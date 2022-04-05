@@ -28,12 +28,13 @@ pub async fn index(req: HttpRequest) -> impl Responder {
     let mut _template : String;
 
     let (_type, _is_host_admin) = get_default_template(req);
-    if auth {
-        _template = _type + &"main/lists/news_list.html".to_string();
-    } else {
-        _template = _type + &"main/auth/auth.html".to_string();
-    }
-
+    //if auth {
+    //    _template = _type + &"main/lists/news_list.html".to_string();
+    //} else {
+    //    _template = _type + &"main/auth/auth.html".to_string();
+    //}
+    _template = _type + &"main/auth/auth.html".to_string();
+    println!("{:?}", auth);
     data.insert("is_host_admin", &_is_host_admin);
     let _rendered = TEMPLATES.render(&_template, &data).unwrap();
     HttpResponse::Ok().body(_rendered)
