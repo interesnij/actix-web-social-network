@@ -1,7 +1,7 @@
 use crate::schema::users;
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
-
+use crate::utils::establish_connection;
 
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
 pub struct User {
@@ -100,8 +100,6 @@ pub struct UserTypeChange {
 pub(crate) struct UserOperation;
 
 impl UserOperation {
-    use crate::utils::establish_connection;
-
     pub fn get_full_name(user: &User) -> String {
         user.first_name + " ".to_string() + user.last_name
     }
