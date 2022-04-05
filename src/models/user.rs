@@ -93,7 +93,7 @@ pub struct UserLanguageChange {
 #[derive(Debug, AsChangeset)]
 #[table_name = "users"]
 pub struct UserTypeChange {
-    pub type: String,
+    pub r#type: String,
 }
 
 /// Методы модели User...

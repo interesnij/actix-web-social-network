@@ -13,6 +13,7 @@ table! {
         level -> Int4,
         password -> Varchar,
         have_link -> Nullable<Varchar>,
+        city -> Nullable<Varchar>,
         status -> Nullable<Varchar>,
         b_avatar -> Nullable<Text>,
         s_avatar -> Nullable<Text>,

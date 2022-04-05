@@ -20,7 +20,7 @@ pub struct SParams {
 }
 
 pub async fn index(req: HttpRequest) -> impl Responder {
-    use actix_web_httpauth::headers::authorization::Authorization;
+    use actix_web_httpauth::headers::authorization::{Authorization, Basic};
 
     let auth = Authorization::<Basic>::parse(req)?;
     let _connection = establish_connection();
