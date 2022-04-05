@@ -9,7 +9,7 @@ pub struct User {
     pub first_name: String,
     pub last_name: String,
     pub phone: String,
-    pub type: String,
+    pub r#type: String,
     pub gender: String,
     pub device: String,
     pub language: String,
@@ -32,9 +32,10 @@ pub struct NewUser {
     pub phone: String,
     pub gender: String,
     pub device: String,
-    pub type: String,
+    pub r#type: String,
     pub password: String,
     pub level: i32,
+    pub language: String,
 }
 #[derive(Debug, Deserialize)]
 pub struct LoginUser {

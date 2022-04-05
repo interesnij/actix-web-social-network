@@ -1,6 +1,5 @@
 use actix_web::HttpRequest;
-use actix_web_httpauth::headers::authorization::Authorization;
-
+use actix_web_httpauth::headers::authorization::{Authorization, Basic};
 
 pub fn get_default_template(req: HttpRequest) -> (String, bool) {
     // получаем папку шаблона и проверяем на хост-админа
