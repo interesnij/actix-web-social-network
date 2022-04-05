@@ -34,7 +34,7 @@ pub async fn index(req: HttpRequest) -> impl Responder {
     //    _template = _type + &"main/auth/auth.html".to_string();
     //}
     _template = _type + &"main/auth/auth.html".to_string();
-    println!("{:?}", _auth);
+    println!("{:?}", _auth.is_ok());
     data.insert("is_host_admin", &_is_host_admin);
     let _rendered = TEMPLATES.render(&_template, &data).unwrap();
     HttpResponse::Ok().body(_rendered)
