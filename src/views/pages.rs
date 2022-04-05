@@ -6,7 +6,7 @@ use actix_web::{
 };
 use serde::Deserialize;
 use tera::Context;
-use crate::utils::{establish_connection, templates, TEMPLATES};
+use crate::utils::{establish_connection, templates::get_default_template, TEMPLATES};
 use crate::diesel::RunQueryDsl;
 
 
@@ -27,7 +27,7 @@ pub async fn index(req: HttpRequest) -> impl Responder {
     let mut data = Context::new();
     let mut _template : String;
 
-    let (_type, _is_host_admin) = templates::get_default_template(req);
+    let (_type, _is_host_admin) = get_default_template(req);
     if auth {
         _template = _type + &"main/lists/news_list.html".to_string();
     } else {

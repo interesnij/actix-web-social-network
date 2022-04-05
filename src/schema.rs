@@ -5,7 +5,7 @@ table! {
         first_name -> Varchar,
         last_name -> Varchar,
         phone -> Varchar,
-        r#type -> Varchar,
+        _type -> Varchar,
         gender -> Varchar,
         device -> Varchar,
         language -> Varchar,
