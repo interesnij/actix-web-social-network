@@ -22,19 +22,19 @@ pub struct SParams {
 pub async fn index(req: HttpRequest) -> impl Responder {
     use actix_web_httpauth::headers::authorization::{Authorization, Basic};
 
-    let auth = Authorization::<Basic>::parse(&req);
+    let _auth = Authorization::<Basic>::parse(&req);
     let _connection = establish_connection();
     let mut data = Context::new();
     let mut _template : String;
 
     let (_type, _is_host_admin) = get_default_template(req);
-    //if auth {
+    //if _auth {
     //    _template = _type + &"main/lists/news_list.html".to_string();
     //} else {
     //    _template = _type + &"main/auth/auth.html".to_string();
     //}
     _template = _type + &"main/auth/auth.html".to_string();
-    println!("{:?}", auth);
+    println!("{:?}", _auth);
     data.insert("is_host_admin", &_is_host_admin);
     let _rendered = TEMPLATES.render(&_template, &data).unwrap();
     HttpResponse::Ok().body(_rendered)
