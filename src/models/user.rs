@@ -101,6 +101,6 @@ pub(crate) struct UserOperation;
 
 impl UserOperation {
     pub fn get_full_name(user: &User) -> String {
-        user.first_name + " ".to_string() + user.last_name
+        user.first_name + &" ".to_string() + &user.last_name
     }
 }

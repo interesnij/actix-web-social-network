@@ -22,7 +22,7 @@ pub struct SParams {
 pub async fn index(req: HttpRequest) -> impl Responder {
     use actix_web_httpauth::headers::authorization::{Authorization, Basic};
 
-    let auth = Authorization::<Basic>::parse(req)?;
+    let auth = Authorization::<Basic>::parse(req);
     let _connection = establish_connection();
     let mut data = Context::new();
     let mut _template : String;
