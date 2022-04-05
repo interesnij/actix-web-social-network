@@ -83,7 +83,7 @@ pub struct UserPermChange {
 #[derive(Debug, AsChangeset)]
 #[table_name = "users"]
 pub struct UserLevelChange {
-    pub level: String,
+    pub level: i32,
 }
 #[derive(Debug, AsChangeset)]
 #[table_name = "users"]

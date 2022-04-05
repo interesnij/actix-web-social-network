@@ -5,8 +5,7 @@ pub use self::{
     templates::*
 };
 
-use actix_web::HttpRequest;
-use crate::diesel::{Connection, PgConnection, RunQueryDsl};
+use crate::diesel::{Connection, PgConnection};
 use tera::Tera;
 use lazy_static::lazy_static;
 
