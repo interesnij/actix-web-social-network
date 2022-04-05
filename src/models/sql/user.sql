@@ -3,7 +3,7 @@ CREATE TABLE users (
     first_name VARCHAR NOT NULL,
     last_name VARCHAR NOT NULL,
     phone VARCHAR NOT NULL,
-    type VARCHAR NOT NULL,
+    _type VARCHAR NOT NULL,
     gender VARCHAR NOT NULL,
     device VARCHAR NOT NULL,
     language VARCHAR NOT NULL,
