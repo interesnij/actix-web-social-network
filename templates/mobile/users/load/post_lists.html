@@ -1,0 +1,33 @@
+<div class="px-0 card user_post_lists_container no-shadow main-container" data-pk="none" data-type="none" style="min-height: 600px;">
+    <form data-type="posts_list" class="cool_private_form">
+      <div class="card-header" style="min-height: 100px;">
+        <span class="header_title">Выберите списки записей</span>
+      </div>
+      <button type="button" class="btn btn-sm border form_btn" disabled id="add_list_selected_lists_btn">
+        Выберите списки
+      </button>
+      <div class="card-body">
+
+        <div class="is_block_paginate">
+          {% for list in object_list %}
+          <div class="media pointer border-bottom items_lists_toggle"
+            data-link="load_post_list"
+            data-pk="{{ list.pk }}"
+            style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
+            <div class="media-body">
+              <h6 class="mb-0" style="padding-top: 10px;">
+                {{ list.name }}
+              </h6>
+              <p>{{ list.count_items_ru }}</p>
+            </div>
+            <span class="custom_color border item_attach_circle" tooltip="Выбрать список" flow="up">
+              <svg class="svg_default" fill="currentColor" viewBox="2 2 20 20">
+                <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"/>
+              </svg>
+          </span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </form>
+</div>

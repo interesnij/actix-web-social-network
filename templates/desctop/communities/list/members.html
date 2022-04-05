@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Подписчики сообщества "{{ community.name }}"{% endblock %}
+{% block meta %}
+<meta property="og:url" content="http://xn--b1afgj5al1e.xn--p1acf/members/{{ community.get_link }}" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="{{ community.name }} - подписчики сообщества" />
+<meta property="og:image" content="http://xn--b1afgj5al1e.xn--p1acf/{{ community.get_b_avatar }}"/>
+{% endblock %}
+{% block content %}
+
+<div class="main-container row" data-type="community_members">
+    <div class="col-md-8 mt-3">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control form-control-sm" placeholder="Поиск подписчиков" aria-label="Recipient's username">
+            <div class="input-group-append">
+                <button class="btn btn-sm border" type="button">Искать</button>
+            </div>
+        </div>
+        <div class="card mb-2">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                        <h5 class="mt-1">Подписчики сообщества
+                            {% include 'desctop/generic/community/community.html' %}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body px-0 py-0">
+                <ul class="list-group is_paginate">
+                    {% for user in object_list %}
+                    <li class="list-group-item">
+                        <div class="media">
+                          {% include 'desctop/generic/user/figure.html' %}
+                          <div class="media-body">
+                              {% include 'desctop/generic/user/user.html' %}
+                              <a href="" class="small">Написать</a>
+                          </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mt-3">
+
+    </div>
+</div>
+
+{% endblock %}

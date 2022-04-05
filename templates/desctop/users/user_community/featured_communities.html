@@ -1,0 +1,17 @@
+
+{% if request.user.get_6_featured_communities_ids %}
+<div class="card mb-3">
+      <a href="{% url 'featured_communities' %}" class="ajax">
+        <div class="media p-2">
+            <div class="media-body">
+                <h6>Рекомендации</h6>
+            </div>
+            {{ request.user.get_featured_communities_count }}
+        </div>
+      </a>
+
+    {% for object in request.user.get_6_featured_communities %}
+      {% include 'desctop/generic/community/card.html' %}
+    {% endfor %}
+</div>
+{% endif %}

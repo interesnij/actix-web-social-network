@@ -1,0 +1,8 @@
+<li class="list-group-item" style="padding-bottom:10px">
+    <div class="media" style="align-items: unset;position: relative;">
+        <div class="media-body doc_media_body">
+            <h6 class="pointer mb-0" style="width: 84%;overflow: hidden;"><a href="{{ object.file.url }}" target="_blank" rel="nofollow">{{ object.title }}</a></h6>
+            <span class="small">{{ object.file.size|filesizeformat }} | {{ object.get_mime_type }}</span>
+        </div>
+    </div>
+</li>

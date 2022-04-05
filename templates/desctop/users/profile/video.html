@@ -1,0 +1,24 @@
+{% if user.is_have_video %}
+
+<div class="card mb-3">
+    <div class="p-1">
+      <a href="{% url 'user_video' pk=user.pk %}" class="ajax">
+        <div class="media">
+            <div class="media-body">
+                <h6 class="content-color-primary mb-0">Видео </h6>
+            </div>
+            {{ user.profile.videos }}
+        </div>
+      </a>
+    </div>
+    <div class="card-body p-1">
+        {% for object in user.get_2_videos %}
+          <div class="media-body position-relative">
+            <img class="image_fit_200" src="{{ object.image.url }}" alt="">
+            <div class="video_icon_play_v2 video_list_detail" video-counter="{{ forloop.counter }}" video-pk="{{ object.pk }}"></div>
+            <a>{{ object.title }}</a>
+          </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}

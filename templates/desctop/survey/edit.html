@@ -1,0 +1,82 @@
+
+    <form data-pk="{{ survey.pk }}">
+      {% csrf_token %}
+        <div class="card mb-3">
+            <div class="card-header border-bottom">
+                <h5 class="content-color-primary mb-0">Изменение опроса</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                  <input type="text" value="{{ survey.title }}" name="title" placeholder="Название" class="form-control" id="id_title">
+                </div>
+                <span id="answers_container">
+
+                  <div class="form-group answers_add_form {% if survey.is_full_answers %}hidden{% endif %}">
+                    <div>
+                      <div>
+                        <span class="input-group-text add_answer pointer">Добавить вариант ответа</span>
+                      </div>
+                    </div>
+                  </div>
+                  <span id="answers_container" class="worker_drag_container">
+                  {% for answer in survey.get_answers %}
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend"><span class="input-group-text handle">≡</span></div>
+                      <input type="text" value="{{ answer.text }}" name="answers" placeholder="Вариант ответа" class="form-control answer">
+                      <div class="input-group-append"><span class="input-group-text remove_answer pointer">x</span></div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                  </span>
+
+                </span>
+
+                <div class="form-group">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" {% if survey.is_full_answers %}checked{% endif %} name="is_anonymous" class="custom-control-input" id="id_is_anonymous">
+                    <label class="custom-control-label" for="id_is_anonymous">Анонимный опрос</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" {% if survey.is_multiple %}checked{% endif %} name="is_multiple" class="custom-control-input" id="id_is_multiple">
+                    <label class="custom-control-label" for="id_is_multiple">Несколько вариантов</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" {% if survey.is_no_edited %}checked{% endif %} name="is_no_edited" class="custom-control-input" id="id_is_no_edited">
+                    <label class="custom-control-label" for="id_is_no_edited">Запрет отмены голоса</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="custom-control custom-checkbox">
+
+                    <input type="checkbox" {% if survey.need_time_end %}checked{% endif %} class="custom-control-input" id="need_time_end">
+                    <label class="custom-control-label" for="need_time_end">Ограничить время</label>
+                  </div>
+                </div>
+                <div class="form-group {% if not survey.need_time_end %}hide{% endif %}">
+                  <label>Дата окончания</label>
+                  <input name="time_end" value="{{ survey.need_time_end }}" type="datetime-local" class="form-control">
+                </div>
+                <div class="hide_image">
+                  <input type="file" name="image" id="id_image" accept="image/*">
+                </div>
+                <div class="border border_2" id="video_holder">
+                  {% if survey.image %}
+                    <img class="img-fluid rounded" src="{{ survey.image.url }}" alt="img" style="height: 100%;">
+                  {% else %}
+                    <p>Добавить обложку?</p>
+                    <i style="">(не обязательно)</i>
+                  {% endif %}
+                </div>
+
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-sm border this_mob_fullscreen_hide">Отмена</button>
+                <button id="edit_survey_btn" type="button" class="btn btn-sm btn-success float-right">Изменить</button>
+            </div>
+        </div>
+    </form>

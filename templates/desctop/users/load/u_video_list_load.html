@@ -1,0 +1,37 @@
+<span class="load_block">
+{% if object_list %}
+<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_block_paginate">
+{% for object in object_list %}
+<div class="col-md-6 mb-3" data-pk="{{ object.pk }}">
+  <div>
+      <img class="image_fit_200 video_load_one pointer"
+           video-counter="{{ object.order }}"
+           video-pk="{{ object.pk }}"
+           src="{{ object.get_image }}" alt="img">
+  </div>
+  <span class="custom_color border item_attach_circle video_load_several"
+       tooltip="Выбрать несколько"
+       flow="up">
+       <svg class="svg_default" fill="currentColor" viewBox="2 2 20 20">
+         <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"/>
+       </svg>
+  </span>
+  <div class="card-body">
+    <h5 class="text-truncate w-100">{{ object.title }}</h5>
+    <span class="small">{{ object.get_created }} | {{ object.visits_count_ru }}</span>
+  </div>
+</div>
+  {% endfor %}
+  {% if page_obj.has_next %}
+  <div class="load centered m-1 next_page_list" data-link="/users/load/u_video_list_load/{{ list.uuid }}/?page={{ page_obj.next_page_number }}">
+      <img src="/static/images/preloader.gif">
+  </div>
+  {% endif %}
+
+</div>
+{% else %}
+<div class="card mb-3 centered">
+  <h5 style="text-align: center;margin: 20px;"> Список видеозаписей пустой.</h5>
+</div>
+{% endif %}
+</span>

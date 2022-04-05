@@ -1,0 +1,42 @@
+{% load post %}
+
+{% with repost=object.repost %}
+<div class="border-left" style="margin-left: 5%" data-pk="{{ repost.pk }}">
+  {% if repost.community %}
+  <div class="card-header">
+      <div class="media">
+        {% include 'mobile/generic/community/repost_figure.html' %}
+          <div class="media-body">
+              <h6 class="mb-0">
+                {% include 'mobile/generic/community/repost_object.html' %}
+              </h6>
+              <p class="mb-0 wall_fullscreen pointer">{{ repost.get_created }}</p>
+          </div>
+      </div>
+  </div>
+  {% else %}
+  <div class="card-header">
+      <div class="media">
+        {% include 'mobile/generic/user/repost_figure.html' %}
+          <div class="media-body">
+              <h6 class="mb-0">
+                {% include 'mobile/generic/user/repost_creator.html' %}
+             </h6>
+              <a class="mb-0 wall_fullscreen pointer">{{ repost.get_created }}</a>
+          </div>
+      </div>
+  </div>
+  {% endif %}
+
+  {% if repost.text %}
+    <div class="fullscreen text_support pointer">
+      {{ repost.get_format_text|safe }}
+    </div>
+  {% endif %}
+
+  {% if repost.attach %}
+    {{ repost|get_attach:request.user|safe }}
+  {% endif %}
+</div>
+
+{% endwith %}

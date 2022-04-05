@@ -1,0 +1,16 @@
+<div class="card mb-3 pag" data-type="user_post" data-pk="{{ object.pk }}">
+  <a class="drag_item handle" data-pk="{{ object.pk }}" style="position:absolute;left:4px;top:-5px;">
+    ≡
+  </a>
+
+    {% include 'desctop/posts/post_user/my_card_header.html' %}
+    {% if object.text %}
+      <div class="fullscreen pointer text_support">
+        {{ object.get_format_text|safe }}
+      </div>
+    {% endif %}
+
+    {% include 'desctop/generic/items/post.html' %}
+
+    {% include 'desctop/posts/post_user/info.html' %}
+</div>

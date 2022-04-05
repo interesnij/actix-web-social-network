@@ -1,0 +1,29 @@
+<div class="card" style="flex: 0 0 100%;">
+  <input type="hidden" name="attach_items" value="sur{{ object.pk }}">
+  <div class="mb-3 border text-center position-relative box-shadow" style="border-radius: .3rem;">
+      <figure class="background-img">
+        {% if object.image %}
+          <img src="{{ object.image.url }}" alt="user image">
+        {% endif %}
+      </figure>
+      <a class="survey_attach_remove pointer" style="position: absolute;top: 8px;right: 8px;">
+        Открепить
+      </a>
+      <div class="container">
+        <br>
+        <h4>{{ object.title }}</h4>
+        <p class="content-color-primary underline">{{ object.creator }}</p>
+        {% if object.time_end %}
+          <p class="content-color-primary">До {{ object.time_end }}</p>
+        {% endif %}
+        <br>
+        {% for answer in object.get_answers %}
+        <div class="lite_color answer_style">
+          <div class="progress2" style="width:{{ answer.get_procent }}%;"></div>
+          <span class="progress_span_r">{{ answer.text }}</span>
+          <span class="progress_span_l" style="margin-left: auto;">{{ answer.get_count }}</span>
+        </div>
+        {% endfor %}
+      </div>
+  </div>
+</div>

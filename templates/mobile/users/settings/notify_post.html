@@ -1,0 +1,81 @@
+{% extends "base_mobile.html" %}
+{% block title %}Уведомления записей {% endblock %}
+{% block content %}
+
+<div class="main-container container mt-3 pk_saver" data-pk="{{ user.pk }}">
+
+  {% include 'mobile/users/settings/menu.html' %}
+  <form id="user_notify_post_form" class="contact-form">
+      {% csrf_token %}
+      <div class="card mb-3">
+          <div class="card-header border-bottom">
+              <h5 class="content-color-primary mb-0">Уведомления в записях</h5>
+          </div>
+          <div class="card-body">
+            <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
+                Комментарии к записям
+                <input type="checkbox" {% if notify_post.comment %} checked {% endif %} name="comment" id="id_comment" class="switch switch-sm">
+                <label style="margin-right:12px;bottom: 5px;" for="id_comment" class="bg_success mb-2 border float-right"></label>
+            </p>
+            <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
+                Ответы на комментарии
+                <input type="checkbox" {% if notify_post.comment_reply %} checked {% endif %} name="comment_reply" id="id_comment_reply" class="switch switch-sm">
+                <label style="margin-right:12px;bottom: 5px;" for="id_comment_reply" class="bg_success mb-2 border float-right"></label>
+            </p>
+            <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
+                Репосты записей
+                <input type="checkbox" {% if notify_post.repost %} checked {% endif %} name="repost" id="id_repost" class="switch switch-sm">
+                <label style="margin-right:12px;bottom: 5px;" for="id_repost" class="bg_success mb-2 border float-right"></label>
+            </p>
+            <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
+                Упоминания в записях
+                <input type="checkbox" {% if notify_post.mention %} checked {% endif %} name="mention" id="id_mention" class="switch switch-sm">
+                <label style="margin-right:12px;bottom: 5px;" for="id_mention" class="bg_success mb-2 border float-right"></label>
+            </p>
+            <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
+                Упоминания в комменариях
+                <input type="checkbox" {% if notify_post.comment_mention %} checked {% endif %} name="comment_mention" id="id_comment_mention" class="switch switch-sm">
+                <label style="margin-right:12px;bottom: 5px;" for="id_comment_mention" class="bg_success mb-2 border float-right"></label>
+            </p>
+
+            <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
+                Лайки на записи
+                <input type="checkbox" {% if notify_post.like %} checked {% endif %} name="like" id="id_like" class="switch switch-sm">
+                <label style="margin-right:12px;bottom: 5px;" for="id_like" class="bg_success mb-2 border float-right"></label>
+            </p>
+            <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
+                Дизайки на записи
+                <input type="checkbox" {% if notify_post.dislike %} checked {% endif %} name="dislike" id="id_dislike" class="switch switch-sm">
+                <label style="margin-right:12px;bottom: 5px;" for="id_dislike" class="bg_success mb-2 border float-right"></label>
+            </p>
+            <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
+                Лайки на комментарии
+                <input type="checkbox" {% if notify_post.comment_like %} checked {% endif %} name="comment_like" id="id_comment_like" class="switch switch-sm">
+                <label style="margin-right:12px;bottom: 5px;" for="id_comment_like" class="bg_success mb-2 border float-right"></label>
+            </p>
+            <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
+                Дизайки на комментарии
+                <input type="checkbox" {% if notify_post.comment_dislike %} checked {% endif %} name="comment_dislike" id="id_comment_dislike" class="switch switch-sm">
+                <label style="margin-right:12px;bottom: 5px;" for="id_comment_dislike" class="bg_success mb-2 border float-right"></label>
+            </p>
+            <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
+                Лайки на ответы
+                <input type="checkbox" {% if notify_post.comment_reply_like %} checked {% endif %} name="comment_reply_like" id="id_comment_reply_like" class="switch switch-sm">
+                <label style="margin-right:12px;bottom: 5px;" for="id_comment_reply_like" class="bg_success mb-2 border float-right"></label>
+            </p>
+            <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
+                Дизайки на ответы
+                <input type="checkbox" {% if notify_post.comment_reply_dislike %} checked {% endif %} name="comment_reply_dislike" id="id_comment_reply_dislike" class="switch switch-sm">
+                <label style="margin-right:12px;bottom: 5px;" for="id_comment_reply_dislike" class="bg_success mb-2 border float-right"></label>
+            </p>
+
+          </div>
+          <div class="card-footer">
+              <button type="button" id="user_notify_post_btn" class="mb-2 btn btn-sm btn-success float-right">Сохранить</button>
+          </div>
+      </div>
+  </form>
+
+</div>
+
+{% endblock %}

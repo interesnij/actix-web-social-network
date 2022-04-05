@@ -1,0 +1,33 @@
+
+    <form community-pk="{{ community.pk }}" class="is_stat_list case_create" data-pk="{{ list.pk }}" data-type="create_community_doc_list">
+      {% csrf_token %}
+      <input type="hidden" name="type" value="{{ type }}" class="type">
+      {% if community %}
+        <input type="hidden" name="community_id" value="{{ community.pk }}">
+      {% endif %}
+
+        <div class="card">
+            <div class="card-header border-bottom">
+                <h5 class="content-color-primary mb-0">{{ text }}</h5>
+            </div>
+            <div class="card-body">
+                  <div class="form-group">
+                    <label>Название</label>
+                    <input type="text" name="name" value="{{ list.name }}" class="form-control" id="id_name">
+                  </div>
+                  <div class="form-group">
+                    <label>Описание</label>
+                    <input name="description" value="{{ list.description }}" class="form-control">
+                  </div>
+                  {% if community %}
+                    {% include 'base_block/perm/edit_community_list_perm.html' %}
+                  {% else %}
+                    {% include 'base_block/perm/edit_user_list_perm.html' %}
+                  {% endif %}
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-sm border item_fullscreen_hide">Отмена</button>
+                <button type="button" class="btn btn-sm btn-success float-right" id="edit_list_btn">Создать</button>
+            </div>
+        </div>
+    </form>

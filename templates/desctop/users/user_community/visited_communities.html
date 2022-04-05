@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Просмотренные сообщества{% endblock %}
+{% block content %}
+
+<div class="main-container" data-pk="{{ user.pk }}" data-type="user_communities">
+<div class="row">
+    <div class="col-md-8">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control form-control-sm" placeholder="Поиск сообществ">
+            <div class="input-group-append">
+                <button class="btn btn-sm border" type="button">Искать</button>
+            </div>
+        </div>
+
+        <div class="card mb-2">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body"><h5 class="mt-1">Просмотренные сообщества</h5></div>
+                </div>
+            </div>
+
+            <div class="card-body px-0 py-0">
+
+              {% if object_list %}
+
+              <ul class="list-group" id="communities_container">
+                  {% for community in object_list %}
+                  <li class="list-group-item">
+                      <div class="media">
+                          {% include 'desctop/generic/community/figure.html' %}
+                          <div class="media-body">
+                              <h6 class="my-0 mt-1">{% include 'desctop/generic/community/community.html' %}</h6>
+                              <p class="small">{{ community.count_members_ru }}</p>
+                          </div>
+                      </div>
+                  </li>
+                  {% endfor %}
+                  {% if page_obj.has_next %}
+                  <div class="load centered m-1 next_page_list" data-link="{% url 'visited_communities' %}?page={{ page_obj.next_page_number }}">
+                      <img src="/static/images/preloader.gif">
+                  </div>
+                  {% endif %}
+              </ul>
+
+              {% else %}
+                {% include 'desctop/users/user_community/no_communities.html' %}
+              {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+        <button id="community_add" class="btn btn-sm border" style="margin-bottom:15px;width:100%;" type="button">Создать сообщество</button>
+        <div class="card mb-2">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body"><h5 class="mt-1">Популярные группы</h5></div>
+                </div>
+            </div>
+
+        </div>
+        <div class="card mb-2">
+                <div class="media">
+                    <div class="media-body">
+                      <h5 class="p-1">
+                        <a href="{% url 'all_communities' %}" class="ajax">Все сообщества</a>
+                      </h5>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

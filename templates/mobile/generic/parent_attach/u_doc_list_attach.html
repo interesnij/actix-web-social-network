@@ -1,0 +1,11 @@
+{% include 'mobile/main/u_posts/card_header.html' %}
+
+{% if object.parent.text %}
+  <div class="fullscreen text_support pointer">
+    {{ object.parent.text|safe }}
+  </div>
+{% endif %}
+
+{% for list in object.parent.get_attach_doc_list %}
+  {% include 'mobile/generic/items/u_doc_list.html' %}
+{% endfor %}

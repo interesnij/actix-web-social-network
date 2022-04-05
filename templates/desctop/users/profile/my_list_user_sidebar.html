@@ -1,0 +1,53 @@
+<div class="card mb-2 mt-3">
+    <div class="p-1">
+      <div class="media">
+          <div class="media-body">
+            <h5 class="mt-1">
+              <a href="{% url 'all_users' %}" class="ajax">Найти друзей</a>
+            </h5>
+          </div>
+      </div>
+    </div>
+</div>
+
+{% if request.user.is_have_followers %}
+<div class="card mb-2">
+    <div class="p-1">
+      <div class="media">
+          <div class="media-body">
+            <h5 class="mt-1">
+              <a href="{% url 'follows' pk=request.user.pk %}" class="ajax">Подписчики</a>
+            </h5>
+          </div>
+      </div>
+    </div>
+</div>
+{% endif %}
+
+{% if request.user.is_have_followings %}
+<div class="card mb-2">
+    <div class="card-header">
+      <div class="media">
+          <div class="media-body">
+            <h5 class="mt-1">
+              <a href="{% url 'followings' %}" class="ajax">Мои заявки</a>
+            </h5>
+          </div>
+      </div>
+    </div>
+</div>
+{% endif %}
+
+{% if request.user.is_have_blacklist %}
+<div class="card mb-2">
+    <div class="p-1">
+      <div class="media">
+          <div class="media-body">
+            <h5 class="mt-1">
+              <a href="{% url 'user_black_list' %}" class="ajax">Черный список</a>
+            </h5>
+          </div>
+      </div>
+    </div>
+</div>
+{% endif %}

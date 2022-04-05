@@ -1,0 +1,81 @@
+<div class="card mb-3 post_detail" data-pk="{{ object.pk }}">
+
+<div class="row">
+  {% if next %}
+  <div class="col" style="padding:5px;">
+    <a class="btn btn-sm border next_item" href="{% url 'load_post' pk=next.pk %}" style="width: -webkit-fill-available;position:static">
+      <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
+    </a>
+  </div>
+  {% endif %}
+
+  <div class="col" style="padding:5px;">
+    <button class="btn btn-sm border menu_drop" style="width: -webkit-fill-available;">
+        Опции
+    </button>
+    <div class="dropdown-menu dropdown-menu-right" data-type="pos{{ object.pk }}">
+      <span>
+        {% if object.is_fixed %}
+          <span class="dropdown-item u_post_unfixed">Открепить</span>
+        {% else %}
+          <span class="dropdown-item u_post_fixed">Закрепить</span>
+        {% endif %}
+      </span>
+      {% if request.user.pk == object.creator.pk %}
+        <span class="dropdown-item u_post_remove">Удалить запись</span>
+        <span class="dropdown-item u_post_edit">Редактировать</span>
+        <span class="dropdown-item item_stat_f">Статистика записи</span>
+        <span>
+          {% if object.comments_enabled %}
+            <span class="dropdown-item u_post_off_comment">Выкл. комментарии</span>
+          {% else %}
+            <span class="dropdown-item u_post_on_comment">Вкл. комментарии</span>
+          {% endif %}
+        </span>
+        <span>
+          {% if object.votes_on %}
+            <span class="dropdown-item u_post_off_votes">Выкл. реакции</span>
+          {% else %}
+            <span class="dropdown-item u_post_on_votes">Вкл. реакции</span>
+          {% endif %}
+        </span>
+      {% elif request.user.is_moderator %}
+        <span class="dropdown-item create_close">Закрыть</span>
+      {% else %}
+        <span class="dropdown-item create_claim">Пожаловаться</span>
+      {% endif %}
+        <span class="dropdown-item copy_link">Скопировать ссылку</span>
+    </div>
+  </div>
+  <div class="col" style="padding:5px;">
+    <a class="btn btn-sm border pointer this_mob_fullscreen_hide" style="width: -webkit-fill-available;">
+      <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+    </a>
+  </div>
+  {% if prev %}
+  <div class="col" style="padding:5px;">
+    <a class="btn btn-sm border prev_item" href="{% url 'load_post' pk=prev.pk %}" style="width: -webkit-fill-available;position:static">
+      <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><rect fill="none" /><path d="M15,5l-1.41,1.41L18.17,11H2V13h16.17l-4.59,4.59L15,19l7-7L15,5z"/></svg>
+    </a>
+  </div>
+  {% endif %}
+</div>
+
+  <div class="card-header">
+      <div class="media">
+        {% include 'mobile/generic/user/creator_figure.html' %}
+          <div class="media-body">
+              <h6 class="mb-0">
+                {% include 'mobile/generic/user/creator.html' %}
+              </h6>
+              <p class="mb-0 handle">{{ object.get_created }}</p>
+          </div>
+      </div>
+  </div>
+
+  {{ object.text|safe }}
+
+  {% include 'mobile/generic/items/post.html' %}
+
+  {% include 'mobile/posts/post_user/info.html' %}
+</div>

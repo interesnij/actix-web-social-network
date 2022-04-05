@@ -1,0 +1,52 @@
+{% extends "base_mobile.html" %}
+{% block title %}Администраторы - {{ community.name }}{% endblock %}
+{% block content %}
+
+<div class="container main-container mt-3 pk_saver" data-pk="{{ community.pk }}" data-type="community_manage_admins">
+
+  {% include 'mobile/communities/manage/menu.html' %}
+
+        <div class="card mb-2">
+            <div class="card-header" style="padding-bottom: 0em;">
+              <div class="media">
+                  <h5 class="mt-1">Администраторы -
+                      {% include 'mobile/generic/community/community.html' %}
+                  </h5>
+              </div>
+              <div class="input-group mb-3" style="display:flex">
+                <input type="text" class="form-control form-control-sm" placeholder="Поиск админов">
+                <div class="input-group-append">
+                    <button class="btn btn-sm border" type="button">Искать</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body px-0 py-0">
+                <ul class="list-group is_paginate">
+                    {% for user in object_list %}
+                    <li class="list-group-item li_{{user.pk }}" data-uuid="{{ user.uuid }}" data-pk="{{ community.pk }}">
+                        <div class="media">
+                          {% include 'mobile/generic/user/figure.html' %}
+                          <div class="media-body">
+                              {% include 'mobile/generic/user/user.html' %}
+                              <span class="staff_btn">
+                                {% if object == community.creator %}
+                                  Владелец
+                                {% else %}
+                                  Администратор<br>
+                                  <span class="small">
+                                    <a class="show_staff_window pointer">Редактировать</a> | <a class="remove_admin pointer">Разжаловать</a>
+                                  </span>
+                                {% endif %}
+                                <br>
+                              </span>
+                          </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+</div>
+
+{% endblock %}

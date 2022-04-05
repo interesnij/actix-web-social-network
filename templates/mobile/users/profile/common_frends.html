@@ -1,0 +1,30 @@
+{% load liked_user %}
+
+{% if common_frends %}
+<div class="card mb-3" style="">
+    <div class="card-header">
+      <a href="{% url 'frends' pk=user.pk %}#tabhome323" class="ajax">
+        <div class="media">
+            <div class="media-body">
+                <h6 class="content-color-primary mb-0">Общие друзья </h6>
+            </div>
+        </div>
+      </a>
+    </div>
+
+    {% for user in common_frends %}
+
+    <div class="card border-top">
+        <div class="card-body">
+            <div class="media">
+              {% include 'mobile/generic/user/figure.html' %}
+              <div class="media-body">
+                  {% include 'mobile/generic/user/user.html' %}
+              </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endif %}

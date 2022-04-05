@@ -1,0 +1,143 @@
+<div class="row mb-1 form_group_flex">
+    <label class="col-md-6">Кто видит список</label>
+    <span class="col-md-6">
+      {% if list.can_see_el == 1 %}
+      <input class="input" name="can_see_el" type="hidden" value="1" />
+      <a class="menu_drop_2 pointer">Все пользователи</a>
+      <span class="collector"></span>
+      {% elif list.can_see_el == 2 %}
+      <input class="input" name="can_see_el" type="hidden" value="2" />
+      <a class="menu_drop_2 pointer">Друзья</a>
+      <span class="collector"></span>
+      {% elif list.can_see_el == 3 %}
+      <input class="input" name="can_see_el" type="hidden" value="3" />
+      <a class="menu_drop_2 pointer">Друзья и друзья друзей</a>
+      <span class="collector"></span>
+      {% elif list.can_see_el == 7 %}
+      <input class="input" name="can_see_el" type="hidden" value="7" />
+      <a class="menu_drop_2 pointer">Только я</a>
+      <span class="collector"></span>
+      {% elif list.can_see_el == 4 %}
+      <input class="input" name="can_see_el" type="hidden" value="4" />
+      <a class="menu_drop_2 pointer underline">Друзья, кроме</a>
+      <span class="collector">:
+        {% for object in list.get_can_see_el_exclude_users %}
+          <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </span>
+
+      {% elif list.can_see_el == 5 %}
+      <input class="input" name="can_see_el" type="hidden" value="4" />
+      <a class="menu_drop_2 pointer underline">Некоторые друзья</a>
+      <span class="collector">:
+        {% for object in list.get_can_see_el_include_users %}
+          <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+      </span>
+      {% endif %}
+      <div class="dropdown-menu" data-action="can_see_el" style="top: 30px;">
+          <span class="dropdown-item select_perm_dropdown" data-value="1">Все пользователи</span>
+          <span class="dropdown-item select_perm_dropdown" data-value="2">Друзья</span>
+          <span class="dropdown-item select_perm_dropdown" data-value="3">Друзья и друзья друзей</span>
+          <span class="dropdown-item select_perm_dropdown" data-value="7">Только я</span>
+          <span class="select_perm_dropdown dropdown-item" data-value="4">Друзья, кроме</span>
+          <span class="select_perm_dropdown dropdown-item" data-value="5">Некоторые друзья</span>
+      </div>
+    </span>
+</div>
+
+<div class="row mb-1 form_group_flex">
+    <label class="col-md-6">Кто создает элементы</label>
+    <span class="col-md-6">
+      {% if list.create_el == 1 %}
+      <input class="input" name="create_el" type="hidden" value="1" />
+      <a class="menu_drop_2 pointer">Все пользователи</a>
+      <span class="collector"></span>
+      {% elif list.create_el == 2 %}
+      <input class="input" name="create_el" type="hidden" value="2" />
+      <a class="menu_drop_2 pointer">Друзья</a>
+      <span class="collector"></span>
+      {% elif list.create_el == 3 %}
+      <input class="input" name="create_el" type="hidden" value="3" />
+      <a class="menu_drop_2 pointer">Друзья и друзья друзей</a>
+      <span class="collector"></span>
+      {% elif list.create_el == 7 %}
+      <input class="input" name="create_el" type="hidden" value="7" />
+      <a class="menu_drop_2 pointer">Только я</a>
+      <span class="collector"></span>
+      {% elif list.create_el == 4 %}
+      <input class="input" name="create_el" type="hidden" value="4" />
+      <a class="menu_drop_2 pointer underline">Друзья, кроме</a>
+      <span class="collector">:
+        {% for object in list.get_create_el_exclude_users %}
+          <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </span>
+
+      {% elif list.create_el == 5 %}
+      <input class="input" name="create_el" type="hidden" value="4" />
+      <a class="menu_drop_2 pointer underline">Некоторые друзья</a>
+      <span class="collector">:
+        {% for object in list.get_create_el_include_users %}
+          <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+      </span>
+      {% endif %}
+      <div class="dropdown-menu" data-action="create_el" style="top: 30px;">
+          <span class="dropdown-item select_perm_dropdown" data-value="1">Все пользователи</span>
+          <span class="dropdown-item select_perm_dropdown" data-value="2">Друзья</span>
+          <span class="dropdown-item select_perm_dropdown" data-value="3">Друзья и друзья друзей</span>
+          <span class="dropdown-item select_perm_dropdown" data-value="7">Только я</span>
+          <span class="select_perm_dropdown dropdown-item" data-value="4">Друзья, кроме</span>
+          <span class="select_perm_dropdown dropdown-item" data-value="5">Некоторые друзья</span>
+      </div>
+    </span>
+</div>
+
+<div class="row mb-1 form_group_flex">
+    <label class="col-md-6">Кто копирует список/элементы</label>
+    <span class="col-md-6">
+      {% if list.copy_el == 1 %}
+      <input class="input" name="copy_el" type="hidden" value="1" />
+      <a class="menu_drop_2 pointer">Все пользователи</a>
+      <span class="collector"></span>
+      {% elif list.copy_el == 2 %}
+      <input class="input" name="copy_el" type="hidden" value="2" />
+      <a class="menu_drop_2 pointer">Друзья</a>
+      <span class="collector"></span>
+      {% elif list.copy_el == 3 %}
+      <input class="input" name="copy_el" type="hidden" value="3" />
+      <a class="menu_drop_2 pointer">Друзья и друзья друзей</a>
+      <span class="collector"></span>
+      {% elif list.copy_el == 7 %}
+      <input class="input" name="copy_el" type="hidden" value="7" />
+      <a class="menu_drop_2 pointer">Только я</a>
+      <span class="collector"></span>
+      {% elif list.copy_el == 4 %}
+      <input class="input" name="copy_el" type="hidden" value="4" />
+      <a class="menu_drop_2 pointer underline">Друзья, кроме</a>
+      <span class="collector">:
+        {% for object in list.get_copy_el_exclude_users %}
+          <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </span>
+
+      {% elif list.copy_el == 5 %}
+      <input class="input" name="copy_el" type="hidden" value="4" />
+      <a class="menu_drop_2 pointer underline">Некоторые друзья</a>
+      <span class="collector">:
+        {% for object in list.get_copy_el_include_users %}
+          <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+      </span>
+      {% endif %}
+      <div class="dropdown-menu" data-action="copy_el" style="top: 30px;">
+          <span class="dropdown-item select_perm_dropdown" data-value="1">Все пользователи</span>
+          <span class="dropdown-item select_perm_dropdown" data-value="2">Друзья</span>
+          <span class="dropdown-item select_perm_dropdown" data-value="3">Друзья и друзья друзей</span>
+          <span class="dropdown-item select_perm_dropdown" data-value="7">Только я</span>
+          <span class="select_perm_dropdown dropdown-item" data-value="4">Друзья, кроме</span>
+          <span class="select_perm_dropdown dropdown-item" data-value="5">Некоторые друзья</span>
+      </div>
+    </span>
+</div>

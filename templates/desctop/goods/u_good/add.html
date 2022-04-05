@@ -1,0 +1,104 @@
+<style>
+  .border_2 {padding: 10px;text-align: center;margin: 20px;cursor:pointer;width: 85%;min-width: 85%;}
+  .border_2 img {width: 85%;height: auto;}
+</style>
+
+<br>
+<h5 class="m-0">Добавление товара</h5>
+<br><br>
+
+<form class="is_stat_list" data-pk="{{ user.pk }}" data-type="create_user_good" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group row">
+      <div class="col-lg-6 col-md-6">
+        <label>Название (обязательно)</label>
+        <input type="text" name="title" class="form-control" id="id_title">
+      </div>
+      <div class="col-lg-6 col-md-6">
+        <label>Цена товара</label>
+        <input type="number" value="0" min="0" name="price" class="form-control" id="id_price">
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-lg-6 col-md-6">
+        <label>Категория</label>
+        <select class="form-control goods_category" id="category" data-live-search="true" tabindex="-1" aria-hidden="true">
+          <option value="">Выберите категорию</option>
+          {% for object in categories %}
+          <option data-pk="{{ object.pk }}" value="{{ object.order }}">{{ object.name }}</option>
+          {% endfor %}
+        </select>
+        <div id="subcat"></div>
+        <label style="margin-top: 12px;">Описание товара</label>
+        <textarea type="text" rows="4" name="description" class="form-control" id="id_description"></textarea>
+      </div>
+
+      <div class="col-lg-6 col-md-6">
+        <div class="form-group">
+          <label>Список</label>
+          <select name="list" id="id_list" style="height:100%">
+            {% for object in user.get_good_lists %}
+              <option value="{{ object.pk }}">{{ object.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="hide_image">{{ form.image }}</div>
+        <div id="good_image" class="border border_2">
+            <h4>обложка</h4>
+            <p>Нажмите, чтобы добавить</p>
+
+            <i style="">(обязательно)</i>
+
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-lg-3 col-md-3">
+        <div class="hide_image">{{ form.image2 }}</div>
+        <div id="good_image2" class="border border_2">
+            <h4 style="font-weight:bold;font-size:30px;color:#CECECE">фото 2</h4>
+            <p>Нажмите, чтобы добавить</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3">
+        <div class="hide_image">{{ form.image3 }}</div>
+        <div id="good_image3" class="border border_2">
+            <h4 style="font-weight:bold;font-size:30px;color:#CECECE">фото 3</h4>
+            <p>Нажмите, чтобы добавить</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3">
+        <div class="hide_image">{{ form.image4 }}</div>
+        <div id="good_image4" class="border border_2">
+            <h4 style="font-weight:bold;font-size:30px;color:#CECECE">фото 4</h4>
+            <p>Нажмите, чтобы добавить</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3">
+        <div class="hide_image">{{ form.image5 }}</div>
+        <div id="good_image5" class="border border_2">
+            <h4 style="font-weight:bold;font-size:30px;color:#CECECE">фото 5</h4>
+            <p>Нажмите, чтобы добавить</p>
+        </div>
+      </div>
+    </div>
+    <br>
+
+    <div class="form-group">
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" checked class="custom-control-input" name="comments_enabled" id="id_comments_enabled">
+            <label class="custom-control-label" for="id_comments_enabled">Разрешить комментарии</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" checked class="custom-control-input" name="votes_on" id="id_votes_on">
+            <label class="custom-control-label" for="id_votes_on">Разрешить реакции</label>
+        </div>
+    </div>
+
+    <div class="card-footer">
+        <button class="btn btn-sm border border item_fullscreen_hide">Отмена</button>
+        <button type="button" id="u_add_good_btn" class="btn btn-sm btn-success float-right">Опубликовать</button>
+    </div>
+</form>

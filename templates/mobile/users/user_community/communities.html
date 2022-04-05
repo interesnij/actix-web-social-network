@@ -1,0 +1,70 @@
+{% extends "base_mobile.html" %}
+{% block title %}Сообщества {{ user.get_full_name_genitive }}{% endblock %}
+{% block meta %}
+<meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/users/{{ user.pk }}/communities/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Сообщества {{ user.get_full_name_genitive }}" />
+<meta property="og:image" content="https://xn--b1afgj5al1e.xn--p1acf{{ user.get_b_avatar }}"/>
+{% endblock %}
+{% block content %}
+
+<div class="main-container container mt-3">
+    <div class="card-header p-0">
+      <div class="row no-gutters">
+        <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
+            {% include 'mobile/generic/user/back.html' %}
+        </div>
+        <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
+            <button class="btn btn-sm border dropdown-toggle menu_drop" style="width: -webkit-fill-available;">
+                Сообщества {{ user.get_name_genitive }} ({{ user.count_communities }})
+            </button>
+            <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
+              <a class="dropdown-item ajax" href="{% url 'trend_communities' %}">Популярные сообщества</a>
+              <a class="dropdown-item ajax" href="{% url 'all_communities' %}">Все сообщества</a>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="card mb-2">
+        <div class="card">
+            <div class="card-body">
+                <div class="input-group mb-3" style="display:flex">
+                    <input type="text" class="form-control" placeholder="Поиск сообществ">
+                    <div class="input-group-append">
+                        <button class="btn border user_community_create_window">Создать</button>
+                    </div>
+                </div>
+                {% if is_user_can_see_community %}
+                {% if object_list %}
+
+                <ul class="list-group is_paginate">
+                    {% for community in object_list %}
+                    <li class="list-group-item pag">
+                        <div class="media">
+                            {% include 'mobile/generic/community/figure.html' %}
+                            <div class="media-body">
+                                <h6 class="my-0 mt-1">{% include 'mobile/generic/community/community.html' %}</h6>
+                                <p class="small">{{ community.count_members_ru }}</p>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                    <div class="load centered m-1 next_page_list" data-link="{% url 'communities' pk=user.pk %}?page={{ page_obj.next_page_number }}">
+                        <img src="/static/images/preloader.gif">
+                    </div>
+                    {% endif %}
+                </ul>
+
+                {% else %}
+                  {% include 'desctop/users/user_community/no_communities.html' %}
+                {% endif %}
+                {% else %}
+                  {% include 'desctop/generic/centered/private_page.html' %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

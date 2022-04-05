@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load liked_user %}
+{% block title %}Все сообщества{% endblock %}
+{% block meta %}
+<meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/communities/all-communities/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="трезвый.рус - все сообщества" />
+<meta property="og:image" content="https://xn--b1afgj5al1e.xn--p1acf/static/images/meta.jpg"/>
+{% endblock %}
+{% block content %}
+
+<div class="row main-container" data-type="community_all">
+    <div class="col-md-8 mt-3">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control form-control-sm" placeholder="Поиск сообществ">
+            <div class="input-group-append">
+                <button class="btn btn-sm border" type="button">Искать</button>
+            </div>
+        </div>
+
+        <div class="card mb-2">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                        <h5 class="mt-1">Все сообщества</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body px-0 py-0">
+              {% if object_list %}
+                <ul class="list-group is_paginate">
+                    {% for community in object_list %}
+                    <li class="list-group-item">
+                        <div class="media">
+                          {% include 'desctop/generic/community/figure.html' %}
+                          <div class="media-body">
+                              <h6 class="my-0 mt-1">{% include 'desctop/generic/community/community.html' %}</h6>
+                              <p class="small">{{ community.count_members }} {{ community.count_members|rupluralize:"подписчик,подписчика,подписчиков" }}</p>
+                          </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <div class="card items_empty centered">
+                  <div class="card-body">
+                  <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M0 0h24v24H0z" fill="none"/><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                  </div>
+                  <h6 style="margin: 20px;text-align: center;"> Пока сообществ нет...</h6>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mt-3">
+        <button class="btn btn-sm border user_community_create_window" style="margin-bottom:15px;width:100%;" data-pk="{{ user.pk }}">
+            Создать сообщество
+        </button>
+
+        <div class="card mb-2">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                        <h5 class="mt-1">Категории </h5>
+                    </div>
+                    <a class="ajax" href="{% url 'all_communities' %}">
+                        все
+                    </a>
+                </div>
+            </div>
+            <div class="card-body px-0 py-0">
+                <ul class="list-group">
+                  {% for object in communities_categories %}
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-body">
+                                <h6 class="my-0 mt-1"><a href="{% url 'community_category' pk=object.pk %}" class="ajax">{{ object.name }}</a></h6>
+                            </div>
+                        </div>
+                    </li>
+                  {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

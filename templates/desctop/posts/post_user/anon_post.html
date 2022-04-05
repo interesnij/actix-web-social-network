@@ -1,0 +1,19 @@
+
+<div class="card mb-3 pag" data-type="user_post" data-pk="{{ object.pk }}">
+  {% include 'desctop/posts/post_user/anon_card_header.html' %}
+
+  <div class="fullscreen text_support pointer">
+    {{ object.get_format_text|safe }}
+  </div>
+
+  {% include 'desctop/generic/items/post.html' %}
+
+  <div class="card-footer border-top py-2">
+      <div class="row">
+          <div class="col interaction" data-type="pos{{ object.pk }}">
+            {% include 'desctop/generic/items/anon_item_footer.html' %}
+          </div>
+      </div>
+      <div class="load_comments"></div>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+<div class="card mb-3 post_detail" data-type="community_post" data-pk="{{ object.pk }}" >
+<div class="row">
+  {% if next %}
+  <div class="col" style="padding:5px;">
+    <a class="btn btn-sm border next_item" href="{% url 'load_post' pk=next.pk %}" style="width: -webkit-fill-available;position:static">
+      <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
+    </a>
+  </div>
+  {% endif %}
+
+  {% include 'mobile/posts/post_user/add_post.html' %}
+
+  <div class="col" style="padding:5px;">
+    <button type="button" class="btn btn-sm border menu_drop" style="width: -webkit-fill-available;">
+        Опции
+    </button>
+    <div class="dropdown-menu dropdown-menu-right">
+      <span>
+        <span class="dropdown-item">Скопировать ссылку</span>
+        <span>
+          <span class="dropdown-item c_all_posts_likes pointer">Оценили</span>
+          <span class="dropdown-item c_all_posts_dislikes pointer">Не оценили</span>
+        </span>
+      </span>
+    </div>
+  </div>
+  <div class="col" style="padding:5px;">
+    <a class="btn btn-sm border pointer this_mob_fullscreen_hide" style="width: -webkit-fill-available;">
+      <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+    </a>
+  </div>
+  {% if prev %}
+    <div class="col" style="padding:5px;">
+      <a class="btn btn-sm border prev_item" href="{% url 'load_post' pk=prev.pk %}" style="width: -webkit-fill-available;position:static">
+        <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><rect fill="none" /><path d="M15,5l-1.41,1.41L18.17,11H2V13h16.17l-4.59,4.59L15,19l7-7L15,5z"/></svg>
+      </a>
+    </div>
+  {% endif %}
+</div>
+
+  <div class="card-header">
+      <div class="media">
+        {% include 'mobile/generic/community/object_figure.html' %}
+        <div class="media-body">
+            <h6 class="mb-0">
+              {% include 'mobile/generic/community/object.html' %}
+              {% if object.is_fixed_in_community %}
+              <span class="is_fixed">
+                <svg style="width: 17px;vertical-align: bottom;" fill="currentColor" viewBox="0 0 24 24">
+                  <g><rect fill="none" height="24" width="24"/></g><g><path d="M16,9V4l1,0c0.55,0,1-0.45,1-1v0c0-0.55-0.45-1-1-1H7C6.45,2,6,2.45,6,3v0 c0,0.55,0.45,1,1,1l1,0v5c0,1.66-1.34,3-3,3h0v2h5.97v7l1,1l1-1v-7H19v-2h0C17.34,12,16,10.66,16,9z" fill-rule="evenodd"/></g>
+                </svg>
+              </span>
+              {% endif %}
+            </h6>
+            <p class="mb-0">{{ object.get_created }}</p>
+        </div>
+      </div>
+  </div>
+
+  {{ object.text|safe }}
+
+  {% include 'mobile/generic/items/post.html' %}
+
+  {% include 'mobile/posts/post_community/anon_info.html' %}
+</div>

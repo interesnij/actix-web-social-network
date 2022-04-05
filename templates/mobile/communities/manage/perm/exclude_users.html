@@ -1,0 +1,52 @@
+<div class="px-0 card no-shadow main-container" chat-pk="{{ community.pk }}" data-pk="none" data-type="none" style="min-height: 600px;">
+    <form data-type="{{ type }}" class="" data-pk="{{ community.pk }}">
+      {% csrf_token %}
+      <input type="hidden" name="type" value="{{ type }}">
+      <div class="card-header" style="min-height: 100px;">
+        {% if users %}
+        <span class="header_title" style="display:none">Выберите тех, кому нельзя {{ text }}</span>
+          {% for object in users %}
+            <span data-pk="{{ object.pk }}" class="btn btn-sm custom_color" style="margin: 2px;">
+              <a href="{{ object.get_link }}" target="_blank">
+                {{ object.get_full_name }}
+              </a>
+             <span class="remove_user_input pointer">x<span></span></span>
+             <input class="user_pk" type="hidden" name="users" value="{{ object.pk }}">
+            </span>
+          {% endfor %}
+        {% else %}
+          <span class="header_title">Выберите тех, кому нельзя {{ text }}</span>
+        {% endif %}
+      </div>
+      <div class="card-body">
+        <div class="is_block_paginate">
+          {% for object in object_list %}
+          <div class="media pointer add_member_chat_toggle border-bottom" data-link="{{ object.get_link }}" data-pk="{{ object.pk }}" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
+            <figure style="width:30px;">
+              {% if object.s_avatar %}
+                <img src="{{ object.s_avatar.url }}" style="width:40px;border-radius:40px;" alt="image">
+              {% else %}
+                <svg fill="currentColor" class="svg_default svg_default_40" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"/></svg>
+              {% endif %}
+            </figure>
+            <div class="media-body">
+              <h6 class="mb-0" style="padding-top: 10px;">
+                {{ object.get_full_name }}
+              </h6>
+            </div>
+            <span class="custom_color border item_attach_circle friends_chat_load_several {% if object in users %}active_svg{% endif %}" tooltip="Выбрать друга" flow="up">
+              <svg class="svg_default" fill="currentColor" viewBox="2 2 20 20">
+                <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"/>
+              </svg>
+          </span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="card-footer border-top">
+        <button type="button" class="btn btn-sm border form_btn" {% if not users %}disabled{% endif %} id="add_community_exclude_users_btn" style="float: right;">
+          Выберите пользователей
+        </button>
+      </div>
+    </form>
+</div>

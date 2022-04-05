@@ -1,0 +1,27 @@
+{% load liked_user %}
+
+<div id="video_player"></div>
+
+<div id="info_video" class="mr-1 ml-1"></div>
+
+<ul id="video_playlists" style="display:none;">
+		<li data-source="my_playlist" data-playlist-name="Основной плейлист" data-thumbnail-path="/static/images/demo_video/p-html.jpg">
+			<p class="fwduvp-categories-title"><span class="fwduvp-header">Название: </span><span class="fwduvp-title">Основной плейлист</span></p>
+			<p class="fwduvp-categories-type"><span class="fwduvp-header">Тип: </span>Видеокаталог</p>
+			<p class="fwduvp-categories-description"><span class="fwduvp-header">Описание: </span>Это Ваш основной плейлист, куда попадают выбранные и закачанные видеороликипо умолчанию</p>
+		</li>
+</ul>
+
+<ul id="my_playlist" style="display:none;" class="">
+	<li data-thumb-source="{{ object.get_image }}"
+			{{ object.get_uri|safe }}
+			data-poster-source="{{ object.get_image }}"
+			data-video-uuid="{{ object.uuid }}" class="video_playlist_li">
+	<div data-video-short-description="">
+			<div style="width:100%">
+				<p class="fwduvp-thumbnail-title">{{ object.title }}</p>
+				<p class="fwduvp-thumbnail-description">{% if object.description %}{{ object.description }}{% else %}Без описания{% endif %}</p>
+			</div>
+		</div>
+	</li>
+</ul>

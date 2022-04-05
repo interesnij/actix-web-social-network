@@ -1,0 +1,97 @@
+{% load message %}
+
+<div>
+<div class="row">
+  <div class="col" style="padding:5px;">
+    <a class="btn btn-sm border pointer this_mob_fullscreen_hide" style="width: -webkit-fill-available;">
+      <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+    </a>
+  </div>
+</div>
+<div class="card" chat-pk="{{ chat.pk }}">
+  <div class="card-header">
+      <div class="media">
+        <figure>
+          {% if chat.image %}
+            <img src="{{ chat.image.url }}" style="border-radius:50px;width:50px;" alt="image">
+          {% else %}
+            <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"/></svg>
+          {% endif %}
+        </figure>
+        <div class="media-body">
+          <h6>{% if chat.name %}{{ chat.name }}{% else %}Групповой чат{% endif %} &nbsp;</h6>
+          <p class="mb-0 user_chat_settings pointer">Настройки</p>
+        </div>
+      </div>
+  </div>
+  <div class="card-body">
+    <div class="list-group-item border-top pointer u_add_members_in_chat mb-2" chat-pk="{{ chat.pk }}">
+      <div class="media">
+          <figure>
+            <svg fill="currentColor" class="svg_default svg_default_30" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+          </figure>
+          <div class="media-body" style="overflow:visible">
+            <h6 class="my-0 mt-1">Пригласить друзей</h6>
+          </div>
+      </div>
+    </div>
+<ul class="is_block_paginate">
+
+<p class="mb-0">{{ chat.get_members_count_ru }}</p>
+{% for object in object_list %}
+<li class="list-group-item border-top pag" data-pk="{{ object.pk }}">
+  <div class="media">
+      <a href="{{ object.get_link }}" target="_blank">
+          <figure>
+              {% if object.s_avatar %}
+              <img src="{{ object.s_avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+              {% else %}
+              <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24">
+                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                  <path d="M0 0h24v24H0z" fill="none" /></svg>
+              {% endif %}
+          </figure>
+      </a>
+      <div class="media-body" style="overflow:visible">
+          <a href="{{ object.get_link }}" target="_blank">
+              <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
+          </a>
+          <div class="dropdown">
+          {% if object.pk == request.user.pk %}
+          <span class="small drop pointer member_role">
+            Создатель беседы
+          </span>
+          <div class="dropdown-menu">
+              <span class="dropdown-item user_exit_in_user_chat">Выйти из беседы</span>
+          </div>
+          {% elif object|is_admin:chat.pk %}
+          <span class="small drop pointer member_role">
+            Администратор
+          </span>
+          <div class="dropdown-menu">
+              <span class="dropdown-item remove_user_from_chat">Удалить из беседы</span>
+              <span class="dropdown-item remove_perm_user_chat">Расжаловать</span>
+          </div>
+          {% else %}
+          <span class="small drop pointer member_role">
+            Участник
+          </span>
+          <div class="dropdown-menu">
+              <span class="dropdown-item remove_user_from_chat">Удалить из беседы</span>
+              <span class="dropdown-item add_perm_user_chat">Сделать админом</span>
+          </div>
+          {% endif %}
+          </div>
+      </div>
+  </div>
+</li>
+{% endfor %}
+{% if page_obj.has_next %}
+<div class="load centered m-1 next_page_list" data-link="/chat/{{ chat.pk }}/info/?page={{ page_obj.next_page_number }}">
+    <img src="/static/images/preloader.gif">
+</div>
+{% endif %}
+</ul>
+</div>
+</div>
+</div>

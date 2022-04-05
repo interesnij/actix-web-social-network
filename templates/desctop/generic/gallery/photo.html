@@ -1,0 +1,15 @@
+
+<div class="row">
+  <div class="col-lg-8 col-md-7 col-sm-12 order-1">
+    <div class="card rounded-0 border-0 mb-3">
+      <img style="width: 100%;" src="{{ object.file.url }}" alt="">
+    </div>
+    {% include 'desctop/gallery/photo_user/settings.html' %}
+  </div>
+  <div class="col-lg-4 col-md-5 col-sm-12 order-2 ">
+
+    {% include 'desctop/gallery/photo_user/card_header.html' %}
+
+    {{ object.list.name }}
+  </div>
+</div>

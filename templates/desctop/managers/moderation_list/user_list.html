@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Жалобы на пользователей{% endblock %}
+{% load liked_user %}
+{% block content %}
+
+<div class="row">
+    <div class="col-12">
+        <br>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control form-control-sm" placeholder="Поиск по списку">
+            <div class="input-group-append">
+                <button class="btn btn-sm border" type="button">Искать</button>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                      <h5 class="mt-1">Жалобы на пользователей</h5>
+                      <small class="content-color-secondary float-right mr-2 mt-1"></small>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body px-0 py-0">
+
+              {% if object_list %}
+
+              <ul class="list-group is_paginate">
+                  {% for object in object_list %}
+                  <li class="list-group-item" user-pk="{{ object.user.pk }}">
+                      <div class="media">
+                        {% include 'desctop/generic/user/user_figure.html' %}
+                        <div class="media-body">
+                            <h6 class="my-0 mt-1">{% include 'desctop/generic/user/user_user.html' %} ({{ object.reports_count }} {{ object.reports_count|rupluralize:"жалоба,жалобы,жалоб" }})</h6>
+                            {% for report in object.user_reports.all %}
+                              <p class="mb-1">{{ forloop.counter }}. {{ report.get_type_display }}</p>
+                              <p class="mb-2">{{ report.description }}</p>
+                            {% endfor %}
+                              <div class="py-2 border-top btn_console">
+                                <a class="user_suspend pointer">Заморозить</a>
+                              | <a class="user_blocker pointer">Заблокировать</a>
+                              | <a class="user_warning_banner pointer">Повесить баннер</a>
+                              | <a class="user_rejected pointer">Отклонить</a>
+                              </div>
+                        </div>
+                      </div>
+                  </li>
+                  {% endfor %}
+              </ul>
+
+              {% else %}
+              <div class="card centered">
+                <div class="card-body">
+                <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"/></svg>
+                </div>
+                <h6 style="margin: 20px;text-align: center;"> Жалоб пока нет...</h6>
+              </div>
+
+              {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

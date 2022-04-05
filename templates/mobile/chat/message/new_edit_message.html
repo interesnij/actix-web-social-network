@@ -1,0 +1,51 @@
+{% load message %}
+    <figure>
+      <a href="{{ object.creator.get_link }}" class="ajax">
+        <img src="{{ object.creator.get_avatar }}" style="border-radius:40px;width:40px;" alt="image">
+      </a>
+    </figure>
+    <div class="media-body">
+      <h5 class="time-title mb-0">
+        <a href="{{ object.creator.get_link }}" class="ajax creator_link"><span class="creator_name">{{ object.creator.get_full_name }}</span></a>
+        <span class="favourite_icon">
+          {% if object|is_favourite:request.user.pk %}
+          <span class="delete_favourite_message pointer" flow="up" tooltip="Убрать из избранного">
+            <svg width="18" height="18" fill="currentColor" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M12 7.13l.97 2.29.47 1.11 1.2.1 2.47.21-1.88 1.63-.91.79.27 1.18.56 2.41-2.12-1.28-1.03-.64-1.03.62-2.12 1.28.56-2.41.27-1.18-.91-.79-1.88-1.63 2.47-.21 1.2-.1.47-1.11.97-2.27M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/></svg>
+          </span>
+          {% endif %}
+        </span>
+        <small class="float-right text-muted">{{ object.get_created }}</small>
+      </h5>
+
+      {% if object.parent %}
+        {{ object.get_parent_message|safe }}
+      {% endif %}
+
+      {% if object.voice %}
+        <audio class="audio" src="{{ object.voice.url }}"></audio>
+      {% elif object.sticker %}
+      <div class="message_sticker mt-1">
+        <img src="{{ object.sticker.image.url }}" style="width: 128px;" tooltip="{{ object.sticker.category.name }}" flow="up">
+      </div>
+      {% else %}
+
+        <div class="pointer toggle_message">
+          <span class="text">{{ object.text|safe }}</span>
+        </div>
+
+      {% if object.attach %}
+        {{ object|get_attach:request.user|safe }}
+      {% endif %}
+
+      {% if object.repost %}
+        <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
+          {% if object.repost.community %}
+            {% include object.get_c_repost_items_desctop %}
+          {% else %}
+            {% include object.get_u_repost_items_desctop %}
+          {% endif %}
+        </span>
+      {% endif %}
+
+      {% endif %}
+    </div>

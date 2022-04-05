@@ -1,0 +1,34 @@
+{% extends "base_mobile.html" %}
+{% block title %}{{ community.name }} - {{ list.name }}{% endblock %}
+{% block meta %}
+<meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/communities/{{ community.pk }}/photo_list/{{ list.uuid }}" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Фотографии сообщества {{ community.name }} - {{ list.name }}" />
+<meta property="og:image" content="https://xn--b1afgj5al1e.xn--p1acf{{ community.get_b_avatar }}"/>
+{% endblock %}
+{% block content %}
+
+<div class="container main-container mt-3" data-pk="{{ list.pk }}" data-type="community_photo_list">
+  <span class="load_block pk_saver" data-pk="{{ community.pk }}">
+  <div class="media mt-3" style="padding-left: 7px;">
+    <form class="uuid_saver" data-uuid="{{ list.uuid }}" data-pk="{{ list.pk }}">
+      {% csrf_token %}
+    <h5 class="mt-1">
+      <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count_items }})
+        <input type="file" accept="image/*" class="add_photos_in_list" name="file" style="display:none" multiple="multiple">
+        {% if list.is_main or list.is_have_edit %}
+        <span class="pointer badge badge-light-success previous_click">Добавить фото</span>
+        {% endif %}
+        {% if community.pk == list.community.pk and list.is_have_edit %}
+        <span class="pointer badge badge-light-secondary c_photo_list_edit">Изменить список</span>
+        <span class="pointer badge badge-light-danger c_photo_list_remove">Удалить список</span>
+        {% endif %}
+    </h5>
+    </form>
+  </div>
+
+  <div class="row is_block_paginate is_paginate drag_container is_stat_list" data-pk="{{ photo_list_pk }}" data-type="pho" data-community-id="{{ list.community.pk }}" id="list_photos_container" data-link="/gallery/load_list_photos/{{ photo_list_pk }}/"></div>
+
+</span>
+</div>
+{% endblock %}

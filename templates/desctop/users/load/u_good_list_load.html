@@ -1,0 +1,42 @@
+<span class="load_block">
+{% if object_list %}
+<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_block_paginate">
+{% for object in object_list %}
+<div class="col-md-6 mb-3">
+  <div class="good_load_one pointer" good-pk="{{ object.pk }}" data-uuid="{{ list.uuid }}">
+    <div class="row align-items-center no-gutters">
+      <div class="col">
+        {% if object.image %}
+          <img class="image_fit_200" style="width:100%" src="{{ object.image.url }}" alt="">
+        {% else %}
+          <svg class="svg_default" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z"/></svg>
+        {% endif %}
+      </div>
+    </div>
+    <span class="good_info">
+      <h5 class="card-title mb-1 header-color-primary text-center good_title">{{ object.title }}</h5>
+      <h6 class="card-subtitle mb-2 header-color-secondary text-center">{{ object.sub_category }}</h6>
+    </span>
+  </div>
+    <span class="custom_color border item_attach_circle good_load_several"
+         tooltip="Выбрать несколько"
+         flow="up">
+         <svg class="svg_default" fill="currentColor" viewBox="2 2 20 20">
+           <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"/>
+         </svg>
+    </span>
+</div>
+  {% endfor %}
+  {% if page_obj.has_next %}
+  <div class="load centered m-1 next_page_list" data-link="/users/load/u_good_list_load/{{ list.uuid }}/?page={{ page_obj.next_page_number }}">
+      <img src="/static/images/preloader.gif">
+  </div>
+  {% endif %}
+
+</div>
+{% else %}
+<div class="card mb-3 centered">
+  <h5 style="text-align: center;margin: 20px;"> Список товаров пустой.</h5>
+</div>
+{% endif %}
+</span>

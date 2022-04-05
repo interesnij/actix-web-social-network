@@ -1,0 +1,172 @@
+
+{% if users %}
+
+<div class="card mb-3">
+  <div class="card-header">
+    <a class="search_ajax" data-left-a="_people" href="/search/?s=people&q={{ q }}">
+      <div class="media border-bottom">
+          <div class="media-body">
+              <h6 class="content-color-primary mb-0">Люди </h6>
+          </div>
+          {{ users_count }}
+      </div>
+    </a>
+  </div>
+
+    <div class="card-body" style="padding:7px;">
+      {% for user in users %}
+        <div class="media mb-2">
+          <a href="{{ user.get_link }}" class="ajax">
+            <figure style="width:50px;">
+              {% if user.s_avatar %}
+                <img src="{{ user.s_avatar.url }}" style="border-radius:50px;" alt="image">
+              {% else %}
+                <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"/></svg>
+              {% endif %}
+            </figure>
+          </a>
+          <div class="media-body">
+            <h6 class="mb-0" style="padding-top: 2px;">
+              <a href="{{ user.get_link }}" class="ajax">{{ user.get_full_name }}</a>
+            </h6>
+            {% if user.pk != request.user.pk %}
+              <a class="small user_send_page_message pointer" data-pk="{{ user.pk }}">Написать сообщение</a>
+            {% else %}
+              <span class="small">Это Вы</span>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endif %}
+
+{% if communities %}
+<div class="card mb-2">
+  <div class="card-header">
+    <a class="search_ajax" data-left-a="_communities" href="/search/?s=communities&q={{ q }}">
+      <div class="media border-bottom">
+          <div class="media-body">
+              <h6 class="content-color-primary mb-0">Сообщества </h6>
+          </div>
+          {{ communities_count }}
+      </div>
+    </a>
+  </div>
+  <div class="card-body" style="padding:7px;">
+{% load liked_user %}
+  {% for community in communities %}
+    <div class="media mb-2">
+        {% include 'desctop/generic/community/figure.html' %}
+        <div class="media-body">
+            <h6 class="my-0 mt-1">{% include 'desctop/generic/community/community.html' %}</h6>
+            <p class="small">{{ community.count_members }} {{ community.count_members|rupluralize:"подписчик,подписчика,подписчиков" }}</p>
+        </div>
+    </div>
+  {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+{% if goods %}
+<div class="card mb-2">
+  <div class="card-header">
+    <a class="search_ajax" data-left-a="_goods" href="/search/?s=goods&q={{ q }}">
+      <div class="media border-bottom">
+          <div class="media-body">
+              <h6 class="content-color-primary mb-0">Товары </h6>
+          </div>
+          {{ goods_count }}
+      </div>
+    </a>
+  </div>
+  <div class="card-body" style="padding:7px;">
+    <div class="row">
+      {% for object in goods %}
+        {% include 'desctop/users/goods/main_list/good.html' %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% if musics %}
+<div class="card mb-2">
+  <div class="card-header">
+    <a class="search_ajax" data-left-a="_music" href="/search/?s=music&q={{ q }}">
+      <div class="media border-bottom">
+          <div class="media-body">
+              <h6 class="content-color-primary mb-0">Аудиозаписи </h6>
+          </div>
+          {{ musics_count }}
+      </div>
+    </a>
+  </div>
+  <div class="card-body" style="padding:7px;">
+    <ul>
+      {% for object in musics %}
+        {% include 'desctop/users/music/track.html' %}
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endif %}
+
+{% if videos %}
+<div class="card mb-2">
+  <div class="card-header">
+    <a class="search_ajax" data-left-a="_video" href="/search/?s=video&q={{ q }}">
+      <div class="media border-bottom">
+          <div class="media-body">
+              <h6 class="content-color-primary mb-0">Видеозаписи </h6>
+          </div>
+          {{ videos_count }}
+      </div>
+    </a>
+  </div>
+  <div class="card-body" style="padding:7px;">
+    <div class="row">
+      {% for object in videos %}
+        {% include 'desctop/users/video/main_list/video.html' %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% if object_list %}
+<div class="card">
+  <div class="card-header">
+    <a class="search_ajax" data-left-a="_news" href="/search/?s=news&q={{ q }}">
+      <div class="media border-bottom">
+          <div class="media-body">
+              <h6 class="content-color-primary mb-0">Новости </h6>
+          </div>
+          {{ posts_count }}
+      </div>
+    </a>
+  </div>
+</div>
+  <div class="is_paginate" style="padding:7px;">
+      {% for object in object_list %}
+        {% if object.community %}
+          {% include 'desctop/posts/post_community/post.html' %}
+        {% else %}
+          {% include 'desctop/posts/post_user/post.html' %}
+        {% endif %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+      <div class="load centered m-1 next_page_list" data-link="/search/?s={{section}}&q={{q}}&page={{ page_obj.next_page_number }}">
+          <img src="/static/images/preloader.gif">
+      </div>
+      {% endif %}
+  </div>
+  {% else %}
+  <div class="card centered">
+    <div class="card-body">
+    <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M22 13h-8v-2h8v2zm0-6h-8v2h8V7zm-8 10h8v-2h-8v2zm-2-8v6c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2zm-1.5 6l-2.25-3-1.75 2.26-1.25-1.51L3.5 15h7z"/></svg>
+    </div>
+    <h6 style="margin: 20px;text-align: center;"> Новостей не найдено...</h6>
+  </div>
+  {% endif %}

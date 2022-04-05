@@ -1,0 +1,68 @@
+{% extends "base_anon.html" %}
+{% block title %}Вопросы - {{ category.name_ru }}{% endblock %}
+{% block meta %}
+<meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/quan/{{ category.name_ru }}" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Вопросы - {{ category.name_ru }}" />
+<meta property="og:image" content="https://xn--b1afgj5al1e.xn--p1acf/static/images/meta.jpg"/>
+{% endblock %}
+{% block content %}
+
+<div class="container mt-4 main-container" data-type="page_quan">
+<div class="row">
+    <div class="col-md-9 order-1">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control form-control-sm" placeholder="Поиск по вопросам" aria-label="Recipient's username">
+            <div class="input-group-append">
+                <button class="btn btn-sm border" type="button">Искать</button>
+            </div>
+        </div>
+        <div class="card mb-2">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                        <h5 class="mt-1">
+                          <svg class="svg_info svg_default" style="margin-bottom: 5px;margin-right: 5px;" fill="currentColor" viewBox="0 0 24 24">
+                            {{ category.icon|safe }}
+                          </svg>  {{ category.name_ru }}</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body px-0 py-0">
+                <ul class="list-group is_paginate">
+                    {% for object in object_list %}
+                    <div class="card">
+						            <a class="menu_drop" style="margin: 20px;cursor:pointer;margin-top: 0;">
+								            {{ object.quest}}
+						            </a>
+
+						            <div class="collapse ckeditor_support">
+							               <div class="card-body">{{ object.content|safe }}</div>
+						            </div>
+					           </div>
+                    {% empty %}
+                    <div class="card">
+                      <div class="card-body">
+                        Пока нет вопросов у матросов...
+                      </div>
+                    </div>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 order-2 left_menu" style="line-height: 30px;">
+      <br><br>
+        {% for object in quest_categories %}
+          <a class="ajax" href="{% url 'quan_categories' cat_name=object.name_en %}">
+            {{ object.name_ru }}
+          </a>
+          <br>
+        {% endfor %}
+    </div>
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,57 @@
+
+<div class="card mb-3" good-pk="{{ object.pk }}" data-pk="{{ community.pk }}">
+  <div class="row">
+    {% if next %}
+    <div class="col" style="padding:5px;">
+      <a class="btn btn-sm border next_item" href="{% url 'community_good' uuid=list.uuid pk=next.pk %}" style="width: -webkit-fill-available;position:static">
+        <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
+      </a>
+    </div>
+    {% endif %}
+
+    {% include 'mobile/goods/add_good.html' %}
+
+    <div class="col" style="padding:5px;">
+      <button type="button" class="btn btn-sm border menu_drop" style="width: -webkit-fill-available;">
+          Опции
+      </button>
+      <div class="dropdown-menu">
+          <span class="dropdown-item">Скопировать ссылку</span>
+          <span>
+            <span class="dropdown-item c_all_goods_likes pointer">Оценили</span>
+            <span class="dropdown-item c_all_goods_dislikes pointer">Не оценили</span>
+          </span>
+      </div>
+    </div>
+    <div class="col" style="padding:5px;">
+      <a class="btn btn-sm border pointer this_mob_fullscreen_hide" style="width: -webkit-fill-available;">
+        <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+      </a>
+    </div>
+    {% if prev %}
+      <div class="col" style="padding:5px;">
+        <a class="btn btn-sm border prev_item" href="{% url 'community_good' uuid=list.uuid pk=prev.pk %}" style="width: -webkit-fill-available;position:static">
+          <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><rect fill="none" /><path d="M15,5l-1.41,1.41L18.17,11H2V13h16.17l-4.59,4.59L15,19l7-7L15,5z"/></svg>
+        </a>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="card good_card mb-3" good-pk="{{ object.pk }}" data-pk="{{ community.pk }}">
+      <div class="card-body py-0">
+        {% include 'mobile/goods/good_base/gallery.html' %}
+
+        {% include 'mobile/goods/good_base/info.html' %}
+
+        <div class="border-top py-2">
+            <div class="row">
+              <div class="col interaction" data-type="goo{{ object.pk }}">
+                {% include 'mobile/generic/items/anon_item_footer.html' %}
+              </div>
+            </div>
+
+            <div class="load_comments" style="margin-right: -15px; margin-left: -15px;margin-top:25px"></div>
+        </div>
+      </div>
+  </div>
+</div>

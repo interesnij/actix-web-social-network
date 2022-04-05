@@ -1,0 +1,61 @@
+
+<div class="card mb-4">
+  <div class="row">
+    <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
+        <a class="btn btn-sm border u_add_survey" style="width: -webkit-fill-available;">+ опрос</a>
+    </div>
+    <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
+      <a class="btn btn-sm border this_mob_fullscreen_hide" style="width: -webkit-fill-available;">
+        <svg fill="currentColor" class="svg_default" style="width: 17px;" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="card-body">
+
+{% if object_list %}
+  <div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_block_paginate">
+    {% for object in object_list %}
+    <div class="card pag mb-3 attach_survey pointer" style="flex: 0 0 100%;" data-pk="{{ object.pk }}">
+      <div class="mb-3 border text-center has-background-img position-relative box-shadow">
+          <figure class="background-img">
+            {% if object.image %}
+              <img src="{{ object.image.url }}" alt="user image">
+            {% endif %}
+          </figure>
+          <div class="container" style="list-style-type:none">
+            <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none border-bottom"></i>
+            <br>
+            <h4>{{ object.title }}</h4>
+            <p class="content-color-primary underline">{{ object.creator }}</p>
+            {% if object.time_end %}
+            <p class="content-color-primary">До {{ object.time_end }}</p>
+            {% endif %}
+            <br>
+            {% for answer in object.get_answers %}
+            <div class="lite_color answer_style">
+              <div class="progress2" style="width:{{ answer.get_procent }}%;"></div>
+              <span class="progress_span_r">{{ answer.text }}</span>
+              <span class="progress_span_l" style="margin-left: auto;">{{ answer.get_count }}</span>
+            </div>
+            {% endfor %}
+            {% if object.is_have_votes %}
+              {{ object.get_6_users }}
+            {% else %}
+              Пока никто не голосовал. Станьте первым!
+            {% endif %}
+          </div>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="card mb-3 centered">
+  <div class="card-body">
+  <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z"/></svg>
+  </div>
+  <h6 style="text-align: center;margin: 20px;"> Ваших опросов пока нет.</h6>
+</div>
+{% endif %}
+</div>
+</div>

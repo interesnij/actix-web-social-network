@@ -1,0 +1,35 @@
+{% if community.is_have_music %}
+
+<div class="card mb-3 music_playlist" data-pk="{{ music_list.pk }}">
+    <div class="card-header">
+      <a href="{% url 'community_music' pk=community.pk %}" class="ajax">
+        <div class="media">
+            <div class="media-body">
+                <h4 class="content-color-primary mb-0">Аудиозаписи</h4>
+            </div>
+            {{ community.community_info.tracks }}
+        </div>
+      </a>
+    </div>
+
+    {% for object in community.get_6_tracks %}
+    <div class="card border-top">
+        <div class="card-body" style="padding:7px;">
+            <div class="media" music-counter="{{ forloop.counter }}">
+              <figure>
+                <a class="pointer music_list_item">
+                  {{ object.get_image|safe }}
+                </a>
+              </figure>
+                <div class="media-body" style="line-height: 10px;">
+                    <p class="track_item music_list_item pointer" style="font-size: 17px;"><a>{{ object.title }}</a></p>
+                    {% if object.genre %}
+                      <a class="small ajax" href="{% url 'genre_music' pk=object.genre.pk %}">{{ object.genre }}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}

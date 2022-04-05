@@ -1,0 +1,31 @@
+<div class="row overflow-x-auto no-gutters pb-2">
+  <div class="col-12">
+  <ul class="date-list border-top" style="width:max-content">
+    {% for object in post_lists %}
+        {% if object.community %}
+        <div class="date community list u_list {% if forloop.first %}active{% else %}pointer post_list_change{% endif %}" list-pk="{{ object.pk }}" data-type="community_post_list" data-pk="{{ object.pk }}">
+          <div class="media">
+            <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
+              <figure>{{ object.community.get_s_avatar|safe }}</figure>
+            </a>
+            <div class="media-body">
+              <h6 class="my-0 mt-1">{{ object.name }} ({{ object.count }})</h6>
+            </div>
+          </div>
+        </div>
+        {% else %}
+          <div class="date list u_list {% if forloop.first %}active{% else %}pointer post_list_change{% endif %}" data-type="user_post_list" list-pk="{{ object.pk }}" data-pk="{{ object.pk }}">
+            <div class="media">
+              <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
+                <figure>{{ object.creator.get_s_avatar|safe }}</figure>
+              </a>
+              <div class="media-body">
+                <h6 class="my-0 mt-1">{{ object.name }} ({{ object.count }})</h6>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+    {% endfor %}
+  </ul>
+  </div>
+</div>

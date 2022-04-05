@@ -1,0 +1,47 @@
+<span class="load_block">
+<div class="card mb-4">
+
+  <div class="card-body">
+
+{% if object_list %}
+  <div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_block_paginate">
+    {% for object in object_list %}
+    <div class="card pag mb-3 attach_survey pointer" style="flex: 0 0 100%;" data-pk="{{ object.pk }}">
+      <div class="mb-3 border text-center has-background-img position-relative box-shadow">
+          <figure class="background-img">
+            {% if object.image %}
+              <img src="{{ object.image.url }}" alt="user image">
+            {% endif %}
+          </figure>
+          <div class="container" style="list-style-type:none">
+            <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none border-bottom"></i>
+            <br>
+            <h4>{{ object.title }}</h4>
+            <p class="content-color-primary underline">{{ object.creator }}</p>
+            {% if object.time_end %}
+            <p class="content-color-primary">До {{ object.time_end }}</p>
+            {% endif %}
+            <br>
+            {% for answer in object.get_answers %}
+            <div class="lite_color answer_style">
+              <div class="progress2" style="width:{{ answer.get_procent }}%;"></div>
+              <span class="progress_span_r">{{ answer.text }}</span>
+              <span class="progress_span_l" style="margin-left: auto;">{{ answer.get_count }}</span>
+            </div>
+            {% endfor %}
+            {% if object.is_have_votes %}
+              {{ object.get_6_users }}
+            {% else %}
+              Пока никто не голосовал. Станьте первым!
+            {% endif %}
+          </div>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+  {% include 'desctop/users/survey/main_list/no_items.html' %}
+{% endif %}
+</div>
+</div>
+</span>

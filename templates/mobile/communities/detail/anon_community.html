@@ -1,0 +1,29 @@
+{% extends "base_anon_mobile.html" %}
+{% block title %}{{ community.name }}{% endblock %}
+{% block meta %}
+<meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/{{ community.get_link }}" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="{{ community.name }} - трезвый.рус" />
+<meta property="og:image" content="https://xn--b1afgj5al1e.xn--p1acf{{ community.get_b_avatar }}"/>
+{% endblock %}
+{% block content %}
+
+{% include 'mobile/communities/detail_sections/cover.html' %}
+
+<div class="container main-container mt-3 pk_saver" data-type="community_main" data-pk="{{ community.pk }}">
+  <div class="card mb-3" style="padding:10px">
+    {% include 'mobile/communities/detail_sections/avatar_open.html' %}
+
+    {% include 'mobile/communities/detail_sections/description.html' %}
+  </div>
+
+  {% if is_member_open %}
+    {% include 'mobile/communities/detail_sections/membersheeps.html' %}
+  {% endif %}
+
+  {% include 'mobile/communities/detail_sections/stat.html' %}
+
+  <div class="load_post_list mt-3 post_view_generator" community-pk="{{ community.pk }}"></div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+
+{% if not list.is_open %}
+  {% load user %}
+  {% include list|get_bad_item:request.user %}
+
+{% elif object_list %}
+{% for object in object_list %}
+  {% include 'desctop/generic/items/staff_photo.html' %}
+{% endfor %}
+  {% if page_obj.has_next %}
+  <div class="load centered m-1 next_page_list" data-link="{% url 'load_photos_list' pk=list.pk %}?page={{ page_obj.next_page_number }}">
+      <img src="/static/images/preloader.gif">
+  </div>
+  {% endif %}
+
+{% else %}
+  {% include 'desctop/communities/photos/main_list/no_photos.html' %}
+{% endif %}

@@ -1,0 +1,50 @@
+<form class="mt-4" style="min-height:400px">
+  {% csrf_token %}
+    <input type="hidden" name="_type" value="{{ type }}">
+    <input type="hidden" name="_subtype" value="{{ subtype }}">
+    <div class="card-header">
+      <h6>Санкция на {{ object.get_description|safe }}</h6>
+    </div>
+    <div class="card-body">
+      <div class="form-group">
+        <div class="custom-control custom-radio submit_case_sanction">
+          <input checked type="radio" value="close" name="case" class="custom-control-input" id="close_">
+          <label class="custom-control-label" for="close_">
+            Закрыть объект
+          </label>
+        </div>
+        {% if open_suspend %}
+          <div class="custom-control custom-radio mt-1 submit_case_suspend submit_case_sanction">
+            <input type="radio" value="suspend" name="case" class="custom-control-input" id="suspend_">
+            <label class="custom-control-label" for="suspend_">
+              Остановить объект
+            </label>
+          </div>
+        {% endif %}
+        {% if open_warning_banner %}
+          <div class="custom-control custom-radio mt-1 submit_case_sanction">
+            <input type="radio" value="warning_banner" name="case" class="custom-control-input" id="suspend_">
+            <label class="custom-control-label" for="suspend_">
+              Применить баннер предупреждения
+            </label>
+          </div>
+        {% endif %}
+      </div>
+      <div class="form-group hidden block_suspend">
+        <label>Выберите время</label>
+        <select class="form-control" name="number">
+          <option value="1">Заморозить на 6 часов</option>
+          <option value="2">Заморозить на 3 дня</option>
+          <option value="3">Заморозить на 7 дней</option>
+          <option value="4">Заморозить на 30 дней</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <div style="display:inline-block" contenteditable="true" placeholder="Добавить комментарий" class="form-control smile_supported"></div>
+      </div>
+    </div>
+    <div class="card-footer">
+        <button class="btn border item_fullscreen_hide">Отмена</button>
+        <button type="button" class="btn custom_color border float-right" id="create_sanction_btn">Закрыть</button>
+    </div>
+</form>

@@ -1,0 +1,95 @@
+{% load list %}
+
+<div class="px-0 card" data-pk="none" data-type="none" style="min-height: 600px;">
+    <form class="cool_private_form">
+      <div class="card-header" style="min-height: 100px;">
+        <span class="header_title">Выберите сообщества</span>
+      </div>
+      <button type="button" class="btn btn-sm border form_btn" disabled id="add_list_selected_communities_btn">
+        Выберите сообщества
+      </button>
+      <div class="card-body">
+
+        <div class="is_block_paginate">
+          {% for object in object_list %}
+
+            {% if list|is_community_list:object %}
+            <div class="media pointer border-bottom" data-link="{{ object.get_link }}" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
+              <figure>
+                {% if object.s_avatar %}
+                  <img style="width:50px;heigth:auto; border-radius:50%" src="{{ object.s_avatar.url }}" alt="img" />
+                {% else %}
+                  <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24">
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"></path>
+                  </svg>
+                {% endif %}
+              </figure>
+              <div class="media-body">
+                <h6 class="mb-0" style="padding-top: 10px;">
+                  {{ object.name }}
+                </h6>
+                <p>Это сообщество копируемого списка</p>
+              </div>
+              <span class="custom_color border item_attach_circle" tooltip="Выбрать сообщество" flow="up">
+                <svg class="svg_default" fill="currentColor" viewBox="2 2 20 20">
+                  <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"/>
+                </svg>
+              </span>
+            </div>
+
+            {% elif list|is_community_collection_list:object.pk %}
+
+            <div class="media border-bottom" data-pk="c{{ object.pk }}" data-link="{{ object.get_link }}" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
+              <figure>
+                {% if object.s_avatar %}
+                  <img style="width:50px;heigth:auto; border-radius:50%" src="{{ object.s_avatar.url }}" alt="img" />
+                {% else %}
+                  <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24">
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"></path>
+                  </svg>
+                {% endif %}
+              </figure>
+              <div class="media-body">
+                <h6 class="mb-0" style="padding-top: 10px;">
+                  {{ object.name }}
+                </h6>
+                <p>Список в коллекции - <a class="pointer remove_list_in_community_collections" data-type="{{ list.get_code }}" data-pk="{{ object.pk }}">удалить</a></p>
+              </div>
+              <span class="custom_color border item_attach_circle" tooltip="Выбрать сообщество" flow="up">
+                <svg class="svg_default" fill="currentColor" viewBox="2 2 20 20">
+                  <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"/>
+                </svg>
+              </span>
+            </div>
+            {% else %}
+            <div class="media pointer communities_toggle border-bottom" data-pk="c{{ object.pk }}" data-link="{{ object.get_link }}" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
+              <figure>
+                {% if object.s_avatar %}
+                  <img style="width:50px;heigth:auto; border-radius:50%" src="{{ object.s_avatar.url }}" alt="img" />
+                {% else %}
+                  <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24">
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"></path>
+                  </svg>
+                {% endif %}
+              </figure>
+              <div class="media-body">
+                <h6 class="mb-0" style="padding-top: 10px;">
+                  {{ object.name }}
+                </h6>
+                <p>Сообщество</p>
+              </div>
+              <span class="custom_color border item_attach_circle" tooltip="Выбрать сообщество" flow="up">
+                <svg class="svg_default" fill="currentColor" viewBox="2 2 20 20">
+                  <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"/>
+                </svg>
+              </span>
+            </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </form>
+</div>

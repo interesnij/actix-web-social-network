@@ -1,0 +1,47 @@
+{% load get_key %}
+
+<div class="container mt-3" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
+  <div class="row no-gutters">
+    <div class="col">
+      <a class="btn btn-sm border this_mob_fullscreen_hide" style="width: -webkit-fill-available;">
+        <svg fill="currentColor" class="svg_default" style="width: 17px;" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="card mb-2" style="flex-basis: 95%;">
+      <div class="card-body" style="padding: 10px;padding-bottom: 0;">
+        <div style="display:flex">
+          <figure><svg fill="currentColor" class="svg_default border" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg></figure>
+          <div class="media-body" style="margin-left: 10px;">
+            <h6 class="my-0 mt-1"><a class="ajax" href="{% url 'user_video_list' pk=list.creator.pk uuid=list.uuid %}">{{ list.name }}</a></h6>
+            <p class="">Список видео <a class="underline ajax" href="{{ list.creator.get_link }}">{{ list.creator.get_full_name_genitive }}</a></p>
+            <p class="">Видеороликов: {{ list.get_video_count }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+          <div class="card mb-2">
+              <div class="card-body">
+                {% if not list.is_open %}
+                  {% load user %}
+                  {% include list|get_bad_item:request.user %}
+
+                {% elif object_list %}
+                    <ul class="is_load_paginate is_stat_list" data-pk="{{ list.pk }}" owner-pk="{{ list.creator.pk }}" data-type="user_video_list">
+                      {% for object in object_list %}
+                        {% include 'mobile/users/user_video/video.html' %}
+                      {% endfor %}
+                      {% if page_obj.has_next %}
+                      <div class="load centered m-1 next_page_list" data-link="{% url 'load_video_list' pk=list.pk %}?page={{ page_obj.next_page_number }}">
+                          <img src="/static/images/preloader.gif">
+                      </div>
+                      {% endif %}
+                    </ul>
+
+                {% else %}
+                  {% include 'mobile/users/video/main_list/no_videos.html' %}
+                {% endif %}
+              </div>
+          </div>
+    </div>

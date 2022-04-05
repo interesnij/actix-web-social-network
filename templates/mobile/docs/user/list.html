@@ -1,0 +1,38 @@
+
+<span class="load_block">
+  <div class="media mt-3 uuid_saver" data-pk="{{ list.pk }}"  data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
+    <h5 class="mt-1">
+      <p>
+        <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count }}) - документы
+        <a class="underline ajax" href="{{ list.creator.get_link }}">{{ list.creator.get_full_name_genitive }}</a>
+      </p>
+      {% include 'desctop/generic/items/list_meta.html' %}
+    </h5>
+  </div>
+  {% if not list.is_open %}
+    {% load user %}
+    {% include list|get_bad_item:request.user %}
+
+  {% elif object_list %}
+                    <ul class="is_load_paginate is_stat_list" data-pk="{{ list.pk }}" owner-pk="{{ list.creator.pk }}" data-type="user_doc_list">
+                      {% for object in object_list %}
+                        {% include 'desctop/users/docs/doc.html' %}
+                      {% endfor %}
+                      {% if page_obj.has_next %}
+                      <div class="load centered m-1 next_page_list" data-link="{% url 'load_doc_list' pk=list.pk %}?page={{ page_obj.next_page_number }}">
+                          <img src="/static/images/preloader.gif">
+                      </div>
+                      {% endif %}
+                    </ul>
+                {% else %}
+                <div class="card centered items_empty">
+                    <div class="card-body" style="margin-top: 10%;">
+                        <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'>
+                            <path d="M0 0h24v24H0z" fill="none" />
+                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+                        </svg>
+                    </div>
+                    <h6 style="margin: 20px;text-align: center;">В списке пока нет документов.</h6>
+                </div>
+                {% endif %}
+</span>

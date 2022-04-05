@@ -1,0 +1,27 @@
+
+<div class="is_stat_list" data-pk="{{ request.user.pk }}" data-type="create_video">
+      <div class="card">
+          <div class="card-header border-bottom">
+              <h6 class="content-color-primary mb-0">Загрузка в мои видео</h6>
+          </div>
+          <form class="card-body i_wont_upload_video" data-pk="{{ list.pk }}">
+            {% csrf_token %}
+            <div class="form-group">
+              <input type="file" class="case_all_input add_video_in_list" accept="video/mp4" name="file" style="display:none">
+              <a class="btn btn-sm border previous_click" style="width:100%">
+                Выбрать файл (mp4)
+              </a>
+            </div>
+            <div class="form-group">
+              <a class="btn btn-sm border uri_click" style="width:100%">
+                Добавить с другого сайта
+              </a>
+              <input type="text" id="id_uri" placeholder="Youtube, Vimeo" class="form-control mt-2" name="uri" style="display:none">
+            </div>
+            <div class="">
+                <button class="btn btn-sm border item_fullscreen_hide">Отмена</button>
+                <button type="button" class="hidden btn btn-sm btn-success float-right" id="add_video_btn">Добавить</button>
+            </div>
+          </form>
+      </div>
+</div>

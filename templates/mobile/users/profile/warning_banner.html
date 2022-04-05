@@ -1,0 +1,24 @@
+{% if user.is_have_warning_banner %}
+<div class="card mb-3 create_fullscreen">
+  <span class="create_fullscreen_hide">
+    <svg class="svg_default svg_default_30" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/>
+    </svg>
+  </span>
+  <div id="create_loader" style="margin-top:30px;border: 1px black solid">
+    <div class="card-header">
+        <h4 class="card-title mb-0">Аккаунт может быть опасен</h4>
+    </div>
+    <div class="card-body">
+      {% if user.get_moderated_description %}
+        <p class="context-menu-promise"> <span class="underline">Комментарий управленца</span>: {{ user.get_moderated_description|linebreaks }}</p>
+      {% else %}
+        <p class="context-menu-promise">Модератор не дал объяснений</p>
+      {% endif %}
+    </div>
+    <div class="card-footer">
+        <a class="context-menu-promise btn btn-success" style="color:white !important">Подробнее</a>
+    </div>
+  </div>
+</div>
+{% endif %}

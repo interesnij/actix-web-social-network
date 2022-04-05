@@ -1,0 +1,12 @@
+<div class="card mb-3 u_post pag" data-type="community_post" data-pk="{{ object.pk }}">
+    {% include 'desctop/posts/post_user/card_header.html' %}
+    {% if object.text %}
+      <div class="fullscreen text_support pointer">
+        {{ object.get_format_text|safe }}
+      </div>
+    {% endif %}
+
+    {% include 'desctop/generic/items/post.html' %}
+
+    {% include 'desctop/posts/post_user/info.html' %}
+</div>

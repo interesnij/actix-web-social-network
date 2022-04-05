@@ -1,0 +1,43 @@
+{% load get_key %}
+
+<ul id="audio_playlists" style="display:none;">
+		<li data-source="playlist_" data-playlist-name="My first playlist" data-thumbnail-path="/static/images/news_small1.jpg">
+			<p class="minimalWhiteCategoriesTitle"><span class="boldWhite">Название: </span>Мой плейлист</p>
+			<p class="minimalWhiteCategoriesType"><span class="boldWhite">Здесь тип плейлиста</span></p>
+			<p class="minimalWhiteCategoriesDescription">Здесь описание плейлиста</p>
+		</li>
+		<li data-source="playlist_new" data-playlist-name="My second playlist" data-thumbnail-path="/static/images/news_small1.jpg">
+			<p class="minimalWhiteCategoriesTitle"><span class="boldWhite">Название: </span>Мой плейлист</p>
+			<p class="minimalWhiteCategoriesType"><span class="boldWhite">Здесь тип плейлиста</span></p>
+			<p class="minimalWhiteCategoriesDescription">Здесь описание плейлиста</p>
+		</li>
+</ul>
+
+
+<ul id="playlist_" style="display:none;">
+  {% for track in request.user.my_playlist_too %}
+  <li data-path="/media/{{ track.file }}"
+      data-thumbpath="{% if track.artwork_url %}{{ track.artwork_url.url }}{% endif %}"
+			data-add="{% if not request.user|is_track_exists:track.id %}true{% else %}false{% endif %}"
+			data-track-id="{{ track.pk }}">
+    <p><span style="font-weight:bold">{{ track.title }}</span></p>
+  </li>
+	{% empty %}
+	<li data-path=""
+      data-thumbpath="/static/images/news_small1.jpg"
+			data-add="false"
+			data-track-id="0">
+    <p><span style="font-weight:bold">ТРЕКОВ ПОКА НЕТ...</span></p>
+  </li>
+  {% endfor %}
+</ul>
+
+
+<ul id="playlist_new" style="display:none;">
+	 <li data-path="http://mp3.trb-stream.net/;.mp3"
+	     data-thumbpath="/static/images/news_small1.jpg"
+			 data-add="{% if not request.user|is_track_exists:track.id %}true{% else %}false{% endif %}"
+ 			 data-track-id="{{ track.pk }}">
+			<p><span style="font-weight:bold; color:#FF0000;">SHOUTCAST EXAMPLE</span> - it really works :) - http://mp3.trb-stream.net/;.mp3</p>
+		</li>
+</ul>

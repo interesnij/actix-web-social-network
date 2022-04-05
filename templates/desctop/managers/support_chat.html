@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Обращения в техподдержку{% endblock %}
+{% load message %}
+{% block content %}
+
+<div class="container main-container mt-3" data-pk="{{ request.user.pk }}" data-type="support_chat_list">
+<div class="row">
+    <div class="col-md-8 chat_list_container" data-pk="{{ request.user.pk }}" style="min-height: 800px;">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control form-control-sm" placeholder="Поиск сообщений">
+            <div class="input-group-append">
+                <button class="btn btn-sm border" type="button">Искать</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body px-0 py-0">
+
+              <ul class="list-group is_paginate">
+                {% for object in object_list %}
+                  <li class="list-group-item" data-pk="{{ object.pk }}">
+                    <a class="chat_ajax" href="{% url 'chat_detail' pk=object.pk %}">
+                      {{ object|get_preview_message:request.user.pk|safe }}
+                    </a>
+                  </li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <div class="load centered m-1 next_page_list" data-link="/managers/?page={{ page_obj.next_page_number }}">
+                    <img src="/static/images/preloader.gif">
+                </div>
+                {% endif %}
+              </ul>
+
+            </div>
+        </div>
+    </div>
+
+    {% include 'desctop/chat/chat/detail/right_panel.html' %}
+</div>
+</div>
+{% endblock %}

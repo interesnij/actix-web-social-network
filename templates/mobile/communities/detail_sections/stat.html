@@ -1,0 +1,104 @@
+{% load liked_user %}
+
+<div class="row no-gutters mb-3 mt-1">
+  {% if community.count_posts %}
+   <div class="col text-center">
+     <div class="media">
+       <div class="media-body">
+         <h4 class="content-color-primary mb-0">{{ community.count_posts }}</h4>
+         <p class="content-color-secondary mb-0">{{ community.count_posts|rupluralize:"запись,записи,записей" }}</p>
+       </div>
+     </div>
+   </div>
+   {% endif %}
+  {% if community.count_members %}
+   <div class="col text-center">
+     <div class="media">
+       <div class="media-body">
+         <h4 class="content-color-primary mb-0">
+           <a href="{% url 'community_members' community.pk %}" class="ajax">
+           {{ community.count_members }}
+           </a>
+         </h4>
+         <p class="content-color-secondary mb-0">
+          <a href="{% url 'community_members' community.pk %}" class="ajax">
+           {{ community.count_members|rupluralize:"подписчик,подписчика,подписчиков" }}
+          </a>
+         </p>
+       </div>
+     </div>
+   </div>
+   {% endif %}
+  {% if community.count_goods %}
+   <div class="col text-center">
+     <div class="media">
+       <div class="media-body">
+         <h4 class="content-color-primary mb-0">
+           <a href="{% url 'community_goods' pk=community.pk %}" class="ajax">
+             {{ community.count_goods }}
+           </a>
+         </h4>
+         <p class="content-color-secondary mb-0">
+           <a href="{% url 'community_goods' pk=community.pk %}" class="ajax">
+             {{ community.count_goods|rupluralize:"товар,товара,товаров" }}
+           </a>
+         </p>
+       </div>
+     </div>
+   </div>
+   {% endif %}
+   {% if community.count_photos %}
+   <div class="col text-center">
+     <div class="media">
+       <div class="media-body">
+         <h4 class="content-color-primary mb-0">
+           <a href="{% url 'community_gallery' pk=community.pk %}" class="ajax">
+           {{ community.count_photos }}
+           </a>
+         </h4>
+         <p class="content-color-secondary mb-0">
+           <a href="{% url 'community_gallery' pk=community.pk %}" class="ajax">
+             {{ community.count_photos|rupluralize:"фотография,фотографии,фотографий" }}
+           </a>
+         </p>
+       </div>
+     </div>
+   </div>
+   {% endif %}
+   {% if community.count_tracks %}
+   <div class="col text-center">
+     <div class="media">
+       <div class="media-body">
+         <h4 class="content-color-primary mb-0">
+          <a href="{% url 'community_music' pk=community.pk %}" class="ajax">
+            {{ community.count_tracks }}
+          </a>
+         </h4>
+         <p class="content-color-secondary mb-0">
+           <a href="{% url 'community_music' pk=community.pk %}" class="ajax">
+             {{ community.count_tracks|rupluralize:"трек,трека,треков" }}
+           </a>
+         </p>
+       </div>
+     </div>
+   </div>
+   {% endif %}
+   {% if community.count_videos %}
+   <div class="col text-center">
+     <div class="media">
+       <div class="media-body">
+         <h4 class="content-color-primary mb-0">
+           <a href="{% url 'community_video' pk=community.pk %}" class="ajax">
+             {{ community.count_videos }}
+           </a>
+         </h4>
+         <p class="content-color-secondary mb-0">
+           <a href="{% url 'community_video' pk=community.pk %}" class="ajax">
+             {{ community.count_videos|rupluralize:"ролик,ролика,роликов" }}
+           </a>
+         </p>
+       </div>
+     </div>
+   </div>
+   {% endif %}
+ </div>

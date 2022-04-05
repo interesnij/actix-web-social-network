@@ -1,0 +1,63 @@
+{% extends "base_mobile.html" %}
+{% block title %}{{ community.name }}{% endblock %}
+{% block meta %}
+<meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/{{ community.get_link }}" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="{{ community.name }} - трезвый.рус" />
+<meta property="og:image" content="https://xn--b1afgj5al1e.xn--p1acf{{ community.get_b_avatar }}"/>
+{% endblock %}
+{% block content %}
+
+{% include 'mobile/communities/detail_sections/cover.html' %}
+
+<div class="container main-container mt-3 pk_saver" data-type="community_main" data-pk="{{ community.pk }}">
+  <div class="card mb-3" style="padding:10px">
+    {% include 'mobile/communities/detail_sections/avatar_open.html' %}
+    <span class="row no-gutters mb-3">
+      <span style="flex: 0 0 40%;max-width:40%;padding:5px;">
+        <a class="btn btn-sm border community_send_page_message" data-pk="{{ community.pk }}" style="width: -webkit-fill-available;">Сообщение</a>
+      </span>
+      <span style="flex: 0 0 40%;max-width:40%;padding:5px;" class="btn_default">
+        {% if request.user.pk in community.get_members_ids %}
+          <a class="btn btn-sm member_delete pointer border" style="width: -webkit-fill-available;">Подписаться</a>
+        {% else %}
+          <a class="btn btn-sm member_create pointer border" style="width: -webkit-fill-available;">Подписаться</a>
+        {% endif %}
+      </span>
+      <span style="flex: 0 0 20%;max-width:20%;padding:5px;" class="btn_default menu_drop">
+        <a class="btn btn-sm pointer border" style="width: -webkit-fill-available;">
+          <svg style="width: 17px;height: 17px; "fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        </a>
+      </span>
+      <div class="dropdown-menu" style="margin-top:-65px;width:100%" data-type="com{{ community.pk }}">
+        <span class="dropdown-item create_repost">Поделиться</span>
+        {% if request.user.is_manager %}
+          <span class="dropdown-item create_close pointer">Закрыть</span>
+        {% else %}
+          <span class="dropdown-item create_claim pointer">Пожаловаться</span>
+        {% endif %}
+        {% if is_stat_open %}
+          <a href="{% url 'community_traffic_day' community.pk %}" class="dropdown-item ajax">Статистика</a>
+        {% endif %}
+      </div>
+    </span>
+    {% include 'mobile/communities/detail_sections/description.html' %}
+  </div>
+
+  {% if is_member_open %}
+    {% include 'mobile/communities/detail_sections/membersheeps.html' %}
+  {% endif %}
+
+  {% include 'mobile/communities/detail_sections/stat.html' %}
+
+  <div class="load_post_list mt-3 post_view_generator" community-pk="{{ community.pk }}"></div>
+
+</div>
+
+{% load get_key %}
+<script>
+  {% if user|is_user_list:user.get_music_list_id %}
+    document.querySelector("body").classList.add('list_' + {{ user.get_music_list_id }});
+  {% endif %}
+</script>
+{% endblock %}

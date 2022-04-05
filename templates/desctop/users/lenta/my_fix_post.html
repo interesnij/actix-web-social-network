@@ -1,0 +1,63 @@
+<div class="card post mb-3 pag" data-pk="{{ object.pk }}">
+  <div class="card-header">
+      <div class="media">
+        {% include 'desctop/generic/user/creator_figure.html' %}
+          <div class="media-body">
+            <h6 class="mb-0">
+              <a href="{{ object.creator.get_link }}" class="ajax">
+                {{ object.creator.get_full_name }}
+              </a>
+              <span class="is_fixed">
+                <svg style="width: 17px;vertical-align: bottom;" fill="currentColor" viewBox="0 0 24 24">
+                  <g><rect fill="none" height="24" width="24"/></g><g><path d="M16,9V4l1,0c0.55,0,1-0.45,1-1v0c0-0.55-0.45-1-1-1H7C6.45,2,6,2.45,6,3v0 c0,0.55,0.45,1,1,1l1,0v5c0,1.66-1.34,3-3,3h0v2h5.97v7l1,1l1-1v-7H19v-2h0C17.34,12,16,10.66,16,9z" fill-rule="evenodd"/></g>
+                </svg>
+              </span>
+            </h6>
+            <a class="mb-0 wall_fullscreen pointer">{{ object.get_created }}</a>
+          </div>
+          <div class="dropdown">
+            <a style="cursor:pointer" class="icon-circle icon-30 btn_default drop">
+              <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" data-type="pos{{ object.pk }}">
+              <span>
+                  <span class="dropdown-item u_post_unfixed">Открепить</span>
+              </span>
+              {% if request.user.pk == object.creator.pk %}
+                <span class="dropdown-item u_post_remove">Удалить запись</span>
+                <span class="dropdown-item u_post_edit">Редактировать</span>
+                <span class="dropdown-item item_stat_f">Статистика записи</span>
+
+                <span>
+                  {% if object.comments_enabled %}
+                    <span class="dropdown-item u_post_off_comment">Выкл. комментарии</span>
+                  {% else %}
+                    <span class="dropdown-item u_post_on_comment">Вкл. комментарии</span>
+                  {% endif %}
+                </span>
+                <span>
+                  {% if object.votes_on %}
+                    <span class="dropdown-item u_post_off_votes">Выкл. реакции</span>
+                  {% else %}
+                    <span class="dropdown-item u_post_on_votes">Вкл. реакции</span>
+                  {% endif %}
+                </span>
+                {% elif request.user.is_moderator %}
+                  <span class="create_close">Закрыть</span>
+                {% else %}
+                  <span class="create_claim">Пожаловаться</span>
+                {% endif %}
+              <span class="dropdown-item js-textareacopybtn">Скопировать ссылку</span>
+            </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="fix_fullscreen pointer text_support">
+    {{ object.get_format_text|safe }}
+  </div>
+
+  {% include 'desctop/generic/items/post.html' %}
+
+  {% include 'desctop/posts/post_user/info.html' %}
+</div>

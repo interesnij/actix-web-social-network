@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Администраторы сообщества "Самые умные"{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-7 col-md-8 col-sm-12 order-1">
+        <br><br><br>
+        <div class="card mb-2">
+            <div class="card-header">
+                <div class="media">
+                  <div class="media-body"><h5 class="mt-1">Самые умные</h5></div>
+                </div>
+            </div>
+            <br><br>
+            <div class="card-body px-0 py-0">
+                <ul class="list-group border-top border-bottom list-group-flush">
+                  <li class="list-group-item">
+                      <div class="media">
+                          <figure>
+                            <img style="border-radius:50px" src="{% static 'images/zukerberg.jpg' %}" />
+                          </figure>
+                          <div class="media-body"><a href="" class="ajax"><h6 class="my-0 mt-1">Марк Цукерберг</h6></a></div>
+                      </div>
+                  </li>
+                  <li class="list-group-item">
+                      <div class="media">
+                          <figure><img style="border-radius:50px" src="{% static 'images/steve_jobs.jpg' %}" /></figure>
+                          <div class="media-body"><a href="" class="ajax"><h6 class="my-0 mt-1">Стив Джобс</h6></a></div>
+                      </div>
+                  </li>
+                    <li class="list-group-item">
+                        <div class="media">
+                            <figure>
+                                {% if request.user.s_avatar %}
+                                <img src="{{ request.user.s_avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+                                {% else %}
+                                <img class="thumb" src="/static/images/fuck_you.jpg" />
+                                {% endif %}
+                            </figure>
+                            <div class="media-body">
+                                <a {% if request.user.is_authenticated %}href=""{% endif %} class="ajax">
+                                    <h6 class="my-0 mt-1">{% if request.user.get_full_name %}{{ request.user.get_full_name }}{% else %} Вы{% endif %}</h6>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

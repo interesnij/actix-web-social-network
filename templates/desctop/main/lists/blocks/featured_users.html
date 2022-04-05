@@ -1,0 +1,24 @@
+{% if request.user.get_featured_friends_count > 1 %}
+
+<div class="card csslider infinity uc_slider mb-3">
+  <p>Возможные друзья</p>
+  {% for object in request.user.get_6_featured_friends_ids %}
+    <input type="radio" name="slides_1" {% if forloop.first %}checked="checked"{% endif %} id="use_{{ forloop.counter }}"/>
+  {% endfor %}
+  <ul>
+    {% for user in request.user.get_6_featured_friends %}
+    <li class="scrollable">
+      {% include 'desctop/generic/user/card.html' %}
+    </li>
+    {% endfor %}
+  </ul>
+  <div class="arrows_1 slides_arrows">
+    {% for object in request.user.get_6_featured_friends_ids %}
+      <label for="use_{{ forloop.counter }}"></label>
+    {% endfor %}
+
+    <label class="goto_first" for="use_1"></label>
+    <label class="goto_last" for="use_{{ request.user.get_featured_friends_count }}"></label>
+  </div>
+</div>
+{% endif %}

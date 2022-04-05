@@ -1,0 +1,69 @@
+{% load message %}
+<div class="container mt-3 main-container" data-pk="{{ chat.pk }}" data-type="user_chat_search">
+  <span class="load_block">
+    <div class="media mt-3" style="padding-left: 7px;">
+      <h5 class="mt-1">Поиск по "<span class="chat_search_value">{{ q }}</span>"</h5>
+    </div>
+  <div class="container-fluid pk_saver">
+    <div class="list-group border-top border-bottom list-group-flush is_block_paginate">
+      {% if object_list %}
+      {% for object in object_list %}
+      <div class="message media p-1" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}">
+          <figure>
+            <a href="{{ object.creator.get_link }}" class="ajax no_select">
+              {{ object.creator.get_40_avatar|safe }}
+            </a>
+          </figure>
+          <div class="media-body" style="overflow: visible;">
+            <h5 class="time-title mb-0">
+              <a href="{{ object.creator.get_link }}" class="ajax creator_link">
+                <span class="creator_name">{{ object.creator.get_full_name }}</span>
+              </a>
+              <small class="float-right small text-muted get_created t_f">{{ object.get_created }}</small>
+            </h5>
+
+            {% if object.parent %}
+              {{ object.get_parent_message|safe }}
+            {% endif %}
+
+            {% if object.voice %}
+              <audio class="audio" src="{{ object.voice.url }}"></audio>
+            {% elif object.sticker %}
+            <div class="message_sticker mt-1 t_f">
+              <img src="{{ object.sticker.image.url }}" style="width: 128px;" tooltip="{{ object.sticker.category.name }}" flow="up">
+            </div>
+            {% else %}
+
+            <span class="text text_support t_f">{{ object.text|safe }}</span>
+
+            {% if object.attach %}
+              {{ object|get_attach:request.user|safe }}
+            {% endif %}
+
+            {% if object.repost %}
+              {% include 'mobile/chat/message/repost.html' %}
+            {% endif %}
+
+            {% if object.is_have_transfer %}
+              {% include 'mobile/chat/message/transfers.html' %}
+            {% endif %}
+
+            {% endif %}
+          </div>
+      </div>
+      {% endfor %}
+        {% if page_obj.has_next %}
+        <div class="load centered m-1 next_page_list" data-link="/chat/{{ chat }}/search/?page={{ page_obj.next_page_number }}">
+            <img src="/static/images/preloader.gif">
+        </div>
+        {% endif %}
+
+      {% else %}
+      <div class="card mb-3 centered items_empty">
+        <h6 style="margin: 20px;text-align: center;"> Ничего не найдено...</h6>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  </span>
+</div>

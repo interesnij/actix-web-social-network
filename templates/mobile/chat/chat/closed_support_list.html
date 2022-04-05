@@ -1,0 +1,35 @@
+{% extends "base_mobile.html" %}
+{% block title %}Обращения в техподдержку{% endblock %}
+{% load message %}
+{% block content %}
+<div class="container chat_list_container main-container pk_saver mt-3" data-pk="{{ request.user.pk }}" data-type="closed_chat_list">
+        <div class="card mb-2">
+            <div class="card-body px-0 py-0">
+              {% if object_list %}
+
+              <ul class="list-group is_paginate">
+                {% for object in object_list %}
+                  <li class="list-group-item" data-pk="{{ object.pk }}">
+                    <a class="chat_ajax" href="{% url 'chat_detail' pk=object.pk %}">
+                      {{ object|get_preview_message:request.user.pk|safe }}
+                    </a>
+                  </li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <div class="load centered m-1 next_page_list" data-link="{% url 'chats_list' %}?page={{ page_obj.next_page_number }}">
+                    <img src="/static/images/preloader.gif">
+                </div>
+                {% endif %}
+              </ul>
+
+              {% else %}
+              <div class="card items_empty centered mb-3">
+                <h6 style="margin: 20px;text-align: center;">
+                   Пока обращений в техподдержку нет.
+                <br>
+              </div>
+              {% endif %}
+            </div>
+        </div>
+</div>
+{% endblock %}

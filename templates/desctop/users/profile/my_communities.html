@@ -1,0 +1,41 @@
+{% if user.is_have_communities %}
+
+<div class="card mb-3">
+    <div class="p-1">
+      <a href="{% url 'communities' pk=user.pk %}" class="ajax">
+        <div class="media">
+            <div class="media-body">
+                <h6 class="content-color-primary mb-0">Группы </h6>
+            </div>
+            {{ user.count_communities }}
+        </div>
+      </a>
+    </div>
+
+    {% for community in user.get_6_communities %}
+    <div class="card border-top">
+        <div class="card-body">
+            <div class="media">
+              {% include 'desctop/generic/community/figure.html' %}
+              <div class="media-body">
+                  <h6 class="my-0 mt-1">{% include 'desctop/generic/community/community.html' %}</h6>
+                  <p class="small">{{ community.count_members_ru }}</p>
+              </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="card mb-3">
+    <div class="card-header">
+        <div class="media centered">
+            <a href="{% url 'all_communities' %}" class="ajax">
+                <div class="media-body">
+                    <h6 class="content-color-primary mb-0">Вступайте в группы</h6>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endif %}

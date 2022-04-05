@@ -1,0 +1,17 @@
+<div class="card mb-3 pag border">
+  <div class="card-header" style="padding-bottom: 0;">
+      <div class="media">
+        <figure>
+          {% include 'mobile/generic/community/object_figure.html' %}
+        </figure>
+          <div class="media-body">
+              <p class="mb-0" data-uuid="{{ object.post.uuid }}" data-pk="{{ object.post.community.pk }}">
+                Сообщество {% include 'mobile/generic/community/object.html' %}
+                {{ object.get_verb_display }} от<a class="fullscreen pointer" style="text-decoration: underline">{{ object.created }}</a>
+              </p>
+              <p class="mb-0 small">{{ object.get_created }}</p>
+          </div>
+      </div>
+  </div>
+  {{ object.get_svg|safe }}
+</div>

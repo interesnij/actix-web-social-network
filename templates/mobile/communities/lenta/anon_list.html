@@ -1,0 +1,69 @@
+<span class="load_list">
+{% if is_user_can_see_post_section %}
+
+{% if community.count_fix_items > 1 %}
+<div class="csslider infinity slider_100 mt-2">
+  <p>Особые записи</p>
+  {% for object in community.get_fixed_posts_ids %}
+    <input type="radio" name="slides" {% if forloop.first %}checked="checked"{% endif %} id="s_{{ forloop.counter }}"/>
+  {% endfor %}
+  <ul>
+    {% for object in get_fixed_posts %}
+    <li class="scrollable">
+        {% if object.community %}
+          {% include 'mobile/communities/lenta/anon_fix_post.html' %}
+        {% else %}
+          {% include 'mobile/users/lenta/anon_fix_post.html' %}
+        {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+  <div class="slides_arrows">
+    {% for object in community.get_fixed_posts_ids %}
+      <label for="s_{{ forloop.counter }}"></label>
+    {% endfor %}
+
+    <label class="goto_first" for="s_1"></label>
+    <label class="goto_last" for="s_{{ user.count_fix_items }}"></label>
+  </div>
+</div>
+{% elif community.count_fix_items == 1 %}
+
+{% for object in get_fixed_posts %}
+    {% if object.community %}
+      {% include 'mobile/communities/lenta/anon_fix_post.html' %}
+    {% else %}
+      {% include 'mobile/users/lenta/anon_fix_post.html' %}
+    {% endif %}
+{% endfor %}
+
+{% endif %}
+
+{% include 'mobile/communities/lenta/lists.html' %}
+  <span class="span_list_pk" list-pk="{{ list.pk }}">
+    <span class="list_pk" data-uuid="{{ list.pk }}">
+      {% if is_user_can_see_post_list %}
+        <span class="post_stream is_paginate">
+          {% for object in object_list %}
+            {% include 'mobile/posts/post_community/anon_post.html' %}
+          {% endfor %}
+          {% if page_obj.has_next %}
+          <div class="load centered m-1 next_page_list" data-link="/posts/list/?community={{ community.pk }}&page={{ page_obj.next_page_number }}">
+              <img src="/static/images/preloader.gif">
+          </div>
+          {% endif %}
+
+          {% if not object and not object_list %}
+            {% include 'mobile/communities/lenta/no_items.html' %}
+          {% endif %}
+        </span>
+        {% else %}
+          {% include 'mobile/generic/centered/private_list.html' %}
+        {% endif %}
+    </span>
+  </span>
+
+{% else %}
+    {% include 'mobile/generic/centered/private_post.html' %}
+{% endif %}
+</span>

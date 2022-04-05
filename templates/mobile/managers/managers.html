@@ -1,0 +1,393 @@
+{% extends "base_mobile.html" %}
+{% block title %}Администрирование|Главная{% endblock %}
+{% block content %}
+
+<div class="container mt-4 main-container" data-type="manager_main">
+          <div class="container mt-4 main-container card">
+            <h1 class="mb-0 text-center">Вы управленец</h1>
+            <h5 class="text-warning mb-4 text-center">
+              <svg fill="currentColor" enable-background="new 0 0 24 24" class="svg_default svg_info" viewBox="0 0 24 24">
+                <g><rect x="0"></rect><polygon points="14.43,10 12,2 9.57,10 2,10 8.18,14.41 5.83,22 12,17.31 18.18,22 15.83,14.41 22,10"></polygon></g>
+              </svg>
+              <svg fill="currentColor" enable-background="new 0 0 24 24" class="svg_default svg_info" viewBox="0 0 24 24">
+                <g><rect x="0"></rect><polygon points="14.43,10 12,2 9.57,10 2,10 8.18,14.41 5.83,22 12,17.31 18.18,22 15.83,14.41 22,10"></polygon></g>
+              </svg>
+              <svg fill="currentColor" enable-background="new 0 0 24 24" class="svg_default svg_info" viewBox="0 0 24 24">
+                <g><rect x="0"></rect><polygon points="14.43,10 12,2 9.57,10 2,10 8.18,14.41 5.83,22 12,17.31 18.18,22 15.83,14.41 22,10"></polygon></g>
+              </svg>
+              <svg fill="currentColor" enable-background="new 0 0 24 24" class="svg_default svg_info" viewBox="0 0 24 24">
+                <g><rect x="0"></rect><polygon points="14.43,10 12,2 9.57,10 2,10 8.18,14.41 5.83,22 12,17.31 18.18,22 15.83,14.41 22,10"></polygon></g>
+              </svg>
+              <svg fill="currentColor" enable-background="new 0 0 24 24" class="svg_default svg_info" viewBox="0 0 24 24">
+                <g><rect x="0"></rect><polygon points="14.43,10 12,2 9.57,10 2,10 8.18,14.41 5.83,22 12,17.31 18.18,22 15.83,14.41 22,10"></polygon></g>
+              </svg>
+            </h5>
+            <p class="content-color-secondary mb-3">
+              Вы управленец соцсети трезвый.рус. Пожалуйста, помните, что быть таким человеком - большая отвественность. <br>
+              Нужно быть беспристрастным, грамотным, осознанным человеком, с развитым чувством справедливости и моральными качествами.<br>
+              Нужно тщательно беречь аккаунт от других пользователей.
+            </p>
+        </div>
+  </div>
+  <div class="container mt-4 main-container">
+    <div class="row">
+      {% if request.user.is_user_administrator %}
+      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+        <div class="card mb-4 box-shadow-large">
+          <div class="card-body text-center">
+            <h1 class="icon-circle icon-100 mb-4">
+              <svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"/></svg>
+            </h1>
+            <h4 class="content-color-primary">Пользователи</h4>
+            <a href="/managers/moderation_list/user/" class="btn-link ajax">Жалобы на профили</a>
+            <br>
+            <a href="/managers/penalty_list/user/" class="btn-link ajax">Администрирование профилей</a>
+            <br>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if request.user.is_community_administrator %}
+      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+        <div class="card mb-4 box-shadow-large">
+          <div class="card-body text-center">
+            <h1 class="icon-circle icon-100 mb-4">
+              <svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+            </h1>
+            <h4 class="content-color-primary">Сообщества</h4>
+            <a href="/managers/moderation_list/community/" class="btn-link ajax">Жалобы на сообщества</a>
+            <br>
+            <a href="/managers/penalty_list/community/" class="btn-link ajax">Администрирование сообществ</a>
+            <br>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if request.user.is_post_administrator %}
+      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+        <div class="card mb-4 box-shadow-large">
+          <div class="card-body text-center">
+            <h1 class="icon-circle icon-100 mb-4">
+              <svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M22 13h-8v-2h8v2zm0-6h-8v2h8V7zm-8 10h8v-2h-8v2zm-2-8v6c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2zm-1.5 6l-2.25-3-1.75 2.26-1.25-1.51L3.5 15h7z"/></svg>
+            </h1>
+            <h4 class="content-color-primary">Записи</h4>
+            <a href="/managers/moderation_list/post/" class="btn-link ajax">Жалобы на записи</a>
+            <br>
+            <a href="/managers/moderation_list/post_comment/" class="btn-link ajax">Жалобы на комментарии</a>
+            <br>
+            <a href="/managers/penalty_list/post/" class="btn-link ajax">Штраф-записи</a>
+            <br>
+            <a href="/managers/penalty_list/post_comment/" class="btn-link ajax">Штраф-комментарии</a>
+            <br>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if request.user.is_photo_administrator %}
+      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+        <div class="card mb-4 box-shadow-large">
+          <div class="card-body text-center">
+            <h1 class="icon-circle icon-100 mb-4">
+              <svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+            </h1>
+            <h4 class="content-color-primary">Изображения</h4>
+            <a href="/managers/moderation_list/photo/" class="btn-link ajax">Жалобы на фото</a>
+            <br>
+            <a href="/managers/moderation_list/photo_comment/" class="btn-link ajax">Жалобы на комментарии</a>
+            <br>
+            <a href="/managers/penalty_list/photo/" class="btn-link ajax">Штраф-фото</a>
+            <br>
+            <a href="/managers/penalty_list/photo_comment/" class="btn-link ajax">Штраф-комментарии</a>
+            <br>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if request.user.is_audio_administrator %}
+      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+        <div class="card mb-4 box-shadow-large">
+          <div class="card-body text-center">
+            <h1 class="icon-circle icon-100 mb-4">
+              <svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 5h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S10 13.88 10 12.5s1.12-2.5 2.5-2.5c.57 0 1.08.19 1.5.51V5h4v2zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
+            </h1>
+            <h4 class="content-color-primary">Аудиозаписи</h4>
+            <a href="/managers/moderation_list/audio/" class="btn-link ajax">Жалобы на треки</a>
+            <br>
+            <a href="/managers/penalty_list/audio/" class="btn-link ajax">Штраф-треки</a>
+            <br>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if request.user.is_audio_administrator %}
+      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+        <div class="card mb-4 box-shadow-large">
+          <div class="card-body text-center">
+            <h1 class="icon-circle icon-100 mb-4">
+              <svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+            </h1>
+            <h4 class="content-color-primary">Видеозаписи</h4>
+            <a href="/managers/moderation_list/video/" class="btn-link ajax">Жалобы на ролики</a>
+            <br>
+            <a href="/managers/moderation_list/video_comment/" class="btn-link ajax">Жалобы на комментарии</a>
+            <br>
+            <a href="/managers/penalty_list/video/" class="btn-link ajax">Штраф-ролики</a>
+            <br>
+            <a href="/managers/penalty_list/video_comment/" class="btn-link ajax">Штраф-комментарии</a>
+            <br>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if request.user.is_user_advertiser %}
+      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+        <div class="card mb-4 box-shadow-large">
+          <div class="card-body text-center">
+            <h1 class="icon-circle icon-100 mb-4">
+              <svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"/></svg>
+            </h1>
+            <h4 class="content-color-primary">Пользователи</h4>
+            <a href="/managers/moderation_list/user_advertiser/" class="btn-link ajax">Жалобы на рекламу</a>
+            <br>
+            <a href="/managers/penalty_list/user_advertiser/" class="btn-link ajax">Штраф-реклама</a>
+            <br>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if request.user.is_community_advertiser %}
+      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+        <div class="card mb-4 box-shadow-large">
+          <div class="card-body text-center">
+            <h1 class="icon-circle icon-100 mb-4">
+              <svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+            </h1>
+            <h4 class="content-color-primary">Сообщества</h4>
+            <a href="/managers/moderation_list/community_advertiser/" class="btn-link ajax">Жалобы на рекламу</a>
+            <br>
+            <a href="/managers/penalty_list/community_advertiser/" class="btn-link ajax">Штраф-реклама</a>
+            <br>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if request.user.is_user_editor %}
+      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+        <div class="card mb-4 box-shadow-large">
+          <div class="card-body text-center">
+            <h1 class="icon-circle icon-100 mb-4">
+              <svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+            </h1>
+            <h4 class="content-color-primary">Пользователи</h4>
+            <a href="/managers/moderation_list/user_editor/" class="btn-link ajax">Жалобы на профили</a>
+            <br>
+            <a href="/managers/penalty_list/user_editor/" class="btn-link ajax">Редактирование профилей</a>
+            <br>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if request.user.is_community_editor %}
+      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+        <div class="card mb-4 box-shadow-large">
+          <div class="card-body text-center">
+            <h1 class="icon-circle icon-100 mb-4">
+              <svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+            </h1>
+            <h4 class="content-color-primary">Сообщества</h4>
+            <a href="/managers/moderation_list/community_editor/" class="btn-link ajax">Жалобы на сообщества</a>
+            <br>
+            <a href="/managers/penalty_list/community_editor/" class="btn-link ajax">Редактирование сообществ</a>
+            <br>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if request.user.is_post_editor %}
+      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+        <div class="card mb-4 box-shadow-large">
+          <div class="card-body text-center">
+            <h1 class="icon-circle icon-100 mb-4">
+              <svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M22 13h-8v-2h8v2zm0-6h-8v2h8V7zm-8 10h8v-2h-8v2zm-2-8v6c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2zm-1.5 6l-2.25-3-1.75 2.26-1.25-1.51L3.5 15h7z"/></svg>
+            </h1>
+            <h4 class="content-color-primary">Записи</h4>
+            <a href="/managers/moderation_list/post/" class="btn-link ajax">Жалобы на записи</a>
+            <br>
+            <a href="/managers/moderation_list/post_comment/" class="btn-link ajax">Жалобы на комментарии</a>
+            <br>
+            <a href="/managers/penalty_list/post/" class="btn-link ajax">Штраф-записи</a>
+            <br>
+            <a href="/managers/penalty_list/post_comment/" class="btn-link ajax">Штраф-комментарии</a>
+            <br>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if request.user.is_photo_editor %}
+      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+        <div class="card mb-4 box-shadow-large">
+          <div class="card-body text-center">
+            <h1 class="icon-circle icon-100 mb-4">
+              <svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+            </h1>
+            <h4 class="content-color-primary">Изображения</h4>
+            <a href="/managers/moderation_list/photo/" class="btn-link ajax">Жалобы на фото</a>
+            <br>
+            <a href="/managers/moderation_list/photo_comment/" class="btn-link ajax">Жалобы на комментарии</a>
+            <br>
+            <a href="/managers/penalty_list/photo/" class="btn-link ajax">Штраф-фото</a>
+            <br>
+            <a href="/managers/penalty_list/photo_comment/" class="btn-link ajax">Штраф-комментарии</a>
+            <br>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if request.user.is_audio_editor %}
+      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+        <div class="card mb-4 box-shadow-large">
+          <div class="card-body text-center">
+            <h1 class="icon-circle icon-100 mb-4">
+              <svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 5h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S10 13.88 10 12.5s1.12-2.5 2.5-2.5c.57 0 1.08.19 1.5.51V5h4v2zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
+            </h1>
+            <h4 class="content-color-primary">Аудиозаписи</h4>
+            <a href="/managers/moderation_list/audio/" class="btn-link ajax">Жалобы на аудиозаписи</a>
+            <br>
+            <a href="/managers/penalty_list/audio/" class="btn-link ajax">Штраф-аудиозаписи</a>
+            <br>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if request.user.is_video_editor %}
+      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+        <div class="card mb-4 box-shadow-large">
+          <div class="card-body text-center">
+            <h1 class="icon-circle icon-100 mb-4">
+              <svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+            </h1>
+            <h4 class="content-color-primary">Видеозаписи</h4>
+            <a href="/managers/moderation_list/video/" class="btn-link ajax">Жалобы на ролики</a>
+            <br>
+            <a href="/managers/moderation_list/video_comment/" class="btn-link ajax">Жалобы на комментарии</a>
+            <br>
+            <a href="/managers/penalty_list/video/" class="btn-link ajax">Штраф-ролики</a>
+            <br>
+            <a href="/managers/penalty_list/video_comment/" class="btn-link ajax">Штраф-комментарии</a>
+            <br>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if request.user.is_user_moderator %}
+      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+        <div class="card mb-4 box-shadow-large">
+          <div class="card-body text-center">
+            <h1 class="icon-circle icon-100 mb-4">
+              <svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+            </h1>
+            <h4 class="content-color-primary">Пользователи</h4>
+            <a href="/managers/moderation_list/user_moderator/" class="btn-link ajax">Жалобы на профили</a>
+            <br>
+            <a href="/managers/penalty_list/user_moderator/" class="btn-link ajax">Модерирование профилей</a>
+            <br>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if request.user.is_community_moderator %}
+      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+        <div class="card mb-4 box-shadow-large">
+          <div class="card-body text-center">
+            <h1 class="icon-circle icon-100 mb-4">
+              <svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+            </h1>
+            <h4 class="content-color-primary">Сообщества</h4>
+            <a href="/managers/moderation_list/community_moderator/" class="btn-link ajax">Жалобы на сообщества</a>
+            <br>
+            <a href="/managers/penalty_list/community_moderator/" class="btn-link ajax">Модерирование сообществ</a>
+            <br>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if request.user.is_post_moderator %}
+      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+        <div class="card mb-4 box-shadow-large">
+          <div class="card-body text-center">
+            <h1 class="icon-circle icon-100 mb-4">
+              <svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M22 13h-8v-2h8v2zm0-6h-8v2h8V7zm-8 10h8v-2h-8v2zm-2-8v6c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2zm-1.5 6l-2.25-3-1.75 2.26-1.25-1.51L3.5 15h7z"/></svg>
+            </h1>
+            <h4 class="content-color-primary">Записи</h4>
+            <a href="/managers/moderation_list/post/" class="btn-link ajax">Жалобы на записи</a>
+            <br>
+            <a href="/managers/moderation_list/post_comment/" class="btn-link ajax">Жалобы на комментарии</a>
+            <br>
+            <a href="/managers/penalty_list/post/" class="btn-link ajax">Штраф-записи</a>
+            <br>
+            <a href="/managers/penalty_list/post_comment/" class="btn-link ajax">Штраф-комментарии</a>
+            <br>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if request.user.is_photo_moderator %}
+      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+        <div class="card mb-4 box-shadow-large">
+          <div class="card-body text-center">
+            <h1 class="icon-circle icon-100 mb-4">
+              <svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+            </h1>
+            <h4 class="content-color-primary">Изображения</h4>
+            <a href="/managers/moderation_list/photo/" class="btn-link ajax">Жалобы на фото</a>
+            <br>
+            <a href="/managers/moderation_list/photo_comment/" class="btn-link ajax">Жалобы на комментарии</a>
+            <br>
+            <a href="/managers/penalty_list/photo/" class="btn-link ajax">Штраф-фото</a>
+            <br>
+            <a href="/managers/penalty_list/photo_comment/" class="btn-link ajax">Штраф-комментарии</a>
+            <br>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if request.user.is_audio_moderator %}
+      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+        <div class="card mb-4 box-shadow-large">
+          <div class="card-body text-center">
+            <h1 class="icon-circle icon-100 mb-4">
+              <svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 5h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S10 13.88 10 12.5s1.12-2.5 2.5-2.5c.57 0 1.08.19 1.5.51V5h4v2zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
+            </h1>
+            <h4 class="content-color-primary">Аудиозаписи</h4>
+            <a href="/managers/moderation_list/audio/" class="btn-link ajax">Жалобы на аудиозаписи</a>
+            <br>
+            <a href="/managers/penalty_list/audio/" class="btn-link ajax">Штраф-аудиозаписи</a>
+            <br>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if request.user.is_video_moderator %}
+      <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
+        <div class="card mb-4 box-shadow-large">
+          <div class="card-body text-center">
+            <h1 class="icon-circle icon-100 mb-4">
+              <svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+            </h1>
+            <h4 class="content-color-primary">Видеозаписи</h4>
+            <a href="/managers/moderation_list/video/" class="btn-link ajax">Жалобы на ролики</a>
+            <br>
+            <a href="/managers/moderation_list/video_comment/" class="btn-link ajax">Жалобы на комментарии</a>
+            <br>
+            <a href="/managers/penalty_list/video/" class="btn-link ajax">Штраф-ролики</a>
+            <br>
+            <a href="/managers/penalty_list/video_comment/" class="btn-link ajax">Штраф-комментарии</a>
+            <br>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+{% endblock %}

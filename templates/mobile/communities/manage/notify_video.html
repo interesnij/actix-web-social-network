@@ -1,0 +1,70 @@
+{% extends "base_mobile.html" %}
+{% block title %}Уведомления видеозаписей - {{ community.name }}{% endblock %}
+{% block content %}
+
+<div class="container main-container mt-3 pk_saver" data-pk="{{ community.pk }}" data-type="community_manage_notify_video">
+
+  {% include 'mobile/communities/manage/menu.html' %}
+  <form id="community_notify_video_form" class="contact-form">
+      {% csrf_token %}
+      <div class="card mb-3">
+          <div class="card-header border-bottom">
+              <h5 class="content-color-primary mb-0">Уведомления видеозаписей -
+                  {% include 'mobile/generic/community/community.html' %}
+              </h5>
+          </div>
+          <div class="card-body">
+            <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
+                Комментарии к видеозаписям
+                <input type="checkbox" {% if notify_video.comment %} checked {% endif %} name="comment" id="id_comment" class="switch switch-sm">
+                <label style="margin-right:12px;bottom: 5px;" for="id_comment" class="bg_success mb-2 border float-right"></label>
+            </p>
+            <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
+                Ответы на комментарии
+                <input type="checkbox" {% if notify_video.comment_reply %} checked {% endif %} name="comment_reply" id="id_comment_reply" class="switch switch-sm">
+                <label style="margin-right:12px;bottom: 5px;" for="id_comment_reply" class="bg_success mb-2 border float-right"></label>
+            </p>
+            <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
+                Репосты видеозаписей
+                <input type="checkbox" {% if notify_video.repost %} checked {% endif %} name="repost" id="id_repost" class="switch switch-sm">
+                <label style="margin-right:12px;bottom: 5px;" for="id_repost" class="bg_success mb-2 border float-right"></label>
+            </p>
+            <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
+                Лайки на видеозаписи
+                <input type="checkbox" {% if notify_video.like %} checked {% endif %} name="like" id="id_like" class="switch switch-sm">
+                <label style="margin-right:12px;bottom: 5px;" for="id_like" class="bg_success mb-2 border float-right"></label>
+            </p>
+            <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
+                Дизайки на видеозаписи
+                <input type="checkbox" {% if notify_video.dislike %} checked {% endif %} name="dislike" id="id_dislike" class="switch switch-sm">
+                <label style="margin-right:12px;bottom: 5px;" for="id_dislike" class="bg_success mb-2 border float-right"></label>
+            </p>
+            <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
+                Лайки на комментарии
+                <input type="checkbox" {% if notify_video.comment_like %} checked {% endif %} name="comment_like" id="id_comment_like" class="switch switch-sm">
+                <label style="margin-right:12px;bottom: 5px;" for="id_comment_like" class="bg_success mb-2 border float-right"></label>
+            </p>
+            <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
+                Дизайки на комментарии
+                <input type="checkbox" {% if notify_video.comment_dislike %} checked {% endif %} name="comment_dislike" id="id_comment_dislike" class="switch switch-sm">
+                <label style="margin-right:12px;bottom: 5px;" for="id_comment_dislike" class="bg_success mb-2 border float-right"></label>
+            </p>
+            <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
+                Лайки на ответы
+                <input type="checkbox" {% if notify_video.comment_reply_like %} checked {% endif %} name="comment_reply_like" id="id_comment_reply_like" class="switch switch-sm">
+                <label style="margin-right:12px;bottom: 5px;" for="id_comment_reply_like" class="bg_success mb-2 border float-right"></label>
+            </p>
+            <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
+                Дизайки на ответы
+                <input type="checkbox" {% if notify_video.comment_reply_dislike %} checked {% endif %} name="comment_reply_dislike" id="id_comment_reply_dislike" class="switch switch-sm">
+                <label style="margin-right:12px;bottom: 5px;" for="id_comment_reply_dislike" class="bg_success mb-2 border float-right"></label>
+            </p>
+
+          </div>
+          <div class="card-footer">
+              <button type="button" id="community_notify_video_btn" class="mb-2 btn btn-sm btn-success float-right">Сохранить</button>
+          </div>
+      </div>
+  </form>
+</div>
+{% endblock %}

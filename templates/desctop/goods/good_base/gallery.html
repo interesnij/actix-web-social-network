@@ -1,0 +1,36 @@
+<div class="product-gallery">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="product-gallery-thumbnails">
+        <ol class="thumb_list list-unstyled">
+          {% if object.image %}
+          <li><img src="{{ object.image.url }}" class="img-responsive" alt=""></li>
+          {% else %}
+          <img src="/static/images/no_img/list.jpg" class="big_img img-responsive" alt="">
+          {% endif %}
+          {% if object.image2 %}
+          <li><img src="{{ object.image2.url }}" alt=""></li>
+          {% endif %}
+          {% if object.image3 %}
+          <li><img src="{{ object.image3.url }}" alt=""></li>
+          {% endif %}
+          {% if object.image4 %}
+          <li><img src="{{ object.image4.url }}" alt=""></li>
+          {% endif %}
+          {% if object.image5 %}
+          <li><img src="{{ object.image5.url }}" alt=""></li>
+          {% endif %}
+        </ol>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div id="big_img">
+        {% if object.image %}
+        <img src="{{ object.image.url }}" class="big_img" alt="">
+        {% else %}
+        <img src="/static/images/no_img/list.jpg" class="big_img" alt="">
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

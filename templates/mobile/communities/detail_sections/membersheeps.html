@@ -1,0 +1,20 @@
+
+{% if community.community_info.members %}
+<div class="card mb-3">
+    <div class="card-body py-2">
+        <div class="media">
+            <div class="media-body">
+              <a href="{% url 'community_members' pk=community.pk %}" class="ajax">
+                <h6 class="my-0 text-truncated">{{ community.community_info.members }}</h6>
+              </a>
+              <a href="{% url 'community_friends' pk=community.pk %}" class="ajax">
+                <p class="small">{{ common_friends_count }}</p>
+              </a>
+            </div>
+            {% for user in membersheeps %}
+              {% include 'mobile/generic/user/figure.html' %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}

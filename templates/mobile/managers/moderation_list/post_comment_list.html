@@ -1,0 +1,125 @@
+{% extends "base_mobile.html" %}
+{% block title %}Жалобы на комментарии записей{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-9 col-lg-8">
+        <br>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control form-control-sm" placeholder="Поиск по списку">
+            <div class="input-group-append">
+                <button class="btn btn-sm border" type="button">Искать</button>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                      <h5 class="mt-1">Жалобы на комментарии записей</h5>
+                      <small class="content-color-secondary float-right mr-2 mt-1"></small>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body px-0 py-0">
+
+              {% if object_list %}
+
+              <div class="is_paginate">
+                  {% for object in object_list %}
+                  <div class="list-group-item pag border" data-pk="{{ object.comment.pk }}">
+                      <div class="media">
+                        <div class="media-body">
+
+                          <span style="padding:20px">{{ object.comment.text }}</span>
+                          <div class="attach_container">
+                            {% for photo in object.comment.comment_photo.all %}
+                            <div class="photo">
+                                <img class="image_fit" src="{{ photo.file.url }}" alt="img">
+                            </div>
+                            {% endfor %}
+                            {% for video in object.comment.comment_video.all %}
+                            <div class="video">
+                                <img class="image_fit" src="{{ video.image.url }}" alt="img">
+                                <div class="video_icon_play_v2"></div>
+                            </div>
+                            {% endfor %}
+                            {% for good in object.comment.comment_good.all %}
+                            <div class="good">
+                              <span class="badge badge-primary mb-2" style="position:absolute;bottom:-8px;">
+                                <svg style="padding-bottom: 1px" height="13" fill="#FFFFFF" viewBox="0 0 24 24" width="13"><path d="M0 0h24v24H0z" fill="none"/><path d="M17.21 9l-4.38-6.56c-.19-.28-.51-.42-.83-.42-.32 0-.64.14-.83.43L6.79 9H2c-.55 0-1 .45-1 1 0 .09.01.18.04.27l2.54 9.27c.23.84 1 1.46 1.92 1.46h13c.92 0 1.69-.62 1.93-1.46l2.54-9.27L23 10c0-.55-.45-1-1-1h-4.79zM9 9l3-4.4L15 9H9zm3 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
+                                {{ good.title }}
+                              </span>
+                              {% if good.image %}
+                                <img class="image_fit" src="{{ good.image.url }}" alt="img">
+                              {% else %}
+                                <svg class="image_fit svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                              {% endif %}
+                            </div>
+                            {% endfor %}
+                            {% for item in object.comment.attached_comment.all %}
+                            <div class="article">
+                              <span class="badge badge-info mb-2" style="position: absolute;bottom:-8px;">
+                                <svg style="padding-bottom: 1px" height="13" fill="#FFFFFF" viewBox="0 0 24 24" width="13"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                                {{ item.title}}
+                              </span>
+                              <div class="text-center pointer">
+                                <div class="align-items-center">
+                                    {% if item.g_image %}
+                                      <img class="image_fit" src="{{ item.g_image.url }}" alt="img">
+                                    {% else %}
+                                      <img class="image_fit" src="/static/images/no-image.jpg" />
+                                    {% endif %}
+                                </div>
+                             </div>
+                            </div>
+                            {% endfor %}
+                            {% for music in object.comment.comment_music.all %}
+                            <div class="col-md-12 music" style="flex-basis: 100%;">
+                              <div class="media" music-counter="{{ forloop.counter0 }}">
+                                  <figure>
+                                    <a class="music_thumb">
+                                      {% if music.artwork_url %}
+                                        <img style="width:30px;heigth:auto" src="{{ music.artwork_url.url }}" alt="img" />
+                                      {% else %}
+                                        <svg fill="currentColor" style="width:30px;heigth:30px" class='svg_default' viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 5h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S10 13.88 10 12.5s1.12-2.5 2.5-2.5c.57 0 1.08.19 1.5.51V5h4v2zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
+                                      {% endif %}
+                                    </a>
+                                  </figure>
+                                  <div class="media-body" style="display: flex;">
+                                      <h6 class="music_title">
+                                        <a>{{ music.title }}</a>
+                                      </h6>
+                                  </div>
+                              </div>
+                            </div>
+                            {% endfor %}
+                          </div>
+                              {% for report in object.post_comment_reports.all %}
+                                <p class="mb-1">{{ forloop.counter }}. {{ report.get_type_display }}</p>
+                                {% if report.description %}<p class="mb-2">{{ report.description }}</p>{% endif %}
+                              {% endfor %}
+                                <div class="border-top btn_console">
+                                  <a href="#" class="post_comment_delete_window">Удалить</a>
+                                | <a href="#" class="post_comment_rejected">Отклонить</a>
+                                </div>
+                        </div>
+                      </div>
+                  </div>
+                  {% endfor %}
+
+              {% else %}
+              <div class="card centered">
+                <div class="card-body">
+                <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M22 13h-8v-2h8v2zm0-6h-8v2h8V7zm-8 10h8v-2h-8v2zm-2-8v6c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2zm-1.5 6l-2.25-3-1.75 2.26-1.25-1.51L3.5 15h7z"/></svg>
+                </div>
+                <h6 style="margin: 20px;text-align: center;">Жалоб на комментарии к записям нет...</h6>
+              </div>
+              {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-3 col-lg-4"></div>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+
+<div class="container mt-3">
+
+  <span class="load_block">
+  <div class="media mt-3" class="uuid_saver" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
+    <h5 class="mt-1">
+      <p>
+        <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count }}) - альбом
+        <a class="underline ajax" href="{{ list.community.get_link }}">{{ list.community.name }}</a>
+      </p>
+      {% include 'desctop/generic/items/list_meta.html' %}
+    </h5>
+  </div>
+  <div class="container-fluid">
+    {% if not list.is_open %}
+      {% load user %}
+      {% include list|get_bad_item:request.user %}
+
+    {% elif object_list %}
+    <div class="row is_block_paginate drag_container is_stat_list" data-pk="{{ list.pk }}" owner-pk="{{ list.community.pk }}" data-type="community_photo_list">
+
+      {% for object in object_list %}
+      <div class="row_item pointer hide_shower detail_photo" photo-pk="{{ object.pk }}">
+        <div class="progressive replace" data-href="{{ object.file.url }}">
+          <img class="preview image_fit_200" src="{{ object.get_preview }}" alt="img">
+        </div>
+      </div>
+      {% endfor %}
+      {% if page_obj.has_next %}
+        <div class="load centered m-1 next_page_list" data-link="{% url 'load_photo_list' pk=list.pk %}?page={{ page_obj.next_page_number }}">
+            <img src="/static/images/preloader.gif">
+        </div>
+      {% endif %}
+
+    </div>
+    {% else %}
+      {% include 'desctop/communities/photos/main_list/no_photos.html' %}
+    {% endif %}
+  </div>
+  </span>
+</div>

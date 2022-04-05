@@ -1,0 +1,11 @@
+{% include 'mobile/main/u_posts/card_header.html' %}
+
+{% if object.parent.text %}
+  <div class="fullscreen text_support pointer">
+    {{ object.parent.text|safe }}
+  </div>
+{% endif %}
+
+{% for playlist in object.parent.get_attach_music_list %}
+  {% include 'mobile/generic/items/u_music_list.html' %}
+{% endfor %}

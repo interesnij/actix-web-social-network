@@ -1,0 +1,32 @@
+
+    <form>
+      {% csrf_token %}
+      <input type="hidden" name="type" value="{{ type }}" class="item_type">
+            <div class="card-header border-bottom">
+              <h6 class="content-color-primary mb-0">
+                <span style="font-weight:bold">Добавить {{ object.get_description|safe }}</span>
+                <br>
+                <span id="toggle_case_item_repost" class="underline" data-flag="create_repost_btn">Репост</span>
+                {% if can_copy_item %}
+                  &nbsp;
+                  <span id="toggle_case_item_copy" class="pointer" data-flag="create_copy_btn">Копия</span>
+                {% endif %}
+              </h6>
+            </div>
+            <div class="card-body">
+              <span class="repost_case">
+                {% include 'desctop/generic/repost/lists_choice.html' %}
+                {% include 'desctop/generic/repost/form.html' %}
+              </span>
+
+              {% if object.can_see_el %}
+              <span class="copy_case is_list" style="display:none">
+                {% include 'desctop/generic/repost/profile_choice.html' %}
+              </span>
+              {% endif %}
+            </div>
+            <div class="card-footer">
+                <button class="btn border item_fullscreen_hide">Отмена</button>
+                <button type="button" class="btn btn-success float-right" id="create_repost_btn">Поделиться</button>
+            </div>
+    </form>

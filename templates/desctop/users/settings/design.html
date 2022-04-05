@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Изменение профиля - внешний вид{% endblock %}
+{% block content %}
+<div class="mt-4 main-container">
+  <div class="row">
+        <div class="col-md-9">
+          <div class="card mb-3">
+                <div class="card-header border-bottom">
+                    <h5 class="content-color-primary mb-0">Внешний вид</h5>
+                </div>
+                <div class="card-body">
+                <p class="content-color-primary page-sub-title-small mt-2">
+                  <span class="icon-circle mr-2">
+                    <svg fill="currentColor" class="svg_default" style="width: 50px;" viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+
+                  </span>
+                  Цвет фона
+                </p>
+                <div class="row">
+                <ul class="list-group list-group-flush w-100">
+                    <li class="list-group-item">
+                        <div class="theme-color" style="display: block;">
+                            <div class="custom-control custom-radio color_change" data-color="white">
+                                <input {% if user.color_settings.color == 'white' %} checked {% endif %} type="radio" id="color_white" class="custom-control-input">
+                                <label class="custom-control-label bg-white" for="color_white"></label>
+                            </div>
+                            <div class="custom-control custom-radio color_change" data-color="dark-blue">
+                                <input {% if user.color_settings.color == 'dark-blue' %} checked {% endif %} type="radio" id="color_dark_blue" class="custom-control-input">
+                                <label class="custom-control-label dark-blue" for="color_dark_blue"></label>
+                            </div>
+                            <div class="custom-control custom-radio color_change" data-color="dark-purple">
+                                <input {% if user.color_settings.color == 'dark-purple' %} checked {% endif %} type="radio" id="color_dark_purple" class="custom-control-input">
+                                <label class="custom-control-label dark-purple" for="color_dark_purple"></label>
+                            </div>
+                            <div class="custom-control custom-radio color_change" data-color="dark-maroon">
+                                <input {% if user.color_settings.color == 'dark-maroon' %} checked {% endif %} type="radio" id="color_dark_maroon" class="custom-control-input">
+                                <label class="custom-control-label dark-maroon" for="color_dark_maroon"></label>
+                            </div>
+                            <div class="custom-control custom-radio color_change" data-color="dark-pink">
+                                <input {% if user.color_settings.color == 'dark-pink' %} checked {% endif %} type="radio" id="color_dark_pink" class="custom-control-input">
+                                <label class="custom-control-label dark-pink" for="color_dark_pink"></label>
+                            </div>
+                            <div class="custom-control custom-radio color_change" data-color="dark-brown">
+                                <input {% if user.color_settings.color == 'dark-brown' %} checked {% endif %} type="radio" id="color_dark_brown" class="custom-control-input">
+                                <label class="custom-control-label dark-brown" for="color_dark_brown"></label>
+                            </div>
+                            <div class="custom-control custom-radio color_change" data-color="dark-green">
+                                <input {% if user.color_settings.color == 'dark-green' %} checked {% endif %} type="radio" id="color_dark_green" class="custom-control-input">
+                                <label class="custom-control-label dark-green" for="color_dark_green"></label>
+                            </div>
+                            <div class="custom-control custom-radio color_change" data-color="red">
+                                <input {% if user.color_settings.color == 'red' %} checked {% endif %} type="radio" id="color_red" class="custom-control-input">
+                                <label class="custom-control-label red" for="color_red"></label>
+                            </div>
+                            <div class="custom-control custom-radio color_change" data-color="purple">
+                                <input {% if user.color_settings.color == 'purple' %} checked {% endif %} type="radio" id="color_purple" class="custom-control-input">
+                                <label class="custom-control-label purple" for="color_purple"></label>
+                            </div>
+                            <div class="custom-control custom-radio color_change" data-color="blue">
+                                <input {% if user.color_settings.color == 'blue' %} checked {% endif %} type="radio" id="color_blue" class="custom-control-input">
+                                <label class="custom-control-label blue" for="color_blue"></label>
+                            </div>
+                            <div class="custom-control custom-radio color_change" data-color="skyblue">
+                                <input {% if user.color_settings.color == 'skyblue' %} checked {% endif %} type="radio" id="color_skyblue" class="custom-control-input">
+                                <label class="custom-control-label skyblue" for="color_skyblue"></label>
+                            </div>
+                            <div class="custom-control custom-radio color_change" data-color="teal">
+                                <input {% if user.color_settings.color == 'teal' %} checked {% endif %} type="radio" id="color_steal" class="custom-control-input">
+                                <label class="custom-control-label teal" for="color_steal"></label>
+                            </div>
+                            <div class="custom-control custom-radio color_change" data-color="orange">
+                                <input {% if user.color_settings.color == 'orange' %} checked {% endif %} type="radio" id="color_orange" class="custom-control-input">
+                                <label class="custom-control-label orange" for="color_orange"></label>
+                            </div>
+                            <div class="custom-control custom-radio color_change" data-color="brown">
+                                <input {% if user.color_settings.color == 'brown' %} checked {% endif %} type="radio" id="color_brown" class="custom-control-input">
+                                <label class="custom-control-label brown" for="color_brown"></label>
+                            </div>
+                            <div class="custom-control custom-radio color_change" data-color="grey">
+                                <input {% if user.color_settings.color == 'grey' %} checked {% endif %} type="radio" id="color_grey" class="custom-control-input">
+                                <label class="custom-control-label grey" for="color_grey"></label>
+                            </div>
+                            <div class="custom-control custom-radio color_change" data-color="dark-grey">
+                                <input {% if user.color_settings.color == 'dark-grey' %} checked {% endif %} id="color_dark" type="radio" class="custom-control-input">
+                                <label class="custom-control-label dark" for="color_dark"></label>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 left_menu">
+          {% include 'desctop/users/settings/menu.html' %}
+        </div>
+
+      </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,11 @@
+<div class="card mb-3 post_detail is_stat_list" data-pk="{{ object.pk }}" data-type="community_post">
+    {% include 'desctop/posts/post_community/card_header.html' %}
+
+    <div class="text_support">
+      {{ object.text|safe }}
+    </div>
+
+    {% include 'desctop/generic/items/post.html' %}
+
+    {% include 'desctop/posts/post_community/info.html' %}
+</div>

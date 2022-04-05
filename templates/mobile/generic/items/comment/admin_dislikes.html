@@ -1,0 +1,13 @@
+{% load liked_user %}
+
+{% if object_list %}
+<div class="like_pop" style="margin:15px">
+  <span>{{ text }} {{ item.like }} {{ item.like|rupluralize:"человек,человека,людей" }}</span>
+  <br><br>
+  <span style="display: flex;">
+    {% for voter in object_list %}
+      {% include 'mobile/generic/user/voter.html' %}
+    {% endfor %}
+  </span>
+</div>
+{% endif %}

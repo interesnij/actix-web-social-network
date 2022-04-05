@@ -1,0 +1,52 @@
+{% extends "base_mobile.html" %}
+{% block title %}Посещаемость по дням{% endblock %}
+{% load post_count %}
+{% block content %}
+
+<div class="main-container container mt-3">
+
+  {% include 'mobile/communities/manage/menu.html' %}
+
+        <div class="card">
+          <div class="card-header">
+              <div class="media">
+                  <div class="media-body">
+                    <h5 class="mt-1">Посещаемость по дням -
+                      {% include 'mobile/generic/community/community.html' %}
+                    </h5>
+									</div>
+
+                <button class="btn border dropdown-toggle mb-2 menu_drop">
+                    День
+                </button>
+                <div class="dropdown-menu" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 60px; right: 0px; will-change: transform;">
+                  <a class="dropdown-item ajax" href="{% url 'community_traffic_week' user.pk %}">Неделя</a>
+                  <a class="dropdown-item ajax" href="{% url 'community_traffic_month' user.pk %}">Месяц</a>
+                  <a class="dropdown-item ajax" href="{% url 'community_traffic_year' user.pk %}">Год</a>
+                </div>
+
+              </div>
+          </div>
+
+          <div class="card-body px-0 py-0">
+            {% if views %}
+            <div class="table-responsive">
+            <canvas id="canvas"
+                    dates='{% for day in days %}{{ day|date:"d.m" }}{% if not forloop.last %},{% endif %}{% endfor %}'
+                    label_1="Уникальные просмотры"
+                    label_2="Все просмотры"
+                    data_1="{% for view in un_views %}{{ view }}{% if not forloop.last %},{% endif %}{% endfor %}"
+                    data_2="{% for view in views %}{{ view }}{% if not forloop.last %},{% endif %}{% endfor %}"
+                    style="height: 20rem !important">
+            </canvas>
+            </div>
+            {% else %}
+            <div><h5 class="mt-4 mb-2" style="margin:10px">Статистических данных пока нет.</h5></div>
+            {% endif %}
+
+            {{ mf_ages|safe }}
+          </div>
+        </div>
+    </div>
+
+{% endblock %}

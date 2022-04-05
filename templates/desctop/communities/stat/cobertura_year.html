@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Охват по годам{% endblock %}
+{% load post_count %}
+{% block content %}
+
+<div class="container main-container">
+<div class="row">
+    <div class="col-md-9 order-1">
+        <div class="card">
+          <div class="card-header">
+              <div class="media">
+                  <div class="media-body">
+										<h5 class="mt-1">Охват по годам -
+											{% include 'desctop/generic/community/community.html' %}
+										</h5>
+									</div>
+                  <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle mb-2 drop">
+                    Год
+                </button>
+                <div class="dropdown-menu" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
+                  <a class="dropdown-item ajax" href="{% url 'community_cuberture_month' community.pk %}">Месяц</a>
+                  <a class="dropdown-item ajax" href="{% url 'community_cuberture_week' community.pk %}">Неделя</a>
+                  <a class="dropdown-item ajax" href="{% url 'community_cuberture_day' community.pk %}">День</a>
+                </div>
+            </div>
+              </div>
+          </div>
+
+          <div class="card-body px-0 py-0">
+            {% if views %}
+						<canvas id="canvas"
+										dates='{% for object in years %} {{ object|date:"Y" }} г.{% if not forloop.last %},{% endif %}{% endfor %}'
+										label_1="Общий охват"
+										label_2="Рекламный охват"
+										data_1="{% for view in views %}{{ view }}{% if not forloop.last %},{% endif %}{% endfor %}"
+										data_2="0">
+            </canvas>
+            {% else %}
+                <div><h5 class="mt-4 mb-2" style="margin:10px">Статистических данных пока нет.</h5></div>
+            {% endif %}
+
+            {{ mf_ages|safe }}
+          </div>
+        </div>
+    </div>
+
+		{% include 'desctop/communities/stat/menu.html' %}
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,56 @@
+<div class="main-container mt-3" data-pk="{{ list.pk }}" data-type="community_photo_list">
+
+<span class="load_block pk_saver">
+  {% if is_user_can_see_photo_section %}
+
+<div class="media mt-3" style="padding-left: 7px;" data-type="lph{{ list.pk }}">
+  <span class="text_support">
+  Фотоальбом <a href="{{ list.community.get_link }}" class="ajax i_link font-weight">
+    - {{ list.community.name }}
+  </a>
+  </span>
+  <form class="uuid_saver" data-uuid="{{ list.uuid }}" data-pk="{{ list.pk }}">
+    {% csrf_token %}
+    <h5 class="mt-1">
+      <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count_items }})
+      {% if is_user_can_create_photos and list.is_have_add %}
+        <input type="file" accept="image/*" class="case_all_input add_photos_in_list" name="file" style="display:none" multiple="multiple">
+        <a class="pointer previous_click hide_delete" tooltip="Добавить фото" flow="up">
+          <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+        </a>
+      {% endif %}
+      {% include 'desctop/generic/items/list_meta.html' %}
+    </h5>
+    <span id="onload_info"></span>
+  </form>
+</div>
+
+{% if not list.is_open %}
+  {% load user %}
+  {% include list|get_bad_item:request.user %}
+
+{% elif object_list %}
+  <div class="row is_paginate is_block_paginate drag_container is_stat_list" data-pk="{{ list.pk }}" owner-pk="{{ list.community.pk }}" data-type="community_photo_list">
+
+    {% for object in object_list %}
+    <div class="row_item pointer hide_shower detail_photo" photo-pk="{{ object.pk }}">
+      <div class="progressive replace" data-href="{{ object.file.url }}">
+        <img class="preview image_fit_200" src="{{ object.get_preview }}" alt="img">
+      </div>
+    </div>
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <div class="load centered m-1 next_page_list" data-link="{% url 'load_photo_list' pk=list.pk %}?page={{ page_obj.next_page_number }}">
+          <img src="/static/images/preloader.gif">
+      </div>
+    {% endif %}
+
+  </div>
+  {% else %}
+    {% include 'desctop/users/photos/main_list/no_photos.html' %}
+  {% endif %}
+  </span>
+</div>
+{% else %}
+  {% include 'desctop/generic/centered/private_page.html' %}
+{% endif %}

@@ -1,0 +1,20 @@
+{% extends "base_mobile.html" %}
+{% block title %} {{ community.name }} - сообщество удалено{% endblock %}
+{% block meta %}
+<meta property="og:url" content="dvizhenie.tv" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="" />
+<meta property="og:image" content="{% if user.profile.avatar %}http://xn--b1afgj5al1e.xn--p1acf/{{ user.profile.avatar }}{% else %}/static/images/user.png{% endif %}"/>
+{% endblock %}
+{% block content %}
+
+<div class="card mt-3 centered">
+  <div class="card-body" style="margin-top: 10%;">
+  <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><g><rect fill="none" height="24" width="24"/></g><g><path d="M14,8c0-2.21-1.79-4-4-4S6,5.79,6,8s1.79,4,4,4S14,10.21,14,8z M17,10v2h6v-2H17z M2,18v2h16v-2c0-2.66-5.33-4-8-4 S2,15.34,2,18z"/></g></svg>
+  </div>
+  <h6 style="text-align: center;margin-bottom: 20px;" class="text-center">
+    Сообщество удалено.
+  </h6>
+</div>
+
+{% endblock %}

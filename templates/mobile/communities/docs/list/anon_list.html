@@ -1,0 +1,60 @@
+{% extends "base_anon_mobile.html" %}
+{% block title %}Документы {{ community.name }} - {{ list.name }}{% endblock %}
+{% block meta %}
+<meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/communities/{{ community.pk }}/doc_list/{{ list.uuid }}" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Документы сообщества {{ community.name }} - {{ list.name }}" />
+<meta property="og:image" content="https://xn--b1afgj5al1e.xn--p1acf{{ community.get_b_avatar }}"/>
+{% endblock %}
+{% block content %}
+
+<div class="container main-container mt-3" data-pk="{{ list.pk }}" data-type="community_docs_list">
+  {% if is_user_can_see_doc_section %}
+          <div class="input-group mb-3">
+            <input type="text" class="form-control form-control-sm" placeholder="Поиск документов">
+            <div class="input-group-append">
+              <button class="btn btn-sm border" type="button">Искать</button>
+            </div>
+          </div>
+          <span class="load_block pk_saver" data-pk="{{ community.pk }}">
+
+          <div class="media mt-3 uuid_saver" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
+            <h5 class="mt-1">
+              <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count_items }})
+              <span class="pointer badge badge-light-primary copy_link">Копировать ссылку</span>
+            </h5>
+          </div>
+          <div class="card mb-2">
+              <div class="card-body">
+                    <ul class="is_paginate is_stat_list" data-pk="{{ list.pk }}" data-type="{% if list.community %}community{% else %}user{% endif %}_doc_list">
+                      {% if not list.is_open %}
+                        {% load user %}
+                        {% include list|get_bad_item:request.user %}
+
+                      {% elif object_list %}
+                      {% for object in object_list %}
+                        {% include 'mobile/communities/docs/anon_doc.html' %}
+                      {% endfor %}
+                      {% if page_obj.has_next %}
+                      <div class="load centered m-1 next_page_list" data-link="{% url 'community_docs_list' pk=community.pk uuid=list.uuid %}?page={{ page_obj.next_page_number }}">
+                          <img src="/static/images/preloader.gif">
+                      </div>
+                      {% endif %}
+
+                      {% else %}
+                      <div class="card centered">
+                        <div class="card-body" style="margin-top: 10%;">
+                        <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'><path fill='none' d='M0 0h24v24H0z'/><path d='M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z'/></svg>
+                        </div>
+                        <h6 style="margin: 20px;text-align: center;">В списке нет музыки. <a href="{% url 'all_music' %}" class="ajax underline">Перейдите в каталог</a> музыкальных композиций и выбирайте из сотен тысяч треков</h6>
+                      </div>
+                      {% endif %}
+                    </ul>
+              </div>
+          </div>
+      </span>
+      {% else %}
+        {% include 'desctop/generic/centered/private_page.html' %}
+      {% endif %}
+</div>
+{% endblock %}

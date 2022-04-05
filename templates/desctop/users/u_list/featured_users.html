@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Возможные друзья{% endblock %}
+{% block content %}
+
+<div class="main-container">
+<div class="row">
+    <div class="col-md-8 mt-3">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control form-control-sm" placeholder="Поиск">
+            <div class="input-group-append">
+                <button class="btn btn-sm border" type="button">Искать</button>
+            </div>
+        </div>
+        <div class="card mb-2">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                        <h5 class="mt-1">
+                          Возможные друзья
+                          <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ user.get_featured_friends_count }}</small>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body px-0 py-0">
+              <ul class="list-group is_paginate">
+                  {% if object_list %}
+                  {% for user in object_list %}
+                  <li class="list-group-item">
+                      <div class="media">
+                          {% include 'desctop/generic/user/figure.html' %}
+                          <div class="media-body">
+                              {% include 'desctop/generic/user/user.html' %}
+                              <a class="small pointer">Написать сообщение</a>
+                          </div>
+                      </div>
+                  </li>
+                  {% endfor %}
+                  {% if page_obj.has_next %}
+                  <div class="load centered m-1 next_page_list" data-link="{% url 'featured_users' %}?page={{ page_obj.next_page_number }}">
+                      <img src="/static/images/preloader.gif">
+                  </div>
+                  {% endif %}
+
+                  {% else %}
+                  <div class="card centered">
+                      <div class="card-body">
+                          <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24">
+                              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                              <path d="M0 0h24v24H0z" fill="none" /></svg>
+                      </div>
+                      <h6 style="margin: 20px;text-align: center;"> Возможных друзей нет...</h6>
+                  </div>
+                  {% endif %}
+              </ul>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        {% include 'desctop/users/profile/my_list_user_sidebar.html' %}
+    </div>
+</div>
+</div>
+{% endblock %}

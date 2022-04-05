@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Теги буквы {{ symbol.name }}{% endblock %}
+
+{% block content %}
+
+<div class="container mt-3 main-container">
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-8">
+          <br>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control form-control-sm" placeholder="Поиск по {{ symbol.name }}">
+            <div class="input-group-append">
+              <button class="btn btn-sm border" type="button">Искать</button>
+            </div>
+          </div>
+          <div class="card mb-2">
+              <div class="card-header">
+                <div class="media">
+                  <div class="media-body">
+                      <h5 class="mt-1">Теги буквы {{ symbol.name }}
+                        <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ symbol.get_tags_count }}</small>
+                      </h5>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                {% if object_list %}
+
+                <div class="is_paginate">
+                {% for object in object_list %}
+                <div class="col-12">
+                  <div class="card mb-3">
+                      <div class="card-body">
+                          <div class="media">
+                              <div class="media-body">
+                                  <p class="mb-0">{% for genre in object.get_genres %}{{ genre.name }}{% if not forloop.last%}, {% endif %}&nbsp;{% endfor %}</p>
+                                  <h4 class="mb-0">
+                                    <a class="ajax" href="{% url 'tag_all_music' pk=object.pk %}">
+                                       {{ object.name }}
+                                    </a>
+                                  </h4>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+                {% endfor %}
+
+                </div>
+                {% endif %}
+              </div>
+          </div>
+
+        </div>
+        <div class="col-12 col-md-4">
+            <br>
+            <div class="card mb-2">
+                <div class="card-header">
+                  <div class="media">
+                      <div class="media-body">
+                        <h5 class="mt-1">
+                          <a href="{% url 'all_music' %}" class="ajax">Каталог музыки</a>
+                        </h5>
+                      </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,9 @@
+{% load liked_user %}
+
+<div class="card-footer border-top py-2 video_display" data-pk="{{ user.pk }}" data-uuid="{{ object.uuid }}">
+    <div class="row">
+      <div class="col interaction" data-type="vid{{ object.pk }}">
+        {% include 'desctop/generic/items/anon_item_footer.html' %}
+      </div>
+    </div>
+</div>

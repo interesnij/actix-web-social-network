@@ -1,0 +1,36 @@
+<form id="add_community_form" class="is_stat_list" data-pk="{{ request.user.pk }}" data-type="create_user_community">
+  {% csrf_token %}
+  <div class="card mb-3">
+    <div class="card-header border-bottom">
+      <h5 class="content-color-primary mb-0">Создание сообщества</h5>
+    </div>
+    <div class="card-body">
+      <div class="form-group ">
+        <label>Название</label>
+        <input type="text" name="name" class="form-control" id="id_name">
+      </div>
+      <div class="form-group ">
+        <label>Категория</label>
+        <select class="form-control" id="sub_category" data-live-search="true" tabindex="-1" aria-hidden="true">
+          <option value="">Выберите тематику</option>
+          {% for object in categories %}
+          <option data-order="{{ object.order }}" value="{{ object.order }}">{{ object.name }}</option>
+          {% endfor %}
+        </select>
+        <div id="subcat"></div>
+      </div>
+      <div class="form-group ">
+        <label>Тип открытости</label>
+        <select class="form-control" id="id_type" name="type" data-live-search="true" tabindex="-1" aria-hidden="true">
+          <option value="PUB">Публичный</option>
+          <option value="CLO">Закрытый</option>
+          <option value="PRI">Частный</option>
+        </select>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-sm border this_mob_fullscreen_hide">Отмена</button>
+      <button type="button" class="btn btn-sm btn-success float-right" id="add_community_btn">Создать</button>
+    </div>
+  </div>
+</form>

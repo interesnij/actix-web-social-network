@@ -1,0 +1,58 @@
+
+<span class="text-hide-xs">
+  {% if next %}
+    <a class="next_item" href="{% url 'post_photo_detail' pk=next.pk post_pk=post.pk %}">
+      <svg fill="currentColor" viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
+    </a>
+  {% endif %}
+  {% if prev %}
+    <a class="prev_item" href="{% url 'post_photo_detail' pk=prev.pk post_pk=post.pk %}">
+      <svg fill="currentColor" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
+    </a>
+  {% endif %}
+
+</span>
+
+<div class="mb-3 data_display is_stat_list" data-type="community_photo" data-pk="{{ object.pk }}" owner-pk="{{ community.pk }}">
+  <div class="row">
+    <div class="col-lg-8 col-md-7 col-sm-12 order-1">
+      <div class="card rounded-0 border-0 mb-3">
+        {% if object.file %}
+          <img style="width: 100%;" src="{{ object.file.url }}" alt="">
+        {% else %}
+          <svg class="svg_default" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z"/></svg>
+        {% endif %}
+    </div>
+
+<span class="btn_settings_photo">
+  <span id="btn_console" data-type="pho{{ object.pk }}">
+    {% if request.user.is_moderator %}
+      <span class="create_close pointer">Закрыть</span>
+    {% else %}
+      <span class="create_claim pointer">Пожаловаться</span>
+    {% endif %}
+    <span class="copy_link pointer">Скопировать ссылку</span>
+  </span>
+  </div>
+    <div class="col-lg-4 col-md-5 col-sm-12 order-2 ">
+      <div class="card-header">
+          <div class="media">
+            {% include 'desctop/generic/community/figure.html' %}
+              <div class="media-body">
+                  <h6 class="mb-0">
+                    {% include 'desctop/generic/community/community.html' %}
+                  </h6>
+                  <p class="mb-0">{{ object.get_created }}</p>
+              </div>
+          </div>
+      </div>
+        {% if object.description %}
+          {{ object.description }}
+        {% else %}
+          <p>Нет описания</p>
+        {% endif %}
+      <br><br>
+      {% include 'desctop/gallery/c_photo/info.html' %}
+    </div>
+  </div>
+</div>

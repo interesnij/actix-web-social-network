@@ -1,0 +1,32 @@
+{% load user %}
+
+<li class="list-group-item u_doc" style="padding-bottom:10px">
+    <div class="media" style="align-items: unset;position: relative;">
+        <div class="media-body doc_media_body">
+            <h6 class="pointer mb-0" style="width: 84%;overflow: hidden;"><a href="{{ object.file.url }}" target="_blank" rel="nofollow">{{ object.title }}</a></h6>
+            <span class="small {% if request.user.pk == list.creator.pk %}handle{% endif %}">{{ object.file.size|filesizeformat }} | {{ object.get_mime_type }}</span>
+            <span class='span_btn' data-pk="{{ object.pk }}">
+                <div class="dropdown" style="position: inherit;">
+                    <a class="btn_default drop pointer">
+                        <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M0 0h24v24H0z" fill="none" />
+                            <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+                        </svg>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" data-type="doc{{ object.pk }}" style="top: 25px;">
+                      <span class="dropdown-item create_repost">Добавить</span>
+                      {% if object|is_user_can_edit_delete:request.user %}
+                        <span class="dropdown-item doc_edit">Изменить</span>
+                        <span class="dropdown-item doc_remove">Удалить</span>
+                      {% elif request.user.is_moderator %}
+                        <span class="dropdown-item create_close">Закрыть</span>
+                      {% else %}
+                        <span class="dropdown-item create_claim">Пожаловаться</span>
+                      {% endif %}
+                      <span class="dropdown-item copy_link">Копировать ссылку</span>
+                    </div>
+                </div>
+            </span>
+        </div>
+    </div>
+</li>

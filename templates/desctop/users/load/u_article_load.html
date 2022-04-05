@@ -1,0 +1,56 @@
+
+<div class="card mb-4">
+  <div class="card-header border-bottom">
+    <h5 class="content-color-primary mb-0">Прикрепление статей</h5>
+  </div>
+  <div class="card-body border-bottom">
+{% if object_list %}
+<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="articles_load_container is_block_paginate">
+{% for object in object_list %}
+<div class="col-md-4 mb-3">
+     <div class="jumbotron mb-3 bg-dark text-center has-background-img position-relative box-shadow">
+         <div class="row align-items-center no-gutters">
+                <figure class="background-img article_load_one pointer" data-uuid="{{ object.uuid }}">
+                  {% if object.g_image %}
+                    <img class="image_fit_200" src="{{ object.g_image.url }}" alt="">
+                  {% else %}
+                    <img src="/static/images/no-image.jpg" />
+                  {% endif %}
+                </figure>
+                <span class="custom_color border item_attach_circle article_load_several"
+                     tooltip="Выбрать несколько"
+                     flow="up">
+                     <svg class="svg_default" fill="currentColor" viewBox="2 2 20 20">
+                       <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"/>
+                     </svg>
+                </span>
+                <div class="container article_info">
+                  <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none text-white border-white "></i>
+                  <br>
+                  <h2 class="text-white article_title">{{ object.title}}</h2>
+                  <p class="lead text-white">Автор {{ object.creator.get_full_name }}</p>
+                  <hr class="my-3">
+                  <a class="btn btn-primary">Читать</a>
+                </div>
+        </div>
+
+    </div>
+  </div>
+  {% endfor %}
+  {% if page_obj.has_next %}
+  <div class="load centered m-1 next_page_list" data-link="/users/load/u_article_load/?page={{ page_obj.next_page_number }}">
+      <img src="/static/images/preloader.gif">
+  </div>
+  {% endif %}
+</div>
+
+{% else %}
+<div class="card mb-3 centered">
+  <div class="card-body">
+  <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M22 13h-8v-2h8v2zm0-6h-8v2h8V7zm-8 10h8v-2h-8v2zm-2-8v6c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2zm-1.5 6l-2.25-3-1.75 2.26-1.25-1.51L3.5 15h7z"/></svg>
+  </div>
+  <h6 style="text-align: center;margin: 20px;"> У Вас нет статей.</h6>
+</div>
+{% endif %}
+</div>
+</div>

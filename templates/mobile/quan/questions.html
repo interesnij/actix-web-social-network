@@ -1,0 +1,50 @@
+{% extends "base_mobile.html" %}
+{% block title %}Вопросы - {{ category.name_ru }}{% endblock %}
+{% block meta %}
+<meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/quan/{{ category.name_ru }}" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Вопросы - {{ category.name_ru }}" />
+<meta property="og:image" content="https://xn--b1afgj5al1e.xn--p1acf/static/images/meta.jpg"/>
+{% endblock %}
+{% block content %}
+
+<div class="container mt-3 main-container" data-type="page_quan">
+        <div class="card mb-2">
+          <div class="card-header p-0">
+                  <button type="button" class="btn border dropdown-toggle menu_drop" style="width:100%;">
+                      Вопросы и ответы
+                  </button>
+                  <div class="dropdown-menu" style="transform: translate3d(0px, 38px, 0px); right: 15px;left: 15px;top: 45px;">
+                    <a class="dropdown-item ajax" href="{% url 'quan' %}">Популярные вопросы</a>
+                      {% for object in quest_categories %}
+                        {% if category.pk != object.pk %}
+                          <a class="dropdown-item ajax" href="{% url 'quan_categories' cat_name=object.name_en %}">{{ object.name_ru }}</a>
+                        {% endfor %}
+                      {% endfor %}
+                  </div>
+          </div>
+
+          <div class="card-body px-0 py-0">
+              <ul class="list-group is_paginate">
+                  {% for object in object_list %}
+                  <div class="card pag">
+                      <a class="menu_drop" style="margin: 20px;cursor:pointer;margin-top: 0;">
+                          {{ object.quest}}
+                      </a>
+                      <div class="collapse ckeditor_support">
+                           <div class="card-body">{{ object.content|safe }}</div>
+                      </div>
+                   </div>
+                  {% empty %}
+                  <div class="card">
+                    <div class="card-body">
+                      Пока нет вопросов у матросов...
+                    </div>
+                  </div>
+                  {% endfor %}
+              </ul>
+          </div>
+        </div>
+    </div>
+
+{% endblock %}

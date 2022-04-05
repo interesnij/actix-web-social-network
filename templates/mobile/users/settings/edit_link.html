@@ -1,0 +1,19 @@
+<form id="u_edit_link_form" class="contact-form">
+    {% csrf_token %}
+    <div class="card mb-3">
+        <div class="card-header border-bottom">
+            <h5 class="content-color-primary mb-0">Изменение ссылки пользователя</h5>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label>Ссылка</label>
+                <input type="text" value="{{ user.get_slug }}" name="link" class="form-control">
+            </div>
+            <div class="user_link_response mb-2 mt-2"></div>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-sm border this_mob_fullscreen_hide">Отмена</button>
+            <button type="button" class="btn btn-sm btn-sm btn-success float-right" id="u_edit_link_btn">Изменить</button>
+        </div>
+    </div>
+</form>

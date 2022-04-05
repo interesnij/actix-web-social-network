@@ -1,0 +1,19 @@
+{% load user %}
+
+
+<span style="margin-bottom: 10px;position:relative;" class="centered dropdown">
+  {% if request.user|is_you_block:user.pk %}
+    <button class="btn btn-sm border" disabled style="width: -webkit-fill-available">Вы заблокированы</button>
+  {% else %}
+    <button class="btn btn-sm border follow_create" style="width: -webkit-fill-available">Добавить в друзья</button>
+  {% endif %}
+
+  <button style="margin-left:5px;" class="btn btn-sm border">
+    <svg style="width: 17px;height: 17px; "fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+  </button>
+  <div class="dropdown-menu" data-type="use{{ user.pk }}" style="width:100%">
+    <span class="dropdown-item user_block">Заблокировать</span>
+    <span class="dropdown-item create_repost">Поделиться</span>
+    <span class="dropdown-item create_close" style="font-weight: bold;">Закрыть</span>
+  </div>
+</span>

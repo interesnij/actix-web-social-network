@@ -1,0 +1,14 @@
+{% load get_key %}
+
+  {% for object in list %}
+  <li data-path="{{ object.uri }}"
+      {% if object.artwork_url %}
+      data-thumbpath="{{ object.artwork_url.url }}"
+      {% endif %}
+      data-title="{{ object.title }}"
+      data-duration="{{ object.duration }}"
+      data-add="{% if not request.user|is_track_exists:object.id %}true{% else %}false{% endif %}"
+			data-track-id="{{ object.pk }}">
+  </li>
+
+  {% endfor %}

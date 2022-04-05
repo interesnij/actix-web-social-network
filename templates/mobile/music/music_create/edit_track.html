@@ -1,0 +1,18 @@
+<form class="is_stat_list" data-pk="{{ track.pk }}" data-type="edit_track">
+    {% csrf_token %}
+      <div class="card">
+          <div class="card-header border-bottom">
+              <h5 class="content-color-primary mb-0">Изменение аудиозаписи</h5>
+          </div>
+          <div class="card-body">
+                <div class="form-group">
+                  <label>Название</label>
+                  <input type="text" value="{{ track.title }}" name="title" class="form-control" id="id_title">
+                </div>
+          </div>
+          <div class="card-footer">
+              <button class="btn btn-sm border item_fullscreen_hide">Отмена</button>
+              <button type="button" class="btn btn-sm btn-success float-right" id="edit_track_btn">Изменить</button>
+          </div>
+      </div>
+  </form>

@@ -1,0 +1,96 @@
+{% load liked_user %}
+
+<div class="row mb-3">
+   {% if user.count_followers %}
+   <div class="col text-center">
+     <div class="media">
+       <div class="media-body">
+         <h4 class="content-color-primary mb-0">
+           <a href="{% url 'follows' pk=user.pk %}" class="ajax">
+             {{ user.count_followers }}
+           </a>
+         </h4>
+         <p class="content-color-secondary mb-0">
+           <a href="{% url 'follows' pk=user.pk %}" class="ajax">
+             {{ user.count_followers|rupluralize:"подписчик,подписчика,подписчиков" }}
+           </a>
+         </p>
+       </div>
+     </div>
+   </div>
+   {% endif %}
+   {% if user.count_communities and is_community_open %}
+   <div class="col text-center">
+     <div class="media">
+       <div class="media-body">
+         <h4 class="content-color-primary mb-0">
+           <a href="{% url 'communities' pk=user.pk %}" class="ajax">
+             {{ user.count_communities }}
+           </a>
+          </h4>
+         <p class="content-color-secondary mb-0">
+           <a href="{% url 'communities' pk=user.pk %}" class="ajax">
+           {{ user.count_communities|rupluralize:"группа,группы,групп" }}
+           </a>
+         </p>
+       </div>
+     </div>
+   </div>
+  {% endif %}
+  {% if user.count_goods and is_good_open %}
+   <div class="col text-center">
+     <div class="media">
+       <div class="media-body">
+         <h4 class="content-color-primary mb-0">
+           <a href="{% url 'user_goods' pk=user.pk %}" class="ajax">
+             {{ user.count_goods }}
+            </a>
+         </h4>
+         <p class="content-color-secondary mb-0">
+           <a href="{% url 'user_goods' pk=user.pk %}" class="ajax">
+             {{ user.count_goods|rupluralize:"товар,товара,товаров" }}
+           </a>
+         </p>
+       </div>
+     </div>
+   </div>
+   {% endif %}
+
+   {% if user.is_have_music and is_music_open %}
+    <div class="col text-center">
+      <div class="media">
+        <div class="media-body">
+          <h4 class="content-color-primary mb-0">
+            <a href="{% url 'user_music' pk=user.pk %}" class="ajax">
+              {{ user.get_music_count }}
+            </a>
+          </h4>
+          <p class="content-color-secondary mb-0">
+            <a href="{% url 'user_music' pk=user.pk %}" class="ajax">
+              {{ user.get_music_count|rupluralize:"трек,трека,треков" }}
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% if user.get_video_count and is_video_open %}
+     <div class="col text-center">
+       <div class="media">
+         <div class="media-body">
+           <h4 class="content-color-primary mb-0">
+             <a href="{% url 'user_video' pk=user.pk %}" class="ajax">
+               {{ user.get_video_count }}
+             </a>
+           </h4>
+           <p class="content-color-secondary mb-0">
+             <a href="{% url 'user_video' pk=user.pk %}" class="ajax">
+               {{ user.get_video_count|rupluralize:"ролик,ролика,роликов" }}
+            </a>
+           </p>
+         </div>
+       </div>
+     </div>
+     {% endif %}
+
+ </div>

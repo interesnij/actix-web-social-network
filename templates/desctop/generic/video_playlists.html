@@ -1,0 +1,188 @@
+{% load static %}
+
+<ul id="video_playlists" style="display:none;">
+				<li data-source="video_playlist1" data-playlist-name="MY HTML PLAYLIST 1" data-thumbnail-path="/static/images/demo_video/p-html.jpg">
+					<p class="fwduvp-categories-title"><span class="fwduvp-header">Title: </span><span class="fwduvp-title">My HTML playlist 1</span></p>
+					<p class="fwduvp-categories-type"><span class="fwduvp-header">Type: </span>HTML</p>
+					<p class="fwduvp-categories-description"><span class="fwduvp-header">Description: </span>Created using <strong>HTML markup</strong>, all format are supported and it can have mixed video formats.</p>
+				</li>
+
+				<li data-source="video_mixedPlaylist" data-playlist-name="MY MIXED PLAYLIST 2" data-thumbnail-path="/static/images/demo_video/p-mixed.jpg">
+					<p class="fwduvp-categories-title"><span class="fwduvp-header">Title: </span><span class="fwduvp-title">My mixed playlist 2</span></p>
+					<p class="fwduvp-categories-type"><span class="fwduvp-header">Type: </span>MIXED</p>
+					<p class="fwduvp-categories-description"><span class="fwduvp-header">Description: </span>Created using <strong>HTML markup</strong>, videos are played self or external hosted. or Youtube.</p>
+				</li>
+
+				<li data-source="list=PLSVxfbEEYaTjyES8zsALvTFE-orFUAVmn"  data-playlist-name="MY YOUTUBE PLAYLIST 1" data-thumbnail-path="/static/images/demo_video/p-youtube.jpg">
+					<p class="fwduvp-categories-title"><span class="fwduvp-header">Title: </span><span class="fwduvp-title">Название плейлиста</span></p>
+					<p class="fwduvp-categories-type"><span class="fwduvp-header">Type: </span>YOUTUBE</p>
+					<p class="fwduvp-categories-description"><span class="fwduvp-header">Description: </span>Created by loading a Youtube playlist, video are loaded and played from Youtube.</p>
+				</li>
+			</ul>
+
+			<!--  HTML playlist -->
+			<ul id="video_playlist1" style="display:none;">
+
+				<li data-thumb-source="/static/images/demo_video/small-fwd.jpg"
+				    data-video-source="[{source:'http://трезвый.рус/static/images/demo_video/fwd-1080p.mp4', label:'small version'}, {source:'http://трезвый.рус/static/images/demo_video/fwd-1080p.mp4', label:'hd720'},{source:'http://трезвый.рус/static/images/demo_video/fwd-1080p.mp4', label:'hd1080'}]"
+						data-start-at-video="2"
+						data-poster-source="/static/images/demo_video/mp4-poster.jpg"
+						data-subtitle-soruce="[{source:'content/subtitles/english_subtitle.vtt', label:'English'}, {source:'content/subtitles/romanian_subtitle.vtt', label:'Romanian'},{source:'content/subtitles/spanish_subtitle.vtt', label:'Spanish'}]"
+						data-start-at-subtitle="1"
+						data-downloadable="yes">
+				<div data-video-short-description="">
+						<div>
+							<p class="video_title">Субтитры и выбор качества видео</p>
+							<p class="video_descriptions">Субтитры и выбор качества видео</p>
+						</div>
+					</div>
+				</li>
+
+				<li data-thumb-source="/static/images/demo_video/travel-thumbnail.jpg"
+				    data-video-source="http://трезвый.рус/static/images/demo_video/travel.mp4"
+						data-poster-source="/static/images/demo_video/travel-poster.jpg"
+						data-downloadable="yes">
+					<ul data-ads="">
+						<li data-source="https://www.youtube.com/watch?v=8EJ3zbKTWQ8"
+						    data-time-start="00:00:15"
+								data-time-to-hold-ads=4
+								data-thumbnail-source="/static/images/demo_video/thumbnail.jpg"
+								data-link="http://трезвый.рус"
+								data-target="_blank"
+								rel="noopener noreferrer">
+						</li>
+						<li data-source="https://www.youtube.com/watch?v=8EJ3zbKTWQ8"
+						    data-time-start="00:00:32"
+								data-time-to-hold-ads=4
+								data-thumbnail-source="/static/images/demo_video/thumbnail.jpg"
+								data-link="http://http://трезвый.рус"
+								data-target="_blank"
+								rel="noopener noreferrer">
+						</li>
+						<li data-source="http://трезвый.рус/static/images/demo_video/thumbnail.jpg"
+						    data-time-start="00:00:45"
+								data-time-to-hold-ads=4
+								data-add-duration="00:00:15"
+								data-thumbnail-source=""
+								data-link="http://www.webdesign-flash.ro/p/evp/content/images/ad.jpg"
+								data-target="_blank"
+								rel="noopener noreferrer">
+						</li>
+					</ul>
+					<div data-video-short-description="">
+						<div>
+							<p class="video_title">Собственнаые рекламные видео вставки</p>
+							<p class="video_description">Собственнаые рекламные видео вставки</p>
+						</div>
+					</div>
+					<div data-video-long-description="">
+						<div>
+							<p class="video_title">Pre, Middle, Post - Roll Advertisement</p>
+							<p class="video_description">Each video can contain a detailed description, the description can be formatted with CSS as you like. The description window and description button can be disabled individually for each video or globally for all video.</p>
+							<p class="fwduvp-link">For more information about this please follow <a href="http://www.webdesign-flash.ro/p/horizontal-gridfolio-pro/">this link</a>.</p>
+						</div>
+					</div>
+				</li>
+
+				<li data-thumb-source="/static/images/demo_video/earth-thumbnail.jpg" data-video-source="http://трезвый.рус/static/images/demo_video/earth.mp4" data-poster-source="/static/images/demo_video/earth-poster.jpg" data-downloadable="yes">
+					<div data-video-short-description="">
+						<div>
+							<p class="video_title">Баннеры на видео в нужныч местах</p>
+							<p class="video_description">Баннеры на видео в нужныч местах Баннеры на видео в нужныч местах</p>
+						</div>
+					</div>
+					<div data-video-long-description="">
+						<div>
+							<p class="video_title">Баннеры на видео в нужныч местах</p>
+							<p class="video_description">Баннеры на видео в нужныч местах. Это запись из окна поясненио о видео ролике</p>
+							<p class="fwduvp-link">For more information about this please follow <a href="http://www.webdesign-flash.ro/p/royal-3d-coverflow/">this link</a></p>
+						</div>
+					</div>
+					<div data-add-popup="">
+						<p data-image-path="http://трезвый.рус/static/images/demo_video/img.jpg" data-time-start="00:00:01" data-time-end="00:00:25" data-link="http://www.webdesign-flash.ro"></p>
+						<p data-image-path="http://трезвый.рус/static/images/demo_video/img.jpg" data-time-start="00:00:31" data-time-end="00:00:52" data-link="http://www.google.com"></p>
+					</div>
+				</li>
+			</ul>
+
+			<ul id="video_mixedPlaylist" style="display:none;">
+				<li data-thumb-source="content/thumbnails/small-fwd.jpg" data-video-source="[{source:'static/images/demo_video/fwd-480p.mp4', label:'small version'}, {source:'content/videos2/fwd-720p.mp4', label:'hd720'},{source:'content/videos2/fwd-1080p.mp4', label:'hd1080'}]" data-start-at-video="2" data-poster-source="content/posters/mp4-poster.jpg,content/posters/mp4-poster-mobile.jpg" data-subtitle-soruce="[{source:'content/subtitles/english_subtitle.vtt', label:'English'}, {source:'content/subtitles/romanian_subtitle.vtt', label:'Romanian'},{source:'content/subtitles/spanish_subtitle.vtt', label:'Spanish'}]"  data-start-at-subtitle="1" data-downloadable="no">
+					<div data-video-short-description="">
+						<div>
+							<p class="video_title">MP4 video support</p>
+							<p class="video_description">Support for self-hosted or external mp4 video files.</p>
+						</div>
+					</div>
+					<div data-video-long-description="">
+						<div>
+							<p class="video_title">MP4 video support</p>
+							<p class="video_main-description">Each video can contain a detailed description, the description can be formatted with CSS as you like. The description window and description button can be disabled individually for each video or globally for all video.</p>
+							<p class="fwduvp-link">For more information about this please follow <a href="http://www.webdesign-flash.ro/" >this link</a></p>
+						</div>
+					</div>
+				</li>
+
+				<li data-thumb-source="content/thumbnails/small-lora.jpg" data-video-source="https://www.youtube.com/watch?v=IDZTCLNOfqU" data-poster-source="content/posters/Youtube-poster.jpg,content/posters/Youtube-poster-mobile.jpg" data-downloadable="no">
+					<div data-video-short-description="">
+						<div>
+							<p class="video_title">Youtube video</p>
+							<p class="video_description">Support for Youtube videos, this video is not part of a Youtube playlist.</p>
+						</div>
+					</div>
+					<div data-video-long-description="">
+						<div>
+							<p class="video_title">Youtube single videos</p>
+							<p class="video_description">Each video can contain a detailed description, the description can be formatted with CSS as you like. The description window and description button can be disabled individually for each video or globally for all video.</p>
+							<p class="fwduvp-link">For more information about this please follow <a href="http://www.webdesign-flash.ro/">this link</a></p>
+						</div>
+					</div>
+				</li>
+
+				<li data-thumb-source="content/thumbnails/v1.jpg" data-video-source="https://vimeo.com/channels/top/62092214" data-poster-source="content/posters/vimeo-poster.jpg,content/posters/vimeo-poster-mobile.jpg">
+					<div data-video-short-description="">
+						<div>
+							<p class="video_title">Vimeo video</p>
+							<p class="video_description">Support for Vimeo videos, this video is not part of a Vimeo playlist.</p>
+						</div>
+					</div>
+					<div data-video-long-description="">
+						<div>
+							<p class="video_title">Vimeo video</p>
+							<p class="video_description">Each video can contain a detailed description, the description can be formatted with CSS as you like. The description window and description button can be disabled individually for each video or globally for all video.</p>
+							<p class="fwduvp-link">For more information about this please follow <a href="http://www.webdesign-flash.ro/">this link</a></p>
+						</div>
+					</div>
+				</li>
+
+				<li data-thumb-source="content/thumbnails/hls-small.jpg" data-video-source="https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8" data-poster-source="content/posters/hls-poster.jpg" data-downloadable="yes">
+					<div data-video-short-description="">
+						<div>
+							<p class="video_title" style="color:white !important">HLS Live Streaming & m3u8</p>
+							<p class="video_description">HTTP Live Streaming</span> /<span class="myBold"> HLS</span> / <span class="myBold">m3u8</span> video support on all browsers.</p>
+						</div>
+					</div>
+					<div data-video-long-description="">
+						<div>
+							<p class="video_title">HLS Live Streaming & m3u8</p>
+							<p class="video_description">Each video can contain a detailed description, the description can be formatted with CSS as you like. The description window and description button can be disabled individually for each video or globally for all video.</p>
+							<p class="fwduvp-link">For more information about this please follow <a href="http://www.webdesign-flash.ro/p/u3dcar/">this link</a></p>
+						</div>
+					</div>
+				</li>
+
+				<li data-thumb-source="content/thumbnails/360-thumbnail.jpg" data-video-source="[{source:'content/videos/360.mp4', label:'', is360:'yes'}]" data-poster-source="content/posters/360-poster.jpg" data-downloadable="yes">
+					<div data-video-short-description="">
+						<div>
+							<p class="video_title">360 Degree & VR</p>
+							<p class="video_description">Virtual reality 360 degree / VR support.</p>
+						</div>
+					</div>
+					<div data-video-long-description="">
+						<div>
+							<p class="fwduvp-video-title">360 Degree & VR</p>
+							<p class="fwduvp-video-main-description">Each video can contain a detailed description, the description can be formatted with CSS as you like. The description window and description button can be disabled individually for each video or globally for all video.</p>
+							<p class="fwduvp-link">For more information about this please follow <a href="http://www.webdesign-flash.ro/p/360viewer/">this link</a></p>
+						</div>
+					</div>
+				</li>
+			</ul>

@@ -1,0 +1,50 @@
+
+<div class="card-header">
+    <div class="media">
+      {% include 'desctop/generic/community/object_figure.html' %}
+        <div class="media-body">
+            <h6 class="mb-0">
+              {% include 'desctop/generic/community/object.html' %}
+            </h6>
+            <p class="mb-0 wall_fullscreen pointer">{{ object.get_created }}</p>
+        </div>
+        <div class="dropdown d-inline-block">
+            <a style="cursor:pointer" class="icon-30 btn_default drop">
+              <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" data-type="pos{{ object.pk }}">
+              <span>
+                {% if not object.is_fixed %}
+                  <span class="dropdown-item c_post_fixed">Закрепить</span>
+                {% else %}
+                  <span class="dropdown-item c_post_unfixed">Открепить</span>
+                {% endif %}
+              </span>
+              {% if object.community.pk == community.pk %}
+                <span class="dropdown-item c_post_remove">Удалить запись</span>
+                <span class="dropdown-item c_post_edit">Редактировать</span>
+                <span class="dropdown-item item_stat_f">Статистика записи</span>
+                <span>
+                  {% if object.comments_enabled %}
+                    <span class="dropdown-item c_post_off_comment">Выкл. комментарии</span>
+                  {% else %}
+                    <span class="dropdown-item c_post_on_comment">Вкл. комментарии</span>
+                  {% endif %}
+                </span>
+                <span>
+                  {% if object.votes_on %}
+                    <span class="dropdown-item c_post_off_votes">Выкл. реакции</span>
+                  {% else %}
+                    <span class="dropdown-item c_post_on_votes">Вкл. реакции</span>
+                  {% endif %}
+                </span>
+              {% elif request.user.is_moderator %}
+                <span class="dropdown-item create_close">Закрыть</span>
+              {% else %}
+                <span class="dropdown-item create_claim">Пожаловаться</span>
+              {% endif %}
+              <span class="dropdown-item js-textareacopybtn">Скопировать ссылку</span>
+            </div>
+        </div>
+    </div>
+</div>

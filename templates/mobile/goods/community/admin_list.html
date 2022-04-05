@@ -1,0 +1,33 @@
+{% load get_key %}
+
+<div class="container mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
+
+  <div class="card mb-3">
+      <div class="card-body">
+          <div class="media">
+              <div class="media-body">
+                  <p class="mb-0">Товары - {{ list.community.name }}</p>
+                  <h4 class="mb-0">{{ list.name }} ({{ list.count_items }})</h4>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  {% if not list.is_open %}
+    {% load user %}
+    {% include list|get_bad_item:request.user %}
+
+  {% elif object_list %}
+  <div class="row is_load_paginate no-gutters is_stat_list" data-pk="{{ list.pk }}" owner-pk="{{ list.community.pk }}" data-type="community_good_list">
+    {% for object in object_list %}
+      {% include 'mobile/communities/goods/good.html' %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+    <div class="load centered m-1 next_page_list" data-link="{% url 'load_good_list' pk=list.pk %}?page={{ page_obj.next_page_number }}">
+        <img src="/static/images/preloader.gif">
+    </div>
+    {% endif %}
+  </div>
+  {% else %}
+    {% include 'mobile/communities/goods/main_list/no_goods.html' %}
+  {% endif %}

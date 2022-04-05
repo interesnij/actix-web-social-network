@@ -1,0 +1,73 @@
+
+<div class="card mb-4">
+  <div class="card-body">
+    <div class="media mt-3" style="padding-left: 7px;">
+        <h5 class="mt-1" style="flex: 1;">Списки документов</h5>
+    </div>
+    <div class="row no-gutters mb-2" style="overflow-x: auto;">
+        <div class="col-12">
+            <ul style="width:max-content;list-style: none;">
+                {% for object in get_lists %}
+                <li class="list_item">
+                    <div class="card file-manager-item folder cover_block border" data-uuid="{{ object.uuid }}">
+                        <div class="card-img-top file-logo-wrapper">
+                          <span>
+                          <svg class="load_attach_doc_list pointer list_toggle list_svg svg_default" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder">
+                            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                          </svg>
+                          </span>
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="content-wrapper">
+                                <p class="card-text file-name mb-0 list_name load_attach_doc_list pointer list_toggle" style="text-align: left;" data-name="{{ object.name }}">{{ object.name }}</p>
+                                <p class="card-text file-size mb-0 count">{{ object.count_items }}</p>
+                            </div>
+                            {% if object.is_not_empty %}
+                            <small class="file-accessed pointer underline doc_attach_list" data-pk="{{ object.pk }}">Прикрепить список</small>
+                            {% else %}
+                              <p style="margin-bottom: 18px;"></p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+<span class="load_block">
+{% if object_list %}
+<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_block_paginate">
+{% for object in object_list %}
+<div class="border" style="position: relative;width: 100%;padding:5px 10px; margin-bottom:7px">
+  <div style="display:flex" data-pk="{{ object.pk }}">
+      <svg fill="currentColor" style="width:30px;heigth:30px" class='svg_default' viewBox="0 0 24 24">
+        <path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+      </svg>
+      <div class="media-body" style="padding-top: 8px; padding-left: 5px;margin-right:40px">
+          <h6>
+            <a href="{{ object.file.url }}" style="white-space: nowrap;" target="_blank" rel="nofollow">{{ object.title }}</a>
+          </h6>
+      </div>
+  </div>
+  <span class="custom_color border item_attach_circle doc_load_several" style="top: 8px;">
+    <svg class="svg_default" fill="currentColor" viewBox="2 2 20 20">
+      <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"/>
+    </svg>
+  </span>
+</div>
+  {% endfor %}
+  {% if page_obj.has_next %}
+  <div class="load centered m-1 next_page_list" data-link="/users/load/u_doc_load/?page={{ page_obj.next_page_number }}">
+      <img src="/static/images/preloader.gif">
+  </div>
+  {% endif %}
+</div>
+{% else %}
+<div class="card mb-3 centered">
+  <h5 style="text-align: center;margin: 20px;"> Список документов пустой.</h5>
+</div>
+{% endif %}
+</span>
+</div>
+</div>

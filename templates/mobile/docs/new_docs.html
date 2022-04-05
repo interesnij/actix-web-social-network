@@ -1,0 +1,7 @@
+{% for object in object_list %}
+  {% if object.community %}
+    {% include 'desctop/communities/docs/doc.html' %}
+  {% else %}
+    {% include 'desctop/users/docs/doc.html' %}
+  {% endif %}
+{% endfor %}

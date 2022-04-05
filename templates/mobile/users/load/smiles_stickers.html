@@ -1,0 +1,50 @@
+<div class="card p-1">
+    <div class="card-body">
+        <div class="tab-content">
+            <div class="tab-pane fade active show smiles_panel" style="height: 190px;width: 250px;">
+                <p class="mb-0 f-sm">
+                    {% if is_have_populate_smiles %}
+                <h6>Часто используемые</h6>
+                {% for smile in request.user.get_populate_smiles %}
+                <img class="pointer classic_smile_item" data-pk="{{ smile.pk }}" style="width: auto;" src="{{ smile.image.url }}" alt="smile">
+                {% endfor %}
+                {% endif %}
+
+                {% for smiles in smiles_category %}
+                <h6>{{ smiles.name }}</h6>
+                {% for smile in smiles.get_smiles %}
+                <img class="pointer classic_smile_item" data-pk="{{ smile.pk }}" style="width: auto;" src="{{ smile.image.url }}" alt="smile">
+                {% endfor %}
+                {% endfor %}
+                <p>
+            </div>
+            <div class="tab-pane fade stickers_panel" style="height: 190px;width: 250px;">
+                <p class="mb-0 f-sm">
+                    {% if is_have_populate_stickers %}
+                <h6>Часто используемые</h6>
+                {% for sticker in request.user.get_populate_stickers %}
+                <img class="pointer classic_sticker_item" data-pk="{{ sticker.pk }}" style="width: 50px" src="{{ sticker.image.url }}" alt="sticker">
+                {% endfor %}
+                {% endif %}
+
+                {% for stickers in stickers_category %}
+                <h6 class="mt-1">{{ stickers.name }}</h6>
+                {% for sticker in stickers.get_stickers %}
+                <img class="pointer classic_sticker_item" data-pk="{{ sticker.pk }}" style="width: 50px" src="{{ sticker.image.url }}" alt="sticker">
+                {% endfor %}
+                {% endfor %}
+                <p>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer border-top tabs-footer">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item tab_smiles pointer mr-1">
+                Смайлы
+            </li>
+            <li class="nav-item tab_stickers pointer mr-1">
+                Emoji
+            </li>
+        </ul>
+    </div>
+</div>

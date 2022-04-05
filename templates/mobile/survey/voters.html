@@ -1,0 +1,10 @@
+
+{% if object_list %}
+<span>{{ survey.get_users_ru }}</span>
+
+<span style="display: flex;" class="mt-2">
+  {% for voter in object_list %}
+    {% include 'desctop/generic/user/voter.html' %}
+  {% endfor %}
+</span>
+{% endif %}

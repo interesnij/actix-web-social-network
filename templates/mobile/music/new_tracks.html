@@ -1,0 +1,7 @@
+{% for object in object_list %}
+  {% if community %}
+    {% include 'mobile/communities/music/track.html' %}
+  {% else %}
+    {% include 'mobile/users/music/track.html' %}
+  {% endif %}
+{% endfor %}

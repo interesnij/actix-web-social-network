@@ -1,0 +1,58 @@
+
+<a class="mb-2 box-shadow mr-2 btn btn-link menu_drop" type="button">
+    Общие настройки
+</a>
+<div class="collapse">
+  <div class="card card-body" style="display: contents;">
+    <ul>
+      <li><a href="{% url 'user_general_form' %}" class="ajax">Общее</a></li>
+      <li><a href="{% url 'user_info_form' %}" class="ajax">Информация</a></li>
+      <li><a href="{% url 'user_design_form' %}" class="ajax">Внешний вид</a></li>
+    </ul>
+  </div>
+</div>
+
+<a class="mb-2 box-shadow mr-2 btn btn-link menu_drop">
+    Мои списки
+</a>
+<div class="collapse">
+  <div class="card card-body" style="display: contents;">
+    <ul>
+      <li><a href="{% url 'follows' pk=user.pk %}" class="ajax">Подписчики</a></li>
+      <li><a href="{% url 'followings' %}" class="ajax">Мои заявки</a></li>
+      <li><a href="{% url 'user_black_list' %}" class="ajax">Черный список</a></li>
+    </ul>
+  </div>
+</div>
+
+<a class="box-shadow mr-2 btn btn-link ajax" href="{% url 'user_profile_private' %}">
+    Приватность
+</a>
+
+<a class="mb-2 box-shadow mr-2 btn btn-link menu_drop">
+    Уведомления
+</a>
+<div class="collapse">
+  <div class="card card-body" style="display: contents;">
+    <ul>
+      <li><a href="{% url 'user_profile_notify' %}" class="ajax">Профиль</a></li>
+      <li><a href="{% url 'user_post_notify' %}" class="ajax">Записи</a></li>
+      <li><a href="{% url 'user_photo_notify' %}" class="ajax">Фотографии</a></li>
+      <li><a href="{% url 'user_good_notify' %}" class="ajax">Товары</a></li>
+      <li><a href="{% url 'user_video_notify' %}" class="ajax">Видеозаписи</a></li>
+      <li><a href="{% url 'user_music_notify' %}" class="ajax">Аудиозаписи</a></li>
+    </ul>
+  </div>
+</div>
+
+<a class="mb-2 box-shadow mr-2 btn btn-link menu_drop">
+    Статистика
+</a>
+<div class="collapse">
+  <div class="card card-body" style="display: contents;">
+    <ul style="list-style-type:none">
+      <li style="margin-bottom:8px;"><a href="{% url 'user_cuberture_day' %}" class="ajax">Обший охват</a></li>
+      <li style="margin-bottom:8px;"><a href="{% url 'user_traffic_day' %}" class="ajax">Посещаемость</a></li>
+    </ul>
+  </div>
+</div>

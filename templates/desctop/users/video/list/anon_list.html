@@ -1,0 +1,57 @@
+{% extends "base_anon.html" %}
+{% block title %}{{ list.name }} : Видеоролики {{ user.get_full_name_genitive }}{% endblock %}
+{% block meta %}
+<meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/users/{{ user.pk }}/video_list/{{ list.uuid }}" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Видеоролики {{ user.get_full_name_genitive }} - {{ list.name }}" />
+<meta property="og:image" content="https://xn--b1afgj5al1e.xn--p1acf{{ user.get_b_avatar }}"/>
+{% endblock %}
+{% block content %}
+
+<div class="mt-3 main-container" data-pk="{{ list.pk }}" data-type="user_photo_list">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control form-control-sm" placeholder="Поиск видео">
+            <div class="input-group-append">
+              <button class="btn btn-sm border" type="button">Искать</button>
+            </div>
+          </div>
+
+            <span class="load_block">
+
+            <div class="media mt-3 uuid_saver" data-pk="{{ list.pk }}" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
+              <h5 class="mt-1">
+                <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count_items }})
+                <span class="pointer badge badge-light-primary copy_link">Копировать ссылку</span>
+              </h5>
+            </div>
+
+          <div class="card mb-2">
+              <div class="card-body uuid_saver vk_saver">
+                <div class="video_playlist" id="movies_container">
+                  <div class="row movies_list_in_list is_paginate is_stat_list" data-pk="{{ list.pk }}" data-type="{% if list.community %}community{% else %}user{% endif %}_video_list" data-list="/users/{{ user.pk }}/video">
+                    {% if not list.is_open %}
+                      {% load user %}
+                      {% include list|get_bad_item:request.user %}
+
+                    {% elif object_list %}
+                      {% for object in object_list %}
+                        {% include 'desctop/users/video/main_list/video.html' %}
+                      {% endfor %}
+                      {% if page_obj.has_next %}
+                      <div class="load centered m-1 next_page_list" data-link="{% url 'user_video_list' pk=user.pk uuid=list.uuid %}?page={{ page_obj.next_page_number }}">
+                          <img src="/static/images/preloader.gif">
+                      </div>
+                      {% endif %}
+
+                    {% else %}
+                      {% include 'desctop/users/video/main_list/no_videos.html' %}
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+          </div>
+      </span>
+</div>
+
+
+{% endblock %}

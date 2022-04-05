@@ -1,0 +1,37 @@
+
+<br>
+<h5 class="m-0">Добавление статьи</h5>
+<br><br>
+
+<form id="FORM-ARTICLE" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+        <label>Название статьи (обязательно)</label>
+        <input type="text" required name="title" class="form-control" id="id_title">
+    </div>
+    <br>
+    <div class="form-group">
+        <div class="id_g_image">{{ form.g_image }}</div>
+        <div id="image-holder">
+            <h4 style="font-weight:bold;font-size:70px;color:#CECECE">обложка</h4>
+            <p>Нажмите, чтобы добавить</p>
+            <i style="">(обязательно)</i>
+        </div>
+    </div>
+    <br>
+    <div class="form-group">
+        {{ form.content }}
+    </div>
+    <br>
+    <div class="form-group ">
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" checked class="custom-control-input" name="comments_enabled" id="id_comments_enabled2">
+            <label class="custom-control-label" for="id_comments_enabled2">Разрешить комментарии</label>
+        </div>
+    </div>
+    <div class="respons_article"></div>
+    <div class="card-footer">
+        <button class="btn border remove_form">Отмена</button>
+        <button type="submit" id="article_post" class="btn btn-success float-right">Опубликовать</button>
+    </div>
+</form>

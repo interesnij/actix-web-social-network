@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% block title %}Администрирование|Главная{% endblock %}
+{% block content %}
+
+<div class="container mt-4 main-container" data-type="manager_main">
+          <div class="container mt-4 card">
+            <h1 class="mb-0 text-center">Вы управленец</h1>
+            <p class="mb-4 text-center">
+              <svg fill="currentColor" enable-background="new 0 0 24 24" class="svg_default svg_info" viewBox="0 0 24 24">
+                <g><rect x="0"></rect><polygon points="14.43,10 12,2 9.57,10 2,10 8.18,14.41 5.83,22 12,17.31 18.18,22 15.83,14.41 22,10"></polygon></g>
+              </svg>
+              <svg fill="currentColor" enable-background="new 0 0 24 24" class="svg_default svg_info" viewBox="0 0 24 24">
+                <g><rect x="0"></rect><polygon points="14.43,10 12,2 9.57,10 2,10 8.18,14.41 5.83,22 12,17.31 18.18,22 15.83,14.41 22,10"></polygon></g>
+              </svg>
+              <svg fill="currentColor" enable-background="new 0 0 24 24" class="svg_default svg_info" viewBox="0 0 24 24">
+                <g><rect x="0"></rect><polygon points="14.43,10 12,2 9.57,10 2,10 8.18,14.41 5.83,22 12,17.31 18.18,22 15.83,14.41 22,10"></polygon></g>
+              </svg>
+              <svg fill="currentColor" enable-background="new 0 0 24 24" class="svg_default svg_info" viewBox="0 0 24 24">
+                <g><rect x="0"></rect><polygon points="14.43,10 12,2 9.57,10 2,10 8.18,14.41 5.83,22 12,17.31 18.18,22 15.83,14.41 22,10"></polygon></g>
+              </svg>
+              <svg fill="currentColor" enable-background="new 0 0 24 24" class="svg_default svg_info" viewBox="0 0 24 24">
+                <g><rect x="0"></rect><polygon points="14.43,10 12,2 9.57,10 2,10 8.18,14.41 5.83,22 12,17.31 18.18,22 15.83,14.41 22,10"></polygon></g>
+              </svg>
+            </p>
+            <p class="content-color-secondary">
+              Вы управленец соцсети трезвый.рус. Пожалуйста, помните, что быть таким человеком - большая отвественность. <br>
+              Нужно быть беспристрастным, грамотным, осознанным человеком, с развитым чувством справедливости и моральными качествами.<br>
+              Нужно тщательно беречь аккаунт от других пользователей.
+            </p>
+        </div>
+
+  <div class="container mt-4">
+    <div class="row">
+      {% if request.user.is_manager %}
+
+      <div class="col-12 col-md-6">
+        <div class="card mb-2 box-shadow-large">
+          <div class="text-center">
+            <h5 class="content-color-primary">Сообщения</h5>
+            <a href="/managers/moderation_list/user/" class="btn-link ajax">Список массовых</a>
+            <br>
+            <a class="btn-link pointer send_manager_messages">Создать рассылку</a>
+            <br>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <div class="card mb-2 box-shadow-large">
+          <div class="text-center">
+            <h5 class="content-color-primary">Пользователи</h5>
+            <a href="/managers/moderation_list/user/" class="btn-link ajax">Жалобы</a>
+            <br>
+            <a href="/managers/penalty_list/user/" class="btn-link ajax">Штраф-лист</a>
+            <br>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <div class="card mb-2 box-shadow-large">
+          <div class="text-center">
+            <h5 class="content-color-primary">Сообщества</h5>
+            <a href="/managers/moderation_list/community/" class="btn-link ajax">Жалобы</a>
+            <br>
+            <a href="/managers/penalty_list/community/" class="btn-link ajax">Штраф-лист</a>
+            <br>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      {% if request.user.is_moderator %}
+
+      <div class="col-12 col-md-6">
+        <div class="card mb-2 box-shadow-large">
+          <div class="text-center">
+            <h5 class="content-color-primary">Записи</h5>
+            <a href="/managers/moderation_list/post/" class="btn-link ajax">Жалобы</a>
+            <br>
+            <a href="/managers/penalty_list/post/" class="btn-link ajax">Штраф-лист</a>
+            <br>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <div class="card mb-2 box-shadow-large">
+          <div class="text-center">
+            <h5 class="content-color-primary">Изображения</h5>
+            <a href="/managers/moderation_list/photo/" class="btn-link ajax">Жалобы</a>
+            <br>
+            <a href="/managers/penalty_list/photo/" class="btn-link ajax">Штраф-лист</a>
+            <br>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <div class="card mb-2 box-shadow-large">
+          <div class="text-center">
+            <h5 class="content-color-primary">Аудиозаписи</h5>
+            <a href="/managers/moderation_list/audio/" class="btn-link ajax">Жалобы</a>
+            <br>
+            <a href="/managers/penalty_list/audio/" class="btn-link ajax">Штраф-лист</a>
+            <br>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <div class="card mb-2 box-shadow-large">
+          <div class="text-center">
+            <h5 class="content-color-primary">Видеозаписи</h5>
+            <a href="/managers/moderation_list/video/" class="btn-link ajax">Жалобы</a>
+            <br>
+            <a href="/managers/penalty_list/video/" class="btn-link ajax">Штраф-лист</a>
+            <br>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+  </div>
+</div>
+{% endblock %}

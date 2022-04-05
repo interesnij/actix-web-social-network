@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Охват по дням - {{ user.get_full_name }}{% endblock %}
+{% load post_count %}
+{% block content %}
+
+<div class="mt-4 main-container">
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+              <div class="media">
+                  <div class="media-body">
+										<h5 class="mt-1">Охват по дням -
+											{% include 'desctop/generic/user/user.html' %}
+										</h5>
+									</div>
+                  <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle mb-2 drop">
+                    День
+                </button>
+                <div class="dropdown-menu" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
+									<a class="dropdown-item ajax" href="{% url 'user_cuberture_year' %}">Год</a>
+                  <a class="dropdown-item ajax" href="{% url 'user_cuberture_month' %}">Месяц</a>
+                  <a class="dropdown-item ajax" href="{% url 'user_cuberture_week' %}">Неделя</a>
+                </div>
+            </div>
+              </div>
+          </div>
+
+          <div class="card-body px-0 py-0">
+            {% if views %}
+            		<canvas id="canvas"
+								        dates='{% for day in days %}{{ day }}{% if not forloop.last %},{% endif %}{% endfor %}'
+												label_1="Общий охват"
+												label_2="Рекламный охват"
+												data_1="{% for view in views %}{{ view }}{% if not forloop.last %},{% endif %}{% endfor %}"
+												data_2="0,1,2">
+                </canvas>
+            {% else %}
+                <div><h5 class="mt-4 mb-2" style="margin:10px">Статистических данных пока нет.</h5></div>
+            {% endif %}
+
+            {{ mf_ages|safe }}
+          </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}

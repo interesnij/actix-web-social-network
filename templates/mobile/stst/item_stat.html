@@ -1,0 +1,22 @@
+
+
+<div class="card">
+    <div class="card-body">
+      <div class="card">
+          <div class="card-header">
+              <div class="media">
+                  <div class="media-body"><h5 class="mt-1">Всего просмотров: {{ item.all_visits_count }}</h5></div>
+              </div>
+          </div>
+          <br><br>
+          <div class="card-body px-0 py-0">
+            <ul class="list-group" id="">
+                {% for object in item.get_visiter_users %}
+                <li class="list-group-item">
+                  {{ object.city_ru }}
+                </li>
+                {% endfor %}
+            </ul>
+          </div>
+      </div>
+</div>

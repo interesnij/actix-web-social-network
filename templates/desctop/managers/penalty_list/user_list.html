@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Оштрафованные пользователей{% endblock %}
+{% block content %}
+
+<div class="container mt-4 main-container">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control form-control-sm" placeholder="Поиск по штраф-листу">
+            <div class="input-group-append">
+                <button class="btn btn-sm border" type="button">Искать</button>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                      <h5 class="mt-1">Оштрафованные пользователи</h5>
+                      <small class="content-color-secondary float-right mr-2 mt-1"></small>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body px-0 py-0">
+
+              {% if object_list %}
+
+              <ul class="list-group is_paginate">
+                  {% for object in object_list %}
+                  <li class="list-group-item" user-pk="{{ object.user.pk }}" data-pk="{{ object.moderated_object.pk }}">
+                      <div class="media">
+                        {% include 'desctop/generic/user/user_figure.html' %}
+                        <div class="media-body btn_console">
+                            {% include 'desctop/generic/user/user_user.html' %}
+                            {% if object.is_suspend %}
+                              <span class="small">До {{ object.expiration }}</span>
+                              (<a class="small remove_user_suspend pointer">Отменить остановку</a> |
+                               <a class="small user_unverify pointer">Отменить проверку</a>)
+                            {% elif object.is_bloked %}
+                              <span class="small">Заблокирован</span>
+                              (<a class="small remove_user_bloсk pointer">Отменить блокировку</a> |
+                               <a class="small user_unverify pointer">Отменить проверку</a>)
+                            {% elif object.is_banner %}
+                              <span class="small">Баннер предупреждения</span>
+                              (<a class="small remove_user_warning_banner pointer">Убрать баннер</a> |
+                               <a class="small user_unverify pointer">Отменить проверку</a>)
+                            {% else %}
+                              <span class="small">Санкции не применены</span>
+                            {% endif %}
+                        </div>
+                      </div>
+                  </li>
+                  {% endfor %}
+              </ul>
+
+              {% else %}
+              <div class="card centered">
+                <div class="card-body">
+                <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"/></svg>
+                </div>
+                <h6 style="margin: 20px;text-align: center;"> Оштрафованных пользователей нет...</h6>
+              </div>
+
+              {% endif %}
+
+            </div>
+        </div>
+</div>
+{% endblock %}
