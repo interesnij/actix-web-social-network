@@ -1,19 +1,18 @@
-{% load static %}
 <!doctype html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>{% block title %}{% endblock %}</title>
     {% block meta %}{% endblock %}
-    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
-    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
-    <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}" media="all" />
-    <link rel="stylesheet" href="{% static 'styles/default.css' %}?ver11" />
-    <link class="my_color_settings" rel="stylesheet" href="/static/styles/color/{{ request.user.get_color_background }}.css" />
-    <link rel="stylesheet" href="{% static 'styles/video.css' %}" media="none" onload="if(media!='all')media='all'" />
-    <link rel="stylesheet" href="{% static 'styles/load.css' %}" media="none" onload="if(media!='all')media='all'" />
+    <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/static/styles/bootstrap.min.css" media="all" />
+    <link rel="stylesheet" href="/static/styles/default.css?ver11" />
+    <link class="my_color_settings" rel="stylesheet" href="/static/styles/color/white.css" />
+    <link rel="stylesheet" href="/static/styles/video.css" media="none" onload="if(media!='all')media='all'" />
+    <link rel="stylesheet" href="/static/styles/load.css" media="none" onload="if(media!='all')media='all'" />
 </head>
-  <body class="fixed-header" data-video="first_player" data-csrf="{{ csrf_token }}">
+  <body class="fixed-header" data-video="first_player" data-csrf="csrf_token">
      <div class="wrapper">
         {% include "base_block/navbar.html" %}
         <div class="row no-gutters">
@@ -32,7 +31,6 @@
         </div>
 
     </div>
-    {% include 'base_block/audio_playlist.html' %}
     <div class='card video_fullscreen' style='display:none'>
       <span class="video_btn_big">
         <span class="video_fullscreen_resize" title="Свернуть">
