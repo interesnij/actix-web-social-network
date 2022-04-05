@@ -1,7 +1,0 @@
-
-<label style="margin-top: 12px;">Подкатегория</label>
-<select class="form-control" name="sub_category" id="id_sub_category" data-live-search="true" tabindex="-1" aria-hidden="true">
-  {% for object in categ %}
-  <option value="{{ object.order }}">{{ object.name }}</option>
-  {% endfor %}
-</select>

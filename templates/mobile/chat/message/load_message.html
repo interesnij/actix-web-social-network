@@ -1,4 +1,0 @@
-{% load message %}
-<a class="chat_ajax" href="{% url 'chat_detail' pk=object.pk %}">
-  {{ object|get_preview_message:request.user.pk|safe }}
-</a>
