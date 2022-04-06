@@ -8,7 +8,7 @@ use serde::Deserialize;
 use tera::Context;
 use crate::utils::{establish_connection, get_default_template, TEMPLATES};
 use crate::diesel::RunQueryDsl;
-use actix_web::http::header::Header;
+use crate::models::NewUser;
 
 
 pub fn global_routes(config: &mut web::ServiceConfig) {
