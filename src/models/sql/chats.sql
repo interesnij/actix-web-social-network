@@ -1,150 +1,106 @@
--- чаты -------
--- описание типов и вариантов приватностей
-
---  PUBLIC,PRIVATE,MANAGER,GROUP = 'PUB','PRI','MAN','GRO'
---  DELETED_PUBLIC,DELETED_PRIVATE,DELETED_MANAGER,DELETED_GROUP = '_DPUB','_DPRI','_DMAN','_DGRO'
---  CLOSED_PUBLIC,CLOSED_PRIVATE,CLOSED_MANAGER,CLOSED_GROUP = '_CPUB','_CPRI','_CMAN','_CGRO'
---  SUPPORT_1, SUPPORT_2, SUPPORT_3, SUPPORT_4, SUPPORT_5 = "SUP1", "SUP2", "SUP3", "SUP4", "SUP5"
---  DELETED_SUPPORT_1, DELETED_SUPPORT_2, DELETED_SUPPORT_3, DELETED_SUPPORT_4, DELETED_SUPPORT_5 = "_SU1", "_SU2", "_SU3", "_SU4", "_SU5"
---  ALL_CAN, CREATOR, CREATOR_ADMINS, MEMBERS_BUT, SOME_MEMBERS = 1,2,3,4,5
-
---  TYPE = (
---      (PUBLIC, 'Публичный'),(PRIVATE, 'Приватный'),(MANAGER, 'Служебный'),(GROUP, 'Групповой'),
---      (DELETED_PUBLIC, 'удал Публичный'),(DELETED_PRIVATE, 'удал Приватный'),(DELETED_MANAGER, 'удал Служебный'),(DELETED_GROUP, 'удал Групповой'),
---      (CLOSED_PUBLIC, 'закр. Публичный'),(CLOSED_PRIVATE, 'закр. Приватный'),(CLOSED_MANAGER, 'закр. Служебный'),(CLOSED_GROUP, 'закр. Групповой'),
---      (SUPPORT_1, 'Техподдержка 1'),(SUPPORT_2, 'Техподдержка 2'),(SUPPORT_3, 'Техподдержка 3'),(SUPPORT_4, 'Техподдержка 4'),(SUPPORT_5, 'Техподдержка 5'),
---      (DELETED_SUPPORT_1, 'удал Тех 1'),(DELETED_SUPPORT_2, 'удал Тех 2'),(DELETED_SUPPORT_3, 'удал Тех 3'),(DELETED_SUPPORT_4, 'удал Тех 4'),(DELETED_SUPPORT_5, 'удал Тех 5'),
---  )
---  ALL_PERM = ((ALL_CAN, 'Все участники'),(CREATOR, 'Создатель'),(CREATOR_ADMINS, 'Создатель и админы'),(MEMBERS_BUT, 'Участники кроме'),(SOME_MEMBERS, 'Некоторые участники'),)
 
 CREATE TABLE chats (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR,
-    _type VARCHAR NOT NULL,
-    image TEXT,
-    description TEXT,
-    community_id INT,
-    creator_id INT NOT NULL,
-    order INT NOT NULL DEFAULT 0,
-    members INT NOT NULL DEFAULT 0,
-    attach TEXT,
-    created TIMESTAMP NOT NULL,
+    id                SERIAL PRIMARY KEY,
+    name              VARCHAR,                    -- название
+    _type             VARCHAR NOT NULL,          -- тип (перечень выше)
+    image             TEXT,                      -- ссылка на аватар
+    description       TEXT,                      -- описание
+    community_id      INT,                       -- id сообщества
+    creator_id        INT NOT NULL,              -- id создателя
+    order             INT NOT NULL DEFAULT 0,    -- порядковый номер
+    members           INT NOT NULL DEFAULT 0,    -- кол-во участников
+    created           TIMESTAMP NOT NULL,        -- когда создан
 
-    can_add_members INT,
-    can_fix_item INT,
-    can_mention INT,
-    can_add_admin INT,
-    can_add_design INT,
-    can_see_settings INT,
-    can_see_log INT,
+    can_add_members   INT,                       -- кто добавляет участников
+    can_fix_item      INT,                       -- кто закрепляет сообщения чата
+    can_mention       INT,                       -- кто упоминает о чате
+    can_add_admin     INT,                       -- кто работает с админами
+    can_add_design    INT,                       -- кто работает с дизайном
+    can_see_settings  INT,                       -- кто видит настройки
+    can_see_log       INT,                       -- кто видит логи чата
 
-    CONSTRAINT fk_chat_creator
+    CONSTRAINT fk_chat_creator                   -- связь с создателем
         FOREIGN KEY(creator_id)
-            REFERENCES users(id)
+            REFERENCES users(id),
+
+    CONSTRAINT fk_chat_community                 -- связь с сообществом
+        FOREIGN KEY(community_id)
+            REFERENCES communities(id),
 );
 
--- Члены сообщества -------
--- описание типов
-
---  ACTIVE, EXITED, DELETED = "ACT", "EXI", "DEL"
---  TYPE = (
---      (ACTIVE, 'Действующий'),(EXITED, 'Вышедший'),(DELETED, 'Уделенный'),
---  )
-
 CREATE TABLE chat_users (
-    id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL,
-    chat_id INT NOT NULL,
-    _type VARCHAR NOT NULL,
-    is_administrator BOOLEAN NOT NULL DEFAULT false,
-    created TIMESTAMP NOT NULL,
-    no_disturb TIMESTAMP,
+    id                SERIAL PRIMARY KEY,            -- id объекта
+    user_id           INT NOT NULL,                  -- id пользователя
+    chat_id           INT NOT NULL,                  -- id чата
+    _type             VARCHAR NOT NULL,              -- тип
+    is_administrator  BOOLEAN NOT NULL DEFAULT false,-- админ ли?
+    created           TIMESTAMP NOT NULL,            -- создано
+    no_disturb        TIMESTAMP,                     -- не беспокоить до...
 
-    CONSTRAINT fk_chat_users_user
+    CONSTRAINT fk_chat_users_user                    -- связь с пользователем
         FOREIGN KEY(user_id)
             REFERENCES users(id),
 
-    CONSTRAINT fk_chat_users_chat
+    CONSTRAINT fk_chat_users_chat                    -- связь с чатом
         FOREIGN KEY(chat_id)
             REFERENCES chats(id)
 );
 
--- Исключения/Включения участников беседы -------
--- описание типов
-
---  NO_VALUE, YES_ITEM, NO_ITEM = 0, 1, 2
---  ITEM = (
---      (NO_VALUE, 'Не активно'),
---      (YES_ITEM, 'Может иметь действия с элементом'),
---      (NO_ITEM, 'Не может иметь действия с элементом'),
---  )
-
 CREATE TABLE chat_ie_settings (
-    id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL,
+    id                SERIAL PRIMARY KEY,     -- id объекта
+    user_id           INT NOT NULL,           -- id пользователя
 
-    can_add_in_chat INT NOT NULL DEFAULT 0,
-    can_add_fix INT NOT NULL DEFAULT 0,
-    can_send_mention INT NOT NULL DEFAULT 0,
-    can_add_admin INT NOT NULL DEFAULT 0,
-    can_add_design INT NOT NULL DEFAULT 0,
-    can_see_settings INT NOT NULL DEFAULT 0,
-    can_see_log INT NOT NULL DEFAULT 0,
+    can_add_in_chat   INT NOT NULL DEFAULT 0, -- кто добавляет участников
+    can_add_fix       INT NOT NULL DEFAULT 0, -- кто закрепляет сообщения
+    can_send_mention  INT NOT NULL DEFAULT 0, -- кто упоминает о чате
+    can_add_admin     INT NOT NULL DEFAULT 0, -- кто работает с админами
+    can_add_design    INT NOT NULL DEFAULT 0, -- кто работает с дизайном
+    can_see_settings  INT NOT NULL DEFAULT 0, -- кто видит настройки
+    can_see_log       INT NOT NULL DEFAULT 0, -- кто видит логи
 
-    CONSTRAINT fk_chat_ie_settings
+    CONSTRAINT fk_chat_ie_settings            -- связь с пользователем
         FOREIGN KEY(user_id)
             REFERENCES chat_users(id)
 );
 
-
--- Сообщения -------
--- описание типов
-
---  PUBLISHED, EDITED, DELETED, CLOSED, DRAFT, MANAGER, PUBLISHED_FIXED, EDITED_FIXED = 'PUB','EDI','_DEL','_CLO','_DRA','MAN','PFIX','EFIX'
---  DELETED_EDITED, CLOSED_EDITED, DELETED_PUBLISHED_FIXED, CLOSED_PUBLISHED_FIXED, DELETED_EDITED_FIXED, CLOSED_EDITED_FIXED = '_DELE','_CLOE', '_DELPF','_CLOPF', '_DELEF','_CLOEF'
---  TYPE = (
---      (PUBLISHED_FIXED, 'Закреп опубл'),(EDITED_FIXED, 'Закреп измен'),(MANAGER, 'Служебное'),(PUBLISHED, 'Опубл'),(DELETED, 'Удалено'),(EDITED, 'Изменено'),(CLOSED, 'Закрыто модератором'),(DRAFT, 'Черновик'),
---      (DELETED_EDITED_FIXED, 'Удал измен закреп'),(DELETED_PUBLISHED_FIXED, 'Удал опубл закреп'),(CLOSED_EDITED_FIXED, 'Закр измен закреп'),(CLOSED_PUBLISHED_FIXED, 'Закр опубл закреп'),(CLOSED_PUBLISHED_FIXED, 'Закр опубл закреп'),(DELETED_EDITED, 'Удал измен'),(CLOSED_EDITED, 'Закр измен'),
---  )
-
 CREATE TABLE messages (
-    id SERIAL PRIMARY KEY,
-    creator_id INT NOT NULL,
-    chat_id INT NOT NULL,
-    parent_id INT,
-    sticker_id INT,
-    repost_id INT,
-    created TIMESTAMP NOT NULL,
-    _text TEXT,
-    unread BOOLEAN NOT NULL DEFAULT true,
-    _type VARCHAR NOT NULL,
-    attach TEXT,
-    voice TEXT,
+    id           SERIAL PRIMARY KEY,            -- id объекта
+    creator_id   INT NOT NULL,                  -- id создателя
+    chat_id      INT NOT NULL,                  -- id чата
+    parent_id    INT,                           -- сообщение-родитель
+    sticker_id   INT,                           -- id стикера
+    repost_id    INT,                           -- id поста
+    created      TIMESTAMP NOT NULL,            -- когда создано
+    _text        TEXT,                          -- текст
+    unread       BOOLEAN NOT NULL DEFAULT true, -- не прочитано?
+    _type        VARCHAR NOT NULL,              -- тип
+    attach       TEXT,                          -- прикрепленные объекты
+    voice        TEXT,                          -- ссылка на голосовое
 
-    CONSTRAINT fk_message_creator
+    CONSTRAINT fk_message_creator               -- связь с создателем
         FOREIGN KEY(message_id)
             REFERENCES users(id),
 
-    CONSTRAINT fk_message_chat
+    CONSTRAINT fk_message_chat                  -- связь с чатом
         FOREIGN KEY(chat_id)
           REFERENCES chats(id),
 
-    CONSTRAINT fk_message_parent
+    CONSTRAINT fk_message_parent                -- связь с родтелем (на какое ответ)
         FOREIGN KEY(parent_id)
           REFERENCES messages(id)
 );
 
 -- Копии сообщений перед изменением -------
 CREATE TABLE message_versions (
-    id SERIAL PRIMARY KEY,
-    message_id INT,
-    sticker_id INT,
-    repost_id INT,
-    created TIMESTAMP NOT NULL,
-    _text TEXT,
-    attach TEXT,
+    id SERIAL        PRIMARY KEY,           -- id объекта
+    message_id       INT,                   -- id сообщения
+    sticker_id       INT,                   -- id стикера
+    repost_id        INT,                   -- id поста
+    created          TIMESTAMP NOT NULL,    -- когда создано
+    _text            TEXT,                  -- текст
+    attach           TEXT,                  -- прикрепленные объекты
 
-    CONSTRAINT fk_message_versions_message
+    CONSTRAINT fk_message_versions_message  -- связь с сообщением
         FOREIGN KEY(message_id)
           REFERENCES messages(id)
 );
@@ -152,32 +108,32 @@ CREATE TABLE message_versions (
 
 -- Особые сообщения для пользователей -------
 CREATE TABLE message_options (
-    id SERIAL PRIMARY KEY,
-    message_id INT,
-    user_id INT,
-    is_deleted BOOLEAN NOT NULL DEFAULT false,
-    is_favourite BOOLEAN NOT NULL DEFAULT false,
+    id             SERIAL PRIMARY KEY,              -- id объекта
+    message_id     INT,                             -- id сообщения
+    user_id        INT,                             -- id пользователя
+    is_deleted     BOOLEAN NOT NULL DEFAULT false,  -- сообщение удалено?
+    is_favourite   BOOLEAN NOT NULL DEFAULT false,  -- сообщение в избранном?
 
-    CONSTRAINT fk_message_options_message
+    CONSTRAINT fk_message_options_message           -- связь с сообщением
         FOREIGN KEY(message_id)
           REFERENCES messages(id),
 
-    CONSTRAINT fk_message_options_creator
+    CONSTRAINT fk_message_options_creator           -- связь с пользователем
         FOREIGN KEY(user_id)
             REFERENCES users(id)
 );
 
 -- Пересланные сообщения -------
 CREATE TABLE message_transfers (
-    id SERIAL PRIMARY KEY,
-    message_id INT,
-    transfer_id INT,
+    id          SERIAL PRIMARY KEY,            -- id объекта
+    message_id  INT,                           -- id сообщения
+    transfer_id INT,                           -- id пересылаемого сообщения
 
-    CONSTRAINT fk_message_transfers_message
+    CONSTRAINT fk_message_transfers_message    -- связь с сообщением
         FOREIGN KEY(message_id)
           REFERENCES messages(id),
 
-    CONSTRAINT fk_message_transfers_transfer
+    CONSTRAINT fk_message_transfers_transfer   -- связь с пересылаемым сообщением
         FOREIGN KEY(transfer_id)
             REFERENCES messages(id)
 );

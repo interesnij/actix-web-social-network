@@ -1,11 +1,11 @@
 
 -- подписчики -------
 CREATE TABLE follows (
-    id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL,
+    id            SERIAL PRIMARY KEY,
+    user_id       INT NOT NULL,
     followed_user INT NOT NULL,
-    view BOOLEAN NOT NULL DEFAULT false,
-    visited INT NOT NULL DEFAULT 0,
+    view          BOOLEAN NOT NULL DEFAULT false,
+    visited       INT NOT NULL DEFAULT 0,
 
     CONSTRAINT fk_follows_user
          FOREIGN KEY(user_id)
@@ -18,11 +18,11 @@ CREATE TABLE follows (
 
 -- заявки на вступление в закрытое сообщество -------
 CREATE TABLE community_follows (
-    id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL,
+    id           SERIAL PRIMARY KEY,
+    user_id      INT NOT NULL,
     community_id INT NOT NULL,
-    view BOOLEAN NOT NULL DEFAULT false,
-    visited INT NOT NULL DEFAULT 0,
+    view         BOOLEAN NOT NULL DEFAULT false,
+    visited      INT NOT NULL DEFAULT 0,
 
     CONSTRAINT fk_community_follows_user
          FOREIGN KEY(user_id)

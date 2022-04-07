@@ -1,10 +1,10 @@
 
 -- подписчики -------
 CREATE TABLE friends (
-    id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL,
+    id             SERIAL PRIMARY KEY,
+    user_id        INT NOT NULL,
     target_user_id INT NOT NULL,
-    visited INT NOT NULL DEFAULT 0,
+    visited        INT NOT NULL DEFAULT 0,
 
     CONSTRAINT fk_friends_user
          FOREIGN KEY(user_id)
