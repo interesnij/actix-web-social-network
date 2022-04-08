@@ -12,8 +12,8 @@ use crate::diesel::RunQueryDsl;
 
 pub fn global_routes(config: &mut web::ServiceConfig) {
     config.route("/phone_send/{phone}/", web::get().to(phone_send));
-    config.route("/phone_verify/{phone}/{code}/", get::post().to(phone_verify));
-    config.route("/signup/", web::post().to(signup));
+    //config.route("/phone_verify/{phone}/{code}/", get::post().to(phone_verify));
+    //config.route("/signup/", web::post().to(signup));
 }
 
 pub async fn process_signup(data: web::Form<NewUser>) -> impl Responder {
