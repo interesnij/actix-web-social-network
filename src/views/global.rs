@@ -47,6 +47,7 @@ pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Res
     use crate::schema::{users, phone_codes};
     use crate::models::{User, PhoneCode};
     use {http_req::error, http_req::request, std::io, std::io::Write};
+    use rustc_serialize::json::Json;
 
     let connection = establish_connection();
     let (_type, _is_host_admin) = get_default_template(req);
@@ -54,12 +55,10 @@ pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Res
     let mut a = Vec::new();
     let _url = "https://api.ucaller.ru/v1.0/initCall?service_id=12203&key=GhfrKn0XKAmA1oVnyEzOnMI5uBnFN4ck&phone=".to_owned() + &_phone.to_string();
     request::get(_url, &mut a);
-    let answer = io::stdout()
-        .write(&a)
-        .ok()
-        .expect("Failed to read line");
-    println!("{:?}", &answer[0]);
-    println!("{:?}", &answer);
+    let answer = io::stdout().write(&a);
+    let json = Json::from_str(&answer).unwrap();
+
+    println!("{:?}", json.find_path(&["phone"]).unwrap());
     //data.insert("phone", &answer);
 
     let _template = _type + &"main/auth/phone_verification.html".to_string();
