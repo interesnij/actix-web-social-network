@@ -47,16 +47,16 @@ enum UserPerms {
 }
 
 enum UserGender {
-    'Man',      // Мужик
-    'Fem',     // Баба
+    "Man",      // Мужик
+    "Fem",     // Баба
 }
 enum UserDevice {
-    'De',      // Комп
-    'Ph',      // Телефон
+    "De",      // Комп
+    "Ph",      // Телефон
 }
 enum UserLanguage {
-    'Ru',      // Русский
-    'En',      // Английский
+    "Ru",      // Русский
+    "En",      // Английский
 }
 
 #[derive(Debug ,Queryable, Serialize, Identifiable)]

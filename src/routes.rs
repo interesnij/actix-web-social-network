@@ -2,7 +2,7 @@ use actix_web::web;
 
 use crate::views::{
     pages,
-    global,
+    //global,
 };
 
 pub fn routes(cfg: &mut web::ServiceConfig) {
