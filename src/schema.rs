@@ -20,3 +20,11 @@ table! {
         email -> Nullable<Varchar>,
     }
 }
+//////////////////// phone_codes //////////////
+table! {
+    phone_codes (id) {
+        id -> Int4,
+        phone -> Varchar,
+        code -> Int4,
+    }
+}
