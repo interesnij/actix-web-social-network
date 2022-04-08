@@ -62,11 +62,11 @@ pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Res
     let mut a = Vec::new();
     let _url = "https://api.ucaller.ru/v1.0/initCall?service_id=12203&key=GhfrKn0XKAmA1oVnyEzOnMI5uBnFN4ck&phone=".to_owned() + &_phone.to_string();
     request::get(_url, &mut a);
-    let answer = io::stdout()
+    let json_answer = io::stdout()
         .write(&a)
         .expect("E");
-
-    println!("{:?}", serde_json::from_str(&answer.to_string()).unwrap());
+    let answer: PhoneJson = serde_json::from_str(&json_answer).unwrap();
+    println!("{:?}", &answer);
     //data.insert("phone", &answer);
 
     let _template = _type + &"main/auth/phone_verification.html".to_string();
