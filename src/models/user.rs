@@ -6,57 +6,57 @@ use crate::utils::establish_connection;
 static mut numba : i32;
 enum UserTypes {
     numba = 1,     // стандартный тип пользователя
-    numba = 1,     // ребенок
-    3,     // идентифицированный
-    4,    // пославший запрос на идентификацию
-    11,   // удаленный стандартный
-    12,   // удаленный ребенок
-    13,   // удаленный идентифицированный
-    14,  // удаленный пославший запрос на идентификацию
-    21,   // закрытый стандартный
-    22,   // закрытый ребенок
-    23,   // закрытый идентифицированный
-    24,  // закрытый пославший запрос на идентификацию
-    31,   // приостановленный стандартный
-    32,   // приостановленный ребенок
-    33,   // приостановленный идентифицированный
-    34,  // приостановленный пославший запрос на идентификацию
-    41,   // закрытый баннером стандартный
-    42,   // закрытый баннером ребенок
-    43,   // закрытый баннером идентифицированный
-    44,  // закрытый баннером пославший запрос на идентификацию
+    numba = 2,     // ребенок
+    numba = 3,     // идентифицированный
+    numba = 4,    // пославший запрос на идентификацию
+    numba = 11,   // удаленный стандартный
+    numba = 12,   // удаленный ребенок
+    numba = 13,   // удаленный идентифицированный
+    numba = 14,  // удаленный пославший запрос на идентификацию
+    numba = 21,   // закрытый стандартный
+    numba = 22,   // закрытый ребенок
+    numba = 23,   // закрытый идентифицированный
+    numba = 24,  // закрытый пославший запрос на идентификацию
+    numba = 31,   // приостановленный стандартный
+    numba = 32,   // приостановленный ребенок
+    numba = 33,   // приостановленный идентифицированный
+    numba = 34,  // приостановленный пославший запрос на идентификацию
+    numba = 41,   // закрытый баннером стандартный
+    numba = 42,   // закрытый баннером ребенок
+    numba = 43,   // закрытый баннером идентифицированный
+    numba = 44,  // закрытый баннером пославший запрос на идентификацию
 }
 
 enum UserPerms {
-    1,      // стандартные полномочия
-    10,     // TRAINEE_MODERATOR
-    13,     // MODERATOR
-    16,     // HIGH_MODERATOR
-    19,     // TEAMLEAD_MODERATOR
-    30,     // TRAINEE_MANAGER
-    33,     // MANAGER
-    36,     // HIGH_MANAGER
-    39,     // TEAMLEAD_MANAGER
-    40,     // ADVERTISER
-    44,     // HIGH_ADVERTISER
-    49,     // TEAMLEAD_ADVERTISER
-    50,     // ADMINISTRATOR
-    54,     // HIGH_ADMINISTRATOR
-    59,     // TEAMLEAD_ADMINISTRATOR
-    60,     // SUPERMANAGER
+    numba = 1,      // стандартные полномочия
+    numba = 10,     // TRAINEE_MODERATOR
+    numba = 13,     // MODERATOR
+    numba = 16,     // HIGH_MODERATOR
+    numba = 19,     // TEAMLEAD_MODERATOR
+    numba = 30,     // TRAINEE_MANAGER
+    numba = 33,     // MANAGER
+    numba = 36,     // HIGH_MANAGER
+    numba = 39,     // TEAMLEAD_MANAGER
+    numba = 40,     // ADVERTISER
+    numba = 44,     // HIGH_ADVERTISER
+    numba = 49,     // TEAMLEAD_ADVERTISER
+    numba = 50,     // ADMINISTRATOR
+    numba = 54,     // HIGH_ADMINISTRATOR
+    numba = 59,     // TEAMLEAD_ADMINISTRATOR
+    numba = 60,     // SUPERMANAGER
 }
 
 enum UserGender {
-    1,      // Мужик
-    2,     // Баба
+    numba = 1,      // Мужик
+    numba = 2,     // Баба
 }
 enum UserDevice {
-    1,      // Комп
-    2,      // Телефон
+    numba = 1,      // Комп
+    numba = 2,      // Телефон
 }
 enum UserLanguage {
-    1,      // Русский
-    2,      // Английский
+    numba = 1,      // Русский
+    numba = 2,      // Английский
 }
 
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
