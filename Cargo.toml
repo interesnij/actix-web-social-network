@@ -8,6 +8,11 @@ edition = "2021"
 [dependencies]
 actix-web = "4"
 actix-files = "0.6"
+actix-redis = { version = "0.8.0", features = ["web"] }
+actix-session = "0.3"
+argonautica = "0.2.0"
+lettre = { git = "https://github.com/lettre/lettre" }
+native-tls = "0.2.4"
 env_logger = "0.9.0"
 log = "0.4"
 tera = "1.5.0"
