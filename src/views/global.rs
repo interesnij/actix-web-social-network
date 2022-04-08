@@ -46,8 +46,8 @@ pub async fn phone_window(req: HttpRequest) -> impl Responder {
 #[derive(Deserialize, Debug)]
 struct PhoneJson {
     status: bool,
-    ucaller_id: i32,
-    phone: i32,
+    ucaller_id: String,
+    phone: String,
     phone_id: String
 }
 pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Responder {
