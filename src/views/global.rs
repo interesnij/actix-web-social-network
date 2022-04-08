@@ -61,7 +61,7 @@ pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Res
     let __request = reqwest::get(_url)
         .await
         .expect("E.");
-    let new_request = __request.text().await.ok();
+    let new_request = __request.text().await.unwrap();
     println!("request - {:?}", &new_request);
 
     let _template = _type + &"main/auth/phone_verification.html".to_string();
