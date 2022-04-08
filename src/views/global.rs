@@ -58,9 +58,8 @@ pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Res
         .write(&a)
         .ok()
         .expect("Failed to read line");
-    println!("{:?}", &answer.phone);
-    println!("{:?}", &answer.0);
-    println!("{:?}", &answer["phone"]);
+    println!("{:?}", &answer[0]);
+    println!("{:?}", &answer);
     //data.insert("phone", &answer);
 
     let _template = _type + &"main/auth/phone_verification.html".to_string();
