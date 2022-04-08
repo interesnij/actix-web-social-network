@@ -94,6 +94,6 @@ pub struct LoginUser {
 
 impl User {
     fn get_full_name(&self) -> String {
-        self.first_name + &" ".to_string() + &self.last_name
+        self.first_name.clone() + &" ".to_string() + &self.last_name.clone()
     }
 }
