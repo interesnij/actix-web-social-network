@@ -61,7 +61,7 @@ enum UserLanguage {
     En,      // Английский
 }
 
-#[derive(Debug ,Queryable, Identifiable)]
+#[derive(Queryable, Identifiable)]
 pub struct User {
     pub id:            i32,
     pub first_name:    String,
