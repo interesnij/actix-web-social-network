@@ -11,6 +11,7 @@ use crate::diesel::RunQueryDsl;
 
 
 pub fn global_routes(config: &mut web::ServiceConfig) {
+    config.route("/phone_window/", web::get().to(phone_window));
     config.route("/phone_send/{phone}/", web::get().to(phone_send));
     //config.route("/phone_verify/{phone}/{code}/", get::post().to(phone_verify));
     //config.route("/signup/", web::post().to(signup));
@@ -32,6 +33,14 @@ pub async fn process_signup() -> impl Responder {
 
     //println!("{:?}", data);
     HttpResponse::Ok().body(format!("ok"))
+}
+
+pub async fn phone_window(req: HttpRequest, _phone: web::Path<String>) -> impl Responder {
+    let (_type, _is_host_admin) = get_default_template(req);
+    let mut data = Context::new();
+    let _template = _type + &"main/auth/phone_verification.html".to_string();
+    let rendered = TEMPLATES.render(&_template, &data).unwrap();
+    HttpResponse::Ok().body(rendered)
 }
 
 pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Responder {
