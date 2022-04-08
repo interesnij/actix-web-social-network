@@ -3,60 +3,60 @@ use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
 use crate::utils::establish_connection;
 
-static mut Numba : i32;
+
 enum UserTypes {
-    STANDART,     // стандартный тип пользователя
-    CHILD,        // ребенок
-    IDENTIFIER,     // идентифицированный
-    IDENTIFIER_SEND,    // пославший запрос на идентификацию
-    DELETE_STANDART,   // удаленный стандартный
-    numba = 12,   // удаленный ребенок
-    numba = 13,   // удаленный идентифицированный
-    numba = 14,  // удаленный пославший запрос на идентификацию
-    numba = 21,   // закрытый стандартный
-    numba = 22,   // закрытый ребенок
-    numba = 23,   // закрытый идентифицированный
-    numba = 24,  // закрытый пославший запрос на идентификацию
-    numba = 31,   // приостановленный стандартный
-    numba = 32,   // приостановленный ребенок
-    numba = 33,   // приостановленный идентифицированный
-    numba = 34,  // приостановленный пославший запрос на идентификацию
-    numba = 41,   // закрытый баннером стандартный
-    numba = 42,   // закрытый баннером ребенок
-    numba = 43,   // закрытый баннером идентифицированный
-    numba = 44,  // закрытый баннером пославший запрос на идентификацию
+    Standart,                   // стандартный тип пользователя
+    Child,                     // ребенок
+    Identifier,                // идентифицированный
+    IdentifierSend,            // пославший запрос на идентификацию
+    DeletedStandart,           // удаленный стандартный
+    DeletedChild,              // удаленный ребенок
+    DeletedIdentifier,         // удаленный идентифицированный
+    DeletedIdentifierSend,     // удаленный пославший запрос на идентификацию
+    ClosedStandart,            // закрытый стандартный
+    ClosedChild,               // закрытый ребенок
+    ClosedIdentifier,          // закрытый идентифицированный
+    ClosedIdentifierSend,      // закрытый пославший запрос на идентификацию
+    SuspendedStandart,         // приостановленный стандартный
+    SuspendedChild,            // приостановленный ребенок
+    SuspendedIdentifier,       // приостановленный идентифицированный
+    SuspendedIdentifierSend,   // приостановленный пославший запрос на идентификацию
+    BannerStandart,            // закрытый баннером стандартный
+    BannerChild,               // закрытый баннером ребенок
+    BannerIdentifier,          // закрытый баннером идентифицированный
+    BannerIdentifierSend,      // закрытый баннером пославший запрос на идентификацию
 }
 
 enum UserPerms {
-    numba = 1,      // стандартные полномочия
-    numba = 10,     // TRAINEE_MODERATOR
-    numba = 13,     // MODERATOR
-    numba = 16,     // HIGH_MODERATOR
-    numba = 19,     // TEAMLEAD_MODERATOR
-    numba = 30,     // TRAINEE_MANAGER
-    numba = 33,     // MANAGER
-    numba = 36,     // HIGH_MANAGER
-    numba = 39,     // TEAMLEAD_MANAGER
-    numba = 40,     // ADVERTISER
-    numba = 44,     // HIGH_ADVERTISER
-    numba = 49,     // TEAMLEAD_ADVERTISER
-    numba = 50,     // ADMINISTRATOR
-    numba = 54,     // HIGH_ADMINISTRATOR
-    numba = 59,     // TEAMLEAD_ADMINISTRATOR
-    numba = 60,     // SUPERMANAGER
+    Standart,                   // стандартные полномочия
+    TraineeModerator,           // TRAINEE_MODERATOR
+    Moderator,                  // MODERATOR
+    HighModerator,              // HIGH_MODERATOR
+    TeamleadModerator,          // TEAMLEAD_MODERATOR
+    TraineeManager = 30,        // TRAINEE_MANAGER
+    Manager = 33,               // MANAGER
+    HighManager = 36,           // HIGH_MANAGER
+    TeamleadManager = 39,       // TEAMLEAD_MANAGER
+    Advertiser = 40,            // ADVERTISER
+    HighAdvertiser = 44,        // HIGH_ADVERTISER
+    TeamleadAdvertiser = 49,    // TEAMLEAD_ADVERTISER
+    Administrator = 50,         // ADMINISTRATOR
+    HighAdministrator = 54,     // HIGH_ADMINISTRATOR
+    TeamleadAdministrator = 59, // TEAMLEAD_ADMINISTRATOR
+    Supermanager = 60,          // SUPERMANAGER
 }
 
 enum UserGender {
-    numba = 1,      // Мужик
-    numba = 2,     // Баба
+    Man,     // Мужик
+    Fem,     // Баба
 }
 enum UserDevice {
-    numba = 1,      // Комп
-    numba = 2,      // Телефон
+    De,      // Комп
+    Ph,      // Телефон
 }
 enum UserLanguage {
-    numba = 1,      // Русский
-    numba = 2,      // Английский
+    Ru,      // Русский
+    En,      // Английский
 }
 
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
