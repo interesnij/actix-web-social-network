@@ -35,7 +35,7 @@ pub async fn process_signup() -> impl Responder {
     HttpResponse::Ok().body(format!("ok"))
 }
 
-pub async fn phone_window(req: HttpRequest, _phone: web::Path<String>) -> impl Responder {
+pub async fn phone_window(req: HttpRequest) -> impl Responder {
     let (_type, _is_host_admin) = get_default_template(req);
     let mut data = Context::new();
     let _template = _type + &"main/auth/phone_verification.html".to_string();
