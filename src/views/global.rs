@@ -48,6 +48,7 @@ pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Res
     use crate::models::{User, PhoneCode};
     use {http_req::error, http_req::request, std::io, std::io::Write};
     use rustc_serialize::json::Json;
+    use serde_json;
 
     let connection = establish_connection();
     let (_type, _is_host_admin) = get_default_template(req);
@@ -58,10 +59,10 @@ pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Res
     let answer = io::stdout()
         .write(&a)
         .expect("E");
-    //let json = Json::from_str(&answer).unwrap();
+    let json = serde_json::from_str(&answer).unwrap();
 
     //println!("{:?}", json.find_path(&["phone"]).unwrap());
-    println!("{:?}", &answer);
+    println!("{:?}", &json);
     //data.insert("phone", &answer);
 
     let _template = _type + &"main/auth/phone_verification.html".to_string();
