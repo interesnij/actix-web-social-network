@@ -5,7 +5,7 @@ use crate::utils::establish_connection;
 
 
 enum UserTypes {
-    "STA",     // стандартный тип пользователя
+    "STA".to_string(),     // стандартный тип пользователя
     "CHI",     // ребенок
     "IDE",     // идентифицированный
     "IDES",    // пославший запрос на идентификацию
