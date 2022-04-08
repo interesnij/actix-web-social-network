@@ -19,7 +19,7 @@ CREATE TABLE wall_objects (
     created               TIMESTAMP NOT NULL,
     verb                  VARCHAR(6) NOT NULL,
     status                VARCHAR(6) NOT NULL,
-    types                  VARCHAR(6) NOT NULL,
+    types                 VARCHAR(6) NOT NULL,
     object_id             INT NOT NULL,
     community_id          INT,
     action_community_id   INT,

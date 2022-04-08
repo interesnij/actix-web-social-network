@@ -3,8 +3,8 @@ CREATE TABLE chats (
     id                SERIAL PRIMARY KEY,
     name              VARCHAR(100),                    -- название
     types             VARCHAR(6) NOT NULL,          -- тип (перечень выше)
-    image             TEXT(500),                      -- ссылка на аватар
-    description       TEXT(500),                      -- описание
+    image             VARCHAR(500),                      -- ссылка на аватар
+    description       VARCHAR(500),                      -- описание
     community_id      INT,                       -- id сообщества
     creator_id        INT NOT NULL,              -- id создателя
     position          INT DEFAULT 0,             -- порядковый номер
@@ -71,11 +71,11 @@ CREATE TABLE messages (
     sticker_id   INT,                           -- id стикера
     repost_id    INT,                           -- id поста
     created      TIMESTAMP NOT NULL,            -- когда создано
-    content      TEXT(5000),                          -- текст
+    content      VARCHAR(5000),                          -- текст
     unread       BOOLEAN NOT NULL DEFAULT true, -- не прочитано?
     types        VARCHAR NOT NULL,              -- тип
-    attach       TEXT(200),                          -- прикрепленные объекты
-    voice        TEXT(500),                          -- ссылка на голосовое
+    attach       VARCHAR(200),                          -- прикрепленные объекты
+    voice        VARCHAR(500),                          -- ссылка на голосовое
 
     CONSTRAINT fk_message_creator               -- связь с создателем
         FOREIGN KEY(creator_id)
@@ -102,8 +102,8 @@ CREATE TABLE message_versions (
     repost_id        INT,                   -- id поста
     parent_id        INT,
     created          TIMESTAMP NOT NULL,    -- когда создано
-    content          TEXT(5000),                  -- текст
-    attach           TEXT(200),                  -- прикрепленные объекты
+    content          VARCHAR(5000),                  -- текст
+    attach           VARCHAR(200),                  -- прикрепленные объекты
 
     CONSTRAINT fk_message_versions_message  -- связь с сообщением
         FOREIGN KEY(message_id)

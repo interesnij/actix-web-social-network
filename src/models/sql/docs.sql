@@ -5,7 +5,7 @@ CREATE TABLE doc_lists (
     community_id    INT,
     creator_id      INT NOT NULL,
     types           VARCHAR(6) NOT NULL,
-    description     TEXT(500),
+    description     VARCHAR(500),
     created         TIMESTAMP NOT NULL,
     count           INT DEFAULT 0,
     repost          INT DEFAULT 0,
@@ -35,7 +35,7 @@ CREATE TABLE docs (
     list_id      INT NOT NULL,
     types        VARCHAR(6) NOT NULL,
     types_2      VARCHAR(6) NOT NULL,
-    file         TEXT(500) NOT NULL,
+    file         VARCHAR(500) NOT NULL,
     created      TIMESTAMP NOT NULL,
 
     repost       INT DEFAULT 0,

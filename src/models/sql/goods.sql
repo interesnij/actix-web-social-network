@@ -2,7 +2,7 @@
 CREATE TABLE good_categories (
     id        SERIAL PRIMARY KEY,
     name      VARCHAR(100) NOT NULL,
-    avatar    TEXT,
+    avatar    VARCHAR(500),
     position  INT DEFAULT 0
 );
 
@@ -11,7 +11,7 @@ CREATE TABLE good_subcategories (
     id          SERIAL PRIMARY KEY,
     name        VARCHAR(200) NOT NULL,
     category_id INT NOT NULL,
-    avatar      TEXT,
+    avatar      VARCHAR(500),
     position    INT DEFAULT 0,
 
     CONSTRAINT fk_good_subcategories
@@ -25,7 +25,7 @@ CREATE TABLE good_lists (
     community_id    INT,
     creator_id      INT NOT NULL,
     types           VARCHAR(6) NOT NULL,
-    description     TEXT(500),
+    description     VARCHAR(500),
     created         TIMESTAMP NOT NULL,
     count           INT DEFAULT 0,
     repost          INT DEFAULT 0,
@@ -56,8 +56,8 @@ CREATE TABLE goods (
     list_id         INT NOT NULL,
     price           INT,
     types           VARCHAR(6) NOT NULL,
-    description     TEXT(500),
-    image           TEXT(500),
+    description     VARCHAR(500),
+    image           VARCHAR(500),
     comment_enabled BOOLEAN NOT NULL DEFAULT true,
     votes_on        BOOLEAN NOT NULL DEFAULT true,
     created         TIMESTAMP NOT NULL,
@@ -93,7 +93,7 @@ CREATE TABLE good_comments (
     creator_id  INT NOT NULL,
     sticker_id  INT,
     parent_id   INT,
-    content     TEXT(1000),
+    content     VARCHAR(1000),
     attach      VARCHAR(200),
     types       VARCHAR(6) NOT NULL,
     created     TIMESTAMP NOT NULL,

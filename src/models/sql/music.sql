@@ -9,8 +9,8 @@ CREATE TABLE sound_genres (
 CREATE TABLE artists (
     id          SERIAL PRIMARY KEY,
     name        VARCHAR(100) NOT NULL,
-    description TEXT(500),
-    image       TEXT(500),
+    description VARCHAR(500),
+    image       VARCHAR(500),
     created     TIMESTAMP NOT NULL,
 
     count       INT DEFAULT 0,
@@ -26,8 +26,8 @@ CREATE TABLE music_albums (
     name            VARCHAR(100) NOT NULL,
     artist_id       INT,
     creator_id      INT NOT NULL,
-    description     TEXT(500),
-    image           TEXT(500),
+    description     VARCHAR(500),
+    image           VARCHAR(500),
     created         TIMESTAMP NOT NULL,
 
     count           INT DEFAULT 0,
@@ -56,8 +56,8 @@ CREATE TABLE music_lists (
     community_id    INT,
     creator_id      INT NOT NULL,
     types           VARCHAR(6) NOT NULL,
-    description     TEXT(500),
-    image           TEXT(500),
+    description     VARCHAR(500),
+    image           VARCHAR(500),
     created         TIMESTAMP NOT NULL,
 
     count           INT DEFAULT 0,
@@ -89,8 +89,8 @@ CREATE TABLE music (
     genre_id      INT,
     album_id      INT,
     types         VARCHAR(6) NOT NULL,
-    file          TEXT(500) NOT NULL,
-    image         TEXT(500),
+    file          VARCHAR(500) NOT NULL,
+    image         VARCHAR(500),
     created       TIMESTAMP NOT NULL,
 
     repost        INT DEFAULT 0,

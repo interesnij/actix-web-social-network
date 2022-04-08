@@ -10,7 +10,7 @@ CREATE TABLE post_lists (
     community_id    INT,
     creator_id      INT NOT NULL,
     types           VARCHAR NOT NULL,
-    description     TEXT(500),
+    description     VARCHAR(500),
     created         TIMESTAMP NOT NULL,
     count           INT DEFAULT 0,
     repost          INT DEFAULT 0,
@@ -34,7 +34,7 @@ CREATE TABLE post_lists (
 
 CREATE TABLE posts (
     id              SERIAL PRIMARY KEY,
-    content         TEXT(5000),
+    content         VARCHAR(5000),
     community_id    INT,
     category_id     INT,
     creator_id      INT NOT NULL,
@@ -76,7 +76,7 @@ CREATE TABLE post_comments (
     creator_id  INT NOT NULL,
     sticker_id  INT,
     parent_id   INT,
-    content     TEXT(1000),
+    content     VARCHAR(1000),
     attach      VARCHAR(200),
     types       VARCHAR(6) NOT NULL,
     created     TIMESTAMP NOT NULL,

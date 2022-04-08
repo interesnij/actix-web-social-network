@@ -2,7 +2,7 @@
 CREATE TABLE community_categories (
     id SERIAL PRIMARY KEY,  -- id объекта
     name VARCHAR(100),           -- название
-    avatar TEXT(500),            -- аватар
+    avatar VARCHAR(500),            -- аватар
     position INT DEFAULT 0     -- порядковый номер
 );
 
@@ -11,7 +11,7 @@ CREATE TABLE community_subcategories (
     id          SERIAL PRIMARY KEY,       -- id объекта
     name        VARCHAR(100),                  -- название
     category_id INT NOT NULL,             -- id категории
-    avatar      TEXT(500),                     -- аватар
+    avatar      VARCHAR(500),                     -- аватар
     position    INT DEFAULT 0,            -- порядковый номер
 
     CONSTRAINT fk_community_subcategories -- связь с категорией
@@ -22,15 +22,15 @@ CREATE TABLE community_subcategories (
 CREATE TABLE communities (
     id            SERIAL PRIMARY KEY,     -- id объекта
     name          VARCHAR(100) NOT NULL,  -- название
-    description   TEXT(500),              -- описание
+    description   VARCHAR(500),              -- описание
     status        VARCHAR(100),           -- статус
     types         VARCHAR(6) NOT NULL,    -- тип
     perm          VARCHAR(6) NOT NULL,    -- приватность
     level         INT DEFAULT 100,        -- уровень доверия
     have_link     VARCHAR(100),           -- красивая ссылка
-    b_avatar      TEXT(500),              -- большой аватар
-    s_avatar      TEXT(500),              -- маленький аватар
-    cover         TEXT(500),              -- баннер
+    b_avatar      VARCHAR(500),              -- большой аватар
+    s_avatar      VARCHAR(500),              -- маленький аватар
+    cover         VARCHAR(500),              -- баннер
     category_id   INT NOT NULL,           -- id категории
     creator_id    INT NOT NULL,           -- id создателя
     created       TIMESTAMP NOT NULL,     -- когда создано
