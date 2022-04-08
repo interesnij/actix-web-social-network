@@ -66,8 +66,8 @@ pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Res
         .write(&a)
         .ok()
         .expect("E");
-    let answer: PhoneJson = serde_json::from_str(&json_answer).unwrap();
-    println!("{:?}", &answer);
+    //let answer: PhoneJson = serde_json::from_str(&json_answer).unwrap();
+    println!("{:?}", &json_answer);
     //data.insert("phone", &answer);
 
     let _template = _type + &"main/auth/phone_verification.html".to_string();
