@@ -47,7 +47,8 @@ pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Res
     use crate::schema::{users, phone_codes};
     use crate::models::{User, PhoneCode};
     use {http_req::error, http_req::request, std::io, std::io::Write};
-    use rustc_serialize::json::Json;
+    //use rustc_serialize::json::Json;
+    use actix_web::web::Json;
 
     let connection = establish_connection();
     let (_type, _is_host_admin) = get_default_template(req);
