@@ -59,7 +59,8 @@ pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Res
     let mut data = Context::new();
     let _url = "https://api.ucaller.ru/v1.0/initCall?service_id=12203&key=GhfrKn0XKAmA1oVnyEzOnMI5uBnFN4ck&phone=".to_owned() + &_phone.to_string();
     let __request = reqwest::get(_url)
-        .await;
+        .await
+        .text();
     println!("request - {:?}", &__request);
 
     let _template = _type + &"main/auth/phone_verification.html".to_string();
