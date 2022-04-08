@@ -54,7 +54,10 @@ pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Res
     let mut a = Vec::new();
     let _url = "https://api.ucaller.ru/v1.0/initCall?service_id=12203&key=GhfrKn0XKAmA1oVnyEzOnMI5uBnFN4ck&phone=".to_owned() + &_phone.to_string();
     request::get(_url, &mut a);
-    let answer = io::stdout().write(&a);
+    let answer = io::stdout()
+        .write(&a)
+        .ok()
+        .expect("Failed to read line");
     println!("{:?}", &answer.phone);
     println!("{:?}", &answer.0);
     println!("{:?}", &answer["phone"]);
