@@ -67,11 +67,11 @@ pub struct User {
     pub first_name:    String,
     pub last_name:     String,
     pub phone:         String,
-    pub types:         UserTypes,
-    pub gender:        UserGender,
-    pub device:        UserDevice,
-    pub language:      UserLanguage,
-    pub perm:          UserPerms,
+    pub types:         String,
+    pub gender:        String,
+    pub device:        String,
+    pub language:      String,
+    pub perm:          String,
     pub level:         i32,
     pub password:      String,
     pub have_link:     Option<String>,
@@ -82,6 +82,23 @@ pub struct User {
     pub email:         Option<String>,
     pub birthday:      chrono::NaiveDateTime,
     pub last_activity: chrono::NaiveDateTime,
+}
+
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="users"]
+pub struct NewUser {
+    pub first_name:     String,
+    pub last_name:      String,
+    pub phone:          String,
+    pub types:          UserTypes,
+    pub gender:         UserGender,
+    pub device:         UserDevice,
+    pub language:       UserLanguage,
+    pub perm:           UserPerms,
+    pub level:          i32,
+    pub password:       String,
+    pub birthday:       chrono::NaiveDateTime,
+    pub last_activity:  chrono::NaiveDateTime,
 }
 
 #[derive(Debug, Deserialize)]
