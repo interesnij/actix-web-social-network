@@ -644,7 +644,7 @@ on('body', 'click', '#register_ajax', function() {
   } else { this.disabled = true }
 
   reg_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  reg_link.open( 'GET', "/phone_verify/", true );
+  reg_link.open( 'GET', "/phone_window/", true );
   reg_link.onreadystatechange = function () {
   if ( reg_link.readyState == 4 && reg_link.status == 200 ) {
 
