@@ -1,4 +1,4 @@
-use crate::schema::other;
+use crate::schema::{phone_codes, custom_links};
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
 use crate::utils::establish_connection;
