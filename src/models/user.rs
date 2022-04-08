@@ -3,7 +3,7 @@ use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
 use crate::utils::establish_connection;
 
-
+#[derive(Insertable)]
 enum UserTypes {
     Standart,                   // стандартный тип пользователя
     Child,                     // ребенок
@@ -26,7 +26,7 @@ enum UserTypes {
     BannerIdentifier,          // закрытый баннером идентифицированный
     BannerIdentifierSend,      // закрытый баннером пославший запрос на идентификацию
 }
-
+#[derive(Insertable)]
 enum UserPerms {
     Standart,                   // стандартные полномочия
     TraineeModerator,           // TRAINEE_MODERATOR
@@ -45,15 +45,17 @@ enum UserPerms {
     TeamleadAdministrator = 59, // TEAMLEAD_ADMINISTRATOR
     Supermanager = 60,          // SUPERMANAGER
 }
-
+#[derive(Insertable)]
 enum UserGender {
     Man,     // Мужик
     Fem,     // Баба
 }
+#[derive(Insertable)]
 enum UserDevice {
     De,      // Комп
     Ph,      // Телефон
 }
+#[derive(Insertable)]
 enum UserLanguage {
     Ru,      // Русский
     En,      // Английский
