@@ -43,12 +43,18 @@ pub async fn phone_window(req: HttpRequest) -> impl Responder {
     HttpResponse::Ok().body(rendered)
 }
 
+#[derive(Deserialize, Debug)]
+struct PhoneJson {
+    status: bool,
+    ucaller_id: i32,
+    phone: i32,
+    phone_id: String
+}
 pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Responder {
     use crate::schema::{users, phone_codes};
     use crate::models::{User, PhoneCode};
     use {http_req::error, http_req::request, std::io, std::io::Write};
     use rustc_serialize::json::Json;
-    use serde_json;
 
     let connection = establish_connection();
     let (_type, _is_host_admin) = get_default_template(req);
@@ -59,7 +65,7 @@ pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Res
     let answer = io::stdout()
         .write(&a)
         .expect("E");
-    let json = serde_json::from_str(&answer).unwrap();
+    let json: PhoneJson = serde_json::from_str(&answer).unwrap();
 
     //println!("{:?}", json.find_path(&["phone"]).unwrap());
     println!("{:?}", &json);
