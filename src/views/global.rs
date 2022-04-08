@@ -31,3 +31,23 @@ pub async fn process_signup(data: web::Form<NewUser>) -> impl Responder {
     println!("{:?}", data);
     HttpResponse::Ok().body(format!("ok"))
 }
+
+pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Responder {
+    use crate::schema::{users, phone_codes};
+    use crate::models::{User, PhoneCode};
+    use {http_req::error, http_req::request, std::io, std::io::Write};
+
+    let connection = establish_connection();
+    let mut data = Context::new();
+    let mut a = Vec::new();
+    let _url = "https://api.ucaller.ru/v1.0/initCall?service_id=12203&key=GhfrKn0XKAmA1oVnyEzOnMI5uBnFN4ck&phone=" + _phone
+    request::get(_url, &mut a)?;
+    let answer = io::stdout().write(&a)?;
+    println!("{:?}", &answer);
+
+    data.insert("phone", &answer);
+
+    let _template = _type + &"main/auth/phone_verification.html".to_string();
+    let rendered = TEMPLATES.render(&_template, &data).unwrap();
+    HttpResponse::Ok().body(rendered)
+}
