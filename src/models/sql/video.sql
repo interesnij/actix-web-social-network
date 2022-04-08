@@ -1,28 +1,28 @@
 CREATE TABLE video_categories (
     id SERIAL PRIMARY KEY,
     name VARCHAR,
-    order INT NOT NULL DEFAULT 0
+    position INT NOT NULL DEFAULT 0
 );
 
 
 CREATE TABLE video_lists (
     id              SERIAL PRIMARY KEY,
-    name            VARCHAR,
+    name            VARCHAR(100) NOT NULL,
     community_id    INT,
     creator_id      INT NOT NULL,
-    _type           VARCHAR NOT NULL,
-    description     TEXT,
+    types           VARCHAR(6) NOT NULL,
+    description     TEXT(500),
     created         TIMESTAMP NOT NULL,
-    count           INT NOT NULL DEFAULT 0,
-    repost          INT NOT NULL DEFAULT 0,
-    copy            INT NOT NULL DEFAULT 0,
-    order           INT NOT NULL DEFAULT 0,
+    count           INT DEFAULT 0,
+    repost          INT DEFAULT 0,
+    copy            INT DEFAULT 0,
+    position        INT DEFAULT 0,
 
-    can_see_el      INT NOT NULL DEFAULT 1,
-    can_see_comment INT NOT NULL DEFAULT 1,
-    create_el       INT NOT NULL DEFAULT 7,
-    create_comment  INT NOT NULL DEFAULT 1,
-    copy_el         INT NOT NULL DEFAULT 1,
+    can_see_el      INT DEFAULT 1,
+    can_see_comment INT DEFAULT 1,
+    create_el       INT DEFAULT 7,
+    create_comment  INT DEFAULT 1,
+    copy_el         INT DEFAULT 1,
 
     CONSTRAINT fk_video_lists_creator
         FOREIGN KEY(creator_id)
@@ -35,26 +35,26 @@ CREATE TABLE video_lists (
 
 CREATE TABLE videos (
     id              SERIAL PRIMARY KEY,
-    title           VARCHAR,
+    title           VARCHAR(100) NOT NULL,
     community_id    INT,
     creator_id      INT NOT NULL,
     list_id         INT NOT NULL,
-    _type           VARCHAR NOT NULL,
-    preview         TEXT NOT NULL,
-    image           TEXT,
-    file            TEXT NOT NULL,
-    description     TEXT,
+    types           VARCHAR(6) NOT NULL,
+    preview         TEXT(500),
+    image           TEXT(500),
+    file            TEXT(500) NOT NULL,
+    description     TEXT(500),
     comment_enabled BOOLEAN NOT NULL DEFAULT true,
     votes_on        BOOLEAN NOT NULL DEFAULT true,
     created         TIMESTAMP NOT NULL,
 
-    comment         INT NOT NULL DEFAULT 0,
-    view            INT NOT NULL DEFAULT 0,
-    liked           INT NOT NULL DEFAULT 0,
-    disliked        INT NOT NULL DEFAULT 0,
-    repost          INT NOT NULL DEFAULT 0,
-    copy            INT NOT NULL DEFAULT 0,
-    order           INT NOT NULL DEFAULT 0,
+    comment         INT DEFAULT 0,
+    view            INT DEFAULT 0,
+    liked           INT DEFAULT 0,
+    disliked        INT DEFAULT 0,
+    repost          INT DEFAULT 0,
+    copy            INT DEFAULT 0,
+    position        INT DEFAULT 0,
 
     CONSTRAINT fk_videos_creator
         FOREIGN KEY(creator_id)
@@ -75,13 +75,14 @@ CREATE TABLE video_comments (
     creator_id  INT NOT NULL,
     sticker_id  INT,
     parent_id   INT,
-    _text       TEXT NOT NULL,
-    attach      VARCHAR NOT NULL,
+    content     TEXT(1000),
+    types       VARCHAR(6) NOT NULL,
+    attach      VARCHAR(200),
     created     TIMESTAMP NOT NULL,
 
-    liked       INT NOT NULL DEFAULT 0,
-    disliked    INT NOT NULL DEFAULT 0,
-    repost      INT NOT NULL DEFAULT 0,
+    liked       INT DEFAULT 0,
+    disliked    INT DEFAULT 0,
+    repost      INT DEFAULT 0,
 
     CONSTRAINT fk_video_comment
         FOREIGN KEY(item_id)
@@ -102,8 +103,8 @@ CREATE INDEX video_comments_creator_id_idx ON video_comments (creator_id);
 -- Сохранение списка у пользователя в коллекции -------
 CREATE TABLE user_video_list_collections (
     id      SERIAL PRIMARY KEY,
-    user_id INT,
-    list_id INT,
+    user_id INT NOT NULL,
+    list_id INT NOT NULL,
 
    CONSTRAINT fk_user_video_list_collections_user
         FOREIGN KEY(user_id)
@@ -117,8 +118,8 @@ CREATE TABLE user_video_list_collections (
 -- Сохранение списка у сообщества в коллекции -------
 CREATE TABLE community_video_list_collections (
     id            SERIAL PRIMARY KEY,
-    community_id  INT,
-    list_id       INT,
+    community_id  INT NOT NULL,
+    list_id       INT NOT NULL,
 
    CONSTRAINT fk_community_video_list_collections_community
         FOREIGN KEY(community_id)
@@ -131,8 +132,8 @@ CREATE TABLE community_video_list_collections (
 
 CREATE TABLE video_list_perm (
     id              SERIAL PRIMARY KEY,
-    user_id         INT,
-    list_id         INT,
+    user_id         INT NOT NULL,
+    list_id         INT NOT NULL,
     can_see_item    INT DEFAULT 0,
     can_see_comment INT DEFAULT 0,
     create_item     INT DEFAULT 0,

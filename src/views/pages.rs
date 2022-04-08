@@ -2,13 +2,14 @@ use actix_web::{
     HttpRequest,
     Responder,
     HttpResponse,
-    web
+    web,
+    http::header::Header
 };
 use serde::Deserialize;
 use tera::Context;
 use crate::utils::{establish_connection, get_default_template, TEMPLATES};
 use crate::diesel::RunQueryDsl;
-use actix_web::http::header::Header;
+
 
 pub fn pages_routes(config: &mut web::ServiceConfig) {
     config.route("/", web::get().to(index));

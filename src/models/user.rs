@@ -3,104 +3,109 @@ use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
 use crate::utils::establish_connection;
 
+
+enum UserTypes {
+    "STA",     // стандартный тип пользователя
+    "CHI",     // ребенок
+    "IDE",     // идентифицированный
+    "IDES",    // пославший запрос на идентификацию
+    "_DELS",   // удаленный стандартный
+    "_DELC",   // удаленный ребенок
+    "_DELI",   // удаленный идентифицированный
+    "_DELIS",  // удаленный пославший запрос на идентификацию
+    "_CLOS",   // закрытый стандартный
+    "_CLOC",   // закрытый ребенок
+    "_CLOI",   // закрытый идентифицированный
+    "_CLOIS",  // закрытый пославший запрос на идентификацию
+    "_SUSS",   // приостановленный стандартный
+    "_SUSC",   // приостановленный ребенок
+    "_SUSI",   // приостановленный идентифицированный
+    "_SUSIS",  // приостановленный пославший запрос на идентификацию
+    "_BANS",   // закрытый баннером стандартный
+    "_BANC",   // закрытый баннером ребенок
+    "_BANI",   // закрытый баннером идентифицированный
+    "_BANIS",  // закрытый баннером пославший запрос на идентификацию
+}
+
+enum UserPerms {
+    1,      // стандартные полномочия
+    10,     // TRAINEE_MODERATOR
+    13,     // MODERATOR
+    16,     // HIGH_MODERATOR
+    19,     // TEAMLEAD_MODERATOR
+    30,     // TRAINEE_MANAGER
+    33,     // MANAGER
+    36,     // HIGH_MANAGER
+    39,     // TEAMLEAD_MANAGER
+    40,     // ADVERTISER
+    44,     // HIGH_ADVERTISER
+    49,     // TEAMLEAD_ADVERTISER
+    50,     // ADMINISTRATOR
+    54,     // HIGH_ADMINISTRATOR
+    59,     // TEAMLEAD_ADMINISTRATOR
+    60,     // SUPERMANAGER
+}
+
+enum UserGender {
+    'Man',      // Мужик
+    'Fem',     // Баба
+}
+enum UserDevice {
+    'De',      // Комп
+    'Ph',      // Телефон
+}
+enum UserLanguage {
+    'Ru',      // Русский
+    'En',      // Английский
+}
+
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
 pub struct User {
-    pub id: i32,
-    pub first_name: String,
-    pub last_name: String,
-    pub phone: String,
-    pub _type: String,
-    pub gender: String,
-    pub device: String,
-    pub language: String,
-    pub perm: String,
-    pub level: i32,
-    pub password: String,
-    pub have_link: Option<String>,
-    pub city: Option<String>,
-    pub status: Option<String>,
-    pub b_avatar: Option<String>,
-    pub s_avatar: Option<String>,
-    pub email: Option<String>,
+    pub id:            i32,
+    pub first_name:    String,
+    pub last_name:     String,
+    pub phone:         String,
+    pub types:         UserTypes,
+    pub gender:        UserGender,
+    pub device:        UserDevice,
+    pub language:      UserLanguage,
+    pub perm:          UserPerms,
+    pub level:         i32,
+    pub password:      String,
+    pub have_link:     Option<String>,
+    pub city:          Option<String>,
+    pub status:        Option<String>,
+    pub b_avatar:      Option<String>,
+    pub s_avatar:      Option<String>,
+    pub email:         Option<String>,
+    pub birthday:      chrono::NaiveDateTime,
+    pub last_activity: chrono::NaiveDateTime,
 }
 
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="users"]
 pub struct NewUser {
-    pub first_name: String,
-    pub last_name: String,
-    pub phone: String,
-    pub gender: String,
-    pub device: String,
-    pub _type: String,
-    pub password: String,
-    pub level: i32,
-    pub language: String,
+    pub first_name:     String,
+    pub last_name:      String,
+    pub phone:          String,
+    pub types:          UserTypes,
+    pub gender:         UserGender,
+    pub device:         UserDevice,
+    pub language:       UserLanguage,
+    pub perm:           UserPerms,
+    pub level:          i32,
+    pub password:       String,
+    pub birthday:       chrono::NaiveDateTime,
+    pub last_activity:  chrono::NaiveDateTime,
 }
 #[derive(Debug, Deserialize)]
 pub struct LoginUser {
-    pub phone: String,
+    pub phone:    String,
     pub password: String,
 }
 
-#[derive(Debug, AsChangeset)]
-#[table_name = "users"]
-pub struct UserNameChange {
-    pub first_name: String,
-    pub last_name: String,
-}
-#[derive(Debug, AsChangeset)]
-#[table_name = "users"]
-pub struct UserPhoneChange {
-    pub phone: String,
-}
-#[derive(Debug, AsChangeset)]
-#[table_name = "users"]
-pub struct UserAvatarChange {
-    pub b_avatar: String,
-    pub s_avatar: String,
-}
-#[derive(Debug, AsChangeset)]
-#[table_name = "users"]
-pub struct UserLinkChange {
-    pub have_link: String,
-}
-#[derive(Debug, AsChangeset)]
-#[table_name = "users"]
-pub struct UserCityChange {
-    pub city: String,
-}
-#[derive(Debug, AsChangeset)]
-#[table_name = "users"]
-pub struct UserStatusChange {
-    pub status: String,
-}
-#[derive(Debug, AsChangeset)]
-#[table_name = "users"]
-pub struct UserPermChange {
-    pub perm: String,
-}
-#[derive(Debug, AsChangeset)]
-#[table_name = "users"]
-pub struct UserLevelChange {
-    pub level: i32,
-}
-#[derive(Debug, AsChangeset)]
-#[table_name = "users"]
-pub struct UserLanguageChange {
-    pub language: String,
-}
-#[derive(Debug, AsChangeset)]
-#[table_name = "users"]
-pub struct UserTypeChange {
-    pub _type: String,
-}
-
-/// Методы модели User...
-pub(crate) struct UserOperation;
-
-impl UserOperation {
-    pub fn get_full_name(user: &User) -> String {
-        user.first_name.clone() + &" ".to_string() + &user.last_name.clone()
+impl User {
+    fn get_full_name(&self) -> String {
+        self.first_name + &" ".to_string() + &self.last_name;
     }
 }

@@ -1,23 +1,23 @@
 
 CREATE TABLE chats (
     id                SERIAL PRIMARY KEY,
-    name              VARCHAR,                    -- название
-    _type             VARCHAR NOT NULL,          -- тип (перечень выше)
-    image             TEXT,                      -- ссылка на аватар
-    description       TEXT,                      -- описание
+    name              VARCHAR(100),                    -- название
+    types             VARCHAR(6) NOT NULL,          -- тип (перечень выше)
+    image             TEXT(500),                      -- ссылка на аватар
+    description       TEXT(500),                      -- описание
     community_id      INT,                       -- id сообщества
     creator_id        INT NOT NULL,              -- id создателя
-    order             INT NOT NULL DEFAULT 0,    -- порядковый номер
-    members           INT NOT NULL DEFAULT 0,    -- кол-во участников
+    position          INT DEFAULT 0,             -- порядковый номер
+    members           INT DEFAULT 0,             -- кол-во участников
     created           TIMESTAMP NOT NULL,        -- когда создан
 
-    can_add_members   INT,                       -- кто добавляет участников
-    can_fix_item      INT,                       -- кто закрепляет сообщения чата
-    can_mention       INT,                       -- кто упоминает о чате
-    can_add_admin     INT,                       -- кто работает с админами
-    can_add_design    INT,                       -- кто работает с дизайном
-    can_see_settings  INT,                       -- кто видит настройки
-    can_see_log       INT,                       -- кто видит логи чата
+    can_add_members   INT DEFAULT 1,                       -- кто добавляет участников
+    can_fix_item      INT DEFAULT 3,                       -- кто закрепляет сообщения чата
+    can_mention       INT DEFAULT 1,                       -- кто упоминает о чате
+    can_add_admin     INT DEFAULT 3,                       -- кто работает с админами
+    can_add_design    INT DEFAULT 2,                       -- кто работает с дизайном
+    can_see_settings  INT DEFAULT 2,                       -- кто видит настройки
+    can_see_log       INT DEFAULT 2,                       -- кто видит логи чата
 
     CONSTRAINT fk_chat_creator                   -- связь с создателем
         FOREIGN KEY(creator_id)
@@ -25,14 +25,14 @@ CREATE TABLE chats (
 
     CONSTRAINT fk_chat_community                 -- связь с сообществом
         FOREIGN KEY(community_id)
-            REFERENCES communities(id),
+            REFERENCES communities(id)
 );
 
 CREATE TABLE chat_users (
     id                SERIAL PRIMARY KEY,            -- id объекта
     user_id           INT NOT NULL,                  -- id пользователя
     chat_id           INT NOT NULL,                  -- id чата
-    _type             VARCHAR NOT NULL,              -- тип
+    types             VARCHAR(6) NOT NULL,              -- тип
     is_administrator  BOOLEAN NOT NULL DEFAULT false,-- админ ли?
     created           TIMESTAMP NOT NULL,            -- создано
     no_disturb        TIMESTAMP,                     -- не беспокоить до...
@@ -71,14 +71,14 @@ CREATE TABLE messages (
     sticker_id   INT,                           -- id стикера
     repost_id    INT,                           -- id поста
     created      TIMESTAMP NOT NULL,            -- когда создано
-    _text        TEXT,                          -- текст
+    content      TEXT(5000),                          -- текст
     unread       BOOLEAN NOT NULL DEFAULT true, -- не прочитано?
-    _type        VARCHAR NOT NULL,              -- тип
-    attach       TEXT,                          -- прикрепленные объекты
-    voice        TEXT,                          -- ссылка на голосовое
+    types        VARCHAR NOT NULL,              -- тип
+    attach       TEXT(200),                          -- прикрепленные объекты
+    voice        TEXT(500),                          -- ссылка на голосовое
 
     CONSTRAINT fk_message_creator               -- связь с создателем
-        FOREIGN KEY(message_id)
+        FOREIGN KEY(creator_id)
             REFERENCES users(id),
 
     CONSTRAINT fk_message_chat                  -- связь с чатом
@@ -87,18 +87,23 @@ CREATE TABLE messages (
 
     CONSTRAINT fk_message_parent                -- связь с родтелем (на какое ответ)
         FOREIGN KEY(parent_id)
-          REFERENCES messages(id)
+          REFERENCES messages(id),
+
+    CONSTRAINT fk_message_post               -- связь с постом (репост в сообщения)
+        FOREIGN KEY(repost_id)
+          REFERENCES posts(id)
 );
 
 -- Копии сообщений перед изменением -------
 CREATE TABLE message_versions (
     id SERIAL        PRIMARY KEY,           -- id объекта
-    message_id       INT,                   -- id сообщения
+    message_id       INT NOT NULL,                   -- id сообщения
     sticker_id       INT,                   -- id стикера
     repost_id        INT,                   -- id поста
+    parent_id        INT,
     created          TIMESTAMP NOT NULL,    -- когда создано
-    _text            TEXT,                  -- текст
-    attach           TEXT,                  -- прикрепленные объекты
+    content          TEXT(5000),                  -- текст
+    attach           TEXT(200),                  -- прикрепленные объекты
 
     CONSTRAINT fk_message_versions_message  -- связь с сообщением
         FOREIGN KEY(message_id)
@@ -109,8 +114,8 @@ CREATE TABLE message_versions (
 -- Особые сообщения для пользователей -------
 CREATE TABLE message_options (
     id             SERIAL PRIMARY KEY,              -- id объекта
-    message_id     INT,                             -- id сообщения
-    user_id        INT,                             -- id пользователя
+    message_id     INT NOT NULL,                             -- id сообщения
+    user_id        INT NOT NULL,                             -- id пользователя
     is_deleted     BOOLEAN NOT NULL DEFAULT false,  -- сообщение удалено?
     is_favourite   BOOLEAN NOT NULL DEFAULT false,  -- сообщение в избранном?
 
@@ -126,8 +131,8 @@ CREATE TABLE message_options (
 -- Пересланные сообщения -------
 CREATE TABLE message_transfers (
     id          SERIAL PRIMARY KEY,            -- id объекта
-    message_id  INT,                           -- id сообщения
-    transfer_id INT,                           -- id пересылаемого сообщения
+    message_id  INT NOT NULL,                  -- id сообщения
+    transfer_id INT NOT NULL,                  -- id пересылаемого сообщения
 
     CONSTRAINT fk_message_transfers_message    -- связь с сообщением
         FOREIGN KEY(message_id)

@@ -1,21 +1,24 @@
 -- пользователи -------
 CREATE TABLE users (
-    id          SERIAL PRIMARY KEY,
-    first_name  VARCHAR NOT NULL,
-    last_name   VARCHAR NOT NULL,
-    phone       VARCHAR NOT NULL,
-    _type       VARCHAR NOT NULL,
-    gender      VARCHAR NOT NULL,
-    device      VARCHAR NOT NULL,
-    language    VARCHAR NOT NULL,
-    perm        VARCHAR NOT NULL,
-    level       INT default 100,
-    password    VARCHAR NOT NULL,
-    have_link   VARCHAR,
-    status      VARCHAR,
-    b_avatar    TEXT,
-    s_avatar    TEXT,
-    email       VARCHAR NOT NULL,
+    id            SERIAL PRIMARY KEY,
+    first_name    VARCHAR(100) NOT NULL,
+    last_name     VARCHAR(100) NOT NULL,
+    phone         VARCHAR(14) NOT NULL,
+    types         VARCHAR(6) NOT NULL,
+    gender        VARCHAR(3) NOT NULL,
+    device        VARCHAR(2) NOT NULL,
+    language      VARCHAR(2) NOT NULL,
+    perm          INT DEFAULT 1,
+    level         INT DEFAULT 100,
+    password      VARCHAR(100) NOT NULL,
+    have_link     VARCHAR(100),
+    city          VARCHAR(100),
+    status        VARCHAR(100),
+    b_avatar      TEXT(500),
+    s_avatar      TEXT(500),
+    email         VARCHAR(100),
+    birthday      TIMESTAMP NOT NULL,
+    last_activity TIMESTAMP NOT NULL,
 
     UNIQUE(phone),
     UNIQUE(email)
@@ -25,26 +28,26 @@ CREATE TABLE users (
 CREATE TABLE user_profile (
     id             SERIAL PRIMARY KEY,
     user_id        INT NOT NULL,
-    posts          INT default 0,
-    views_post     INT default 0,
-    friends        INT default 0,
-    follows        INT default 0,
-    communities    INT default 0,
-    photos         INT default 0,
-    goods          INT default 0,
-    docs           INT default 0,
-    tracks         INT default 0,
-    videos         INT default 0,
-    articles       INT default 0,
+    posts          INT DEFAULT 0,
+    views_post     INT DEFAULT 0,
+    friends        INT DEFAULT 0,
+    follows        INT DEFAULT 0,
+    communities    INT DEFAULT 0,
+    photos         INT DEFAULT 0,
+    goods          INT DEFAULT 0,
+    docs           INT DEFAULT 0,
+    tracks         INT DEFAULT 0,
+    videos         INT DEFAULT 0,
+    articles       INT DEFAULT 0,
     _time          TIMESTAMP,
     height         FLOAT,
-    activity       TEXT,
-    interests      TEXT,
-    favorite_music TEXT,
-    favorite_films TEXT,
-    favorite_books TEXT,
-    favorite_game  TEXT,
-    about          TEXT,
+    activity       TEXT(500),
+    interests      TEXT(500),
+    favorite_music TEXT(500),
+    favorite_films TEXT(500),
+    favorite_books TEXT(500),
+    favorite_game  TEXT(500),
+    about          TEXT(500),
 
     CONSTRAINT fk_user_profile
         FOREIGN KEY(user_id)
@@ -55,15 +58,15 @@ CREATE TABLE user_profile (
 CREATE TABLE user_location (
     id SERIAL PRIMARY KEY,
     user_id     INT NOT NULL,
-    city_ru     VARCHAR,
-    city_en     VARCHAR,
+    city_ru     VARCHAR(100),
+    city_en     VARCHAR(100),
     city_lat    FLOAT,
     city_lon    FLOAT,
 
-    region_ru   VARCHAR,
-    region_en   VARCHAR,
-    country_ru  VARCHAR,
-    country_en  VARCHAR,
+    region_ru   VARCHAR(100),
+    region_en   VARCHAR(100),
+    country_ru  VARCHAR(100),
+    country_en  VARCHAR(100),
 
     CONSTRAINT fk_user_location
         FOREIGN KEY(user_id)
@@ -85,13 +88,13 @@ CREATE TABLE ip_user (
 CREATE TABLE user_anketa (
     id                    SERIAL PRIMARY KEY,
     user_id               INT NOT NULL,
-    political_preferences VARCHAR,
-    worldview             VARCHAR,
-    mainthing_in_life     VARCHAR,
-    mainthing_in_people   VARCHAR,
-    attitude_to_smoking   VARCHAR,
-    attitude_to_alcohol   VARCHAR,
-    inspiration           VARCHAR,
+    political_preferences VARCHAR(500),
+    worldview             VARCHAR(500),
+    mainthing_in_life     VARCHAR(500),
+    mainthing_in_people   VARCHAR(500),
+    attitude_to_smoking   VARCHAR(500),
+    attitude_to_alcohol   VARCHAR(500),
+    inspiration           VARCHAR(500),
 
     CONSTRAINT fk_user_anketa
         FOREIGN KEY(user_id)
@@ -102,8 +105,8 @@ CREATE TABLE user_anketa (
 CREATE TABLE user_delete_anketa (
     id      SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
-    answer  VARCHAR,
-    other   VARCHAR,
+    answer  VARCHAR(6),
+    other   VARCHAR(200),
 
     CONSTRAINT fk_user_delete_anketa
         FOREIGN KEY(user_id)
@@ -114,8 +117,8 @@ CREATE TABLE user_delete_anketa (
 CREATE TABLE user_love_status (
     id            SERIAL PRIMARY KEY,
     user_id       INT NOT NULL,
-    male_status   VARCHAR,
-    female_status VARCHAR,
+    male_status   VARCHAR(6),
+    female_status VARCHAR(6),
 
     CONSTRAINT fk_user_love_status
         FOREIGN KEY(user_id)
@@ -168,7 +171,7 @@ CREATE TABLE user_dad_one (
 );
 
 -- Братья, сёстры -------
-CREATE TABLE user_brother_sister_one (
+CREATE TABLE user_brother_sister (
     id        SERIAL PRIMARY KEY,
     user_id   INT NOT NULL,
     target_id INT NOT NULL,
@@ -247,37 +250,53 @@ CREATE TABLE user_blocks (
 -- Список ключей новостей, уведомлений или рекомендаций (если пользователь хочет их группировать) -------
 CREATE TABLE list_uc (
     id    SERIAL PRIMARY KEY,
-    _type INT NOT NULL,      -- тип списка: 0 - неактивен, 1 - основной, 2 - пользовательский
-    name  VARCHAR NOT NULL    -- название
+    types INT DEFAULT 0,      -- тип списка: 0 - неактивен, 1 - основной, 2 - пользовательский
+    name  VARCHAR(100) NOT NULL,    -- название
     owner INT NOT NULL       -- владелец
 );
 
 -- Ключи рекомендаций -------
 CREATE TABLE featured_uc (
-    id        SERIAL PRIMARY KEY,
-    owner     INT NOT NULL,                  -- кто получает рекомендации
-    user      INT,                            -- рекомендуемый друг
-    community INT,                       -- рекомендуемое сообщество
-    mute      BOOLEAN NOT NULL DEFAULT false, -- не получать рекомендации источника
-    sleep     TIMESTAMP                      -- не получать рекомендации источника до указанного времени
+    id            SERIAL PRIMARY KEY,
+    owner         INT NOT NULL,                  -- кто получает рекомендации
+    list_id       INT,                             -- список, если есть
+    user_id       INT,                  -- рекомендуемый друг
+    community_id  INT,                  -- рекомендуемое сообщество
+    mute          BOOLEAN NOT NULL DEFAULT false, -- не получать рекомендации источника
+    sleep         TIMESTAMP,                       -- не получать рекомендации источника до указанного времени
+
+    CONSTRAINT fk_featured_uc_list
+         FOREIGN KEY(list_id)
+             REFERENCES list_uc(id)
+
 );
 -- Ключи новостей -------
 CREATE TABLE news_uc (
-    id        SERIAL PRIMARY KEY,
-    owner     INT NOT NULL,                  -- кто получает новости
-    user      INT,                            -- новости друга
-    community INT,                       -- новости сообщества
-    mute      BOOLEAN NOT NULL DEFAULT false, -- не получать новости источника
-    sleep     TIMESTAMP                      -- не получать новости источника до указанного времени
+    id           SERIAL PRIMARY KEY,
+    owner        INT NOT NULL,                  -- кто получает новости
+    list_id      INT,
+    user_id      INT,                            -- новости друга
+    community    INT,                       -- новости сообщества
+    mute         BOOLEAN NOT NULL DEFAULT false, -- не получать новости источника
+    sleep        TIMESTAMP,                      -- не получать новости источника до указанного времени
+
+    CONSTRAINT fk_news_uc_list
+         FOREIGN KEY(list_id)
+             REFERENCES list_uc(id)
 );
 -- Ключи уыедомлений -------
 CREATE TABLE notify_uc (
-    id        SERIAL PRIMARY KEY,
-    owner     INT NOT NULL,                  -- кто получает уведомления
-    user      INT,                            -- уведомления друга
-    community INT,                       -- уведомления сообщества
-    mute      BOOLEAN NOT NULL DEFAULT false, -- не получать уведомления источника
-    sleep     TIMESTAMP                      -- не получать уведомления источника до указанного времени
+    id           SERIAL PRIMARY KEY,
+    owner        INT NOT NULL,                  -- кто получает уведомления
+    list_id      INT,
+    user_id      INT,                            -- уведомления друга
+    community    INT,                       -- уведомления сообщества
+    mute         BOOLEAN NOT NULL DEFAULT false, -- не получать уведомления источника
+    sleep        TIMESTAMP,                      -- не получать уведомления источника до указанного времени
+
+    CONSTRAINT fk_notify_uc_list
+         FOREIGN KEY(list_id)
+             REFERENCES list_uc(id)
 );
 
 ------------------
@@ -286,65 +305,65 @@ CREATE TABLE notify_uc (
 
 -- Порядок следования фотоальбома -------
 CREATE TABLE user_photo_list_position (
-    id        SERIAL PRIMARY KEY,
-    user      INT DEFAULT 0,     -- Пользователь
-    list      INT DEFAULT 0,     -- Фотоальбом
-    position  INT DEFAULT 0, -- Порядок отображения
-    _type     INT DEFAULT 1     -- 1 - открыт, 0 - недоступен (например, удален)
+    id            SERIAL PRIMARY KEY,
+    user_id       INT NOT NULL,     -- Пользователь
+    list          INT NOT NULL,     -- Фотоальбом
+    position      INT DEFAULT 0, -- Порядок отображения
+    types         INT DEFAULT 1     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 -- Порядок следования списка записей -------
 CREATE TABLE user_post_list_position (
-    id        SERIAL PRIMARY KEY,
-    user      INT DEFAULT 0,     -- Пользователь
-    list      INT DEFAULT 0,     -- Список записей
-    position  INT DEFAULT 0, -- Порядок отображения
-    _type     INT DEFAULT 1     -- 1 - открыт, 0 - недоступен (например, удален)
+    id           SERIAL PRIMARY KEY,
+    user_id      INT NOT NULL,     -- Пользователь
+    list         INT NOT NULL,     -- Список записей
+    position     INT DEFAULT 0, -- Порядок отображения
+    types        INT DEFAULT 1     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 -- Порядок следования списка аудиозаписей -------
 CREATE TABLE user_music_list_position (
-    id        SERIAL PRIMARY KEY,
-    user      INT DEFAULT 0,     -- Пользователь
-    list      INT DEFAULT 0,     -- Список аудиозаписей
-    position  INT DEFAULT 0, -- Порядок отображения
-    _type     INT DEFAULT 1     -- 1 - открыт, 0 - недоступен (например, удален)
+    id            SERIAL PRIMARY KEY,
+    user_id       INT NOT NULL,     -- Пользователь
+    list          INT NOT NULL,     -- Список аудиозаписей
+    position      INT DEFAULT 0,     -- Порядок отображения
+    types         INT DEFAULT 1      -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 -- Порядок следования списка товаров -------
 CREATE TABLE user_good_list_position (
-    id        SERIAL PRIMARY KEY,
-    user      INT DEFAULT 0,     -- Пользователь
-    list      INT DEFAULT 0,     -- Список товаров
-    position  INT DEFAULT 0, -- Порядок отображения
-    _type     INT DEFAULT 1     -- 1 - открыт, 0 - недоступен (например, удален)
+    id           SERIAL PRIMARY KEY,
+    user_id      INT NOT NULL,     -- Пользователь
+    list         INT NOT NULL,     -- Список товаров
+    position     INT DEFAULT 0, -- Порядок отображения
+    types        INT DEFAULT 1     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 -- Порядок следования списка видеозаписей -------
 CREATE TABLE user_video_list_position (
-    id        SERIAL PRIMARY KEY,
-    user      INT DEFAULT 0,     -- Пользователь
-    list      INT DEFAULT 0,     -- Список видеозаписей
-    position  INT DEFAULT 0, -- Порядок отображения
-    _type     INT DEFAULT 1     -- 1 - открыт, 0 - недоступен (например, удален)
+    id           SERIAL PRIMARY KEY,
+    user_id      INT NOT NULL,     -- Пользователь
+    list         INT NOT NULL,     -- Список видеозаписей
+    position     INT DEFAULT 0, -- Порядок отображения
+    types        INT DEFAULT 1     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 -- Порядок следования списка опросов -------
 CREATE TABLE user_survey_list_position (
-    id        SERIAL PRIMARY KEY,
-    user      INT DEFAULT 0,     -- Пользователь
-    list      INT DEFAULT 0,     -- Список опросов
-    position  INT DEFAULT 0, -- Порядок отображения
-    _type     INT DEFAULT 1     -- 1 - открыт, 0 - недоступен (например, удален)
+    id           SERIAL PRIMARY KEY,
+    user_id      INT NOT NULL,     -- Пользователь
+    list         INT NOT NULL,     -- Список опросов
+    position     INT DEFAULT 0, -- Порядок отображения
+    types        INT DEFAULT 1     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 -- Порядок следования списка документов -------
 CREATE TABLE user_doc_list_position (
-    id         SERIAL PRIMARY KEY,
-    user       INT DEFAULT 0,     -- Пользователь
-    list       INT DEFAULT 0,     -- Список документов
-    position   INT DEFAULT 0, -- Порядок отображения
-    _type      INT DEFAULT 1     -- 1 - открыт, 0 - недоступен (например, удален)
+    id             SERIAL PRIMARY KEY,
+    user_id        INT NOT NULL,     -- Пользователь
+    list           INT NOT NULL,     -- Список документов
+    position       INT DEFAULT 0, -- Порядок отображения
+    types          INT DEFAULT 1     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 ------------------
@@ -355,7 +374,7 @@ CREATE TABLE user_doc_list_position (
 CREATE TABLE color_settings (
     id        SERIAL PRIMARY KEY,
     user_id   INT NOT NULL,
-    color     VARCHAR DEFAULT "white",
+    color     VARCHAR(50) NOT NULL,
 
     CONSTRAINT fk_color_settings
          FOREIGN KEY(user_id)
@@ -368,19 +387,19 @@ CREATE TABLE color_settings (
 CREATE TABLE user_private (
     id                SERIAL PRIMARY KEY,
     user_id           INT NOT NULL,
-    can_see_community INT NOT NULL, -- Кто видит сообщества
-    can_see_info      INT NOT NULL,      -- Кто видит информацию
-    can_see_friend    INT NOT NULL,    -- Кто видит друзей
-    can_send_message  INT NOT NULL,  -- Кто пишет сообщения
-    can_add_in_chat   INT NOT NULL,   -- Кто приглашает в беседы
-    can_see_post      INT NOT NULL,      -- Кто видит записи
-    can_see_photo     INT NOT NULL,     -- Кто видит фотографии
-    can_see_good      INT NOT NULL,      -- Кто видит товары
-    can_see_video     INT NOT NULL,     -- Кто видит видеозаписи
-    can_see_music     INT NOT NULL,     -- Кто видит аудиозапис
-    can_see_planner   INT NOT NULL,   -- Кто видит раздел планирования
-    can_see_doc       INT NOT NULL,       -- Кто видит документы
-    can_see_survey    INT NOT NULL,    -- Кто видит опросы
+    can_see_community INT DEFAULT 0, -- Кто видит сообщества
+    can_see_info      INT DEFAULT 0,      -- Кто видит информацию
+    can_see_friend    INT DEFAULT 0,    -- Кто видит друзей
+    can_send_message  INT DEFAULT 0,  -- Кто пишет сообщения
+    can_add_in_chat   INT DEFAULT 0,   -- Кто приглашает в беседы
+    can_see_post      INT DEFAULT 0,      -- Кто видит записи
+    can_see_photo     INT DEFAULT 0,     -- Кто видит фотографии
+    can_see_good      INT DEFAULT 0,      -- Кто видит товары
+    can_see_video     INT DEFAULT 0,     -- Кто видит видеозаписи
+    can_see_music     INT DEFAULT 0,     -- Кто видит аудиозапис
+    can_see_planner   INT DEFAULT 0,   -- Кто видит раздел планирования
+    can_see_doc       INT DEFAULT 0,       -- Кто видит документы
+    can_see_survey    INT DEFAULT 0,    -- Кто видит опросы
 
     CONSTRAINT fk_user_private
          FOREIGN KEY(user_id)
@@ -392,9 +411,9 @@ CREATE TABLE user_private (
 CREATE TABLE user_profile_notifications (
     id                   SERIAL PRIMARY KEY,
     user_id              INT NOT NULL,
-    connection_request   BOOLEAN NOT NULL DEFAULT true,
-    connection_confirmed BOOLEAN NOT NULL DEFAULT true,
-    community_invite     BOOLEAN NOT NULL DEFAULT true,
+    connection_request   BOOLEAN DEFAULT true,
+    connection_confirmed BOOLEAN DEFAULT true,
+    community_invite     BOOLEAN DEFAULT true,
 
     CONSTRAINT fk_user_profile_notifications
          FOREIGN KEY(user_id)
@@ -468,17 +487,17 @@ CREATE TABLE user_video_notifications (
 CREATE TABLE user_good_notifications (
     id                      SERIAL PRIMARY KEY,
     user_id                 INT NOT NULL,
-    comment                 BOOLEAN NOT NULL DEFAULT true,
-    comment_reply           BOOLEAN NOT NULL DEFAULT true,
-    mention                 BOOLEAN NOT NULL DEFAULT true,
-    comment_mention         BOOLEAN NOT NULL DEFAULT true,
-    repost                  BOOLEAN NOT NULL DEFAULT true,
-    liked                   BOOLEAN NOT NULL DEFAULT true,
-    disliked                BOOLEAN NOT NULL DEFAULT true,
-    comment_liked           BOOLEAN NOT NULL DEFAULT true,
-    comment_disliked        BOOLEAN NOT NULL DEFAULT true,
-    comment_reply_liked     BOOLEAN NOT NULL DEFAULT true,
-    comment_reply_disliked  BOOLEAN NOT NULL DEFAULT true,
+    comment                 BOOLEAN DEFAULT true,
+    comment_reply           BOOLEAN DEFAULT true,
+    mention                 BOOLEAN DEFAULT true,
+    comment_mention         BOOLEAN DEFAULT true,
+    repost                  BOOLEAN DEFAULT true,
+    liked                   BOOLEAN DEFAULT true,
+    disliked                BOOLEAN DEFAULT true,
+    comment_liked           BOOLEAN DEFAULT true,
+    comment_disliked        BOOLEAN DEFAULT true,
+    comment_reply_liked     BOOLEAN DEFAULT true,
+    comment_reply_disliked  BOOLEAN DEFAULT true,
 
     CONSTRAINT fk_user_good_notifications
          FOREIGN KEY(user_id)
@@ -489,7 +508,7 @@ CREATE TABLE user_good_notifications (
 CREATE TABLE user_music_notifications (
     id         SERIAL PRIMARY KEY,
     user_id    INT NOT NULL,
-    repost     BOOLEAN NOT NULL DEFAULT true,
+    repost     BOOLEAN DEFAULT true,
 
     CONSTRAINT fk_user_music_notifications
          FOREIGN KEY(user_id)

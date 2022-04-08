@@ -20,11 +20,11 @@ mod views;
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
-        let _files = Files::new("/static", "static/").show_files_listing();
-        let _files2 = Files::new("/media", "media/").show_files_listing();
+        let static_files = Files::new("/static", "static/").show_files_listing();
+        let media_files = Files::new("/media", "media/").show_files_listing();
         App::new()
-            .service(_files)
-            .service(_files2)
+            .service(static_files)
+            .service(media_files)
             .configure(routes)
     })
     .bind("151.248.120.138:9015")?

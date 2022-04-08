@@ -1,18 +1,18 @@
 -- Категории товаров -------
 CREATE TABLE good_categories (
-    id      SERIAL PRIMARY KEY,
-    name    VARCHAR,
-    avatar  TEXT,
-    order   INT DEFAULT 0
+    id        SERIAL PRIMARY KEY,
+    name      VARCHAR(100) NOT NULL,
+    avatar    TEXT,
+    position  INT DEFAULT 0
 );
 
 -- Суб-категории товаров -------
 CREATE TABLE good_subcategories (
     id          SERIAL PRIMARY KEY,
-    name        VARCHAR,
+    name        VARCHAR(200) NOT NULL,
     category_id INT NOT NULL,
     avatar      TEXT,
-    order       INT DEFAULT 0,
+    position    INT DEFAULT 0,
 
     CONSTRAINT fk_good_subcategories
         FOREIGN KEY(category_id)
@@ -21,22 +21,22 @@ CREATE TABLE good_subcategories (
 
 CREATE TABLE good_lists (
     id              SERIAL PRIMARY KEY,
-    name            VARCHAR,
+    name            VARCHAR(100) NOT NULL,
     community_id    INT,
     creator_id      INT NOT NULL,
-    _type           VARCHAR NOT NULL,
-    description     TEXT,
+    types           VARCHAR(6) NOT NULL,
+    description     TEXT(500),
     created         TIMESTAMP NOT NULL,
-    count           INT NOT NULL DEFAULT 0,
-    repost          INT NOT NULL DEFAULT 0,
-    copy            INT NOT NULL DEFAULT 0,
-    order           INT NOT NULL DEFAULT 0,
+    count           INT DEFAULT 0,
+    repost          INT DEFAULT 0,
+    copy            INT DEFAULT 0,
+    position        INT DEFAULT 0,
 
-    can_see_el      INT NOT NULL DEFAULT 1,
-    can_see_comment INT NOT NULL DEFAULT 1,
-    create_el       INT NOT NULL DEFAULT 7,
-    create_comment  INT NOT NULL DEFAULT 1,
-    copy_el         INT NOT NULL DEFAULT 1,
+    can_see_el      INT DEFAULT 1,
+    can_see_comment INT DEFAULT 1,
+    create_el       INT DEFAULT 7,
+    create_comment  INT DEFAULT 1,
+    copy_el         INT DEFAULT 1,
 
     CONSTRAINT fk_good_lists_creator
         FOREIGN KEY(creator_id)
@@ -49,28 +49,26 @@ CREATE TABLE good_lists (
 
 CREATE TABLE goods (
     id              SERIAL PRIMARY KEY,
-    title           VARCHAR,
+    title           VARCHAR(100) NOT NULL,
     community_id    INT,
     category_id     INT,
     creator_id      INT NOT NULL,
     list_id         INT NOT NULL,
     price           INT,
-    _type           VARCHAR NOT NULL,
-    preview         TEXT NOT NULL,
-    file            TEXT NOT NULL,
-    description     TEXT,
-    image           TEXT,
+    types           VARCHAR(6) NOT NULL,
+    description     TEXT(500),
+    image           TEXT(500),
     comment_enabled BOOLEAN NOT NULL DEFAULT true,
     votes_on        BOOLEAN NOT NULL DEFAULT true,
     created         TIMESTAMP NOT NULL,
 
-    comment         INT NOT NULL DEFAULT 0,
-    view            INT NOT NULL DEFAULT 0,
-    liked           INT NOT NULL DEFAULT 0,
-    disliked        INT NOT NULL DEFAULT 0,
-    repost          INT NOT NULL DEFAULT 0,
-    copy            INT NOT NULL DEFAULT 0,
-    order           INT NOT NULL DEFAULT 0,
+    comment         INT DEFAULT 0,
+    view            INT DEFAULT 0,
+    liked           INT DEFAULT 0,
+    disliked        INT DEFAULT 0,
+    repost          INT DEFAULT 0,
+    copy            INT DEFAULT 0,
+    position        INT DEFAULT 0,
 
     CONSTRAINT fk_goods_creator
         FOREIGN KEY(creator_id)
@@ -95,13 +93,14 @@ CREATE TABLE good_comments (
     creator_id  INT NOT NULL,
     sticker_id  INT,
     parent_id   INT,
-    _text       TEXT NOT NULL,
-    attach      VARCHAR NOT NULL,
+    content     TEXT(1000),
+    attach      VARCHAR(200),
+    types       VARCHAR(6) NOT NULL,
     created     TIMESTAMP NOT NULL,
 
-    liked       INT NOT NULL DEFAULT 0,
-    disliked    INT NOT NULL DEFAULT 0,
-    repost      INT NOT NULL DEFAULT 0,
+    liked       INT DEFAULT 0,
+    disliked    INT DEFAULT 0,
+    repost      INT DEFAULT 0,
 
     CONSTRAINT fk_good_comment
         FOREIGN KEY(item_id)
@@ -122,8 +121,8 @@ CREATE INDEX good_comments_creator_id_idx ON good_comments (creator_id);
 -- Сохранение списка у пользователя в коллекции -------
 CREATE TABLE user_good_list_collections (
     id      SERIAL PRIMARY KEY,
-    user_id INT,
-    list_id INT,
+    user_id INT NOT NULL,
+    list_id INT NOT NULL,
 
    CONSTRAINT fk_user_good_list_collections_user
         FOREIGN KEY(user_id)
@@ -137,8 +136,8 @@ CREATE TABLE user_good_list_collections (
 -- Сохранение списка у сообщества в коллекции -------
 CREATE TABLE community_good_list_collections (
     id           SERIAL PRIMARY KEY,
-    community_id INT,
-    list_id      INT,
+    community_id INT NOT NULL,
+    list_id      INT NOT NULL,
 
    CONSTRAINT fk_community_good_list_collections_community
         FOREIGN KEY(community_id)
@@ -151,8 +150,8 @@ CREATE TABLE community_good_list_collections (
 
 CREATE TABLE good_list_perm (
     id              SERIAL PRIMARY KEY,
-    user_id         INT,
-    list_id         INT,
+    user_id         INT NOT NULL,
+    list_id         INT NOT NULL,
     can_see_item    INT DEFAULT 0,
     can_see_comment INT DEFAULT 0,
     create_item     INT DEFAULT 0,

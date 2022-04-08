@@ -1,18 +1,18 @@
 CREATE TABLE moderated (
     id            SERIAL PRIMARY KEY,
-    description   VARCHAR,
+    description   VARCHAR(500),
     verified      BOOLEAN NOT NULL DEFAULT false,
-    status        INT NOT NULL DEFAULT 0,
-    _type         VARCHAR,
-    object_id     INT NOT NULL DEFAULT 0
+    status        INT DEFAULT 0,
+    types         VARCHAR(6) NOT NULL,
+    object_id     INT NOT NULL
 );
 
 CREATE TABLE moderated_reports (
     id                  SERIAL PRIMARY KEY,
     reporter_id         INT NOT NULL,
     moderated_object_id INT NOT NULL,
-    description         VARCHAR,
-    _type               VARCHAR,
+    description         VARCHAR(500),
+    types               VARCHAR(6) NOT NULL,
 
     CONSTRAINT fk_moderated_reports_reporter
         FOREIGN KEY(reporter_id)
@@ -27,8 +27,8 @@ CREATE TABLE moderated_penalties (
     id                  SERIAL PRIMARY KEY,
     manager_id          INT NOT NULL,
     moderated_object_id INT NOT NULL,
-    expiration          TIMESTAMP NOT NULL,
-    _type               VARCHAR,
+    expiration          TIMESTAMP,
+    types               VARCHAR(6) NOT NULL,
     object_id           INT NOT NULL,
     status              INT NOT NULL,
 
@@ -47,10 +47,10 @@ CREATE TABLE moderated_logs (
     manager_id      INT NOT NULL,
     object_id       INT NOT NULL,
     action          INT NOT NULL,
-    description     VARCHAR,
-    _type           VARCHAR,
+    description     VARCHAR(500),
+    types           VARCHAR(6) NOT NULL,
     created         TIMESTAMP NOT NULL,
-    time_to_suspend TIMESTAMP NOT NULL,
+    time_to_suspend TIMESTAMP,
 
     CONSTRAINT fk_moderated_logs_manager
         FOREIGN KEY(manager_id)
@@ -71,8 +71,8 @@ CREATE TABLE staff_logs (
 CREATE TABLE support_users (
     id          SERIAL PRIMARY KEY,
     manager_id  INT NOT NULL,
-    level       INT NOT NULL DEFAULT 0,
-    points      INT NOT NULL DEFAULT 0,
-    chats       INT NOT NULL DEFAULT 0,
+    level       INT DEFAULT 0,
+    points      INT DEFAULT 0,
+    chats       INT DEFAULT 0,
     created     TIMESTAMP NOT NULL
 );

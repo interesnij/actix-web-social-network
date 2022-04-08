@@ -1,3 +1,2 @@
 [print_schema]
 file = "src/schema.rs"
-schema = "MY-SCHEMA"

@@ -5,7 +5,7 @@ CREATE TABLE follows (
     user_id       INT NOT NULL,
     followed_user INT NOT NULL,
     view          BOOLEAN NOT NULL DEFAULT false,
-    visited       INT NOT NULL DEFAULT 0,
+    visited       INT DEFAULT 0,
 
     CONSTRAINT fk_follows_user
          FOREIGN KEY(user_id)
@@ -22,7 +22,7 @@ CREATE TABLE community_follows (
     user_id      INT NOT NULL,
     community_id INT NOT NULL,
     view         BOOLEAN NOT NULL DEFAULT false,
-    visited      INT NOT NULL DEFAULT 0,
+    visited      INT DEFAULT 0,
 
     CONSTRAINT fk_community_follows_user
          FOREIGN KEY(user_id)
