@@ -21,7 +21,8 @@ pub async fn process_signup(data: web::Form<NewUser>) -> impl Responder {
     use crate::models::{
         User,
         //NewUser,
-    }
+    };
+
     let connection = establish_connection();
 
     //diesel::insert_into(users::table)
