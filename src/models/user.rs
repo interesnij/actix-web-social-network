@@ -84,23 +84,6 @@ pub struct User {
     pub last_activity: chrono::NaiveDateTime,
 }
 
-#[derive(Debug, Deserialize, Insertable)]
-#[table_name="users"]
-pub struct NewUser {
-    pub first_name:     String,
-    pub last_name:      String,
-    pub phone:          String,
-    pub types:          String,
-    pub gender:         String,
-    pub device:         String,
-    pub language:       String,
-    pub perm:           String,
-    pub level:          i32,
-    pub password:       String,
-    pub birthday:       chrono::NaiveDateTime,
-    pub last_activity:  chrono::NaiveDateTime,
-}
-
 #[derive(Debug, Deserialize)]
 pub struct LoginUser {
     pub phone:    String,
