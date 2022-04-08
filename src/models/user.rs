@@ -61,7 +61,7 @@ enum UserLanguage {
     En,      // Английский
 }
 
-#[derive(Debug ,Queryable, Serialize, Identifiable)]
+#[derive(Debug ,Queryable, Identifiable)]
 pub struct User {
     pub id:            i32,
     pub first_name:    String,
@@ -89,6 +89,8 @@ pub struct LoginUser {
     pub phone:    String,
     pub password: String,
 }
+
+
 
 impl User {
     fn get_full_name(&self) -> String {
