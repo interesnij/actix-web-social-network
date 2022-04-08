@@ -6,7 +6,7 @@ use crate::utils::establish_connection;
 static mut numba : i32;
 enum UserTypes {
     numba = 1,     // стандартный тип пользователя
-    2,     // ребенок
+    numba = 1,     // ребенок
     3,     // идентифицированный
     4,    // пославший запрос на идентификацию
     11,   // удаленный стандартный
