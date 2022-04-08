@@ -47,8 +47,7 @@ pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Res
     request::get(_url, &mut a);
     let answer = io::stdout().write(&a);
     println!("{:?}", &answer);
-
-    data.insert("phone", &answer);
+    //data.insert("phone", &answer);
 
     let _template = _type + &"main/auth/phone_verification.html".to_string();
     let rendered = TEMPLATES.render(&_template, &data).unwrap();
