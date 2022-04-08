@@ -582,7 +582,7 @@ on('#ajax', 'click', '#phone_send', function() {
   _user_phone = 7 + _user_phone;
 
   var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-  request.open('GET', "/users/progs/phone_send/" + _user_phone + "/", true);
+  request.open('GET', "/phone_send/" + _user_phone + "/", true);
   request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   request.onreadystatechange = function() {
       if (request.readyState == 4 && request.status == 200) {
