@@ -3,7 +3,7 @@ use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
 use crate::utils::establish_connection;
 
-let mut numba : i32;
+static mut numba : i32;
 enum UserTypes {
     numba = 1,     // стандартный тип пользователя
     2,     // ребенок
