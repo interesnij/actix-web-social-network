@@ -16,7 +16,7 @@ pub fn global_routes(config: &mut web::ServiceConfig) {
     //config.route("/signup/", web::post().to(signup));
 }
 
-pub async fn process_signup(data: web::Form<NewUser>) -> impl Responder {
+pub async fn process_signup() -> impl Responder {
     use crate::schema::users;
     use crate::models::{
         User,
