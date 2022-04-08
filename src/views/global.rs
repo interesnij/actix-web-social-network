@@ -67,7 +67,7 @@ pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Res
 
     println!("json{:?}", &json_answer);
     //println!("status{:?}", &json_answer["status"]);
-    println!("json string{:?}", &json_answer.to_string());
+    //println!("json string{:?}", &json_answer.to_string());
     //let answer: PhoneJson = serde_json::from_str(&json_answer.to_string()).unwrap();
     //println!("answer{:?}", &answer);
     //data.insert("phone", &answer);
