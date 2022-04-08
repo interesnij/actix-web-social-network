@@ -62,6 +62,7 @@ pub enum UserLanguage {
 }
 
 #[derive(Queryable, Identifiable)]
+#[table_name="users"]
 pub struct User {
     pub id:            i32,
     pub first_name:    String,
@@ -84,7 +85,7 @@ pub struct User {
     pub last_activity: chrono::NaiveDateTime,
 }
 
-
+#[derive(Debug)]
 #[table_name="users"]
 pub struct NewUser {
     pub first_name:     String,
