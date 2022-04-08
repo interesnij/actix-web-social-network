@@ -4,7 +4,7 @@ use serde::{Serialize, Deserialize};
 use crate::utils::establish_connection;
 
 
-enum UserTypes {
+pub enum UserTypes {
     Standart,                   // стандартный тип пользователя
     Child,                     // ребенок
     Identifier,                // идентифицированный
@@ -27,36 +27,36 @@ enum UserTypes {
     BannerIdentifierSend,      // закрытый баннером пославший запрос на идентификацию
 }
 
-enum UserPerms {
-    Standart,                   // стандартные полномочия
-    TraineeModerator,           // TRAINEE_MODERATOR
-    Moderator,                  // MODERATOR
-    HighModerator,              // HIGH_MODERATOR
-    TeamleadModerator,          // TEAMLEAD_MODERATOR
-    TraineeManager = 30,        // TRAINEE_MANAGER
-    Manager = 33,               // MANAGER
-    HighManager = 36,           // HIGH_MANAGER
-    TeamleadManager = 39,       // TEAMLEAD_MANAGER
-    Advertiser = 40,            // ADVERTISER
-    HighAdvertiser = 44,        // HIGH_ADVERTISER
-    TeamleadAdvertiser = 49,    // TEAMLEAD_ADVERTISER
-    Administrator = 50,         // ADMINISTRATOR
-    HighAdministrator = 54,     // HIGH_ADMINISTRATOR
-    TeamleadAdministrator = 59, // TEAMLEAD_ADMINISTRATOR
-    Supermanager = 60,          // SUPERMANAGER
+pub enum UserPerms {
+    Standart,              // стандартные полномочия
+    TraineeModerator,      // TRAINEE_MODERATOR
+    Moderator,             // MODERATOR
+    HighModerator,         // HIGH_MODERATOR
+    TeamleadModerator,     // TEAMLEAD_MODERATOR
+    TraineeManager,        // TRAINEE_MANAGER
+    Manager,               // MANAGER
+    HighManager,           // HIGH_MANAGER
+    TeamleadManager,       // TEAMLEAD_MANAGER
+    Advertiser,            // ADVERTISER
+    HighAdvertiser,        // HIGH_ADVERTISER
+    TeamleadAdvertiser,    // TEAMLEAD_ADVERTISER
+    Administrator,         // ADMINISTRATOR
+    HighAdministrator,     // HIGH_ADMINISTRATOR
+    TeamleadAdministrator, // TEAMLEAD_ADMINISTRATOR
+    Supermanager,          // SUPERMANAGER
 }
 
-enum UserGender {
+pub enum UserGender {
     Man,     // Мужик
     Fem,     // Баба
 }
 
-enum UserDevice {
+pub enum UserDevice {
     De,      // Комп
     Ph,      // Телефон
 }
 
-enum UserLanguage {
+pub enum UserLanguage {
     Ru,      // Русский
     En,      // Английский
 }
@@ -89,8 +89,6 @@ pub struct LoginUser {
     pub phone:    String,
     pub password: String,
 }
-
-
 
 impl User {
     fn get_full_name(&self) -> String {
