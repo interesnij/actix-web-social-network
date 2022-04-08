@@ -61,14 +61,6 @@ pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Res
     let __request = reqwest::get(_url)?
         .text()?;
     println!("request - {:?}", &__request);
-    let json_answer = io::stdout().write(&a);
-
-    println!("json{:?}", &json_answer);
-    //println!("status{:?}", &json_answer["status"]);
-    //println!("json string{:?}", &json_answer.to_string());
-    //let answer: PhoneJson = serde_json::from_str(&json_answer.to_string()).unwrap();
-    //println!("answer{:?}", &answer);
-    //data.insert("phone", &answer);
 
     let _template = _type + &"main/auth/phone_verification.html".to_string();
     let rendered = TEMPLATES.render(&_template, &data).unwrap();
