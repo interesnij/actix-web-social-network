@@ -93,6 +93,10 @@ CREATE TABLE post_comments (
         FOREIGN KEY(creator_id)
             REFERENCES users(id),
 
+    CONSTRAINT fk_sticker_post_comment
+        FOREIGN KEY(sticker_id)
+            REFERENCES stickers(id),
+
     CONSTRAINT fk_post_parent_comment
         FOREIGN KEY(parent_id)
           REFERENCES post_comments(id)

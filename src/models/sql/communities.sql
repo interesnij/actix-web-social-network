@@ -94,6 +94,7 @@ CREATE TABLE community_ie_settings (
     can_add_planner         INT DEFAULT 0,
     can_add_doc             INT DEFAULT 0,
     can_add_music           INT DEFAULT 0,
+    can_add_survey          INT DEFAULT 0,
 
     can_create_post         INT DEFAULT 0,
     can_create_photo        INT DEFAULT 0,
@@ -121,6 +122,7 @@ CREATE TABLE community_info (
     videos       INT DEFAULT 0,
     docs         INT DEFAULT 0,
     articles     INT DEFAULT 0,
+    survey       INT DEFAULT 0,
 
     CONSTRAINT fk_community_info
         FOREIGN KEY(community_id)

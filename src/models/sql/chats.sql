@@ -85,9 +85,13 @@ CREATE TABLE messages (
         FOREIGN KEY(chat_id)
           REFERENCES chats(id),
 
-    CONSTRAINT fk_message_parent                -- связь с родтелем (на какое ответ)
+    CONSTRAINT fk_message_parent                -- связь с родителем (на какое ответ)
         FOREIGN KEY(parent_id)
           REFERENCES messages(id),
+
+    CONSTRAINT fk_message_sticker                -- связь со стикером
+        FOREIGN KEY(sticker_id)
+          REFERENCES stickers(id),
 
     CONSTRAINT fk_message_post               -- связь с постом (репост в сообщения)
         FOREIGN KEY(repost_id)

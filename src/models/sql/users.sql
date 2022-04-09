@@ -514,3 +514,40 @@ CREATE TABLE user_music_notifications (
          FOREIGN KEY(user_id)
              REFERENCES users(id)
 );
+
+
+------------------
+------------------
+-- Смайлы и стикеры
+
+-- Популярные смайлы -------
+CREATE TABLE user_populate_smiles (
+    id        SERIAL PRIMARY KEY,
+    user_id   INT NOT NULL,
+    smile_id  INT NOT NULL,
+    count     INT DEFAULT 0,
+
+    CONSTRAINT fk_user_populate_smiles_user
+         FOREIGN KEY(user_id)
+             REFERENCES users(id),
+
+    CONSTRAINT fk_user_populate_smiles_smile
+        FOREIGN KEY(smile_id)
+            REFERENCES smiles(id)
+);
+
+-- Популярные стикеры -------
+CREATE TABLE user_populate_stickers (
+    id          SERIAL PRIMARY KEY,
+    user_id     INT NOT NULL,
+    sticker_id  INT NOT NULL,
+    count       INT DEFAULT 0,
+
+    CONSTRAINT fk_user_populate_stickers_user
+         FOREIGN KEY(user_id)
+             REFERENCES users(id),
+
+    CONSTRAINT fk_user_populate_stickers_sticker
+        FOREIGN KEY(sticker_id)
+            REFERENCES stickers(id)
+);

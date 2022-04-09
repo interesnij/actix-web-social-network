@@ -7,24 +7,24 @@ use crate::utils::establish_connection;
 pub enum UserTypes {
     Standart,                   // стандартный тип пользователя
     Child,                     // ребенок
-    Identifier,                // идентифицированный
-    IdentifierSend,            // пославший запрос на идентификацию
+    Identified,                // идентифицированный
+    IdentifiedSend,            // пославший запрос на идентификацию
     DeletedStandart,           // удаленный стандартный
     DeletedChild,              // удаленный ребенок
-    DeletedIdentifier,         // удаленный идентифицированный
-    DeletedIdentifierSend,     // удаленный пославший запрос на идентификацию
+    DeletedIdentified,         // удаленный идентифицированный
+    DeletedIdentifiedSend,     // удаленный пославший запрос на идентификацию
     ClosedStandart,            // закрытый стандартный
     ClosedChild,               // закрытый ребенок
-    ClosedIdentifier,          // закрытый идентифицированный
-    ClosedIdentifierSend,      // закрытый пославший запрос на идентификацию
+    ClosedIdentified,          // закрытый идентифицированный
+    ClosedIdentifiedSend,      // закрытый пославший запрос на идентификацию
     SuspendedStandart,         // приостановленный стандартный
     SuspendedChild,            // приостановленный ребенок
-    SuspendedIdentifier,       // приостановленный идентифицированный
-    SuspendedIdentifierSend,   // приостановленный пославший запрос на идентификацию
+    SuspendedIdentified,       // приостановленный идентифицированный
+    SuspendedIdentifiedSend,   // приостановленный пославший запрос на идентификацию
     BannerStandart,            // закрытый баннером стандартный
     BannerChild,               // закрытый баннером ребенок
-    BannerIdentifier,          // закрытый баннером идентифицированный
-    BannerIdentifierSend,      // закрытый баннером пославший запрос на идентификацию
+    BannerIdentified,          // закрытый баннером идентифицированный
+    BannerIdentifiedSend,      // закрытый баннером пославший запрос на идентификацию
 }
 
 pub enum UserPerms {

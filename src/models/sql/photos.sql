@@ -88,6 +88,10 @@ CREATE TABLE photo_comments (
         FOREIGN KEY(creator_id)
             REFERENCES users(id),
 
+    CONSTRAINT fk_sticker_photo_comment
+        FOREIGN KEY(sticker_id)
+            REFERENCES stickers(id),
+
     CONSTRAINT fk_photo_parent_comment
         FOREIGN KEY(parent_id)
           REFERENCES photo_comments(id)
