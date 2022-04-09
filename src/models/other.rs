@@ -103,7 +103,7 @@ pub struct Smile {
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="smiles"]
-pub struct NewSmile {
+pub struct NewSmile { 
     pub name:        String,
     pub position:    i32,
     pub smile_categorie_id: i32,
