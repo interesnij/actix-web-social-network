@@ -40,7 +40,7 @@ pub struct NewCustomLink {
 
 /////// StickerCategories //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
-pub struct StickerCategory {
+pub struct StickerCategorie {
     pub id:          i32,
     pub name:        String,
     pub position:    i32,
@@ -49,7 +49,7 @@ pub struct StickerCategory {
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="sticker_categories"]
-pub struct NewStickerCategory {
+pub struct NewStickerCategorie {
     pub name:        String,
     pub position:    i32,
     pub creator_id:  Option<i32>,
@@ -58,12 +58,12 @@ pub struct NewStickerCategory {
 
 /////// Stickers //////
 #[derive(Identifiable, Queryable, Associations)]
-#[belongs_to(StickerCategory)]
+#[belongs_to(StickerCategorie)]
 pub struct Sticker {
     pub id:                    i32,
     pub name:                  String,
     pub position:              i32,
-    pub sticker_category_id: i32,
+    pub sticker_categorie_id: i32,
     pub image:                 String,
 }
 #[derive(Debug, Deserialize, Insertable)]
@@ -71,13 +71,13 @@ pub struct Sticker {
 pub struct NewSticker {
     pub name:        String,
     pub position:    i32,
-    pub sticker_category_id: i32,
+    pub sticker_categorie_id: i32,
     pub image:       String,
 }
 
 /////// SmileCategories //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
-pub struct SmileCategory {
+pub struct SmileCategorie {
     pub id:          i32,
     pub name:        String,
     pub position:    i32,
@@ -85,7 +85,7 @@ pub struct SmileCategory {
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="smile_categories"]
-pub struct NewSmileCategory {
+pub struct NewSmileCategorie {
     pub name:        String,
     pub position:    i32,
     pub description: Option<String>,
@@ -93,12 +93,12 @@ pub struct NewSmileCategory {
 
 /////// Smiles //////
 #[derive(Identifiable, Queryable, Associations)]
-#[belongs_to(SmileCategory)]
+#[belongs_to(SmileCategorie)]
 pub struct Smile {
     pub id:               i32,
     pub name:             String,
     pub position:         i32,
-    pub smile_category_id: i32,
+    pub smile_categorie_id: i32,
     pub image:            String,
 }
 #[derive(Debug, Deserialize, Insertable)]
@@ -106,6 +106,6 @@ pub struct Smile {
 pub struct NewSmile {
     pub name:        String,
     pub position:    i32,
-    pub smile_category_id: i32,
+    pub smile_categorie_id: i32,
     pub image:       String,
 }
