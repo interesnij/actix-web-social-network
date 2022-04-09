@@ -57,7 +57,7 @@ pub struct NewStickerCategories {
 }
 
 /////// Stickers //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Identifiable, Queryable, Associations)]
 #[belongs_to(StickerCategories)]
 pub struct Stickers {
     pub id:         i32,
@@ -92,7 +92,7 @@ pub struct NewSmileCategories {
 }
 
 /////// Smiles //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Identifiable, Queryable, Associations)]
 #[belongs_to(SmileCategories)]
 pub struct Smiles {
     pub id:         i32,
