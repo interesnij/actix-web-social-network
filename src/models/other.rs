@@ -63,7 +63,7 @@ pub struct Sticker {
     pub id:                    i32,
     pub name:                  String,
     pub position:              i32,
-    pub sticker_categories_id: i32,
+    pub sticker_category_id: i32,
     pub image:                 String,
 }
 #[derive(Debug, Deserialize, Insertable)]
@@ -71,7 +71,7 @@ pub struct Sticker {
 pub struct NewSticker {
     pub name:        String,
     pub position:    i32,
-    pub sticker_categories_id: i32,
+    pub sticker_category_id: i32,
     pub image:       String,
 }
 
@@ -98,7 +98,7 @@ pub struct Smile {
     pub id:               i32,
     pub name:             String,
     pub position:         i32,
-    pub smile_categories_id: i32,
+    pub smile_category_id: i32,
     pub image:            String,
 }
 #[derive(Debug, Deserialize, Insertable)]
@@ -106,6 +106,6 @@ pub struct Smile {
 pub struct NewSmile {
     pub name:        String,
     pub position:    i32,
-    pub smile_categories_id: i32,
+    pub smile_category_id: i32,
     pub image:       String,
 }
