@@ -40,7 +40,6 @@ pub struct NewCustomLink {
 
 /////// StickerCategories //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
-#[belongs_to(User)]
 pub struct StickerCategories {
     pub id:          i32,
     pub name:        String,
@@ -83,7 +82,6 @@ pub struct SmileCategories {
     pub id:          i32,
     pub name:        String,
     pub position:    i32,
-    pub creator_id:  Option<i32>,
     pub description: Option<String>,
 }
 #[derive(Debug, Deserialize, Insertable)]
@@ -91,7 +89,6 @@ pub struct SmileCategories {
 pub struct NewSmileCategories {
     pub name:        String,
     pub position:    i32,
-    pub creator_id:  Option<i32>,
     pub description: Option<String>,
 }
 
