@@ -13,19 +13,12 @@ use crate::diesel::RunQueryDsl;
 pub fn global_routes(config: &mut web::ServiceConfig) {
     config.route("/phone_window/", web::get().to(phone_window));
     config.route("/phone_send/{phone}/", web::get().to(phone_send));
-    //config.route("/phone_verify/{phone}/{code}/", get::post().to(phone_verify));
+    config.route("/phone_verify/{phone}/{code}/", get::post().to(phone_verify));
     //config.route("/signup/", web::post().to(signup));
 }
 
 pub async fn process_signup() -> impl Responder {
-    use crate::schema::users;
-    use crate::models::{
-        User,
-        //NewUser,
-    };
-
     let connection = establish_connection();
-
     //diesel::insert_into(users::table)
     //    .values(&*data)
     //    .get_result::<User>(&connection)
@@ -51,8 +44,6 @@ struct PhoneJson {
     phone_id: String
 }
 pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Responder {
-    use crate::schema::{users, phone_codes};
-    use crate::models::{User, PhoneCode};
 
     let connection = establish_connection();
     let (_type, _is_host_admin) = get_default_template(req);
@@ -68,4 +59,27 @@ pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Res
     let _template = _type + &"main/auth/phone_verification.html".to_string();
     let rendered = TEMPLATES.render(&_template, &data).unwrap();
     HttpResponse::Ok().body(rendered)
+}
+
+pub async fn phone_verify(param: web::Path<(i64,i32)>) -> impl Responder {
+    use crate::schema::phone_codes;
+    use crate::models::PhoneCode;
+
+    let connection = establish_connection();
+    let _phone : i64 = param.0;
+    let _code : i32 = param.1;
+    let mut response_text : String;
+
+    let _phone_codes = phone_codes
+        .filter(schema::phone_codes::phone.eq(&_phone), schema::phone_codes::code.eq(&_code))
+        .load::<PhoneCode>(&_connection)
+        .expect("E");
+    if _phone_codes.len() > 1 {
+        diesel::delete(_phone_codes).execute(&_connection).expect("E");
+        response_text = "ok";
+    } else {
+        response_text = "Код подтверждения неверный. Проверьте, пожалуйста, номер, с которого мы Вам звонили. Последние 4 цифры этого номера и есть код подтверждения, который нужно ввести с поле 'Последние 4 цифры'. Если не можете найти номер, нажмите на кнопку 'Перезвонить повторно.'";
+    }
+
+    HttpResponse::Ok().body(response_text)
 }
