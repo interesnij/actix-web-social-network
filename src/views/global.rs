@@ -15,7 +15,7 @@ pub fn global_routes(config: &mut web::ServiceConfig) {
     config.route("/phone_window/", web::get().to(phone_window));
     config.route("/phone_send/{phone}/", web::get().to(phone_send));
     config.route("/phone_verify/{phone}/{code}/", web::get().to(phone_verify));
-    config.route("/signup/", web::post().to(signup));
+    config.route("/signup/", web::post().to(process_signup));
 }
 
 pub async fn process_signup() -> impl Responder {
