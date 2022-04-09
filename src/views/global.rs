@@ -62,12 +62,12 @@ pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Res
     HttpResponse::Ok().body(rendered)
 }
 
-pub async fn phone_verify(param: web::Path<(i64,i32)>) -> impl Responder {
-    use crate::schema::phone_codes;
+pub async fn phone_verify(param: web::Path<(String,i32)>) -> impl Responder {
+    use crate::schema::phone_codes::dsl::phone_codes;
     use crate::models::PhoneCode;
 
     let connection = establish_connection();
-    let _phone : i64 = param.0;
+    let _phone : String = param.0;
     let _code : i32 = param.1;
     let mut response_text : String;
 
