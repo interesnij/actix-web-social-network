@@ -18,8 +18,9 @@ pub fn global_routes(config: &mut web::ServiceConfig) {
     config.route("/signup/", web::post().to(process_signup));
 }
 
-pub async fn process_signup() -> impl Responder {
+pub async fn process_signup(data: web::Form<NewUser>) -> impl Responder {
     let _connection = establish_connection();
+
 
     //diesel::insert_into(users::table)
     //    .values(&*data)
