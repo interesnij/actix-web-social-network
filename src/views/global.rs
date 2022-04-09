@@ -7,7 +7,7 @@ use actix_web::{
 use serde::Deserialize;
 use tera::Context;
 use crate::utils::{establish_connection, get_default_template, TEMPLATES};
-use crate::diesel::RunQueryDsl;
+use diesel::prelude::*;
 use crate::schema;
 
 
