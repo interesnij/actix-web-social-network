@@ -40,8 +40,8 @@ use serde::{Serialize, Deserialize};
 use crate::utils::establish_connection;
 use crate::models::{
     User,
-    Stickers,
-    Smiles,
+    Sticker,
+    Smile,
 };
 
 

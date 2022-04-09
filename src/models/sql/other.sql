@@ -14,11 +14,7 @@ CREATE TABLE sticker_categories (
     name        VARCHAR(100),
     position    INT NOT NULL DEFAULT 0,
     creator_id  INT,
-    description VARCHAR(200),
-
-    CONSTRAINT fk_sticker_categories
-        FOREIGN KEY(creator_id)
-            REFERENCES users(id)
+    description VARCHAR(200)
 );
 
 CREATE TABLE stickers (
@@ -48,6 +44,6 @@ CREATE TABLE smiles (
     image                VARCHAR(500),
 
     CONSTRAINT fk_smiles
-        FOREIGN KEY(category_id)
+        FOREIGN KEY(smile_categories_id)
             REFERENCES smile_categories(id)
 );

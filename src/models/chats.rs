@@ -14,7 +14,7 @@ use crate::models::{
     User,
     Community,
     Post,
-    Stickers,
+    Sticker,
 };
 
 
