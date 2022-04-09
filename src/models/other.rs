@@ -40,7 +40,7 @@ pub struct NewCustomLink {
 
 /////// StickerCategories //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
-pub struct StickerCategories {
+pub struct StickerCategory {
     pub id:          i32,
     pub name:        String,
     pub position:    i32,
@@ -49,7 +49,7 @@ pub struct StickerCategories {
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="sticker_categories"]
-pub struct NewStickerCategories {
+pub struct NewStickerCategory {
     pub name:        String,
     pub position:    i32,
     pub creator_id:  Option<i32>,
@@ -58,7 +58,7 @@ pub struct NewStickerCategories {
 
 /////// Stickers //////
 #[derive(Identifiable, Queryable, Associations)]
-#[belongs_to(StickerCategories)]
+#[belongs_to(StickerCategory)]
 pub struct Sticker {
     pub id:                    i32,
     pub name:                  String,
@@ -77,7 +77,7 @@ pub struct NewSticker {
 
 /////// SmileCategories //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
-pub struct SmileCategories {
+pub struct SmileCategory {
     pub id:          i32,
     pub name:        String,
     pub position:    i32,
@@ -85,7 +85,7 @@ pub struct SmileCategories {
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="smile_categories"]
-pub struct NewSmileCategories {
+pub struct NewSmileCategory {
     pub name:        String,
     pub position:    i32,
     pub description: Option<String>,
@@ -93,7 +93,7 @@ pub struct NewSmileCategories {
 
 /////// Smiles //////
 #[derive(Identifiable, Queryable, Associations)]
-#[belongs_to(SmileCategories)]
+#[belongs_to(SmileCategory)]
 pub struct Smile {
     pub id:               i32,
     pub name:             String,
