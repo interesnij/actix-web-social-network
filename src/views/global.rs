@@ -8,12 +8,13 @@ use serde::Deserialize;
 use tera::Context;
 use crate::utils::{establish_connection, get_default_template, TEMPLATES};
 use crate::diesel::RunQueryDsl;
+use crate::schema;
 
 
 pub fn global_routes(config: &mut web::ServiceConfig) {
     config.route("/phone_window/", web::get().to(phone_window));
     config.route("/phone_send/{phone}/", web::get().to(phone_send));
-    config.route("/phone_verify/{phone}/{code}/", get::post().to(phone_verify));
+    config.route("/phone_verify/{phone}/{code}/", web::get().to(phone_verify));
     //config.route("/signup/", web::post().to(signup));
 }
 
@@ -76,9 +77,9 @@ pub async fn phone_verify(param: web::Path<(i64,i32)>) -> impl Responder {
         .expect("E");
     if _phone_codes.len() > 1 {
         diesel::delete(_phone_codes).execute(&_connection).expect("E");
-        response_text = "ok";
+        response_text = "ok".to_string();
     } else {
-        response_text = "Код подтверждения неверный. Проверьте, пожалуйста, номер, с которого мы Вам звонили. Последние 4 цифры этого номера и есть код подтверждения, который нужно ввести с поле 'Последние 4 цифры'. Если не можете найти номер, нажмите на кнопку 'Перезвонить повторно.'";
+        response_text = "Код подтверждения неверный. Проверьте, пожалуйста, номер, с которого мы Вам звонили. Последние 4 цифры этого номера и есть код подтверждения, который нужно ввести с поле 'Последние 4 цифры'. Если не можете найти номер, нажмите на кнопку 'Перезвонить повторно.'".to_string();
     }
 
     HttpResponse::Ok().body(response_text)
