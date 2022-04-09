@@ -537,7 +537,7 @@ on('#ajax', 'click', '#code_send', function() {
               form_data.append("phone", _user_phone);
 
               request_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-              request_2.open( 'POST', "/rest-auth/registration/", true );
+              request_2.open( 'POST', "/signup/", true );
               request_2.onreadystatechange = function () {
               if ( request_2.readyState == 4 && request_2.status == 201 ) {
                 window.location.href = "/";
@@ -548,7 +548,8 @@ on('#ajax', 'click', '#code_send', function() {
             	} else {
             		document.body.classList.remove("password");
             	}
-            	}};
+            	}}
+              else { document.body.querySelector("#jsondata2").innerHTML = responseText};
               request_2.send(form_data);
         }
     };

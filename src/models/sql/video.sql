@@ -92,6 +92,10 @@ CREATE TABLE video_comments (
         FOREIGN KEY(creator_id)
             REFERENCES users(id),
 
+    CONSTRAINT fk_sticker_video_comment
+        FOREIGN KEY(sticker_id)
+            REFERENCES stickers(id),
+
     CONSTRAINT fk_video_parent_comment
         FOREIGN KEY(parent_id)
           REFERENCES video_comments(id)

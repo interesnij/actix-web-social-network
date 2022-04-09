@@ -32,11 +32,17 @@ use crate::schema::{
     user_video_notifications,
     user_good_notifications,
     user_music_notifications,
+    user_populate_smiles,
+    user_populate_stickers,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
 use crate::utils::establish_connection;
-use crate::models::User;
+use crate::models::{
+    User,
+    Stickers,
+    Smiles,
+};
 
 
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
@@ -139,12 +145,12 @@ pub struct NewUserAnketa {
 
 /////// UserDeleteAnketa //////
 enum UserDeleteAnketaEnum {
-    "У меня есть другая страница",
-    "Соцсеть отнимает много времени",
-    "Мало свободы самовыражения",
-    "Соцсеть плохо защищает данные",
-    "Соцсеть плохо защищает детей",
-    "Другая причина",
+    OtherPage,         // "У меня есть другая страница",
+    ManyTime,          // "Соцсеть отнимает много времени",
+    NeedFree,          // "Мало свободы самовыражения",
+    BadSafeUserData,   // "Соцсеть плохо защищает данные",
+    BadSafeChild,      // "Соцсеть плохо защищает детей",
+    OtherReason        //"Другая причина",
 }
 
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
@@ -155,49 +161,35 @@ pub struct UserDeleteAnketa {
     pub answer:  UserDeleteAnketaEnum,
     pub other:   Option<String>,
 }
-#[derive(Debug, Deserialize, Insertable)]
-#[table_name="user_delete_anketa"]
-pub struct NewUserDeleteAnketa {
-    pub user_id: i32,
-    pub answer:  UserDeleteAnketaEnum,
-    pub other:   Option<String>,
-}
 
 /////// UserLoveStatus //////
 enum MaleLoveStatus {
-    "Не выбрано",
-    "Не женат",
-    "Есть подруга",
-    "Помолвлен",
-    "Женат",
-    "В гражданском браке",
-    "Влюблён",
-    "Всё сложно",
-    "В активном поиске",
+    NotSelected,             // "Не выбрано",
+    NotMarried,              // "Не женат",
+    ThereIsAFriend,          // "Есть подруга",
+    Engaged,                 // "Помолвлен",
+    Married.                 // "Женат",
+    InACivilMarriage,        // "В гражданском браке",
+    InLove,                  // "Влюблён",
+    EverythingIsComplicated, // "Всё сложно",
+    InActiveSearch,          // "В активном поиске",
 }
 enum FemaleLoveStatus {
-    "Не выбрано",
-    "Не замужем",
-    "Есть друг",
-    "Помолвлена",
-    "Замужем",
-    "В гражданском браке",
-    "Влюблена",
-    "Всё сложно",
-    "В активном поиске",
+    NotSelected,             // "Не выбрано",
+    NotMarried,              // "Не женат",
+    ThereIsAFriend,          // "Есть подруга",
+    Engaged,                 // "Помолвлен",
+    Married.                 // "Женат",
+    InACivilMarriage,        // "В гражданском браке",
+    InLove,                  // "Влюблён",
+    EverythingIsComplicated, // "Всё сложно",
+    InActiveSearch,          // "В активном поиске",
 }
 
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
 pub struct UserLoveStatus {
     pub id:             i32,
-    pub user_id:        i32,
-    pub male_status:    MaleLoveStatus,
-    pub female_status:  FemaleLoveStatus,
-}
-#[derive(Debug, Deserialize, Insertable)]
-#[table_name="user_love_status"]
-pub struct NewUserLoveStatus {
     pub user_id:        i32,
     pub male_status:    MaleLoveStatus,
     pub female_status:  FemaleLoveStatus,
@@ -334,9 +326,8 @@ pub struct NewUserBlocks {
 //////////////////////////////////////////////////////
 /////// ListUC //////
 enum ListUCTypes {
-    0,
-    1,
-    2,
+    NoValue, // Не активный
+    Active,  // Активный список
 }
 
 #[derive(Debug, Queryable, Serialize, Identifiable)]
@@ -549,4 +540,70 @@ pub struct NewUserDocListPosition {
     pub list_id:  i32,
     pub position: i32,
     pub types:    i32,
+}
+
+/////// UserPrivate //////
+pub enum UserPrivateTypes{
+    AllCan,      // Все пользователи
+    Friends,     // Друзья
+    EachOther,   // Друзья и друзья друзей
+    You,         // Только я
+    FriendsBut,  // Друзья, кроме
+    SomeFriends, // Некоторые друзья
+}
+
+#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[belongs_to(User)]
+pub struct UserDocListPosition {
+    pub id:                 i32,
+    pub user_id:            UserPrivateTypes,
+    pub can_see_community:  UserPrivateTypes,
+    pub can_see_info:       UserPrivateTypes,
+    pub can_see_friend:     UserPrivateTypes,
+    pub can_send_message:   UserPrivateTypes,
+    pub can_add_in_chat:    UserPrivateTypes,
+    pub can_see_post:       UserPrivateTypes,
+    pub can_see_photo:      UserPrivateTypes,
+    pub can_see_good:       UserPrivateTypes,
+    pub can_see_video:      UserPrivateTypes,
+    pub can_see_music:      UserPrivateTypes,
+    pub can_see_planner:    UserPrivateTypes,
+    pub can_see_doc:        UserPrivateTypes,
+    pub can_see_survey:     UserPrivateTypes,
+}
+
+/////// UserPopulateSmiles //////
+#[derive(Debug ,Queryable, Serialize, Identifiable)]
+#[belongs_to(User)]
+#[belongs_to(Smiles)]
+pub struct UserPopulateSmiles {
+    pub id:         i32,
+    pub user_id:    i32,
+    pub smile_id:   i32,
+    pub count:   i32,
+}
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="user_populate_smiles"]
+pub struct NewUserPopulateSmiles {
+    pub user_id:    i32,
+    pub smile_id:   i32,
+    pub count:   i32,
+}
+
+/////// UserPopulateStickers //////
+#[derive(Debug ,Queryable, Serialize, Identifiable)]
+#[belongs_to(User)]
+#[belongs_to(Stickers)]
+pub struct UserPopulateStickers {
+    pub id:         i32,
+    pub user_id:    i32,
+    pub sticker_id: i32,
+    pub count:      i32,
+}
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="user_populate_stickers"]
+pub struct NewUserPopulateStickers {
+    pub user_id:    i32,
+    pub sticker_id: i32,
+    pub count:      i32,
 }

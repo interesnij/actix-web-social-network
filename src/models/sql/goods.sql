@@ -110,6 +110,10 @@ CREATE TABLE good_comments (
         FOREIGN KEY(creator_id)
             REFERENCES users(id),
 
+    CONSTRAINT fk_sticker_good_comment
+        FOREIGN KEY(sticker_id)
+            REFERENCES stickers(id),
+
     CONSTRAINT fk_good_parent_comment
         FOREIGN KEY(parent_id)
           REFERENCES good_comments(id)
