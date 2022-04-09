@@ -77,7 +77,11 @@ pub async fn phone_verify(param: web::Path<(String,i32)>) -> impl Responder {
         .load::<PhoneCode>(&_connection)
         .expect("E");
     if _phone_codes.len() > 1 {
-        diesel::delete(_phone_codes).execute(&_connection).expect("E");
+        diesel::delete(phone_codes
+                .filter(schema::phone_codes::phone.eq(&_phone))
+                .filter(schema::phone_codes::code.eq(&_code))
+            ).execute(&_connection)
+            .expect("E");
         response_text = "ok".to_string();
     } else {
         response_text = "Код подтверждения неверный. Проверьте, пожалуйста, номер, с которого мы Вам звонили. Последние 4 цифры этого номера и есть код подтверждения, который нужно ввести с поле 'Последние 4 цифры'. Если не можете найти номер, нажмите на кнопку 'Перезвонить повторно.'".to_string();
