@@ -77,7 +77,6 @@ pub struct NewStickers {
 
 /////// SmileCategories //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
-#[belongs_to(User)]
 pub struct SmileCategories {
     pub id:          i32,
     pub name:        String,
