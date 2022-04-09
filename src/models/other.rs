@@ -59,7 +59,7 @@ pub struct NewStickerCategories {
 /////// Stickers //////
 #[derive(Identifiable, Queryable, Associations)]
 #[belongs_to(StickerCategories)]
-pub struct Stickers {
+pub struct Sticker {
     pub id:                    i32,
     pub name:                  String,
     pub position:              i32,
@@ -68,7 +68,7 @@ pub struct Stickers {
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="stickers"]
-pub struct NewStickers {
+pub struct NewSticker {
     pub name:        String,
     pub position:    i32,
     pub sticker_categories_id: i32,
@@ -94,7 +94,7 @@ pub struct NewSmileCategories {
 /////// Smiles //////
 #[derive(Identifiable, Queryable, Associations)]
 #[belongs_to(SmileCategories)]
-pub struct Smiles {
+pub struct Smile {
     pub id:               i32,
     pub name:             String,
     pub position:         i32,
@@ -103,7 +103,7 @@ pub struct Smiles {
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="smiles"]
-pub struct NewSmiles {
+pub struct NewSmile {
     pub name:        String,
     pub position:    i32,
     pub smile_categories_id: i32,
