@@ -19,8 +19,9 @@ pub fn global_routes(config: &mut web::ServiceConfig) {
 }
 
 pub async fn process_signup(data: web::Form<NewUser>) -> impl Responder {
-    let _connection = establish_connection();
+    use crate::models::NewUser;
 
+    let _connection = establish_connection();
 
     //diesel::insert_into(users::table)
     //    .values(&*data)
