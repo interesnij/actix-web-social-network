@@ -9,6 +9,7 @@ use tera::Context;
 use crate::utils::{establish_connection, get_default_template, TEMPLATES};
 use diesel::prelude::*;
 use crate::schema;
+use crate::models::NewUser;
 
 
 pub fn global_routes(config: &mut web::ServiceConfig) {
@@ -19,8 +20,6 @@ pub fn global_routes(config: &mut web::ServiceConfig) {
 }
 
 pub async fn process_signup(data: web::Form<NewUser>) -> impl Responder {
-    use crate::models::NewUser;
-
     let _connection = establish_connection();
 
     //diesel::insert_into(users::table)
