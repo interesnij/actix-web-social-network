@@ -22,14 +22,14 @@ CREATE TABLE sticker_categories (
 );
 
 CREATE TABLE stickers (
-    id           SERIAL PRIMARY KEY,
-    name         VARCHAR(100),
-    position     INT NOT NULL DEFAULT 0,
-    category_id  INT,
-    image        VARCHAR(500),
+    id                     SERIAL PRIMARY KEY,
+    name                   VARCHAR(100),
+    position               INT NOT NULL DEFAULT 0,
+    sticker_categories_id  INT,
+    image                  VARCHAR(500),
 
     CONSTRAINT fk_stickers
-        FOREIGN KEY(category_id)
+        FOREIGN KEY(sticker_categories_id)
             REFERENCES sticker_categories(id)
 );
 
@@ -41,11 +41,11 @@ CREATE TABLE smile_categories (
 );
 
 CREATE TABLE smiles (
-    id           SERIAL PRIMARY KEY,
-    name         VARCHAR(100),
-    position     INT NOT NULL DEFAULT 0,
-    category_id  INT,
-    image        VARCHAR(500),
+    id                   SERIAL PRIMARY KEY,
+    name                 VARCHAR(100),
+    position             INT NOT NULL DEFAULT 0,
+    smile_categories_id  INT,
+    image                VARCHAR(500),
 
     CONSTRAINT fk_smiles
         FOREIGN KEY(category_id)
