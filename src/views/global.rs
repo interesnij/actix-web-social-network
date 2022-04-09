@@ -72,7 +72,8 @@ pub async fn phone_verify(param: web::Path<(String,i32)>) -> impl Responder {
     let mut response_text : String;
 
     let _phone_codes = phone_codes
-        .filter(schema::phone_codes::phone.eq(&_phone), schema::phone_codes::code.eq(&_code))
+        .filter(schema::phone_codes::phone.eq(&_phone))
+        .filter(schema::phone_codes::code.eq(&_code))
         .load::<PhoneCode>(&_connection)
         .expect("E");
     if _phone_codes.len() > 1 {
