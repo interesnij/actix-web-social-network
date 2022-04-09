@@ -66,7 +66,7 @@ pub async fn phone_verify(param: web::Path<(String,i32)>) -> impl Responder {
     use crate::schema::phone_codes::dsl::phone_codes;
     use crate::models::PhoneCode;
 
-    let connection = establish_connection();
+    let _connection = establish_connection();
     let _phone : String = param.0;
     let _code : i32 = param.1;
     let mut response_text : String;
