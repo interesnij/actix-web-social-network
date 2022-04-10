@@ -1,3 +1,5 @@
+-- Your SQL goes here
+
 CREATE TABLE phone_codes (
     id    SERIAL PRIMARY KEY,
     phone VARCHAR(14) NOT NULL,
@@ -47,4 +49,3 @@ CREATE TABLE smiles (
         FOREIGN KEY(smile_categorie_id)
             REFERENCES smile_categories(id)
 );
--- Your SQL goes here
