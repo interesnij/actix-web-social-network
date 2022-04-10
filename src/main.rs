@@ -25,7 +25,6 @@ async fn main() -> std::io::Result<()> {
             .wrap(RedisSession::new("127.0.0.1:6379", &[0; 32]))
             .wrap(
                 Cors::new()
-                    .allowed_origin("*")
                     .allowed_methods(vec!["GET", "POST", "DELETE", "OPTIONS"])
                     .max_age(3600)
                     .finish()
