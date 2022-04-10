@@ -40,7 +40,7 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl
     if _is_host_admin {
         get_perm = UserPerms::Supermanager;
     }
-    let date_str = _data.date_year.clone() + "-" + _data.date_month.clone() + "-" + _data.date_day.clone();
+    let date_str = _data.date_year.clone() + "-" + &_data.date_month.clone() + "-" + &_data.date_day.clone();
     diesel::insert_into(users::table)
         .values((
             users::first_name.eq(_data.first_name.clone()),
