@@ -5,7 +5,7 @@ use actix_web::http::header::Header;
 pub fn get_default_template(req: HttpRequest) -> (String, bool) {
     // получаем папку шаблона и проверяем на хост-админа
     let mut _type = "".to_string();
-    let auth = Authorization::<Basic>::parse(&req);
+    let _auth = Authorization::<Basic>::parse(&req);
     for header in req.headers().into_iter() {
         if header.0 == "user-agent" {
             let _val = format!("{:?}", header.1);
