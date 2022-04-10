@@ -21,12 +21,7 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         let static_files = Files::new("/static", "static/").show_files_listing();
         let media_files = Files::new("/media", "media/").show_files_listing();
-        let cors = Cors::default()
-                .allowed_origin("*")
-                .allowed_methods(vec!["GET", "POST"])
-                .allowed_headers(vec![header::AUTHORIZATION, header::ACCEPT])
-                .allowed_header(header::CONTENT_TYPE)
-                .max_age(3600);
+        let cors = Cors::default();
         App::new()
             //.wrap(
             //    CookieSession::signed(&[0; 32])
