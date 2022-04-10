@@ -8,8 +8,8 @@ edition = "2021"
 [dependencies]
 actix-web = "4"
 actix-files = "0.6"
-actix-redis = { version = "0.8.0", features = ["web"] }
-actix-session = "0.3"
+actix-redis = { version = "0.11.0", features = ["web"] }
+actix-session = "0.6.2"
 #lettre = { git = "https://github.com/lettre/lettre" }
 native-tls = "0.2.4"
 env_logger = "0.9.0"
@@ -29,7 +29,7 @@ mime = "0.3.16"
 failure = "0.1.8"
 uuid = { version = "0.8.2", features = ["serde", "v4"] }
 actix-identity = "*"
-actix-cors = "0.5.4"
+actix-cors = "0.6.1"
 actix-service = "*"
 lazy_static = "*"
 validator = "*"
