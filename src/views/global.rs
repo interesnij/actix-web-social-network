@@ -19,15 +19,41 @@ pub fn global_routes(config: &mut web::ServiceConfig) {
     config.route("/signup/", web::post().to(process_signup));
 }
 
-pub async fn process_signup(_data: web::Form<NewUser>) -> impl Responder {
+pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl Responder {
+    use crate::schema::users::dsl::*;
+    use crate::models::{UserTypes, UserPerms, UserGender, UserDevice, UserLanguage}
+
     let _connection = establish_connection();
-
-    //diesel::insert_into(users::table)
-    //    .values(&*data)
-    //    .get_result::<User>(&connection)
-    //    .expect("Error registering user.");
-
-    //println!("{:?}", data);
+    let (_type, _is_host_admin) = get_default_template(req);
+    let mut get_device = UserDevice::De;
+    let mut get_gender = UserGender::Man;
+    let mut get_language = UserLanguage::Ru;
+    let mut get_perm = UserPerms::Standart;
+    if _data.gender == "Fem".to_string() {
+        get_gender = UserGender::Fem;
+    }
+    if _type == "mobile/".to_string() {
+        get_device = UserDevice::Ph;
+    }
+    if _is_host_admin {
+        get_perm = UserPerms::Supermanager;
+    }
+    let date_str = _data.date_year.clone() + "-".to_string() + _data.date_month.clone() + "-".to_string() + _data.date_day.clone();
+    diesel::insert_into(users::table)
+        .values((
+            users::first_name.eq(_data.first_name.clone()),
+            users::last_name.eq(_data.last_name.clone()),
+            users::phone.eq(_data.phone.clone()),
+            users::gender.eq(get_gender),
+            users::device.eq(get_device),
+            users::language.eq(get_language),
+            users::perm.eq(get_perm),
+            users::password.eq(hash_password(_data.password.clone())?),
+            users::birthday.eq(NaiveDate::parse_from_str(date_str, "%Y-%m-%d").unwrap()),
+            users::last_activity.eq(dsl::now),
+        ))
+        .execute(&_connection)
+        .expect("Insertion failed");
     HttpResponse::Ok().body(format!("ok"))
 }
 
