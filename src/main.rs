@@ -15,7 +15,8 @@ async fn main() -> std::io::Result<()> {
     use actix_cors::Cors;
     use actix_files::Files;
     use crate::routes::routes;
-    use actix_session::CookieSession;
+    use actix_redis::RedisSession;
+    use actix_session::Session;
     use actix_web::{middleware, web, App, HttpServer, http::header};
 
     HttpServer::new(|| {
