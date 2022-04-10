@@ -44,8 +44,8 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl
     let date_str = _data.date_year.clone() + "-" + &_data.date_month.clone() + "-" + &_data.date_day.clone();
     diesel::insert_into(users::table)
         .values((
-            first_name.eq(_data.first_name.clone()),
-            last_name.eq(_data.last_name.clone()),
+            crate::models::user::users::first_name.eq(_data.first_name.clone()),
+            crate::models::user::users::last_name.eq(_data.last_name.clone()),
             phone.eq(_data.phone.clone()),
             gender.eq(get_gender),
             device.eq(get_device),
