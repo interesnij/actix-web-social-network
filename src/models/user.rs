@@ -3,62 +3,66 @@ use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
 use crate::utils::establish_connection;
 
-
+#[derive(DbEnum)]
 pub enum UserTypes {
-    Standart(String),                   // стандартный тип пользователя
-    Child(String),                     // ребенок
-    Identified(String),                // идентифицированный
-    IdentifiedSend(String),            // пославший запрос на идентификацию
-    DeletedStandart(String),           // удаленный стандартный
-    DeletedChild(String),              // удаленный ребенок
-    DeletedIdentified(String),         // удаленный идентифицированный
-    DeletedIdentifiedSend(String),     // удаленный пославший запрос на идентификацию
-    ClosedStandart(String),            // закрытый стандартный
-    ClosedChild(String),               // закрытый ребенок
-    ClosedIdentified(String),          // закрытый идентифицированный
-    ClosedIdentifiedSend(String),      // закрытый пославший запрос на идентификацию
-    SuspendedStandart(String),         // приостановленный стандартный
-    SuspendedChild(String),            // приостановленный ребенок
-    SuspendedIdentified(String),       // приостановленный идентифицированный
-    SuspendedIdentifiedSend(String),   // приостановленный пославший запрос на идентификацию
-    BannerStandart(String),            // закрытый баннером стандартный
-    BannerChild(String),               // закрытый баннером ребенок
-    BannerIdentified(String),          // закрытый баннером идентифицированный
-    BannerIdentifiedSend(String),      // закрытый баннером пославший запрос на идентификацию
+    Standart,                   // стандартный тип пользователя
+    Child,                     // ребенок
+    Identified,                // идентифицированный
+    IdentifiedSend,            // пославший запрос на идентификацию
+    DeletedStandart,           // удаленный стандартный
+    DeletedChild,              // удаленный ребенок
+    DeletedIdentified,         // удаленный идентифицированный
+    DeletedIdentifiedSend,     // удаленный пославший запрос на идентификацию
+    ClosedStandart,            // закрытый стандартный
+    ClosedChild,               // закрытый ребенок
+    ClosedIdentified,          // закрытый идентифицированный
+    ClosedIdentifiedSend,      // закрытый пославший запрос на идентификацию
+    SuspendedStandart,         // приостановленный стандартный
+    SuspendedChild,            // приостановленный ребенок
+    SuspendedIdentified,       // приостановленный идентифицированный
+    SuspendedIdentifiedSend,   // приостановленный пославший запрос на идентификацию
+    BannerStandart,            // закрытый баннером стандартный
+    BannerChild,               // закрытый баннером ребенок
+    BannerIdentified,          // закрытый баннером идентифицированный
+    BannerIdentifiedSend,      // закрытый баннером пославший запрос на идентификацию
 }
 
+#[derive(DbEnum)]
 pub enum UserPerms {
-    Standart(String),              // стандартные полномочия
-    TraineeModerator(String),      // TRAINEE_MODERATOR
-    Moderator(String),             // MODERATOR
-    HighModerator(String),         // HIGH_MODERATOR
-    TeamleadModerator(String),     // TEAMLEAD_MODERATOR
-    TraineeManager(String),        // TRAINEE_MANAGER
-    Manager(String),               // MANAGER
-    HighManager(String),           // HIGH_MANAGER
-    TeamleadManager(String),       // TEAMLEAD_MANAGER
-    Advertiser(String),            // ADVERTISER
-    HighAdvertiser(String),        // HIGH_ADVERTISER
-    TeamleadAdvertiser(String),    // TEAMLEAD_ADVERTISER
-    Administrator(String),         // ADMINISTRATOR
-    HighAdministrator(String),     // HIGH_ADMINISTRATOR
-    TeamleadAdministrator(String), // TEAMLEAD_ADMINISTRATOR
-    Supermanager(String),          // SUPERMANAGER
+    Standart,              // стандартные полномочия
+    TraineeModerator,      // TRAINEE_MODERATOR
+    Moderator,             // MODERATOR
+    HighModerator,         // HIGH_MODERATOR
+    TeamleadModerator,     // TEAMLEAD_MODERATOR
+    TraineeManager,        // TRAINEE_MANAGER
+    Manager,               // MANAGER
+    HighManager,           // HIGH_MANAGER
+    TeamleadManager,       // TEAMLEAD_MANAGER
+    Advertiser,            // ADVERTISER
+    HighAdvertiser,        // HIGH_ADVERTISER
+    TeamleadAdvertiser,    // TEAMLEAD_ADVERTISER
+    Administrator,         // ADMINISTRATOR
+    HighAdministrator,     // HIGH_ADMINISTRATOR
+    TeamleadAdministrator, // TEAMLEAD_ADMINISTRATOR
+    Supermanager,          // SUPERMANAGER
 }
 
+#[derive(DbEnum)]
 pub enum UserGender {
-    Man(String),     // Мужик
-    Fem(String),     // Баба
+    Man,     // Мужик
+    Fem,     // Баба
 }
 
+#[derive(DbEnum)]
 pub enum UserDevice {
-    De(String),      // Комп
-    Ph(String),      // Телефон
+    De,      // Комп
+    Ph,      // Телефон
 }
 
+#[derive(DbEnum)]
 pub enum UserLanguage {
-    Ru(String),      // Русский
-    En(String),      // Английский
+    Ru,      // Русский
+    En,      // Английский
 }
 
 #[derive(Queryable, Identifiable)]
