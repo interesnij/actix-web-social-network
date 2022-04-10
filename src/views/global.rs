@@ -24,7 +24,6 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl
     use crate::models::{UserTypes, UserPerms, UserGender, UserDevice, UserLanguage};
     use crate::utils::hash_password;
     use chrono::NaiveDate;
-    use crate::models::user::users::*;
 
     let _connection = establish_connection();
     let (_type, _is_host_admin) = get_default_template(req);
@@ -44,8 +43,8 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl
     let date_str = _data.date_year.clone() + "-" + &_data.date_month.clone() + "-" + &_data.date_day.clone();
     diesel::insert_into(users::table)
         .values((
-            crate::models::user::users::first_name.eq(_data.first_name.clone()),
-            crate::models::user::users::last_name.eq(_data.last_name.clone()),
+            schema::users::first_name.eq(_data.first_name.clone()),
+            schema::users::last_name.eq(_data.last_name.clone()),
             phone.eq(_data.phone.clone()),
             gender.eq(get_gender),
             device.eq(get_device),
