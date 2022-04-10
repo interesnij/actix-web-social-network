@@ -5,60 +5,60 @@ use crate::utils::establish_connection;
 
 
 pub enum UserTypes {
-    Standart,                   // стандартный тип пользователя
-    Child,                     // ребенок
-    Identified,                // идентифицированный
-    IdentifiedSend,            // пославший запрос на идентификацию
-    DeletedStandart,           // удаленный стандартный
-    DeletedChild,              // удаленный ребенок
-    DeletedIdentified,         // удаленный идентифицированный
-    DeletedIdentifiedSend,     // удаленный пославший запрос на идентификацию
-    ClosedStandart,            // закрытый стандартный
-    ClosedChild,               // закрытый ребенок
-    ClosedIdentified,          // закрытый идентифицированный
-    ClosedIdentifiedSend,      // закрытый пославший запрос на идентификацию
-    SuspendedStandart,         // приостановленный стандартный
-    SuspendedChild,            // приостановленный ребенок
-    SuspendedIdentified,       // приостановленный идентифицированный
-    SuspendedIdentifiedSend,   // приостановленный пославший запрос на идентификацию
-    BannerStandart,            // закрытый баннером стандартный
-    BannerChild,               // закрытый баннером ребенок
-    BannerIdentified,          // закрытый баннером идентифицированный
-    BannerIdentifiedSend,      // закрытый баннером пославший запрос на идентификацию
+    Standart(String),                   // стандартный тип пользователя
+    Child(String),                     // ребенок
+    Identified(String),                // идентифицированный
+    IdentifiedSend(String),            // пославший запрос на идентификацию
+    DeletedStandart(String),           // удаленный стандартный
+    DeletedChild(String),              // удаленный ребенок
+    DeletedIdentified(String),         // удаленный идентифицированный
+    DeletedIdentifiedSend(String),     // удаленный пославший запрос на идентификацию
+    ClosedStandart(String),            // закрытый стандартный
+    ClosedChild(String),               // закрытый ребенок
+    ClosedIdentified(String),          // закрытый идентифицированный
+    ClosedIdentifiedSend(String),      // закрытый пославший запрос на идентификацию
+    SuspendedStandart(String),         // приостановленный стандартный
+    SuspendedChild(String),            // приостановленный ребенок
+    SuspendedIdentified(String),       // приостановленный идентифицированный
+    SuspendedIdentifiedSend(String),   // приостановленный пославший запрос на идентификацию
+    BannerStandart(String),            // закрытый баннером стандартный
+    BannerChild(String),               // закрытый баннером ребенок
+    BannerIdentified(String),          // закрытый баннером идентифицированный
+    BannerIdentifiedSend(String),      // закрытый баннером пославший запрос на идентификацию
 }
 
 pub enum UserPerms {
-    Standart,              // стандартные полномочия
-    TraineeModerator,      // TRAINEE_MODERATOR
-    Moderator,             // MODERATOR
-    HighModerator,         // HIGH_MODERATOR
-    TeamleadModerator,     // TEAMLEAD_MODERATOR
-    TraineeManager,        // TRAINEE_MANAGER
-    Manager,               // MANAGER
-    HighManager,           // HIGH_MANAGER
-    TeamleadManager,       // TEAMLEAD_MANAGER
-    Advertiser,            // ADVERTISER
-    HighAdvertiser,        // HIGH_ADVERTISER
-    TeamleadAdvertiser,    // TEAMLEAD_ADVERTISER
-    Administrator,         // ADMINISTRATOR
-    HighAdministrator,     // HIGH_ADMINISTRATOR
-    TeamleadAdministrator, // TEAMLEAD_ADMINISTRATOR
-    Supermanager,          // SUPERMANAGER
+    Standart(String),              // стандартные полномочия
+    TraineeModerator(String),      // TRAINEE_MODERATOR
+    Moderator(String),             // MODERATOR
+    HighModerator(String),         // HIGH_MODERATOR
+    TeamleadModerator(String),     // TEAMLEAD_MODERATOR
+    TraineeManager(String),        // TRAINEE_MANAGER
+    Manager(String),               // MANAGER
+    HighManager(String),           // HIGH_MANAGER
+    TeamleadManager(String),       // TEAMLEAD_MANAGER
+    Advertiser(String),            // ADVERTISER
+    HighAdvertiser(String),        // HIGH_ADVERTISER
+    TeamleadAdvertiser(String),    // TEAMLEAD_ADVERTISER
+    Administrator(String),         // ADMINISTRATOR
+    HighAdministrator(String),     // HIGH_ADMINISTRATOR
+    TeamleadAdministrator(String), // TEAMLEAD_ADMINISTRATOR
+    Supermanager(String),          // SUPERMANAGER
 }
 
 pub enum UserGender {
-    Man,     // Мужик
-    Fem,     // Баба
+    Man(String),     // Мужик
+    Fem(String),     // Баба
 }
 
 pub enum UserDevice {
-    De,      // Комп
-    Ph,      // Телефон
+    De(String),      // Комп
+    Ph(String),      // Телефон
 }
 
 pub enum UserLanguage {
-    Ru,      // Русский
-    En,      // Английский
+    Ru(String),      // Русский
+    En(String),      // Английский
 }
 
 #[derive(Queryable, Identifiable)]
@@ -90,11 +90,11 @@ pub struct NewUser {
     pub first_name:    String,
     pub last_name:     String,
     pub phone:         String,
-    pub types:         crate::models::UserTypes,
-    pub gender:        crate::models::UserGender,
-    pub device:        crate::models::UserDevice,
-    pub language:      crate::models::UserLanguage,
-    pub perm:          crate::models::UserPerms,
+    pub types:         String,
+    pub gender:        String,
+    pub device:        String,
+    pub language:      String,
+    pub perm:          String,
     pub level:         i32,
     pub password:      String,
     pub birthday:      chrono::NaiveDateTime,
