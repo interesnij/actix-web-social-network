@@ -25,14 +25,12 @@ async fn main() -> std::io::Result<()> {
             .wrap(
                 CookieSession::signed(&[0; 32])
                     .domain("151.248.120.138:9015")
-                    .name("auth")
-                    .secure(false)
+                    .name("actix_session")
+                    .path("/")
+                    .secure(true)
             )
             .wrap(
-                Cors::new()
-                    .allowed_methods(vec!["GET", "POST", "DELETE", "OPTIONS"])
-                    .max_age(3600)
-                    .finish()
+                Cors::new().permissive()
                 )
             .service(static_files)
             .service(media_files)
