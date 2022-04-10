@@ -42,3 +42,4 @@ actix-rt = "2"
 actix-web-httpauth = "0.6.0"
 reqwest = "*"
 derive_more = "0.99.5"
+diesel-derive-enum = { git = "https://github.com/adwhit/diesel-derive-enum", features = ["postgres"] }
