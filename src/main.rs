@@ -22,7 +22,7 @@ async fn main() -> std::io::Result<()> {
         let static_files = Files::new("/static", "static/").show_files_listing();
         let media_files = Files::new("/media", "media/").show_files_listing();
         let cors = Cors::default()
-                .allowed_origin("151.248.120.138:9015")
+                .allowed_origin("*")
                 .allowed_methods(vec!["GET", "POST"])
                 .allowed_headers(vec![header::AUTHORIZATION, header::ACCEPT])
                 .allowed_header(header::CONTENT_TYPE)
