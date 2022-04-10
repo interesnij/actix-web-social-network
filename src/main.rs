@@ -15,14 +15,19 @@ async fn main() -> std::io::Result<()> {
     use actix_cors::Cors;
     use actix_files::Files;
     use crate::routes::routes;
-    use actix_redis::RedisSession;
+    use actix_session::CookieSession;
     use actix_web::{middleware, web, App, HttpServer};
 
     HttpServer::new(|| {
         let static_files = Files::new("/static", "static/").show_files_listing();
         let media_files = Files::new("/media", "media/").show_files_listing();
         App::new()
-            .wrap(RedisSession::new("127.0.0.1:6379", &[0; 32]))
+            .wrap(
+                CookieSession::signed(&[0; 32])
+                    .domain("151.248.120.138:9015")
+                    .name("auth")
+                    .secure(false)
+            )
             .wrap(
                 Cors::new()
                     .allowed_methods(vec!["GET", "POST", "DELETE", "OPTIONS"])
