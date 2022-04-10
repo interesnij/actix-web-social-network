@@ -4,7 +4,7 @@ use serde::{Serialize, Deserialize};
 use crate::utils::establish_connection;
 use diesel_derive_enum::DbEnum;
 
-#[derive(DbEnum)]
+#[derive(DbEnum, DB)]
 pub enum UserTypesEnum {
     Standart,                   // стандартный тип пользователя
     Child,                     // ребенок
@@ -28,7 +28,7 @@ pub enum UserTypesEnum {
     BannerIdentifiedSend,      // закрытый баннером пославший запрос на идентификацию
 }
 
-#[derive(DbEnum)]
+#[derive(DbEnum, DB)]
 pub enum UserPermEnum {
     Standart,              // стандартные полномочия
     TraineeModerator,      // TRAINEE_MODERATOR
@@ -48,19 +48,19 @@ pub enum UserPermEnum {
     Supermanager,          // SUPERMANAGER
 }
 
-#[derive(DbEnum)]
+#[derive(DbEnum, DB)]
 pub enum UserGenderEnum {
     Man,     // Мужик
     Fem,     // Баба
 }
 
-#[derive(DbEnum)]
+#[derive(DbEnum, DB)]
 pub enum UserDeviceEnum {
     De,      // Комп
     Ph,      // Телефон
 }
 
-#[derive(DbEnum)]
+#[derive(DbEnum, DB)]
 pub enum UserLanguageEnum {
     Ru,      // Русский
     En,      // Английский
