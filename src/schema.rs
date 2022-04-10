@@ -1,4 +1,7 @@
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     color_settings (id) {
         id -> Int4,
         user_id -> Int4,
@@ -7,6 +10,19 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
+    custom_links (id) {
+        id -> Int4,
+        link -> Varchar,
+    }
+}
+
+table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     featured_uc (id) {
         id -> Int4,
         owner -> Int4,
@@ -19,6 +35,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     ip_user (id) {
         id -> Int4,
         user_id -> Int4,
@@ -27,6 +46,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     list_uc (id) {
         id -> Int4,
         types -> Nullable<Int4>,
@@ -36,6 +58,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     news_uc (id) {
         id -> Int4,
         owner -> Int4,
@@ -48,6 +73,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     notify_uc (id) {
         id -> Int4,
         owner -> Int4,
@@ -60,6 +88,71 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
+    phone_codes (id) {
+        id -> Int4,
+        phone -> Varchar,
+        code -> Int4,
+    }
+}
+
+table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
+    smile_categories (id) {
+        id -> Int4,
+        name -> Nullable<Varchar>,
+        position -> Int4,
+        description -> Nullable<Varchar>,
+    }
+}
+
+table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
+    smiles (id) {
+        id -> Int4,
+        name -> Nullable<Varchar>,
+        position -> Int4,
+        smile_categorie_id -> Nullable<Int4>,
+        image -> Nullable<Varchar>,
+    }
+}
+
+table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
+    sticker_categories (id) {
+        id -> Int4,
+        name -> Nullable<Varchar>,
+        position -> Int4,
+        creator_id -> Nullable<Int4>,
+        description -> Nullable<Varchar>,
+    }
+}
+
+table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
+    stickers (id) {
+        id -> Int4,
+        name -> Nullable<Varchar>,
+        position -> Int4,
+        sticker_categorie_id -> Nullable<Int4>,
+        image -> Nullable<Varchar>,
+    }
+}
+
+table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_anketa (id) {
         id -> Int4,
         user_id -> Int4,
@@ -74,6 +167,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_blocks (id) {
         id -> Int4,
         user_id -> Int4,
@@ -82,6 +178,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_brother_sister (id) {
         id -> Int4,
         user_id -> Int4,
@@ -90,6 +189,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_children_one (id) {
         id -> Int4,
         user_id -> Int4,
@@ -98,6 +200,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_colleagues_one (id) {
         id -> Int4,
         user_id -> Int4,
@@ -106,6 +211,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_dad_one (id) {
         id -> Int4,
         user_id -> Int4,
@@ -114,6 +222,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_delete_anketa (id) {
         id -> Int4,
         user_id -> Int4,
@@ -123,6 +234,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_doc_list_position (id) {
         id -> Int4,
         user_id -> Int4,
@@ -133,6 +247,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_good_list_position (id) {
         id -> Int4,
         user_id -> Int4,
@@ -143,6 +260,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_good_notifications (id) {
         id -> Int4,
         user_id -> Int4,
@@ -161,6 +281,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_grandsons_one (id) {
         id -> Int4,
         user_id -> Int4,
@@ -169,6 +292,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_location (id) {
         id -> Int4,
         user_id -> Int4,
@@ -184,6 +310,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_love_status (id) {
         id -> Int4,
         user_id -> Int4,
@@ -193,6 +322,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_mom_one (id) {
         id -> Int4,
         user_id -> Int4,
@@ -201,6 +333,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_music_list_position (id) {
         id -> Int4,
         user_id -> Int4,
@@ -211,6 +346,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_music_notifications (id) {
         id -> Int4,
         user_id -> Int4,
@@ -219,6 +357,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_partner_one (id) {
         id -> Int4,
         user_id -> Int4,
@@ -227,6 +368,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_photo_list_position (id) {
         id -> Int4,
         user_id -> Int4,
@@ -237,6 +381,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_photo_notifications (id) {
         id -> Int4,
         user_id -> Int4,
@@ -255,6 +402,33 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
+    user_populate_smiles (id) {
+        id -> Int4,
+        user_id -> Int4,
+        smile_id -> Int4,
+        count -> Nullable<Int4>,
+    }
+}
+
+table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
+    user_populate_stickers (id) {
+        id -> Int4,
+        user_id -> Int4,
+        sticker_id -> Int4,
+        count -> Nullable<Int4>,
+    }
+}
+
+table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_post_list_position (id) {
         id -> Int4,
         user_id -> Int4,
@@ -265,6 +439,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_post_notifications (id) {
         id -> Int4,
         user_id -> Int4,
@@ -283,6 +460,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_private (id) {
         id -> Int4,
         user_id -> Int4,
@@ -303,6 +483,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_profile (id) {
         id -> Int4,
         user_id -> Int4,
@@ -330,6 +513,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_profile_notifications (id) {
         id -> Int4,
         user_id -> Int4,
@@ -340,6 +526,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_survey_list_position (id) {
         id -> Int4,
         user_id -> Int4,
@@ -350,6 +539,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_video_list_position (id) {
         id -> Int4,
         user_id -> Int4,
@@ -360,6 +552,9 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     user_video_notifications (id) {
         id -> Int4,
         user_id -> Int4,
@@ -378,16 +573,19 @@ table! {
 }
 
 table! {
+    use diesel::sql_types::*;
+    use crate::my_enum::*;
+
     users (id) {
         id -> Int4,
         first_name -> Varchar,
         last_name -> Varchar,
         phone -> Varchar,
-        types -> Varchar,
-        gender -> Varchar,
-        device -> Varchar,
-        language -> Varchar,
-        perm -> Nullable<Int4>,
+        types -> User_types_enum,
+        gender -> User_gender_enum,
+        device -> User_device_enum,
+        language -> User_language_enum,
+        perm -> User_perm_enum,
         level -> Nullable<Int4>,
         password -> Varchar,
         have_link -> Nullable<Varchar>,
@@ -406,6 +604,8 @@ joinable!(featured_uc -> list_uc (list_id));
 joinable!(ip_user -> users (user_id));
 joinable!(news_uc -> list_uc (list_id));
 joinable!(notify_uc -> list_uc (list_id));
+joinable!(smiles -> smile_categories (smile_categorie_id));
+joinable!(stickers -> sticker_categories (sticker_categorie_id));
 joinable!(user_anketa -> users (user_id));
 joinable!(user_delete_anketa -> users (user_id));
 joinable!(user_good_notifications -> users (user_id));
@@ -413,6 +613,10 @@ joinable!(user_location -> users (user_id));
 joinable!(user_love_status -> users (user_id));
 joinable!(user_music_notifications -> users (user_id));
 joinable!(user_photo_notifications -> users (user_id));
+joinable!(user_populate_smiles -> smiles (smile_id));
+joinable!(user_populate_smiles -> users (user_id));
+joinable!(user_populate_stickers -> stickers (sticker_id));
+joinable!(user_populate_stickers -> users (user_id));
 joinable!(user_post_notifications -> users (user_id));
 joinable!(user_private -> users (user_id));
 joinable!(user_profile -> users (user_id));
@@ -421,11 +625,17 @@ joinable!(user_video_notifications -> users (user_id));
 
 allow_tables_to_appear_in_same_query!(
     color_settings,
+    custom_links,
     featured_uc,
     ip_user,
     list_uc,
     news_uc,
     notify_uc,
+    phone_codes,
+    smile_categories,
+    smiles,
+    sticker_categories,
+    stickers,
     user_anketa,
     user_blocks,
     user_brother_sister,
@@ -445,6 +655,8 @@ allow_tables_to_appear_in_same_query!(
     user_partner_one,
     user_photo_list_position,
     user_photo_notifications,
+    user_populate_smiles,
+    user_populate_stickers,
     user_post_list_position,
     user_post_notifications,
     user_private,
