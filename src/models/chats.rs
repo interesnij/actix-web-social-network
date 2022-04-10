@@ -57,7 +57,7 @@ use crate::models::{
 pub struct Chat {
     pub id:                 i32,
     pub name:               String,
-    pub types:              u8,
+    pub types:              i8,
     pub image:              Option<String>,
     pub description:        Option<String>,
     pub community_id:       Option<i32>,
@@ -145,7 +145,7 @@ pub struct Message {
     pub created:       chrono::NaiveDateTime,
     pub content:       Option<String>,
     pub unread:        Bool,
-    pub typed:         u8,
+    pub typed:         i8,
     pub attach:        Option<String>,
     pub voice:         Option<String>,
 }
