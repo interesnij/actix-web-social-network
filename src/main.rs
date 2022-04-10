@@ -26,6 +26,14 @@ async fn main() -> std::io::Result<()> {
         let private_key = actix_web::cookie::Key::generate();
 
         App::new()
+            .configure(|app| Cors::for_app(app) // <- Construct CORS middleware builder
+                .allowed_origin("151.248.120.138:9015")
+                .allowed_methods(vec!["GET", "POST"])
+                .allowed_headers(vec![http::header::AUTHORIZATION, http::header::ACCEPT])
+                .allowed_header(http::header::CONTENT_TYPE)
+                .max_age(3600)
+                .register()
+            )
             .wrap(RedisSession::new("127.0.0.1:6379", private_key.master()))
             .service(static_files)
             .service(media_files)
