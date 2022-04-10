@@ -1,29 +1,8 @@
 -- MyEnum (rust перечисление) = my_enum (тип поля postgre) = MyEnumMapping (схема)
 -- пользователи -------
 
-CREATE TYPE user_types_enum AS USER_TYPES_ENUM (
-  'standart',
-  'child',
-  'identified',
-  'identified_send',
-  'deleted_standart',
-  'deleted_child',
-  'deleted_identified',
-  'deleted_identified_send',
-  'closed_standart',
-  'closed_child',
-  'closed_identified',
-  'closed_identified_send',
-  'suspended_standart',
-  'suspended_child',
-  'suspended_identified',
-  'suspended_identified_send',
-  'banner_standart',
-  'banner_child',
-  'banner_identified',
-  'banner_identified_send',
-);
-CREATE TYPE user_perm_enum AS USER_PERM_ENUM (
+CREATE TYPE user_types_enum AS ENUM ('standart','child','identified','identified_send','deleted_standart','deleted_child','deleted_identified','deleted_identified_send','closed_standart','closed_child','closed_identified','closed_identified_send','suspended_standart','suspended_child','suspended_identified','suspended_identified_send','banner_standart','banner_child','banner_identified','banner_identified_send');
+CREATE TYPE user_perm_enum AS ENUM (
   'standart',
   'child',
   'trainee_moderator',
@@ -40,19 +19,19 @@ CREATE TYPE user_perm_enum AS USER_PERM_ENUM (
   'administrator',
   'high_administrator',
   'teamlead_administrator',
-  'supermanager',
+  'supermanager'
 );
-CREATE TYPE user_gender_enum AS USER_GENDER_ENUM (
+CREATE TYPE user_gender_enum AS ENUM (
   'Man',
-  'Fem',
+  'Fem'
 );
-CREATE TYPE user_device_enum AS USER_DEVICE_ENUM (
+CREATE TYPE user_device_enum AS ENUM (
   'De',
-  'Ph',
+  'Ph'
 );
-CREATE TYPE user_language_enum AS USER_LANGUAGE_ENUM (
+CREATE TYPE user_language_enum AS ENUM (
   'Ru',
-  'En',
+  'En'
 );
 
 CREATE TABLE users (
