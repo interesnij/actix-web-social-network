@@ -5,7 +5,7 @@ use crate::utils::establish_connection;
 use diesel_derive_enum::DbEnum;
 
 #[derive(DbEnum)]
-pub enum UserTypes {
+pub enum UserTypesEnum {
     Standart,                   // стандартный тип пользователя
     Child,                     // ребенок
     Identified,                // идентифицированный
@@ -29,7 +29,7 @@ pub enum UserTypes {
 }
 
 #[derive(DbEnum)]
-pub enum UserPerms {
+pub enum UserPermEnum {
     Standart,              // стандартные полномочия
     TraineeModerator,      // TRAINEE_MODERATOR
     Moderator,             // MODERATOR
@@ -49,19 +49,19 @@ pub enum UserPerms {
 }
 
 #[derive(DbEnum)]
-pub enum UserGender {
+pub enum UserGenderEnum {
     Man,     // Мужик
     Fem,     // Баба
 }
 
 #[derive(DbEnum)]
-pub enum UserDevice {
+pub enum UserDeviceEnum {
     De,      // Комп
     Ph,      // Телефон
 }
 
 #[derive(DbEnum)]
-pub enum UserLanguage {
+pub enum UserLanguageEnum {
     Ru,      // Русский
     En,      // Английский
 }
@@ -73,11 +73,11 @@ pub struct User {
     pub first_name:    String,
     pub last_name:     String,
     pub phone:         String,
-    pub types:         UserTypes,
-    pub gender:        UserGender,
-    pub device:        UserDevice,
-    pub language:      UserLanguage,
-    pub perm:          UserPerms,
+    pub types:         UserTypesEnum,
+    pub gender:        UserGenderEnum,
+    pub device:        UserDeviceEnum,
+    pub language:      UserLanguageEnum,
+    pub perm:          UserPermEnum,
     pub level:         i32,
     pub password:      String,
     pub have_link:     Option<String>,
@@ -90,17 +90,17 @@ pub struct User {
     pub last_activity: chrono::NaiveDateTime,
 }
 
-#[derive(Deserialize,Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="users"]
 pub struct NewUser {
     pub first_name:    String,
     pub last_name:     String,
     pub phone:         String,
-    pub types:         String,
-    pub gender:        String,
-    pub device:        String,
-    pub language:      String,
-    pub perm:          String,
+    pub types:         UserTypesEnum,
+    pub gender:        UserGenderEnum,
+    pub device:        UserDeviceEnum,
+    pub language:      UserLanguageEnum,
+    pub perm:          UserPermEnum,
     pub level:         i32,
     pub password:      String,
     pub birthday:      chrono::NaiveDateTime,
