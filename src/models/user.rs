@@ -79,7 +79,7 @@ pub struct User {
     pub last_activity: chrono::NaiveDateTime,
 }
 
-
+use diesel::types::Char;
 #[derive(Deserialize, Insertable)]
 #[table_name="users"]
 pub struct NewUser {
