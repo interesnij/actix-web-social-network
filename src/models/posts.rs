@@ -34,29 +34,27 @@ pub struct NewPostCategories {
 }
 
 /////// PostList //////
-pub enum PostListTypes{
-    Main,           // основной список
-    List,           // пользовательский список
-    Draft,          // список предложки
-    Deleted,        // удаленный список
-    Closed,         // закрытый список
-    ClosedMain,     // закрытый основной список
-    Suspended,      // замороженный список
-    SuspendedMain,  // замороженный основной список
-}
+////////// Тип списка
+    // 'a' основной список
+    // 'd' пользовательский список
+    // 'e' список предложки
+    // 'g' удаленный список
+    // 'k' закрытый список
+    // 'l' закрытый основной список
+    // 'p' замороженный список
+    // 'r' замороженный основной список
 
-pub enum PostListPerm{
-    AllCan,       // Все пользователи
-    Friends,      // Друзья
-    EachOther,    // Друзья и друзья друзей
-    FriendsBut,   // Друзья, кроме
-    SomeFriends,  // Некоторые друзья
-    Members,      // Подписчики
-    Creator,      // Только я / владелец сообщества
-    Admins,       // Администраторы
-    MembersBut,   // Подписчики, кроме
-    SomeMembers,  // Некоторые подписчики
-}
+//////////// Приватность списка
+    // 'a' Все пользователи
+    // 'b' Друзья
+    // 'c' Друзья и друзья друзей
+    // 'd' Друзья, кроме
+    // 'e' Некоторые друзья
+    // 'f' Подписчики
+    // 'g' Только я / владелец сообщества
+    // 'h' Администраторы
+    // 'i' Подписчики, кроме
+    // 'j' Некоторые подписчики
 
 /////// PostList //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
@@ -68,33 +66,33 @@ pub struct PostList {
     pub name:            String,
     pub community_id:    Option<i32>,
     pub creator_id:      i32,
-    pub types:           PostListTypes,
+    pub types:           Char,
     pub description:     Option<String>,
     pub created:         chrono::NaiveDateTime,
     pub count:           i32,
     pub repost:          i32,
     pub copy:            i32,
     pub position:        i32,
-    pub can_see_el:      i32,
-    pub can_see_comment: i32,
-    pub create_el:       i32,
-    pub create_comment:  i32,
-    pub copy_el:         i32,
+    pub can_see_el:      Char,
+    pub can_see_comment: Char,
+    pub create_el:       Char,
+    pub create_comment:  Char,
+    pub copy_el:         Char,
 }
 
 /////// Post //////
-pub enum PostTypes{
-    COffer,         // Предложка сообщества
-    UOffer,         // Предложка пользователя
-    CreatorDraft,   // Черновик владельца
-    OfferDraft,     // Черновик предложки
-    Fixed,          // Закрепленый
-    Published,      // Опубликовано
-    Deleted,        // Удаленый
-    Closed,         // Закрыто модератором
-    DeletedCOffer,  // Удаленый предложенный в сообщество
-    DeletedUOffer,  // Удаленый предложенный у пользователя
-}
+
+    // 'f' Предложка сообщества
+    // 'g' Предложка пользователя
+    // 'd' Черновик владельца
+    // 'e' Черновик предложки
+    // 'b' Закрепленый
+    // 'a' Опубликовано
+    // 'c' Удаленый
+    // 'h' Закрыто модератором
+    // 'i' Удаленый предложенный в сообщество
+    // 'y' Удаленый предложенный у пользователя
+
 
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Community)]
@@ -109,7 +107,7 @@ pub struct Post {
     pub category_id:     Option<i32>,
     pub creator_id:      i32,
     pub list_id:         i32,
-    pub types:           PostTypes,
+    pub types:           Char,
     pub attach:          Option<String>,
     pub comment_enabled: Bool,
     pub votes_on:        Bool,
@@ -124,15 +122,14 @@ pub struct Post {
 }
 
 /////// PostComment //////
-pub enum PostCommentTypes{
-    Published,      // Опубликованный
-    Edited,         // Изменённый
-    Draft,          // Черновик
-    Deleted,        // Удаленый
-    DeletedEdited,  // Изменённый Удаленый
-    Closed,         // Закрытый модератором
-    ClosedEdited,   // Закрытый Удаленый
-}
+
+// 'a' Опубликованный
+// 'b' Изменённый
+// 'c' Удаленый
+// 'd' Изменённый Удаленый
+// 'e' Закрытый модератором
+// 'f' Закрытый Удаленый
+
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Post)]
 #[belongs_to(User)]
@@ -146,7 +143,7 @@ pub struct PostComment {
     pub parent_id:  Option<i32>,
     pub content:    Option<String>,
     pub attach:     Option<String>,
-    pub types:      PostCommentTypes,
+    pub types:      Char,
     pub created:    chrono::NaiveDateTime,
     pub liked:      i32,
     pub disliked:   i32,
@@ -176,11 +173,7 @@ pub struct CommunityPostListCollection {
 }
 
 /////// PostListPerm //////
-pub enum PostListPermTypes{
-    NoValue,    // Нет значения
-    Enable,     // Активно
-    Disable,    // Не активно
-}
+
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
 #[belongs_to(PostList)]
@@ -189,9 +182,9 @@ pub struct PostListPerm {
     pub id:              i32,
     pub user_id:         i32,
     pub list_id:         i32,
-    pub can_see_item:    PostListPermTypes,
-    pub can_see_comment: PostListPermTypes,
-    pub create_item:     PostListPermTypes,
-    pub create_comment:  PostListPermTypes,
-    pub can_copy:        PostListPermTypes,
+    pub can_see_item:    Char,
+    pub can_see_comment: Char,
+    pub create_item:     Char,
+    pub create_comment:  Char,
+    pub can_copy:        Char,
 }

@@ -2,69 +2,58 @@ use crate::schema::users;
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
 use crate::utils::establish_connection;
-use diesel_derive_enum::DbEnum;
 
-#[derive(DbEnum, DB)]
-pub enum UserTypesEnum {
-    Standart,                   // стандартный тип пользователя
-    Child,                     // ребенок
-    Identified,                // идентифицированный
-    IdentifiedSend,            // пославший запрос на идентификацию
-    DeletedStandart,           // удаленный стандартный
-    DeletedChild,              // удаленный ребенок
-    DeletedIdentified,         // удаленный идентифицированный
-    DeletedIdentifiedSend,     // удаленный пославший запрос на идентификацию
-    ClosedStandart,            // закрытый стандартный
-    ClosedChild,               // закрытый ребенок
-    ClosedIdentified,          // закрытый идентифицированный
-    ClosedIdentifiedSend,      // закрытый пославший запрос на идентификацию
-    SuspendedStandart,         // приостановленный стандартный
-    SuspendedChild,            // приостановленный ребенок
-    SuspendedIdentified,       // приостановленный идентифицированный
-    SuspendedIdentifiedSend,   // приостановленный пославший запрос на идентификацию
-    BannerStandart,            // закрытый баннером стандартный
-    BannerChild,               // закрытый баннером ребенок
-    BannerIdentified,          // закрытый баннером идентифицированный
-    BannerIdentifiedSend,      // закрытый баннером пославший запрос на идентификацию
-}
+///// Типы пользоватетеля
+    // 1 стандартный тип пользователя
+    // 3 ребенок
+    // 7 идентифицированный
+    // 6 пославший запрос на идентификацию
+    // 11 удаленный стандартный
+    // 13 удаленный ребенок
+    // 17 удаленный идентифицированный
+    // 16 удаленный пославший запрос на идентификацию
+    // 21 закрытый стандартный
+    // 23 закрытый ребенок
+    // 27 закрытый идентифицированный
+    // 26 закрытый пославший запрос на идентификацию
+    // 31 приостановленный стандартный
+    // 33 приостановленный ребенок
+    // 37 приостановленный идентифицированный
+    // 36 приостановленный пославший запрос на идентификацию
+    // 41 закрытый баннером стандартный
+    // 43 закрытый баннером ребенок
+    // 47 закрытый баннером идентифицированный
+    // 46 закрытый баннером пославший запрос на идентификацию
 
-#[derive(DbEnum, DB)]
-pub enum UserPermEnum {
-    Standart,              // стандартные полномочия
-    TraineeModerator,      // TRAINEE_MODERATOR
-    Moderator,             // MODERATOR
-    HighModerator,         // HIGH_MODERATOR
-    TeamleadModerator,     // TEAMLEAD_MODERATOR
-    TraineeManager,        // TRAINEE_MANAGER
-    Manager,               // MANAGER
-    HighManager,           // HIGH_MANAGER
-    TeamleadManager,       // TEAMLEAD_MANAGER
-    Advertiser,            // ADVERTISER
-    HighAdvertiser,        // HIGH_ADVERTISER
-    TeamleadAdvertiser,    // TEAMLEAD_ADVERTISER
-    Administrator,         // ADMINISTRATOR
-    HighAdministrator,     // HIGH_ADMINISTRATOR
-    TeamleadAdministrator, // TEAMLEAD_ADMINISTRATOR
-    Supermanager,          // SUPERMANAGER
-}
+///// Полномочия пользоватетеля
+    // 1 стандартные полномочия
+    // 10 TRAINEE_MODERATOR
+    // 13 MODERATOR
+    // 16 HIGH_MODERATOR
+    // 19 TEAMLEAD_MODERATOR
+    // 20 TRAINEE_MANAGER
+    // 23 MANAGER
+    // 26 HIGH_MANAGER
+    // 29 TEAMLEAD_MANAGER
+    // 30 ADVERTISER
+    // 34 HIGH_ADVERTISER
+    // 39 TEAMLEAD_ADVERTISER
+    // 40 ADMINISTRATOR
+    // 44 HIGH_ADMINISTRATOR
+    // 49 TEAMLEAD_ADMINISTRATOR
+    // 60 SUPERMANAGER
 
-#[derive(DbEnum, DB)]
-pub enum UserGenderEnum {
-    Man,     // Мужик
-    Fem,     // Баба
-}
+///// Пол пользоватетеля
+    // 'a' Мужик
+    // 'b' Баба
 
-#[derive(DbEnum, DB)]
-pub enum UserDeviceEnum {
-    De,      // Комп
-    Ph,      // Телефон
-}
+///// Оборудование пользоватетеля
+    // 'a' Комп
+    // 'b' Телефон
 
-#[derive(DbEnum, DB)]
-pub enum UserLanguageEnum {
-    Ru,      // Русский
-    En,      // Английский
-}
+///// Язык пользоватетеля
+    // 'a' Комп
+    // 'b' Телефон
 
 #[derive(Queryable, Identifiable)]
 #[table_name="users"]
@@ -73,12 +62,12 @@ pub struct User {
     pub first_name:    String,
     pub last_name:     String,
     pub phone:         String,
-    pub types:         UserTypesEnum,
-    pub gender:        UserGenderEnum,
-    pub device:        UserDeviceEnum,
-    pub language:      UserLanguageEnum,
-    pub perm:          UserPermEnum,
-    pub level:         i32,
+    pub types:         u8,
+    pub gender:        Char,
+    pub device:        Char,
+    pub language:      Char,
+    pub perm:          u8,
+    pub level:         u8,
     pub password:      String,
     pub have_link:     Option<String>,
     pub city:          Option<String>,
@@ -96,12 +85,12 @@ pub struct NewUser {
     pub first_name:    String,
     pub last_name:     String,
     pub phone:         String,
-    pub types:         UserTypesEnum,
-    pub gender:        UserGenderEnum,
-    pub device:        UserDeviceEnum,
-    pub language:      UserLanguageEnum,
-    pub perm:          UserPermEnum,
-    pub level:         i32,
+    pub types:         u8,
+    pub gender:        Char,
+    pub device:        Char,
+    pub language:      Char,
+    pub perm:          u8,
+    pub level:         u8,
     pub password:      String,
     pub birthday:      chrono::NaiveDateTime,
     pub last_activity: chrono::NaiveDateTime,

@@ -4,19 +4,19 @@ CREATE TABLE doc_lists (
     name            VARCHAR(100) NOT NULL,
     community_id    INT,
     creator_id      INT NOT NULL,
-    types           VARCHAR(6) NOT NULL,
+    types           CHAR NOT NULL,
     description     VARCHAR(500),
     created         TIMESTAMP NOT NULL,
     count           INT DEFAULT 0,
     repost          INT DEFAULT 0,
     copy            INT DEFAULT 0,
 
-    can_see_el      INT DEFAULT 1,
-    can_see_comment INT DEFAULT 1,
-    create_el       INT DEFAULT 7,
-    create_comment  INT DEFAULT 1,
-    copy_el         INT DEFAULT 1,
-    position        INT DEFAULT 0,
+    can_see_el      CHAR NOT NULL,
+    can_see_comment CHAR NOT NULL,
+    create_el       CHAR NOT NULL,
+    create_comment  CHAR NOT NULL,
+    copy_el         CHAR NOT NULL,
+    position        CHAR NOT NULL,
 
     CONSTRAINT fk_doc_lists_creator
         FOREIGN KEY(creator_id)
@@ -33,8 +33,8 @@ CREATE TABLE docs (
     community_id INT,
     creator_id   INT NOT NULL,
     list_id      INT NOT NULL,
-    types        VARCHAR(6) NOT NULL,
-    types_2      VARCHAR(6) NOT NULL,
+    types        CHAR NOT NULL,
+    types_2      CHAR NOT NULL,
     file         VARCHAR(500) NOT NULL,
     created      TIMESTAMP NOT NULL,
 
@@ -91,9 +91,9 @@ CREATE TABLE doc_list_perm (
     id            SERIAL PRIMARY KEY,
     user_id       INT NOT NULL,
     list_id       INT NOT NULL,
-    can_see_item  INT DEFAULT 0,
-    create_item   INT DEFAULT 0,
-    can_copy      INT DEFAULT 0,
+    can_see_item  CHAR NOT NULL,
+    create_item   CHAR NOT NULL,
+    can_copy      CHAR NOT NULL,
 
    CONSTRAINT fk_doc_list_perm_user
         FOREIGN KEY(user_id)

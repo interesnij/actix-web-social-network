@@ -1,50 +1,17 @@
 -- MyEnum (rust перечисление) = my_enum (тип поля postgre) = MyEnumMapping (схема)
 -- пользователи -------
 
-CREATE TYPE user_types_enum AS ENUM ('standart','child','identified','identified_send','deleted_standart','deleted_child','deleted_identified','deleted_identified_send','closed_standart','closed_child','closed_identified','closed_identified_send','suspended_standart','suspended_child','suspended_identified','suspended_identified_send','banner_standart','banner_child','banner_identified','banner_identified_send');
-CREATE TYPE user_perm_enum AS ENUM (
-  'standart',
-  'child',
-  'trainee_moderator',
-  'moderator',
-  'high_moderator',
-  'teamlead_moderator',
-  'trainee_manager',
-  'manager',
-  'high_manager',
-  'teamlead_manager',
-  'advertiser',
-  'high_advertiser',
-  'teamlead_advertiser',
-  'administrator',
-  'high_administrator',
-  'teamlead_administrator',
-  'supermanager'
-);
-CREATE TYPE user_gender_enum AS ENUM (
-  'Man',
-  'Fem'
-);
-CREATE TYPE user_device_enum AS ENUM (
-  'De',
-  'Ph'
-);
-CREATE TYPE user_language_enum AS ENUM (
-  'Ru',
-  'En'
-);
-
 CREATE TABLE users (
     id            SERIAL PRIMARY KEY,
     first_name    VARCHAR(100) NOT NULL,
     last_name     VARCHAR(100) NOT NULL,
     phone         VARCHAR(14) NOT NULL,
-    types         user_types_enum NOT NULL,
-    gender        user_gender_enum NOT NULL,
-    device        user_device_enum NOT NULL,
-    language      user_language_enum NOT NULL,
-    perm          user_perm_enum NOT NULL,
-    level         INT DEFAULT 100,
+    types         SMALLINT NOT NULL,
+    gender        CHAR NOT NULL,
+    device        CHAR NOT NULL,
+    language      CHAR NOT NULL,
+    perm          SMALLINT NOT NULL,
+    level         SMALLINT DEFAULT 100,
     password      VARCHAR(100) NOT NULL,
     have_link     VARCHAR(100),
     city          VARCHAR(100),
@@ -140,7 +107,7 @@ CREATE TABLE user_anketa (
 CREATE TABLE user_delete_anketa (
     id      SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
-    answer  VARCHAR(6),
+    answer  CHAR,
     other   VARCHAR(200),
 
     CONSTRAINT fk_user_delete_anketa
@@ -344,7 +311,7 @@ CREATE TABLE user_photo_list_position (
     user_id       INT NOT NULL,     -- Пользователь
     list          INT NOT NULL,     -- Фотоальбом
     position      INT DEFAULT 0, -- Порядок отображения
-    types         INT DEFAULT 1     -- 1 - открыт, 0 - недоступен (например, удален)
+    types         CHAR NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 -- Порядок следования списка записей -------
@@ -353,7 +320,7 @@ CREATE TABLE user_post_list_position (
     user_id      INT NOT NULL,     -- Пользователь
     list         INT NOT NULL,     -- Список записей
     position     INT DEFAULT 0, -- Порядок отображения
-    types        INT DEFAULT 1     -- 1 - открыт, 0 - недоступен (например, удален)
+    types        CHAR NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 -- Порядок следования списка аудиозаписей -------
@@ -362,7 +329,7 @@ CREATE TABLE user_music_list_position (
     user_id       INT NOT NULL,     -- Пользователь
     list          INT NOT NULL,     -- Список аудиозаписей
     position      INT DEFAULT 0,     -- Порядок отображения
-    types         INT DEFAULT 1      -- 1 - открыт, 0 - недоступен (например, удален)
+    types         CHAR NOT NULL      -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 -- Порядок следования списка товаров -------
@@ -371,7 +338,7 @@ CREATE TABLE user_good_list_position (
     user_id      INT NOT NULL,     -- Пользователь
     list         INT NOT NULL,     -- Список товаров
     position     INT DEFAULT 0, -- Порядок отображения
-    types        INT DEFAULT 1     -- 1 - открыт, 0 - недоступен (например, удален)
+    types        CHAR NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 -- Порядок следования списка видеозаписей -------
@@ -380,7 +347,7 @@ CREATE TABLE user_video_list_position (
     user_id      INT NOT NULL,     -- Пользователь
     list         INT NOT NULL,     -- Список видеозаписей
     position     INT DEFAULT 0, -- Порядок отображения
-    types        INT DEFAULT 1     -- 1 - открыт, 0 - недоступен (например, удален)
+    types        CHAR NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 -- Порядок следования списка опросов -------
@@ -389,7 +356,7 @@ CREATE TABLE user_survey_list_position (
     user_id      INT NOT NULL,     -- Пользователь
     list         INT NOT NULL,     -- Список опросов
     position     INT DEFAULT 0, -- Порядок отображения
-    types        INT DEFAULT 1     -- 1 - открыт, 0 - недоступен (например, удален)
+    types        CHAR NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 -- Порядок следования списка документов -------
@@ -398,7 +365,7 @@ CREATE TABLE user_doc_list_position (
     user_id        INT NOT NULL,     -- Пользователь
     list           INT NOT NULL,     -- Список документов
     position       INT DEFAULT 0, -- Порядок отображения
-    types          INT DEFAULT 1     -- 1 - открыт, 0 - недоступен (например, удален)
+    types          CHAR NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 ------------------
@@ -422,19 +389,19 @@ CREATE TABLE color_settings (
 CREATE TABLE user_private (
     id                SERIAL PRIMARY KEY,
     user_id           INT NOT NULL,
-    can_see_community INT DEFAULT 0, -- Кто видит сообщества
-    can_see_info      INT DEFAULT 0,      -- Кто видит информацию
-    can_see_friend    INT DEFAULT 0,    -- Кто видит друзей
-    can_send_message  INT DEFAULT 0,  -- Кто пишет сообщения
-    can_add_in_chat   INT DEFAULT 0,   -- Кто приглашает в беседы
-    can_see_post      INT DEFAULT 0,      -- Кто видит записи
-    can_see_photo     INT DEFAULT 0,     -- Кто видит фотографии
-    can_see_good      INT DEFAULT 0,      -- Кто видит товары
-    can_see_video     INT DEFAULT 0,     -- Кто видит видеозаписи
-    can_see_music     INT DEFAULT 0,     -- Кто видит аудиозапис
-    can_see_planner   INT DEFAULT 0,   -- Кто видит раздел планирования
-    can_see_doc       INT DEFAULT 0,       -- Кто видит документы
-    can_see_survey    INT DEFAULT 0,    -- Кто видит опросы
+    can_see_community CHAR NOT NULL, -- Кто видит сообщества
+    can_see_info      CHAR NOT NULL,      -- Кто видит информацию
+    can_see_friend    CHAR NOT NULL,    -- Кто видит друзей
+    can_send_message  CHAR NOT NULL,  -- Кто пишет сообщения
+    can_add_in_chat   CHAR NOT NULL,   -- Кто приглашает в беседы
+    can_see_post      CHAR NOT NULL,      -- Кто видит записи
+    can_see_photo     CHAR NOT NULL,     -- Кто видит фотографии
+    can_see_good      CHAR NOT NULL,      -- Кто видит товары
+    can_see_video     CHAR NOT NULL,     -- Кто видит видеозаписи
+    can_see_music     CHAR NOT NULL,     -- Кто видит аудиозапис
+    can_see_planner   CHAR NOT NULL,   -- Кто видит раздел планирования
+    can_see_doc       CHAR NOT NULL,       -- Кто видит документы
+    can_see_survey    CHAR NOT NULL,    -- Кто видит опросы
 
     CONSTRAINT fk_user_private
          FOREIGN KEY(user_id)

@@ -4,17 +4,17 @@ CREATE TABLE survey_lists (
     name          VARCHAR(100) NOT NULL,
     community_id  INT,
     creator_id    INT NOT NULL,
-    types         VARCHAR(6) NOT NULL,
+    types         CHAR NOT NULL,
     description   VARCHAR(500),
     created       TIMESTAMP NOT NULL,
     count         INT DEFAULT 0,
     repost        INT DEFAULT 0,
     copy          INT DEFAULT 0,
 
-    can_see_el    INT DEFAULT 1,
-    create_el     INT DEFAULT 7,
-    copy_el       INT DEFAULT 1,
-    position      INT DEFAULT 0,
+    can_see_el    CHAR NOT NULL,
+    create_el     CHAR NOT NULL,
+    copy_el       CHAR NOT NULL,
+    position      CHAR NOT NULL,
 
     CONSTRAINT fk_survey_lists_creator
         FOREIGN KEY(creator_id)
@@ -31,7 +31,7 @@ CREATE TABLE surveys (
     community_id  INT,
     creator_id    INT NOT NULL,
     list_id       INT NOT NULL,
-    types         VARCHAR(6) NOT NULL,
+    types         CHAR NOT NULL,
     image         VARCHAR(500),
     is_anonymous  BOOLEAN NOT NULL DEFAULT false,
     is_multiple   BOOLEAN NOT NULL DEFAULT false,
@@ -93,9 +93,9 @@ CREATE TABLE survey_list_perm (
     id            SERIAL PRIMARY KEY,
     user_id       INT NOT NULL,
     list_id       INT NOT NULL,
-    can_see_item  INT DEFAULT 0,
-    create_item   INT DEFAULT 0,
-    can_copy      INT DEFAULT 0,
+    can_see_item  CHAR NOT NULL,
+    create_item   CHAR NOT NULL,
+    can_copy      CHAR NOT NULL,
 
    CONSTRAINT fk_survey_list_perm_user
         FOREIGN KEY(user_id)

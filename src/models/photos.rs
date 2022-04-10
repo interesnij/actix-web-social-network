@@ -17,29 +17,36 @@ use crate::models::{
 
 
 /////// PhotoList //////
-pub enum PhotoListTypes{
-    Main,           // основной список
-    List,           // пользовательский список
-    Draft,          // список предложки
-    Deleted,        // удаленный список
-    Closed,         // закрытый список
-    ClosedMain,     // закрытый основной список
-    Suspended,      // замороженный список
-    SuspendedMain,  // замороженный основной список
-}
 
-pub enum PhotoListPerm{
-    AllCan,       // Все пользователи
-    Friends,      // Друзья
-    EachOther,    // Друзья и друзья друзей
-    FriendsBut,   // Друзья, кроме
-    SomeFriends,  // Некоторые друзья
-    Members,      // Подписчики
-    Creator,      // Только я / владелец сообщества
-    Admins,       // Администраторы
-    MembersBut,   // Подписчики, кроме
-    SomeMembers,  // Некоторые подписчики
-}
+////////// Тип списка
+    // 'a' основной список
+    // 'b' Фото со страницы
+    // 'c' Фото со стены
+    // 'd' пользовательский список
+    // 'e' список предложки
+    // 'g' удаленный список
+    // 'h' Фото со страницы
+    // 'i' Фото со стены
+    // 'k' закрытый список
+    // 'l' закрытый основной список
+    // 'm' Фото со страницы
+    // 'n' Фото со стены
+    // 'p' замороженный список
+    // 'r' замороженный основной список
+    // 's' Фото со страницы
+    // 't' Фото со стены
+
+//////////// Приватность списка
+    // 'a' Все пользователи
+    // 'b' Друзья
+    // 'c' Друзья и друзья друзей
+    // 'd' Друзья, кроме
+    // 'e' Некоторые друзья
+    // 'f' Подписчики
+    // 'g' Только я / владелец сообщества
+    // 'h' Администраторы
+    // 'i' Подписчики, кроме
+    // 'j' Некоторые подписчики
 
 /////// PhotoList //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
@@ -51,33 +58,24 @@ pub struct PhotoList {
     pub name:            String,
     pub community_id:    Option<i32>,
     pub creator_id:      i32,
-    pub types:           PhotoListTypes,
+    pub types:           Char,
     pub description:     Option<String>,
     pub created:         chrono::NaiveDateTime,
     pub count:           i32,
     pub repost:          i32,
     pub copy:            i32,
     pub position:        i32,
-    pub can_see_el:      PhotoListPerm,
-    pub can_see_comment: PhotoListPerm,
-    pub create_el:       PhotoListPerm,
-    pub create_comment:  PhotoListPerm,
-    pub copy_el:         PhotoListPerm,
+    pub can_see_el:      Char,
+    pub can_see_comment: Char,
+    pub create_el:       Char,
+    pub create_comment:  Char,
+    pub copy_el:         Char,
 }
 
 /////// Photo //////
-pub enum PhotoTypes{
-    COffer,         // Предложка сообщества
-    UOffer,         // Предложка пользователя
-    CreatorDraft,   // Черновик владельца
-    OfferDraft,     // Черновик предложки
-    Fixed,          // Закрепленый
-    Published,      // Опубликовано
-    Deleted,        // Удаленый
-    Closed,         // Закрыто модератором
-    DeletedCOffer,  // Удаленый предложенный в сообщество
-    DeletedUOffer,  // Удаленый предложенный у пользователя
-}
+    // 'a' Опубликовано
+    // 'b' Удаленый
+    // 'c' Закрыто модератором
 
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Community)]
@@ -86,13 +84,13 @@ pub enum PhotoTypes{
 #[table_name="photos"]
 pub struct Photo {
     pub id:              i32,
-    pub title:         Option<String>,
+    pub title:           Option<String>,
     pub community_id:    Option<i32>,
     pub creator_id:      i32,
     pub list_id:         i32,
-    pub types:           PhotoTypes,
-    pub preview:     Option<String>,
-    pub file:     Option<String>,
+    pub types:           Char,
+    pub preview:         Option<String>,
+    pub file:            Option<String>,
     pub description:     Option<String>,
     pub comment_enabled: Bool,
     pub votes_on:        Bool,
@@ -108,15 +106,14 @@ pub struct Photo {
 }
 
 /////// PhotoComment //////
-pub enum PhotoCommentTypes{
-    Published,      // Опубликованный
-    Edited,         // Изменённый
-    Draft,          // Черновик
-    Deleted,        // Удаленый
-    DeletedEdited,  // Изменённый Удаленый
-    Closed,         // Закрытый модератором
-    ClosedEdited,   // Закрытый Удаленый
-}
+
+    // 'a' Опубликованный
+    // 'b' Изменённый
+    // 'c' Удаленый
+    // 'd' Изменённый Удаленый
+    // 'e' Закрытый модератором
+    // 'f' Закрытый Удаленый
+
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Photo)]
 #[belongs_to(User)]
@@ -130,7 +127,7 @@ pub struct PhotoComment {
     pub parent_id:  Option<i32>,
     pub content:    Option<String>,
     pub attach:     Option<String>,
-    pub types:      PhotoCommentTypes,
+    pub types:      Char,
     pub created:    chrono::NaiveDateTime,
     pub liked:      i32,
     pub disliked:   i32,
@@ -160,11 +157,11 @@ pub struct CommunityPhotoListCollection {
 }
 
 /////// PhotoListPerm //////
-pub enum PhotoListPermTypes{
-    NoValue,    // Нет значения
-    Enable,     // Активно
-    Disable,    // Не активно
-}
+
+    // 'c' Нет значения
+    // 'a' Активно
+    // 'b' Не активно
+
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
 #[belongs_to(PhotoList)]
@@ -173,9 +170,9 @@ pub struct PhotoListPerm {
     pub id:              i32,
     pub user_id:         i32,
     pub list_id:         i32,
-    pub can_see_item:    PhotoListPermTypes,
-    pub can_see_comment: PhotoListPermTypes,
-    pub create_item:     PhotoListPermTypes,
-    pub create_comment:  PhotoListPermTypes,
-    pub can_copy:        PhotoListPermTypes,
+    pub can_see_item:    Char,
+    pub can_see_comment: Char,
+    pub create_item:     Char,
+    pub create_comment:  Char,
+    pub can_copy:        Char,
 }

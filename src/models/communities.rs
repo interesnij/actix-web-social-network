@@ -58,30 +58,31 @@ pub struct NewCommunitySubCategories {
     pub position:    i32,
 }
 
+/////// Community //////
 
-pub enum CommunityTypes {
-    Private,           // приватное сообщество
-    Close,             // закрытое сообщество
-    Public,            // публичное сообщество
-    DeletedPublic,     // удаленное публичное
-    DeletedPrivate,    // удаленное приватное
-    DeletedClose,      // удаленное закрытое
-    BannerPublic,      // баннер публичный
-    BannerPrivate,     // баннер приватный
-    BannerClose,       // баннер закрытый
-    ClosedPublic,      // заблокированное публичное
-    ClosedPrivate,     // заблокированное приватное
-    ClosedClose,       // заблокированное закрытое
-    SuspendedPublic,   // приостановленный стандартный
-    SuspendedPrivate,  // приостановленный ребенок
-    SuspendedClose,    // приостановленный идентифицированный
+/////// Тип сообщества //////
+    // 1 приватное сообщество
+    // 2 закрытое сообщество
+    // 3 публичное сообщество
+    // 13 удаленное публичное
+    // 11 удаленное приватное
+    // 12 удаленное закрытое
+    // 23 баннер публичный
+    // 21 баннер приватный
+    // 22 баннер закрытый
+    // 33 заблокированное публичное
+    // 31 заблокированное приватное
+    // 32 заблокированное закрытое
+    // 43 приостановленное публичное
+    // 41 приостановленное приватное
+    // 42 приостановленное закрытое
 }
 
-pub enum CommunityPerm {
-    Standart,          // стандартное сообщество
-    Child,             // детское сообщество
-    IdentifiedSend,    // подавшее на идентификацию сообщество
-    Identified,        // идентификацированное сообщество
+/////// Статус сообщества //////
+    // 'a' стандартное сообщество
+    // 'b' детское сообщество
+    // 'c' подавшее на идентификацию сообщество
+    // 'd' идентификацированное сообщество
 }
 
 /////// Community //////
@@ -94,9 +95,9 @@ pub struct Community {
     pub name:        String,
     pub description: Option<String>,
     pub status:      Option<String>,
-    pub types:       CommunityTypes,
-    pub perm:        CommunityPerm,
-    pub level:       i32,
+    pub types:       u8,
+    pub perm:        Char,
+    pub level:       u8,
     pub have_link:   Option<String>,
     pub b_avatar:    Option<String>,
     pub s_avatar:    Option<String>,
@@ -135,11 +136,11 @@ pub struct NewCommunityMembership {
     pub visited:          i32,
 }
 
-pub enum CommunityMemberPermTypes{
-    NoValue,    // Нет значения
-    Enable,     // Активно
-    Disable,    // Не активно
-}
+/////// Исключения/ включения подписчиков сообщества //////
+    // 'c' Нет значения
+    // 'a' Активно
+    // 'b' Не активно
+
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(CommunityMembership)]
 #[table_name="community_ie_settings"]
@@ -147,40 +148,40 @@ pub struct CommunityMemberPerm {
     pub id:                      i32,
     pub user_id:                 i32,
 
-    pub can_see_info:            CommunityMemberPermTypes,
-    pub can_see_member:          CommunityMemberPermTypes,
-    pub can_send_message:        CommunityMemberPermTypes,
-    pub can_see_doc:             CommunityMemberPermTypes,
-    pub can_see_music:           CommunityMemberPermTypes,
-    pub can_see_survey:          CommunityMemberPermTypes,
-    pub can_see_post:            CommunityMemberPermTypes,
-    pub can_see_post_comment:    CommunityMemberPermTypes,
-    pub can_see_photo:           CommunityMemberPermTypes,
-    pub can_see_photo_comment:   CommunityMemberPermTypes,
-    pub can_see_good:            CommunityMemberPermTypes,
-    pub can_see_good_comment:    CommunityMemberPermTypes,
-    pub can_see_video:           CommunityMemberPermTypes,
-    pub can_see_video_comment:   CommunityMemberPermTypes,
-    pub can_see_planner:         CommunityMemberPermTypes,
-    pub can_see_planner_comment: CommunityMemberPermTypes,
+    pub can_see_info:            Char,
+    pub can_see_member:          Char,
+    pub can_send_message:        Char,
+    pub can_see_doc:             Char,
+    pub can_see_music:           Char,
+    pub can_see_survey:          Char,
+    pub can_see_post:            Char,
+    pub can_see_post_comment:    Char,
+    pub can_see_photo:           Char,
+    pub can_see_photo_comment:   Char,
+    pub can_see_good:            Char,
+    pub can_see_good_comment:    Char,
+    pub can_see_video:           Char,
+    pub can_see_video_comment:   Char,
+    pub can_see_planner:         Char,
+    pub can_see_planner_comment: Char,
 
-    pub can_add_post:            CommunityMemberPermTypes,
-    pub can_add_photo:           CommunityMemberPermTypes,
-    pub can_add_good:            CommunityMemberPermTypes,
-    pub can_add_video:           CommunityMemberPermTypes,
-    pub can_add_planner:         CommunityMemberPermTypes,
-    pub can_add_doc:             CommunityMemberPermTypes,
-    pub can_add_music:           CommunityMemberPermTypes,
-    pub can_add_survey:          CommunityMemberPermTypes,
+    pub can_add_post:            Char,
+    pub can_add_photo:           Char,
+    pub can_add_good:            Char,
+    pub can_add_video:           Char,
+    pub can_add_planner:         Char,
+    pub can_add_doc:             Char,
+    pub can_add_music:           Char,
+    pub can_add_survey:          Char,
 
-    pub can_create_post:         CommunityMemberPermTypes,
-    pub can_create_photo:        CommunityMemberPermTypes,
-    pub can_create_good:         CommunityMemberPermTypes,
-    pub can_create_video:        CommunityMemberPermTypes,
-    pub can_create_planner:      CommunityMemberPermTypes,
-    pub can_create_doc:          CommunityMemberPermTypes,
-    pub can_create_music:        CommunityMemberPermTypes,
-    pub can_create_survey:       CommunityMemberPermTypes,
+    pub can_create_post:         Char,
+    pub can_create_photo:        Char,
+    pub can_create_good:         Char,
+    pub can_create_video:        Char,
+    pub can_create_planner:      Char,
+    pub can_create_doc:          Char,
+    pub can_create_music:        Char,
+    pub can_create_survey:       Char,
 }
 
 #[derive(Debug, Queryable, Serialize, Identifiable)]
@@ -200,34 +201,33 @@ pub struct CommunityInfo {
     pub survey:       i32,
 }
 
-pub enum CommunityPrivate{
-    AllCan,          // Все пользователи
-    Memberships,     // Подписчики
-    Creator,         // Создатель
-    MembershipsBut,  // Подписчики, кроме
-    SomeMemberships, // Некоторые подписчики
-    Staff,           // Персонал
-}
+    // 'a' Все пользователи
+    // 'b' Подписчики
+    // 'c' Создатель
+    // 'd' Подписчики, кроме
+    // 'e' Некоторые подписчики
+    // 'f' Персонал
+
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Community)]
 #[table_name="community_private"]
 pub struct CommunityPrivate {
     pub id:               i32,
     pub community_id:     i32,
-    pub can_see_member:   CommunityPrivate,
-    pub can_see_info:     CommunityPrivate,
-    pub can_send_message: CommunityPrivate,
-    pub can_see_post:     CommunityPrivate,
-    pub can_see_photo:    CommunityPrivate,
-    pub can_see_good:     CommunityPrivate,
-    pub can_see_video:    CommunityPrivate,
-    pub can_see_music:    CommunityPrivate,
-    pub can_see_planner:  CommunityPrivate,
-    pub can_see_doc:      CommunityPrivate,
-    pub can_see_survey:   CommunityPrivate,
-    pub can_see_settings: CommunityPrivate,
-    pub can_see_log:      CommunityPrivate,
-    pub can_see_stat:     CommunityPrivate,
+    pub can_see_member:   Char,
+    pub can_see_info:     Char,
+    pub can_send_message: Char,
+    pub can_see_post:     Char,
+    pub can_see_photo:    Char,
+    pub can_see_good:     Char,
+    pub can_see_video:    Char,
+    pub can_see_music:    Char,
+    pub can_see_planner:  Char,
+    pub can_see_doc:      Char,
+    pub can_see_survey:   Char,
+    pub can_see_settings: Char,
+    pub can_see_log:      Char,
+    pub can_see_stat:     Char,
 }
 
 #[derive(Debug, Queryable, Serialize, Identifiable)]
@@ -333,7 +333,7 @@ pub struct CommunityPhotoListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    i32, // 1 - open, 2 - close
+    pub types:    Char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="community_photo_list_position"]
@@ -341,7 +341,7 @@ pub struct NewCommunityPhotoListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    i32,
+    pub types:    Char,
 }
 
 /////// CommunityPostListPosition //////
@@ -351,7 +351,7 @@ pub struct CommunityPostListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    i32, // 1 - open, 2 - close
+    pub types:    Char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="community_post_list_position"]
@@ -359,7 +359,7 @@ pub struct NewCommunityPostListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    i32,
+    pub types:    Char,
 }
 
 /////// CommunityMusicListPosition //////
@@ -369,7 +369,7 @@ pub struct CommunityMusicListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    i32, // 1 - open, 2 - close
+    pub types:    Char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="community_music_list_position"]
@@ -377,7 +377,7 @@ pub struct NewCommunityMusicListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    i32,
+    pub types:    Char,
 }
 
 /////// CommunityGoodListPosition //////
@@ -387,7 +387,7 @@ pub struct CommunityGoodListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    i32, // 1 - open, 2 - close
+    pub types:    Char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="community_good_list_position"]
@@ -395,7 +395,7 @@ pub struct NewCommunityGoodListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    i32,
+    pub types:    Char,
 }
 
 /////// CommunityVideoListPosition //////
@@ -405,7 +405,7 @@ pub struct CommunityVideoListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    i32, // 1 - open, 2 - close
+    pub types:    Char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="community_video_list_position"]
@@ -413,7 +413,7 @@ pub struct NewCommunityVideoListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    i32,
+    pub types:    Char,
 }
 
 /////// CommunitySurveyListPosition //////
@@ -423,7 +423,7 @@ pub struct CommunitySurveyListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    i32, // 1 - open, 2 - close
+    pub types:    Char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="community_survey_list_position"]
@@ -431,7 +431,7 @@ pub struct NewCommunitySurveyListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    i32,
+    pub types:    Char,
 }
 
 /////// CommunityDocListPosition //////
@@ -441,7 +441,7 @@ pub struct CommunityDocListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    i32, // 1 - open, 2 - close
+    pub types:    Char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="community_doc_list_position"]
@@ -449,5 +449,5 @@ pub struct NewCommunityDocListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    i32,
+    pub types:    Char,
 }

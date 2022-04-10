@@ -24,7 +24,7 @@ CREATE TABLE good_lists (
     name            VARCHAR(100) NOT NULL,
     community_id    INT,
     creator_id      INT NOT NULL,
-    types           VARCHAR(6) NOT NULL,
+    types           CHAR NOT NULL,
     description     VARCHAR(500),
     created         TIMESTAMP NOT NULL,
     count           INT DEFAULT 0,
@@ -32,11 +32,11 @@ CREATE TABLE good_lists (
     copy            INT DEFAULT 0,
     position        INT DEFAULT 0,
 
-    can_see_el      INT DEFAULT 1,
-    can_see_comment INT DEFAULT 1,
-    create_el       INT DEFAULT 7,
-    create_comment  INT DEFAULT 1,
-    copy_el         INT DEFAULT 1,
+    can_see_el      CHAR NOT NULL,
+    can_see_comment CHAR NOT NULL,
+    create_el       CHAR NOT NULL,
+    create_comment  CHAR NOT NULL,
+    copy_el         CHAR NOT NULL,
 
     CONSTRAINT fk_good_lists_creator
         FOREIGN KEY(creator_id)
@@ -55,7 +55,7 @@ CREATE TABLE goods (
     creator_id      INT NOT NULL,
     list_id         INT NOT NULL,
     price           INT,
-    types           VARCHAR(6) NOT NULL,
+    types           CHAR NOT NULL,
     description     VARCHAR(500),
     image           VARCHAR(500),
     comment_enabled BOOLEAN NOT NULL DEFAULT true,
@@ -95,7 +95,7 @@ CREATE TABLE good_comments (
     parent_id   INT,
     content     VARCHAR(1000),
     attach      VARCHAR(200),
-    types       VARCHAR(6) NOT NULL,
+    types       CHAR NOT NULL,
     created     TIMESTAMP NOT NULL,
 
     liked       INT DEFAULT 0,
@@ -156,11 +156,11 @@ CREATE TABLE good_list_perm (
     id              SERIAL PRIMARY KEY,
     user_id         INT NOT NULL,
     list_id         INT NOT NULL,
-    can_see_item    INT DEFAULT 0,
-    can_see_comment INT DEFAULT 0,
-    create_item     INT DEFAULT 0,
-    create_comment  INT DEFAULT 0,
-    can_copy        INT DEFAULT 0,
+    can_see_item    CHAR NOT NULL,
+    can_see_comment CHAR NOT NULL,
+    create_item     CHAR NOT NULL,
+    create_comment  CHAR NOT NULL,
+    can_copy        CHAR NOT NULL,
 
    CONSTRAINT fk_good_list_perm_user
         FOREIGN KEY(user_id)

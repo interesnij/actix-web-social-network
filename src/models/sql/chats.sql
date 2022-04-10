@@ -1,23 +1,23 @@
 
 CREATE TABLE chats (
     id                SERIAL PRIMARY KEY,
-    name              VARCHAR(100),                    -- название
-    types             VARCHAR(6) NOT NULL,          -- тип (перечень выше)
-    image             VARCHAR(500),                      -- ссылка на аватар
-    description       VARCHAR(500),                      -- описание
+    name              VARCHAR(100),              -- название
+    types             SMALLINT NOT NULL,             -- тип (перечень выше)
+    image             VARCHAR(500),              -- ссылка на аватар
+    description       VARCHAR(500),              -- описание
     community_id      INT,                       -- id сообщества
     creator_id        INT NOT NULL,              -- id создателя
     position          INT DEFAULT 0,             -- порядковый номер
     members           INT DEFAULT 0,             -- кол-во участников
     created           TIMESTAMP NOT NULL,        -- когда создан
 
-    can_add_members   INT DEFAULT 1,                       -- кто добавляет участников
-    can_fix_item      INT DEFAULT 3,                       -- кто закрепляет сообщения чата
-    can_mention       INT DEFAULT 1,                       -- кто упоминает о чате
-    can_add_admin     INT DEFAULT 3,                       -- кто работает с админами
-    can_add_design    INT DEFAULT 2,                       -- кто работает с дизайном
-    can_see_settings  INT DEFAULT 2,                       -- кто видит настройки
-    can_see_log       INT DEFAULT 2,                       -- кто видит логи чата
+    can_add_members   CHAR NOT NULL,                       -- кто добавляет участников
+    can_fix_item      CHAR NOT NULL,                       -- кто закрепляет сообщения чата
+    can_mention       CHAR NOT NULL,                       -- кто упоминает о чате
+    can_add_admin     CHAR NOT NULL,                       -- кто работает с админами
+    can_add_design    CHAR NOT NULL,                       -- кто работает с дизайном
+    can_see_settings  CHAR NOT NULL,                       -- кто видит настройки
+    can_see_log       CHAR NOT NULL,                       -- кто видит логи чата
 
     CONSTRAINT fk_chat_creator                   -- связь с создателем
         FOREIGN KEY(creator_id)
@@ -32,7 +32,7 @@ CREATE TABLE chat_users (
     id                SERIAL PRIMARY KEY,            -- id объекта
     user_id           INT NOT NULL,                  -- id пользователя
     chat_id           INT NOT NULL,                  -- id чата
-    types             VARCHAR(6) NOT NULL,              -- тип
+    types             CHAR NOT NULL,                 -- тип
     is_administrator  BOOLEAN NOT NULL DEFAULT false,-- админ ли?
     created           TIMESTAMP NOT NULL,            -- создано
     no_disturb        TIMESTAMP,                     -- не беспокоить до...
@@ -50,13 +50,13 @@ CREATE TABLE chat_ie_settings (
     id                SERIAL PRIMARY KEY,     -- id объекта
     user_id           INT NOT NULL,           -- id пользователя
 
-    can_add_in_chat   INT NOT NULL DEFAULT 0, -- кто добавляет участников
-    can_add_fix       INT NOT NULL DEFAULT 0, -- кто закрепляет сообщения
-    can_send_mention  INT NOT NULL DEFAULT 0, -- кто упоминает о чате
-    can_add_admin     INT NOT NULL DEFAULT 0, -- кто работает с админами
-    can_add_design    INT NOT NULL DEFAULT 0, -- кто работает с дизайном
-    can_see_settings  INT NOT NULL DEFAULT 0, -- кто видит настройки
-    can_see_log       INT NOT NULL DEFAULT 0, -- кто видит логи
+    can_add_in_chat   CHAR NOT NULL,          -- кто добавляет участников
+    can_add_fix       CHAR NOT NULL,          -- кто закрепляет сообщения
+    can_send_mention  CHAR NOT NULL,          -- кто упоминает о чате
+    can_add_admin     CHAR NOT NULL,          -- кто работает с админами
+    can_add_design    CHAR NOT NULL,          -- кто работает с дизайном
+    can_see_settings  CHAR NOT NULL,          -- кто видит настройки
+    can_see_log       CHAR NOT NULL,          -- кто видит логи
 
     CONSTRAINT fk_chat_ie_settings            -- связь с пользователем
         FOREIGN KEY(user_id)
@@ -71,11 +71,11 @@ CREATE TABLE messages (
     sticker_id   INT,                           -- id стикера
     repost_id    INT,                           -- id поста
     created      TIMESTAMP NOT NULL,            -- когда создано
-    content      VARCHAR(5000),                          -- текст
+    content      VARCHAR(5000),                 -- текст
     unread       BOOLEAN NOT NULL DEFAULT true, -- не прочитано?
-    types        VARCHAR NOT NULL,              -- тип
-    attach       VARCHAR(200),                          -- прикрепленные объекты
-    voice        VARCHAR(500),                          -- ссылка на голосовое
+    types        SMALLINT NOT NULL,                     -- тип
+    attach       VARCHAR(200),                  -- прикрепленные объекты
+    voice        VARCHAR(500),                  -- ссылка на голосовое
 
     CONSTRAINT fk_message_creator               -- связь с создателем
         FOREIGN KEY(creator_id)

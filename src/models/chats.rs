@@ -18,39 +18,37 @@ use crate::models::{
 };
 
 
-/////// Chat //////
-enum ChatTypes {
-    Public,             // публичный чат
-    Private,            // приватный
-    Manager,            // менеджерский
-    Group,              //  групповой
-    DeletedPublic,      // удаленный публичный
-    DeletedPrivate,     // удаленный приватный
-    DeletedManager,     // удаленный менеджерский
-    DeletedGroup,       // удаленный групповой
-    ClosedPublic,       // закрытый публичный
-    ClosedPrivate,      // закрытый приватный
-    ClosedManager,      // закрытый менеджерский
-    ClosedGroup,        // закрытый групповой
-    Support1,           // Техподдержка 1 уровня
-    Support2,           // Техподдержка 2 уровня
-    Support3,           // Техподдержка 3 уровня
-    Support4,           // Техподдержка 4 уровня
-    Support5,           // Техподдержка 5 уровня
-    DeletedSupport1,    // удаленная техподдержка 1 уровня
-    DeletedSupport2,    // удаленная техподдержка 2 уровня
-    DeletedSupport3,    // удаленная техподдержка 3 уровня
-    DeletedSupport4,    // удаленная техподдержка 4 уровня
-    DeletedSupport5,    // удаленная техподдержка 5 уровня
-}
+/////// Тип чата //////
+    // 1 публичный чат
+    // 2 приватный
+    // 3 менеджерский
+    // 4 групповой
+    // 11 Техподдержка 1 уровня
+    // 12 Техподдержка 2 уровня
+    // 13 Техподдержка 3 уровня
+    // 14 Техподдержка 4 уровня
+    // 15 Техподдержка 5 уровня
 
-enum ChatPerms {
-    AllCan,           // Все участники
-    Creator,          // Создатель
-    CreatorAndAdmins, // Создатель и админы
-    MembersBut,       // Участники кроме
-    SomeMembersBut,   // Некоторые участники
-}
+    // 21 удаленный публичный
+    // 22 удаленный приватный
+    // 23 удаленный менеджерский
+    // 24 удаленный групповой
+    // 31 закрытый публичный
+    // 32 закрытый приватный
+    // 33 закрытый менеджерский
+    // 34 закрытый групповой
+    // 41 удаленная техподдержка 1 уровня
+    // 42 удаленная техподдержка 2 уровня
+    // 43 удаленная техподдержка 3 уровня
+    // 44 удаленная техподдержка 4 уровня
+    // 45 удаленная техподдержка 5 уровня
+
+/////// Приватность чата //////
+    // 'a' Все участники
+    // 'b' Создатель
+    // 'c' Создатель и админы
+    // 'd' Участники кроме
+    // 'e' Некоторые участники
 
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
@@ -59,7 +57,7 @@ enum ChatPerms {
 pub struct Chat {
     pub id:                 i32,
     pub name:               String,
-    pub types:              ChatTypes,
+    pub types:              u8,
     pub image:              Option<String>,
     pub description:        Option<String>,
     pub community_id:       Option<i32>,
@@ -67,21 +65,21 @@ pub struct Chat {
     pub position:           i32,
     pub members:            i32,
     pub created:            chrono::NaiveDateTime,
-    pub can_add_members:    i32,
-    pub can_fix_item:       i32,
-    pub can_mention:        i32,
-    pub can_add_admin:      i32,
-    pub can_add_design:     i32,
-    pub can_see_settings:   i32,
-    pub can_see_log:        i32,
+    pub can_add_members:    Char,
+    pub can_fix_item:       Char,
+    pub can_mention:        Char,
+    pub can_add_admin:      Char,
+    pub can_add_design:     Char,
+    pub can_see_settings:   Char,
+    pub can_see_log:        Char,
 }
 
 /////// ChatUsers //////
-enum ChatUsersTypes {
-    Active,    // Действующий участник чата
-    Left,      // Вышедший
-    Deleted,   // Удаленный админом
-}
+
+/////// Тип участника чата //////
+    // 'a' Действующий участник чата
+    // 'b' Вышедший
+    // 'c' Удаленный админом
 
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
@@ -91,49 +89,45 @@ pub struct ChatUsers {
     pub id:               i32,
     pub user_id:          i32,
     pub chat_id:          i32,
-    pub types:            ChatUsersTypes,
+    pub types:            Char,
     pub is_administrator: Bool,
     pub created:          chrono::NaiveDateTime,
     pub no_disturb:       chrono::NaiveDateTime,
 }
 
 /////// ChatPerm //////
-pub enum ChatPermTypes{
-    NoValue,    // Нет значения
-    Enable,     // Активно
-    Disable,    // Не активно
-}
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(ChatUsers)]
 #[table_name="chat_ie_settings"]
 pub struct ChatPerm {
     pub id:               i32,
     pub user_id:          i32,
-    pub can_add_in_chat:  ChatPermTypes,
-    pub can_add_fix:      ChatPermTypes,
-    pub can_add_admin:    ChatPermTypes,
-    pub can_add_design:   ChatPermTypes,
-    pub can_see_settings: ChatPermTypes,
-    pub can_see_log:      ChatPermTypes,
+    pub can_add_in_chat:  Char,
+    pub can_add_fix:      Char,
+    pub can_add_admin:    Char,
+    pub can_add_design:   Char,
+    pub can_see_settings: Char,
+    pub can_see_log:      Char,
 }
 
 /////// Message //////
-enum MessageTypes {
-    Published,               // Опубликовано
-    Edited,                 // Редактировано
-    Deleted,                // Удалено
-    Closed,                 // Закрыто
-    Draft,                  // Черновик
-    Manager,                // Статусное
-    FixedPublished,         // Опубликовано закрепленное
-    FixedEdited,            // Редактировано закрепленное
-    DeletedEdited,          // Удалено редактированное
-    ClosedEdited,           // Закрыто редактированное
-    DeletedFixedPublished,  // Удалено опубликованное закрепленное
-    ClosedFixedPublished,   // Закрыто опубликованное закрепленное
-    DeletedFixedEdited,     // Удалено редактированное закрепленное
-    ClosedFixedEdited,      // Закрыто редактированное закрепленное
-}
+
+/////// Тип сообщения //////
+    // 1 Опубликовано
+    // 2 Редактировано
+    // 3 Удалено
+    // 4 Закрыто
+    // 5 Черновик
+    // 6 Статусное
+    // 7 Опубликовано закрепленное
+    // 17 Редактировано закрепленное
+    // 22 Удалено редактированное
+    // 24 Закрыто редактированное
+    // 26 Удалено опубликованное закрепленное
+    // 28 Закрыто опубликованное закрепленное
+    // 30 Удалено редактированное закрепленное
+    // 32 Закрыто редактированное закрепленное
+
 
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Chat)]
@@ -151,7 +145,7 @@ pub struct Message {
     pub created:       chrono::NaiveDateTime,
     pub content:       Option<String>,
     pub unread:        Bool,
-    pub typed:         MessageTypes,
+    pub typed:         u8,
     pub attach:        Option<String>,
     pub voice:         Option<String>,
 }

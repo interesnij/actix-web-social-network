@@ -2,8 +2,8 @@ CREATE TABLE moderated (
     id            SERIAL PRIMARY KEY,
     description   VARCHAR(500),
     verified      BOOLEAN NOT NULL DEFAULT false,
-    status        INT DEFAULT 0,
-    types         VARCHAR(6) NOT NULL,
+    status        CHAR NOT NULL,
+    types         CHAR NOT NULL,
     object_id     INT NOT NULL
 );
 
@@ -12,7 +12,7 @@ CREATE TABLE moderated_reports (
     reporter_id         INT NOT NULL,
     moderated_object_id INT NOT NULL,
     description         VARCHAR(500),
-    types               VARCHAR(6) NOT NULL,
+    types               CHAR NOT NULL,
 
     CONSTRAINT fk_moderated_reports_reporter
         FOREIGN KEY(reporter_id)
@@ -28,9 +28,9 @@ CREATE TABLE moderated_penalties (
     manager_id          INT NOT NULL,
     moderated_object_id INT NOT NULL,
     expiration          TIMESTAMP,
-    types               VARCHAR(6) NOT NULL,
+    types               CHAR NOT NULL,
     object_id           INT NOT NULL,
-    status              INT NOT NULL,
+    status              CHAR NOT NULL,
 
     CONSTRAINT fk_moderated_penalties_reporter
         FOREIGN KEY(manager_id)
@@ -46,9 +46,9 @@ CREATE TABLE moderated_logs (
     id              SERIAL PRIMARY KEY,
     manager_id      INT NOT NULL,
     object_id       INT NOT NULL,
-    action          INT NOT NULL,
+    action          CHAR NOT NULL,
     description     VARCHAR(500),
-    types           VARCHAR(6) NOT NULL,
+    types           CHAR NOT NULL,
     created         TIMESTAMP NOT NULL,
     time_to_suspend TIMESTAMP,
 
