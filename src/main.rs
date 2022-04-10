@@ -21,15 +21,11 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         let static_files = Files::new("/static", "static/").show_files_listing();
         let media_files = Files::new("/media", "media/").show_files_listing();
-        let cors = Cors::default();
+        //let cors = Cors::default();
+        let private_key = actix_web::cookie::Key::generate();
+
         App::new()
-            //.wrap(
-            //    CookieSession::signed(&[0; 32])
-            //        .domain("151.248.120.138:9015")
-            //        .name("actix_session")
-            //        .path("/")
-            //        .secure(true)
-            //)
+            .wrap(RedisSession::new("127.0.0.1:6379", private_key.master()))
             .service(static_files)
             .service(media_files)
             .configure(routes)
