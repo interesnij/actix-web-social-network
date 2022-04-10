@@ -65,13 +65,13 @@ pub struct Chat {
     pub position:           i32,
     pub members:            i32,
     pub created:            chrono::NaiveDateTime,
-    pub can_add_members:    Char,
-    pub can_fix_item:       Char,
-    pub can_mention:        Char,
-    pub can_add_admin:      Char,
-    pub can_add_design:     Char,
-    pub can_see_settings:   Char,
-    pub can_see_log:        Char,
+    pub can_add_members:    char,
+    pub can_fix_item:       char,
+    pub can_mention:        char,
+    pub can_add_admin:      char,
+    pub can_add_design:     char,
+    pub can_see_settings:   char,
+    pub can_see_log:        char,
 }
 
 /////// ChatUsers //////
@@ -89,7 +89,7 @@ pub struct ChatUsers {
     pub id:               i32,
     pub user_id:          i32,
     pub chat_id:          i32,
-    pub types:            Char,
+    pub types:            char,
     pub is_administrator: Bool,
     pub created:          chrono::NaiveDateTime,
     pub no_disturb:       chrono::NaiveDateTime,
@@ -102,12 +102,12 @@ pub struct ChatUsers {
 pub struct ChatPerm {
     pub id:               i32,
     pub user_id:          i32,
-    pub can_add_in_chat:  Char,
-    pub can_add_fix:      Char,
-    pub can_add_admin:    Char,
-    pub can_add_design:   Char,
-    pub can_see_settings: Char,
-    pub can_see_log:      Char,
+    pub can_add_in_chat:  char,
+    pub can_add_fix:      char,
+    pub can_add_admin:    char,
+    pub can_add_design:   char,
+    pub can_see_settings: char,
+    pub can_see_log:      char,
 }
 
 /////// Message //////

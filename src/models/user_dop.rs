@@ -158,7 +158,7 @@ enum UserDeleteAnketaEnum {
 pub struct UserDeleteAnketa {
     pub id:      i32,
     pub user_id: i32,
-    pub answer:  Char,
+    pub answer:  char,
     pub other:   Option<String>,
 }
 
@@ -189,8 +189,8 @@ pub struct UserDeleteAnketa {
 pub struct UserLoveStatus {
     pub id:             i32,
     pub user_id:        i32,
-    pub male_status:    Char,
-    pub female_status:  Char,
+    pub male_status:    char,
+    pub female_status:  char,
 }
 
 /////// UserPartnerOne //////
@@ -329,14 +329,14 @@ pub struct NewUserBlocks {
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 pub struct ListUC {
     pub id:     i32,
-    pub types:  Char,
+    pub types:  char,
     pub name:   String,
     pub owner:  i32,
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="list_uc"]
 pub struct NewListUC {
-    pub types: Char,
+    pub types: char,
     pub name:  String,
     pub owner: i32,
 }
@@ -419,7 +419,7 @@ pub struct UserPhotoListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    Char, // 1 - open, 2 - close
+    pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_photo_list_position"]
@@ -427,7 +427,7 @@ pub struct NewUserPhotoListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    Char,
+    pub types:    char,
 }
 
 /////// UserPostListPosition //////
@@ -437,7 +437,7 @@ pub struct UserPostListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    Char, // 1 - open, 2 - close
+    pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_post_list_position"]
@@ -445,7 +445,7 @@ pub struct NewUserPostListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    Char,
+    pub types:    char,
 }
 
 /////// UserMusicListPosition //////
@@ -455,7 +455,7 @@ pub struct UserMusicListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    Char, // 1 - open, 2 - close
+    pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_music_list_position"]
@@ -463,7 +463,7 @@ pub struct NewUserMusicListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    Char,
+    pub types:    char,
 }
 
 /////// UserGoodListPosition //////
@@ -473,7 +473,7 @@ pub struct UserGoodListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    Char, // 1 - open, 2 - close
+    pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_good_list_position"]
@@ -481,7 +481,7 @@ pub struct NewUserGoodListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    Char,
+    pub types:    char,
 }
 
 /////// UserVideoListPosition //////
@@ -491,7 +491,7 @@ pub struct UserVideoListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    Char, // 1 - open, 2 - close
+    pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_video_list_position"]
@@ -499,7 +499,7 @@ pub struct NewUserVideoListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    Char,
+    pub types:    char,
 }
 
 /////// UserSurveyListPosition //////
@@ -509,7 +509,7 @@ pub struct UserSurveyListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    Char, // 1 - open, 2 - close
+    pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_survey_list_position"]
@@ -517,7 +517,7 @@ pub struct NewUserSurveyListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    Char,
+    pub types:    char,
 }
 
 /////// UserDocListPosition //////
@@ -527,7 +527,7 @@ pub struct UserDocListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    Char, // 1 - open, 2 - close
+    pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_doc_list_position"]
@@ -535,7 +535,7 @@ pub struct NewUserDocListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    Char,
+    pub types:    char,
 }
 
 /////// UserPrivate //////
@@ -551,20 +551,20 @@ pub struct NewUserDocListPosition {
 #[belongs_to(User)]
 pub struct UserPrivate {
     pub id:                 i32,
-    pub user_id:            Char,
-    pub can_see_community:  Char,
-    pub can_see_info:       Char,
-    pub can_see_friend:     Char,
-    pub can_send_message:   Char,
-    pub can_add_in_chat:    Char,
-    pub can_see_post:       Char,
-    pub can_see_photo:      Char,
-    pub can_see_good:       Char,
-    pub can_see_video:      Char,
-    pub can_see_music:      Char,
-    pub can_see_planner:    Char,
-    pub can_see_doc:        Char,
-    pub can_see_survey:     Char,
+    pub user_id:            char,
+    pub can_see_community:  char,
+    pub can_see_info:       char,
+    pub can_see_friend:     char,
+    pub can_send_message:   char,
+    pub can_add_in_chat:    char,
+    pub can_see_post:       char,
+    pub can_see_photo:      char,
+    pub can_see_good:       char,
+    pub can_see_video:      char,
+    pub can_see_music:      char,
+    pub can_see_planner:    char,
+    pub can_see_doc:        char,
+    pub can_see_survey:     char,
 }
 
 /////// UserPopulateSmiles //////
