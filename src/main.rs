@@ -12,7 +12,7 @@ mod views;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    use actix_cors::Cors;
+    use actix_web::middleware::cors::Cors;
     use actix_files::Files;
     use crate::routes::routes;
     use actix_redis::RedisSession;
