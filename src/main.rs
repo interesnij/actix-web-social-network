@@ -30,9 +30,10 @@ async fn main() -> std::io::Result<()> {
             .allowed_headers(vec![header::AUTHORIZATION, header::ACCEPT])
             .allowed_header(header::CONTENT_TYPE)
             .max_age(3600);
-            
+
         App::new()
             .wrap(RedisSession::new("127.0.0.1:6379", private_key.master()))
+            .wrap(cors)
             .service(static_files)
             .service(media_files)
             .configure(routes)
