@@ -11,7 +11,7 @@ CREATE TABLE users (
     device        CHAR NOT NULL,
     language      CHAR NOT NULL,
     perm          SMALLINT NOT NULL,
-    level         SMALLINT DEFAULT 100,
+    level         SMALLINT NOT NULL DEFAULT 100,
     password      VARCHAR(100) NOT NULL,
     have_link     VARCHAR(100),
     city          VARCHAR(100),

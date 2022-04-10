@@ -460,7 +460,11 @@ table! {
         device -> Bpchar,
         language -> Bpchar,
         perm -> Int2,
+<<<<<<< HEAD
         level -> Nullable<Int2>,
+=======
+        level -> Int2, 
+>>>>>>> 3446212 (J)
         password -> Varchar,
         have_link -> Nullable<Varchar>,
         city -> Nullable<Varchar>,
