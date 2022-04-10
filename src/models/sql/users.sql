@@ -1,14 +1,70 @@
+-- MyEnum (rust перечисление) = my_enum (тип поля postgre) = MyEnumMapping (схема)
 -- пользователи -------
+
+CREATE TYPE user_types_enum AS USER_TYPES_ENUM (
+  'standart',
+  'child',
+  'identified',
+  'identified_send',
+  'deleted_standart',
+  'deleted_child',
+  'deleted_identified',
+  'deleted_identified_send',
+  'closed_standart',
+  'closed_child',
+  'closed_identified',
+  'closed_identified_send',
+  'suspended_standart',
+  'suspended_child',
+  'suspended_identified',
+  'suspended_identified_send',
+  'banner_standart',
+  'banner_child',
+  'banner_identified',
+  'banner_identified_send',
+);
+CREATE TYPE user_perm_enum AS USER_PERM_ENUM (
+  'standart',
+  'child',
+  'trainee_moderator',
+  'moderator',
+  'high_moderator',
+  'teamlead_moderator',
+  'trainee_manager',
+  'manager',
+  'high_manager',
+  'teamlead_manager',
+  'advertiser',
+  'high_advertiser',
+  'teamlead_advertiser',
+  'administrator',
+  'high_administrator',
+  'teamlead_administrator',
+  'supermanager',
+);
+CREATE TYPE user_gender_enum AS USER_GENDER_ENUM (
+  'Man',
+  'Fem',
+);
+CREATE TYPE user_device_enum AS USER_DEVICE_ENUM (
+  'De',
+  'Ph',
+);
+CREATE TYPE user_language_enum AS USER_LANGUAGE_ENUM (
+  'Ru',
+  'En',
+);
+
 CREATE TABLE users (
     id            SERIAL PRIMARY KEY,
     first_name    VARCHAR(100) NOT NULL,
     last_name     VARCHAR(100) NOT NULL,
     phone         VARCHAR(14) NOT NULL,
-    types         VARCHAR(6) NOT NULL,
-    gender        VARCHAR(3) NOT NULL,
-    device        VARCHAR(2) NOT NULL,
-    language      VARCHAR(2) NOT NULL,
-    perm          INT DEFAULT 1,
+    types         user_types_enum NOT NULL,
+    gender        user_gender_enum NOT NULL,
+    device        user_device_enum NOT NULL,
+    language      user_language_enum NOT NULL,
+    perm          user_perm_enum NOT NULL,
     level         INT DEFAULT 100,
     password      VARCHAR(100) NOT NULL,
     have_link     VARCHAR(100),
