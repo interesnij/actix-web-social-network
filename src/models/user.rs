@@ -79,6 +79,7 @@ pub struct User {
     pub last_activity: chrono::NaiveDateTime,
 }
 
+
 #[derive(Deserialize, Insertable)]
 #[table_name="users"]
 pub struct NewUser {
