@@ -90,15 +90,13 @@ pub struct NewUser {
     pub first_name:    String,
     pub last_name:     String,
     pub phone:         String,
-    pub types:         String,
     pub gender:        String,
-    pub device:        String,
     pub language:      String,
-    pub perm:          String,
-    pub level:         i32,
     pub password:      String,
     pub birthday:      chrono::NaiveDateTime,
-    pub last_activity: chrono::NaiveDateTime,
+    pub date_day:      String,
+    pub date_month:    String,
+    pub date_year:     String,
 }
 
 #[derive(Debug, Deserialize)]
@@ -117,9 +115,4 @@ impl User {
 pub struct SessionUser {
     pub id: i32,
     pub phone: String,
-}
-impl From<User> for SessionUser {
-    fn from(User { phone, id, .. }: User) -> Self {
-        SessionUser { phone, id }
-    }
 }
