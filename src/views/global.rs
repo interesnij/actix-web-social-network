@@ -24,6 +24,7 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl
     use crate::models::{UserTypes, UserPerms, UserGender, UserDevice, UserLanguage};
     use crate::utils::hash_password;
     use chrono::NaiveDate;
+    use crate::models::user::users::*;
 
     let _connection = establish_connection();
     let (_type, _is_host_admin) = get_default_template(req);
