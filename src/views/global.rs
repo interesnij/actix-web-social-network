@@ -45,14 +45,14 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl
         .values((
             schema::users::first_name.eq(_data.first_name.clone()),
             schema::users::last_name.eq(_data.last_name.clone()),
-            phone.eq(_data.phone.clone()),
-            gender.eq(get_gender),
-            device.eq(get_device),
-            language.eq(get_language),
-            perm.eq(get_perm),
-            password.eq(hash_password(_data.password.clone())),
-            birthday.eq(NaiveDate::parse_from_str(&date_str, "%Y-%m-%d").unwrap()),
-            last_activity.eq(chrono::offset::Local::now()),
+            schema::users::phone.eq(_data.phone.clone()),
+            schema::users::gender.eq(get_gender),
+            schema::users::device.eq(get_device),
+            schema::users::language.eq(get_language),
+            schema::users::perm.eq(get_perm),
+            schema::users::password.eq(hash_password(_data.password.clone())),
+            schema::users::birthday.eq(NaiveDate::parse_from_str(&date_str, "%Y-%m-%d").unwrap()),
+            schema::users::last_activity.eq(chrono::offset::Local::now()),
         ))
         .execute(&_connection)
         .expect("Insertion failed");
