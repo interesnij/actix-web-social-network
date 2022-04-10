@@ -112,3 +112,14 @@ impl User {
         self.first_name.clone() + &" ".to_string() + &self.last_name.clone()
     }
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct SessionUser {
+    pub id: i32,
+    pub phone: String,
+}
+impl From<User> for SessionUser {
+    fn from(User { phone, id, .. }: User) -> Self {
+        SessionUser { phone, id }
+    }
+}
