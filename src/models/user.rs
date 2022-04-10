@@ -2,6 +2,7 @@ use crate::schema::users;
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
 use crate::utils::establish_connection;
+use diesel_derive_enum::DbEnum;
 
 #[derive(DbEnum)]
 pub enum UserTypes {
@@ -90,6 +91,7 @@ pub struct User {
 }
 
 #[derive(Deserialize,Insertable)]
+#[table_name="users"]
 pub struct NewUser {
     pub first_name:    String,
     pub last_name:     String,
