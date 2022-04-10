@@ -1,7 +1,5 @@
-mod payload_handler;
 mod templates;
 pub use self::{
-    payload_handler::*,
     templates::*
 };
 
