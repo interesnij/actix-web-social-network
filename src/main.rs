@@ -31,11 +31,6 @@ async fn main() -> std::io::Result<()> {
             )
             .wrap(
                 Cors::default()
-                    .allowed_origin("151.248.120.138:9015")
-                    .allowed_methods(vec!["GET", "POST"])
-                    .allowed_headers(vec![header::AUTHORIZATION, header::ACCEPT])
-                    .allowed_header(header::CONTENT_TYPE)
-                    .max_age(3600)
                 )
             .service(static_files)
             .service(media_files)
