@@ -50,9 +50,9 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl
             users::device.eq(get_device),
             users::language.eq(get_language),
             users::perm.eq(get_perm),
-            users::password.eq(hash_password(_data.password.clone())?),
+            users::password.eq(hash_password(_data.password.clone())),
             users::birthday.eq(NaiveDate::parse_from_str(date_str, "%Y-%m-%d").unwrap()),
-            users::last_activity.eq(dsl::now),
+            users::last_activity.eq(chrono::offset::Local::now()), 
         ))
         .execute(&_connection)
         .expect("Insertion failed");
