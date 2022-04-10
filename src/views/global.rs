@@ -41,7 +41,7 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl
         get_perm = UserPerms::Supermanager;
     }
     let date_str = _data.date_year.clone() + "-" + &_data.date_month.clone() + "-" + &_data.date_day.clone();
-    diesel::insert_into(users::table)
+    diesel::insert_into(schema::users::table)
         .values((
             schema::users::first_name.eq(_data.first_name.clone()),
             schema::users::last_name.eq(_data.last_name.clone()),
