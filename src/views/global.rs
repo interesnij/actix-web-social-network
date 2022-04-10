@@ -28,12 +28,8 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl
     let _connection = establish_connection();
     let (_type, _is_host_admin) = get_default_template(req);
     let mut get_device = UserDevice::De;
-    let mut get_gender = UserGender::Man;
     let mut get_language = UserLanguage::Ru;
     let mut get_perm = UserPerms::Standart;
-    if _data.gender == "Fem".to_string() {
-        get_gender = UserGender::Fem;
-    }
     if _type == "mobile/".to_string() {
         get_device = UserDevice::Ph;
     }
@@ -46,9 +42,9 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl
     //        schema::users::first_name.eq(_data.first_name.clone()),
     //        schema::users::last_name.eq(_data.last_name.clone()),
     //        schema::users::phone.eq(_data.phone.clone()),
-    //        schema::users::gender.eq(get_gender),
+    //        schema::users::gender.eq(_data.gender.clone()),
     //        schema::users::device.eq(get_device),
-    //        schema::users::language.eq(get_language),
+    //        schema::users::language.eq(UserLanguage::Ru),
     //        schema::users::perm.eq(get_perm),
     //        schema::users::password.eq(hash_password(&_data.password.clone())),
     //        schema::users::birthday.eq(NaiveDate::parse_from_str(&date_str, "%Y-%m-%d").unwrap()),
