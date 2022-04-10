@@ -77,10 +77,9 @@ pub fn is_signed_in(session: &Session) -> bool {
 }
 
 pub fn set_current_user(session: &Session, user: &SessionUser) -> () {
-    use std::pin::Pin;
     // сериализация в строку подходит для этого случая,
     // но двоичный код был бы предпочтительнее в производственных вариантах использования.
-    Pin::new(&mut session).set("user", serde_json::to_string(user).unwrap()).unwrap();
+    session.set("user", serde_json::to_string(user).unwrap()).unwrap();
 }
 
 pub fn get_current_user(session: &Session) -> Result<SessionUser, AuthError> {
