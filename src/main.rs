@@ -22,16 +22,14 @@ async fn main() -> std::io::Result<()> {
         let static_files = Files::new("/static", "static/").show_files_listing();
         let media_files = Files::new("/media", "media/").show_files_listing();
         App::new()
-            .wrap(
-                CookieSession::signed(&[0; 32])
-                    .domain("151.248.120.138:9015")
-                    .name("actix_session")
-                    .path("/")
-                    .secure(true)
-            )
-            .wrap(
-                Cors::default()
-                )
+            //.wrap(
+            //    CookieSession::signed(&[0; 32])
+            //        .domain("151.248.120.138:9015")
+            //        .name("actix_session")
+            //        .path("/")
+            //        .secure(true)
+            //)
+            .wrap(Cors::default())
             .service(static_files)
             .service(media_files)
             .configure(routes)
