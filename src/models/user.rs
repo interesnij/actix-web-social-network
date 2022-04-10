@@ -90,7 +90,7 @@ pub struct NewUser {
     pub first_name:    String,
     pub last_name:     String,
     pub phone:         String,
-    pub types:         crate::models::UserTypes:,
+    pub types:         crate::models::UserTypes,
     pub gender:        crate::models::UserGender,
     pub device:        crate::models::UserDevice,
     pub language:      crate::models::UserLanguage,
