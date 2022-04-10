@@ -20,7 +20,7 @@ pub fn global_routes(config: &mut web::ServiceConfig) {
 }
 
 pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl Responder {
-    use crate::schema::users::dsl::*;
+    use crate::schema::users::dsl::users;
     use crate::models::{UserTypes, UserPerms, UserGender, UserDevice, UserLanguage};
     use crate::utils::hash_password;
     use chrono::NaiveDate;
@@ -51,8 +51,8 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl
             users::language.eq(get_language),
             users::perm.eq(get_perm),
             users::password.eq(hash_password(_data.password.clone())),
-            users::birthday.eq(NaiveDate::parse_from_str(date_str, "%Y-%m-%d").unwrap()),
-            users::last_activity.eq(chrono::offset::Local::now()), 
+            users::birthday.eq(NaiveDate::parse_from_str(&date_str, "%Y-%m-%d").unwrap()),
+            users::last_activity.eq(chrono::offset::Local::now()),
         ))
         .execute(&_connection)
         .expect("Insertion failed");
