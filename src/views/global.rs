@@ -21,7 +21,9 @@ pub fn global_routes(config: &mut web::ServiceConfig) {
 
 pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl Responder {
     use crate::schema::users::dsl::*;
-    use crate::models::{UserTypes, UserPerms, UserGender, UserDevice, UserLanguage}
+    use crate::models::{UserTypes, UserPerms, UserGender, UserDevice, UserLanguage};
+    use crate::utils::hash_password;
+    use chrono::NaiveDate;
 
     let _connection = establish_connection();
     let (_type, _is_host_admin) = get_default_template(req);
@@ -38,7 +40,7 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl
     if _is_host_admin {
         get_perm = UserPerms::Supermanager;
     }
-    let date_str = _data.date_year.clone() + "-".to_string() + _data.date_month.clone() + "-".to_string() + _data.date_day.clone();
+    let date_str = _data.date_year.clone() + "-" + _data.date_month.clone() + "-" + _data.date_day.clone();
     diesel::insert_into(users::table)
         .values((
             users::first_name.eq(_data.first_name.clone()),
