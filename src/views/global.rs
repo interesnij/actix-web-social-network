@@ -44,15 +44,15 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl
     diesel::insert_into(users::table)
         .values((
             first_name.eq(_data.first_name.clone()),
-            users::last_name.eq(_data.last_name.clone()),
-            users::phone.eq(_data.phone.clone()),
-            users::gender.eq(get_gender),
-            users::device.eq(get_device),
-            users::language.eq(get_language),
-            users::perm.eq(get_perm),
-            users::password.eq(hash_password(_data.password.clone())),
-            users::birthday.eq(NaiveDate::parse_from_str(&date_str, "%Y-%m-%d").unwrap()),
-            users::last_activity.eq(chrono::offset::Local::now()),
+            last_name.eq(_data.last_name.clone()),
+            phone.eq(_data.phone.clone()),
+            gender.eq(get_gender),
+            device.eq(get_device),
+            language.eq(get_language),
+            perm.eq(get_perm),
+            password.eq(hash_password(_data.password.clone())),
+            birthday.eq(NaiveDate::parse_from_str(&date_str, "%Y-%m-%d").unwrap()),
+            last_activity.eq(chrono::offset::Local::now()),
         ))
         .execute(&_connection)
         .expect("Insertion failed");
