@@ -50,7 +50,7 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl
             schema::users::device.eq(get_device),
             schema::users::language.eq(get_language),
             schema::users::perm.eq(get_perm),
-            schema::users::password.eq(hash_password(_data.password.clone())),
+            schema::users::password.eq(hash_password(&_data.password.clone())),
             schema::users::birthday.eq(NaiveDate::parse_from_str(&date_str, "%Y-%m-%d").unwrap()),
             schema::users::last_activity.eq(chrono::offset::Local::now()),
         ))
