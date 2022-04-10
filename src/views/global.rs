@@ -22,7 +22,7 @@ pub fn global_routes(config: &mut web::ServiceConfig) {
 pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl Responder {
     use crate::schema::users::dsl::users;
     use crate::models::{UserTypes, UserPerms, UserGender, UserDevice, UserLanguage};
-    use crate::utils::hash_password;
+    use crate::utils::{hash_password, is_signed_in, set_current_user, to_home};
     use chrono::NaiveDate;
 
     let _connection = establish_connection();
