@@ -3,13 +3,14 @@ use actix_web::{
     Responder,
     HttpResponse,
     web,
+    http::header::LOCATION,
 };
 use serde::Deserialize;
 use tera::Context;
-use crate::utils::{establish_connection, get_default_template, TEMPLATES};
+use crate::utils::{establish_connection, get_default_template, TEMPLATES, is_signed_in};
 use diesel::prelude::*;
 use crate::schema;
-use crate::models::NewUser;
+use crate::models::{NewUser, SessionUser};
 use actix_session::Session;
 
 
@@ -18,6 +19,7 @@ pub fn global_routes(config: &mut web::ServiceConfig) {
     config.route("/phone_send/{phone}/", web::get().to(phone_send));
     config.route("/phone_verify/{phone}/{code}/", web::get().to(phone_verify));
     config.route("/signup/", web::get().to(process_signup));
+    config.route("/login/", web::post().to(login));
 }
 
 #[derive(Deserialize)]
@@ -29,9 +31,64 @@ pub struct NewUserForm {
     pub birthday:    String,
     pub phone:       String,
 }
+
+fn find_user(data: web::Form<LoginUser>) -> Result<SessionUser, AuthError> {
+    use crate::schema::users::dsl::users;
+
+    let _connection = establish_connection();
+    let mut items = users
+        .filter(phone.eq(&data.phone))
+        .load::<User>(&_connection)
+        .expect("Error.");
+
+    if let Some(user) = items.pop() {
+        if let Ok(matching) = verify(&user.password, &data.password) {
+            if matching {
+                return Ok(user.into());
+            }
+        }
+    }
+    Err(AuthError::NotFound(String::from("User not found")))
+}
+
+fn handle_sign_in(data: AuthData,
+                session: &Session,
+                req: &HttpRequest) -> Result<HttpResponse, AuthError> {
+    use crate::utils::{is_json_request, set_current_user};
+
+    let _connection = establish_connection();
+    let result = find_user(data, _connection);
+    let is_json = is_json_request(req);
+
+    match result {
+        Ok(user) => {
+            set_current_user(&session, &user);
+            if is_json {
+                Ok(HttpResponse::Ok().json(user))
+            } else {
+                Ok(to_home())
+            }
+        },
+        Err(err) => {
+            if is_json {
+                Ok(HttpResponse::Unauthorized().json(err.to_string()))
+            } else {
+                let t = SignIn { error: Some(err.to_string()) };
+                Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(t.call().unwrap()))
+            }
+        },
+    }
+}
+
+pub async fn login(data: web::Form<LoginUser>, session: Session, req: HttpRequest) -> impl Responder {
+    if is_signed_in(&session) {
+        to_home();
+    }
+    handle_sign_in(data.into_inner(), &session, &req)
+}
 pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responder {
     use crate::schema::users::dsl::users;
-    use crate::utils::{hash_password, is_signed_in, set_current_user, to_home};
+    use crate::utils::{hash_password, set_current_user, to_home};
     use crate::models::{User, SessionUser};
     use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
 
