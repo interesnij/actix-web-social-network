@@ -527,18 +527,16 @@ on('#ajax', 'click', '#code_send', function() {
           var div = document.getElementById('jsondata');
           div.innerHTML = request.responseText;
             if (request.responseText.indexOf("ok") != -1) {
-              form_data = new FormData(_form);
-              form_data.append("first_name", document.body.querySelector(".first_name").value);
-              form_data.append("last_name", document.body.querySelector(".last_name").value);
-              form_data.append("gender", document.body.querySelector(".gender").value);
-              form_data.append("password", document.body.querySelector(".password1").value);
-              form_data.append("birthday", document.body.querySelector(".birthday").value);
-              form_data.append("phone", _user_phone);
+              _first_name = document.body.querySelector(".first_name").value;
+              _last_name = document.body.querySelector(".last_name").value;
+              _gender = document.body.querySelector(".gender").value;
+              _password = document.body.querySelector(".password1").value;
+              _birthday = document.body.querySelector(".birthday").value;
 
               console.log(form_data);
-              
+              _params = "?first_name=" + _first_name + "&last_name=" + _last_name + "&gender=" + _gender + "&password=" + _password + "&birthday=" + _birthday  + "&_phone=" + _user_phone;
               request_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-              request_2.open( 'POST', "/signup/", true );
+              request_2.open( 'GET', "/signup/" + _params, true );
               request_2.onreadystatechange = function () {
               if ( request_2.readyState == 4 && request_2.status == 201 ) {
                 window.location.href = "/";
@@ -551,7 +549,7 @@ on('#ajax', 'click', '#code_send', function() {
             	}
             	}}
               else { document.body.querySelector("#jsondata2").innerHTML = responseText};
-              request_2.send(form_data);
+              request_2.send();
         }
     };
     request.send(null)

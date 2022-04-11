@@ -16,69 +16,67 @@ pub fn global_routes(config: &mut web::ServiceConfig) {
     config.route("/phone_window/", web::get().to(phone_window));
     config.route("/phone_send/{phone}/", web::get().to(phone_send));
     config.route("/phone_verify/{phone}/{code}/", web::get().to(phone_verify));
-    config.route("/signup/", web::post().to(process_signup));
+    config.route("/signup/", web::get().to(process_signup));
 }
 
 #[derive(Deserialize)]
 pub struct NewUserForm {
     pub first_name:  String,
     pub last_name:   String,
-    pub phone:       String,
-    pub password:    String,
     pub gender:      String,
+    pub password:    String,
     pub birthday:    chrono::NaiveDate,
+    pub phone:       String,
 }
-pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUserForm>) -> impl Responder {
+pub async fn process_signup(req: HttpRequest) -> impl Responder {
     use crate::schema::users::dsl::users;
     use crate::utils::{hash_password, is_signed_in, set_current_user, to_home};
     use crate::models::User;
     use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
 
     let _connection = establish_connection();
-    let (_type, _is_host_admin) = get_default_template(req);
-    let mut get_device = "a";
-    let mut get_language = "a";
-    let mut get_gender = "a";
-    let mut get_perm = 1;
-    if _type == "mobile/".to_string() {
-        get_device = "b";
-    }
-    if _data.gender == "Fem".to_string() {
-        get_gender = "b";
-    }
-    if _is_host_admin {
-        get_perm = 60;
-    }
-    println!("first_name {:?}", _data.first_name.clone());
-    println!("last_name {:?}", _data.last_name.clone());
-    println!("phone {:?}", _data.phone.clone());
-    println!("password {:?}", _data.password.clone());
-    println!("gender {:?}", _data.gender.clone());
-    println!("birthday {:?}", _data.birthday.clone());
+    let params = web::Query::<NewUserForm>::from_query(&req.query_string());
+    if params.is_ok() {
+        let params_2 = params.unwrap();
+        let (_type, _is_host_admin) = get_default_template(req);
+        let mut get_device = "a";
+        let mut get_language = "a";
+        let mut get_gender = "a";
+        let mut get_perm = 1;
+        if _type == "mobile/".to_string() {
+            get_device = "b";
+        }
+        if params_2.gender.clone() == "Fem".to_string() {
+            get_gender = "b";
+        }
+        if _is_host_admin {
+            get_perm = 60;
+        }
 
-    let d = NaiveDate::from_ymd(2015, 6, 3);
-    let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
-    let form_user = NewUser {
-        first_name: _data.first_name.clone(),
-        last_name: _data.last_name.clone(),
-        phone: _data.phone.clone(),
-        types: 1,
-        gender: get_gender.to_string(),
-        device: get_device.to_string(),
-        language: get_language.to_string(),
-        perm: get_perm,
-        level: 100,
-        //password: hash_password(&_data.password.clone()),
-        password: _data.password.clone(),
-        //birthday: NaiveDate::parse_from_str(&_data.birthday.clone(), "%Y-%m-%d").unwrap(),
-        birthday: _data.birthday.clone(),
-        last_activity: NaiveDateTime::new(d, t),
-    };
+        let d = NaiveDate::from_ymd(2015, 6, 3);
+        let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
+        let form_user = NewUser {
+            first_name: params_2.first_name.clone(),
+            last_name: params_2.last_name.clone(),
+            phone: params_2.phone.clone(),
+            types: 1,
+            gender: get_gender.to_string(),
+            device: get_device.to_string(),
+            language: get_language.to_string(),
+            perm: get_perm,
+            level: 100,
+            //password: hash_password(&_data.password.clone()),
+            password: params_2.password.clone(),
+            //birthday: NaiveDate::parse_from_str(&_data.birthday.clone(), "%Y-%m-%d").unwrap(),
+            birthday: params_2.birthday.clone(),
+            last_activity: NaiveDateTime::new(d, t),
+        };
 
-    let _new_user = diesel::insert_into(schema::users::table)
-        .values(&form_user)
-        .get_result::<User>(&_connection)
-        .expect("Error saving user.");
+        let _new_user = diesel::insert_into(schema::users::table)
+            .values(&form_user)
+            .get_result::<User>(&_connection)
+            .expect("Error saving user.");
+    }
     HttpResponse::Ok().body(format!("ok"))
 }
 
