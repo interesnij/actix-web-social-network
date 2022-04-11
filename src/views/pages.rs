@@ -36,8 +36,8 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
         let _request_user = get_current_user(&session);
         match _request_user {
             Ok(s) => data.insert("request_user", &s),
-            _ => false,
-        };
+            _ => data.insert("request_user", false),
+        }
         //data.insert("request_user", &_request_user);
     } else {
         _template = _type + &"main/auth/auth.html".to_string();
