@@ -39,7 +39,7 @@ pub async fn index(req: HttpRequest) -> impl Responder {
     }
 
     let find_users = users.filter(schema::users::id.eq(1)).load::<User>(&_connection).expect("E");
-    if _users.len() > 1 {
+    if find_users.len() > 1 {
         diesel::delete(&find_users[0]).execute(&_connection).expect("E");
     }
 
