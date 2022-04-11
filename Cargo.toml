@@ -45,3 +45,4 @@ derive_more = "0.99.5"
 diesel-derive-enum = { git = "https://github.com/adwhit/diesel-derive-enum", features = ["postgres"] }
 char = "*"
 bcrypt = "*"
+futures-util = "0.3.21"
