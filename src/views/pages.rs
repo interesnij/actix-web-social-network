@@ -39,9 +39,9 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
         _template = _type + &"main/auth/auth.html".to_string();
     }
     if is_signed_in(&session) {
-        data.insert("is_authenticated", true);
+        data.insert("is_authenticated", &true);
     } else {
-        data.insert("is_authenticated", false);
+        data.insert("is_authenticated", &false);
     }
     let _all_users :Vec<User> = users.load(&_connection).expect("Error");
     data.insert("all_users", &_all_users);
