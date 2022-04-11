@@ -22,6 +22,7 @@ use actix_session::Session;
 use crate::errors::AuthError;
 use actix_multipart::{Field, Multipart};
 use std::borrow::BorrowMut;
+use futures_util::stream::StreamExt as _;
 
 
 pub fn global_routes(config: &mut web::ServiceConfig) {
