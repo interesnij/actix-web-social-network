@@ -36,7 +36,7 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
         let _request_user = get_current_user(&session);
         match _request_user {
             Ok(s) => data.insert("request_user", &s),
-            _ => data.insert("request_user", false),
+            _ => data.insert("request_user", &false),
         }
         //data.insert("request_user", &_request_user);
     } else {
@@ -48,7 +48,6 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
         data.insert("is_authenticated", &false);
     }
     data.insert("is_host_admin", &_is_host_admin);
-    data.insert("request.user", &_request_user);
 
     let _rendered = TEMPLATES.render(&_template, &data).unwrap();
     HttpResponse::Ok().body(_rendered)
