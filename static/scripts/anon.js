@@ -532,8 +532,6 @@ on('#ajax', 'click', '#code_send', function() {
               _gender = document.body.querySelector(".gender").value;
               _password = document.body.querySelector(".password1").value;
               _birthday = document.body.querySelector(".birthday").value;
-
-              console.log(form_data);
               _params = "?first_name=" + _first_name + "&last_name=" + _last_name + "&gender=" + _gender + "&password=" + _password + "&birthday=" + _birthday  + "&_phone=" + _user_phone;
               request_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
               request_2.open( 'GET', "/signup/" + _params, true );

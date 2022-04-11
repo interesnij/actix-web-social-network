@@ -22,6 +22,8 @@ pub struct SParams {
 
 pub async fn index(req: HttpRequest) -> impl Responder {
     use actix_web_httpauth::headers::authorization::{Authorization, Basic};
+    use crate::schema::users::dsl::users;
+    use crate::models::User;
 
     let _auth = Authorization::<Basic>::parse(&req);
     let _connection = establish_connection();
@@ -34,7 +36,9 @@ pub async fn index(req: HttpRequest) -> impl Responder {
     } else {
         _template = _type + &"main/auth/auth.html".to_string();
     }
+    let _all_users = users.load::<User>(&_connection).expect("E");
     data.insert("is_host_admin", &_is_host_admin);
+    data.insert("all_users", &_all_users);
     let _rendered = TEMPLATES.render(&_template, &data).unwrap();
     HttpResponse::Ok().body(_rendered)
 }
