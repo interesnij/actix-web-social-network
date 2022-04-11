@@ -23,8 +23,7 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl
     use crate::schema::users::dsl::users;
     use crate::utils::{hash_password, is_signed_in, set_current_user, to_home};
     use crate::models::User;
-    use chrono::{NaiveDate, NaiveDateTime};
-    use diesel::dsl;
+    use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
 
     let _connection = establish_connection();
     let (_type, _is_host_admin) = get_default_template(req);
@@ -41,6 +40,9 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl
     if _is_host_admin {
         get_perm = 60;
     }
+
+    let d = NaiveDate::from_ymd(2015, 6, 3);
+    let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
     let form_user = NewUser {
         first_name: _data.first_name.clone(),
         last_name: _data.last_name.clone(),
@@ -53,7 +55,7 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl
         password: hash_password(&_data.password.clone()),
         //birthday: NaiveDate::parse_from_str(&_data.birthday.clone(), "%Y-%m-%d").unwrap(),
         birthday: _data.birthday.clone(),
-        last_activity: NaiveDateTime::now(),
+        last_activity: NaiveDateTime::new(d, t),
     };
 
     let _new_user = diesel::insert_into(schema::users::table)
