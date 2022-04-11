@@ -148,7 +148,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
     if params.is_ok() {
         println!("params ok!");
         let params_2 = params.unwrap();
-        let (_type, _is_host_admin) = get_default_template(req);
+        let (_type, _is_host_admin, _request_user) = get_default_template(session, req);
         let mut get_device = "a";
         let mut get_language = "a";
         let mut get_gender = "a";
@@ -197,7 +197,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
 }
 
 pub async fn phone_window(req: HttpRequest) -> impl Responder {
-    let (_type, _is_host_admin) = get_default_template(req);
+    let (_type, _is_host_admin, _request_user) = get_default_template(session, req);
     let mut data = Context::new();
     let _template = _type + &"main/auth/phone_window.html".to_string();
     let rendered = TEMPLATES.render(&_template, &data).unwrap();
@@ -213,7 +213,7 @@ struct PhoneJson {
     code: i32,
 }
 pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Responder {
-    let (_type, _is_host_admin) = get_default_template(req);
+    let (_type, _is_host_admin, _request_user) = get_default_template(session, req);
     let mut data = Context::new();
     let req_phone = _phone.to_string();
     if req_phone.len() > 8 {

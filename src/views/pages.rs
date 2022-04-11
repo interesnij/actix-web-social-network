@@ -30,7 +30,7 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
     let mut data = Context::new();
     let mut _template : String;
 
-    let (_type, _is_host_admin) = get_default_template(req);
+    let (_type, _is_host_admin, _request_user) = get_default_template(session, req);
     if is_signed_in(&session) {
         _template = _type + &"main/lists/news_list.html".to_string();
     } else {
