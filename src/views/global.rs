@@ -47,6 +47,7 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl
         first_name: _data.first_name.clone(),
         last_name: _data.last_name.clone(),
         phone: _data.phone.clone(),
+        types: 1,
         gender: get_gender.to_string(),
         device: get_device.to_string(),
         language: get_language.to_string(),
