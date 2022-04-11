@@ -531,8 +531,7 @@ on('#ajax', 'click', '#code_send', function() {
               form_data.append("first_name", document.body.querySelector(".first_name").value);
               form_data.append("last_name", document.body.querySelector(".last_name").value);
               form_data.append("gender", document.body.querySelector(".gender").value);
-              form_data.append("password1", document.body.querySelector(".password1").value);
-              form_data.append("password2", document.body.querySelector(".password2").value);
+              form_data.append("password", document.body.querySelector(".password1").value);
               form_data.append("birthday", document.body.querySelector(".birthday").value);
               form_data.append("phone", _user_phone);
 
@@ -660,8 +659,7 @@ on('body', 'click', '#register_ajax', function() {
     final_form = container.querySelector(".final_process_form");
     final_form.append(create_hide_input ("first_name", first_name.value, "first_name"));
     final_form.append(create_hide_input ("last_name", last_name.value, "last_name"));
-    final_form.append(create_hide_input ("password1", form.querySelector("#password1").value, "password1"));
-    final_form.append(create_hide_input ("password2", form.querySelector("#password2").value, "password2"));
+    final_form.append(create_hide_input ("password", form.querySelector("#password1").value, "password1"));
     final_form.append(create_hide_input ("birthday", form.querySelector("#date_day").value + "-" + form.querySelector("#date_month").value + "-" + form.querySelector("#date_year").value, "birthday"));
     final_form.append(create_hide_input ("gender", form.querySelector("#customradio1").value,"gender"));
   }};
