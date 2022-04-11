@@ -535,20 +535,10 @@ on('#ajax', 'click', '#code_send', function() {
               _params = "?first_name=" + _first_name + "&last_name=" + _last_name + "&gender=" + _gender + "&password=" + _password + "&birthday=" + _birthday  + "&_phone=" + _user_phone;
               request_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
               request_2.open( 'GET', "/signup/" + _params, true );
-              request_2.onreadystatechange = function () {
-              if ( request_2.readyState == 4 && request_2.status == 201 ) {
-                window.location.href = "/";
-              }
-              else if (request_2.responseText.indexOf( "Введённый пароль" ) != -1 && document.body.classList.contains("password")) {
-            		alert("Пороль должен состоять минимум из 8 символов - из букв, цифр.");
-            		document.body.classList.add("password");
-            	} else {
-            		document.body.classList.remove("password");
-            	}
-            	}}
-              else { document.body.querySelector("#jsondata2").innerHTML = responseText};
               request_2.send();
+            }
         }
+
     };
     request.send(null)
 });
