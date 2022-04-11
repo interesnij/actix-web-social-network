@@ -5,7 +5,7 @@ use actix_web::{
     web,
     http::header::LOCATION,
 };
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use tera::Context;
 use crate::utils::{
     establish_connection,
