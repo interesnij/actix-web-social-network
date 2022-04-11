@@ -7,7 +7,7 @@ use actix_web::{
 };
 use serde::Deserialize;
 use tera::Context;
-use crate::utils::{is_signed_in, get_current_user, establish_connection, get_default_template, TEMPLATES};
+use crate::utils::{is_signed_in, get_request_user, establish_connection, get_default_template, TEMPLATES};
 use crate::schema;
 use diesel::prelude::*;
 use actix_session::Session;

@@ -100,14 +100,10 @@ pub fn get_request_user(session: &Session) -> User  {
     use crate::schema;
     use crate::schema::users::dsl::users;
 
-    let _request_user = get_current_user(&session);
-    match _request_user {
-        Ok(s) => s,
-        _ => false,
-    }
+    let _current_user = session.get::<String>("user");
     let _connection = establish_connection();
     users
-        .filter(schema::users::id.eq(_request_user.id))
+        .filter(schema::users::id.eq(_current_user.id))
         .load::<User>(&_connection)
         .expect("E")[0]
 }
