@@ -21,37 +21,42 @@ pub fn global_routes(config: &mut web::ServiceConfig) {
 
 pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl Responder {
     use crate::schema::users::dsl::users;
-    //use crate::models::{UserTypes, UserPerms, UserGender, UserDevice, UserLanguage};
     use crate::utils::{hash_password, is_signed_in, set_current_user, to_home};
     use chrono::NaiveDate;
 
     let _connection = establish_connection();
     let (_type, _is_host_admin) = get_default_template(req);
-    //let mut get_device = UserDevice::De;
-    //let mut get_language = UserLanguage::Ru;
-    //let mut get_perm = UserPerms::Standart;
-    //if _type == "mobile/".to_string() {
-    //    get_device = UserDevice::Ph;
-    //}
-    //if _is_host_admin {
-    //    get_perm = UserPerms::Supermanager;
-    //}
+    let mut get_device = 'a';
+    let mut get_language = 'a';
+    let mut get_gender = 'a';
+    let mut get_perm = 1;
+    if _type == "mobile/".to_string() {
+        get_device = 'b';
+    }
+    if _data.gender == "Fem".to_string() {
+        get_gender = 'b';
+    }
+    if _is_host_admin {
+        get_perm = 60;
+    }
+    let form_user = NewUser {
+        first_name: _data.first_name.clone(),
+        last_name: _data.last_name.clone(),
+        phone: _data.phone.clone(),
+        gender: get_gender,
+        device: get_device,
+        language: get_language,
+        perm: get_perm,
+        level: 100,
+        password: hash_password(&_data.password.clone()),
+        birthday: NaiveDate::parse_from_str(&_data.birthday.clone(), "%Y-%m-%d").unwrap(),
+        last_activity: chrono::offset::Local::now(),
+    };
 
-    //diesel::insert_into(schema::users::table)
-    //    .values((
-    //        schema::users::first_name.eq(_data.first_name.clone()),
-    //        schema::users::last_name.eq(_data.last_name.clone()),
-    //        schema::users::phone.eq(_data.phone.clone()),
-    //        schema::users::gender.eq(_data.gender.clone()),
-    //        schema::users::device.eq(get_device),
-    //        schema::users::language.eq(UserLanguage::Ru),
-    //        schema::users::perm.eq(get_perm),
-    //        schema::users::password.eq(hash_password(&_data.password.clone())),
-    //        schema::users::birthday.eq(NaiveDate::parse_from_str(&date_str, "%Y-%m-%d").unwrap()),
-    //        schema::users::last_activity.eq(chrono::offset::Local::now()),
-    //    ))
-    //    .execute(&_connection)
-    //    .expect("Insertion failed");
+    let _new_user = diesel::insert_into(users::table)
+        .values(&form_user)
+        .get_result::<User>(&_connection)
+        .expect("Error saving user.");
     HttpResponse::Ok().body(format!("ok"))
 }
 
