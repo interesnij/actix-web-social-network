@@ -47,6 +47,7 @@ pub fn hash_password(password: &str) -> String {
       .with_password(password)
       .with_secret_key(vars::secret_key().as_str())
       .hash()
+      .expect("E.")
       //.map_err(|_| AuthError::AuthenticationError(String::from("Не удалось хэшировать пароль")))
 }
 
