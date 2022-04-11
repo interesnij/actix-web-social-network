@@ -85,7 +85,7 @@ fn handle_sign_in(data: LoginUser,
             if is_json {
                 Ok(HttpResponse::Unauthorized().json(err.to_string()))
             } else {
-                HttpResponse::Ok().body(format!("ok"))
+                Ok(to_home())
             }
         },
     }
