@@ -52,7 +52,11 @@ fn find_user(data: LoginUser) -> Result<SessionUser, AuthError> {
     if let Some(user) = items.pop() {
         if let Ok(matching) = verify(&user.password, &data.password) {
             if matching {
-                return Ok(user.into());
+                __user = SessionUser {
+                    id: user.id,
+                    phone: user.phone,
+                }
+                return Ok(__user.into());
             }
         }
     }
