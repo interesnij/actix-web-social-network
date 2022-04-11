@@ -103,9 +103,10 @@ pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Res
             let _url = "https://api.ucaller.ru/v1.0/initCall?service_id=12203&key=GhfrKn0XKAmA1oVnyEzOnMI5uBnFN4ck&phone=".to_owned() + &req_phone;
             let __request = reqwest::get(_url).await.expect("E.");
             let new_request = __request.text().await.unwrap();
+            println!("{:?}", new_request);
             let phone200: PhoneJson = serde_json::from_str(&new_request).unwrap();
 
-            new_phone_code = NewPhoneCode {
+            let new_phone_code = NewPhoneCode {
                 phone: &phone200.phone,
                 code: &phone200.code,
             };
