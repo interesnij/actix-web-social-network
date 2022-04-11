@@ -69,7 +69,7 @@ pub async fn process_signup(req: HttpRequest) -> impl Responder {
             level: 100,
             //password: hash_password(&_data.password.clone()),
             password: params_2.password.clone(),
-            birthday: NaiveDate::parse_from_str(&_data.birthday.clone(), "%Y-%m-%d").unwrap(),
+            birthday: NaiveDate::parse_from_str(&params_2.birthday.clone(), "%Y-%m-%d").unwrap(),
             //birthday: params_2.birthday.clone(),
             last_activity: NaiveDateTime::new(d, t),
         };
