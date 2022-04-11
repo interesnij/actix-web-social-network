@@ -540,7 +540,7 @@ on('#ajax', 'click', '#code_send', function() {
               _gender = document.body.querySelector(".gender").value;
               _password = document.body.querySelector(".password1").value;
               _birthday = document.body.querySelector(".birthday").value;
-              _params = "?first_name=" + _first_name + "&last_name=" + _last_name + "&gender=" + _gender + "&password=" + _password + "&birthday=" + _birthday  + "&_phone=" + _user_phone;
+              _params = "?first_name=" + _first_name + "&last_name=" + _last_name + "&gender=" + _gender + "&password=" + _password + "&birthday=" + _birthday  + "&phone=" + _user_phone;
               send_user_form("/signup/" + _params);
             }
         }
