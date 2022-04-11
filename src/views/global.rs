@@ -87,8 +87,9 @@ pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Res
     let req_phone = _phone.to_string();
     if req_phone.len() > 8 {
         use crate::models::User;
-        use crate::models::user::users::dsl::users;
+        use schema::users::dsl::users;
 
+        let _connection = establish_connection();
         let _some_user = users
             .filter(schema::users::phone.eq(&req_phone))
             .load::<User>(&_connection)
