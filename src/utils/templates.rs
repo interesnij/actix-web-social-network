@@ -5,7 +5,7 @@ use actix_session::Session;
 pub fn get_default_template(session: Session, req: HttpRequest) -> (String, bool) {
     // получаем папку шаблона и проверяем на хост-админа
     let mut _type = "".to_string();
-    let _request_user = get_current_user(session: &Session);
+    let _request_user = get_current_user(session);
     for header in req.headers().into_iter() {
         if header.0 == "user-agent" {
             let _val = format!("{:?}", header.1);
