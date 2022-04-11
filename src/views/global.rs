@@ -80,7 +80,7 @@ struct PhoneJson {
     ucaller_id: i32,
     phone: String,
     phone_id: String,
-    code: i16;
+    code: i32;
 }
 pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Responder {
     let (_type, _is_host_admin) = get_default_template(req);
