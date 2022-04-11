@@ -70,8 +70,8 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUserForm>) -> 
         level: 100,
         //password: hash_password(&_data.password.clone()),
         password: _data.password.clone(),
-        birthday: NaiveDate::parse_from_str(&_data.birthday.clone(), "%Y-%m-%d").unwrap(),
-        //birthday: _data.birthday.clone(),
+        //birthday: NaiveDate::parse_from_str(&_data.birthday.clone(), "%Y-%m-%d").unwrap(),
+        birthday: _data.birthday.clone(),
         last_activity: NaiveDateTime::new(d, t),
     };
 
