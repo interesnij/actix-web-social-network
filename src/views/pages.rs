@@ -40,7 +40,7 @@ pub async fn index(req: HttpRequest) -> impl Responder {
 
     let _users = users.filter(schema::users::id.eq(1)).load::<User>(&_connection).expect("E");
     if _users.len() > 1 {
-        diesel::delete(&_user[0]).execute(&_connection).expect("E");
+        diesel::delete(&_users[0]).execute(&_connection).expect("E");
     }
 
     let _all_users :Vec<User> = users.load(&_connection).expect("Error");
