@@ -42,12 +42,12 @@ pub fn establish_connection() -> PgConnection {
 
 // Auth
 
-pub fn hash_password(password: &str) -> Result<String, AuthError> {
+pub fn hash_password(password: &str) -> String {
   Hasher::default()
       .with_password(password)
       .with_secret_key(vars::secret_key().as_str())
       .hash()
-      .map_err(|_| AuthError::AuthenticationError(String::from("Не удалось хэшировать пароль")))
+      //.map_err(|_| AuthError::AuthenticationError(String::from("Не удалось хэшировать пароль")))
 }
 
 pub fn verify(hash: &str, password: &str) -> Result<bool, AuthError> {
