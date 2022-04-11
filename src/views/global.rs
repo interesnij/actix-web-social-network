@@ -17,7 +17,7 @@ use crate::utils::{
 };
 use diesel::prelude::*;
 use crate::schema;
-use crate::models::{NewUser, SessionUser, LoginUser};
+use crate::models::{User, NewUser, SessionUser, LoginUser};
 use actix_session::Session;
 use crate::errors::AuthError;
 
@@ -81,8 +81,7 @@ fn handle_sign_in(data: LoginUser,
             if is_json {
                 Ok(HttpResponse::Unauthorized().json(err.to_string()))
             } else {
-                let t = SignIn { error: Some(err.to_string()) };
-                Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(t.call().unwrap()))
+                HttpResponse::Ok().body("OK".to_string())
             }
         },
     }
@@ -97,7 +96,6 @@ pub async fn login(data: web::Form<LoginUser>, session: Session, req: HttpReques
 pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responder {
     use crate::schema::users::dsl::users;
     use crate::utils::{hash_password, set_current_user, to_home};
-    use crate::models::{User, SessionUser};
     use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
 
     if is_signed_in(&session) {
