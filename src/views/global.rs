@@ -40,7 +40,7 @@ pub struct NewUserForm {
     pub phone:       String,
 }
 
-fn find_user(data: web::Form<LoginUser>) -> Result<SessionUser, AuthError> {
+fn find_user(data: LoginUser) -> Result<SessionUser, AuthError> {
     use crate::schema::users::dsl::users;
 
     let _connection = establish_connection();
@@ -81,7 +81,7 @@ fn handle_sign_in(data: LoginUser,
             if is_json {
                 Ok(HttpResponse::Unauthorized().json(err.to_string()))
             } else {
-                HttpResponse::Ok().body("OK".to_string())
+                Ok()
             }
         },
     }
