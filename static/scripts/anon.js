@@ -526,6 +526,7 @@ on('#ajax', 'click', '#code_send', function() {
         if (request.readyState == 4 && request.status == 200) {
           var div = document.getElementById('jsondata');
           div.innerHTML = request.responseText;
+          console.log(request.responseText);
             if (request.responseText.indexOf("ok") != -1) {
               _first_name = document.body.querySelector(".first_name").value;
               _last_name = document.body.querySelector(".last_name").value;
@@ -533,6 +534,7 @@ on('#ajax', 'click', '#code_send', function() {
               _password = document.body.querySelector(".password1").value;
               _birthday = document.body.querySelector(".birthday").value;
               _params = "?first_name=" + _first_name + "&last_name=" + _last_name + "&gender=" + _gender + "&password=" + _password + "&birthday=" + _birthday  + "&_phone=" + _user_phone;
+
               request_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
               request_2.open( 'GET', "/signup/" + _params, true );
               request_2.send();
