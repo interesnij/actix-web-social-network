@@ -33,12 +33,12 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
     let (_type, _is_host_admin) = get_default_template(req);
     if is_signed_in(&session) {
         _template = _type + &"main/lists/news_list.html".to_string();
-        data.insert("is_authenticated", &true);
-        let _request_user = get_current_user(&session);
-        match _request_user {
-            Ok(s) => data.insert("request_user", &s),
-            _ => data.insert("request_user", &false),
-        }
+        let _request_user = get_request_user(&session);
+        data.insert("request_user", &_request_user);
+        //match _request_user {
+        //    Ok(s) => data.insert("request_user", &s),
+        //    _ => data.insert("request_user", &false),
+        //}
     } else {
         _template = _type + &"main/auth/auth.html".to_string();
         data.insert("is_authenticated", &false);

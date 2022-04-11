@@ -4,7 +4,8 @@ pub use self::{
 };
 use argonautica::{Hasher, Verifier};
 use actix_session::Session;
-use crate::diesel::{Connection, PgConnection};
+use diesel::prelude::*;
+//use crate::diesel::{Connection, PgConnection};
 use tera::Tera;
 use lazy_static::lazy_static;
 use actix_web::{
@@ -12,8 +13,9 @@ use actix_web::{
   HttpRequest,
   HttpResponse
 };
-use crate::{errors::AuthError, vars, models::SessionUser};
 
+use crate::{errors::AuthError, vars, models::SessionUser};
+use crate::models::User;
 
 lazy_static! {
     pub static ref TEMPLATES: Tera = {
@@ -93,6 +95,21 @@ pub fn get_current_user(session: &Session) -> Result<SessionUser, AuthError> {
           Err(AuthError::AuthenticationError(String::from(msg))),
           |user| serde_json::from_str(&user).or_else(|_| Err(AuthError::AuthenticationError(String::from(msg))))
         )
+}
+pub fn get_request_user(session: &Session) -> User  {
+    use crate::schema;
+    use crate::schema::users::dsl::users;
+
+    let _request_user = get_current_user(&session);
+    match _request_user {
+        Ok(s) => s,
+        _ => false,
+    }
+    let _connection = establish_connection();
+    users
+        .filter(schema::users::id.eq(_request_user.id))
+        .load::<User>(&_connection)
+        .expect("E")[0]
 }
 
 pub fn to_home() -> HttpResponse {
