@@ -25,7 +25,7 @@ pub struct NewUserForm {
     pub last_name:   String,
     pub gender:      String,
     pub password:    String,
-    pub birthday:    chrono::NaiveDate,
+    pub birthday:    String,
     pub phone:       String,
 }
 pub async fn process_signup(req: HttpRequest) -> impl Responder {
@@ -69,8 +69,8 @@ pub async fn process_signup(req: HttpRequest) -> impl Responder {
             level: 100,
             //password: hash_password(&_data.password.clone()),
             password: params_2.password.clone(),
-            //birthday: NaiveDate::parse_from_str(&_data.birthday.clone(), "%Y-%m-%d").unwrap(),
-            birthday: params_2.birthday.clone(),
+            birthday: NaiveDate::parse_from_str(&_data.birthday.clone(), "%Y-%m-%d").unwrap(),
+            //birthday: params_2.birthday.clone(),
             last_activity: NaiveDateTime::new(d, t),
         };
 
