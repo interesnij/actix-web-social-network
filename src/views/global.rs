@@ -50,10 +50,10 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl
         level: 100,
         password: hash_password(&_data.password.clone()),
         birthday: NaiveDate::parse_from_str(&_data.birthday.clone(), "%Y-%m-%d").unwrap(),
-        last_activity: chrono::offset::Local::now(),
+        last_activity: NaiveDate::now(),
     };
 
-    let _new_user = diesel::insert_into(users::table)
+    let _new_user = diesel::insert_into(schema::users::table)
         .values(&form_user)
         .get_result::<User>(&_connection)
         .expect("Error saving user.");

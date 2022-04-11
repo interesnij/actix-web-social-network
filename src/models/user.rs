@@ -93,7 +93,7 @@ pub struct NewUser {
     pub perm:          i16,
     pub level:         i16,
     pub password:      String,
-    pub birthday:      chrono::NaiveDateTime,
+    pub birthday:      chrono::NaiveDate,
     pub last_activity: chrono::NaiveDateTime,
 }
 
