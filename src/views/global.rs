@@ -127,7 +127,7 @@ pub async fn phone_verify(param: web::Path<(String,i32)>) -> impl Responder {
         .filter(schema::phone_codes::code.eq(&_code))
         .load::<PhoneCode>(&_connection)
         .expect("E");
-    if _phone_codes.len() > 1 {
+    if _phone_codes.len() > 0 {
         diesel::delete(phone_codes
                 .filter(schema::phone_codes::phone.eq(&_phone))
                 .filter(schema::phone_codes::code.eq(&_code))
