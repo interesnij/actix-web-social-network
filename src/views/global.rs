@@ -196,7 +196,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
     HttpResponse::Ok().body(format!("ok"))
 }
 
-pub async fn phone_window(req: HttpRequest) -> impl Responder {
+pub async fn phone_window(session: Session, req: HttpRequest) -> impl Responder {
     let (_type, _is_host_admin, _request_user) = get_default_template(session, req);
     let mut data = Context::new();
     let _template = _type + &"main/auth/phone_window.html".to_string();
@@ -212,7 +212,7 @@ struct PhoneJson {
     phone_id: String,
     code: i32,
 }
-pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Responder {
+pub async fn phone_send(session: Session, req: HttpRequest, _phone: web::Path<String>) -> impl Responder {
     let (_type, _is_host_admin, _request_user) = get_default_template(session, req);
     let mut data = Context::new();
     let req_phone = _phone.to_string();
