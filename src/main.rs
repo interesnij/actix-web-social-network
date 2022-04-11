@@ -26,16 +26,16 @@ async fn main() -> std::io::Result<()> {
         let media_files = Files::new("/media", "media/").show_files_listing();
         //let cors = Cors::default();
         let private_key = actix_web::cookie::Key::generate();
-        let cors = Cors::default()
-            .allowed_origin("151.248.120.138:9015")
-            .allowed_methods(vec!["GET", "POST"])
-            .allowed_headers(vec![header::AUTHORIZATION, header::ACCEPT])
-            .allowed_header(header::CONTENT_TYPE)
-            .max_age(3600);
+        //let cors = Cors::default()
+        //    .allowed_origin("151.248.120.138:9015")
+        //    .allowed_methods(vec!["GET", "POST"])
+        //    .allowed_headers(vec![header::AUTHORIZATION, header::ACCEPT])
+        //    .allowed_header(header::CONTENT_TYPE)
+        //    .max_age(3600);
 
         App::new()
             .wrap(RedisSession::new("127.0.0.1:6379", private_key.master()))
-            .wrap(cors)
+            //.wrap(cors)
             .service(static_files)
             .service(media_files)
             .configure(routes)
