@@ -2,7 +2,7 @@
 {% block title %}Рады Вас видеть | трезвый.рус{% endblock %}
 {% block content %}
 {% for user in all_users %}
-{{ user.id }} {{ user.first_name }}
+{{ user.id }} {{ user.first_name }} {{ user.phone }}
 {% endfor %}
 <div class="main-container h-100 h-sm-auto">
             <div class="row h-100 h-sm-auto">
