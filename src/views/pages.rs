@@ -44,18 +44,18 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
     } else {
         data.insert("is_authenticated", &false);
     }
-    let _all_users :Vec<User> = users.load(&_connection).expect("Error");
-    data.insert("all_users", &_all_users);
-    for user in _all_users {
-        let phone = &user.phone;
-        use rand::Rng;
-        let xxx1: i32 = rand::thread_rng().gen_range(0..10000);
-        let yyy1: String = xxx1.to_string();
-        diesel::update(&user)
-            .set(schema::users::phone.eq(yyy1))
-            .get_result::<User>(&_connection)
-            .expect("Error.");
-    }
+    //let _all_users :Vec<User> = users.load(&_connection).expect("Error");
+    //data.insert("all_users", &_all_users);
+    //for user in _all_users {
+    //    let phone = &user.phone;
+    //    use rand::Rng;
+    //    let xxx1: i32 = rand::thread_rng().gen_range(0..10000);
+    //    let yyy1: String = xxx1.to_string();
+    //    diesel::update(&user)
+    //        .set(schema::users::phone.eq(yyy1))
+    //        .get_result::<User>(&_connection)
+    //        .expect("Error.");
+    //}
     data.insert("is_host_admin", &_is_host_admin);
 
     let _rendered = TEMPLATES.render(&_template, &data).unwrap();
