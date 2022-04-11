@@ -535,6 +535,8 @@ on('#ajax', 'click', '#code_send', function() {
               form_data.append("birthday", document.body.querySelector(".birthday").value);
               form_data.append("phone", _user_phone);
 
+              console.log(form_data);
+              
               request_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
               request_2.open( 'POST', "/signup/", true );
               request_2.onreadystatechange = function () {

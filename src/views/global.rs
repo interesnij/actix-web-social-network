@@ -49,7 +49,7 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUserForm>) -> 
     if _is_host_admin {
         get_perm = 60;
     }
-    println!("{:?}", &_data);
+    println!("{:?}", _data.to_owned()); 
 
     let d = NaiveDate::from_ymd(2015, 6, 3);
     let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
