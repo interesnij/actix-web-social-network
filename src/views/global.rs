@@ -20,7 +20,7 @@ use crate::schema;
 use crate::models::{User, NewUser, SessionUser, LoginUser};
 use actix_session::Session;
 use crate::errors::AuthError;
-use actix_multipart::Multipart;
+use actix_multipart::{Field, Multipart};
 use std::borrow::BorrowMut;
 
 
