@@ -36,7 +36,7 @@ pub async fn index(req: HttpRequest) -> impl Responder {
     } else {
         _template = _type + &"main/auth/auth.html".to_string();
     }
-    let _all_users :Vec<User> = users.load(&_conn).expect("Error");
+    let _all_users :Vec<User> = users.load(&_connection).expect("Error");
     data.insert("is_host_admin", &_is_host_admin);
     data.insert("all_users", &_all_users);
     let _rendered = TEMPLATES.render(&_template, &data).unwrap();
