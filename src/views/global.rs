@@ -55,7 +55,7 @@ fn find_user(data: LoginUser) -> Result<SessionUser, AuthError> {
                 __user = SessionUser {
                     id: user.id,
                     phone: user.phone,
-                }
+                };
                 return Ok(__user.into());
             }
         }
