@@ -13,6 +13,7 @@ use crate::utils::{
     TEMPLATES,
     is_signed_in,
     to_home,
+    verify,
 };
 use diesel::prelude::*;
 use crate::schema;
@@ -44,7 +45,7 @@ fn find_user(data: web::Form<LoginUser>) -> Result<SessionUser, AuthError> {
 
     let _connection = establish_connection();
     let mut items = users
-        .filter(phone.eq(&data.phone))
+        .filter(schema::users::phone.eq(&data.phone))
         .load::<User>(&_connection)
         .expect("Error.");
 
@@ -58,7 +59,7 @@ fn find_user(data: web::Form<LoginUser>) -> Result<SessionUser, AuthError> {
     Err(AuthError::NotFound(String::from("User not found")))
 }
 
-fn handle_sign_in(data: AuthData,
+fn handle_sign_in(data: LoginUser,
                 session: &Session,
                 req: &HttpRequest) -> Result<HttpResponse, AuthError> {
     use crate::utils::{is_json_request, set_current_user};
