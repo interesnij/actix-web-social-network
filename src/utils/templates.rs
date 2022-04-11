@@ -1,6 +1,6 @@
 use actix_web::HttpRequest;
 use actix_session::Session;
-use crate::utils::is_signed_in;
+use crate::utils::{is_signed_in, get_current_user};
 
 
 pub fn get_default_template(session: Session, req: HttpRequest)
