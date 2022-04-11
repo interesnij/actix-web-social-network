@@ -17,7 +17,7 @@ CREATE TABLE artists (
     repost      INT DEFAULT 0,
     copy        INT DEFAULT 0,
 
-    can_see_el  CHAR(1) NOT NULL,
+    can_see_el  "char" NOT NULL,
     position    INT DEFAULT 0
 );
 
@@ -34,12 +34,12 @@ CREATE TABLE music_albums (
     repost          INT DEFAULT 0,
     copy            INT DEFAULT 0,
 
-    can_see_el      CHAR(1) NOT NULL,
-    can_see_comment CHAR(1) NOT NULL,
-    create_el       CHAR(1) NOT NULL,
-    create_comment  CHAR(1) NOT NULL,
-    copy_el         CHAR(1) NOT NULL,
-    position        CHAR(1) NOT NULL,
+    can_see_el      "char" NOT NULL,
+    can_see_comment "char" NOT NULL,
+    create_el       "char" NOT NULL,
+    create_comment  "char" NOT NULL,
+    copy_el         "char" NOT NULL,
+    position        "char" NOT NULL,
 
     CONSTRAINT fk_music_albums_creator
         FOREIGN KEY(creator_id)
@@ -55,7 +55,7 @@ CREATE TABLE music_lists (
     name            VARCHAR(100) NOT NULL,
     community_id    INT,
     creator_id      INT NOT NULL,
-    types           CHAR(1) NOT NULL,
+    types           "char" NOT NULL,
     description     VARCHAR(500),
     image           VARCHAR(500),
     created         TIMESTAMP NOT NULL,
@@ -64,12 +64,12 @@ CREATE TABLE music_lists (
     repost          INT DEFAULT 0,
     copy            INT DEFAULT 0,
 
-    can_see_el      CHAR(1) NOT NULL,
-    can_see_comment CHAR(1) NOT NULL,
-    create_el       CHAR(1) NOT NULL,
-    create_comment  CHAR(1) NOT NULL,
-    copy_el         CHAR(1) NOT NULL,
-    position        CHAR(1) NOT NULL,
+    can_see_el      "char" NOT NULL,
+    can_see_comment "char" NOT NULL,
+    create_el       "char" NOT NULL,
+    create_comment  "char" NOT NULL,
+    copy_el         "char" NOT NULL,
+    position        "char" NOT NULL,
 
     CONSTRAINT fk_music_lists_creator
         FOREIGN KEY(creator_id)
@@ -88,7 +88,7 @@ CREATE TABLE music (
     list_id       INT NOT NULL,
     genre_id      INT,
     album_id      INT,
-    types         CHAR(1) NOT NULL,
+    types         "char" NOT NULL,
     file          VARCHAR(500) NOT NULL,
     image         VARCHAR(500),
     created       TIMESTAMP NOT NULL,
@@ -146,9 +146,9 @@ CREATE TABLE music_list_perm (
     id            SERIAL PRIMARY KEY,
     user_id       INT NOT NULL,
     list_id       INT NOT NULL,
-    can_see_item  CHAR(1) NOT NULL,
-    create_item   CHAR(1) NOT NULL,
-    can_copy      CHAR(1) NOT NULL,
+    can_see_item  "char" NOT NULL,
+    create_item   "char" NOT NULL,
+    can_copy      "char" NOT NULL,
 
    CONSTRAINT fk_music_list_perm_user
         FOREIGN KEY(user_id)

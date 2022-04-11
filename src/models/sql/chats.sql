@@ -11,13 +11,13 @@ CREATE TABLE chats (
     members           INT DEFAULT 0,             -- кол-во участников
     created           TIMESTAMP NOT NULL,        -- когда создан
 
-    can_add_members   CHAR(1) NOT NULL,                       -- кто добавляет участников
-    can_fix_item      CHAR(1) NOT NULL,                       -- кто закрепляет сообщения чата
-    can_mention       CHAR(1) NOT NULL,                       -- кто упоминает о чате
-    can_add_admin     CHAR(1) NOT NULL,                       -- кто работает с админами
-    can_add_design    CHAR(1) NOT NULL,                       -- кто работает с дизайном
-    can_see_settings  CHAR(1) NOT NULL,                       -- кто видит настройки
-    can_see_log       CHAR(1) NOT NULL,                       -- кто видит логи чата
+    can_add_members   "char" NOT NULL,                       -- кто добавляет участников
+    can_fix_item      "char" NOT NULL,                       -- кто закрепляет сообщения чата
+    can_mention       "char" NOT NULL,                       -- кто упоминает о чате
+    can_add_admin     "char" NOT NULL,                       -- кто работает с админами
+    can_add_design    "char" NOT NULL,                       -- кто работает с дизайном
+    can_see_settings  "char" NOT NULL,                       -- кто видит настройки
+    can_see_log       "char" NOT NULL,                       -- кто видит логи чата
 
     CONSTRAINT fk_chat_creator                   -- связь с создателем
         FOREIGN KEY(creator_id)
@@ -32,7 +32,7 @@ CREATE TABLE chat_users (
     id                SERIAL PRIMARY KEY,            -- id объекта
     user_id           INT NOT NULL,                  -- id пользователя
     chat_id           INT NOT NULL,                  -- id чата
-    types             CHAR(1) NOT NULL,                 -- тип
+    types             "char" NOT NULL,                 -- тип
     is_administrator  BOOLEAN NOT NULL DEFAULT false,-- админ ли?
     created           TIMESTAMP NOT NULL,            -- создано
     no_disturb        TIMESTAMP,                     -- не беспокоить до...
@@ -50,13 +50,13 @@ CREATE TABLE chat_ie_settings (
     id                SERIAL PRIMARY KEY,     -- id объекта
     user_id           INT NOT NULL,           -- id пользователя
 
-    can_add_in_chat   CHAR(1) NOT NULL,          -- кто добавляет участников
-    can_add_fix       CHAR(1) NOT NULL,          -- кто закрепляет сообщения
-    can_send_mention  CHAR(1) NOT NULL,          -- кто упоминает о чате
-    can_add_admin     CHAR(1) NOT NULL,          -- кто работает с админами
-    can_add_design    CHAR(1) NOT NULL,          -- кто работает с дизайном
-    can_see_settings  CHAR(1) NOT NULL,          -- кто видит настройки
-    can_see_log       CHAR(1) NOT NULL,          -- кто видит логи
+    can_add_in_chat   "char" NOT NULL,          -- кто добавляет участников
+    can_add_fix       "char" NOT NULL,          -- кто закрепляет сообщения
+    can_send_mention  "char" NOT NULL,          -- кто упоминает о чате
+    can_add_admin     "char" NOT NULL,          -- кто работает с админами
+    can_add_design    "char" NOT NULL,          -- кто работает с дизайном
+    can_see_settings  "char" NOT NULL,          -- кто видит настройки
+    can_see_log       "char" NOT NULL,          -- кто видит логи
 
     CONSTRAINT fk_chat_ie_settings            -- связь с пользователем
         FOREIGN KEY(user_id)
