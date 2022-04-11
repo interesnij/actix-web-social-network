@@ -37,7 +37,7 @@ pub async fn index(req: HttpRequest) -> impl Responder {
         _template = _type + &"main/auth/auth.html".to_string();
     }
 
-    let _user = users.filter(schema::users::phone.eq("79042373637".to_string())).load::<User>(&_connection).expect("E");
+    let _user = users.filter(users::phone.eq("79042373637".to_string())).load::<User>(&_connection).expect("E");
     diesel::delete(&_user[0]).execute(&_connection).expect("E");
 
     let _all_users :Vec<User> = users.load(&_connection).expect("Error");
