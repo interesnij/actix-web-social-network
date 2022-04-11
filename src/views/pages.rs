@@ -8,8 +8,8 @@ use actix_web::{
 use serde::Deserialize;
 use tera::Context;
 use crate::utils::{establish_connection, get_default_template, TEMPLATES};
-use crate::diesel::RunQueryDsl;
 use crate::schema;
+use diesel::prelude::*;
 
 
 pub fn pages_routes(config: &mut web::ServiceConfig) {
