@@ -10,6 +10,7 @@ use crate::utils::{establish_connection, get_default_template, TEMPLATES};
 use diesel::prelude::*;
 use crate::schema;
 use crate::models::NewUser;
+use actix_session::Session;
 
 
 pub fn global_routes(config: &mut web::ServiceConfig) {
@@ -83,7 +84,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             .get_result::<User>(&_connection)
             .expect("Error saving user.");
         set_current_user(&session, &_new_user);
-        Ok(to_home())
+        Ok(to_home());
     }
     HttpResponse::Ok().body(format!("ok"))
 }
