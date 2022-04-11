@@ -69,7 +69,7 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl
 pub async fn phone_window(req: HttpRequest) -> impl Responder {
     let (_type, _is_host_admin) = get_default_template(req);
     let mut data = Context::new();
-    let _template = _type + &"main/auth/phone_verification.html".to_string();
+    let _template = _type + &"main/auth/phone_window.html".to_string();
     let rendered = TEMPLATES.render(&_template, &data).unwrap();
     HttpResponse::Ok().body(rendered)
 }
@@ -84,14 +84,26 @@ struct PhoneJson {
 pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Responder {
     let (_type, _is_host_admin) = get_default_template(req);
     let mut data = Context::new();
-    let _url = "https://api.ucaller.ru/v1.0/initCall?service_id=12203&key=GhfrKn0XKAmA1oVnyEzOnMI5uBnFN4ck&phone=".to_owned() + &_phone.to_string();
-    let __request = reqwest::get(_url).await.expect("E.");
-    let new_request = __request.text().await.unwrap();
-    let phone200: PhoneJson = serde_json::from_str(&new_request).unwrap();
-    println!("phone - {:?}", &phone200.phone);
-
-    let _template = _type + &"main/auth/phone_verification.html".to_string();
-    let rendered = TEMPLATES.render(&_template, &data).unwrap();
+    let req_phone = _phone.to_string();
+    if req_phone.len() > 8 {
+        let _some_user = users
+            .filter(schema::users::phone.eq(&req_phone))
+            .load::<User>(&_connection)
+            .expect("E");
+        if _some_user.len() > 0 {
+            let rendered = "Пользователь с таким номером уже зарегистрирован. Используйте другой номер или напишите в службу поддержки, если этот номер Вы не использовали ранее.";
+        } else {
+            let _url = "https://api.ucaller.ru/v1.0/initCall?service_id=12203&key=GhfrKn0XKAmA1oVnyEzOnMI5uBnFN4ck&phone=".to_owned() + &req_phone;
+            let __request = reqwest::get(_url).await.expect("E.");
+            let new_request = __request.text().await.unwrap();
+            let phone200: PhoneJson = serde_json::from_str(&new_request).unwrap();
+            println!("phone - {:?}", &phone200.phone);
+            let rendered = "Мы Вам звоним. Последние 4 цифры нашего номера - код подтверждения, который нужно ввести в поле 'Последние 4 цифры' и нажать 'Подтвердить' <div class='row block_verify mt-5'><div class='col-md-2'></div><div class='col-md-4'><input type='number' id='code' onkeyup='code_check();' class='form-control border-0' placeholder='Последние 4 цифры'><hr class='my-0'></div><div class='mb-3 col-md-4'><button type='button' disabled='disabled' id='code_send' class='btn btn-primary pink-gradient'>Подтвердить</button></div><div class='col-md-2'></div></div>";
+        }
+    }
+    else {
+        let rendered = "Введите, пожалуйста, корректное количество цифр Вашего телефона";
+    }
     HttpResponse::Ok().body(rendered)
 }
 
