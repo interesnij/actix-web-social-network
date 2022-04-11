@@ -19,7 +19,7 @@ CREATE TABLE users (
     b_avatar      VARCHAR(500),
     s_avatar      VARCHAR(500),
     email         VARCHAR(100),
-    birthday      TIMESTAMP NOT NULL,
+    birthday      DATE NOT NULL,
     last_activity TIMESTAMP NOT NULL,
 
     UNIQUE(phone),
