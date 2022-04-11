@@ -89,7 +89,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             phone: _new_user.phone,
         };
         set_current_user(&session, &_session_user);
-        Ok(to_home());
+        to_home();
     }
     HttpResponse::Ok().body(format!("ok"))
 }
