@@ -148,7 +148,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
     if params.is_ok() {
         println!("params ok!");
         let params_2 = params.unwrap();
-        let (_type, _is_host_admin, _request_user) = get_default_template(session, req);
+        let (_type, _is_host_admin, _request_user) = get_default_template(&session, req);
         let mut get_device = "a";
         let mut get_language = "a";
         let mut get_gender = "a";
