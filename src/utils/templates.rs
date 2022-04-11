@@ -12,7 +12,10 @@ pub fn get_default_template(session: Session, req: HttpRequest)
     {
     // получаем папку шаблона и проверяем на хост-админа
     let mut _type = "".to_string();
-    let _request_user = get_current_user(session);
+    let mut _request_user = "".to_string();
+    if get_current_user(&session).is_ok() {
+        _request_user = get_current_user(&session);
+    }
     for header in req.headers().into_iter() {
         if header.0 == "user-agent" {
             let _val = format!("{:?}", header.1);
