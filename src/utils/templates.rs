@@ -3,19 +3,18 @@ use actix_session::Session;
 use crate::utils::{is_signed_in, get_current_user};
 
 
-pub fn get_default_template(session: Session, req: HttpRequest)
+pub fn get_default_template(req: HttpRequest)
      -> (
          String,
-         bool,
-         String
+         bool
         )
     {
     // получаем папку шаблона и проверяем на хост-админа
     let mut _type = "".to_string();
     let mut _request_user = "".to_string();
-    if get_current_user(&session).is_ok() {
-        _request_user = get_current_user(&session);
-    }
+    //if get_current_user(&session).is_ok() {
+    //    _request_user = get_current_user(&session);
+    //}
     for header in req.headers().into_iter() {
         if header.0 == "user-agent" {
             let _val = format!("{:?}", header.1);
@@ -32,5 +31,5 @@ pub fn get_default_template(session: Session, req: HttpRequest)
     if _val.contains(&"91.239.184.81".to_string()) {
         _is_host_admin = true;
     };
-    (_type, _is_host_admin, _request_user)
+    (_type, _is_host_admin)
 }
