@@ -67,7 +67,7 @@ pub async fn process_signup(req: HttpRequest) -> impl Responder {
             language: get_language.to_string(),
             perm: get_perm,
             level: 100,
-            password: hash_password(&_data.password.clone()),
+            password: hash_password(&params_2.password.clone()),
             //password: params_2.password.clone(),
             birthday: NaiveDate::parse_from_str(&params_2.birthday.clone(), "%Y-%m-%d").unwrap(),
             //birthday: params_2.birthday.clone(),
