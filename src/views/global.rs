@@ -40,6 +40,7 @@ pub struct NewUserForm {
     pub phone:       String,
 }
 
+
 fn find_user(data: LoginUser) -> Result<SessionUser, AuthError> {
     use crate::schema::users::dsl::users;
 
@@ -95,6 +96,8 @@ pub async fn login(data: web::Form<LoginUser>, session: Session, req: HttpReques
     if is_signed_in(&session) {
         to_home();
     }
+    println!("{:?}", data.phone.clone());
+    println!("{:?}", data.password.clone());
     handle_sign_in(data.into_inner(), &session, &req)
 }
 pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responder {
