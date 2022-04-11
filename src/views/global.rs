@@ -78,7 +78,7 @@ pub async fn phone_window(req: HttpRequest) -> impl Responder {
 struct PhoneJson {
     status: bool,
     ucaller_id: i32,
-    phone: String,
+    phone: i64,
     phone_id: String,
     code: i32,
 }
