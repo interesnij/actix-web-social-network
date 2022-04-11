@@ -27,15 +27,15 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl
 
     let _connection = establish_connection();
     let (_type, _is_host_admin) = get_default_template(req);
-    let mut get_device = 'a';
-    let mut get_language = 'a';
-    let mut get_gender = 'a';
+    let mut get_device = "a";
+    let mut get_language = "a";
+    let mut get_gender = "a";
     let mut get_perm = 1;
     if _type == "mobile/".to_string() {
-        get_device = 'b';
+        get_device = "b";
     }
     if _data.gender == "Fem".to_string() {
-        get_gender = 'b';
+        get_gender = "b";
     }
     if _is_host_admin {
         get_perm = 60;
@@ -44,9 +44,9 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl
         first_name: _data.first_name.clone(),
         last_name: _data.last_name.clone(),
         phone: _data.phone.clone(),
-        gender: get_gender,
-        device: get_device,
-        language: get_language,
+        gender: get_gender.to_string(),
+        device: get_device.to_string(),
+        language: get_language.to_string(),
         perm: get_perm,
         level: 100,
         password: hash_password(&_data.password.clone()),
