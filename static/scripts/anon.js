@@ -510,17 +510,17 @@ on('#ajax', 'click', '#code_send', function() {
   _user_phone = document.getElementById('phone').value;
   _user_phone = _user_phone.replace(/[^0-9]/g, '');
 
-  if (_user_phone[0] == "+7") {
+  if (_user_phone[0] == "+") {
     _user_phone = _user_phone.slice(2)
   }
-  else if (_user_phone[0] == "8") {
+  else if (_user_phone[0] == "8" || _user_phone[0] == "7") {
     _user_phone = _user_phone.slice(1)
   };
   _user_phone = 7 + _user_phone;
 
     var code = document.getElementById('code').value;
     var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    request.open('GET', "/users/progs/phone_verify/" + _user_phone + "/" + code + "/", true);
+    request.open('GET', "/phone_verify/" + _user_phone + "/" + code + "/", true);
     request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200) {
