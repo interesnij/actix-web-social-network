@@ -36,7 +36,9 @@ pub async fn process_signup(req: HttpRequest) -> impl Responder {
 
     let _connection = establish_connection();
     let params = web::Query::<NewUserForm>::from_query(&req.query_string());
+    println!("!!!!")
     if params.is_ok() {
+        println!("params ok!")
         let params_2 = params.unwrap();
         let (_type, _is_host_admin) = get_default_template(req);
         let mut get_device = "a";
