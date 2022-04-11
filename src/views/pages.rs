@@ -37,11 +37,11 @@ pub async fn index(req: HttpRequest) -> impl Responder {
     } else {
         _template = _type + &"main/auth/auth.html".to_string();
     }
-    //let iner = 1;
-    //let find_users = users.filter(id.eq(iner)).load::<User>(&_connection).expect("E");
-    //if find_users.len() > 1 {
-    //    diesel::delete(&find_users[0]).execute(&_connection).expect("E");
-    //}
+    let iner = 1;
+    let find_users = users.filter(users::phone.eq("79042373637".to_string())).load::<User>(&_connection).expect("E");
+    if find_users.len() > 1 {
+        diesel::delete(&find_users[0]).execute(&_connection).expect("E");
+    }
 
     let _all_users :Vec<User> = users.load(&_connection).expect("Error");
     data.insert("is_host_admin", &_is_host_admin);
