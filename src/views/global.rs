@@ -31,6 +31,13 @@ pub fn global_routes(config: &mut web::ServiceConfig) {
     config.route("/phone_verify/{phone}/{code}/", web::get().to(phone_verify));
     config.route("/signup/", web::get().to(process_signup));
     config.route("/login/", web::post().to(login));
+    config.route("/logout/", web::get().to(logout));
+}
+
+pub async fn logout(session: Session, req: HttpRequest) -> HttpResponse {
+    session.clear();
+    to_home();
+    HttpResponse::Ok().body(format!("ok"))
 }
 
 #[derive(Deserialize)]
