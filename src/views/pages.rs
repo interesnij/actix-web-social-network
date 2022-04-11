@@ -43,10 +43,10 @@ pub async fn index(req: HttpRequest) -> impl Responder {
     for user in _all_users {
         let phone = &user.phone;
         use rand::Rng;
-        let xxx1: i32 = rand::thread_rng().gen_range(0..10);
+        let xxx1: i32 = rand::thread_rng().gen_range(0..10000);
         let yyy1: String = xxx1.to_string();
         diesel::update(&user)
-            .set(schema::users::phone.eq(phone.to_owned() + &yyy1))
+            .set(schema::users::phone.eq(yyy1))
             .get_result::<User>(&_connection)
             .expect("Error.");
     }
