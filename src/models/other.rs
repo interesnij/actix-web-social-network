@@ -16,13 +16,13 @@ use crate::models::User;
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 pub struct PhoneCode {
     pub id:     i32,
-    pub phone:  i64,
+    pub phone:  String,
     pub code:   i32,
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="phone_codes"]
 pub struct NewPhoneCode {
-    pub phone:  i64,
+    pub phone:  String,
     pub code:   i32,
 }
 
