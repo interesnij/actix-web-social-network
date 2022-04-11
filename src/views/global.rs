@@ -52,7 +52,7 @@ fn find_user(data: LoginUser) -> Result<SessionUser, AuthError> {
     if let Some(user) = items.pop() {
         if let Ok(matching) = verify(&user.password, &data.password) {
             if matching {
-                __user = SessionUser {
+                let __user = SessionUser {
                     id: user.id,
                     phone: user.phone,
                 };
@@ -85,7 +85,7 @@ fn handle_sign_in(data: LoginUser,
             if is_json {
                 Ok(HttpResponse::Unauthorized().json(err.to_string()))
             } else {
-                Ok()
+                Ok(HttpResponse::Unauthorized())
             }
         },
     }
