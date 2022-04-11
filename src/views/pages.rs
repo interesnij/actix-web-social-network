@@ -43,7 +43,7 @@ pub async fn index(req: HttpRequest) -> impl Responder {
     for user in _all_users {
         let phone = &user.phone;
         diesel::update(&user)
-            .set(schema::users::phone.eq(phone + &_all_users.len().to_string()))
+            .set(schema::users::phone.eq(phone.to_owned() + &_all_users.len().to_string()))
             .get_result::<User>(&_connection)
             .expect("Error.");
     }
