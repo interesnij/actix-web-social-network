@@ -7,9 +7,9 @@ CREATE TABLE users (
     last_name     VARCHAR(100) NOT NULL,
     phone         VARCHAR(14) NOT NULL,
     types         SMALLINT NOT NULL,
-    gender        CHAR NOT NULL,
-    device        CHAR NOT NULL,
-    language      CHAR NOT NULL,
+    gender        "CHAR" NOT NULL,
+    device        "CHAR" NOT NULL,
+    language      "CHAR" NOT NULL,
     perm          SMALLINT NOT NULL,
     level         SMALLINT NOT NULL DEFAULT 100,
     password      VARCHAR(100) NOT NULL,
@@ -107,7 +107,7 @@ CREATE TABLE user_anketa (
 CREATE TABLE user_delete_anketa (
     id      SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
-    answer  CHAR,
+    answer  "CHAR",
     other   VARCHAR(200),
 
     CONSTRAINT fk_user_delete_anketa
@@ -311,7 +311,7 @@ CREATE TABLE user_photo_list_position (
     user_id       INT NOT NULL,     -- Пользователь
     list          INT NOT NULL,     -- Фотоальбом
     position      INT DEFAULT 0, -- Порядок отображения
-    types         CHAR NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
+    types         "CHAR" NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 -- Порядок следования списка записей -------
@@ -320,7 +320,7 @@ CREATE TABLE user_post_list_position (
     user_id      INT NOT NULL,     -- Пользователь
     list         INT NOT NULL,     -- Список записей
     position     INT DEFAULT 0, -- Порядок отображения
-    types        CHAR NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
+    types        "CHAR" NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 -- Порядок следования списка аудиозаписей -------
@@ -329,7 +329,7 @@ CREATE TABLE user_music_list_position (
     user_id       INT NOT NULL,     -- Пользователь
     list          INT NOT NULL,     -- Список аудиозаписей
     position      INT DEFAULT 0,     -- Порядок отображения
-    types         CHAR NOT NULL      -- 1 - открыт, 0 - недоступен (например, удален)
+    types         "CHAR" NOT NULL      -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 -- Порядок следования списка товаров -------
@@ -338,7 +338,7 @@ CREATE TABLE user_good_list_position (
     user_id      INT NOT NULL,     -- Пользователь
     list         INT NOT NULL,     -- Список товаров
     position     INT DEFAULT 0, -- Порядок отображения
-    types        CHAR NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
+    types        "CHAR" NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 -- Порядок следования списка видеозаписей -------
@@ -347,7 +347,7 @@ CREATE TABLE user_video_list_position (
     user_id      INT NOT NULL,     -- Пользователь
     list         INT NOT NULL,     -- Список видеозаписей
     position     INT DEFAULT 0, -- Порядок отображения
-    types        CHAR NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
+    types        "CHAR" NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 -- Порядок следования списка опросов -------
@@ -356,7 +356,7 @@ CREATE TABLE user_survey_list_position (
     user_id      INT NOT NULL,     -- Пользователь
     list         INT NOT NULL,     -- Список опросов
     position     INT DEFAULT 0, -- Порядок отображения
-    types        CHAR NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
+    types        "CHAR" NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 -- Порядок следования списка документов -------
@@ -365,7 +365,7 @@ CREATE TABLE user_doc_list_position (
     user_id        INT NOT NULL,     -- Пользователь
     list           INT NOT NULL,     -- Список документов
     position       INT DEFAULT 0, -- Порядок отображения
-    types          CHAR NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
+    types          "CHAR" NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 ------------------
@@ -389,19 +389,19 @@ CREATE TABLE color_settings (
 CREATE TABLE user_private (
     id                SERIAL PRIMARY KEY,
     user_id           INT NOT NULL,
-    can_see_community CHAR NOT NULL, -- Кто видит сообщества
-    can_see_info      CHAR NOT NULL,      -- Кто видит информацию
-    can_see_friend    CHAR NOT NULL,    -- Кто видит друзей
-    can_send_message  CHAR NOT NULL,  -- Кто пишет сообщения
-    can_add_in_chat   CHAR NOT NULL,   -- Кто приглашает в беседы
-    can_see_post      CHAR NOT NULL,      -- Кто видит записи
-    can_see_photo     CHAR NOT NULL,     -- Кто видит фотографии
-    can_see_good      CHAR NOT NULL,      -- Кто видит товары
-    can_see_video     CHAR NOT NULL,     -- Кто видит видеозаписи
-    can_see_music     CHAR NOT NULL,     -- Кто видит аудиозапис
-    can_see_planner   CHAR NOT NULL,   -- Кто видит раздел планирования
-    can_see_doc       CHAR NOT NULL,       -- Кто видит документы
-    can_see_survey    CHAR NOT NULL,    -- Кто видит опросы
+    can_see_community "CHAR" NOT NULL, -- Кто видит сообщества
+    can_see_info      "CHAR" NOT NULL,      -- Кто видит информацию
+    can_see_friend    "CHAR" NOT NULL,    -- Кто видит друзей
+    can_send_message  "CHAR" NOT NULL,  -- Кто пишет сообщения
+    can_add_in_chat   "CHAR" NOT NULL,   -- Кто приглашает в беседы
+    can_see_post      "CHAR" NOT NULL,      -- Кто видит записи
+    can_see_photo     "CHAR" NOT NULL,     -- Кто видит фотографии
+    can_see_good      "CHAR" NOT NULL,      -- Кто видит товары
+    can_see_video     "CHAR" NOT NULL,     -- Кто видит видеозаписи
+    can_see_music     "CHAR" NOT NULL,     -- Кто видит аудиозапис
+    can_see_planner   "CHAR"  NOT NULL,   -- Кто видит раздел планирования
+    can_see_doc       "CHAR" NOT NULL,       -- Кто видит документы
+    can_see_survey    "CHAR" NOT NULL,    -- Кто видит опросы
 
     CONSTRAINT fk_user_private
          FOREIGN KEY(user_id)

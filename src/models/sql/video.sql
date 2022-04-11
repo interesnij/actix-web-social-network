@@ -10,7 +10,7 @@ CREATE TABLE video_lists (
     name            VARCHAR(100) NOT NULL,
     community_id    INT,
     creator_id      INT NOT NULL,
-    types           CHAR NOT NULL,
+    types           CHAR(1) NOT NULL,
     description     VARCHAR(500),
     created         TIMESTAMP NOT NULL,
     count           INT DEFAULT 0,
@@ -18,11 +18,11 @@ CREATE TABLE video_lists (
     copy            INT DEFAULT 0,
     position        INT DEFAULT 0,
 
-    can_see_el      CHAR NOT NULL,
-    can_see_comment CHAR NOT NULL,
-    create_el       CHAR NOT NULL,
-    create_comment  CHAR NOT NULL,
-    copy_el         CHAR NOT NULL,
+    can_see_el      CHAR(1) NOT NULL,
+    can_see_comment CHAR(1) NOT NULL,
+    create_el       CHAR(1) NOT NULL,
+    create_comment  CHAR(1) NOT NULL,
+    copy_el         CHAR(1) NOT NULL,
 
     CONSTRAINT fk_video_lists_creator
         FOREIGN KEY(creator_id)
@@ -39,7 +39,7 @@ CREATE TABLE videos (
     community_id    INT,
     creator_id      INT NOT NULL,
     list_id         INT NOT NULL,
-    types           CHAR NOT NULL,
+    types           CHAR(1) NOT NULL,
     preview         VARCHAR(500),
     image           VARCHAR(500),
     file            VARCHAR(500) NOT NULL,
@@ -76,7 +76,7 @@ CREATE TABLE video_comments (
     sticker_id  INT,
     parent_id   INT,
     content     VARCHAR(1000),
-    types       CHAR NOT NULL,
+    types       CHAR(1) NOT NULL,
     attach      VARCHAR(200),
     created     TIMESTAMP NOT NULL,
 
@@ -138,11 +138,11 @@ CREATE TABLE video_list_perm (
     id              SERIAL PRIMARY KEY,
     user_id         INT NOT NULL,
     list_id         INT NOT NULL,
-    can_see_item    CHAR NOT NULL,
-    can_see_comment CHAR NOT NULL,
-    create_item     CHAR NOT NULL,
-    create_comment  CHAR NOT NULL,
-    can_copy        CHAR NOT NULL,
+    can_see_item    CHAR(1) NOT NULL,
+    can_see_comment CHAR(1) NOT NULL,
+    create_item     CHAR(1) NOT NULL,
+    create_comment  CHAR(1) NOT NULL,
+    can_copy        CHAR(1) NOT NULL,
 
    CONSTRAINT fk_video_list_perm_user
         FOREIGN KEY(user_id)

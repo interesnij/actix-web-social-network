@@ -23,9 +23,9 @@ CREATE TABLE communities (
     id            SERIAL PRIMARY KEY,     -- id объекта
     name          VARCHAR(100) NOT NULL,  -- название
     description   VARCHAR(500),           -- описание
-    status        CHAR NOT NULL,          -- статус
+    status        CHAR(1) NOT NULL,          -- статус
     types         SMALLINT NOT NULL,      -- тип
-    perm          CHAR NOT NULL,          -- приватность
+    perm          CHAR(1) NOT NULL,          -- приватность
     level         SMALLINT DEFAULT 100,   -- уровень доверия
     have_link     VARCHAR(100),           -- красивая ссылка
     b_avatar      VARCHAR(500),           -- большой аватар
@@ -70,40 +70,40 @@ CREATE TABLE community_ie_settings (
     id                      SERIAL PRIMARY KEY,
     user_id                 INT NOT NULL,
 
-    can_see_info            CHAR NOT NULL,
-    can_see_member          CHAR NOT NULL,
-    can_send_message        CHAR NOT NULL,
-    can_see_doc             CHAR NOT NULL,
-    can_see_music           CHAR NOT NULL,
-    can_see_survey          CHAR NOT NULL,
-    can_see_post            CHAR NOT NULL,
-    can_see_post_comment    CHAR NOT NULL,
-    can_see_photo           CHAR NOT NULL,
-    can_see_photo_comment   CHAR NOT NULL,
-    can_see_good            CHAR NOT NULL,
-    can_see_good_comment    CHAR NOT NULL,
-    can_see_video           CHAR NOT NULL,
-    can_see_video_comment   CHAR NOT NULL,
-    can_see_planner         CHAR NOT NULL,
-    can_see_planner_comment CHAR NOT NULL,
+    can_see_info            CHAR(1) NOT NULL,
+    can_see_member          CHAR(1) NOT NULL,
+    can_send_message        CHAR(1) NOT NULL,
+    can_see_doc             CHAR(1) NOT NULL,
+    can_see_music           CHAR(1) NOT NULL,
+    can_see_survey          CHAR(1) NOT NULL,
+    can_see_post            CHAR(1) NOT NULL,
+    can_see_post_comment    CHAR(1) NOT NULL,
+    can_see_photo           CHAR(1) NOT NULL,
+    can_see_photo_comment   CHAR(1) NOT NULL,
+    can_see_good            CHAR(1) NOT NULL,
+    can_see_good_comment    CHAR(1) NOT NULL,
+    can_see_video           CHAR(1) NOT NULL,
+    can_see_video_comment   CHAR(1) NOT NULL,
+    can_see_planner         CHAR(1) NOT NULL,
+    can_see_planner_comment CHAR(1) NOT NULL,
 
-    can_add_post            CHAR NOT NULL,
-    can_add_photo           CHAR NOT NULL,
-    can_add_good            CHAR NOT NULL,
-    can_add_video           CHAR NOT NULL,
-    can_add_planner         CHAR NOT NULL,
-    can_add_doc             CHAR NOT NULL,
-    can_add_music           CHAR NOT NULL,
-    can_add_survey          CHAR NOT NULL,
+    can_add_post            CHAR(1) NOT NULL,
+    can_add_photo           CHAR(1) NOT NULL,
+    can_add_good            CHAR(1) NOT NULL,
+    can_add_video           CHAR(1) NOT NULL,
+    can_add_planner         CHAR(1) NOT NULL,
+    can_add_doc             CHAR(1) NOT NULL,
+    can_add_music           CHAR(1) NOT NULL,
+    can_add_survey          CHAR(1) NOT NULL,
 
-    can_create_post         CHAR NOT NULL,
-    can_create_photo        CHAR NOT NULL,
-    can_create_good         CHAR NOT NULL,
-    can_create_video        CHAR NOT NULL,
-    can_create_planner      CHAR NOT NULL,
-    can_create_doc          CHAR NOT NULL,
-    can_create_music        CHAR NOT NULL,
-    can_create_survey       CHAR NOT NULL,
+    can_create_post         CHAR(1) NOT NULL,
+    can_create_photo        CHAR(1) NOT NULL,
+    can_create_good         CHAR(1) NOT NULL,
+    can_create_video        CHAR(1) NOT NULL,
+    can_create_planner      CHAR(1) NOT NULL,
+    can_create_doc          CHAR(1) NOT NULL,
+    can_create_music        CHAR(1) NOT NULL,
+    can_create_survey       CHAR(1) NOT NULL,
 
     CONSTRAINT fk_community_ie_settings
         FOREIGN KEY(user_id)
@@ -132,21 +132,21 @@ CREATE TABLE community_info (
 CREATE TABLE community_private (
     id                SERIAL PRIMARY KEY,
     community_id      INT NOT NULL,
-    can_see_member    CHAR NOT NULL, -- Кто видит сообщества
-    can_see_info      CHAR NOT NULL, -- Кто видит информацию
-    can_send_message  CHAR NOT NULL, -- Кто пишет сообщения
-    can_see_post      CHAR NOT NULL, -- Кто видит записи
-    can_see_photo     CHAR NOT NULL, -- Кто видит фотографии
-    can_see_good      CHAR NOT NULL, -- Кто видит товары
-    can_see_video     CHAR NOT NULL, -- Кто видит видеозаписи
-    can_see_music     CHAR NOT NULL, -- Кто видит аудиозапис
-    can_see_planner   CHAR NOT NULL, -- Кто видит раздел планирования
-    can_see_doc       CHAR NOT NULL, -- Кто видит документы
-    can_see_survey    CHAR NOT NULL, -- Кто видит опросы
+    can_see_member    CHAR(1) NOT NULL, -- Кто видит сообщества
+    can_see_info      CHAR(1) NOT NULL, -- Кто видит информацию
+    can_send_message  CHAR(1) NOT NULL, -- Кто пишет сообщения
+    can_see_post      CHAR(1) NOT NULL, -- Кто видит записи
+    can_see_photo     CHAR(1) NOT NULL, -- Кто видит фотографии
+    can_see_good      CHAR(1) NOT NULL, -- Кто видит товары
+    can_see_video     CHAR(1) NOT NULL, -- Кто видит видеозаписи
+    can_see_music     CHAR(1) NOT NULL, -- Кто видит аудиозапис
+    can_see_planner   CHAR(1) NOT NULL, -- Кто видит раздел планирования
+    can_see_doc       CHAR(1) NOT NULL, -- Кто видит документы
+    can_see_survey    CHAR(1) NOT NULL, -- Кто видит опросы
 
-    can_see_settings  CHAR NOT NULL, -- Кто видит настройки
-    can_see_log       CHAR NOT NULL, -- Кто видит логи
-    can_see_stat      CHAR NOT NULL, -- Кто видит статистику
+    can_see_settings  CHAR(1) NOT NULL, -- Кто видит настройки
+    can_see_log       CHAR(1) NOT NULL, -- Кто видит логи
+    can_see_stat      CHAR(1) NOT NULL, -- Кто видит статистику
     CONSTRAINT fk_community_private
          FOREIGN KEY(community_id)
              REFERENCES communities(id)
@@ -270,7 +270,7 @@ CREATE TABLE community_photo_list_position (
     community_id INT NOT NULL,       -- Сообщество
     list         INT DEFAULT 0,       -- Фотоальбом
     position     INT DEFAULT 0,       -- Порядок отображения
-    types        CHAR NOT NULL        -- 1 - открыт, 0 - недоступен (например, удален)
+    types        CHAR(1) NOT NULL        -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 -- Порядок следования списка записей -------
@@ -279,7 +279,7 @@ CREATE TABLE community_post_list_position (
     community_id    INT NOT NULL,      -- Сообщество
     list            INT DEFAULT 0,      -- Список записей
     position        INT DEFAULT 0,      -- Порядок отображения
-    types           CHAR NOT NULL       -- 1 - открыт, 0 - недоступен (например, удален)
+    types           CHAR(1) NOT NULL       -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 -- Порядок следования списка аудиозаписей -------
@@ -288,7 +288,7 @@ CREATE TABLE community_music_list_position (
     community_id   INT NOT NULL,       -- Сообщество
     list           INT DEFAULT 0,       -- Список аудиозаписей
     position       INT DEFAULT 0,       -- Порядок отображения
-    types          CHAR NOT NULL        -- 1 - открыт, 0 - недоступен (например, удален)
+    types          CHAR(1) NOT NULL        -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 -- Порядок следования списка товаров -------
@@ -297,7 +297,7 @@ CREATE TABLE community_good_list_position (
     community_id INT NOT NULL,        -- Сообщество
     list         INT DEFAULT 0,       -- Список товаров
     position     INT DEFAULT 0,       -- Порядок отображения
-    types        CHAR NOT NULL        -- 1 - открыт, 0 - недоступен (например, удален)
+    types        CHAR(1) NOT NULL        -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 -- Порядок следования списка видеозаписей -------
@@ -306,7 +306,7 @@ CREATE TABLE community_video_list_position (
     community_id INT NOT NULL,      -- Сообщество
     list         INT DEFAULT 0,      -- Список видеозаписей
     position     INT DEFAULT 0,      -- Порядок отображения
-    types        CHAR NOT NULL       -- 1 - открыт, 0 - недоступен (например, удален)
+    types        CHAR(1) NOT NULL       -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 -- Порядок следования списка опросов -------
@@ -315,7 +315,7 @@ CREATE TABLE community_survey_list_position (
     community_id  INT NOT NULL,      -- Сообщество
     list          INT DEFAULT 0,      -- Список опросов
     position      INT DEFAULT 0,      -- Порядок отображения
-    types         CHAR NOT NULL       -- 1 - открыт, 0 - недоступен (например, удален)
+    types         CHAR(1) NOT NULL       -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
 -- Порядок следования списка документов -------
@@ -324,5 +324,5 @@ CREATE TABLE community_doc_list_position (
     community_id  INT NOT NULL,      -- Сообщество
     list          INT DEFAULT 0,      -- Список документов
     position      INT DEFAULT 0,      -- Порядок отображения
-    types         CHAR NOT NULL       -- 1 - открыт, 0 - недоступен (например, удален)
+    types         CHAR(1) NOT NULL       -- 1 - открыт, 0 - недоступен (например, удален)
 );

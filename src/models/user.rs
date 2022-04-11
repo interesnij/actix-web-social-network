@@ -52,8 +52,8 @@ use crate::utils::establish_connection;
     // 'b' Телефон
 
 ///// Язык пользоватетеля
-    // 'a' Комп
-    // 'b' Телефон
+    // 'a' Русский
+    // 'b' Английский
 
 #[derive(Queryable, Identifiable)]
 #[table_name="users"]
@@ -62,12 +62,12 @@ pub struct User {
     pub first_name:    String,
     pub last_name:     String,
     pub phone:         String,
-    pub types:         i8,
+    pub types:         i16,
     pub gender:        char,
     pub device:        char,
     pub language:      char,
-    pub perm:          i8,
-    pub level:         i8,
+    pub perm:          i16,
+    pub level:         i16,
     pub password:      String,
     pub have_link:     Option<String>,
     pub city:          Option<String>,
@@ -87,9 +87,9 @@ pub struct NewUser {
     pub last_name:     String,
     pub phone:         String,
     pub types:         i16,
-    pub gender:        String,
-    pub device:        String,
-    pub language:      String,
+    pub gender:        char,
+    pub device:        char,
+    pub language:      char,
     pub perm:          i16,
     pub level:         i16,
     pub password:      String,
