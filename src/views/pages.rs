@@ -31,10 +31,9 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
     let mut _template : String;
 
     let (_type, _is_host_admin) = get_default_template(req);
-    let mut _request_user :String;
     if is_signed_in(&session) {
         _template = _type + &"main/lists/news_list.html".to_string();
-        _request_user = Result<get_current_user(&session), "".to_string()>;
+        let _request_user = Ok(get_current_user(&session));
         data.insert("request_user", &_request_user);
     } else {
         _template = _type + &"main/auth/auth.html".to_string();
