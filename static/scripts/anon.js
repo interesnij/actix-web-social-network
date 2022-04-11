@@ -654,7 +654,11 @@ on('body', 'click', '#register_ajax', function() {
     final_form.append(create_hide_input ("first_name", first_name.value, "first_name"));
     final_form.append(create_hide_input ("last_name", last_name.value, "last_name"));
     final_form.append(create_hide_input ("password", form.querySelector("#password1").value, "password1"));
-    final_form.append(create_hide_input ("birthday", form.querySelector("#date_year").value + "-" + form.querySelector("#date_month").value + "-" + form.querySelector("#date_day").value);
+    final_form.append(
+      create_hide_input ("birthday",
+        form.querySelector("#date_year").value
+        + "-" + form.querySelector("#date_month").value +
+        "-" + form.querySelector("#date_day").value));
     final_form.append(create_hide_input ("gender", form.querySelector("#customradio1").value,"gender"));
   }};
   reg_link.send( );
