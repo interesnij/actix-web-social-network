@@ -32,7 +32,7 @@ pub struct NewUserForm {
 pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responder {
     use crate::schema::users::dsl::users;
     use crate::utils::{hash_password, is_signed_in, set_current_user, to_home};
-    use crate::models::User;
+    use crate::models::{User, SessionUser};
     use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
 
     if is_signed_in(&session) {
@@ -83,7 +83,12 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             .values(&form_user)
             .get_result::<User>(&_connection)
             .expect("Error saving user.");
-        set_current_user(&session, &_new_user);
+
+        let _session_user = SessionUser {
+            id: _new_user.id,
+            phone: _new_user.phone,
+        };
+        set_current_user(&session, &_session_user);
         Ok(to_home());
     }
     HttpResponse::Ok().body(format!("ok"))
