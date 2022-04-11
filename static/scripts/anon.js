@@ -658,7 +658,7 @@ on('body', 'click', '#register_ajax', function() {
       create_hide_input ("birthday",
         form.querySelector("#date_year").value
         + "-" + form.querySelector("#date_month").value +
-        "-" + form.querySelector("#date_day").value));
+        "-" + form.querySelector("#date_day").value), "birthday");
     final_form.append(create_hide_input ("gender", form.querySelector("#customradio1").value,"gender"));
   }};
   reg_link.send( );
