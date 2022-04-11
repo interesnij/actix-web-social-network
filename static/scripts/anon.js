@@ -698,7 +698,7 @@ on('body', 'click', '#logg', function() {
 
   form_data = new FormData(form);
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'POST', "/rest-auth/login/", true );
+  link.open( 'POST', "/login/", true );
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
