@@ -7,7 +7,7 @@ use actix_web::{
 };
 use serde::Deserialize;
 use tera::Context;
-use crate::utils::{is_signed_in, get_request_user, establish_connection, get_default_template, TEMPLATES};
+use crate::utils::{is_signed_in, get_current_user, establish_connection, get_default_template, TEMPLATES};
 use crate::schema;
 use diesel::prelude::*;
 use actix_session::Session;
@@ -33,12 +33,14 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
     let (_type, _is_host_admin) = get_default_template(req);
     if is_signed_in(&session) {
         _template = _type + &"main/lists/news_list.html".to_string();
-        let _request_user = get_request_user(&session);
-        data.insert("request_user", &_request_user);
-        //match _request_user {
-        //    Ok(s) => data.insert("request_user", &s),
-        //    _ => data.insert("request_user", &false),
-        //}
+        let _request_user = get_current_user(&session);
+        match _request_user {
+            Ok(s) => data.insert("request_user", &users
+                .filter(schema::users::id.eq(_request_user.id))
+                .load::<User>(&_connection)
+                .expect("E")[0]),
+            _ => data.insert("request_user", &false),
+        }
     } else {
         _template = _type + &"main/auth/auth.html".to_string();
         data.insert("is_authenticated", &false);
