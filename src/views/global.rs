@@ -20,6 +20,8 @@ use crate::schema;
 use crate::models::{User, NewUser, SessionUser, LoginUser};
 use actix_session::Session;
 use crate::errors::AuthError;
+use actix_multipart::Multipart;
+use std::borrow::BorrowMut;
 
 
 pub fn global_routes(config: &mut web::ServiceConfig) {
@@ -92,13 +94,38 @@ fn handle_sign_in(data: LoginUser,
     }
 }
 
-pub async fn login(data: web::Form<LoginUser>, session: Session, req: HttpRequest) -> impl Responder {
+pub async fn login_form(payload: &mut Multipart) -> LoginUser {
+    let mut form: LoginUser = LoginUser {
+        phone: "".to_string(),
+        password: "".to_string(),
+    };
+
+    while let Some(item) = payload.next().await {
+        let mut field: Field = item.expect("split_payload err");
+        let name = field.name();
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let data_string = s.to_string();
+                    if field.name() == "phone" {
+                        form.phone = data_string
+                    } else if field.name() == "password" {
+                        form.password = data_string
+                    }
+                }
+            }
+    }
+    form
+}
+
+pub async fn login(mut payload: Multipart, session: Session, req: HttpRequest) -> impl Responder {
     if is_signed_in(&session) {
         to_home();
     }
-    println!("{:?}", data.phone.clone());
-    println!("{:?}", data.password.clone());
-    handle_sign_in(data.into_inner(), &session, &req)
+    let form = login_form(payload.borrow_mut()).await;
+    println!("{:?}", form.phone.clone());
+    println!("{:?}", form.password.clone());
+    handle_sign_in(form.into_inner(), &session, &req)
 }
 pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responder {
     use crate::schema::users::dsl::users;
