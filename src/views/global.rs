@@ -2,7 +2,7 @@ use actix_web::{
     HttpRequest,
     Responder,
     HttpResponse,
-    web
+    web,
 };
 use serde::Deserialize;
 use tera::Context;
@@ -54,7 +54,7 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUserForm>) -> 
     println!("phone {:?}", _data.phone.clone());
     println!("password {:?}", _data.password.clone());
     println!("gender {:?}", _data.gender.clone());
-    println!("birthday {:?}", _data.birthday.clone()); 
+    println!("birthday {:?}", _data.birthday.clone());
 
     let d = NaiveDate::from_ymd(2015, 6, 3);
     let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
@@ -68,9 +68,10 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUserForm>) -> 
         language: get_language.to_string(),
         perm: get_perm,
         level: 100,
-        password: hash_password(&_data.password.clone()),
-        //birthday: NaiveDate::parse_from_str(&_data.birthday.clone(), "%Y-%m-%d").unwrap(),
-        birthday: _data.birthday.clone(),
+        //password: hash_password(&_data.password.clone()),
+        password: _data.password.clone(),
+        birthday: NaiveDate::parse_from_str(&_data.birthday.clone(), "%Y-%m-%d").unwrap(),
+        //birthday: _data.birthday.clone(),
         last_activity: NaiveDateTime::new(d, t),
     };
 
