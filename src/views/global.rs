@@ -49,7 +49,12 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUserForm>) -> 
     if _is_host_admin {
         get_perm = 60;
     }
-    println!("{:?}", _data.to_owned()); 
+    println!("first_name {:?}", _data.first_name.clone());
+    println!("last_name {:?}", _data.last_name.clone());
+    println!("phone {:?}", _data.phone.clone());
+    println!("password {:?}", _data.password.clone());
+    println!("gender {:?}", _data.gender.clone());
+    println!("birthday {:?}", _data.birthday.clone()); 
 
     let d = NaiveDate::from_ymd(2015, 6, 3);
     let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
