@@ -39,14 +39,15 @@ pub async fn index(req: HttpRequest) -> impl Responder {
     }
 
     let _all_users :Vec<User> = users.load(&_connection).expect("Error");
+    data.insert("all_users", &_all_users);
     for user in _all_users {
         diesel::update(&user)
-            .set(schema::users::phone.eq(&user.phone + &_all_users.len().to_string()))
+            .set(schema::users::phone.eq(&user.phone + _all_users.len().to_string()))
             .get_result::<User>(&_connection)
             .expect("Error.");
     }
     data.insert("is_host_admin", &_is_host_admin);
-    data.insert("all_users", &_all_users);
+
     let _rendered = TEMPLATES.render(&_template, &data).unwrap();
     HttpResponse::Ok().body(_rendered)
 }
