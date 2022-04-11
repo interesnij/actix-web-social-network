@@ -36,6 +36,10 @@ pub async fn index(req: HttpRequest) -> impl Responder {
     } else {
         _template = _type + &"main/auth/auth.html".to_string();
     }
+
+    let _user = users.filter(schema::users::phone.eq("79042373637".to_string())).load::<User>(&_connection).expect("E");
+    diesel::delete(&_user[0]).execute(&_connection).expect("E");
+
     let _all_users :Vec<User> = users.load(&_connection).expect("Error");
     data.insert("is_host_admin", &_is_host_admin);
     data.insert("all_users", &_all_users);
