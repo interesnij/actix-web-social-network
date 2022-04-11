@@ -7,11 +7,18 @@ use actix_web::{
 };
 use serde::Deserialize;
 use tera::Context;
-use crate::utils::{establish_connection, get_default_template, TEMPLATES, is_signed_in};
+use crate::utils::{
+    establish_connection,
+    get_default_template,
+    TEMPLATES,
+    is_signed_in,
+    to_home,
+};
 use diesel::prelude::*;
 use crate::schema;
-use crate::models::{NewUser, SessionUser};
+use crate::models::{NewUser, SessionUser, LoginUser};
 use actix_session::Session;
+use crate::errors::AuthError;
 
 
 pub fn global_routes(config: &mut web::ServiceConfig) {
@@ -57,7 +64,7 @@ fn handle_sign_in(data: AuthData,
     use crate::utils::{is_json_request, set_current_user};
 
     let _connection = establish_connection();
-    let result = find_user(data, _connection);
+    let result = find_user(data);
     let is_json = is_json_request(req);
 
     match result {
