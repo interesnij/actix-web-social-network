@@ -11,6 +11,7 @@ use crate::utils::{establish_connection, get_default_template, TEMPLATES};
 use crate::schema;
 use diesel::prelude::*;
 use crate::utils::is_signed_in;
+use actix_session::Session;
 
 
 pub fn pages_routes(config: &mut web::ServiceConfig) {
