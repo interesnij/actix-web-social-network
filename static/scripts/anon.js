@@ -504,7 +504,12 @@ var ready = (callback) => {
   if (document.readyState != "loading") callback();
   else document.addEventListener("DOMContentLoaded", callback);
 };
-
+function send_user_form (url) {
+  request_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+  request_2.open( 'GET', url, true );
+  request_2.send();
+  console.log("send!!");
+};
 on('#ajax', 'click', '#code_send', function() {
   _form = document.body.querySelector(".final_process_form");
   _user_phone = document.getElementById('phone').value;
@@ -525,19 +530,18 @@ on('#ajax', 'click', '#code_send', function() {
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200) {
           var div = document.getElementById('jsondata');
+
           div.innerHTML = request.responseText;
           console.log(request.responseText);
-            if (request.responseText.indexOf("ok") != -1) {
+            if (request.responseText == "ok") {
+              console.log("ok");
               _first_name = document.body.querySelector(".first_name").value;
               _last_name = document.body.querySelector(".last_name").value;
               _gender = document.body.querySelector(".gender").value;
               _password = document.body.querySelector(".password1").value;
               _birthday = document.body.querySelector(".birthday").value;
               _params = "?first_name=" + _first_name + "&last_name=" + _last_name + "&gender=" + _gender + "&password=" + _password + "&birthday=" + _birthday  + "&_phone=" + _user_phone;
-
-              request_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-              request_2.open( 'GET', "/signup/" + _params, true );
-              request_2.send();
+              send_user_form("/signup/" + _params);
             }
         }
 
