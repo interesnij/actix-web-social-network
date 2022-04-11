@@ -3,7 +3,7 @@
     <div class="container">
         <div class="align-items-center">
           <div class="col-auto" style="padding-left: 0;">
-              <a href="/news_list/" class="logo ajax">
+              <a href="/" class="logo ajax">
                 <img src="/static/images/hakew.png" alt="logo">
                 <span style="margin-top:10px;float:left;"class="d-none d-sm-block">ТРЕЗВЫЙ.РУС</span>
               </a>
@@ -16,6 +16,7 @@
                    <a class="btn header-color-secondary btn-icon pointer" id="notification" style="position: relative;">
                      <svg fill="currentColor" class="svg_default" width="30" height="30" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
                      <span class="new_unread_notify">
+
                       </span>
                    </a>
                </div>
@@ -23,13 +24,18 @@
 
                 <div class="dropdown text-hide-xs d-inline-block">
                     <a class="btn header-color-secondary username drop">
-                       <figure class="userpic" data-id="" data-pk="request.user.get_link" data-name="request.user.get_full_name" data-device="comp">
+                       <figure class="userpic" data-id="{{ request_user.pk }}" data-pk="request_user.get_link" data-name="{{ request_user.first_name }} {{ request_user.last_name }}" data-device="comp">
+                         {% if request_user.s_avatar %}
+                           <img src="{{ request_user.s_avatar }}" alt="">
+                         {% else %}
+                           <svg fill="currentColor" class="svg_default svg_info" style="margin-bottom:40px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"/></svg>
+                         {% endif %}
                        </figure>
                        <h5 class="text-hide-xs"><span class="header-color-primary">Мой профиль</span></h5>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right profile-dropdown">
 
-                        <a class="dropdown-item ajax" href="request.user.get_link">
+                        <a class="dropdown-item ajax" href="request.user">
                             <div class="row align-items-center">
                                 <div class="col">Моя страница</div>
                                 <div class="col-auto">
