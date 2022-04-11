@@ -75,7 +75,7 @@ pub struct User {
     pub b_avatar:      Option<String>,
     pub s_avatar:      Option<String>,
     pub email:         Option<String>,
-    pub birthday:      chrono::NaiveDateTime,
+    pub birthday:      chrono::NaiveDate,
     pub last_activity: chrono::NaiveDateTime,
 }
 
