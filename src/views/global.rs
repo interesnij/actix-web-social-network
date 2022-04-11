@@ -105,7 +105,7 @@ pub async fn login_form(payload: &mut Multipart) -> LoginUser {
         let name = field.name();
             while let Some(chunk) = field.next().await {
                 let data = chunk.expect("split_payload err chunk");
-                if let Ok(s) = str::from_utf8(&data) {
+                if let Ok(s) = std::str::from_utf8(&data) {
                     let data_string = s.to_string();
                     if field.name() == "phone" {
                         form.phone = data_string
