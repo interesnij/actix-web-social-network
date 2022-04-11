@@ -43,7 +43,7 @@ pub struct NewUserForm {
 }
 
 
-fn find_user(data: LoginUser) -> Result<SessionUser, AuthError> {
+fn find_user(data: LoginUser2) -> Result<SessionUser, AuthError> {
     use crate::schema::users::dsl::users;
 
     let _connection = establish_connection();
@@ -66,7 +66,7 @@ fn find_user(data: LoginUser) -> Result<SessionUser, AuthError> {
     Err(AuthError::NotFound(String::from("User not found")))
 }
 
-fn handle_sign_in(data: LoginUser,
+fn handle_sign_in(data: LoginUser2,
                 session: &Session,
                 req: &HttpRequest) -> Result<HttpResponse, AuthError> {
     use crate::utils::{is_json_request, set_current_user};
@@ -94,8 +94,13 @@ fn handle_sign_in(data: LoginUser,
     }
 }
 
-pub async fn login_form(payload: &mut Multipart) -> LoginUser {
-    let mut form: LoginUser = LoginUser {
+#[derive(Deserialize, Serialize, Debug)]
+pub struct LoginUser2 {
+    pub phone:    String,
+    pub password: String,
+}
+pub async fn login_form(payload: &mut Multipart) -> LoginUser2 {
+    let mut form: LoginUser2 = LoginUser2 {
         phone: "".to_string(),
         password: "".to_string(),
     };
