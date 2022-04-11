@@ -80,7 +80,7 @@ struct PhoneJson {
     ucaller_id: i32,
     phone: String,
     phone_id: String,
-    code: i32;
+    code: i32,
 }
 pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Responder {
     let (_type, _is_host_admin) = get_default_template(req);
@@ -107,8 +107,8 @@ pub async fn phone_send(req: HttpRequest, _phone: web::Path<String>) -> impl Res
             let phone200: PhoneJson = serde_json::from_str(&new_request).unwrap();
 
             let new_phone_code = NewPhoneCode {
-                phone: &phone200.phone.to_string(),
-                code: &phone200.code,
+                phone: phone200.phone.to_string(),
+                code:  phone200.code,
             };
             diesel::insert_into(schema::phone_codes::table)
                 .values(&new_phone_code)
