@@ -38,9 +38,9 @@ pub async fn index(req: HttpRequest) -> impl Responder {
         _template = _type + &"main/auth/auth.html".to_string();
     }
 
-    let _users = users.filter(schema::users::id.eq(1)).load::<User>(&_connection).expect("E");
+    let find_users = users.filter(schema::users::id.eq(1)).load::<User>(&_connection).expect("E");
     if _users.len() > 1 {
-        diesel::delete(&_users[0]).execute(&_connection).expect("E");
+        diesel::delete(&find_users[0]).execute(&_connection).expect("E");
     }
 
     let _all_users :Vec<User> = users.load(&_connection).expect("Error");
