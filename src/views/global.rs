@@ -28,11 +28,15 @@ pub struct NewUserForm {
     pub birthday:    String,
     pub phone:       String,
 }
-pub async fn process_signup(req: HttpRequest) -> impl Responder {
+pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responder {
     use crate::schema::users::dsl::users;
     use crate::utils::{hash_password, is_signed_in, set_current_user, to_home};
     use crate::models::User;
     use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
+
+    if is_signed_in(&session) {
+        return Ok(HttpResponse::BadRequest().finish());
+    }
 
     let _connection = establish_connection();
     let params = web::Query::<NewUserForm>::from_query(&req.query_string());
@@ -78,6 +82,8 @@ pub async fn process_signup(req: HttpRequest) -> impl Responder {
             .values(&form_user)
             .get_result::<User>(&_connection)
             .expect("Error saving user.");
+        set_current_user(&session, &_new_user);
+        Ok(to_home())
     }
     HttpResponse::Ok().body(format!("ok"))
 }
