@@ -100,7 +100,7 @@ pub fn get_request_user(session: &Session) -> User  {
     use crate::schema;
     use crate::schema::users::dsl::users;
 
-    let _user_string = session.get::<String>("user").unwrap();
+    let _user_string = Some(session.get::<String>("user")).unwrap();
     let _current_user = serde_json::from_str(&_user_string);
     let _connection = establish_connection();
     users
