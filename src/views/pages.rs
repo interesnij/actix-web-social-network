@@ -40,8 +40,8 @@ pub async fn index(req: HttpRequest) -> impl Responder {
 
     let _all_users :Vec<User> = users.load(&_connection).expect("Error");
     for user in _all_users {
-        diesel::update(user)
-            .set(schema::users::phone.eq(1))
+        diesel::update(&user)
+            .set(schema::users::phone.eq(schema::users::phone + _all_users.len().to_string()))
             .get_result::<User>(&_connection)
             .expect("Error.");
     }
