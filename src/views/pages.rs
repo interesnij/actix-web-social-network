@@ -38,7 +38,6 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
             Ok(s) => data.insert("request_user", &s),
             _ => data.insert("request_user", &false),
         }
-        //data.insert("request_user", &_request_user);
     } else {
         _template = _type + &"main/auth/auth.html".to_string();
     }
