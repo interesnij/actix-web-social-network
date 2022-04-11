@@ -10,7 +10,6 @@ use tera::Context;
 use crate::utils::{is_signed_in, establish_connection, get_default_template, TEMPLATES};
 use crate::schema;
 use diesel::prelude::*;
-use crate::utils::is_signed_in;
 use actix_session::Session;
 
 
