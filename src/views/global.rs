@@ -53,7 +53,7 @@ pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl
         password: hash_password(&_data.password.clone()),
         //birthday: NaiveDate::parse_from_str(&_data.birthday.clone(), "%Y-%m-%d").unwrap(),
         birthday: _data.birthday.clone(),
-        last_activity: NaiveDateTime::now(d),
+        last_activity: NaiveDateTime::now(),
     };
 
     let _new_user = diesel::insert_into(schema::users::table)
