@@ -19,7 +19,16 @@ pub fn global_routes(config: &mut web::ServiceConfig) {
     config.route("/signup/", web::post().to(process_signup));
 }
 
-pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUser>) -> impl Responder {
+#[derive(Deserialize)]
+pub struct NewUserForm {
+    pub first_name:  String,
+    pub last_name:   String,
+    pub phone:       String,
+    pub password:    String,
+    pub gender:      String,
+    pub birthday:    chrono::NaiveDate,
+}
+pub async fn process_signup(req: HttpRequest, _data: web::Form<NewUserForm>) -> impl Responder {
     use crate::schema::users::dsl::users;
     use crate::utils::{hash_password, is_signed_in, set_current_user, to_home};
     use crate::models::User;
