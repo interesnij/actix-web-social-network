@@ -36,7 +36,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
     use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
 
     if is_signed_in(&session) {
-        Ok(to_home());
+        to_home();
     }
 
     let _connection = establish_connection();
