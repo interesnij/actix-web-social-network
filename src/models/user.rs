@@ -96,7 +96,7 @@ pub struct NewUser {
     pub last_activity: chrono::NaiveDateTime,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct LoginUser {
     pub phone:    String,
     pub password: String,
