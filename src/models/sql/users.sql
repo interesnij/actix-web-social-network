@@ -12,7 +12,7 @@ CREATE TABLE users (
     language      "char" NOT NULL,
     perm          SMALLINT NOT NULL,
     level         SMALLINT NOT NULL DEFAULT 100,
-    password      VARCHAR(300) NOT NULL,
+    password      VARCHAR(500) NOT NULL,
     have_link     VARCHAR(100),
     city          VARCHAR(100),
     status        VARCHAR(100),
