@@ -42,6 +42,7 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
         data.insert("is_authenticated", &false);
     }
     data.insert("is_host_admin", &_is_host_admin);
+    data.insert("request.user", &_request_user);
 
     let _rendered = TEMPLATES.render(&_template, &data).unwrap();
     HttpResponse::Ok().body(_rendered)

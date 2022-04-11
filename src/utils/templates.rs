@@ -2,7 +2,13 @@ use actix_web::HttpRequest;
 use actix_session::Session;
 
 
-pub fn get_default_template(session: Session, req: HttpRequest) -> (String, bool) {
+pub fn get_default_template(session: Session, req: HttpRequest)
+     -> (
+         String,
+         bool,
+         String
+        )
+    {
     // получаем папку шаблона и проверяем на хост-админа
     let mut _type = "".to_string();
     let _request_user = get_current_user(session);
