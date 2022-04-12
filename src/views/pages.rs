@@ -29,7 +29,7 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
 
     let _connection = establish_connection();
     let mut _template : String;
-    let mut _auth : bool;
+    let mut _auth = false;
     if is_signed_in(&session) {
         _auth = true;
     }
