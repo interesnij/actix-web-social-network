@@ -152,7 +152,7 @@ pub struct UserLocation {
     pub created:   String,
     pub timestamp: i64,
 }
-#[derive(Deserialize)]
+#[derive(Debug, Deserialize)]
 pub struct CityLocation {
     pub ip:         String,
     pub lat:        f32,
@@ -170,7 +170,7 @@ pub struct CityLocation {
     pub tel:        String,
     pub post:       String,
 }
-#[derive(Deserialize)]
+#[derive(Debug, Deserialize)]
 pub struct RegionLocation {
     pub id:         i32,
     pub lat:        i32,
@@ -189,7 +189,7 @@ pub struct RegionLocation {
     pub vk:         String,
     pub utc:        String,
 }
-#[derive(Deserialize)]
+#[derive(Debug, Deserialize)]
 pub struct CountryLocation {
     pub id:         i32,
     pub iso:        String,
