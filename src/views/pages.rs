@@ -31,15 +31,6 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
         _auth = true;
     }
 
-    if let Some(val) = &req.peer_addr() {
-        let ipaddr = val.ip();
-        let _url = "http://api.sypexgeo.net/J5O6d/json/".to_owned() + &ipaddr.to_string();
-        let __request = reqwest::get(_url).await.expect("E.");
-        let new_request = __request.text().await.unwrap();
-        let location200: UserLocation = serde_json::from_str(&new_request).unwrap();
-        println!("{:?}", location200.city.name_ru);
-    };
-
     let (_type, mut data) = get_default_template_2(req, session);
     if _auth == true {
         _template = _type + &"main/lists/news_list.html".to_string();
