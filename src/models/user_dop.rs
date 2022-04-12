@@ -554,7 +554,7 @@ pub struct NewUserDocListPosition {
 #[belongs_to(User)]
 pub struct UserPrivate {
     pub id:                 i32,
-    pub user_id:            char,
+    pub user_id:            i32,
     pub can_see_community:  char,
     pub can_see_info:       char,
     pub can_see_friend:     char,
@@ -604,4 +604,179 @@ pub struct NewUserPopulateStickers {
     pub user_id:    i32,
     pub sticker_id: i32,
     pub count:      i32,
+}
+
+
+/////// UserNotifications //////
+#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[belongs_to(User)]
+pub struct UserNotifications {
+    pub id:                   i32,
+    pub user_id:         i32,
+    pub connection_request:   Bool,
+    pub connection_confirmed: Bool,
+    pub user_invite:     Bool,
+}
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="user_notifications"]
+pub struct NewUserNotifications {
+    pub user_id:         i32,
+    pub connection_request:   Bool,
+    pub connection_confirmed: Bool,
+    pub user_invite:     Bool,
+}
+
+/////// UserNotificationsPost //////
+#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[belongs_to(User)]
+pub struct UserNotificationsPost {
+    pub id:                     i32,
+    pub user_id:           i32,
+    pub comment:                Bool,
+    pub comment_reply:          Bool,
+    pub mention:                Bool,
+    pub comment_mention:        Bool,
+    pub repost:                 Bool,
+    pub liked:                  Bool,
+    pub disliked:               Bool,
+    pub comment_liked:          Bool,
+    pub comment_disliked:       Bool,
+    pub comment_reply_liked:    Bool,
+    pub comment_reply_disliked: Bool,
+}
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="user_post_notifications"]
+pub struct NewUserNotificationsPost {
+    pub user_id:           i32,
+    pub comment:                Bool,
+    pub comment_reply:          Bool,
+    pub mention:                Bool,
+    pub comment_mention:        Bool,
+    pub repost:                 Bool,
+    pub liked:                  Bool,
+    pub disliked:               Bool,
+    pub comment_liked:          Bool,
+    pub comment_disliked:       Bool,
+    pub comment_reply_liked:    Bool,
+    pub comment_reply_disliked: Bool,
+}
+
+/////// UserNotificationsPhoto //////
+#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[belongs_to(User)]
+pub struct UserNotificationsPhoto {
+    pub id:                     i32,
+    pub user_id:           i32,
+    pub comment:                Bool,
+    pub comment_reply:          Bool,
+    pub mention:                Bool,
+    pub comment_mention:        Bool,
+    pub repost:                 Bool,
+    pub liked:                  Bool,
+    pub disliked:               Bool,
+    pub comment_liked:          Bool,
+    pub comment_disliked:       Bool,
+    pub comment_reply_liked:    Bool,
+    pub comment_reply_disliked: Bool,
+}
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="user_photo_notifications"]
+pub struct NewUserNotificationsPhoto {
+    pub user_id:           i32,
+    pub comment:                Bool,
+    pub comment_reply:          Bool,
+    pub mention:                Bool,
+    pub comment_mention:        Bool,
+    pub repost:                 Bool,
+    pub liked:                  Bool,
+    pub disliked:               Bool,
+    pub comment_liked:          Bool,
+    pub comment_disliked:       Bool,
+    pub comment_reply_liked:    Bool,
+    pub comment_reply_disliked: Bool,
+}
+
+/////// UserNotificationsVideo //////
+#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[belongs_to(User)]
+pub struct UserNotificationsVideo {
+    pub id:                     i32,
+    pub user_id:           i32,
+    pub comment:                Bool,
+    pub comment_reply:          Bool,
+    pub mention:                Bool,
+    pub comment_mention:        Bool,
+    pub repost:                 Bool,
+    pub liked:                  Bool,
+    pub disliked:               Bool,
+    pub comment_liked:          Bool,
+    pub comment_disliked:       Bool,
+    pub comment_reply_liked:    Bool,
+    pub comment_reply_disliked: Bool,
+}
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="user_video_notifications"]
+pub struct NewUserNotificationsVideo {
+    pub user_id:           i32,
+    pub comment:                Bool,
+    pub comment_reply:          Bool,
+    pub mention:                Bool,
+    pub comment_mention:        Bool,
+    pub repost:                 Bool,
+    pub liked:                  Bool,
+    pub disliked:               Bool,
+    pub comment_liked:          Bool,
+    pub comment_disliked:       Bool,
+    pub comment_reply_liked:    Bool,
+    pub comment_reply_disliked: Bool,
+}
+
+/////// UserNotificationsGood //////
+#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[belongs_to(User)]
+pub struct UserNotificationsGood {
+    pub id:                     i32,
+    pub user_id:           i32,
+    pub comment:                Bool,
+    pub comment_reply:          Bool,
+    pub mention:                Bool,
+    pub comment_mention:        Bool,
+    pub repost:                 Bool,
+    pub liked:                  Bool,
+    pub disliked:               Bool,
+    pub comment_liked:          Bool,
+    pub comment_disliked:       Bool,
+    pub comment_reply_liked:    Bool,
+    pub comment_reply_disliked: Bool,
+}
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="user_good_notifications"]
+pub struct NewUserNotificationsGood {
+    pub user_id:           i32,
+    pub comment:                Bool,
+    pub comment_reply:          Bool,
+    pub mention:                Bool,
+    pub comment_mention:        Bool,
+    pub repost:                 Bool,
+    pub liked:                  Bool,
+    pub disliked:               Bool,
+    pub comment_liked:          Bool,
+    pub comment_disliked:       Bool,
+    pub comment_reply_liked:    Bool,
+    pub comment_reply_disliked: Bool,
+}
+
+/////// UserNotificationsMusic //////
+#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[belongs_to(User)]
+pub struct UserNotificationsMusic {
+    pub id:                     i32,
+    pub user_id:           i32,
+    pub repost:                 Bool,
+}
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="user_music_notifications"]
+pub struct NewUserNotificationsMusic {
+    pub user_id:           i32,
+    pub repost:                 Bool,
 }

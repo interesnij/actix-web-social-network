@@ -25,7 +25,7 @@ use std::borrow::BorrowMut;
 use futures_util::stream::StreamExt as _;
 
 
-pub fn global_routes(config: &mut web::ServiceConfig) {
+pub fn auth_routes(config: &mut web::ServiceConfig) {
     config.route("/phone_window/", web::get().to(phone_window));
     config.route("/phone_send/{phone}/", web::get().to(phone_send));
     config.route("/phone_verify/{phone}/{code}/", web::get().to(phone_verify));
@@ -143,83 +143,51 @@ pub async fn login(mut payload: Multipart, session: Session, req: HttpRequest) -
 
 #[derive(Debug, Deserialize)]
 pub struct UserLocation {
-    //pub ip:        String,
     pub city:      CityLocation,
     pub region:    RegionLocation,
     pub country:   CountryLocation,
-    //pub error:     String,
-    //pub request:   i32,
-    //pub created:   String,
-    //pub timestamp: i64,
 }
 #[derive(Debug, Deserialize)]
 pub struct CityLocation {
-    //pub id:         String,
-    //pub lat:        f32,
-    //pub lon:        f32,
     pub name_ru:    String,
     pub name_en:    String,
-    //pub name_de:    String,
-    //pub name_fr:    String,
-    //pub name_it:    String,
-    //pub name_es:    String,
-    //pub name_pt:    String,
-    //pub okato:      String,
-    //pub vk:         i32,
-    //pub population: i32,
-    //pub tel:        String,
-    //pub post:       String,
 }
 #[derive(Debug, Deserialize)]
 pub struct RegionLocation {
-    //pub id:         i32,
-    //pub lat:        i32,
-    //pub lon:        i32,
     pub name_ru:    String,
     pub name_en:    String,
-    //pub name_de:    String,
-    //pub name_fr:    String,
-    //pub name_it:    String,
-    //pub name_es:    String,
-    //pub name_pt:    String,
-    //pub iso:        String,
-    //pub timezone:   String,
-    //pub okato:      String,
-    //pub auto:       String,
-    //pub vk:         String,
-    //pub utc:        String,
 }
 #[derive(Debug, Deserialize)]
 pub struct CountryLocation {
-    //pub id:         i32,
-    //pub iso:        String,
-    //pub continent:  String,
-    //pub lat:        i32,
-    //pub lon:        i32,
     pub name_ru:    String,
     pub name_en:    String,
-    //pub name_de:    String,
-    //pub name_fr:    String,
-    //pub name_it:    String,
-    //pub name_es:    String,
-    //pub name_pt:    String,
-    //pub timezone:        String,
-    //pub area:   i64,
-    //pub population:      i64,
-    //pub capital_id:       i64,
-    //pub capital_ru:         String,
-    //pub capital_en:        String,
-    //pub cur_code:         String,
-    //pub phone:        String,
-    //pub neighbours:        String,
-    //pub vk:   i32,
-    //pub utc:   i32,
 }
 
 pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responder {
     use crate::schema::users::dsl::users;
+    use crate::schema::users::dsl::user_location;
     use crate::utils::{hash_password, set_current_user, to_home};
     use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
+    use crate::models::{
+        UserLocation, NewUserLocation,
+        UserProfile, NewUserProfile,
+        IpUser, NewIpUser,
+        UserPhotoListPosition, NewUserPhotoListPosition,
+        UserPostListPosition, NewUserPostListPosition,
+        UserMusicListPosition, NewUserMusicListPosition,
+        UserGoodListPosition, NewUserGoodListPosition,
+        UserVideoListPosition, NewUserVideoListPosition,
+        UserSurveyListPosition, NewUserSurveyListPosition,
+        UserDocListPosition, NewUserDocListPosition,
+        UserPrivate, NewUserPrivate,
+
+        UserNotificationsMusic, NewUserNotificationsMusic,
+        UserNotificationsGood, NewUserNotificationsGood,
+        UserNotificationsVideo, NewUserNotificationsVideo,
+        UserNotificationsPhoto, NewUserNotificationsPhoto,
+        UserNotificationsPost, UserNotificationsPost,
+        UserNotifications, NewUserNotifications,
+    };
 
     if is_signed_in(&session) {
         to_home();
@@ -231,20 +199,39 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
     if params.is_ok() {
         println!("params ok!");
 
+        let location200: UserLocation;
+
         let params_2 = params.unwrap();
-        let (_type, _is_host_admin) = get_default_template(req);
+
+        let mut get_perm = 1;
+        let mut location200: UserLocation;
+        let mut ipaddr: String;
+        if let Some(val) = &req.peer_addr() {
+            ipaddr = &val.ip().to_string();
+            let _url = "http://api.sypexgeo.net/J5O6d/json/".to_owned() + &ipaddr;
+            let __request = reqwest::get(_url).await.expect("E.");
+            let new_request = __request.text().await.unwrap();
+            location200 = serde_json::from_str(&new_request).unwrap();
+            if ipaddr.contains(&"91.239.184.81".to_string()) {
+                get_perm = 60;
+            };
+            println!("{:?}", location200.city.name_ru);
+        };
+
         let mut get_device = "a";
+        for header in &req.headers().into_iter() {
+            if header.0 == "user-agent" {
+                let _val = format!("{:?}", header.1);
+                if _val.contains("Mobile"){
+                    get_device = "b";
+                };
+            }
+        };
+
         let mut get_language = "a";
         let mut get_gender = "a";
-        let mut get_perm = 1;
-        if _type == "mobile/".to_string() {
-            get_device = "b";
-        }
         if params_2.gender.clone() == "Fem".to_string() {
             get_gender = "b";
-        }
-        if _is_host_admin {
-            get_perm = 60;
         }
 
         let d = NaiveDate::from_ymd(2015, 6, 3);
@@ -273,6 +260,9 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             id: _new_user.id,
             phone: _new_user.phone,
         };
+
+
+
         set_current_user(&session, &_session_user);
     }
     HttpResponse::Ok().body(format!("ok"))

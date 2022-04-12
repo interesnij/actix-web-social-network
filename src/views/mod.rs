@@ -1,7 +1,7 @@
 pub mod pages;
-pub mod global;
+pub mod auth;
 
 pub use self::{
     pages::*,
-    global::*,
+    auth::*,
 };
