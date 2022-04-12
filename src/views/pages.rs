@@ -32,7 +32,7 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
         _auth = true;
     }
 
-    let (_type, mut data) = get_default_template_2(req, session);
+    let (_type, mut data) = get_default_template_2(&req, session);
     if _auth == true {
         _template = _type + &"main/lists/news_list.html".to_string();
     } else {
