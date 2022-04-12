@@ -32,15 +32,7 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
         _auth = true;
     }
 
-    let (_type, mut data) = get_default_template_2(&req, session);
-    if _auth == true {
-        _template = _type + &"main/lists/news_list.html".to_string();
-    } else {
-        _template = _type + &"main/auth/auth.html".to_string();
-    }
-    data.insert("test", &true);
-
-    if let Some(val) = req.peer_addr() {
+    if let Some(val) = &req.peer_addr() {
         let ipaddr = val.ip();
         let _url = "http://api.sypexgeo.net/J5O6d/json/".to_owned() + &ipaddr.to_string();
         let __request = reqwest::get(_url).await.expect("E.");
@@ -48,6 +40,13 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
         let location200: UserLocation = serde_json::from_str(&new_request).unwrap();
         println!("{:?}", location200);
     };
+
+    let (_type, mut data) = get_default_template_2(req, session);
+    if _auth == true {
+        _template = _type + &"main/lists/news_list.html".to_string();
+    } else {
+        _template = _type + &"main/auth/auth.html".to_string();
+    }
 
     let _rendered = TEMPLATES.render(&_template, &data).unwrap();
     HttpResponse::Ok().body(_rendered)
