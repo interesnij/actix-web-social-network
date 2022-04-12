@@ -1,5 +1,6 @@
 mod user;
 mod other;
+mod user_dop;
 
 pub use self::{
     user::*,
