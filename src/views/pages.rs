@@ -23,7 +23,7 @@ pub struct SParams {
 
 pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
     use crate::utils::get_default_template_2;
-    use crate::global::{UserLocation, CityLocation, RegionLocation, CountryLocation};
+    use crate::views::global::{UserLocation, CityLocation, RegionLocation, CountryLocation};
 
     let _connection = establish_connection();
     let mut _template : String;
