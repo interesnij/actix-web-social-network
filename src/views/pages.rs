@@ -40,12 +40,14 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
     }
     data.insert("test", &true);
 
+    if let Some(val) = req.peer_addr() {
+        let _url = "http://api.sypexgeo.net/J5O6d/json/".to_owned() + val.ip();
+        let __request = reqwest::get(_url).await.expect("E.");
+        let new_request = __request.text().await.unwrap();
+        let location200: UserLocation = serde_json::from_str(&new_request).unwrap();
+        println!("{:?}", location200);
+    };
 
-    let _url = "http://api.sypexgeo.net/J5O6d/json/".to_owned() + &Some(req.peer_addr());
-    let __request = reqwest::get(_url).await.expect("E.");
-    let new_request = __request.text().await.unwrap();
-    let location200: UserLocation = serde_json::from_str(&new_request).unwrap();
-    println!("{:?}", location200);
     let _rendered = TEMPLATES.render(&_template, &data).unwrap();
     HttpResponse::Ok().body(_rendered)
 }
