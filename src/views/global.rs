@@ -154,7 +154,7 @@ pub struct UserLocation {
 }
 #[derive(Debug, Deserialize)]
 pub struct CityLocation {
-    pub ip:         String,
+    pub id:         String,
     pub lat:        f32,
     pub lon:        f32,
     pub name_ru:    String,
