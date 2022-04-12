@@ -128,8 +128,8 @@ pub struct Video {
     pub types:           char,
     pub file:            String,
     pub description:     Option<String>,
-    pub comment_enabled: Bool,
-    pub votes_on:        Bool,
+    pub comment_enabled: bool,
+    pub votes_on:        bool,
     pub created:         chrono::NaiveDateTime,
 
     pub comment:         i32,
@@ -150,8 +150,8 @@ pub struct NewVideo {
     pub types:           String,
     pub file:            String,
     pub description:     Option<String>,
-    pub comment_enabled: Bool,
-    pub votes_on:        Bool,
+    pub comment_enabled: bool,
+    pub votes_on:        bool,
     pub created:         chrono::NaiveDateTime,
 
     pub comment:         i32,

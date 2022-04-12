@@ -353,7 +353,7 @@ pub struct FeaturedUC {
     pub list_id:      i32,
     pub user_id:      Option<i32>,
     pub community_id: Option<i32>,
-    pub mute:         Bool,
+    pub mute:         bool,
     pub sleep:        Option<chrono::NaiveDateTime>,
 }
 #[derive(Debug, Deserialize, Insertable)]
@@ -363,7 +363,7 @@ pub struct NewFeaturedUC {
     pub list_id:      i32,
     pub user_id:      Option<i32>,
     pub community_id: Option<i32>,
-    pub mute:         Bool,
+    pub mute:         bool,
     pub sleep:        Option<chrono::NaiveDateTime>,
 }
 
@@ -376,7 +376,7 @@ pub struct NewsUC {
     pub list_id:      i32,
     pub user_id:      Option<i32>,
     pub community_id: Option<i32>,
-    pub mute:         Bool,
+    pub mute:         bool,
     pub sleep:        Option<chrono::NaiveDateTime>,
 }
 #[derive(Debug, Deserialize, Insertable)]
@@ -386,7 +386,7 @@ pub struct NewNewsUC {
     pub list_id:      i32,
     pub user_id:      Option<i32>,
     pub community_id: Option<i32>,
-    pub mute:         Bool,
+    pub mute:         bool,
     pub sleep:        Option<chrono::NaiveDateTime>,
 }
 
@@ -399,7 +399,7 @@ pub struct NotifyUC {
     pub list_id:      i32,
     pub user_id:      Option<i32>,
     pub community_id: Option<i32>,
-    pub mute:         Bool,
+    pub mute:         bool,
     pub sleep:        Option<chrono::NaiveDateTime>,
 }
 #[derive(Debug, Deserialize, Insertable)]
@@ -409,7 +409,7 @@ pub struct NewNotifyUC {
     pub list_id:      i32,
     pub user_id:      Option<i32>,
     pub community_id: Option<i32>,
-    pub mute:         Bool,
+    pub mute:         bool,
     pub sleep:        Option<chrono::NaiveDateTime>,
 }
 /////====================================////
@@ -612,17 +612,17 @@ pub struct NewUserPopulateStickers {
 pub struct UserNotifications {
     pub id:                   i32,
     pub user_id:         i32,
-    pub connection_request:   Bool,
-    pub connection_confirmed: Bool,
-    pub user_invite:     Bool,
+    pub connection_request:   bool,
+    pub connection_confirmed: bool,
+    pub user_invite:     bool,
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_notifications"]
 pub struct NewUserNotifications {
     pub user_id:         i32,
-    pub connection_request:   Bool,
-    pub connection_confirmed: Bool,
-    pub user_invite:     Bool,
+    pub connection_request:   bool,
+    pub connection_confirmed: bool,
+    pub user_invite:     bool,
 }
 
 /////// UserNotificationsPost //////
@@ -631,33 +631,33 @@ pub struct NewUserNotifications {
 pub struct UserNotificationsPost {
     pub id:                     i32,
     pub user_id:           i32,
-    pub comment:                Bool,
-    pub comment_reply:          Bool,
-    pub mention:                Bool,
-    pub comment_mention:        Bool,
-    pub repost:                 Bool,
-    pub liked:                  Bool,
-    pub disliked:               Bool,
-    pub comment_liked:          Bool,
-    pub comment_disliked:       Bool,
-    pub comment_reply_liked:    Bool,
-    pub comment_reply_disliked: Bool,
+    pub comment:                bool,
+    pub comment_reply:          bool,
+    pub mention:                bool,
+    pub comment_mention:        bool,
+    pub repost:                 bool,
+    pub liked:                  bool,
+    pub disliked:               bool,
+    pub comment_liked:          bool,
+    pub comment_disliked:       bool,
+    pub comment_reply_liked:    bool,
+    pub comment_reply_disliked: bool,
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_post_notifications"]
 pub struct NewUserNotificationsPost {
     pub user_id:           i32,
-    pub comment:                Bool,
-    pub comment_reply:          Bool,
-    pub mention:                Bool,
-    pub comment_mention:        Bool,
-    pub repost:                 Bool,
-    pub liked:                  Bool,
-    pub disliked:               Bool,
-    pub comment_liked:          Bool,
-    pub comment_disliked:       Bool,
-    pub comment_reply_liked:    Bool,
-    pub comment_reply_disliked: Bool,
+    pub comment:                bool,
+    pub comment_reply:          bool,
+    pub mention:                bool,
+    pub comment_mention:        bool,
+    pub repost:                 bool,
+    pub liked:                  bool,
+    pub disliked:               bool,
+    pub comment_liked:          bool,
+    pub comment_disliked:       bool,
+    pub comment_reply_liked:    bool,
+    pub comment_reply_disliked: bool,
 }
 
 /////// UserNotificationsPhoto //////
@@ -666,33 +666,33 @@ pub struct NewUserNotificationsPost {
 pub struct UserNotificationsPhoto {
     pub id:                     i32,
     pub user_id:           i32,
-    pub comment:                Bool,
-    pub comment_reply:          Bool,
-    pub mention:                Bool,
-    pub comment_mention:        Bool,
-    pub repost:                 Bool,
-    pub liked:                  Bool,
-    pub disliked:               Bool,
-    pub comment_liked:          Bool,
-    pub comment_disliked:       Bool,
-    pub comment_reply_liked:    Bool,
-    pub comment_reply_disliked: Bool,
+    pub comment:                bool,
+    pub comment_reply:          bool,
+    pub mention:                bool,
+    pub comment_mention:        bool,
+    pub repost:                 bool,
+    pub liked:                  bool,
+    pub disliked:               bool,
+    pub comment_liked:          bool,
+    pub comment_disliked:       bool,
+    pub comment_reply_liked:    bool,
+    pub comment_reply_disliked: bool,
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_photo_notifications"]
 pub struct NewUserNotificationsPhoto {
     pub user_id:           i32,
-    pub comment:                Bool,
-    pub comment_reply:          Bool,
-    pub mention:                Bool,
-    pub comment_mention:        Bool,
-    pub repost:                 Bool,
-    pub liked:                  Bool,
-    pub disliked:               Bool,
-    pub comment_liked:          Bool,
-    pub comment_disliked:       Bool,
-    pub comment_reply_liked:    Bool,
-    pub comment_reply_disliked: Bool,
+    pub comment:                bool,
+    pub comment_reply:          bool,
+    pub mention:                bool,
+    pub comment_mention:        bool,
+    pub repost:                 bool,
+    pub liked:                  bool,
+    pub disliked:               bool,
+    pub comment_liked:          bool,
+    pub comment_disliked:       bool,
+    pub comment_reply_liked:    bool,
+    pub comment_reply_disliked: bool,
 }
 
 /////// UserNotificationsVideo //////
@@ -701,33 +701,33 @@ pub struct NewUserNotificationsPhoto {
 pub struct UserNotificationsVideo {
     pub id:                     i32,
     pub user_id:           i32,
-    pub comment:                Bool,
-    pub comment_reply:          Bool,
-    pub mention:                Bool,
-    pub comment_mention:        Bool,
-    pub repost:                 Bool,
-    pub liked:                  Bool,
-    pub disliked:               Bool,
-    pub comment_liked:          Bool,
-    pub comment_disliked:       Bool,
-    pub comment_reply_liked:    Bool,
-    pub comment_reply_disliked: Bool,
+    pub comment:                bool,
+    pub comment_reply:          bool,
+    pub mention:                bool,
+    pub comment_mention:        bool,
+    pub repost:                 bool,
+    pub liked:                  bool,
+    pub disliked:               bool,
+    pub comment_liked:          bool,
+    pub comment_disliked:       bool,
+    pub comment_reply_liked:    bool,
+    pub comment_reply_disliked: bool,
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_video_notifications"]
 pub struct NewUserNotificationsVideo {
     pub user_id:           i32,
-    pub comment:                Bool,
-    pub comment_reply:          Bool,
-    pub mention:                Bool,
-    pub comment_mention:        Bool,
-    pub repost:                 Bool,
-    pub liked:                  Bool,
-    pub disliked:               Bool,
-    pub comment_liked:          Bool,
-    pub comment_disliked:       Bool,
-    pub comment_reply_liked:    Bool,
-    pub comment_reply_disliked: Bool,
+    pub comment:                bool,
+    pub comment_reply:          bool,
+    pub mention:                bool,
+    pub comment_mention:        bool,
+    pub repost:                 bool,
+    pub liked:                  bool,
+    pub disliked:               bool,
+    pub comment_liked:          bool,
+    pub comment_disliked:       bool,
+    pub comment_reply_liked:    bool,
+    pub comment_reply_disliked: bool,
 }
 
 /////// UserNotificationsGood //////
@@ -736,46 +736,46 @@ pub struct NewUserNotificationsVideo {
 pub struct UserNotificationsGood {
     pub id:                     i32,
     pub user_id:           i32,
-    pub comment:                Bool,
-    pub comment_reply:          Bool,
-    pub mention:                Bool,
-    pub comment_mention:        Bool,
-    pub repost:                 Bool,
-    pub liked:                  Bool,
-    pub disliked:               Bool,
-    pub comment_liked:          Bool,
-    pub comment_disliked:       Bool,
-    pub comment_reply_liked:    Bool,
-    pub comment_reply_disliked: Bool,
+    pub comment:                bool,
+    pub comment_reply:          bool,
+    pub mention:                bool,
+    pub comment_mention:        bool,
+    pub repost:                 bool,
+    pub liked:                  bool,
+    pub disliked:               bool,
+    pub comment_liked:          bool,
+    pub comment_disliked:       bool,
+    pub comment_reply_liked:    bool,
+    pub comment_reply_disliked: bool,
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_good_notifications"]
 pub struct NewUserNotificationsGood {
     pub user_id:           i32,
-    pub comment:                Bool,
-    pub comment_reply:          Bool,
-    pub mention:                Bool,
-    pub comment_mention:        Bool,
-    pub repost:                 Bool,
-    pub liked:                  Bool,
-    pub disliked:               Bool,
-    pub comment_liked:          Bool,
-    pub comment_disliked:       Bool,
-    pub comment_reply_liked:    Bool,
-    pub comment_reply_disliked: Bool,
+    pub comment:                bool,
+    pub comment_reply:          bool,
+    pub mention:                bool,
+    pub comment_mention:        bool,
+    pub repost:                 bool,
+    pub liked:                  bool,
+    pub disliked:               bool,
+    pub comment_liked:          bool,
+    pub comment_disliked:       bool,
+    pub comment_reply_liked:    bool,
+    pub comment_reply_disliked: bool,
 }
 
 /////// UserNotificationsMusic //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
 pub struct UserNotificationsMusic {
-    pub id:                     i32,
-    pub user_id:           i32,
-    pub repost:                 Bool,
+    pub id:       i32,
+    pub user_id:  i32,
+    pub repost:   bool,
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_music_notifications"]
 pub struct NewUserNotificationsMusic {
-    pub user_id:           i32,
-    pub repost:                 Bool,
+    pub user_id:   i32,
+    pub repost:    bool,
 }

@@ -107,7 +107,7 @@ pub struct ChatUsers {
     pub user_id:          i32,
     pub chat_id:          i32,
     pub types:            char,
-    pub is_administrator: Bool,
+    pub is_administrator: bool,
     pub created:          chrono::NaiveDateTime,
     pub no_disturb:       Option<chrono::NaiveDateTime>,
 }
@@ -117,7 +117,7 @@ pub struct NewChatUsers {
     pub user_id:          i32,
     pub chat_id:          i32,
     pub types:            String,
-    pub is_administrator: Bool,
+    pub is_administrator: bool,
     pub created:          chrono::NaiveDateTime,
 }
 
@@ -180,7 +180,7 @@ pub struct Message {
     pub repost_id:     Option<i32>,
     pub created:       chrono::NaiveDateTime,
     pub content:       Option<String>,
-    pub unread:        Bool,
+    pub unread:        bool,
     pub types:         i16,
     pub attach:        Option<String>,
     pub voice:         Option<String>,
@@ -207,16 +207,16 @@ pub struct MessageOptions {
     pub id:            i32,
     pub message_id:    i32,
     pub creator_id:    i32,
-    pub is_deleted:    Bool,
-    pub is_favourite:  Bool,
+    pub is_deleted:    bool,
+    pub is_favourite:  bool,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="message_options"]
 pub struct NewMessageOptions {
     pub message_id:    i32,
     pub creator_id:    i32,
-    pub is_deleted:    Bool,
-    pub is_favourite:  Bool,
+    pub is_deleted:    bool,
+    pub is_favourite:  bool,
 }
 
 /////// MessageVersion //////

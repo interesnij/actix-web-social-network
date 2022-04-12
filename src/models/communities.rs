@@ -125,10 +125,10 @@ pub struct CommunityMembership {
     pub id:               i32,
     pub user_id:          i32,
     pub community_id:     i32,
-    pub is_administrator: Bool,
-    pub is_moderator:     Bool,
-    pub is_editor:        Bool,
-    pub is_advertiser:    Bool,
+    pub is_administrator: bool,
+    pub is_moderator:     bool,
+    pub is_editor:        bool,
+    pub is_advertiser:    bool,
     pub created:          chrono::NaiveDateTime,
     pub visited:          i32,
 }
@@ -138,10 +138,10 @@ pub struct CommunityMembership {
 pub struct NewCommunityMembership {
     pub user_id:          i32,
     pub community_id:     i32,
-    pub is_administrator: Bool,
-    pub is_moderator:     Bool,
-    pub is_editor:        Bool,
-    pub is_advertiser:    Bool,
+    pub is_administrator: bool,
+    pub is_moderator:     bool,
+    pub is_editor:        bool,
+    pub is_advertiser:    bool,
     pub created:          chrono::NaiveDateTime,
     pub visited:          i32,
 }
@@ -280,17 +280,17 @@ pub struct NewCommunityPrivate {
 pub struct CommunityNotifications {
     pub id:                   i32,
     pub community_id:         i32,
-    pub connection_request:   Bool,
-    pub connection_confirmed: Bool,
-    pub community_invite:     Bool,
+    pub connection_request:   bool,
+    pub connection_confirmed: bool,
+    pub community_invite:     bool,
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="community_notifications"]
 pub struct NewCommunityNotifications {
     pub community_id:         i32,
-    pub connection_request:   Bool,
-    pub connection_confirmed: Bool,
-    pub community_invite:     Bool,
+    pub connection_request:   bool,
+    pub connection_confirmed: bool,
+    pub community_invite:     bool,
 }
 
 /////// CommunityNotificationsPost //////
@@ -299,33 +299,33 @@ pub struct NewCommunityNotifications {
 pub struct CommunityNotificationsPost {
     pub id:                     i32,
     pub community_id:           i32,
-    pub comment:                Bool,
-    pub comment_reply:          Bool,
-    pub mention:                Bool,
-    pub comment_mention:        Bool,
-    pub repost:                 Bool,
-    pub liked:                  Bool,
-    pub disliked:               Bool,
-    pub comment_liked:          Bool,
-    pub comment_disliked:       Bool,
-    pub comment_reply_liked:    Bool,
-    pub comment_reply_disliked: Bool,
+    pub comment:                bool,
+    pub comment_reply:          bool,
+    pub mention:                bool,
+    pub comment_mention:        bool,
+    pub repost:                 bool,
+    pub liked:                  bool,
+    pub disliked:               bool,
+    pub comment_liked:          bool,
+    pub comment_disliked:       bool,
+    pub comment_reply_liked:    bool,
+    pub comment_reply_disliked: bool,
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="community_post_notifications"]
 pub struct NewCommunityNotificationsPost {
     pub community_id:           i32,
-    pub comment:                Bool,
-    pub comment_reply:          Bool,
-    pub mention:                Bool,
-    pub comment_mention:        Bool,
-    pub repost:                 Bool,
-    pub liked:                  Bool,
-    pub disliked:               Bool,
-    pub comment_liked:          Bool,
-    pub comment_disliked:       Bool,
-    pub comment_reply_liked:    Bool,
-    pub comment_reply_disliked: Bool,
+    pub comment:                bool,
+    pub comment_reply:          bool,
+    pub mention:                bool,
+    pub comment_mention:        bool,
+    pub repost:                 bool,
+    pub liked:                  bool,
+    pub disliked:               bool,
+    pub comment_liked:          bool,
+    pub comment_disliked:       bool,
+    pub comment_reply_liked:    bool,
+    pub comment_reply_disliked: bool,
 }
 
 /////// CommunityNotificationsPhoto //////
@@ -334,33 +334,33 @@ pub struct NewCommunityNotificationsPost {
 pub struct CommunityNotificationsPhoto {
     pub id:                     i32,
     pub community_id:           i32,
-    pub comment:                Bool,
-    pub comment_reply:          Bool,
-    pub mention:                Bool,
-    pub comment_mention:        Bool,
-    pub repost:                 Bool,
-    pub liked:                  Bool,
-    pub disliked:               Bool,
-    pub comment_liked:          Bool,
-    pub comment_disliked:       Bool,
-    pub comment_reply_liked:    Bool,
-    pub comment_reply_disliked: Bool,
+    pub comment:                bool,
+    pub comment_reply:          bool,
+    pub mention:                bool,
+    pub comment_mention:        bool,
+    pub repost:                 bool,
+    pub liked:                  bool,
+    pub disliked:               bool,
+    pub comment_liked:          bool,
+    pub comment_disliked:       bool,
+    pub comment_reply_liked:    bool,
+    pub comment_reply_disliked: bool,
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="community_photo_notifications"]
 pub struct NewCommunityNotificationsPhoto {
     pub community_id:           i32,
-    pub comment:                Bool,
-    pub comment_reply:          Bool,
-    pub mention:                Bool,
-    pub comment_mention:        Bool,
-    pub repost:                 Bool,
-    pub liked:                  Bool,
-    pub disliked:               Bool,
-    pub comment_liked:          Bool,
-    pub comment_disliked:       Bool,
-    pub comment_reply_liked:    Bool,
-    pub comment_reply_disliked: Bool,
+    pub comment:                bool,
+    pub comment_reply:          bool,
+    pub mention:                bool,
+    pub comment_mention:        bool,
+    pub repost:                 bool,
+    pub liked:                  bool,
+    pub disliked:               bool,
+    pub comment_liked:          bool,
+    pub comment_disliked:       bool,
+    pub comment_reply_liked:    bool,
+    pub comment_reply_disliked: bool,
 }
 
 /////// CommunityNotificationsVideo //////
@@ -369,33 +369,33 @@ pub struct NewCommunityNotificationsPhoto {
 pub struct CommunityNotificationsVideo {
     pub id:                     i32,
     pub community_id:           i32,
-    pub comment:                Bool,
-    pub comment_reply:          Bool,
-    pub mention:                Bool,
-    pub comment_mention:        Bool,
-    pub repost:                 Bool,
-    pub liked:                  Bool,
-    pub disliked:               Bool,
-    pub comment_liked:          Bool,
-    pub comment_disliked:       Bool,
-    pub comment_reply_liked:    Bool,
-    pub comment_reply_disliked: Bool,
+    pub comment:                bool,
+    pub comment_reply:          bool,
+    pub mention:                bool,
+    pub comment_mention:        bool,
+    pub repost:                 bool,
+    pub liked:                  bool,
+    pub disliked:               bool,
+    pub comment_liked:          bool,
+    pub comment_disliked:       bool,
+    pub comment_reply_liked:    bool,
+    pub comment_reply_disliked: bool,
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="community_video_notifications"]
 pub struct NewCommunityNotificationsVideo {
     pub community_id:           i32,
-    pub comment:                Bool,
-    pub comment_reply:          Bool,
-    pub mention:                Bool,
-    pub comment_mention:        Bool,
-    pub repost:                 Bool,
-    pub liked:                  Bool,
-    pub disliked:               Bool,
-    pub comment_liked:          Bool,
-    pub comment_disliked:       Bool,
-    pub comment_reply_liked:    Bool,
-    pub comment_reply_disliked: Bool,
+    pub comment:                bool,
+    pub comment_reply:          bool,
+    pub mention:                bool,
+    pub comment_mention:        bool,
+    pub repost:                 bool,
+    pub liked:                  bool,
+    pub disliked:               bool,
+    pub comment_liked:          bool,
+    pub comment_disliked:       bool,
+    pub comment_reply_liked:    bool,
+    pub comment_reply_disliked: bool,
 }
 
 /////// CommunityNotificationsGood //////
@@ -404,33 +404,33 @@ pub struct NewCommunityNotificationsVideo {
 pub struct CommunityNotificationsGood {
     pub id:                     i32,
     pub community_id:           i32,
-    pub comment:                Bool,
-    pub comment_reply:          Bool,
-    pub mention:                Bool,
-    pub comment_mention:        Bool,
-    pub repost:                 Bool,
-    pub liked:                  Bool,
-    pub disliked:               Bool,
-    pub comment_liked:          Bool,
-    pub comment_disliked:       Bool,
-    pub comment_reply_liked:    Bool,
-    pub comment_reply_disliked: Bool,
+    pub comment:                bool,
+    pub comment_reply:          bool,
+    pub mention:                bool,
+    pub comment_mention:        bool,
+    pub repost:                 bool,
+    pub liked:                  bool,
+    pub disliked:               bool,
+    pub comment_liked:          bool,
+    pub comment_disliked:       bool,
+    pub comment_reply_liked:    bool,
+    pub comment_reply_disliked: bool,
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="community_good_notifications"]
 pub struct NewCommunityNotificationsGood {
     pub community_id:           i32,
-    pub comment:                Bool,
-    pub comment_reply:          Bool,
-    pub mention:                Bool,
-    pub comment_mention:        Bool,
-    pub repost:                 Bool,
-    pub liked:                  Bool,
-    pub disliked:               Bool,
-    pub comment_liked:          Bool,
-    pub comment_disliked:       Bool,
-    pub comment_reply_liked:    Bool,
-    pub comment_reply_disliked: Bool,
+    pub comment:                bool,
+    pub comment_reply:          bool,
+    pub mention:                bool,
+    pub comment_mention:        bool,
+    pub repost:                 bool,
+    pub liked:                  bool,
+    pub disliked:               bool,
+    pub comment_liked:          bool,
+    pub comment_disliked:       bool,
+    pub comment_reply_liked:    bool,
+    pub comment_reply_disliked: bool,
 }
 
 /////// CommunityNotificationsMusic //////
@@ -439,13 +439,13 @@ pub struct NewCommunityNotificationsGood {
 pub struct CommunityNotificationsMusic {
     pub id:                     i32,
     pub community_id:           i32,
-    pub repost:                 Bool,
+    pub repost:                 bool,
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="community_music_notifications"]
 pub struct NewCommunityNotificationsMusic {
     pub community_id:           i32,
-    pub repost:                 Bool,
+    pub repost:                 bool,
 }
 
 /////// CommunityPhotoListPosition //////
