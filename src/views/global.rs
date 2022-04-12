@@ -141,7 +141,7 @@ pub async fn login(mut payload: Multipart, session: Session, req: HttpRequest) -
     handle_sign_in(form, &session, &req)
 }
 
-#[derive(Deserialize)]
+#[derive(Debug, Deserialize)]
 pub struct UserLocation {
     pub ip:        String,
     pub city:      CityLocation,
