@@ -198,8 +198,8 @@ pub struct UserLoveStatus {
 
 /////// UserPartnerOne //////
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
-#[belongs_to(User), foreign_key="user_partners")]
-#[belongs_to(User), foreign_key="partner_by_users")]
+#[belongs_to(User), foreign_key="user_partners"]
+#[belongs_to(User), foreign_key="partner_by_users"]
 pub struct UserPartnerOne {
     pub id:         i32,
     pub user_id:    i32,
@@ -214,8 +214,8 @@ pub struct NewUserPartnerOne {
 
 /////// UserMomOne //////
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
-#[belongs_to(User), foreign_key="user_mom")]
-#[belongs_to(User), foreign_key="mom_by_users")]
+#[belongs_to(User), foreign_key="user_mom"]
+#[belongs_to(User), foreign_key="mom_by_users"]
 pub struct UserMomOne {
     pub id:      i32,
     pub user_id: i32,
@@ -230,8 +230,8 @@ pub struct NewUserMomOne {
 
 /////// UserDadOne //////
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
-#[belongs_to(User), foreign_key="user_dad")]
-#[belongs_to(User), foreign_key="dad_by_users")]
+#[belongs_to(User), foreign_key="user_dad"]
+#[belongs_to(User), foreign_key="dad_by_users"]
 pub struct UserDadOne {
     pub id:      i32,
     pub user_id: i32,
@@ -246,8 +246,8 @@ pub struct NewUserDadOne {
 
 /////// UserBrothersSisters //////
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
-#[belongs_to(User), foreign_key="user_bro_sist")]
-#[belongs_to(User), foreign_key="brother_sister_by_users")]
+#[belongs_to(User), foreign_key="user_bro_sist"]
+#[belongs_to(User), foreign_key="brother_sister_by_users"]
 pub struct UserBrothersSisters {
     pub id:         i32,
     pub user_id:    i32,
@@ -262,8 +262,8 @@ pub struct NewUserBrothersSisters {
 
 /////// UserChildren //////
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
-#[belongs_to(User), foreign_key="user_children")]
-#[belongs_to(User), foreign_key="children_by_users")]
+#[belongs_to(User), foreign_key="user_children"]
+#[belongs_to(User), foreign_key="children_by_users"]
 pub struct UserChildren {
     pub id:       i32,
     pub user_id:  i32,
@@ -278,8 +278,8 @@ pub struct NewUserChildren {
 
 /////// UserGrandsons //////
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
-#[belongs_to(User), foreign_key="user_grandsons")]
-#[belongs_to(User), foreign_key="grandsons_by_users")]
+#[belongs_to(User), foreign_key="user_grandsons"]
+#[belongs_to(User), foreign_key="grandsons_by_users"]
 pub struct UserGrandsons {
     pub id:          i32,
     pub user_id:     i32,
@@ -294,8 +294,8 @@ pub struct NewUserGrandsons {
 
 /////// UserColleagues //////
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
-#[belongs_to(User), foreign_key="user_colleagues")]
-#[belongs_to(User), foreign_key="colleagues_by_users")]
+#[belongs_to(User), foreign_key="user_colleagues"]
+#[belongs_to(User), foreign_key="colleagues_by_users"]
 pub struct UserColleagues {
     pub id:           i32,
     pub user_id:      i32,
@@ -310,8 +310,8 @@ pub struct NewUserColleagues {
 
 /////// UserBlocks //////
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
-#[belongs_to(User, foreign_key="user_blocks")]
-#[belongs_to(User, foreign_key="blocked_by_users")]
+#[belongs_to(User, foreign_key="user_blocks"]
+#[belongs_to(User, foreign_key="blocked_by_users"]
 pub struct UserBlocks {
     pub id:              i32,
     pub user_id:         i32,
