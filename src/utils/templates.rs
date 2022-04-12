@@ -2,8 +2,6 @@ use actix_web::HttpRequest;
 use actix_session::Session;
 use crate::utils::{is_signed_in, get_current_user, establish_connection};
 use tera::Context;
-use crate::schema::users::dsl::users;
-use crate::models::User;
 
 
 pub fn get_default_template(req: HttpRequest)
@@ -40,6 +38,11 @@ pub fn get_default_template_2(req: HttpRequest, session: Session)
          data<Context>
         )
     {
+
+    use crate::schema::users::dsl::users;
+    use crate::models::User;
+    use diesel::prelude::*;
+    
     let mut _type = "".to_string();
     let _connection = establish_connection();
     let mut _request_user = "".to_string();
