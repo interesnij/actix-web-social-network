@@ -144,13 +144,13 @@ pub async fn login(mut payload: Multipart, session: Session, req: HttpRequest) -
 #[derive(Debug, Deserialize)]
 pub struct UserLocation {
     pub ip:        String,
-    pub city:      CityLocation,
-    pub region:    RegionLocation,
-    pub country:   CountryLocation,
-    pub error:     String,
-    pub request:   i32,
-    pub created:   String,
-    pub timestamp: i64,
+    //pub city:      CityLocation,
+    //pub region:    RegionLocation,
+    //pub country:   CountryLocation,
+    //pub error:     String,
+    //pub request:   i32,
+    //pub created:   String,
+    //pub timestamp: i64,
 }
 #[derive(Debug, Deserialize)]
 pub struct CityLocation {
