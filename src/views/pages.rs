@@ -23,8 +23,6 @@ pub struct SParams {
 }
 
 pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
-    use crate::schema::users::dsl::users;
-    use crate::models::User;
     use crate::utils::get_default_template_2;
 
     let _connection = establish_connection();
@@ -40,7 +38,7 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
     } else {
         _template = _type + &"main/auth/auth.html".to_string();
     }
-
+    data.insert("test", &true);
     let _rendered = TEMPLATES.render(&_template, &data).unwrap();
     HttpResponse::Ok().body(_rendered)
 }
