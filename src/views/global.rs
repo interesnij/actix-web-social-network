@@ -143,7 +143,7 @@ pub async fn login(mut payload: Multipart, session: Session, req: HttpRequest) -
 
 #[derive(Debug, Deserialize)]
 pub struct UserLocation {
-    pub ip:        String,
+    //pub ip:        String,
     pub city:      CityLocation,
     pub region:    RegionLocation,
     pub country:   CountryLocation,
@@ -154,7 +154,7 @@ pub struct UserLocation {
 }
 #[derive(Debug, Deserialize)]
 pub struct CityLocation {
-    pub id:         String,
+    //pub id:         String,
     //pub lat:        f32,
     //pub lon:        f32,
     pub name_ru:    String,
@@ -172,7 +172,7 @@ pub struct CityLocation {
 }
 #[derive(Debug, Deserialize)]
 pub struct RegionLocation {
-    pub id:         i32,
+    //pub id:         i32,
     //pub lat:        i32,
     //pub lon:        i32,
     pub name_ru:    String,
