@@ -158,7 +158,7 @@ pub struct UserDeleteAnketa {
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_delete_anketa"]
-pub struct NewUserAnketa {
+pub struct NewUserDeleteAnketa {
     pub user_id: i32,
     pub answer:  char,
     pub other:   Option<String>,
