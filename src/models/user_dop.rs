@@ -548,7 +548,6 @@ pub struct NewUserDocListPosition {
     // 'd' Только я
     // 'e' Друзья, кроме
     // 'f' Некоторые друзья
-}
 
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
