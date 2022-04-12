@@ -50,13 +50,13 @@ CREATE TABLE chat_ie_settings (
     id                SERIAL PRIMARY KEY,     -- id объекта
     user_id           INT NOT NULL,           -- id пользователя
 
-    can_add_in_chat   "char" NOT NULL,          -- кто добавляет участников
-    can_add_fix       "char" NOT NULL,          -- кто закрепляет сообщения
-    can_send_mention  "char" NOT NULL,          -- кто упоминает о чате
-    can_add_admin     "char" NOT NULL,          -- кто работает с админами
-    can_add_design    "char" NOT NULL,          -- кто работает с дизайном
-    can_see_settings  "char" NOT NULL,          -- кто видит настройки
-    can_see_log       "char" NOT NULL,          -- кто видит логи
+    can_add_in_chat   "char",                 -- кто добавляет участников
+    can_add_fix       "char",                 -- кто закрепляет сообщения
+    can_send_mention  "char",                 -- кто упоминает о чате
+    can_add_admin     "char",                 -- кто работает с админами
+    can_add_design    "char",                 -- кто работает с дизайном
+    can_see_settings  "char",                 -- кто видит настройки
+    can_see_log       "char",                 -- кто видит логи
 
     CONSTRAINT fk_chat_ie_settings            -- связь с пользователем
         FOREIGN KEY(user_id)

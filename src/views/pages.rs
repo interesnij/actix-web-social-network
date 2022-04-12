@@ -27,25 +27,14 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
     use crate::models::User;
 
     let _connection = establish_connection();
-    let mut data = Context::new();
     let mut _template : String;
 
-    let (_type, _is_host_admin) = get_default_template(req);
+    let (_type, data) = get_default_template_2(&req, &session);
     if is_signed_in(&session) {
         _template = _type + &"main/lists/news_list.html".to_string();
-        let _request_user = get_current_user(&session);
-        match _request_user {
-            Ok(s) => data.insert("request_user", &users
-                .filter(schema::users::id.eq(s.id))
-                .load::<User>(&_connection)
-                .expect("E")[0]),
-            _ => data.insert("request_user", &false),
-        }
     } else {
         _template = _type + &"main/auth/auth.html".to_string();
-        data.insert("is_authenticated", &false);
     }
-    data.insert("is_host_admin", &_is_host_admin);
 
     let _rendered = TEMPLATES.render(&_template, &data).unwrap();
     HttpResponse::Ok().body(_rendered)

@@ -31,7 +31,6 @@ CREATE TABLE photo_lists (
 
 CREATE TABLE photos (
     id              SERIAL PRIMARY KEY,
-    title           VARCHAR(100) NOT NULL,
     community_id    INT,
     creator_id      INT NOT NULL,
     list_id         INT NOT NULL,
@@ -134,11 +133,11 @@ CREATE TABLE photo_list_perm (
     id              SERIAL PRIMARY KEY,
     user_id         INT NOT NULL,
     list_id         INT NOT NULL,
-    can_see_item    "char" NOT NULL,
-    can_see_comment "char" NOT NULL,
-    create_item     "char" NOT NULL,
-    create_comment  "char" NOT NULL,
-    can_copy        "char" NOT NULL,
+    can_see_item    "char",
+    can_see_comment "char",
+    create_item     "char",
+    create_comment  "char",
+    can_copy        "char",
 
    CONSTRAINT fk_photo_list_perm_user
         FOREIGN KEY(user_id)

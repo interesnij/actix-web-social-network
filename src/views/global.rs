@@ -183,7 +183,6 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             perm: get_perm,
             level: 100,
             password: hash_password(&params_2.password.clone()),
-            //password: params_2.password.clone(),
             birthday: NaiveDate::parse_from_str(&params_2.birthday.clone(), "%Y-%m-%d").unwrap(),
             last_activity: NaiveDateTime::new(d, t),
         };
@@ -198,7 +197,6 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             phone: _new_user.phone,
         };
         set_current_user(&session, &_session_user);
-        to_home();
     }
     HttpResponse::Ok().body(format!("ok"))
 }

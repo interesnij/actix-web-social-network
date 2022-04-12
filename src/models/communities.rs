@@ -106,7 +106,19 @@ pub struct Community {
     pub creator_id:  i32,
     pub created:     chrono::NaiveDateTime,
 }
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="communities"]
+pub struct NewCommunity {
+    pub name:        String,
+    pub types:       i16,
+    pub perm:        String,
+    pub level:       i16,
+    pub category_id: i32,
+    pub creator_id:  i32,
+    pub created:     chrono::NaiveDateTime,
+}
 
+/////// CommunityMembership //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
 #[belongs_to(Community)]
@@ -136,6 +148,7 @@ pub struct NewCommunityMembership {
     pub visited:          i32,
 }
 
+/////// CommunityMemberPerm //////
 /////// Исключения/ включения подписчиков сообщества //////
     // 'c' Нет значения
     // 'a' Активно
@@ -148,42 +161,43 @@ pub struct CommunityMemberPerm {
     pub id:                      i32,
     pub user_id:                 i32,
 
-    pub can_see_info:            char,
-    pub can_see_member:          char,
-    pub can_send_message:        char,
-    pub can_see_doc:             char,
-    pub can_see_music:           char,
-    pub can_see_survey:          char,
-    pub can_see_post:            char,
-    pub can_see_post_comment:    char,
-    pub can_see_photo:           char,
-    pub can_see_photo_comment:   char,
-    pub can_see_good:            char,
-    pub can_see_good_comment:    char,
-    pub can_see_video:           char,
-    pub can_see_video_comment:   char,
-    pub can_see_planner:         char,
-    pub can_see_planner_comment: char,
+    pub can_see_info:            Option<char>,
+    pub can_see_member:          Option<char>,
+    pub can_send_message:        Option<char>,
+    pub can_see_doc:             Option<char>,
+    pub can_see_music:           Option<char>,
+    pub can_see_survey:          Option<char>,
+    pub can_see_post:            Option<char>,
+    pub can_see_post_comment:    Option<char>,
+    pub can_see_photo:           Option<char>,
+    pub can_see_photo_comment:   Option<char>,
+    pub can_see_good:            Option<char>,
+    pub can_see_good_comment:    Option<char>,
+    pub can_see_video:           Option<char>,
+    pub can_see_video_comment:   Option<char>,
+    pub can_see_planner:         Option<char>,
+    pub can_see_planner_comment: Option<char>,
 
-    pub can_add_post:            char,
-    pub can_add_photo:           char,
-    pub can_add_good:            char,
-    pub can_add_video:           char,
-    pub can_add_planner:         char,
-    pub can_add_doc:             char,
-    pub can_add_music:           char,
-    pub can_add_survey:          char,
+    pub can_add_post:            Option<char>,
+    pub can_add_photo:           Option<char>,
+    pub can_add_good:            Option<char>,
+    pub can_add_video:           Option<char>,
+    pub can_add_planner:         Option<char>,
+    pub can_add_doc:             Option<char>,
+    pub can_add_music:           Option<char>,
+    pub can_add_survey:          Option<char>,
 
-    pub can_create_post:         char,
-    pub can_create_photo:        char,
-    pub can_create_good:         char,
-    pub can_create_video:        char,
-    pub can_create_planner:      char,
-    pub can_create_doc:          char,
-    pub can_create_music:        char,
-    pub can_create_survey:       char,
+    pub can_create_post:         Option<char>,
+    pub can_create_photo:        Option<char>,
+    pub can_create_good:         Option<char>,
+    pub can_create_video:        Option<char>,
+    pub can_create_planner:      Option<char>,
+    pub can_create_doc:          Option<char>,
+    pub can_create_music:        Option<char>,
+    pub can_create_survey:       Option<char>,
 }
 
+/////// CommunityInfo //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Community)]
 #[table_name="community_info"]
@@ -200,7 +214,22 @@ pub struct CommunityInfo {
     pub articles:     i32,
     pub survey:       i32,
 }
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="community_info"]
+pub struct NewCommunityInfo {
+    pub community_id: i32,
+    pub posts:        i32,
+    pub members:      i32,
+    pub photos:       i32,
+    pub goods:        i32,
+    pub tracks:       i32,
+    pub videos:       i32,
+    pub docs:         i32,
+    pub articles:     i32,
+    pub survey:       i32,
+}
 
+/////// CommunityPrivate //////
     // 'a' Все пользователи
     // 'b' Подписчики
     // 'c' Создатель
@@ -229,7 +258,27 @@ pub struct CommunityPrivate {
     pub can_see_log:      char,
     pub can_see_stat:     char,
 }
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="community_info"]
+pub struct NewCommunityPrivate {
+    pub community_id:     i32,
+    pub can_see_member:   String,
+    pub can_see_info:     String,
+    pub can_send_message: String,
+    pub can_see_post:     String,
+    pub can_see_photo:    String,
+    pub can_see_good:     String,
+    pub can_see_video:    String,
+    pub can_see_music:    String,
+    pub can_see_planner:  String,
+    pub can_see_doc:      String,
+    pub can_see_survey:   String,
+    pub can_see_settings: String,
+    pub can_see_log:      String,
+    pub can_see_stat:     String,
+}
 
+/////// CommunityNotifications //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Community)]
 #[table_name="community_notifications"]
@@ -240,7 +289,16 @@ pub struct CommunityNotifications {
     pub connection_confirmed: Bool,
     pub community_invite:     Bool,
 }
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="community_notifications"]
+pub struct NewCommunityNotifications {
+    pub community_id:         i32,
+    pub connection_request:   Bool,
+    pub connection_confirmed: Bool,
+    pub community_invite:     Bool,
+}
 
+/////// CommunityNotificationsPost //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Community)]
 #[table_name="community_post_notifications"]
@@ -259,7 +317,24 @@ pub struct CommunityNotificationsPost {
     pub comment_reply_liked:    Bool,
     pub comment_reply_disliked: Bool,
 }
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="community_post_notifications"]
+pub struct NewCommunityNotificationsPost {
+    pub community_id:           i32,
+    pub comment:                Bool,
+    pub comment_reply:          Bool,
+    pub mention:                Bool,
+    pub comment_mention:        Bool,
+    pub repost:                 Bool,
+    pub liked:                  Bool,
+    pub disliked:               Bool,
+    pub comment_liked:          Bool,
+    pub comment_disliked:       Bool,
+    pub comment_reply_liked:    Bool,
+    pub comment_reply_disliked: Bool,
+}
 
+/////// CommunityNotificationsPhoto //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Community)]
 #[table_name="community_photo_notifications"]
@@ -278,7 +353,24 @@ pub struct CommunityNotificationsPhoto {
     pub comment_reply_liked:    Bool,
     pub comment_reply_disliked: Bool,
 }
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="community_photo_notifications"]
+pub struct NewCommunityNotificationsPhoto {
+    pub community_id:           i32,
+    pub comment:                Bool,
+    pub comment_reply:          Bool,
+    pub mention:                Bool,
+    pub comment_mention:        Bool,
+    pub repost:                 Bool,
+    pub liked:                  Bool,
+    pub disliked:               Bool,
+    pub comment_liked:          Bool,
+    pub comment_disliked:       Bool,
+    pub comment_reply_liked:    Bool,
+    pub comment_reply_disliked: Bool,
+}
 
+/////// CommunityNotificationsVideo //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Community)]
 #[table_name="community_video_notifications"]
@@ -297,7 +389,24 @@ pub struct CommunityNotificationsVideo {
     pub comment_reply_liked:    Bool,
     pub comment_reply_disliked: Bool,
 }
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="community_video_notifications"]
+pub struct NewCommunityNotificationsVideo {
+    pub community_id:           i32,
+    pub comment:                Bool,
+    pub comment_reply:          Bool,
+    pub mention:                Bool,
+    pub comment_mention:        Bool,
+    pub repost:                 Bool,
+    pub liked:                  Bool,
+    pub disliked:               Bool,
+    pub comment_liked:          Bool,
+    pub comment_disliked:       Bool,
+    pub comment_reply_liked:    Bool,
+    pub comment_reply_disliked: Bool,
+}
 
+/////// CommunityNotificationsGood //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Community)]
 #[table_name="community_good_notifications"]
@@ -316,7 +425,24 @@ pub struct CommunityNotificationsGood {
     pub comment_reply_liked:    Bool,
     pub comment_reply_disliked: Bool,
 }
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="community_good_notifications"]
+pub struct NewCommunityNotificationsGood {
+    pub community_id:           i32,
+    pub comment:                Bool,
+    pub comment_reply:          Bool,
+    pub mention:                Bool,
+    pub comment_mention:        Bool,
+    pub repost:                 Bool,
+    pub liked:                  Bool,
+    pub disliked:               Bool,
+    pub comment_liked:          Bool,
+    pub comment_disliked:       Bool,
+    pub comment_reply_liked:    Bool,
+    pub comment_reply_disliked: Bool,
+}
 
+/////// CommunityNotificationsMusic //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Community)]
 #[table_name="community_music_notifications"]
@@ -325,8 +451,14 @@ pub struct CommunityNotificationsMusic {
     pub community_id:           i32,
     pub repost:                 Bool,
 }
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="community_music_notifications"]
+pub struct NewCommunityNotificationsMusic {
+    pub community_id:           i32,
+    pub repost:                 Bool,
+}
 
-
+/////// CommunityPhotoListPosition //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 pub struct CommunityPhotoListPosition {
     pub id:       i32,
@@ -341,7 +473,7 @@ pub struct NewCommunityPhotoListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    char,
+    pub types:    String,
 }
 
 /////// CommunityPostListPosition //////
@@ -359,7 +491,7 @@ pub struct NewCommunityPostListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    char,
+    pub types:    String,
 }
 
 /////// CommunityMusicListPosition //////
@@ -377,7 +509,7 @@ pub struct NewCommunityMusicListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    char,
+    pub types:    String,
 }
 
 /////// CommunityGoodListPosition //////
@@ -395,7 +527,7 @@ pub struct NewCommunityGoodListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    char,
+    pub types:    String,
 }
 
 /////// CommunityVideoListPosition //////
@@ -413,7 +545,7 @@ pub struct NewCommunityVideoListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    char,
+    pub types:    String,
 }
 
 /////// CommunitySurveyListPosition //////
@@ -431,7 +563,7 @@ pub struct NewCommunitySurveyListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    char,
+    pub types:    String,
 }
 
 /////// CommunityDocListPosition //////
@@ -449,5 +581,5 @@ pub struct NewCommunityDocListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i32,
-    pub types:    char,
+    pub types:    String,
 }

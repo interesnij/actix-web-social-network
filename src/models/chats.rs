@@ -74,6 +74,25 @@ pub struct Chat {
     pub can_see_log:        char,
 }
 
+#[derive(Deserialize, Insertable)]
+#[table_name="chats"]
+pub struct NewChat {
+    pub name:               String,
+    pub types:              i16,
+    pub community_id:       Option<i32>,
+    pub creator_id:         i32,
+    pub position:           i32,
+    pub members:            i32,
+    pub created:            chrono::NaiveDateTime,
+    pub can_add_members:    String,
+    pub can_fix_item:       String,
+    pub can_mention:        String,
+    pub can_add_admin:      String,
+    pub can_add_design:     String,
+    pub can_see_settings:   String,
+    pub can_see_log:        String,
+}
+
 /////// ChatUsers //////
 
 /////// Тип участника чата //////
@@ -92,7 +111,16 @@ pub struct ChatUsers {
     pub types:            char,
     pub is_administrator: Bool,
     pub created:          chrono::NaiveDateTime,
-    pub no_disturb:       chrono::NaiveDateTime,
+    pub no_disturb:       Option<chrono::NaiveDateTime>,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="chat_users"]
+pub struct NewChatUsers {
+    pub user_id:          i32,
+    pub chat_id:          i32,
+    pub types:            String,
+    pub is_administrator: Bool,
+    pub created:          chrono::NaiveDateTime,
 }
 
 /////// ChatPerm //////
@@ -102,12 +130,23 @@ pub struct ChatUsers {
 pub struct ChatPerm {
     pub id:               i32,
     pub user_id:          i32,
-    pub can_add_in_chat:  char,
-    pub can_add_fix:      char,
-    pub can_add_admin:    char,
-    pub can_add_design:   char,
-    pub can_see_settings: char,
-    pub can_see_log:      char,
+    pub can_add_in_chat:  Option<char>,
+    pub can_add_fix:      Option<char>,
+    pub can_add_admin:    Option<char>,
+    pub can_add_design:   Option<char>,
+    pub can_see_settings: Option<char>,
+    pub can_see_log:      Option<char>,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="chat_ie_settings"]
+pub struct NewChatPerm {
+    pub user_id:          i32,
+    pub can_add_in_chat:  Option<String>,
+    pub can_add_fix:      Option<String>,
+    pub can_add_admin:    Option<String>,
+    pub can_add_design:   Option<String>,
+    pub can_see_settings: Option<String>,
+    pub can_see_log:      Option<String>,
 }
 
 /////// Message //////
@@ -115,12 +154,13 @@ pub struct ChatPerm {
 /////// Тип сообщения //////
     // 1 Опубликовано
     // 2 Редактировано
-    // 3 Удалено
-    // 4 Закрыто
     // 5 Черновик
     // 6 Статусное
     // 7 Опубликовано закрепленное
-    // 17 Редактировано закрепленное
+    // 8 Редактировано закрепленное
+
+    // 10 Удалено
+    // 11 Закрыто
     // 22 Удалено редактированное
     // 24 Закрыто редактированное
     // 26 Удалено опубликованное закрепленное
@@ -149,6 +189,20 @@ pub struct Message {
     pub attach:        Option<String>,
     pub voice:         Option<String>,
 }
+#[derive(Deserialize, Insertable)]
+#[table_name="messages"]
+pub struct NewMessage {
+    pub creator_id:    i32,
+    pub chat_id:       i32,
+    pub parent_id:     Option<i32>,
+    pub sticker_id:    Option<i32>,
+    pub repost_id:     Option<i32>,
+    pub created:       chrono::NaiveDateTime,
+    pub content:       Option<String>,
+    pub typed:         i16,
+    pub attach:        Option<String>,
+    pub voice:         Option<String>,
+}
 
 /////// MessageOptions //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
@@ -156,6 +210,14 @@ pub struct Message {
 #[table_name="message_options"]
 pub struct MessageOptions {
     pub id:            i32,
+    pub message_id:    i32,
+    pub creator_id:    i32,
+    pub is_deleted:    Bool,
+    pub is_favourite:  Bool,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="message_options"]
+pub struct NewMessageOptions {
     pub message_id:    i32,
     pub creator_id:    i32,
     pub is_deleted:    Bool,
@@ -176,14 +238,31 @@ pub struct MessageVersion {
     pub content:       Option<String>,
     pub attach:        Option<String>,
 }
+#[derive(Deserialize, Insertable)]
+#[table_name="message_versions"]
+pub struct NewMessageVersion {
+    pub message_id:    i32,
+    pub sticker_id:    Option<i32>,
+    pub repost_id:     Option<i32>,
+    pub parent_id:     Option<i32>,
+    pub created:       chrono::NaiveDateTime,
+    pub content:       Option<String>,
+    pub attach:        Option<String>,
+}
 
-/////// MessageVersion //////
+/////// MessageTransfers //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Message, foreign_key="message_transfers_message")]
 #[belongs_to(Message, foreign_key="message_transfers_transfer")]
 #[table_name="message_transfers"]
 pub struct MessageTransfers {
     pub id:            i32,
+    pub message_id:    i32,
+    pub transfer_id:   i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="message_transfers"]
+pub struct NewMessageTransfers {
     pub message_id:    i32,
     pub transfer_id:   i32,
 }
