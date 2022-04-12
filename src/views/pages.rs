@@ -23,6 +23,7 @@ pub struct SParams {
 
 pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
     use crate::utils::get_default_template_2;
+    use crate::global::{UserLocation, CityLocation, RegionLocation, CountryLocation};
 
     let _connection = establish_connection();
     let mut _template : String;
@@ -38,6 +39,13 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
         _template = _type + &"main/auth/auth.html".to_string();
     }
     data.insert("test", &true);
+
+    let _url = "http://api.sypexgeo.net/J5O6d/json/151.248.120.138".to_owned();
+    let __request = reqwest::get(_url).await.expect("E.");
+    let new_request = __request.text().await.unwrap();
+    println!("{:?}", new_request);
+    let location200: UserLocation = serde_json::from_str(&new_request).unwrap();
+    println!("{:?}", location200);
     let _rendered = TEMPLATES.render(&_template, &data).unwrap();
     HttpResponse::Ok().body(_rendered)
 }

@@ -140,6 +140,82 @@ pub async fn login(mut payload: Multipart, session: Session, req: HttpRequest) -
     println!("{:?}", form.password.clone());
     handle_sign_in(form, &session, &req)
 }
+
+#[derive(Deserialize)]
+pub struct UserLocation {
+    pub ip:        String,
+    pub city:      CityLocation,
+    pub region:    RegionLocation,
+    pub country:   CountryLocation,
+    pub error:     String,
+    pub request:   i32,
+    pub created:   String,
+    pub timestamp: i64,
+}
+#[derive(Deserialize)]
+pub struct CityLocation {
+    pub ip:         String,
+    pub lat:        f32,
+    pub lon:        f32,
+    pub name_ru:    String,
+    pub name_en:    String,
+    pub name_de:    String,
+    pub name_fr:    String,
+    pub name_it:    String,
+    pub name_es:    String,
+    pub name_pt:    String,
+    pub okato:      String,
+    pub vk:         i32,
+    pub population: i32,
+    pub tel:        String,
+    pub post:       String,
+}
+#[derive(Deserialize)]
+pub struct RegionLocation {
+    pub id:         i32,
+    pub lat:        i32,
+    pub lon:        i32,
+    pub name_ru:    String,
+    pub name_en:    String,
+    pub name_de:    String,
+    pub name_fr:    String,
+    pub name_it:    String,
+    pub name_es:    String,
+    pub name_pt:    String,
+    pub iso:        String,
+    pub timezone:   String,
+    pub okato:      String,
+    pub auto:       String,
+    pub vk:         String,
+    pub utc:        String,
+}
+#[derive(Deserialize)]
+pub struct CountryLocation {
+    pub id:         i32,
+    pub iso:        String,
+    pub continent:  String,
+    pub lat:        i32,
+    pub lon:        i32,
+    pub name_ru:    String,
+    pub name_en:    String,
+    pub name_de:    String,
+    pub name_fr:    String,
+    pub name_it:    String,
+    pub name_es:    String,
+    pub name_pt:    String,
+    pub timezone:        String,
+    pub area:   i64,
+    pub population:      i64,
+    pub capital_id:       i64,
+    pub capital_ru:         String,
+    pub capital_en:        String,
+    pub cur_code:         String,
+    pub phone:        String,
+    pub neighbours:        String,
+    pub vk:   i32,
+    pub utc:   i32,
+}
+
 pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responder {
     use crate::schema::users::dsl::users;
     use crate::utils::{hash_password, set_current_user, to_home};
@@ -154,6 +230,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
     println!("!!!!");
     if params.is_ok() {
         println!("params ok!");
+
         let params_2 = params.unwrap();
         let (_type, _is_host_admin) = get_default_template(req);
         let mut get_device = "a";
