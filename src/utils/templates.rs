@@ -32,7 +32,7 @@ pub fn get_default_template(req: HttpRequest)
     (_type, _is_host_admin)
 }
 
-pub fn get_default_template_2(req: HttpRequest, session: Session) -> (tera::Context) {
+pub fn get_default_template_2(req: HttpRequest, session: Session) -> (String, tera::Context) {
     use crate::schema::users::dsl::users;
     use crate::models::User;
     use diesel::prelude::*;
@@ -52,7 +52,6 @@ pub fn get_default_template_2(req: HttpRequest, session: Session) -> (tera::Cont
         }
     };
     let mut data = Context::new();
-    data.insert("test", &true);
 
     let _val = format!("{:?}", Some(req.peer_addr()));
     if _val.contains(&"91.239.184.81".to_string()) {
