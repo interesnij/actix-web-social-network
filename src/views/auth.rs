@@ -207,7 +207,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
         let mut location200: UserLocation;
         let mut ipaddr: String;
         if let Some(val) = &req.peer_addr() {
-            ipaddr = &val.ip().to_string();
+            ipaddr = val.ip().to_string();
             let _url = "http://api.sypexgeo.net/J5O6d/json/".to_owned() + &ipaddr;
             let __request = reqwest::get(_url).await.expect("E.");
             let new_request = __request.text().await.unwrap();
