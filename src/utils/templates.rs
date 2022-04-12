@@ -35,14 +35,15 @@ pub fn get_default_template(req: HttpRequest)
 pub fn get_default_template_2(req: HttpRequest, session: Session)
      -> (
          String,
-         data<Context>
+         <Context>
         )
     {
 
     use crate::schema::users::dsl::users;
     use crate::models::User;
     use diesel::prelude::*;
-    
+    use crate::schema;
+
     let mut _type = "".to_string();
     let _connection = establish_connection();
     let mut _request_user = "".to_string();

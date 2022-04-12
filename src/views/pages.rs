@@ -30,7 +30,7 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
     let _connection = establish_connection();
     let mut _template : String;
 
-    let (_type, data) = get_default_template_2(&req, &session);
+    let (_type, data) = get_default_template_2(req, session);
     if is_signed_in(&session) {
         _template = _type + &"main/lists/news_list.html".to_string();
     } else {
