@@ -107,7 +107,7 @@ CREATE TABLE user_anketa (
 CREATE TABLE user_delete_anketa (
     id      SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
-    answer  "CHAR",
+    answer  "char",
     other   VARCHAR(200),
     created TIMESTAMP NOT NULL,
 
