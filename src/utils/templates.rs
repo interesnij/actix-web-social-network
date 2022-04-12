@@ -37,7 +37,7 @@ pub fn get_default_template(req: HttpRequest)
 pub fn get_default_template_2(req: HttpRequest, session: Session)
      -> (
          String,
-         data: Context
+         data<Context>
         )
     {
     let mut _type = "".to_string();

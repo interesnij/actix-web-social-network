@@ -25,6 +25,7 @@ pub struct SParams {
 pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
     use crate::schema::users::dsl::users;
     use crate::models::User;
+    use crate::utils::get_default_template_2;
 
     let _connection = establish_connection();
     let mut _template : String;
