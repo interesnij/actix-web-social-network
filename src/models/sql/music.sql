@@ -16,9 +16,9 @@ CREATE TABLE artists (
     count       INT DEFAULT 0,
     repost      INT DEFAULT 0,
     copy        INT DEFAULT 0,
+    position    SMALLINT DEFAULT 0
 
     can_see_el  "char" NOT NULL,
-    position    INT DEFAULT 0
 );
 
 CREATE TABLE music_albums (
@@ -33,13 +33,11 @@ CREATE TABLE music_albums (
     count           INT DEFAULT 0,
     repost          INT DEFAULT 0,
     copy            INT DEFAULT 0,
+    position        SMALLINT DEFAULT 0,
 
     can_see_el      "char" NOT NULL,
-    can_see_comment "char" NOT NULL,
     create_el       "char" NOT NULL,
-    create_comment  "char" NOT NULL,
     copy_el         "char" NOT NULL,
-    position        "char" NOT NULL,
 
     CONSTRAINT fk_music_albums_creator
         FOREIGN KEY(creator_id)
@@ -63,13 +61,11 @@ CREATE TABLE music_lists (
     count           INT DEFAULT 0,
     repost          INT DEFAULT 0,
     copy            INT DEFAULT 0,
+    position        SMALLINT DEFAULT 0,
 
     can_see_el      "char" NOT NULL,
-    can_see_comment "char" NOT NULL,
     create_el       "char" NOT NULL,
-    create_comment  "char" NOT NULL,
     copy_el         "char" NOT NULL,
-    position        "char" NOT NULL,
 
     CONSTRAINT fk_music_lists_creator
         FOREIGN KEY(creator_id)
@@ -80,7 +76,7 @@ CREATE TABLE music_lists (
             REFERENCES communities(id)
 );
 
-CREATE TABLE music (
+CREATE TABLE musics (
     id            SERIAL PRIMARY KEY,
     title         VARCHAR(100) NOT NULL,
     community_id  INT,
@@ -93,10 +89,10 @@ CREATE TABLE music (
     image         VARCHAR(500),
     created       TIMESTAMP NOT NULL,
 
+    view          INT DEFAULT 0,
     repost        INT DEFAULT 0,
     copy          INT DEFAULT 0,
-    position      INT DEFAULT 0,
-    view          INT DEFAULT 0,
+    position      SMALLINT DEFAULT 0,
 
     CONSTRAINT fk_music_creator
         FOREIGN KEY(creator_id)
@@ -146,9 +142,9 @@ CREATE TABLE music_list_perm (
     id            SERIAL PRIMARY KEY,
     user_id       INT NOT NULL,
     list_id       INT NOT NULL,
-    can_see_item  "char" NOT NULL,
-    create_item   "char" NOT NULL,
-    can_copy      "char" NOT NULL,
+    can_see_item  NOT NULL,
+    create_item   NOT NULL,
+    can_copy      NOT NULL,
 
    CONSTRAINT fk_music_list_perm_user
         FOREIGN KEY(user_id)

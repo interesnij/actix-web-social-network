@@ -1,10 +1,9 @@
 use crate::schema::{
-    photo_lists,
-    photos,
-    photo_comments,
-    user_photo_list_collections,
-    community_photo_list_collections,
-    photo_list_perm,
+    survey_lists,
+    surveys,
+    user_survey_list_collections,
+    community_survey_list_collections,
+    survey_list_perm,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
@@ -12,11 +11,10 @@ use crate::utils::establish_connection;
 use crate::models::{
     User,
     Community,
-    Sticker,
 };
 
 
-/////// PhotoList //////
+/////// SurveyList //////
 
 ////////// Тип списка
     // 'a' основной список
@@ -59,11 +57,11 @@ use crate::models::{
     // 'i' Подписчики, кроме
     // 'j' Некоторые подписчики
 
-/////// PhotoList //////
+/////// SurveyList //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Community)]
 #[belongs_to(User)]
-pub struct PhotoList {
+pub struct SurveyList {
     pub id:              i32,
     pub name:            String,
     pub community_id:    Option<i32>,
@@ -76,14 +74,12 @@ pub struct PhotoList {
     pub copy:            i32,
     pub position:        i16,
     pub can_see_el:      char,
-    pub can_see_comment: char,
     pub create_el:       char,
-    pub create_comment:  char,
     pub copy_el:         char,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="photo_lists"]
-pub struct NewPhotoList {
+#[table_name="survey_lists"]
+pub struct NewSurveyList {
     pub name:            String,
     pub community_id:    Option<i32>,
     pub creator_id:      i32,
@@ -95,13 +91,11 @@ pub struct NewPhotoList {
     pub copy:            i32,
     pub position:        i16,
     pub can_see_el:      String,
-    pub can_see_comment: String,
     pub create_el:       String,
-    pub create_comment:  String,
     pub copy_el:         String,
 }
 
-/////// Photo //////
+/////// Survey //////
 
 //////////// тип
 // 'a' Опубликовано
@@ -118,152 +112,104 @@ pub struct NewPhotoList {
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Community)]
 #[belongs_to(User)]
-#[belongs_to(PhotoList)]
-pub struct Photo {
+#[belongs_to(SurveyList)]
+pub struct Survey {
     pub id:              i32,
+    pub title:           String,
     pub community_id:    Option<i32>,
     pub creator_id:      i32,
     pub list_id:         i32,
     pub types:           char,
-    pub preview:         String,
-    pub file:            String,
-    pub description:     Option<String>,
-    pub comment_enabled: Bool,
-    pub votes_on:        Bool,
+    pub image:           Option<String>,
+    pub is_anonymous:    bool,
+    pub is_multiple:     bool,
+    pub is_no_edited:    bool,
+    pub time_end:        Option<chrono::NaiveDateTime>,
     pub created:         chrono::NaiveDateTime,
 
-    pub comment:         i32,
     pub view:            i32,
-    pub liked:           i32,
-    pub disliked:        i32,
     pub repost:          i32,
     pub copy:            i32,
     pub position:        i16,
+    pub vote:            i16,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="photos"]
-pub struct NewPhoto {
+#[table_name="surveys"]
+pub struct NewSurvey {
+    pub title:           String,
     pub community_id:    Option<i32>,
     pub creator_id:      i32,
     pub list_id:         i32,
-    pub types:           String,
-    pub preview:         String,
-    pub file:            String,
-    pub description:     Option<String>,
-    pub comment_enabled: Bool,
-    pub votes_on:        Bool,
+    pub types:           char,
+    pub image:           Option<String>,
+    pub is_anonymous:    bool,
+    pub is_multiple:     bool,
+    pub is_no_edited:    bool,
+    pub time_end:        Option<chrono::NaiveDateTime>,
     pub created:         chrono::NaiveDateTime,
 
-    pub comment:         i32,
     pub view:            i32,
-    pub liked:           i32,
-    pub disliked:        i32,
     pub repost:          i32,
     pub copy:            i32,
     pub position:        i16,
+    pub vote:            i16,
 }
 
-/////// PhotoComment //////
 
-    // 'a' Опубликованный
-    // 'b' Изменённый
-    // 'c' Удаленый
-    // 'd' Изменённый Удаленый
-    // 'e' Закрытый модератором
-    // 'f' Закрытый Удаленый
-
-#[derive(Debug, Queryable, Serialize, Identifiable)]
-#[belongs_to(Photo)]
-#[belongs_to(User)]
-#[belongs_to(Stickers)]
-pub struct PhotoComment {
-    pub id:         i32,
-    pub item_id:    i32,
-    pub creator_id: i32,
-    pub sticker_id: Option<i32>,
-    pub parent_id:  Option<i32>,
-    pub content:    Option<String>,
-    pub attach:     Option<String>,
-    pub types:      char,
-    pub created:    chrono::NaiveDateTime,
-    pub liked:      i32,
-    pub disliked:   i32,
-    pub repost:     i32,
-}
-#[derive(Debug, Deserialize, Insertable)]
-#[table_name="photo_comments"]
-pub struct NewPhotoComment {
-    pub item_id:    i32,
-    pub creator_id: i32,
-    pub sticker_id: Option<i32>,
-    pub parent_id:  Option<i32>,
-    pub content:    Option<String>,
-    pub attach:     Option<String>,
-    pub types:      String,
-    pub created:    chrono::NaiveDateTime,
-    pub liked:      i32,
-    pub disliked:   i32,
-    pub repost:     i32,
-}
-
-/////// UserPhotoListCollection //////
+/////// UserSurveyListCollection //////
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
-#[belongs_to(PhotoList)]
-pub struct UserPhotoListCollection {
+#[belongs_to(SurveyList)]
+pub struct UserSurveyListCollection {
     pub id:       i32,
     pub user_id:  i32,
     pub list_id:  i32,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="user_photo_list_collections"]
-pub struct NewUserPhotoListCollection {
+#[table_name="user_survey_list_collections"]
+pub struct NewUserSurveyListCollection {
     pub user_id:  i32,
     pub list_id:  i32,
 }
 
-/////// CommunityPhotoListCollection //////
+/////// CommunitySurveyListCollection //////
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
 #[belongs_to(Community)]
-#[belongs_to(PhotoList)]
-pub struct CommunityPhotoListCollection {
+#[belongs_to(SurveyList)]
+pub struct CommunitySurveyListCollection {
     pub id:            i32,
     pub community_id:  i32,
     pub list_id:       i32,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="community_photo_list_collections"]
-pub struct NewCommunityPhotoListCollection {
+#[table_name="community_survey_list_collections"]
+pub struct NewCommunitySurveyListCollection {
     pub community_id:  i32,
     pub list_id:       i32,
 }
 
-/////// PhotoListPerm //////
+/////// SurveyListPerm //////
     // 'a' Активно
     // 'b' Не активно
     // 'c' Нет значения
 
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
-#[belongs_to(PhotoList)]
-pub struct PhotoListPerm {
+#[belongs_to(SurveyList)]
+pub struct SurveyListPerm {
     pub id:              i32,
     pub user_id:         i32,
     pub list_id:         i32,
     pub can_see_item:    Option<char>,
-    pub can_see_comment: Option<char>,
     pub create_item:     Option<char>,
-    pub create_comment:  Option<char>,
     pub can_copy:        Option<char>,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="photo_list_perm"]
-pub struct NewPhotoListPerm {
+#[table_name="survey_list_perm"]
+pub struct NewSurveyListPerm {
     pub user_id:         i32,
     pub list_id:         i32,
     pub can_see_item:    Option<String>,
-    pub can_see_comment: Option<String>,
     pub create_item:     Option<String>,
-    pub create_comment:  Option<String>,
     pub can_copy:        Option<String>,
 }

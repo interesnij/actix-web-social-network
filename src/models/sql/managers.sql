@@ -1,10 +1,12 @@
-CREATE TABLE moderated (
+CREATE TABLE moderateds (
     id            SERIAL PRIMARY KEY,
     description   VARCHAR(500),
     verified      BOOLEAN NOT NULL DEFAULT false,
     status        "char" NOT NULL,
-    types         "char" NOT NULL,
-    object_id     INT NOT NULL
+    types         SMALLINT NOT NULL,
+    object_id     INT NOT NULL,
+    created       TIMESTAMP NOT NULL,
+    count         INT DEFAULT 0
 );
 
 CREATE TABLE moderated_reports (
@@ -13,6 +15,7 @@ CREATE TABLE moderated_reports (
     moderated_object_id INT NOT NULL,
     description         VARCHAR(500),
     types               "char" NOT NULL,
+    created             TIMESTAMP NOT NULL,
 
     CONSTRAINT fk_moderated_reports_reporter
         FOREIGN KEY(reporter_id)
@@ -28,9 +31,10 @@ CREATE TABLE moderated_penalties (
     manager_id          INT NOT NULL,
     moderated_object_id INT NOT NULL,
     expiration          TIMESTAMP,
-    types               "char" NOT NULL,
+    types               SMALLINT NOT NULL,
     object_id           INT NOT NULL,
     status              "char" NOT NULL,
+    created             TIMESTAMP NOT NULL,
 
     CONSTRAINT fk_moderated_penalties_reporter
         FOREIGN KEY(manager_id)
@@ -48,7 +52,7 @@ CREATE TABLE moderated_logs (
     object_id       INT NOT NULL,
     action          "char" NOT NULL,
     description     VARCHAR(500),
-    types           "char" NOT NULL,
+    types           SMALLINT NOT NULL,
     created         TIMESTAMP NOT NULL,
     time_to_suspend TIMESTAMP,
 
@@ -59,6 +63,8 @@ CREATE TABLE moderated_logs (
 
 CREATE TABLE staff_logs (
     id          SERIAL PRIMARY KEY,
+    types       SMALLINT NOT NULL,
+    action      "char" NOT NULL,
     manager_id  INT NOT NULL,
     user_id     INT NOT NULL,
     created     TIMESTAMP NOT NULL,
@@ -71,7 +77,7 @@ CREATE TABLE staff_logs (
 CREATE TABLE support_users (
     id          SERIAL PRIMARY KEY,
     manager_id  INT NOT NULL,
-    level       INT DEFAULT 0,
+    level       SMALLINT DEFAULT 0,
     points      INT DEFAULT 0,
     chats       INT DEFAULT 0,
     created     TIMESTAMP NOT NULL

@@ -15,7 +15,7 @@ CREATE TABLE post_lists (
     count           INT DEFAULT 0,
     repost          INT DEFAULT 0,
     copy            INT DEFAULT 0,
-    position        INT DEFAULT 0,
+    position        SMALLINT DEFAULT 0,
 
     can_see_el      "char" NOT NULL,
     can_see_comment "char" NOT NULL,
@@ -140,11 +140,11 @@ CREATE TABLE post_list_perm (
     id              SERIAL PRIMARY KEY,
     user_id         INT NOT NULL,
     list_id         INT NOT NULL,
-    can_see_item    "char" NOT NULL,
-    can_see_comment "char" NOT NULL,
-    create_item     "char" NOT NULL,
-    create_comment  "char" NOT NULL,
-    can_copy        "char" NOT NULL,
+    can_see_item    "char",
+    can_see_comment "char",
+    create_item     "char",
+    create_comment  "char",
+    can_copy        "char",
 
    CONSTRAINT fk_post_list_perm_user
         FOREIGN KEY(user_id)

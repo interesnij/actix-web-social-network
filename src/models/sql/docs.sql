@@ -10,13 +10,13 @@ CREATE TABLE doc_lists (
     count           INT DEFAULT 0,
     repost          INT DEFAULT 0,
     copy            INT DEFAULT 0,
+    position        SMALLINT DEFAULT 0,
 
     can_see_el      "char" NOT NULL,
     can_see_comment "char" NOT NULL,
     create_el       "char" NOT NULL,
     create_comment  "char" NOT NULL,
     copy_el         "char" NOT NULL,
-    position        "char" NOT NULL,
 
     CONSTRAINT fk_doc_lists_creator
         FOREIGN KEY(creator_id)
@@ -38,10 +38,10 @@ CREATE TABLE docs (
     file         VARCHAR(500) NOT NULL,
     created      TIMESTAMP NOT NULL,
 
-    repost       INT DEFAULT 0,
-    copy         INT DEFAULT 0,
-    position     INT DEFAULT 0,
     view         INT DEFAULT 0,
+    repost       INT DEFAULT 0,
+    copy         SMALLINT DEFAULT 0,
+    position     INT DEFAULT 0,
 
     CONSTRAINT fk_docs_creator
         FOREIGN KEY(creator_id)
@@ -91,9 +91,9 @@ CREATE TABLE doc_list_perm (
     id            SERIAL PRIMARY KEY,
     user_id       INT NOT NULL,
     list_id       INT NOT NULL,
-    can_see_item  "char" NOT NULL,
-    create_item   "char" NOT NULL,
-    can_copy      "char" NOT NULL,
+    can_see_item  "char",
+    create_item   "char",
+    can_copy      "char",
 
    CONSTRAINT fk_doc_list_perm_user
         FOREIGN KEY(user_id)

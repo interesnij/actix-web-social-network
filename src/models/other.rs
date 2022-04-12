@@ -43,7 +43,7 @@ pub struct NewCustomLink {
 pub struct StickerCategorie {
     pub id:          i32,
     pub name:        String,
-    pub position:    i32,
+    pub position:    i16,
     pub creator_id:  Option<i32>,
     pub description: Option<String>,
 }
@@ -51,7 +51,7 @@ pub struct StickerCategorie {
 #[table_name="sticker_categories"]
 pub struct NewStickerCategorie {
     pub name:        String,
-    pub position:    i32,
+    pub position:    i16,
     pub creator_id:  Option<i32>,
     pub description: Option<String>,
 }
@@ -62,7 +62,7 @@ pub struct NewStickerCategorie {
 pub struct Sticker {
     pub id:                    i32,
     pub name:                  String,
-    pub position:              i32,
+    pub position:              i16,
     pub sticker_categorie_id: i32,
     pub image:                 String,
 }
@@ -70,7 +70,7 @@ pub struct Sticker {
 #[table_name="stickers"]
 pub struct NewSticker {
     pub name:        String,
-    pub position:    i32,
+    pub position:    i16,
     pub sticker_categorie_id: i32,
     pub image:       String,
 }
@@ -80,14 +80,14 @@ pub struct NewSticker {
 pub struct SmileCategorie {
     pub id:          i32,
     pub name:        String,
-    pub position:    i32,
+    pub position:    i16,
     pub description: Option<String>,
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="smile_categories"]
 pub struct NewSmileCategorie {
     pub name:        String,
-    pub position:    i32,
+    pub position:    i16,
     pub description: Option<String>,
 }
 
@@ -97,7 +97,7 @@ pub struct NewSmileCategorie {
 pub struct Smile {
     pub id:               i32,
     pub name:             String,
-    pub position:         i32,
+    pub position:         i16,
     pub smile_categorie_id: i32,
     pub image:            String,
 }
@@ -105,7 +105,7 @@ pub struct Smile {
 #[table_name="smiles"]
 pub struct NewSmile {
     pub name:        String,
-    pub position:    i32,
+    pub position:    i16,
     pub smile_categorie_id: i32,
     pub image:       String,
 }

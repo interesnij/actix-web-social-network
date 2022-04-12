@@ -56,7 +56,6 @@ use crate::utils::establish_connection;
     // 'b' Английский
 
 #[derive(Debug, Serialize, Identifiable, Queryable)]
-#[table_name="users"]
 pub struct User {
     pub id:            i32,
     pub first_name:    String,

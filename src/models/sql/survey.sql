@@ -10,11 +10,11 @@ CREATE TABLE survey_lists (
     count         INT DEFAULT 0,
     repost        INT DEFAULT 0,
     copy          INT DEFAULT 0,
+    position      SMALLINT DEFAULT 0,
 
     can_see_el    "char" NOT NULL,
     create_el     "char" NOT NULL,
     copy_el       "char" NOT NULL,
-    position      "char" NOT NULL,
 
     CONSTRAINT fk_survey_lists_creator
         FOREIGN KEY(creator_id)
@@ -39,10 +39,10 @@ CREATE TABLE surveys (
     time_end      TIMESTAMP,
     created       TIMESTAMP NOT NULL,
 
+    view        INT DEFAULT 0,
     repost        INT DEFAULT 0,
     copy          INT DEFAULT 0,
-    position      INT DEFAULT 0,
-    view          INT DEFAULT 0,
+    position      SMALLINT DEFAULT 0,
     vote          INT DEFAULT 0,
 
     CONSTRAINT fk_surveys_creator
@@ -93,9 +93,9 @@ CREATE TABLE survey_list_perm (
     id            SERIAL PRIMARY KEY,
     user_id       INT NOT NULL,
     list_id       INT NOT NULL,
-    can_see_item  "char" NOT NULL,
-    create_item   "char" NOT NULL,
-    can_copy      "char" NOT NULL,
+    can_see_item  "char",
+    create_item   "char",
+    can_copy      "char",
 
    CONSTRAINT fk_survey_list_perm_user
         FOREIGN KEY(user_id)

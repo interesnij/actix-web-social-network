@@ -53,7 +53,6 @@ use crate::models::{
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
 #[belongs_to(Community)]
-#[table_name="chats"]
 pub struct Chat {
     pub id:                 i32,
     pub name:               String,
@@ -62,7 +61,7 @@ pub struct Chat {
     pub description:        Option<String>,
     pub community_id:       Option<i32>,
     pub creator_id:         i32,
-    pub position:           i32,
+    pub position:           i16,
     pub members:            i32,
     pub created:            chrono::NaiveDateTime,
     pub can_add_members:    char,
@@ -81,7 +80,7 @@ pub struct NewChat {
     pub types:              i16,
     pub community_id:       Option<i32>,
     pub creator_id:         i32,
-    pub position:           i32,
+    pub position:           i16,
     pub members:            i32,
     pub created:            chrono::NaiveDateTime,
     pub can_add_members:    String,
@@ -103,7 +102,6 @@ pub struct NewChat {
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
 #[belongs_to(Chat)]
-#[table_name="chat_users"]
 pub struct ChatUsers {
     pub id:               i32,
     pub user_id:          i32,
@@ -126,7 +124,6 @@ pub struct NewChatUsers {
 /////// ChatPerm //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(ChatUsers)]
-#[table_name="chat_ie_settings"]
 pub struct ChatPerm {
     pub id:               i32,
     pub user_id:          i32,
@@ -174,7 +171,6 @@ pub struct NewChatPerm {
 #[belongs_to(User)]
 #[belongs_to(Post)]
 #[belongs_to(Stickers)]
-#[table_name="messages"]
 pub struct Message {
     pub id:            i32,
     pub creator_id:    i32,
@@ -185,7 +181,7 @@ pub struct Message {
     pub created:       chrono::NaiveDateTime,
     pub content:       Option<String>,
     pub unread:        Bool,
-    pub typed:         i16,
+    pub types:         i16,
     pub attach:        Option<String>,
     pub voice:         Option<String>,
 }
@@ -199,7 +195,7 @@ pub struct NewMessage {
     pub repost_id:     Option<i32>,
     pub created:       chrono::NaiveDateTime,
     pub content:       Option<String>,
-    pub typed:         i16,
+    pub types:         i16,
     pub attach:        Option<String>,
     pub voice:         Option<String>,
 }
@@ -207,7 +203,6 @@ pub struct NewMessage {
 /////// MessageOptions //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Message)]
-#[table_name="message_options"]
 pub struct MessageOptions {
     pub id:            i32,
     pub message_id:    i32,
@@ -227,7 +222,6 @@ pub struct NewMessageOptions {
 /////// MessageVersion //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Message)]
-#[table_name="message_versions"]
 pub struct MessageVersion {
     pub id:            i32,
     pub message_id:    i32,
@@ -254,7 +248,6 @@ pub struct NewMessageVersion {
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Message, foreign_key="message_transfers_message")]
 #[belongs_to(Message, foreign_key="message_transfers_transfer")]
-#[table_name="message_transfers"]
 pub struct MessageTransfers {
     pub id:            i32,
     pub message_id:    i32,

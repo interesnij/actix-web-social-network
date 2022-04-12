@@ -11,7 +11,7 @@ CREATE TABLE photo_lists (
     count            INT DEFAULT 0,
     repost           INT DEFAULT 0,
     copy             INT DEFAULT 0,
-    position         INT DEFAULT 0,
+    position         SMALLINT DEFAULT 0,
 
     can_see_el       "char" NOT NULL,
     can_see_comment  "char" NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE photos (
     disliked        INT DEFAULT 0,
     repost          INT DEFAULT 0,
     copy            INT DEFAULT 0,
-    position        INT DEFAULT 0,
+    position        SMALLINT DEFAULT 0,
 
     CONSTRAINT fk_photos_creator
         FOREIGN KEY(creator_id)

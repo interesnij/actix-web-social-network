@@ -109,6 +109,7 @@ CREATE TABLE user_delete_anketa (
     user_id INT NOT NULL,
     answer  "CHAR",
     other   VARCHAR(200),
+    created TIMESTAMP NOT NULL,
 
     CONSTRAINT fk_user_delete_anketa
         FOREIGN KEY(user_id)
@@ -310,7 +311,7 @@ CREATE TABLE user_photo_list_position (
     id            SERIAL PRIMARY KEY,
     user_id       INT NOT NULL,     -- Пользователь
     list          INT NOT NULL,     -- Фотоальбом
-    position      INT DEFAULT 0, -- Порядок отображения
+    position      SMALLINT DEFAULT 0, -- Порядок отображения
     types         "char" NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
@@ -319,7 +320,7 @@ CREATE TABLE user_post_list_position (
     id           SERIAL PRIMARY KEY,
     user_id      INT NOT NULL,     -- Пользователь
     list         INT NOT NULL,     -- Список записей
-    position     INT DEFAULT 0, -- Порядок отображения
+    position     SMALLINT DEFAULT 0, -- Порядок отображения
     types        "char" NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
@@ -328,7 +329,7 @@ CREATE TABLE user_music_list_position (
     id            SERIAL PRIMARY KEY,
     user_id       INT NOT NULL,     -- Пользователь
     list          INT NOT NULL,     -- Список аудиозаписей
-    position      INT DEFAULT 0,     -- Порядок отображения
+    position      SMALLINT DEFAULT 0,     -- Порядок отображения
     types         "char" NOT NULL      -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
@@ -337,7 +338,7 @@ CREATE TABLE user_good_list_position (
     id           SERIAL PRIMARY KEY,
     user_id      INT NOT NULL,     -- Пользователь
     list         INT NOT NULL,     -- Список товаров
-    position     INT DEFAULT 0, -- Порядок отображения
+    position     SMALLINT DEFAULT 0, -- Порядок отображения
     types        "char" NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
@@ -346,7 +347,7 @@ CREATE TABLE user_video_list_position (
     id           SERIAL PRIMARY KEY,
     user_id      INT NOT NULL,     -- Пользователь
     list         INT NOT NULL,     -- Список видеозаписей
-    position     INT DEFAULT 0, -- Порядок отображения
+    position     SMALLINT DEFAULT 0, -- Порядок отображения
     types        "char" NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
@@ -355,7 +356,7 @@ CREATE TABLE user_survey_list_position (
     id           SERIAL PRIMARY KEY,
     user_id      INT NOT NULL,     -- Пользователь
     list         INT NOT NULL,     -- Список опросов
-    position     INT DEFAULT 0, -- Порядок отображения
+    position     SMALLINT DEFAULT 0, -- Порядок отображения
     types        "char" NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
@@ -364,7 +365,7 @@ CREATE TABLE user_doc_list_position (
     id             SERIAL PRIMARY KEY,
     user_id        INT NOT NULL,     -- Пользователь
     list           INT NOT NULL,     -- Список документов
-    position       INT DEFAULT 0, -- Порядок отображения
+    position       SMALLINT DEFAULT 0, -- Порядок отображения
     types          "char" NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 

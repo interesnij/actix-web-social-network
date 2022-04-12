@@ -3,7 +3,7 @@ CREATE TABLE community_categories (
     id SERIAL PRIMARY KEY,  -- id объекта
     name VARCHAR(100),           -- название
     avatar VARCHAR(500),            -- аватар
-    position INT DEFAULT 0     -- порядковый номер
+    position SMALLINT DEFAULT 0     -- порядковый номер
 );
 
 -- Суб-категории сообществ -------
@@ -12,7 +12,7 @@ CREATE TABLE community_subcategories (
     name        VARCHAR(100),                  -- название
     category_id INT NOT NULL,             -- id категории
     avatar      VARCHAR(500),                     -- аватар
-    position    INT DEFAULT 0,            -- порядковый номер
+    position    SMALLINT DEFAULT 0,            -- порядковый номер
 
     CONSTRAINT fk_community_subcategories -- связь с категорией
         FOREIGN KEY(category_id)
@@ -269,7 +269,7 @@ CREATE TABLE community_photo_list_position (
     id           SERIAL PRIMARY KEY,
     community_id INT NOT NULL,       -- Сообщество
     list         INT DEFAULT 0,       -- Фотоальбом
-    position     INT DEFAULT 0,       -- Порядок отображения
+    position     SMALLINT DEFAULT 0,       -- Порядок отображения
     types        "char" NOT NULL        -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
@@ -278,7 +278,7 @@ CREATE TABLE community_post_list_position (
     id              SERIAL PRIMARY KEY,
     community_id    INT NOT NULL,      -- Сообщество
     list            INT DEFAULT 0,      -- Список записей
-    position        INT DEFAULT 0,      -- Порядок отображения
+    position        SMALLINT DEFAULT 0,      -- Порядок отображения
     types           "char" NOT NULL       -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
@@ -287,7 +287,7 @@ CREATE TABLE community_music_list_position (
     id             SERIAL PRIMARY KEY,  --
     community_id   INT NOT NULL,       -- Сообщество
     list           INT DEFAULT 0,       -- Список аудиозаписей
-    position       INT DEFAULT 0,       -- Порядок отображения
+    position       SMALLINT DEFAULT 0,       -- Порядок отображения
     types          "char" NOT NULL        -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
@@ -296,7 +296,7 @@ CREATE TABLE community_good_list_position (
     id           SERIAL PRIMARY KEY,  --
     community_id INT NOT NULL,        -- Сообщество
     list         INT DEFAULT 0,       -- Список товаров
-    position     INT DEFAULT 0,       -- Порядок отображения
+    position     SMALLINT DEFAULT 0,       -- Порядок отображения
     types        "char" NOT NULL        -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
@@ -305,7 +305,7 @@ CREATE TABLE community_video_list_position (
     id           SERIAL PRIMARY KEY, --
     community_id INT NOT NULL,      -- Сообщество
     list         INT DEFAULT 0,      -- Список видеозаписей
-    position     INT DEFAULT 0,      -- Порядок отображения
+    position     SMALLINT DEFAULT 0,      -- Порядок отображения
     types        "char" NOT NULL       -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
@@ -314,7 +314,7 @@ CREATE TABLE community_survey_list_position (
     id            SERIAL PRIMARY KEY,
     community_id  INT NOT NULL,      -- Сообщество
     list          INT DEFAULT 0,      -- Список опросов
-    position      INT DEFAULT 0,      -- Порядок отображения
+    position      SMALLINT DEFAULT 0,      -- Порядок отображения
     types         "char" NOT NULL       -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
@@ -323,6 +323,6 @@ CREATE TABLE community_doc_list_position (
     id            SERIAL PRIMARY KEY,
     community_id  INT NOT NULL,      -- Сообщество
     list          INT DEFAULT 0,      -- Список документов
-    position      INT DEFAULT 0,      -- Порядок отображения
+    position      SMALLINT DEFAULT 0,      -- Порядок отображения
     types         "char" NOT NULL       -- 1 - открыт, 0 - недоступен (например, удален)
 );

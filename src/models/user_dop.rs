@@ -144,22 +144,29 @@ pub struct NewUserAnketa {
 }
 
 /////// UserDeleteAnketa //////
-enum UserDeleteAnketaEnum {
     // 'a' "У меня есть другая страница",
     // 'b' "Соцсеть отнимает много времени",
     // 'c' "Мало свободы самовыражения",
     // 'd' "Соцсеть плохо защищает данные",
     // 'e' "Соцсеть плохо защищает детей",
     // 'f' "Другая причина",
-}
 
-#[derive(Debug ,Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
 pub struct UserDeleteAnketa {
     pub id:      i32,
     pub user_id: i32,
     pub answer:  char,
     pub other:   Option<String>,
+    pub created: chrono::NaiveDateTime,
+}
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="user_delete_anketa"]
+pub struct NewUserAnketa {
+    pub user_id: i32,
+    pub answer:  char,
+    pub other:   Option<String>,
+    pub created: chrono::NaiveDateTime,
 }
 
 /////// UserLoveStatus //////
@@ -351,7 +358,7 @@ pub struct FeaturedUC {
     pub user_id:      Option<i32>,
     pub community_id: Option<i32>,
     pub mute:         Bool,
-    pub sleep:        chrono::NaiveDateTime,
+    pub sleep:        Option<chrono::NaiveDateTime>,
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="featured_uc"]
@@ -361,7 +368,7 @@ pub struct NewFeaturedUC {
     pub user_id:      Option<i32>,
     pub community_id: Option<i32>,
     pub mute:         Bool,
-    pub sleep:        chrono::NaiveDateTime,
+    pub sleep:        Option<chrono::NaiveDateTime>,
 }
 
 /////// NewsUC //////
@@ -374,7 +381,7 @@ pub struct NewsUC {
     pub user_id:      Option<i32>,
     pub community_id: Option<i32>,
     pub mute:         Bool,
-    pub sleep:        chrono::NaiveDateTime,
+    pub sleep:        Option<chrono::NaiveDateTime>,
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="news_uc"]
@@ -384,7 +391,7 @@ pub struct NewNewsUC {
     pub user_id:      Option<i32>,
     pub community_id: Option<i32>,
     pub mute:         Bool,
-    pub sleep:        chrono::NaiveDateTime,
+    pub sleep:        Option<chrono::NaiveDateTime>,
 }
 
 /////// NotifyUC //////
@@ -397,7 +404,7 @@ pub struct NotifyUC {
     pub user_id:      Option<i32>,
     pub community_id: Option<i32>,
     pub mute:         Bool,
-    pub sleep:        chrono::NaiveDateTime,
+    pub sleep:        Option<chrono::NaiveDateTime>,
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="notify_uc"]
@@ -407,7 +414,7 @@ pub struct NewNotifyUC {
     pub user_id:      Option<i32>,
     pub community_id: Option<i32>,
     pub mute:         Bool,
-    pub sleep:        chrono::NaiveDateTime,
+    pub sleep:        Option<chrono::NaiveDateTime>,
 }
 /////====================================////
 
@@ -418,7 +425,7 @@ pub struct UserPhotoListPosition {
     pub id:       i32,
     pub user_id:  i32,
     pub list_id:  i32,
-    pub position: i32,
+    pub position: i16,
     pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
@@ -426,7 +433,7 @@ pub struct UserPhotoListPosition {
 pub struct NewUserPhotoListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
-    pub position: i32,
+    pub position: i16,
     pub types:    char,
 }
 
@@ -436,7 +443,7 @@ pub struct UserPostListPosition {
     pub id:       i32,
     pub user_id:  i32,
     pub list_id:  i32,
-    pub position: i32,
+    pub position: i16,
     pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
@@ -444,7 +451,7 @@ pub struct UserPostListPosition {
 pub struct NewUserPostListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
-    pub position: i32,
+    pub position: i16,
     pub types:    char,
 }
 
@@ -454,7 +461,7 @@ pub struct UserMusicListPosition {
     pub id:       i32,
     pub user_id:  i32,
     pub list_id:  i32,
-    pub position: i32,
+    pub position: i16,
     pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
@@ -462,7 +469,7 @@ pub struct UserMusicListPosition {
 pub struct NewUserMusicListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
-    pub position: i32,
+    pub position: i16,
     pub types:    char,
 }
 
@@ -472,7 +479,7 @@ pub struct UserGoodListPosition {
     pub id:       i32,
     pub user_id:  i32,
     pub list_id:  i32,
-    pub position: i32,
+    pub position: i16,
     pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
@@ -480,7 +487,7 @@ pub struct UserGoodListPosition {
 pub struct NewUserGoodListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
-    pub position: i32,
+    pub position: i16,
     pub types:    char,
 }
 
@@ -490,7 +497,7 @@ pub struct UserVideoListPosition {
     pub id:       i32,
     pub user_id:  i32,
     pub list_id:  i32,
-    pub position: i32,
+    pub position: i16,
     pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
@@ -498,7 +505,7 @@ pub struct UserVideoListPosition {
 pub struct NewUserVideoListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
-    pub position: i32,
+    pub position: i16,
     pub types:    char,
 }
 
@@ -508,7 +515,7 @@ pub struct UserSurveyListPosition {
     pub id:       i32,
     pub user_id:  i32,
     pub list_id:  i32,
-    pub position: i32,
+    pub position: i16,
     pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
@@ -516,7 +523,7 @@ pub struct UserSurveyListPosition {
 pub struct NewUserSurveyListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
-    pub position: i32,
+    pub position: i16,
     pub types:    char,
 }
 
@@ -526,7 +533,7 @@ pub struct UserDocListPosition {
     pub id:       i32,
     pub user_id:  i32,
     pub list_id:  i32,
-    pub position: i32,
+    pub position: i16,
     pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
@@ -534,7 +541,7 @@ pub struct UserDocListPosition {
 pub struct NewUserDocListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
-    pub position: i32,
+    pub position: i16,
     pub types:    char,
 }
 

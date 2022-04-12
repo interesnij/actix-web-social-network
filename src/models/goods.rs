@@ -1,11 +1,10 @@
 use crate::schema::{
-    post_categories,
-    post_lists,
-    posts,
-    post_comments,
-    user_post_list_collections,
-    community_post_list_collections,
-    post_list_perm,
+    good_lists,
+    goods,
+    good_comments,
+    user_good_list_collections,
+    community_good_list_collections,
+    good_list_perm,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
@@ -17,23 +16,8 @@ use crate::models::{
 };
 
 
-/////// CommunityCategories //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
-pub struct PostCategories {
-    pub id:       i32,
-    pub name:     String,
-    pub avatar:   Option<String>,
-    pub position: i16,
-}
-#[derive(Debug, Deserialize, Insertable)]
-#[table_name="post_categories"]
-pub struct NewPostCategories {
-    pub name:     String,
-    pub avatar:   Option<String>,
-    pub position: i16,
-}
+/////// GoodList //////
 
-/////// PostList //////
 ////////// Тип списка
     // 'a' основной список
     // 'b' пользовательский список
@@ -63,23 +47,23 @@ pub struct NewPostCategories {
     // 'z' замороженный Фото со стены
     // замороженный '1', '2' ....
 
-    //////////// Приватность списка
-        // 'a' Все пользователи
-        // 'b' Друзья
-        // 'c' Друзья и друзья друзей
-        // 'd' Друзья, кроме
-        // 'e' Некоторые друзья
-        // 'f' Подписчики
-        // 'g' Только я / владелец сообщества
-        // 'h' Администраторы
-        // 'i' Подписчики, кроме
-        // 'j' Некоторые подписчики
+//////////// Приватность списка
+    // 'a' Все пользователи
+    // 'b' Друзья
+    // 'c' Друзья и друзья друзей
+    // 'd' Друзья, кроме
+    // 'e' Некоторые друзья
+    // 'f' Подписчики
+    // 'g' Только я / владелец сообщества
+    // 'h' Администраторы
+    // 'i' Подписчики, кроме
+    // 'j' Некоторые подписчики
 
-/////// PostList //////
+/////// GoodList //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Community)]
 #[belongs_to(User)]
-pub struct PostList {
+pub struct GoodList {
     pub id:              i32,
     pub name:            String,
     pub community_id:    Option<i32>,
@@ -98,8 +82,8 @@ pub struct PostList {
     pub copy_el:         char,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="post_lists"]
-pub struct NewPostList {
+#[table_name="good_lists"]
+pub struct NewGoodList {
     pub name:            String,
     pub community_id:    Option<i32>,
     pub creator_id:      i32,
@@ -117,82 +101,84 @@ pub struct NewPostList {
     pub copy_el:         String,
 }
 
-/////// Post //////
+/////// Good //////
 
 //////////// тип
-    // 'a' Опубликовано
-    // 'b' Закрепленый
-    // 'c' Удаленый
-    // 'd' Черновик владельца
-    // 'e' Черновик предложки
-    // 'f' Предложка сообщества
-    // 'g' Предложка пользователя
-    // 'h' Закрыто модератором
-    // 'i' Удаленый предложенный в сообщество
-    // 'y' Удаленый предложенный у пользователя
-
+// 'a' Опубликовано
+// 'b' Закрепленый
+// 'c' Удаленый
+// 'd' Черновик владельца
+// 'e' Черновик предложки
+// 'f' Предложка сообщества
+// 'g' Предложка пользователя
+// 'h' Закрыто модератором
+// 'i' Удаленый предложенный в сообщество
+// 'y' Удаленый предложенный у пользователя
 
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Community)]
-#[belongs_to(PostCategories)]
 #[belongs_to(User)]
-#[belongs_to(PostList)]
-pub struct Post {
+#[belongs_to(GoodList)]
+pub struct Good {
     pub id:              i32,
-    pub content:         Option<String>,
+    pub title:           String,
     pub community_id:    Option<i32>,
-    pub category_id:     Option<i32>,
     pub creator_id:      i32,
     pub list_id:         i32,
+    pub price:           Option<i32>,
     pub types:           char,
-    pub attach:          Option<String>,
+    pub file:            String,
+    pub description:     Option<String>,
     pub comment_enabled: Bool,
     pub votes_on:        Bool,
     pub created:         chrono::NaiveDateTime,
+
     pub comment:         i32,
     pub view:            i32,
     pub liked:           i32,
     pub disliked:        i32,
     pub repost:          i32,
     pub copy:            i32,
-    pub position:        i32,
+    pub position:        i16,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="posts"]
-pub struct NewPost {
-    pub content:         Option<String>,
+#[table_name="goods"]
+pub struct NewGood {
+    pub title:           String,
     pub community_id:    Option<i32>,
-    pub category_id:     Option<i32>,
     pub creator_id:      i32,
     pub list_id:         i32,
+    pub price:           Option<i32>,
     pub types:           String,
-    pub attach:          Option<String>,
+    pub file:            String,
+    pub description:     Option<String>,
     pub comment_enabled: Bool,
     pub votes_on:        Bool,
     pub created:         chrono::NaiveDateTime,
+
     pub comment:         i32,
     pub view:            i32,
     pub liked:           i32,
     pub disliked:        i32,
     pub repost:          i32,
     pub copy:            i32,
-    pub position:        i32,
+    pub position:        i16,
 }
 
-/////// PostComment //////
+/////// GoodComment //////
 
-// 'a' Опубликованный
-// 'b' Изменённый
-// 'c' Удаленый
-// 'd' Изменённый Удаленый
-// 'e' Закрытый модератором
-// 'f' Закрытый Удаленый
+    // 'a' Опубликованный
+    // 'b' Изменённый
+    // 'c' Удаленый
+    // 'd' Изменённый Удаленый
+    // 'e' Закрытый модератором
+    // 'f' Закрытый Удаленый
 
 #[derive(Debug, Queryable, Serialize, Identifiable)]
-#[belongs_to(Post)]
+#[belongs_to(Good)]
 #[belongs_to(User)]
 #[belongs_to(Stickers)]
-pub struct PostComment {
+pub struct GoodComment {
     pub id:         i32,
     pub item_id:    i32,
     pub creator_id: i32,
@@ -207,8 +193,8 @@ pub struct PostComment {
     pub repost:     i32,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="post_comments"]
-pub struct NewPostComment {
+#[table_name="good_comments"]
+pub struct NewGoodComment {
     pub item_id:    i32,
     pub creator_id: i32,
     pub sticker_id: Option<i32>,
@@ -222,46 +208,47 @@ pub struct NewPostComment {
     pub repost:     i32,
 }
 
-/////// UserPostListCollection //////
+/////// UserGoodListCollection //////
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
-#[belongs_to(PostList)]
-pub struct UserPostListCollection {
+#[belongs_to(GoodList)]
+pub struct UserGoodListCollection {
     pub id:       i32,
     pub user_id:  i32,
     pub list_id:  i32,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="user_post_list_collections"]
-pub struct NewUserPostListCollection {
+#[table_name="user_good_list_collections"]
+pub struct NewUserGoodListCollection {
     pub user_id:  i32,
     pub list_id:  i32,
 }
 
-/////// CommunityPostListCollection //////
+/////// CommunityGoodListCollection //////
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
 #[belongs_to(Community)]
-#[belongs_to(PostList)]
-pub struct CommunityPostListCollection {
+#[belongs_to(GoodList)]
+pub struct CommunityGoodListCollection {
     pub id:            i32,
     pub community_id:  i32,
     pub list_id:       i32,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="community_post_list_collections"]
-pub struct NewCommunityPostListCollection {
+#[table_name="community_good_list_collections"]
+pub struct NewCommunityGoodListCollection {
     pub community_id:  i32,
     pub list_id:       i32,
 }
 
-/////// PostListPerm //////
-// 'a' Активно
-// 'b' Не активно
-// 'c' Нет значения
+/////// GoodListPerm //////
+    // 'a' Активно
+    // 'b' Не активно
+    // 'c' Нет значения
+
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
-#[belongs_to(PostList)]
-pub struct PostListPerm {
+#[belongs_to(GoodList)]
+pub struct GoodListPerm {
     pub id:              i32,
     pub user_id:         i32,
     pub list_id:         i32,
@@ -272,8 +259,8 @@ pub struct PostListPerm {
     pub can_copy:        Option<char>,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="post_list_perm"]
-pub struct NewPostListPerm {
+#[table_name="good_list_perm"]
+pub struct NewGoodListPerm {
     pub user_id:         i32,
     pub list_id:         i32,
     pub can_see_item:    Option<String>,

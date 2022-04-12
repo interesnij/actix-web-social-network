@@ -5,7 +5,6 @@ pub use self::{
 use argonautica::{Hasher, Verifier};
 use actix_session::Session;
 use diesel::prelude::*;
-//use crate::diesel::{Connection, PgConnection};
 use tera::Tera;
 use lazy_static::lazy_static;
 use actix_web::{

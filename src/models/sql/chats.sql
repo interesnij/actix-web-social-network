@@ -7,7 +7,7 @@ CREATE TABLE chats (
     description       VARCHAR(500),              -- описание
     community_id      INT,                       -- id сообщества
     creator_id        INT NOT NULL,              -- id создателя
-    position          INT DEFAULT 0,             -- порядковый номер
+    position          SMALLINT DEFAULT 0,             -- порядковый номер
     members           INT DEFAULT 0,             -- кол-во участников
     created           TIMESTAMP NOT NULL,        -- когда создан
 
