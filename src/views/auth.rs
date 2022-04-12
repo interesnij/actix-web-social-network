@@ -185,7 +185,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
         UserNotificationsGood, NewUserNotificationsGood,
         UserNotificationsVideo, NewUserNotificationsVideo,
         UserNotificationsPhoto, NewUserNotificationsPhoto,
-        UserNotificationsPost, UserNotificationsPost,
+        UserNotificationsPost, NewUserNotificationsPost,
         UserNotifications, NewUserNotifications,
     };
 
