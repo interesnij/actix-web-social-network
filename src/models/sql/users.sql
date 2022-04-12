@@ -62,9 +62,6 @@ CREATE TABLE user_location (
     user_id     INT NOT NULL,
     city_ru     VARCHAR(100),
     city_en     VARCHAR(100),
-    city_lat    FLOAT,
-    city_lon    FLOAT,
-
     region_ru   VARCHAR(100),
     region_en   VARCHAR(100),
     country_ru  VARCHAR(100),
