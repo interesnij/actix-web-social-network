@@ -39,7 +39,7 @@ CREATE TABLE posts (
     community_id    INT,
     post_categorie_id     INT,
     user_id      INT NOT NULL,
-    list_id         INT NOT NULL,
+    post_list_id         INT NOT NULL,
     types           "char" NOT NULL,
     attach          VARCHAR(200),
     comment_enabled BOOLEAN NOT NULL DEFAULT true,
@@ -67,7 +67,7 @@ CREATE TABLE posts (
             REFERENCES communitys(id),
 
     CONSTRAINT fk_posts_list
-        FOREIGN KEY(list_id)
+        FOREIGN KEY(post_list_id)
             REFERENCES post_lists(id)
 );
 

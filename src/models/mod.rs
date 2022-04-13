@@ -3,7 +3,7 @@ mod user;
 mod user_dop;
 mod communities;
 mod posts;
-//mod chats;
+mod chats;
 
 pub use self::{
     other::*,
@@ -11,5 +11,5 @@ pub use self::{
     user_dop::*,
     communities::*,
     posts::*,
-    //chats::*,
+    chats::*,
 };
