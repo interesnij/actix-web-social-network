@@ -29,7 +29,7 @@ CREATE TABLE post_lists (
 
     CONSTRAINT fk_post_lists_community
         FOREIGN KEY(community_id)
-            REFERENCES communities(id)
+            REFERENCES communitys(id)
 );
 
 CREATE TABLE posts (
@@ -63,7 +63,7 @@ CREATE TABLE posts (
 
     CONSTRAINT fk_posts_community
         FOREIGN KEY(community_id)
-            REFERENCES communities(id),
+            REFERENCES communitys(id),
 
     CONSTRAINT fk_posts_list
         FOREIGN KEY(list_id)
@@ -101,8 +101,8 @@ CREATE TABLE post_comments (
         FOREIGN KEY(parent_id)
           REFERENCES post_comments(id)
 );
-CREATE INDEX post_comments_item_id_idx ON post_comments (item_id);
-CREATE INDEX post_comments_creator_id_idx ON post_comments (creator_id);
+CREATE INDEX post_comments_post_id_idx ON post_comments (post_id);
+CREATE INDEX post_comments_user_id_idx ON post_comments (user_id);
 
 
 -- Сохранение списка у пользователя в коллекции -------
@@ -128,7 +128,7 @@ CREATE TABLE community_post_list_collections (
 
    CONSTRAINT fk_community_post_list_collections_community
         FOREIGN KEY(community_id)
-            REFERENCES communities(id),
+            REFERENCES communitys(id),
 
    CONSTRAINT fk_community_post_list_collections_list
         FOREIGN KEY(post_list_id)

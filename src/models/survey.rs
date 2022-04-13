@@ -117,7 +117,7 @@ pub struct Survey {
     pub id:              i32,
     pub title:           String,
     pub community_id:    Option<i32>,
-    pub creator_id:      i32,
+    pub user_id:      i32,
     pub survey_list_id:         i32,
     pub types:           char,
     pub image:           Option<String>,
@@ -138,7 +138,7 @@ pub struct Survey {
 pub struct NewSurvey {
     pub title:           String,
     pub community_id:    Option<i32>,
-    pub creator_id:      i32,
+    pub user_id:      i32,
     pub survey_list_id:         i32,
     pub types:           char,
     pub image:           Option<String>,

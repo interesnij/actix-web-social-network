@@ -73,7 +73,7 @@ CREATE TABLE music_lists (
 
     CONSTRAINT fk_music_lists_community
         FOREIGN KEY(community_id)
-            REFERENCES communities(id)
+            REFERENCES communitys(id)
 );
 
 CREATE TABLE musics (
@@ -100,7 +100,7 @@ CREATE TABLE musics (
 
     CONSTRAINT fk_music_community
         FOREIGN KEY(community_id)
-            REFERENCES communities(id),
+            REFERENCES communitys(id),
 
     CONSTRAINT fk_music_list
         FOREIGN KEY(music_list_id)
@@ -131,7 +131,7 @@ CREATE TABLE community_music_list_collections (
 
    CONSTRAINT fk_community_music_list_collections_community
         FOREIGN KEY(community_id)
-            REFERENCES communities(id),
+            REFERENCES communitys(id),
 
    CONSTRAINT fk_community_music_list_collections_list
         FOREIGN KEY(music_list_id)

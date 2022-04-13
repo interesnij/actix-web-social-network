@@ -24,14 +24,14 @@ CREATE TABLE doc_lists (
 
     CONSTRAINT fk_doc_lists_community
         FOREIGN KEY(community_id)
-            REFERENCES communities(id)
+            REFERENCES communitys(id)
 );
 
 CREATE TABLE docs (
     id           SERIAL PRIMARY KEY,
     title        VARCHAR(200) NOT NULL,
     community_id INT,
-    creator_id   INT NOT NULL,
+    user_id   INT NOT NULL,
     doc_list_id      INT NOT NULL,
     types        "char" NOT NULL,
     types_2      "char" NOT NULL,
@@ -44,12 +44,12 @@ CREATE TABLE docs (
     position     INT DEFAULT 0,
 
     CONSTRAINT fk_docs_creator
-        FOREIGN KEY(creator_id)
+        FOREIGN KEY(user_id)
             REFERENCES users(id),
 
     CONSTRAINT fk_docs_community
         FOREIGN KEY(community_id)
-            REFERENCES communities(id),
+            REFERENCES communitys(id),
 
     CONSTRAINT fk_docs_list
         FOREIGN KEY(doc_list_id)
@@ -80,7 +80,7 @@ CREATE TABLE community_doc_list_collections (
 
    CONSTRAINT fk_community_doc_list_collections_community
         FOREIGN KEY(community_id)
-            REFERENCES communities(id),
+            REFERENCES communitys(id),
 
    CONSTRAINT fk_community_doc_list_collections_list
         FOREIGN KEY(doc_list_id)

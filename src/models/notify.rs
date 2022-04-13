@@ -23,7 +23,7 @@ use crate::models::{User, Community};
 pub struct Notification {
     pub id:                  i32,
     pub recipient_id:        i32,
-    pub creator_id:          i32,
+    pub user_id:          i32,
     pub created:             chrono::NaiveDateTime,
     pub verb:                String,
     pub status:              char,
@@ -38,7 +38,7 @@ pub struct Notification {
 #[table_name="notifications"]
 pub struct NewNotification {
     pub recipient_id:        i32,
-    pub creator_id:          i32,
+    pub user_id:          i32,
     pub created:             chrono::NaiveDateTime,
     pub verb:                String,
     pub status:              char,
@@ -63,7 +63,7 @@ pub struct NewNotification {
 #[belongs_to(Community), foreign_key="wall_action_community")]
 pub struct WallObject {
     pub id:                  i32,
-    pub creator_id:          i32,
+    pub user_id:          i32,
     pub created:             chrono::NaiveDateTime,
     pub verb:                String,
     pub status:              char,
@@ -77,7 +77,7 @@ pub struct WallObject {
 #[derive(Deserialize, Insertable)]
 #[table_name="wall_objects"]
 pub struct NewWallObject {
-    pub recipient_id:        i32,
+    pub user_id:        i32,
     pub created:             chrono::NaiveDateTime,
     pub verb:                String,
     pub status:              char,

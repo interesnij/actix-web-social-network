@@ -22,7 +22,7 @@ CREATE TABLE survey_lists (
 
     CONSTRAINT fk_survey_lists_community
         FOREIGN KEY(community_id)
-            REFERENCES communities(id)
+            REFERENCES communitys(id)
 );
 
 CREATE TABLE surveys (
@@ -51,7 +51,7 @@ CREATE TABLE surveys (
 
     CONSTRAINT fk_surveys_community
         FOREIGN KEY(community_id)
-            REFERENCES communities(id),
+            REFERENCES communitys(id),
 
     CONSTRAINT fk_surveys_list
         FOREIGN KEY(survey_list_id)
@@ -82,7 +82,7 @@ CREATE TABLE community_survey_list_collections (
 
    CONSTRAINT fk_community_survey_list_collections_community
         FOREIGN KEY(community_id)
-            REFERENCES communities(id),
+            REFERENCES communitys(id),
 
    CONSTRAINT fk_community_survey_list_collections_list
         FOREIGN KEY(survey_list_id)

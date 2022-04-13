@@ -44,7 +44,7 @@ CREATE TABLE good_lists (
 
     CONSTRAINT fk_good_lists_community
         FOREIGN KEY(community_id)
-            REFERENCES communities(id)
+            REFERENCES communitys(id)
 );
 
 CREATE TABLE goods (
@@ -76,7 +76,7 @@ CREATE TABLE goods (
 
     CONSTRAINT fk_goods_community
         FOREIGN KEY(community_id)
-            REFERENCES communities(id),
+            REFERENCES communitys(id),
 
     CONSTRAINT fk_goods_category
         FOREIGN KEY(category_id)
@@ -118,8 +118,8 @@ CREATE TABLE good_comments (
         FOREIGN KEY(parent_id)
           REFERENCES good_comments(id)
 );
-CREATE INDEX good_comments_item_id_idx ON good_comments (item_id);
-CREATE INDEX good_comments_creator_id_idx ON good_comments (creator_id);
+CREATE INDEX good_comments_good_id_idx ON good_comments (good_id);
+CREATE INDEX good_comments_user_id_idx ON good_comments (user_id);
 
 
 -- Сохранение списка у пользователя в коллекции -------
@@ -145,7 +145,7 @@ CREATE TABLE community_good_list_collections (
 
    CONSTRAINT fk_community_good_list_collections_community
         FOREIGN KEY(community_id)
-            REFERENCES communities(id),
+            REFERENCES communitys(id),
 
    CONSTRAINT fk_community_good_list_collections_list
         FOREIGN KEY(good_list_id)

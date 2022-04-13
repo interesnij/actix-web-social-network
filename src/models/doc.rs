@@ -118,7 +118,7 @@ pub struct Doc {
     pub id:              i32,
     pub title:           String,
     pub community_id:    Option<i32>,
-    pub creator_id:      i32,
+    pub user_id:      i32,
     pub doc_list_id:         i32,
     pub types:           char,
     pub types_2:         char,
@@ -135,7 +135,7 @@ pub struct Doc {
 pub struct NewDoc {
     pub title:           String,
     pub community_id:    Option<i32>,
-    pub creator_id:      i32,
+    pub user_id:      i32,
     pub doc_list_id:     i32,
     pub types:           String,
     pub types_2:         String,

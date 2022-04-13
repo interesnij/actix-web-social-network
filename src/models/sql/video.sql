@@ -30,7 +30,7 @@ CREATE TABLE video_lists (
 
     CONSTRAINT fk_video_lists_community
         FOREIGN KEY(community_id)
-            REFERENCES communities(id)
+            REFERENCES communitys(id)
 );
 
 CREATE TABLE videos (
@@ -62,7 +62,7 @@ CREATE TABLE videos (
 
     CONSTRAINT fk_videos_community
         FOREIGN KEY(community_id)
-            REFERENCES communities(id),
+            REFERENCES communitys(id),
 
     CONSTRAINT fk_videos_list
         FOREIGN KEY(video_list_id)
@@ -100,8 +100,8 @@ CREATE TABLE video_comments (
         FOREIGN KEY(parent_id)
           REFERENCES video_comments(id)
 );
-CREATE INDEX video_comments_item_id_idx ON video_comments (item_id);
-CREATE INDEX video_comments_creator_id_idx ON video_comments (creator_id);
+CREATE INDEX video_comments_video_id_idx ON video_comments (video_id);
+CREATE INDEX video_comments_user_id_idx ON video_comments (user_id);
 
 
 -- Сохранение списка у пользователя в коллекции -------
@@ -127,7 +127,7 @@ CREATE TABLE community_video_list_collections (
 
    CONSTRAINT fk_community_video_list_collections_community
         FOREIGN KEY(community_id)
-            REFERENCES communities(id),
+            REFERENCES communitys(id),
 
    CONSTRAINT fk_community_video_list_collections_list
         FOREIGN KEY(video_list_id)

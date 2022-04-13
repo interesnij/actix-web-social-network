@@ -206,7 +206,7 @@ pub struct NewMessage {
 pub struct MessageOption {
     pub id:            i32,
     pub message_id:    i32,
-    pub creator_id:    i32,
+    pub user_id:    i32,
     pub is_deleted:    bool,
     pub is_favourite:  bool,
 }
@@ -214,7 +214,7 @@ pub struct MessageOption {
 #[table_name="message_options"]
 pub struct NewMessageOption {
     pub message_id:    i32,
-    pub creator_id:    i32,
+    pub user_id:    i32,
     pub is_deleted:    bool,
     pub is_favourite:  bool,
 }

@@ -30,7 +30,7 @@ CREATE TABLE community_follows (
 
     CONSTRAINT fk_community_follows_community
          FOREIGN KEY(community_id)
-             REFERENCES communities(id)
+             REFERENCES communitys(id)
 );
 
 CREATE TABLE follow_ie_settings (

@@ -25,7 +25,7 @@ CREATE TABLE photo_lists (
 
     CONSTRAINT fk_photo_lists_community
         FOREIGN KEY(community_id)
-            REFERENCES communities(id)
+            REFERENCES communitys(id)
 );
 
 
@@ -56,7 +56,7 @@ CREATE TABLE photos (
 
     CONSTRAINT fk_photos_community
         FOREIGN KEY(community_id)
-            REFERENCES communities(id),
+            REFERENCES communitys(id),
 
     CONSTRAINT fk_photos_list
         FOREIGN KEY(photo_list_id)
@@ -95,8 +95,8 @@ CREATE TABLE photo_comments (
         FOREIGN KEY(parent_id)
           REFERENCES photo_comments(id)
 );
-CREATE INDEX photo_comments_item_id_idx ON photo_comments (item_id);
-CREATE INDEX photo_comments_creator_id_idx ON photo_comments (creator_id);
+CREATE INDEX photo_comments_photo_id_idx ON photo_comments (photo_id);
+CREATE INDEX photo_comments_user_id_idx ON photo_comments (user_id);
 
 
 -- Сохранение списка у пользователя в коллекции -------
@@ -122,7 +122,7 @@ CREATE TABLE community_photo_list_collections (
 
    CONSTRAINT fk_community_photo_list_collections_community
         FOREIGN KEY(community_id)
-            REFERENCES communities(id),
+            REFERENCES communitys(id),
 
    CONSTRAINT fk_community_photo_list_collections_list
         FOREIGN KEY(photo_list_id)

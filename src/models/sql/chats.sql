@@ -78,7 +78,7 @@ CREATE TABLE messages (
     voice        VARCHAR(500),                  -- ссылка на голосовое
 
     CONSTRAINT fk_message_creator               -- связь с создателем
-        FOREIGN KEY(creator_id)
+        FOREIGN KEY(user_id)
             REFERENCES users(id),
 
     CONSTRAINT fk_message_chat                  -- связь с чатом
