@@ -52,7 +52,7 @@ pub struct NewCommunityFollow {
 
 /////// FollowPrivate //////
 #[derive(Deserialize)]
-pub struct FollowIeSetting {
+pub struct FollowPerm {
     pub id:                      i32,
     pub follow_id:               i32,
     pub can_see_info:            Option<char>,

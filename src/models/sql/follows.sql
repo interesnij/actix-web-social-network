@@ -33,7 +33,7 @@ CREATE TABLE community_follows (
              REFERENCES communitys(id)
 );
 
-CREATE TABLE follows_ie_settings (
+CREATE TABLE follows_perms (
     id                       SERIAL PRIMARY KEY,
     follow_id                INT NOT NULL,
 
@@ -72,9 +72,5 @@ CREATE TABLE follows_ie_settings (
     can_create_planner       "char",
     can_create_doc           "char",
     can_create_music         "char",
-    can_create_survey        "char",
-
-    CONSTRAINT fk_follows_ie_settings
-        FOREIGN KEY(follow_id)
-            REFERENCES follows(id)
+    can_create_survey        "char"
 );

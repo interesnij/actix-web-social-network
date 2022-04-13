@@ -169,25 +169,25 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
     use crate::utils::{hash_password, set_current_user, to_home};
     use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
     use crate::models::{
-        UserLocation, NewUserLocation,
-        UserProfile, NewUserProfile,
-        IpUser, NewIpUser,
-        UserPhotoListPosition, NewUserPhotoListPosition,
-        UserPostListPosition, NewUserPostListPosition,
-        UserMusicListPosition, NewUserMusicListPosition,
-        UserGoodListPosition, NewUserGoodListPosition,
-        UserVideoListPosition, NewUserVideoListPosition,
-        UserSurveyListPosition, NewUserSurveyListPosition,
-        UserDocListPosition, NewUserDocListPosition,
-        UserPrivate, NewUserPrivate,
+        //UserLocation, NewUserLocation,
+        //UserProfile, NewUserProfile,
+        //IpUser, NewIpUser,
+        //UserPhotoListPosition, NewUserPhotoListPosition,
+        //UserPostListPosition, NewUserPostListPosition,
+        //UserMusicListPosition, NewUserMusicListPosition,
+        //UserGoodListPosition, NewUserGoodListPosition,
+        //UserVideoListPosition, NewUserVideoListPosition,
+        //UserSurveyListPosition, NewUserSurveyListPosition,
+        //UserDocListPosition, NewUserDocListPosition,
+        //UserPrivate, NewUserPrivate,
 
-        UserPhotoNotification, NewUserPhotoNotification,
-        UserGoodNotification, NewUserGoodNotification,
-        UserVideoNotification, NewUserVideoNotification,
-        UserMusicNotification, NewUserMusicNotification,
-        UserPostNotification, NewUserPostNotification,
-        UserSurveyNotification, NewUserSurveyNotification,
-        UserNotification, NewUserNotification,
+        //UserPhotoNotification, NewUserPhotoNotification,
+        //UserGoodNotification, NewUserGoodNotification,
+        //UserVideoNotification, NewUserVideoNotification,
+        //UserMusicNotification, NewUserMusicNotification,
+        //UserPostNotification, NewUserPostNotification,
+        //UserSurveyNotification, NewUserSurveyNotification,
+        //UserNotification, NewUserNotification,
     };
 
     if is_signed_in(&session) {
@@ -201,12 +201,11 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
         println!("params ok!");
 
         let location200: UserLocation;
-
         let params_2 = params.unwrap();
-
         let mut get_perm = 1;
         let mut location200: UserLocation;
         let mut ipaddr: String;
+
         if let Some(val) = &req.peer_addr() {
             ipaddr = val.ip().to_string();
             let _url = "http://api.sypexgeo.net/J5O6d/json/".to_owned() + &ipaddr;
