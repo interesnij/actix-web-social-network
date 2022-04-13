@@ -43,7 +43,7 @@ pub struct NewCommunityCategory {
 
 /////// CommunitySubCategories //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
-pub struct CommunitySubCategory {
+pub struct CommunitySubcategory {
     pub id:          i32,
     pub name:        String,
     pub category_id: i32,
@@ -52,7 +52,7 @@ pub struct CommunitySubCategory {
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_subcategorys"]
-pub struct NewCommunitySubCategory {
+pub struct NewCommunitySubcategory {
     pub name:        String,
     pub category_id: i32,
     pub avatar:      Option<String>,
@@ -86,7 +86,7 @@ pub struct NewCommunitySubCategory {
 
 /////// Community //////
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
-#[belongs_to(CommunitySubCategorys, foreign_key="community_category")]
+#[belongs_to(CommunitySubcategorys, foreign_key="community_category")]
 #[belongs_to(User, foreign_key="community_creator")]
 pub struct Community {
     pub id:          i32,
@@ -120,7 +120,7 @@ pub struct NewCommunity {
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(Community)]
-pub struct CommunityMembership {
+pub struct CommunitiesMembership {
     pub id:               i32,
     pub user_id:          i32,
     pub community_id:     i32,
@@ -134,7 +134,7 @@ pub struct CommunityMembership {
 
 #[derive(Deserialize, Insertable)]
 #[table_name="communities_memberships"]
-pub struct NewCommunityMembership {
+pub struct NewCommunitiesMembership {
     pub user_id:          i32,
     pub community_id:     i32,
     pub is_administrator: bool,
