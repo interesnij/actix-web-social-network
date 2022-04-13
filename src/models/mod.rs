@@ -11,6 +11,8 @@ mod docs;
 mod follows;
 mod friends;
 mod managers;
+mod notify;
+mod goods;
 
 pub use self::{
     other::*,
@@ -26,4 +28,6 @@ pub use self::{
     follows::*,
     friends::*,
     managers::*,
+    notify::*,
+    goods::*,
 };

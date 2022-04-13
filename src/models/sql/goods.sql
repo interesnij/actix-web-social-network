@@ -23,7 +23,7 @@ CREATE TABLE good_lists (
     id              SERIAL PRIMARY KEY,
     name            VARCHAR(100) NOT NULL,
     community_id    INT,
-    user_id      INT NOT NULL,
+    user_id         INT NOT NULL,
     types           "char" NOT NULL,
     description     VARCHAR(500),
     created         TIMESTAMP NOT NULL,

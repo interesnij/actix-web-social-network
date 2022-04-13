@@ -16,10 +16,6 @@ use crate::models::{User, Community};
     // 'd' Закрыто
 
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
-#[belongs_to(User), foreign_key="notify_recipient_user")]
-#[belongs_to(User), foreign_key="notify_creator_user")]
-#[belongs_to(Community), foreign_key="notify_community")]
-#[belongs_to(Community), foreign_key="notify_action_community")]
 pub struct Notification {
     pub id:                  i32,
     pub recipient_id:        i32,
@@ -58,9 +54,6 @@ pub struct NewNotification {
     // 'd' Закрыто
 
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
-#[belongs_to(User), foreign_key="wall_creator_user")]
-#[belongs_to(Community), foreign_key="wall_community")]
-#[belongs_to(Community), foreign_key="wall_action_community")]
 pub struct WallObject {
     pub id:                  i32,
     pub user_id:          i32,
