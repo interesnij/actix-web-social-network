@@ -10,6 +10,7 @@ mod videos;
 mod docs;
 mod follows;
 mod friends;
+mod managers;
 
 pub use self::{
     other::*,
@@ -24,4 +25,5 @@ pub use self::{
     docs::*,
     follows::*,
     friends::*,
+    managers::*,
 };
