@@ -153,7 +153,7 @@ pub struct NewCommunitiesMembership {
 
 //#[derive(Debug, Serialize, Identifiable, Associations)]
 //#[belongs_to(CommunitiesMembership, foreign_key="community_member")]
-//#[table_name="community_ie_settings"]
+//#[table_name="community_member_ie_settings"]
 //pub struct CommunityIeSetting {
 //    pub id:                      i32,
 //    pub community_member:        i32,

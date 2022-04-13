@@ -66,7 +66,7 @@ CREATE TABLE communities_memberships (
             REFERENCES communitys(id)
 );
 
-CREATE TABLE community_ie_settings (
+CREATE TABLE community_member_ie_settings ( 
     id                      SERIAL PRIMARY KEY,
     community_member        INT NOT NULL,
 
