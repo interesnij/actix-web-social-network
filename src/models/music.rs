@@ -80,7 +80,7 @@ pub struct MusicAlbum {
     pub id:          i32,
     pub name:        String,
     pub artist_id:   i32,
-    pub creator_id:  i32,
+    pub user_id:  i32,
     pub description: Option<String>,
     pub image:       Option<String>,
     pub created:     chrono::NaiveDateTime,
@@ -99,7 +99,7 @@ pub struct MusicAlbum {
 pub struct NewMusicAlbum {
     pub name:        String,
     pub artist_id:   i32,
-    pub creator_id:  i32,
+    pub user_id:  i32,
     pub description: Option<String>,
     pub image:       Option<String>,
     pub created:     chrono::NaiveDateTime,
@@ -151,7 +151,7 @@ pub struct MusicList {
     pub id:           i32,
     pub name:         String,
     pub community_id: i32,
-    pub creator_id:   i32,
+    pub user_id:   i32,
     pub types:        char,
     pub description:  Option<String>,
     pub image:        Option<String>,
@@ -171,7 +171,7 @@ pub struct MusicList {
 pub struct NewMusicList {
     pub name:         String,
     pub community_id: i32,
-    pub creator_id:   i32,
+    pub user_id:   i32,
     pub types:        char,
     pub description:  Option<String>,
     pub image:        Option<String>,
@@ -209,8 +209,8 @@ pub struct Music {
     pub id:              i32,
     pub title:           String,
     pub community_id:    Option<i32>,
-    pub creator_id:      i32,
-    pub list_id:         i32,
+    pub user_id:      i32,
+    pub music_list_id:         i32,
     pub genre_id:        Option<i32>,
     pub album_id:        Option<i32>,
     pub types:           char,
@@ -228,8 +228,8 @@ pub struct Music {
 pub struct NewMusic {
     pub title:           String,
     pub community_id:    Option<i32>,
-    pub creator_id:      i32,
-    pub list_id:         i32,
+    pub user_id:      i32,
+    pub music_list_id:         i32,
     pub genre_id:        Option<i32>,
     pub album_id:        Option<i32>,
     pub types:           char,
@@ -251,13 +251,13 @@ pub struct NewMusic {
 pub struct UserMusicListCollection {
     pub id:       i32,
     pub user_id:  i32,
-    pub list_id:  i32,
+    pub music_list_id:  i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_music_list_collections"]
 pub struct NewUserMusicListCollection {
     pub user_id:  i32,
-    pub list_id:  i32,
+    pub music_list_id:  i32,
 }
 
 /////// CommunityMusicListCollection //////
@@ -267,13 +267,13 @@ pub struct NewUserMusicListCollection {
 pub struct CommunityMusicListCollection {
     pub id:            i32,
     pub community_id:  i32,
-    pub list_id:       i32,
+    pub music_list_id:       i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_music_list_collections"]
 pub struct NewCommunityMusicListCollection {
     pub community_id:  i32,
-    pub list_id:       i32,
+    pub music_list_id:       i32,
 }
 
 /////// MusicListPerm //////
@@ -287,7 +287,7 @@ pub struct NewCommunityMusicListCollection {
 pub struct MusicListPerm {
     pub id:              i32,
     pub user_id:         i32,
-    pub list_id:         i32,
+    pub music_list_id:         i32,
     pub can_see_item:    Option<char>,
     pub create_item:     Option<char>,
     pub can_copy:        Option<char>,
@@ -296,7 +296,7 @@ pub struct MusicListPerm {
 #[table_name="music_list_perms"]
 pub struct NewMusicListPerm {
     pub user_id:         i32,
-    pub list_id:         i32,
+    pub music_list_id:         i32,
     pub can_see_item:    Option<String>,
     pub create_item:     Option<String>,
     pub can_copy:        Option<String>,

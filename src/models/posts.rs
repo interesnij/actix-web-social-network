@@ -83,7 +83,7 @@ pub struct PostList {
     pub id:              i32,
     pub name:            String,
     pub community_id:    Option<i32>,
-    pub creator_id:      i32,
+    pub user_id:      i32,
     pub types:           char,
     pub description:     Option<String>,
     pub created:         chrono::NaiveDateTime,
@@ -102,7 +102,7 @@ pub struct PostList {
 pub struct NewPostList {
     pub name:            String,
     pub community_id:    Option<i32>,
-    pub creator_id:      i32,
+    pub user_id:      i32,
     pub types:           String,
     pub description:     Option<String>,
     pub created:         chrono::NaiveDateTime,
@@ -141,8 +141,8 @@ pub struct Post {
     pub id:              i32,
     pub content:         Option<String>,
     pub community_id:    Option<i32>,
-    pub category_id:     Option<i32>,
-    pub creator_id:      i32,
+    pub post_category_id:     Option<i32>,
+    pub user_id:      i32,
     pub list_id:         i32,
     pub types:           char,
     pub attach:          Option<String>,
@@ -162,8 +162,8 @@ pub struct Post {
 pub struct NewPost {
     pub content:         Option<String>,
     pub community_id:    Option<i32>,
-    pub category_id:     Option<i32>,
-    pub creator_id:      i32,
+    pub post_category_id:     Option<i32>,
+    pub user_id:      i32,
     pub list_id:         i32,
     pub types:           String,
     pub attach:          Option<String>,
@@ -191,11 +191,11 @@ pub struct NewPost {
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Post)]
 #[belongs_to(User)]
-#[belongs_to(Stickers)]
+#[belongs_to(Sticker)]
 pub struct PostComment {
     pub id:         i32,
-    pub item_id:    i32,
-    pub creator_id: i32,
+    pub post_id:    i32,
+    pub user_id: i32,
     pub sticker_id: Option<i32>,
     pub parent_id:  Option<i32>,
     pub content:    Option<String>,
@@ -209,8 +209,8 @@ pub struct PostComment {
 #[derive(Deserialize, Insertable)]
 #[table_name="post_comments"]
 pub struct NewPostComment {
-    pub item_id:    i32,
-    pub creator_id: i32,
+    pub post_id:    i32,
+    pub user_id: i32,
     pub sticker_id: Option<i32>,
     pub parent_id:  Option<i32>,
     pub content:    Option<String>,
@@ -229,13 +229,13 @@ pub struct NewPostComment {
 pub struct UserPostListCollection {
     pub id:       i32,
     pub user_id:  i32,
-    pub list_id:  i32,
+    pub post_list_id:  i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_post_list_collections"]
 pub struct NewUserPostListCollection {
     pub user_id:  i32,
-    pub list_id:  i32,
+    pub post_list_id:  i32,
 }
 
 /////// CommunityPostListCollection //////
@@ -245,13 +245,13 @@ pub struct NewUserPostListCollection {
 pub struct CommunityPostListCollection {
     pub id:            i32,
     pub community_id:  i32,
-    pub list_id:       i32,
+    pub post_list_id:       i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_post_list_collections"]
 pub struct NewCommunityPostListCollection {
     pub community_id:  i32,
-    pub list_id:       i32,
+    pub post_list_id:       i32,
 }
 
 /////// PostListPerm //////
@@ -264,7 +264,7 @@ pub struct NewCommunityPostListCollection {
 pub struct PostListPerm {
     pub id:              i32,
     pub user_id:         i32,
-    pub list_id:         i32,
+    pub post_list_id:         i32,
     pub can_see_item:    Option<char>,
     pub can_see_comment: Option<char>,
     pub create_item:     Option<char>,
@@ -275,7 +275,7 @@ pub struct PostListPerm {
 #[table_name="post_list_perms"]
 pub struct NewPostListPerm {
     pub user_id:         i32,
-    pub list_id:         i32,
+    pub post_list_id:         i32,
     pub can_see_item:    Option<String>,
     pub can_see_comment: Option<String>,
     pub create_item:     Option<String>,

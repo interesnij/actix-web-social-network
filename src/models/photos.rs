@@ -67,7 +67,7 @@ pub struct PhotoList {
     pub id:              i32,
     pub name:            String,
     pub community_id:    Option<i32>,
-    pub creator_id:      i32,
+    pub user_id:      i32,
     pub types:           char,
     pub description:     Option<String>,
     pub created:         chrono::NaiveDateTime,
@@ -86,7 +86,7 @@ pub struct PhotoList {
 pub struct NewPhotoList {
     pub name:            String,
     pub community_id:    Option<i32>,
-    pub creator_id:      i32,
+    pub user_id:      i32,
     pub types:           String,
     pub description:     Option<String>,
     pub created:         chrono::NaiveDateTime,
@@ -122,8 +122,8 @@ pub struct NewPhotoList {
 pub struct Photo {
     pub id:              i32,
     pub community_id:    Option<i32>,
-    pub creator_id:      i32,
-    pub list_id:         i32,
+    pub user_id:      i32,
+    pub photo_list_id:         i32,
     pub types:           char,
     pub preview:         String,
     pub file:            String,
@@ -144,8 +144,8 @@ pub struct Photo {
 #[table_name="photos"]
 pub struct NewPhoto {
     pub community_id:    Option<i32>,
-    pub creator_id:      i32,
-    pub list_id:         i32,
+    pub user_id:      i32,
+    pub photo_list_id:         i32,
     pub types:           String,
     pub preview:         String,
     pub file:            String,
@@ -175,11 +175,11 @@ pub struct NewPhoto {
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Photo)]
 #[belongs_to(User)]
-#[belongs_to(Stickers)]
+#[belongs_to(Sticker)]
 pub struct PhotoComment {
     pub id:         i32,
-    pub item_id:    i32,
-    pub creator_id: i32,
+    pub photo_id:    i32,
+    pub user_id: i32,
     pub sticker_id: Option<i32>,
     pub parent_id:  Option<i32>,
     pub content:    Option<String>,
@@ -193,8 +193,8 @@ pub struct PhotoComment {
 #[derive(Deserialize, Insertable)]
 #[table_name="photo_comments"]
 pub struct NewPhotoComment {
-    pub item_id:    i32,
-    pub creator_id: i32,
+    pub photo_id:    i32,
+    pub user_id: i32,
     pub sticker_id: Option<i32>,
     pub parent_id:  Option<i32>,
     pub content:    Option<String>,
@@ -213,13 +213,13 @@ pub struct NewPhotoComment {
 pub struct UserPhotoListCollection {
     pub id:       i32,
     pub user_id:  i32,
-    pub list_id:  i32,
+    pub photo_list_id:  i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_photo_list_collections"]
 pub struct NewUserPhotoListCollection {
     pub user_id:  i32,
-    pub list_id:  i32,
+    pub photo_list_id:  i32,
 }
 
 /////// CommunityPhotoListCollection //////
@@ -229,13 +229,13 @@ pub struct NewUserPhotoListCollection {
 pub struct CommunityPhotoListCollection {
     pub id:            i32,
     pub community_id:  i32,
-    pub list_id:       i32,
+    pub photo_list_id:       i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_photo_list_collections"]
 pub struct NewCommunityPhotoListCollection {
     pub community_id:  i32,
-    pub list_id:       i32,
+    pub photo_list_id:       i32,
 }
 
 /////// PhotoListPerm //////
@@ -249,7 +249,7 @@ pub struct NewCommunityPhotoListCollection {
 pub struct PhotoListPerm {
     pub id:              i32,
     pub user_id:         i32,
-    pub list_id:         i32,
+    pub photo_list_id:         i32,
     pub can_see_item:    Option<char>,
     pub can_see_comment: Option<char>,
     pub create_item:     Option<char>,
@@ -260,7 +260,7 @@ pub struct PhotoListPerm {
 #[table_name="photo_list_perms"]
 pub struct NewPhotoListPerm {
     pub user_id:         i32,
-    pub list_id:         i32,
+    pub photo_list_id:         i32,
     pub can_see_item:    Option<String>,
     pub can_see_comment: Option<String>,
     pub create_item:     Option<String>,

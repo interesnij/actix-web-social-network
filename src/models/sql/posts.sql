@@ -8,7 +8,7 @@ CREATE TABLE post_lists (
     id              SERIAL PRIMARY KEY,
     name            VARCHAR(100) NOT NULL,
     community_id    INT,
-    creator_id      INT NOT NULL,
+    user_id      INT NOT NULL,
     types           "char" NOT NULL,
     description     VARCHAR(500),
     created         TIMESTAMP NOT NULL,
@@ -24,7 +24,7 @@ CREATE TABLE post_lists (
     copy_el         "char" NOT NULL,
 
     CONSTRAINT fk_post_lists_creator
-        FOREIGN KEY(creator_id)
+        FOREIGN KEY(user_id)
             REFERENCES users(id),
 
     CONSTRAINT fk_post_lists_community
@@ -36,8 +36,8 @@ CREATE TABLE posts (
     id              SERIAL PRIMARY KEY,
     content         VARCHAR(5000),
     community_id    INT,
-    category_id     INT,
-    creator_id      INT NOT NULL,
+    post_category_id     INT,
+    user_id      INT NOT NULL,
     list_id         INT NOT NULL,
     types           "char" NOT NULL,
     attach          VARCHAR(200),
@@ -54,11 +54,11 @@ CREATE TABLE posts (
     position        INT DEFAULT 0,
 
     CONSTRAINT fk_posts_creator
-        FOREIGN KEY(creator_id)
+        FOREIGN KEY(user_id)
             REFERENCES users(id),
 
     CONSTRAINT fk_posts_category
-        FOREIGN KEY(category_id)
+        FOREIGN KEY(post_category_id)
             REFERENCES post_categories(id),
 
     CONSTRAINT fk_posts_community
@@ -72,8 +72,8 @@ CREATE TABLE posts (
 
 CREATE TABLE post_comments (
     id          SERIAL PRIMARY KEY,
-    item_id     INT NOT NULL,
-    creator_id  INT NOT NULL,
+    post_id     INT NOT NULL,
+    user_id  INT NOT NULL,
     sticker_id  INT,
     parent_id   INT,
     content     VARCHAR(1000),
@@ -86,11 +86,11 @@ CREATE TABLE post_comments (
     repost      INT DEFAULT 0,
 
     CONSTRAINT fk_post_comment
-        FOREIGN KEY(item_id)
+        FOREIGN KEY(post_id)
             REFERENCES posts(id),
 
     CONSTRAINT fk_user_post_comment
-        FOREIGN KEY(creator_id)
+        FOREIGN KEY(user_id)
             REFERENCES users(id),
 
     CONSTRAINT fk_sticker_post_comment
@@ -109,14 +109,14 @@ CREATE INDEX post_comments_creator_id_idx ON post_comments (creator_id);
 CREATE TABLE user_post_list_collections (
     id      SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
-    list_id INT NOT NULL,
+    post_list_id INT NOT NULL,
 
    CONSTRAINT fk_user_post_list_collections_user
         FOREIGN KEY(user_id)
             REFERENCES users(id),
 
    CONSTRAINT fk_user_post_list_collections_list
-        FOREIGN KEY(list_id)
+        FOREIGN KEY(post_list_id)
             REFERENCES post_lists(id)
 );
 
@@ -124,14 +124,14 @@ CREATE TABLE user_post_list_collections (
 CREATE TABLE community_post_list_collections (
     id            SERIAL PRIMARY KEY,
     community_id  INT NOT NULL,
-    list_id       INT NOT NULL,
+    post_list_id       INT NOT NULL,
 
    CONSTRAINT fk_community_post_list_collections_community
         FOREIGN KEY(community_id)
             REFERENCES communities(id),
 
    CONSTRAINT fk_community_post_list_collections_list
-        FOREIGN KEY(list_id)
+        FOREIGN KEY(post_list_id)
             REFERENCES post_lists(id)
 );
 
@@ -139,7 +139,7 @@ CREATE TABLE community_post_list_collections (
 CREATE TABLE post_list_perms (
     id              SERIAL PRIMARY KEY,
     user_id         INT NOT NULL,
-    list_id         INT NOT NULL,
+    post_list_id         INT NOT NULL,
     can_see_item    "char",
     can_see_comment "char",
     create_item     "char",
@@ -151,6 +151,6 @@ CREATE TABLE post_list_perms (
             REFERENCES users(id),
 
    CONSTRAINT fk_post_list_perm_list
-        FOREIGN KEY(list_id)
+        FOREIGN KEY(post_list_id)
             REFERENCES post_lists(id)
 );

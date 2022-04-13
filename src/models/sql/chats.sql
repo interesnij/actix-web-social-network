@@ -6,7 +6,7 @@ CREATE TABLE chats (
     image             VARCHAR(500),              -- ссылка на аватар
     description       VARCHAR(500),              -- описание
     community_id      INT,                       -- id сообщества
-    creator_id        INT NOT NULL,              -- id создателя
+    user_id           INT NOT NULL,              -- id создателя
     position          SMALLINT DEFAULT 0,             -- порядковый номер
     members           INT DEFAULT 0,             -- кол-во участников
     created           TIMESTAMP NOT NULL,        -- когда создан
@@ -20,7 +20,7 @@ CREATE TABLE chats (
     can_see_log       "char" NOT NULL,                       -- кто видит логи чата
 
     CONSTRAINT fk_chat_creator                   -- связь с создателем
-        FOREIGN KEY(creator_id)
+        FOREIGN KEY(user_id)
             REFERENCES users(id),
 
     CONSTRAINT fk_chat_community                 -- связь с сообществом
@@ -48,7 +48,7 @@ CREATE TABLE chat_users (
 
 CREATE TABLE chat_ie_settings (
     id                SERIAL PRIMARY KEY,     -- id объекта
-    user_id           INT NOT NULL,           -- id пользователя
+    chat_users_id     INT NOT NULL,           -- id пользователя
 
     can_add_in_chat   "char",                 -- кто добавляет участников
     can_add_fix       "char",                 -- кто закрепляет сообщения
@@ -65,7 +65,7 @@ CREATE TABLE chat_ie_settings (
 
 CREATE TABLE messages (
     id           SERIAL PRIMARY KEY,            -- id объекта
-    creator_id   INT NOT NULL,                  -- id создателя
+    user_id      INT NOT NULL,                  -- id создателя
     chat_id      INT NOT NULL,                  -- id чата
     parent_id    INT,                           -- сообщение-родитель
     sticker_id   INT,                           -- id стикера
@@ -135,8 +135,8 @@ CREATE TABLE message_options (
 -- Пересланные сообщения -------
 CREATE TABLE message_transfers (
     id          SERIAL PRIMARY KEY,            -- id объекта
-    message_id  INT NOT NULL,                  -- id сообщения
-    transfer_id INT NOT NULL,                  -- id пересылаемого сообщения
+    message_transfers_message     INT NOT NULL,                  -- id сообщения
+    message_transfers_transfer    INT NOT NULL,                  -- id пересылаемого сообщения
 
     CONSTRAINT fk_message_transfers_message    -- связь с сообщением
         FOREIGN KEY(message_id)

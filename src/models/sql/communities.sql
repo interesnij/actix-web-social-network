@@ -31,16 +31,16 @@ CREATE TABLE communitys (
     b_avatar      VARCHAR(500),           -- большой аватар
     s_avatar      VARCHAR(500),           -- маленький аватар
     cover         VARCHAR(500),           -- баннер
-    category_id   INT NOT NULL,           -- id категории
-    creator_id    INT NOT NULL,           -- id создателя
+    community_category   INT NOT NULL,           -- id категории
+    community_creator    INT NOT NULL,           -- id создателя
     created       TIMESTAMP NOT NULL,     -- когда создано
 
     CONSTRAINT fk_community_creator   -- связь с пользователем
-        FOREIGN KEY(creator_id)
+        FOREIGN KEY(community_creator)
             REFERENCES users(id),
 
     CONSTRAINT fk_community_category  -- связь с категорией
-        FOREIGN KEY(category_id)
+        FOREIGN KEY(community_category)
             REFERENCES community_subcategories(id)
 );
 
@@ -68,7 +68,7 @@ CREATE TABLE communities_memberships (
 
 CREATE TABLE community_ie_settings (
     id                      SERIAL PRIMARY KEY,
-    user_id                 INT NOT NULL,
+    community_member                 INT NOT NULL,
 
     can_see_info            "char",
     can_see_member          "char",
@@ -106,7 +106,7 @@ CREATE TABLE community_ie_settings (
     can_create_survey       "char",
 
     CONSTRAINT fk_community_ie_settings
-        FOREIGN KEY(user_id)
+        FOREIGN KEY(community_member)
             REFERENCES communities_memberships(id)
 );
 

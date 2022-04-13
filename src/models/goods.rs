@@ -67,7 +67,7 @@ pub struct GoodList {
     pub id:              i32,
     pub name:            String,
     pub community_id:    Option<i32>,
-    pub creator_id:      i32,
+    pub user_id:      i32,
     pub types:           char,
     pub description:     Option<String>,
     pub created:         chrono::NaiveDateTime,
@@ -86,7 +86,7 @@ pub struct GoodList {
 pub struct NewGoodList {
     pub name:            String,
     pub community_id:    Option<i32>,
-    pub creator_id:      i32,
+    pub user_id:      i32,
     pub types:           String,
     pub description:     Option<String>,
     pub created:         chrono::NaiveDateTime,
@@ -123,8 +123,8 @@ pub struct Good {
     pub id:              i32,
     pub title:           String,
     pub community_id:    Option<i32>,
-    pub creator_id:      i32,
-    pub list_id:         i32,
+    pub user_id:      i32,
+    pub good_list_id:         i32,
     pub price:           Option<i32>,
     pub types:           char,
     pub file:            String,
@@ -146,8 +146,8 @@ pub struct Good {
 pub struct NewGood {
     pub title:           String,
     pub community_id:    Option<i32>,
-    pub creator_id:      i32,
-    pub list_id:         i32,
+    pub user_id:      i32,
+    pub good_list_id:         i32,
     pub price:           Option<i32>,
     pub types:           String,
     pub file:            String,
@@ -177,11 +177,11 @@ pub struct NewGood {
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Good)]
 #[belongs_to(User)]
-#[belongs_to(Stickers)]
+#[belongs_to(Sticker)]
 pub struct GoodComment {
     pub id:         i32,
-    pub item_id:    i32,
-    pub creator_id: i32,
+    pub good_id:    i32,
+    pub user_id: i32,
     pub sticker_id: Option<i32>,
     pub parent_id:  Option<i32>,
     pub content:    Option<String>,
@@ -195,8 +195,8 @@ pub struct GoodComment {
 #[derive(Deserialize, Insertable)]
 #[table_name="good_comments"]
 pub struct NewGoodComment {
-    pub item_id:    i32,
-    pub creator_id: i32,
+    pub good_id:    i32,
+    pub user_id: i32,
     pub sticker_id: Option<i32>,
     pub parent_id:  Option<i32>,
     pub content:    Option<String>,
@@ -215,13 +215,13 @@ pub struct NewGoodComment {
 pub struct UserGoodListCollection {
     pub id:       i32,
     pub user_id:  i32,
-    pub list_id:  i32,
+    pub good_list_id:  i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_good_list_collections"]
 pub struct NewUserGoodListCollection {
     pub user_id:  i32,
-    pub list_id:  i32,
+    pub good_list_id:  i32,
 }
 
 /////// CommunityGoodListCollection //////
@@ -231,13 +231,13 @@ pub struct NewUserGoodListCollection {
 pub struct CommunityGoodListCollection {
     pub id:            i32,
     pub community_id:  i32,
-    pub list_id:       i32,
+    pub good_list_id:       i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_good_list_collections"]
 pub struct NewCommunityGoodListCollection {
     pub community_id:  i32,
-    pub list_id:       i32,
+    pub good_list_id:       i32,
 }
 
 /////// GoodListPerm //////
@@ -251,7 +251,7 @@ pub struct NewCommunityGoodListCollection {
 pub struct GoodListPerm {
     pub id:              i32,
     pub user_id:         i32,
-    pub list_id:         i32,
+    pub good_list_id:         i32,
     pub can_see_item:    Option<char>,
     pub can_see_comment: Option<char>,
     pub create_item:     Option<char>,
@@ -262,7 +262,7 @@ pub struct GoodListPerm {
 #[table_name="good_list_perms"]
 pub struct NewGoodListPerm {
     pub user_id:         i32,
-    pub list_id:         i32,
+    pub good_list_id:         i32,
     pub can_see_item:    Option<String>,
     pub can_see_comment: Option<String>,
     pub create_item:     Option<String>,

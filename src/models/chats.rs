@@ -60,7 +60,7 @@ pub struct Chat {
     pub image:              Option<String>,
     pub description:        Option<String>,
     pub community_id:       Option<i32>,
-    pub creator_id:         i32,
+    pub user_id:            i32,
     pub position:           i16,
     pub members:            i32,
     pub created:            chrono::NaiveDateTime,
@@ -79,7 +79,7 @@ pub struct NewChat {
     pub name:               String,
     pub types:              i16,
     pub community_id:       Option<i32>,
-    pub creator_id:         i32,
+    pub user_id:            i32,
     pub position:           i16,
     pub members:            i32,
     pub created:            chrono::NaiveDateTime,
@@ -126,7 +126,7 @@ pub struct NewChatUser {
 #[belongs_to(ChatUsers)]
 pub struct ChatIeSetting {
     pub id:               i32,
-    pub user_id:          i32,
+    pub chat_users_id:    i32,
     pub can_add_in_chat:  Option<char>,
     pub can_add_fix:      Option<char>,
     pub can_add_admin:    Option<char>,
@@ -137,7 +137,7 @@ pub struct ChatIeSetting {
 #[derive(Deserialize, Insertable)]
 #[table_name="chat_ie_settings"]
 pub struct NewChatIeSetting {
-    pub user_id:          i32,
+    pub chat_users_id:    i32,
     pub can_add_in_chat:  Option<String>,
     pub can_add_fix:      Option<String>,
     pub can_add_admin:    Option<String>,
@@ -170,10 +170,10 @@ pub struct NewChatIeSetting {
 #[belongs_to(Chat)]
 #[belongs_to(User)]
 #[belongs_to(Post)]
-#[belongs_to(Stickers)]
+#[belongs_to(Sticker)]
 pub struct Message {
     pub id:            i32,
-    pub creator_id:    i32,
+    pub user_id:       i32,
     pub chat_id:       i32,
     pub parent_id:     Option<i32>,
     pub sticker_id:    Option<i32>,
@@ -188,7 +188,7 @@ pub struct Message {
 #[derive(Deserialize, Insertable)]
 #[table_name="messages"]
 pub struct NewMessage {
-    pub creator_id:    i32,
+    pub user_id:       i32,
     pub chat_id:       i32,
     pub parent_id:     Option<i32>,
     pub sticker_id:    Option<i32>,
@@ -249,9 +249,9 @@ pub struct NewMessageVersion {
 #[belongs_to(Message, foreign_key="message_transfers_message")]
 #[belongs_to(Message, foreign_key="message_transfers_transfer")]
 pub struct MessageTransfer {
-    pub id:            i32,
-    pub message_id:    i32,
-    pub transfer_id:   i32,
+    pub id:         i32,
+    pub message_transfers_message:    i32,
+    pub message_transfers_transfer:   i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="message_transfers"]

@@ -3,7 +3,7 @@ CREATE TABLE doc_lists (
     id              SERIAL PRIMARY KEY,
     name            VARCHAR(100) NOT NULL,
     community_id    INT,
-    creator_id      INT NOT NULL,
+    user_id      INT NOT NULL,
     types           "char" NOT NULL,
     description     VARCHAR(500),
     created         TIMESTAMP NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE doc_lists (
     copy_el         "char" NOT NULL,
 
     CONSTRAINT fk_doc_lists_creator
-        FOREIGN KEY(creator_id)
+        FOREIGN KEY(user_id)
             REFERENCES users(id),
 
     CONSTRAINT fk_doc_lists_community
@@ -32,7 +32,7 @@ CREATE TABLE docs (
     title        VARCHAR(200) NOT NULL,
     community_id INT,
     creator_id   INT NOT NULL,
-    list_id      INT NOT NULL,
+    doc_list_id      INT NOT NULL,
     types        "char" NOT NULL,
     types_2      "char" NOT NULL,
     file         VARCHAR(500) NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE docs (
             REFERENCES communities(id),
 
     CONSTRAINT fk_docs_list
-        FOREIGN KEY(list_id)
+        FOREIGN KEY(doc_list_id)
             REFERENCES doc_lists(id)
 );
 
@@ -61,14 +61,14 @@ CREATE TABLE docs (
 CREATE TABLE user_doc_list_collections (
     id      SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
-    list_id INT NOT NULL,
+    doc_list_id INT NOT NULL,
 
    CONSTRAINT fk_user_doc_list_collections_user
         FOREIGN KEY(user_id)
             REFERENCES users(id),
 
    CONSTRAINT fk_user_doc_list_collections_list
-        FOREIGN KEY(list_id)
+        FOREIGN KEY(doc_list_id)
             REFERENCES doc_lists(id)
 );
 
@@ -76,21 +76,21 @@ CREATE TABLE user_doc_list_collections (
 CREATE TABLE community_doc_list_collections (
     id           SERIAL PRIMARY KEY,
     community_id INT NOT NULL,
-    list_id      INT NOT NULL,
+    doc_list_id      INT NOT NULL,
 
    CONSTRAINT fk_community_doc_list_collections_community
         FOREIGN KEY(community_id)
             REFERENCES communities(id),
 
    CONSTRAINT fk_community_doc_list_collections_list
-        FOREIGN KEY(list_id)
+        FOREIGN KEY(doc_list_id)
             REFERENCES doc_lists(id)
 );
 
 CREATE TABLE doc_list_perms (
     id            SERIAL PRIMARY KEY,
     user_id       INT NOT NULL,
-    list_id       INT NOT NULL,
+    doc_list_id   INT NOT NULL,
     can_see_item  "char",
     create_item   "char",
     can_copy      "char",
@@ -100,6 +100,6 @@ CREATE TABLE doc_list_perms (
             REFERENCES users(id),
 
    CONSTRAINT fk_doc_list_perm_list
-        FOREIGN KEY(list_id)
+        FOREIGN KEY(doc_list_id)
             REFERENCES doc_lists(id)
 );

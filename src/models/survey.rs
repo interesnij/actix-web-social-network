@@ -65,7 +65,7 @@ pub struct SurveyList {
     pub id:              i32,
     pub name:            String,
     pub community_id:    Option<i32>,
-    pub creator_id:      i32,
+    pub user_id:      i32,
     pub types:           char,
     pub description:     Option<String>,
     pub created:         chrono::NaiveDateTime,
@@ -82,7 +82,7 @@ pub struct SurveyList {
 pub struct NewSurveyList {
     pub name:            String,
     pub community_id:    Option<i32>,
-    pub creator_id:      i32,
+    pub user_id:      i32,
     pub types:           String,
     pub description:     Option<String>,
     pub created:         chrono::NaiveDateTime,
@@ -118,7 +118,7 @@ pub struct Survey {
     pub title:           String,
     pub community_id:    Option<i32>,
     pub creator_id:      i32,
-    pub list_id:         i32,
+    pub survey_list_id:         i32,
     pub types:           char,
     pub image:           Option<String>,
     pub is_anonymous:    bool,
@@ -139,7 +139,7 @@ pub struct NewSurvey {
     pub title:           String,
     pub community_id:    Option<i32>,
     pub creator_id:      i32,
-    pub list_id:         i32,
+    pub survey_list_id:         i32,
     pub types:           char,
     pub image:           Option<String>,
     pub is_anonymous:    bool,
@@ -163,13 +163,13 @@ pub struct NewSurvey {
 pub struct UserSurveyListCollection {
     pub id:       i32,
     pub user_id:  i32,
-    pub list_id:  i32,
+    pub survey_list_id:  i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_survey_list_collections"]
 pub struct NewUserSurveyListCollection {
     pub user_id:  i32,
-    pub list_id:  i32,
+    pub survey_list_id:  i32,
 }
 
 /////// CommunitySurveyListCollection //////
@@ -179,13 +179,13 @@ pub struct NewUserSurveyListCollection {
 pub struct CommunitySurveyListCollection {
     pub id:            i32,
     pub community_id:  i32,
-    pub list_id:       i32,
+    pub survey_list_id:       i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_survey_list_collections"]
 pub struct NewCommunitySurveyListCollection {
     pub community_id:  i32,
-    pub list_id:       i32,
+    pub survey_list_id:       i32,
 }
 
 /////// SurveyListPerm //////
@@ -199,7 +199,7 @@ pub struct NewCommunitySurveyListCollection {
 pub struct SurveyListPerm {
     pub id:              i32,
     pub user_id:         i32,
-    pub list_id:         i32,
+    pub survey_list_id:         i32,
     pub can_see_item:    Option<char>,
     pub create_item:     Option<char>,
     pub can_copy:        Option<char>,
@@ -208,7 +208,7 @@ pub struct SurveyListPerm {
 #[table_name="survey_list_perms"]
 pub struct NewSurveyListPerm {
     pub user_id:         i32,
-    pub list_id:         i32,
+    pub survey_list_id:         i32,
     pub can_see_item:    Option<String>,
     pub create_item:     Option<String>,
     pub can_copy:        Option<String>,

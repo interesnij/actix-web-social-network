@@ -66,7 +66,7 @@ pub struct DocList {
     pub id:              i32,
     pub name:            String,
     pub community_id:    Option<i32>,
-    pub creator_id:      i32,
+    pub user_id:         i32,
     pub types:           char,
     pub description:     Option<String>,
     pub created:         chrono::NaiveDateTime,
@@ -83,7 +83,7 @@ pub struct DocList {
 pub struct NewDocList {
     pub name:            String,
     pub community_id:    Option<i32>,
-    pub creator_id:      i32,
+    pub user_id:         i32,
     pub types:           String,
     pub description:     Option<String>,
     pub created:         chrono::NaiveDateTime,
@@ -119,7 +119,7 @@ pub struct Doc {
     pub title:           String,
     pub community_id:    Option<i32>,
     pub creator_id:      i32,
-    pub list_id:         i32,
+    pub doc_list_id:         i32,
     pub types:           char,
     pub types_2:         char,
     pub file:            String,
@@ -136,7 +136,7 @@ pub struct NewDoc {
     pub title:           String,
     pub community_id:    Option<i32>,
     pub creator_id:      i32,
-    pub list_id:         i32,
+    pub doc_list_id:     i32,
     pub types:           String,
     pub types_2:         String,
     pub file:            String,
@@ -155,14 +155,14 @@ pub struct NewDoc {
 #[belongs_to(DocList)]
 pub struct UserDocListCollection {
     pub id:       i32,
-    pub user_id:  i32,
+    pub doc_list_id:  i32,
     pub list_id:  i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_doc_list_collections"]
 pub struct NewUserDocListCollection {
     pub user_id:  i32,
-    pub list_id:  i32,
+    pub doc_list_id:  i32,
 }
 
 /////// CommunityDocListCollection //////
@@ -172,13 +172,13 @@ pub struct NewUserDocListCollection {
 pub struct CommunityDocListCollection {
     pub id:            i32,
     pub community_id:  i32,
-    pub list_id:       i32,
+    pub doc_list_id:       i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_doc_list_collections"]
 pub struct NewCommunityDocListCollection {
     pub community_id:  i32,
-    pub list_id:       i32,
+    pub doc_list_id:       i32,
 }
 
 /////// DocListPerm //////
@@ -192,7 +192,7 @@ pub struct NewCommunityDocListCollection {
 pub struct DocListPerm {
     pub id:              i32,
     pub user_id:         i32,
-    pub list_id:         i32,
+    pub doc_list_id:         i32,
     pub can_see_item:    Option<char>,
     pub create_item:     Option<char>,
     pub can_copy:        Option<char>,
@@ -201,7 +201,7 @@ pub struct DocListPerm {
 #[table_name="doc_list_perms"]
 pub struct NewDocListPerm {
     pub user_id:         i32,
-    pub list_id:         i32,
+    pub doc_list_id:         i32,
     pub can_see_item:    Option<String>,
     pub create_item:     Option<String>,
     pub can_copy:        Option<String>,

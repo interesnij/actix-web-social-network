@@ -87,8 +87,8 @@ pub struct NewCommunitySubCategory{
 
 /////// Community //////
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
-#[belongs_to(CommunitySubCategorys)]
-#[belongs_to(User)]
+#[belongs_to(CommunitySubCategorys, foreign_key="community_category")]
+#[belongs_to(User, foreign_key="community_creator")]
 pub struct Community {
     pub id:          i32,
     pub name:        String,
@@ -101,8 +101,8 @@ pub struct Community {
     pub b_avatar:    Option<String>,
     pub s_avatar:    Option<String>,
     pub cover:       Option<String>,
-    pub category_id: i32,
-    pub creator_id:  i32,
+    pub community_category: i32,
+    pub community_creator:  i32,
     pub created:     chrono::NaiveDateTime,
 }
 #[derive(Deserialize, Insertable)]
@@ -112,8 +112,8 @@ pub struct NewCommunity {
     pub types:       i16,
     pub perm:        String,
     pub level:       i16,
-    pub category_id: i32,
-    pub creator_id:  i32,
+    pub community_category: i32,
+    pub community_creator:  i32,
     pub created:     chrono::NaiveDateTime,
 }
 
@@ -153,11 +153,11 @@ pub struct NewCommunityMembership {
     // 'b' Не активно
 
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
-#[belongs_to(CommunityMembership)]
+#[belongs_to(CommunityMembership, foreign_key="community_member")]
 #[table_name="community_ie_settings"]
 pub struct CommunityIeSetting {
     pub id:                      i32,
-    pub user_id:                 i32,
+    pub community_member:                 i32,
 
     pub can_see_info:            Option<char>,
     pub can_see_member:          Option<char>,

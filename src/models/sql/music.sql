@@ -25,7 +25,7 @@ CREATE TABLE music_albums (
     id              SERIAL PRIMARY KEY,
     name            VARCHAR(100) NOT NULL,
     artist_id       INT,
-    creator_id      INT NOT NULL,
+    user_id      INT NOT NULL,
     description     VARCHAR(500),
     image           VARCHAR(500),
     created         TIMESTAMP NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE music_albums (
     copy_el         "char" NOT NULL,
 
     CONSTRAINT fk_music_albums_creator
-        FOREIGN KEY(creator_id)
+        FOREIGN KEY(user_id)
             REFERENCES users(id),
 
     CONSTRAINT fk_music_albums_artist
@@ -52,7 +52,7 @@ CREATE TABLE music_lists (
     id              SERIAL PRIMARY KEY,
     name            VARCHAR(100) NOT NULL,
     community_id    INT,
-    creator_id      INT NOT NULL,
+    user_id      INT NOT NULL,
     types           "char" NOT NULL,
     description     VARCHAR(500),
     image           VARCHAR(500),
@@ -68,7 +68,7 @@ CREATE TABLE music_lists (
     copy_el         "char" NOT NULL,
 
     CONSTRAINT fk_music_lists_creator
-        FOREIGN KEY(creator_id)
+        FOREIGN KEY(user_id)
             REFERENCES users(id),
 
     CONSTRAINT fk_music_lists_community
@@ -80,8 +80,8 @@ CREATE TABLE musics (
     id            SERIAL PRIMARY KEY,
     title         VARCHAR(100) NOT NULL,
     community_id  INT,
-    creator_id    INT NOT NULL,
-    list_id       INT NOT NULL,
+    user_id    INT NOT NULL,
+    music_list_id       INT NOT NULL,
     genre_id      INT,
     album_id      INT,
     types         "char" NOT NULL,
@@ -95,7 +95,7 @@ CREATE TABLE musics (
     position      SMALLINT DEFAULT 0,
 
     CONSTRAINT fk_music_creator
-        FOREIGN KEY(creator_id)
+        FOREIGN KEY(user_id)
             REFERENCES users(id),
 
     CONSTRAINT fk_music_community
@@ -103,7 +103,7 @@ CREATE TABLE musics (
             REFERENCES communities(id),
 
     CONSTRAINT fk_music_list
-        FOREIGN KEY(list_id)
+        FOREIGN KEY(music_list_id)
             REFERENCES music_lists(id)
 );
 
@@ -112,14 +112,14 @@ CREATE TABLE musics (
 CREATE TABLE user_music_list_collections (
     id      SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
-    list_id INT NOT NULL,
+    music_list_id INT NOT NULL,
 
    CONSTRAINT fk_user_music_list_collections_user
         FOREIGN KEY(user_id)
             REFERENCES users(id),
 
    CONSTRAINT fk_user_music_list_collections_list
-        FOREIGN KEY(list_id)
+        FOREIGN KEY(music_list_id)
             REFERENCES music_lists(id)
 );
 
@@ -127,21 +127,21 @@ CREATE TABLE user_music_list_collections (
 CREATE TABLE community_music_list_collections (
     id           SERIAL PRIMARY KEY,
     community_id INT NOT NULL,
-    list_id      INT NOT NULL,
+    music_list_id      INT NOT NULL,
 
    CONSTRAINT fk_community_music_list_collections_community
         FOREIGN KEY(community_id)
             REFERENCES communities(id),
 
    CONSTRAINT fk_community_music_list_collections_list
-        FOREIGN KEY(list_id)
+        FOREIGN KEY(music_list_id)
             REFERENCES music_lists(id)
 );
 
 CREATE TABLE music_list_perms (
     id            SERIAL PRIMARY KEY,
     user_id       INT NOT NULL,
-    list_id       INT NOT NULL,
+    music_list_id       INT NOT NULL,
     can_see_item  NOT NULL,
     create_item   NOT NULL,
     can_copy      NOT NULL,
@@ -151,6 +151,6 @@ CREATE TABLE music_list_perms (
             REFERENCES users(id),
 
    CONSTRAINT fk_music_list_perm_list
-        FOREIGN KEY(list_id)
+        FOREIGN KEY(music_list_id)
             REFERENCES music_lists(id)
 );

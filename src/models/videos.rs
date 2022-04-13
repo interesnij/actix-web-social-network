@@ -67,7 +67,7 @@ pub struct VideoList {
     pub id:              i32,
     pub name:            String,
     pub community_id:    Option<i32>,
-    pub creator_id:      i32,
+    pub user_id:      i32,
     pub types:           char,
     pub description:     Option<String>,
     pub created:         chrono::NaiveDateTime,
@@ -86,7 +86,7 @@ pub struct VideoList {
 pub struct NewVideoList {
     pub name:            String,
     pub community_id:    Option<i32>,
-    pub creator_id:      i32,
+    pub user_id:      i32,
     pub types:           String,
     pub description:     Option<String>,
     pub created:         chrono::NaiveDateTime,
@@ -123,8 +123,8 @@ pub struct Video {
     pub id:              i32,
     pub title:           String,
     pub community_id:    Option<i32>,
-    pub creator_id:      i32,
-    pub list_id:         i32,
+    pub user_id:      i32,
+    pub video_list_id:         i32,
     pub types:           char,
     pub file:            String,
     pub description:     Option<String>,
@@ -145,8 +145,8 @@ pub struct Video {
 pub struct NewVideo {
     pub title:           String,
     pub community_id:    Option<i32>,
-    pub creator_id:      i32,
-    pub list_id:         i32,
+    pub user_id:      i32,
+    pub video_list_id:         i32,
     pub types:           String,
     pub file:            String,
     pub description:     Option<String>,
@@ -175,11 +175,11 @@ pub struct NewVideo {
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Video)]
 #[belongs_to(User)]
-#[belongs_to(Stickers)]
+#[belongs_to(Sticker)]
 pub struct VideoComment {
     pub id:         i32,
-    pub item_id:    i32,
-    pub creator_id: i32,
+    pub video_id:    i32,
+    pub user_id: i32,
     pub sticker_id: Option<i32>,
     pub parent_id:  Option<i32>,
     pub content:    Option<String>,
@@ -193,8 +193,8 @@ pub struct VideoComment {
 #[derive(Deserialize, Insertable)]
 #[table_name="video_comments"]
 pub struct NewVideoComment {
-    pub item_id:    i32,
-    pub creator_id: i32,
+    pub video_id:    i32,
+    pub user_id: i32,
     pub sticker_id: Option<i32>,
     pub parent_id:  Option<i32>,
     pub content:    Option<String>,
@@ -213,13 +213,13 @@ pub struct NewVideoComment {
 pub struct UserVideoListCollection {
     pub id:       i32,
     pub user_id:  i32,
-    pub list_id:  i32,
+    pub video_list_id:  i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_video_list_collections"]
 pub struct NewUserVideoListCollection {
     pub user_id:  i32,
-    pub list_id:  i32,
+    pub video_list_id:  i32,
 }
 
 /////// CommunityVideoListCollection //////
@@ -229,13 +229,13 @@ pub struct NewUserVideoListCollection {
 pub struct CommunityVideoListCollection {
     pub id:            i32,
     pub community_id:  i32,
-    pub list_id:       i32,
+    pub video_list_id:       i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_video_list_collections"]
 pub struct NewCommunityVideoListCollection {
     pub community_id:  i32,
-    pub list_id:       i32,
+    pub video_list_id:       i32,
 }
 
 /////// VideoListPerm //////
@@ -249,7 +249,7 @@ pub struct NewCommunityVideoListCollection {
 pub struct VideoListPerm {
     pub id:              i32,
     pub user_id:         i32,
-    pub list_id:         i32,
+    pub video_list_id:         i32,
     pub can_see_item:    Option<char>,
     pub can_see_comment: Option<char>,
     pub create_item:     Option<char>,
@@ -260,7 +260,7 @@ pub struct VideoListPerm {
 #[table_name="video_list_perms"]
 pub struct NewVideoListPerm {
     pub user_id:         i32,
-    pub list_id:         i32,
+    pub video_list_id:         i32,
     pub can_see_item:    Option<String>,
     pub can_see_comment: Option<String>,
     pub create_item:     Option<String>,

@@ -3,7 +3,7 @@ CREATE TABLE photo_lists (
     id               SERIAL PRIMARY KEY,
     name             VARCHAR(100) NOT NULL,
     community_id     INT,
-    creator_id       INT NOT NULL,
+    user_id       INT NOT NULL,
     types            "char" NOT NULL,
     description      VARCHAR(500),
     cover_photo      VARCHAR(500),
@@ -20,7 +20,7 @@ CREATE TABLE photo_lists (
     copy_el          "char" NOT NULL,
 
     CONSTRAINT fk_photo_lists_creator
-        FOREIGN KEY(creator_id)
+        FOREIGN KEY(user_id)
             REFERENCES users(id),
 
     CONSTRAINT fk_photo_lists_community
@@ -32,8 +32,8 @@ CREATE TABLE photo_lists (
 CREATE TABLE photos (
     id              SERIAL PRIMARY KEY,
     community_id    INT,
-    creator_id      INT NOT NULL,
-    list_id         INT NOT NULL,
+    user_id      INT NOT NULL,
+    photo_list_id         INT NOT NULL,
     types           "char" NOT NULL,
     preview         VARCHAR(500) NOT NULL,
     file            VARCHAR(500) NOT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE photos (
     position        SMALLINT DEFAULT 0,
 
     CONSTRAINT fk_photos_creator
-        FOREIGN KEY(creator_id)
+        FOREIGN KEY(user_id)
             REFERENCES users(id),
 
     CONSTRAINT fk_photos_community
@@ -59,15 +59,15 @@ CREATE TABLE photos (
             REFERENCES communities(id),
 
     CONSTRAINT fk_photos_list
-        FOREIGN KEY(list_id)
+        FOREIGN KEY(photo_list_id)
             REFERENCES photo_lists(id)
 );
 
 
 CREATE TABLE photo_comments (
     id          SERIAL PRIMARY KEY,
-    item_id     INT NOT NULL,
-    creator_id  INT NOT NULL,
+    photo_id     INT NOT NULL,
+    user_id  INT NOT NULL,
     sticker_id  INT,
     parent_id   INT,
     content     VARCHAR(1000),
@@ -80,11 +80,11 @@ CREATE TABLE photo_comments (
     repost      INT DEFAULT 0,
 
     CONSTRAINT fk_photo_comment
-        FOREIGN KEY(item_id)
+        FOREIGN KEY(photo_id)
             REFERENCES photos(id),
 
     CONSTRAINT fk_user_photo_comment
-        FOREIGN KEY(creator_id)
+        FOREIGN KEY(user_id)
             REFERENCES users(id),
 
     CONSTRAINT fk_sticker_photo_comment
@@ -103,14 +103,14 @@ CREATE INDEX photo_comments_creator_id_idx ON photo_comments (creator_id);
 CREATE TABLE user_photo_list_collections (
     id      SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
-    list_id INT NOT NULL,
+    photo_list_id INT NOT NULL,
 
    CONSTRAINT fk_user_photo_list_collections_user
         FOREIGN KEY(user_id)
             REFERENCES users(id),
 
    CONSTRAINT fk_user_photo_list_collections_list
-        FOREIGN KEY(list_id)
+        FOREIGN KEY(photo_list_id)
             REFERENCES photo_lists(id)
 );
 
@@ -118,21 +118,21 @@ CREATE TABLE user_photo_list_collections (
 CREATE TABLE community_photo_list_collections (
     id            SERIAL PRIMARY KEY,
     community_id  INT NOT NULL,
-    list_id       INT NOT NULL,
+    photo_list_id       INT NOT NULL,
 
    CONSTRAINT fk_community_photo_list_collections_community
         FOREIGN KEY(community_id)
             REFERENCES communities(id),
 
    CONSTRAINT fk_community_photo_list_collections_list
-        FOREIGN KEY(list_id)
+        FOREIGN KEY(photo_list_id)
             REFERENCES photo_lists(id)
 );
 
 CREATE TABLE photo_list_perms (
     id              SERIAL PRIMARY KEY,
     user_id         INT NOT NULL,
-    list_id         INT NOT NULL,
+    photo_list_id         INT NOT NULL,
     can_see_item    "char",
     can_see_comment "char",
     create_item     "char",
@@ -144,6 +144,6 @@ CREATE TABLE photo_list_perms (
             REFERENCES users(id),
 
    CONSTRAINT fk_photo_list_perm_list
-        FOREIGN KEY(list_id)
+        FOREIGN KEY(photo_list_id)
             REFERENCES photo_lists(id)
 );

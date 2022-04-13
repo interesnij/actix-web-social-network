@@ -3,7 +3,7 @@ CREATE TABLE survey_lists (
     id            SERIAL PRIMARY KEY,
     name          VARCHAR(100) NOT NULL,
     community_id  INT,
-    creator_id    INT NOT NULL,
+    user_id    INT NOT NULL,
     types         "char" NOT NULL,
     description   VARCHAR(500),
     created       TIMESTAMP NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE survey_lists (
     copy_el       "char" NOT NULL,
 
     CONSTRAINT fk_survey_lists_creator
-        FOREIGN KEY(creator_id)
+        FOREIGN KEY(user_id)
             REFERENCES users(id),
 
     CONSTRAINT fk_survey_lists_community
@@ -29,8 +29,8 @@ CREATE TABLE surveys (
     id            SERIAL PRIMARY KEY,
     title         VARCHAR(100) NOT NULL,
     community_id  INT,
-    creator_id    INT NOT NULL,
-    list_id       INT NOT NULL,
+    user_id    INT NOT NULL,
+    survey_list_id       INT NOT NULL,
     types         "char" NOT NULL,
     image         VARCHAR(500),
     is_anonymous  BOOLEAN NOT NULL DEFAULT false,
@@ -46,7 +46,7 @@ CREATE TABLE surveys (
     vote          INT DEFAULT 0,
 
     CONSTRAINT fk_surveys_creator
-        FOREIGN KEY(creator_id)
+        FOREIGN KEY(user_id)
             REFERENCES users(id),
 
     CONSTRAINT fk_surveys_community
@@ -54,7 +54,7 @@ CREATE TABLE surveys (
             REFERENCES communities(id),
 
     CONSTRAINT fk_surveys_list
-        FOREIGN KEY(list_id)
+        FOREIGN KEY(survey_list_id)
             REFERENCES survey_lists(id)
 );
 
@@ -63,14 +63,14 @@ CREATE TABLE surveys (
 CREATE TABLE user_survey_list_collections (
     id        SERIAL PRIMARY KEY,
     user_id   INT NOT NULL,
-    list_id   INT NOT NULL,
+    survey_list_id   INT NOT NULL,
 
    CONSTRAINT fk_user_survey_list_collections_user
         FOREIGN KEY(user_id)
             REFERENCES users(id),
 
    CONSTRAINT fk_user_survey_list_collections_list
-        FOREIGN KEY(list_id)
+        FOREIGN KEY(survey_list_id)
             REFERENCES survey_lists(id)
 );
 
@@ -78,21 +78,21 @@ CREATE TABLE user_survey_list_collections (
 CREATE TABLE community_survey_list_collections (
     id            SERIAL PRIMARY KEY,
     community_id  INT NOT NULL,
-    list_id       INT NOT NULL,
+    survey_list_id       INT NOT NULL,
 
    CONSTRAINT fk_community_survey_list_collections_community
         FOREIGN KEY(community_id)
             REFERENCES communities(id),
 
    CONSTRAINT fk_community_survey_list_collections_list
-        FOREIGN KEY(list_id)
+        FOREIGN KEY(survey_list_id)
             REFERENCES survey_lists(id)
 );
 
 CREATE TABLE survey_list_perms (
     id            SERIAL PRIMARY KEY,
     user_id       INT NOT NULL,
-    list_id       INT NOT NULL,
+    survey_list_id       INT NOT NULL,
     can_see_item  "char",
     create_item   "char",
     can_copy      "char",
@@ -102,6 +102,6 @@ CREATE TABLE survey_list_perms (
             REFERENCES users(id),
 
    CONSTRAINT fk_survey_list_perm_list
-        FOREIGN KEY(list_id)
+        FOREIGN KEY(survey_list_id)
             REFERENCES survey_lists(id)
 );

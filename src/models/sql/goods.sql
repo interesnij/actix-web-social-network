@@ -23,7 +23,7 @@ CREATE TABLE good_lists (
     id              SERIAL PRIMARY KEY,
     name            VARCHAR(100) NOT NULL,
     community_id    INT,
-    creator_id      INT NOT NULL,
+    user_id      INT NOT NULL,
     types           "char" NOT NULL,
     description     VARCHAR(500),
     created         TIMESTAMP NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE good_lists (
     copy_el         "char" NOT NULL,
 
     CONSTRAINT fk_good_lists_creator
-        FOREIGN KEY(creator_id)
+        FOREIGN KEY(user_id)
             REFERENCES users(id),
 
     CONSTRAINT fk_good_lists_community
@@ -52,8 +52,8 @@ CREATE TABLE goods (
     title           VARCHAR(100) NOT NULL,
     community_id    INT,
     category_id     INT,
-    creator_id      INT NOT NULL,
-    list_id         INT NOT NULL,
+    user_id      INT NOT NULL,
+    good_list_id         INT NOT NULL,
     price           INT,
     types           "char" NOT NULL,
     description     VARCHAR(500),
@@ -71,7 +71,7 @@ CREATE TABLE goods (
     position        SMALLINT DEFAULT 0,
 
     CONSTRAINT fk_goods_creator
-        FOREIGN KEY(creator_id)
+        FOREIGN KEY(user_id)
             REFERENCES users(id),
 
     CONSTRAINT fk_goods_community
@@ -83,14 +83,14 @@ CREATE TABLE goods (
             REFERENCES good_subcategories(id),
 
     CONSTRAINT fk_goods_list
-        FOREIGN KEY(list_id)
+        FOREIGN KEY(good_list_id)
             REFERENCES good_lists(id)
 );
 
 CREATE TABLE good_comments (
     id          SERIAL PRIMARY KEY,
-    item_id     INT NOT NULL,
-    creator_id  INT NOT NULL,
+    good_id     INT NOT NULL,
+    user_id  INT NOT NULL,
     sticker_id  INT,
     parent_id   INT,
     content     VARCHAR(1000),
@@ -103,11 +103,11 @@ CREATE TABLE good_comments (
     repost      INT DEFAULT 0,
 
     CONSTRAINT fk_good_comment
-        FOREIGN KEY(item_id)
+        FOREIGN KEY(good_id)
             REFERENCES goods(id),
 
     CONSTRAINT fk_user_good_comment
-        FOREIGN KEY(creator_id)
+        FOREIGN KEY(user_id)
             REFERENCES users(id),
 
     CONSTRAINT fk_sticker_good_comment
@@ -126,14 +126,14 @@ CREATE INDEX good_comments_creator_id_idx ON good_comments (creator_id);
 CREATE TABLE user_good_list_collections (
     id      SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
-    list_id INT NOT NULL,
+    good_list_id INT NOT NULL,
 
    CONSTRAINT fk_user_good_list_collections_user
         FOREIGN KEY(user_id)
             REFERENCES users(id),
 
    CONSTRAINT fk_user_good_list_collections_list
-        FOREIGN KEY(list_id)
+        FOREIGN KEY(good_list_id)
             REFERENCES good_lists(id)
 );
 
@@ -141,21 +141,21 @@ CREATE TABLE user_good_list_collections (
 CREATE TABLE community_good_list_collections (
     id           SERIAL PRIMARY KEY,
     community_id INT NOT NULL,
-    list_id      INT NOT NULL,
+    good_list_id      INT NOT NULL,
 
    CONSTRAINT fk_community_good_list_collections_community
         FOREIGN KEY(community_id)
             REFERENCES communities(id),
 
    CONSTRAINT fk_community_good_list_collections_list
-        FOREIGN KEY(list_id)
+        FOREIGN KEY(good_list_id)
             REFERENCES good_lists(id)
 );
 
 CREATE TABLE good_list_perms (
     id              SERIAL PRIMARY KEY,
     user_id         INT NOT NULL,
-    list_id         INT NOT NULL,
+    good_list_id         INT NOT NULL,
     can_see_item    "char",
     can_see_comment "char",
     create_item     "char",
@@ -167,6 +167,6 @@ CREATE TABLE good_list_perms (
             REFERENCES users(id),
 
    CONSTRAINT fk_good_list_perm_list
-        FOREIGN KEY(list_id)
+        FOREIGN KEY(good_list_id)
             REFERENCES good_lists(id)
 );
