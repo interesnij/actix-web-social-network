@@ -51,8 +51,7 @@ pub struct NewCommunityFollow {
 }
 
 /////// FollowPrivate //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
-#[table_name="follow_ie_settings"]
+#[derive(Deserialize)]
 pub struct FollowIeSetting {
     pub id:                      i32,
     pub follow_id:               i32,

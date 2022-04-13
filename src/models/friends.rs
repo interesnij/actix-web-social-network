@@ -26,8 +26,7 @@ pub struct NewFriend {
 
 
 /////// ConnectIeSetting //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
-#[table_name="connect_ie_settings"]
+#[derive(Deserialize)]
 pub struct ConnectIeSetting {
     pub id:                      i32,
     pub friend_id:               i32,
