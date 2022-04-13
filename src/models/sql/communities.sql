@@ -31,16 +31,16 @@ CREATE TABLE communitys (
     b_avatar      VARCHAR(500),           -- большой аватар
     s_avatar      VARCHAR(500),           -- маленький аватар
     cover         VARCHAR(500),           -- баннер
-    community_category   INT NOT NULL,           -- id категории
-    community_creator    INT NOT NULL,           -- id создателя
+    community_subcategory_id   INT NOT NULL,           -- id категории
+    user_id    INT NOT NULL,           -- id создателя
     created       TIMESTAMP NOT NULL,     -- когда создано
 
     CONSTRAINT fk_community_creator   -- связь с пользователем
-        FOREIGN KEY(community_creator)
+        FOREIGN KEY(user_id)
             REFERENCES users(id),
 
     CONSTRAINT fk_community_category  -- связь с категорией
-        FOREIGN KEY(community_category)
+        FOREIGN KEY(community_subcategory_id)
             REFERENCES community_subcategories(id)
 );
 

@@ -86,8 +86,8 @@ pub struct NewCommunitySubcategory {
 
 /////// Community //////
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
-#[belongs_to(CommunitySubcategorys, foreign_key="community_category")]
-#[belongs_to(User, foreign_key="community_creator")]
+#[belongs_to(CommunitySubcategorys)]
+#[belongs_to(User)]
 pub struct Community {
     pub id:          i32,
     pub name:        String,
@@ -100,8 +100,8 @@ pub struct Community {
     pub b_avatar:    Option<String>,
     pub s_avatar:    Option<String>,
     pub cover:       Option<String>,
-    pub community_category: i32,
-    pub community_creator:  i32,
+    pub community_subcategory_id: i32,
+    pub user_id:  i32,
     pub created:     chrono::NaiveDateTime,
 }
 #[derive(Deserialize, Insertable)]
@@ -111,8 +111,8 @@ pub struct NewCommunity {
     pub types:       i16,
     pub perm:        String,
     pub level:       i16,
-    pub community_category: i32,
-    pub community_creator:  i32,
+    pub community_subcategory_id: i32,
+    pub user_id:  i32,
     pub created:     chrono::NaiveDateTime,
 }
 
