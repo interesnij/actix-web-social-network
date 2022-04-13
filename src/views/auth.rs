@@ -165,7 +165,7 @@ pub struct CountryLocation {
 
 pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responder {
     use crate::schema::users::dsl::users;
-    use crate::schema::users::dsl::user_location;
+    use crate::schema::users::dsl::user_locations;
     use crate::utils::{hash_password, set_current_user, to_home};
     use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
     use crate::models::{

@@ -26,7 +26,7 @@ use crate::schema::{
     user_doc_list_positions,
     color_settings,
     user_privates,
-    user_notifications, 
+    user_notifications,
     user_profile_notifications,
     user_post_notifications,
     user_photo_notifications,
@@ -287,7 +287,6 @@ pub struct NewUserChildren {
 
 /////// UserGrandsons //////
 #[derive(Queryable, Serialize, Identifiable)]
-#[belongs_to(User, foreign_key="user_grandsons")]
 #[belongs_to(User, foreign_key="grandsons_by_users")]
 pub struct UserGrandson {
     pub id:          i32,
@@ -355,7 +354,7 @@ pub struct NewListUserCommunitiesKey {
 
 /////// FeaturedUC //////
 #[derive(Queryable, Serialize, Identifiable)]
-#[belongs_to(ListUC)]
+#[belongs_to(ListUserCommunitiesKey)]
 pub struct FeaturedUserCommunitie {
     pub id:           i32,
     pub owner:        i32,
@@ -378,7 +377,7 @@ pub struct NewFeaturedUserCommunitie {
 
 /////// NewsUC //////
 #[derive(Queryable, Serialize, Identifiable)]
-#[belongs_to(ListUC)]
+#[belongs_to(ListUserCommunitiesKey)]
 pub struct NewsUserCommunitie {
     pub id:           i32,
     pub owner:        i32,
@@ -401,7 +400,7 @@ pub struct NewNewsListUserCommunitie {
 
 /////// NotifyUC //////
 #[derive(Queryable, Serialize, Identifiable)]
-#[belongs_to(ListUC)]
+#[belongs_to(ListUserCommunitiesKey)]
 pub struct NotifyUserCommunitie {
     pub id:           i32,
     pub owner:        i32,
