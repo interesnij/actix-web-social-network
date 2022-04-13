@@ -276,7 +276,7 @@ pub struct NewCommunityPrivate {
 /////// CommunityNotifications //////
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
-pub struct CommunityNotifications {
+pub struct CommunityNotification {
     pub id:                   i32,
     pub community_id:         i32,
     pub connection_request:   bool,
@@ -285,7 +285,7 @@ pub struct CommunityNotifications {
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_notifications"]
-pub struct NewCommunityNotifications {
+pub struct NewCommunityNotification {
     pub community_id:         i32,
     pub connection_request:   bool,
     pub connection_confirmed: bool,
@@ -295,7 +295,7 @@ pub struct NewCommunityNotifications {
 /////// CommunityNotificationsPost //////
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
-pub struct CommunityPostNotifications {
+pub struct CommunityPostNotification {
     pub id:                     i32,
     pub community_id:           i32,
     pub comment:                bool,
@@ -312,7 +312,7 @@ pub struct CommunityPostNotifications {
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_post_notifications"]
-pub struct NewCommunityPostNotifications {
+pub struct NewCommunityPostNotification {
     pub community_id:           i32,
     pub comment:                bool,
     pub comment_reply:          bool,
@@ -330,7 +330,7 @@ pub struct NewCommunityPostNotifications {
 /////// CommunityNotificationsPhoto //////
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
-pub struct CommunityPhotoNotifications {
+pub struct CommunityPhotoNotification {
     pub id:                     i32,
     pub community_id:           i32,
     pub comment:                bool,
@@ -347,7 +347,7 @@ pub struct CommunityPhotoNotifications {
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_photo_notifications"]
-pub struct NewCommunityPhotoNotifications {
+pub struct NewCommunityPhotoNotification {
     pub community_id:           i32,
     pub comment:                bool,
     pub comment_reply:          bool,
@@ -365,7 +365,7 @@ pub struct NewCommunityPhotoNotifications {
 /////// CommunityNotificationsVideo //////
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
-pub struct CommunityVideoNotifications {
+pub struct CommunityVideoNotification {
     pub id:                     i32,
     pub community_id:           i32,
     pub comment:                bool,
@@ -382,7 +382,7 @@ pub struct CommunityVideoNotifications {
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_video_notifications"]
-pub struct NewCommunityVideoNotifications {
+pub struct NewCommunityVideoNotification {
     pub community_id:           i32,
     pub comment:                bool,
     pub comment_reply:          bool,
@@ -400,7 +400,7 @@ pub struct NewCommunityVideoNotifications {
 /////// CommunityNotificationsGood //////
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
-pub struct CommunityGoodNotifications {
+pub struct CommunityGoodNotification {
     pub id:                     i32,
     pub community_id:           i32,
     pub comment:                bool,
@@ -417,7 +417,7 @@ pub struct CommunityGoodNotifications {
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_good_notifications"]
-pub struct NewCommunityGoodNotifications {
+pub struct NewCommunityGoodNotification {
     pub community_id:           i32,
     pub comment:                bool,
     pub comment_reply:          bool,
@@ -435,14 +435,14 @@ pub struct NewCommunityGoodNotifications {
 /////// CommunityNotificationsMusic //////
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
-pub struct CommunityMusicNotifications {
+pub struct CommunityMusicNotification {
     pub id:                     i32,
     pub community_id:           i32,
     pub repost:                 bool,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_music_notifications"]
-pub struct NewCommunityMusicNotifications {
+pub struct NewCommunityMusicNotification {
     pub community_id:           i32,
     pub repost:                 bool,
 }
