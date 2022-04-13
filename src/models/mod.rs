@@ -6,6 +6,8 @@ mod posts;
 mod chats;
 mod photos;
 mod survey;
+mod video;
+mod docs;
 
 pub use self::{
     other::*,
@@ -16,4 +18,6 @@ pub use self::{
     chats::*,
     photos::*,
     survey::*,
+    video::*,
+    docs::*,
 };
