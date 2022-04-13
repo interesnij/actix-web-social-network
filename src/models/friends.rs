@@ -13,14 +13,14 @@ use crate::models::User;
 pub struct Friend {
     pub id:             i32,
     pub user_id:           i32,
-    pub target_user:    i32,
+    pub target_user_id:    i32,
     pub visited:        i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="friends"]
 pub struct NewFriend {
     pub user_id:           i32,
-    pub target_user:    i32,
+    pub target_user_id:    i32,
     pub visited:        i32,
 }
 
@@ -93,14 +93,14 @@ pub struct NewConnectIeSetting {
     pub can_see_planner:         Option<String>,
     pub can_see_planner_comment: Option<String>,
 
-    pub can_copy_post:            Option<char>,
-    pub can_copy_photo:           Option<char>,
-    pub can_copy_good:            Option<char>,
-    pub can_copy_video:           Option<char>,
-    pub can_copy_planner:         Option<char>,
-    pub can_copy_doc:             Option<char>,
-    pub can_copy_music:           Option<char>,
-    pub can_copy_survey:          Option<char>,
+    pub can_copy_post:            Option<String>,
+    pub can_copy_photo:           Option<String>,
+    pub can_copy_good:            Option<String>,
+    pub can_copy_video:           Option<String>,
+    pub can_copy_planner:         Option<String>,
+    pub can_copy_doc:             Option<String>,
+    pub can_copy_music:           Option<String>,
+    pub can_copy_survey:          Option<String>,
 
     pub can_create_post:         Option<String>,
     pub can_create_photo:        Option<String>,
