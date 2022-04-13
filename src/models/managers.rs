@@ -140,7 +140,7 @@ pub struct NewModeratedReport {
 #[belongs_to(Moderated)]
 pub struct ModeratedPenaltie {
     pub id:                  i32,
-    pub manager_id:          i32,
+    pub user_id:          i32,
     pub moderated_object_id: i32,
     pub expiration:          Option<chrono::NaiveDateTime>,
     pub types:               i16, // описан в самом начале, одно и то же - объект.
@@ -151,7 +151,7 @@ pub struct ModeratedPenaltie {
 #[derive(Deserialize, Insertable)]
 #[table_name="moderated_penalties"]
 pub struct NewModeratedPenaltie {
-    pub manager_id:          i32,
+    pub user_id:          i32,
     pub moderated_object_id: i32,
     pub expiration:          Option<chrono::NaiveDateTime>,
     pub types:               i16, // описан в самом начале, одно и то же - объект.
