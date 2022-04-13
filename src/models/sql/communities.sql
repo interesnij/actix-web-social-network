@@ -16,7 +16,7 @@ CREATE TABLE community_subcategorys (
 
     CONSTRAINT fk_community_subcategories -- связь с категорией
         FOREIGN KEY(category_id)
-            REFERENCES community_categories(id)
+            REFERENCES community_categorys(id)
 );
 
 CREATE TABLE communitys (
@@ -41,7 +41,7 @@ CREATE TABLE communitys (
 
     CONSTRAINT fk_community_category  -- связь с категорией
         FOREIGN KEY(community_subcategory_id)
-            REFERENCES community_subcategories(id)
+            REFERENCES community_subcategorys(id)
 );
 
 
@@ -63,12 +63,12 @@ CREATE TABLE communities_memberships (
 
     CONSTRAINT fk_communities_memberships_community   -- связь с сообществом
         FOREIGN KEY(community_id)
-            REFERENCES communities(id)
+            REFERENCES communitys(id)
 );
 
 CREATE TABLE community_ie_settings (
     id                      SERIAL PRIMARY KEY,
-    community_member                 INT NOT NULL,
+    community_member        INT NOT NULL,
 
     can_see_info            "char",
     can_see_member          "char",
@@ -126,7 +126,7 @@ CREATE TABLE community_infos (
 
     CONSTRAINT fk_community_info
         FOREIGN KEY(community_id)
-            REFERENCES communities(id)
+            REFERENCES communitys(id)
 );
 
 CREATE TABLE community_privates (
@@ -149,7 +149,7 @@ CREATE TABLE community_privates (
     can_see_stat      "char" NOT NULL, -- Кто видит статистику
     CONSTRAINT fk_community_private
          FOREIGN KEY(community_id)
-             REFERENCES communities(id)
+             REFERENCES communitys(id)
 );
 
 -- Уведомления сообщества -------
@@ -162,7 +162,7 @@ CREATE TABLE community_notifications (
 
     CONSTRAINT fk_community_notifications
          FOREIGN KEY(community_id)
-             REFERENCES communities(id)
+             REFERENCES communitys(id)
 );
 
 -- Уведомления записей -------
@@ -183,7 +183,7 @@ CREATE TABLE community_post_notifications (
 
     CONSTRAINT fk_community_post_notifications
          FOREIGN KEY(community_id)
-             REFERENCES communities(id)
+             REFERENCES communitys(id)
 );
 
 -- Уведомления фотографий -------
@@ -204,7 +204,7 @@ CREATE TABLE community_photo_notifications (
 
     CONSTRAINT fk_community_photo_notifications
          FOREIGN KEY(community_id)
-             REFERENCES communities(id)
+             REFERENCES communitys(id)
 );
 
 -- Уведомления видеозаписей -------
@@ -225,7 +225,7 @@ CREATE TABLE community_video_notifications (
 
     CONSTRAINT fk_community_video_notifications
          FOREIGN KEY(community_id)
-             REFERENCES communities(id)
+             REFERENCES communitys(id)
 );
 
 -- Уведомления товаров -------
@@ -246,7 +246,7 @@ CREATE TABLE community_good_notifications (
 
     CONSTRAINT fk_community_good_notifications
          FOREIGN KEY(community_id)
-             REFERENCES communities(id)
+             REFERENCES communitys(id)
 );
 
 -- Уведомления опросов -------
@@ -257,7 +257,7 @@ CREATE TABLE community_survey_notifications (
 
     CONSTRAINT fk_community_survey_notifications
          FOREIGN KEY(community_id)
-             REFERENCES communities(id)
+             REFERENCES communitys(id)
 );
 
 -- Уведомления аудиозаписей -------
@@ -268,7 +268,7 @@ CREATE TABLE community_music_notifications (
 
     CONSTRAINT fk_community_music_notifications
          FOREIGN KEY(community_id)
-             REFERENCES communities(id)
+             REFERENCES communitys(id)
 );
 
 ------------------

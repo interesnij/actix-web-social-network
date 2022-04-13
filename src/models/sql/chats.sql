@@ -25,7 +25,7 @@ CREATE TABLE chats (
 
     CONSTRAINT fk_chat_community                 -- связь с сообществом
         FOREIGN KEY(community_id)
-            REFERENCES communities(id)
+            REFERENCES communitys(id)
 );
 
 CREATE TABLE chat_users (
