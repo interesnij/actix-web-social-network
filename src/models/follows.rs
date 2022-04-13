@@ -1,7 +1,7 @@
 use crate::schema::{
     follows,
     community_follows,
-    follows_ie_settings,
+    //follows_ie_settings,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
