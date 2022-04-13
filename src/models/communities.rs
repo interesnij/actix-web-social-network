@@ -51,7 +51,7 @@ pub struct CommunitySubCategory {
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_subcategorys"]
-pub struct NewCommunitySubCategory{
+pub struct NewCommunitySubCategory {
     pub name:        String,
     pub category_id: i32,
     pub avatar:      Option<String>,
@@ -76,14 +76,12 @@ pub struct NewCommunitySubCategory{
     // 43 приостановленное публичное
     // 41 приостановленное приватное
     // 42 приостановленное закрытое
-}
 
 /////// Статус сообщества //////
     // 'a' стандартное сообщество
     // 'b' детское сообщество
     // 'c' подавшее на идентификацию сообщество
     // 'd' идентификацированное сообщество
-}
 
 /////// Community //////
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
