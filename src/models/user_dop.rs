@@ -257,14 +257,14 @@ pub struct NewUserDadOne {
 #[derive(Queryable, Serialize, Identifiable)]
 #[belongs_to(User, foreign_key="user_bro_sist")]
 #[belongs_to(User, foreign_key="brother_sister_by_users")]
-pub struct UserBrothersSister {
+pub struct UserBrotherSister {
     pub id:         i32,
     pub user_id:    i32,
     pub target_id:  i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_brother_sisters"]
-pub struct NewUserBrothersSister {
+pub struct NewUserBrotherSister {
     pub user_id:    i32,
     pub target_id:  i32,
 }
