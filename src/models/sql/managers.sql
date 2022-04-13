@@ -12,7 +12,7 @@ CREATE TABLE moderateds (
 CREATE TABLE moderated_reports (
     id                  SERIAL PRIMARY KEY,
     user_id         INT NOT NULL,
-    moderated_object_id INT NOT NULL,
+    moderated_id INT NOT NULL,
     description         VARCHAR(500),
     types               "char" NOT NULL,
     created             TIMESTAMP NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE moderated_reports (
 CREATE TABLE moderated_penalties (
     id                  SERIAL PRIMARY KEY,
     user_id          INT NOT NULL,
-    moderated_object_id INT NOT NULL,
+    moderated_object INT NOT NULL,
     expiration          TIMESTAMP,
     types               SMALLINT NOT NULL,
     object_id           INT NOT NULL,

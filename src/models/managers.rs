@@ -113,7 +113,7 @@ pub struct NewModerated {
 pub struct ModeratedReport {
     pub id:               i32,
     pub user_id:         i32,
-    pub moderated_object_id: i32,
+    pub moderated_id: i32,
     pub description:      Option<String>,
     pub types:            char,
     pub created:          chrono::NaiveDateTime,
@@ -122,7 +122,7 @@ pub struct ModeratedReport {
 #[table_name="moderated_reports"]
 pub struct NewModeratedReport {
     pub user_id:         i32,
-    pub moderated_object_id: i32,
+    pub moderated_id: i32,
     pub description:      Option<String>,
     pub types:            String,
     pub created:          chrono::NaiveDateTime,
@@ -141,7 +141,7 @@ pub struct NewModeratedReport {
 pub struct ModeratedPenaltie {
     pub id:                  i32,
     pub user_id:          i32,
-    pub moderated_object_id: i32,
+    pub moderated_id: i32,
     pub expiration:          Option<chrono::NaiveDateTime>,
     pub types:               i16, // описан в самом начале, одно и то же - объект.
     pub object_id:           i32,
@@ -152,7 +152,7 @@ pub struct ModeratedPenaltie {
 #[table_name="moderated_penalties"]
 pub struct NewModeratedPenaltie {
     pub user_id:          i32,
-    pub moderated_object_id: i32,
+    pub moderated_id: i32,
     pub expiration:          Option<chrono::NaiveDateTime>,
     pub types:               i16, // описан в самом начале, одно и то же - объект.
     pub object_id:           i32,
