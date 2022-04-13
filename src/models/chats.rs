@@ -123,7 +123,7 @@ pub struct NewChatUser {
 
 /////// ChatPerm //////
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
-#[belongs_to(ChatUsers)]
+#[belongs_to(ChatUser)]
 pub struct ChatIeSetting {
     pub id:               i32,
     pub chat_users_id:    i32,
