@@ -152,7 +152,7 @@ pub struct NewCommunitiesMembership {
     // 'b' Не активно
 
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
-#[belongs_to(CommunityMembership, foreign_key="community_member")]
+#[belongs_to(CommunitiesMembership, foreign_key="community_member")]
 #[table_name="community_ie_settings"]
 pub struct CommunityIeSetting {
     pub id:                      i32,
