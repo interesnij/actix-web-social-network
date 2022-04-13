@@ -71,7 +71,7 @@ pub struct ConnectIeSetting {
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="connect_ie_settings"]
-pub struct NewFollowIeSetting {
+pub struct NewConnectIeSetting {
     pub follow_id:                 i32,
 
     pub can_see_info:            Option<String>,
