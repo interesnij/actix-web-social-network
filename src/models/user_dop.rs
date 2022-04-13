@@ -13,8 +13,8 @@ use crate::schema::{
     user_grandsons_ones,
     user_colleagues_ones,
     user_blocks,
-    list_user_communties_keys,
-    featured_user_communties,
+    list_user_communities_keys,
+    featured_user_communities,
     news_user_communities,
     notify_user_communities,
     user_photo_list_positions,
@@ -288,14 +288,14 @@ pub struct NewUserChildrenOne {
 /////// UserGrandsons //////
 #[derive(Queryable, Serialize, Identifiable)]
 #[belongs_to(User, foreign_key="grandsons_by_users")]
-pub struct UserGrandsonOne {
+pub struct UserGrandsonsOne {
     pub id:          i32,
     pub user_id:     i32,
     pub grandson_id: i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_grandsons_ones"]
-pub struct NewUserGrandsonOne {
+pub struct NewUserGrandsonsOne {
     pub user_id:     i32,
     pub grandson_id: i32,
 }
@@ -345,7 +345,7 @@ pub struct ListUserCommunitiesKey {
     pub owner:  i32,
 }
 #[derive(Deserialize, Insertable)]
-#[table_name="list_user_communties_keys"]
+#[table_name="list_user_communities_keys"]
 pub struct NewListUserCommunitiesKey {
     pub types: String,
     pub name:  String,
@@ -365,7 +365,7 @@ pub struct FeaturedUserCommunitie {
     pub sleep:        Option<chrono::NaiveDateTime>,
 }
 #[derive(Deserialize, Insertable)]
-#[table_name="featured_user_communties"]
+#[table_name="featured_user_communities"]
 pub struct NewFeaturedUserCommunitie {
     pub owner:        i32,
     pub list_id:      i32,
