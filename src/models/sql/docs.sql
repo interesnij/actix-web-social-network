@@ -40,8 +40,8 @@ CREATE TABLE docs (
 
     view         INT DEFAULT 0,
     repost       INT DEFAULT 0,
-    copy         SMALLINT DEFAULT 0,
-    position     INT DEFAULT 0,
+    copy         INT DEFAULT 0,
+    position     SMALLINT DEFAULT 0,
 
     CONSTRAINT fk_docs_creator
         FOREIGN KEY(user_id)

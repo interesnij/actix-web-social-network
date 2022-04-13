@@ -155,8 +155,8 @@ pub struct NewDoc {
 #[belongs_to(DocList)]
 pub struct UserDocListCollection {
     pub id:       i32,
+    pub user_id:  i32,
     pub doc_list_id:  i32,
-    pub list_id:  i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_doc_list_collections"]
