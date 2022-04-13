@@ -37,7 +37,7 @@ pub struct NewNotification {
     pub user_id:          i32,
     pub created:             chrono::NaiveDateTime,
     pub verb:                String,
-    pub status:              char,
+    pub status:              String,
     pub types:               i16,  // описан в модерации тип объекта
     pub object_id:           i32,
     pub community_id:        i32,
@@ -73,7 +73,7 @@ pub struct NewWallObject {
     pub user_id:        i32,
     pub created:             chrono::NaiveDateTime,
     pub verb:                String,
-    pub status:              char,
+    pub status:              String,
     pub types:               i16,  // описан в модерации тип объекта
     pub object_id:           i32,
     pub community_id:        i32,
