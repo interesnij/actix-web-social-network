@@ -7,6 +7,302 @@ table! {
 }
 
 table! {
+    communities_memberships (id) {
+        id -> Int4,
+        user_id -> Int4,
+        community_id -> Int4,
+        is_administrator -> Bool,
+        is_moderator -> Bool,
+        is_editor -> Bool,
+        is_advertiser -> Bool,
+        created -> Timestamp,
+        visited -> Int4,
+    }
+}
+
+table! {
+    community_categorys (id) {
+        id -> Int4,
+        name -> Nullable<Varchar>,
+        avatar -> Nullable<Varchar>,
+        position -> Nullable<Int2>,
+    }
+}
+
+table! {
+    community_doc_list_positions (id) {
+        id -> Int4,
+        community_id -> Int4,
+        list_id -> Nullable<Int4>,
+        position -> Nullable<Int2>,
+        types -> Char,
+    }
+}
+
+table! {
+    community_good_list_positions (id) {
+        id -> Int4,
+        community_id -> Int4,
+        list_id -> Nullable<Int4>,
+        position -> Nullable<Int2>,
+        types -> Char,
+    }
+}
+
+table! {
+    community_good_notifications (id) {
+        id -> Int4,
+        community_id -> Int4,
+        comment -> Bool,
+        comment_reply -> Bool,
+        mention -> Bool,
+        comment_mention -> Bool,
+        repost -> Bool,
+        liked -> Bool,
+        disliked -> Bool,
+        comment_liked -> Bool,
+        comment_disliked -> Bool,
+        comment_reply_liked -> Bool,
+        comment_reply_disliked -> Bool,
+    }
+}
+
+table! {
+    community_ie_settings (id) {
+        id -> Int4,
+        community_member -> Int4,
+        can_see_info -> Nullable<Char>,
+        can_see_member -> Nullable<Char>,
+        can_send_message -> Nullable<Char>,
+        can_see_doc -> Nullable<Char>,
+        can_see_music -> Nullable<Char>,
+        can_see_survey -> Nullable<Char>,
+        can_see_post -> Nullable<Char>,
+        can_see_post_comment -> Nullable<Char>,
+        can_see_photo -> Nullable<Char>,
+        can_see_photo_comment -> Nullable<Char>,
+        can_see_good -> Nullable<Char>,
+        can_see_good_comment -> Nullable<Char>,
+        can_see_video -> Nullable<Char>,
+        can_see_video_comment -> Nullable<Char>,
+        can_see_planner -> Nullable<Char>,
+        can_see_planner_comment -> Nullable<Char>,
+        can_add_post -> Nullable<Char>,
+        can_add_photo -> Nullable<Char>,
+        can_add_good -> Nullable<Char>,
+        can_add_video -> Nullable<Char>,
+        can_add_planner -> Nullable<Char>,
+        can_add_doc -> Nullable<Char>,
+        can_add_music -> Nullable<Char>,
+        can_add_survey -> Nullable<Char>,
+        can_create_post -> Nullable<Char>,
+        can_create_photo -> Nullable<Char>,
+        can_create_good -> Nullable<Char>,
+        can_create_video -> Nullable<Char>,
+        can_create_planner -> Nullable<Char>,
+        can_create_doc -> Nullable<Char>,
+        can_create_music -> Nullable<Char>,
+        can_create_survey -> Nullable<Char>,
+    }
+}
+
+table! {
+    community_infos (id) {
+        id -> Int4,
+        community_id -> Int4,
+        posts -> Nullable<Int4>,
+        members -> Nullable<Int4>,
+        photos -> Nullable<Int4>,
+        goods -> Nullable<Int4>,
+        tracks -> Nullable<Int4>,
+        videos -> Nullable<Int4>,
+        docs -> Nullable<Int4>,
+        articles -> Nullable<Int4>,
+        survey -> Nullable<Int4>,
+    }
+}
+
+table! {
+    community_music_list_positions (id) {
+        id -> Int4,
+        community_id -> Int4,
+        list_id -> Nullable<Int4>,
+        position -> Nullable<Int2>,
+        types -> Char,
+    }
+}
+
+table! {
+    community_music_notifications (id) {
+        id -> Int4,
+        community_id -> Int4,
+        repost -> Bool,
+    }
+}
+
+table! {
+    community_notifications (id) {
+        id -> Int4,
+        community_id -> Int4,
+        connection_request -> Bool,
+        connection_confirmed -> Bool,
+        community_invite -> Bool,
+    }
+}
+
+table! {
+    community_photo_list_positions (id) {
+        id -> Int4,
+        community_id -> Int4,
+        list_id -> Nullable<Int4>,
+        position -> Nullable<Int2>,
+        types -> Char,
+    }
+}
+
+table! {
+    community_photo_notifications (id) {
+        id -> Int4,
+        community_id -> Int4,
+        comment -> Bool,
+        comment_reply -> Bool,
+        mention -> Bool,
+        comment_mention -> Bool,
+        repost -> Bool,
+        liked -> Bool,
+        disliked -> Bool,
+        comment_liked -> Bool,
+        comment_disliked -> Bool,
+        comment_reply_liked -> Bool,
+        comment_reply_disliked -> Bool,
+    }
+}
+
+table! {
+    community_post_list_positions (id) {
+        id -> Int4,
+        community_id -> Int4,
+        list_id -> Nullable<Int4>,
+        position -> Nullable<Int2>,
+        types -> Char,
+    }
+}
+
+table! {
+    community_post_notifications (id) {
+        id -> Int4,
+        community_id -> Int4,
+        comment -> Bool,
+        comment_reply -> Bool,
+        mention -> Bool,
+        comment_mention -> Bool,
+        repost -> Bool,
+        liked -> Bool,
+        disliked -> Bool,
+        comment_liked -> Bool,
+        comment_disliked -> Bool,
+        comment_reply_liked -> Bool,
+        comment_reply_disliked -> Bool,
+    }
+}
+
+table! {
+    community_privates (id) {
+        id -> Int4,
+        community_id -> Int4,
+        can_see_member -> Char,
+        can_see_info -> Char,
+        can_send_message -> Char,
+        can_see_post -> Char,
+        can_see_photo -> Char,
+        can_see_good -> Char,
+        can_see_video -> Char,
+        can_see_music -> Char,
+        can_see_planner -> Char,
+        can_see_doc -> Char,
+        can_see_survey -> Char,
+        can_see_settings -> Char,
+        can_see_log -> Char,
+        can_see_stat -> Char,
+    }
+}
+
+table! {
+    community_subcategorys (id) {
+        id -> Int4,
+        name -> Nullable<Varchar>,
+        category_id -> Int4,
+        avatar -> Nullable<Varchar>,
+        position -> Nullable<Int2>,
+    }
+}
+
+table! {
+    community_survey_list_positions (id) {
+        id -> Int4,
+        community_id -> Int4,
+        list_id -> Nullable<Int4>,
+        position -> Nullable<Int2>,
+        types -> Char,
+    }
+}
+
+table! {
+    community_survey_notifications (id) {
+        id -> Int4,
+        community_id -> Int4,
+        vote -> Bool,
+    }
+}
+
+table! {
+    community_video_list_positions (id) {
+        id -> Int4,
+        community_id -> Int4,
+        list_id -> Nullable<Int4>,
+        position -> Nullable<Int2>,
+        types -> Char,
+    }
+}
+
+table! {
+    community_video_notifications (id) {
+        id -> Int4,
+        community_id -> Int4,
+        comment -> Bool,
+        comment_reply -> Bool,
+        mention -> Bool,
+        comment_mention -> Bool,
+        repost -> Bool,
+        liked -> Bool,
+        disliked -> Bool,
+        comment_liked -> Bool,
+        comment_disliked -> Bool,
+        comment_reply_liked -> Bool,
+        comment_reply_disliked -> Bool,
+    }
+}
+
+table! {
+    communitys (id) {
+        id -> Int4,
+        name -> Varchar,
+        description -> Nullable<Varchar>,
+        status -> Char,
+        types -> Int2,
+        perm -> Char,
+        level -> Nullable<Int2>,
+        have_link -> Nullable<Varchar>,
+        b_avatar -> Nullable<Varchar>,
+        s_avatar -> Nullable<Varchar>,
+        cover -> Nullable<Varchar>,
+        community_subcategory_id -> Int4,
+        user_id -> Int4,
+        created -> Timestamp,
+    }
+}
+
+table! {
     custom_links (id) {
         id -> Int4,
         link -> Varchar,
@@ -14,7 +310,7 @@ table! {
 }
 
 table! {
-    featured_uc (id) {
+    featured_user_communities (id) {
         id -> Int4,
         owner -> Int4,
         list_id -> Nullable<Int4>,
@@ -26,7 +322,7 @@ table! {
 }
 
 table! {
-    ip_user (id) {
+    ip_users (id) {
         id -> Int4,
         user_id -> Int4,
         ip -> Nullable<Varchar>,
@@ -34,33 +330,33 @@ table! {
 }
 
 table! {
-    list_uc (id) {
+    list_user_communities_keys (id) {
         id -> Int4,
-        types -> Nullable<Int4>,
+        types -> Char,
         name -> Varchar,
         owner -> Int4,
     }
 }
 
 table! {
-    news_uc (id) {
+    news_user_communities (id) {
         id -> Int4,
         owner -> Int4,
         list_id -> Nullable<Int4>,
         user_id -> Nullable<Int4>,
-        community -> Nullable<Int4>,
+        community_id -> Nullable<Int4>,
         mute -> Bool,
         sleep -> Nullable<Timestamp>,
     }
 }
 
 table! {
-    notify_uc (id) {
+    notify_user_communities (id) {
         id -> Int4,
         owner -> Int4,
         list_id -> Nullable<Int4>,
         user_id -> Nullable<Int4>,
-        community -> Nullable<Int4>,
+        community_id -> Nullable<Int4>,
         mute -> Bool,
         sleep -> Nullable<Timestamp>,
     }
@@ -78,7 +374,7 @@ table! {
     smile_categories (id) {
         id -> Int4,
         name -> Nullable<Varchar>,
-        position -> Int4,
+        position -> Int2,
         description -> Nullable<Varchar>,
     }
 }
@@ -87,7 +383,7 @@ table! {
     smiles (id) {
         id -> Int4,
         name -> Nullable<Varchar>,
-        position -> Int4,
+        position -> Int2,
         smile_categorie_id -> Nullable<Int4>,
         image -> Nullable<Varchar>,
     }
@@ -97,7 +393,7 @@ table! {
     sticker_categories (id) {
         id -> Int4,
         name -> Nullable<Varchar>,
-        position -> Int4,
+        position -> Int2,
         creator_id -> Nullable<Int4>,
         description -> Nullable<Varchar>,
     }
@@ -107,14 +403,14 @@ table! {
     stickers (id) {
         id -> Int4,
         name -> Nullable<Varchar>,
-        position -> Int4,
+        position -> Int2,
         sticker_categorie_id -> Nullable<Int4>,
         image -> Nullable<Varchar>,
     }
 }
 
 table! {
-    user_anketa (id) {
+    user_anketas (id) {
         id -> Int4,
         user_id -> Int4,
         political_preferences -> Nullable<Varchar>,
@@ -130,69 +426,70 @@ table! {
 table! {
     user_blocks (id) {
         id -> Int4,
-        user_id -> Int4,
+        user_block_i -> Int4,
         blocked_user_id -> Int4,
     }
 }
 
 table! {
-    user_brother_sister (id) {
+    user_brother_sisters (id) {
         id -> Int4,
-        user_id -> Int4,
-        target_id -> Int4,
+        brother_user_i -> Int4,
+        brother_target_id -> Int4,
     }
 }
 
 table! {
-    user_children_one (id) {
+    user_children_ones (id) {
         id -> Int4,
-        user_id -> Int4,
+        child_user_i -> Int4,
         child_id -> Int4,
     }
 }
 
 table! {
-    user_colleagues_one (id) {
+    user_colleagues_ones (id) {
         id -> Int4,
-        user_id -> Int4,
+        user_colleague_i -> Int4,
         colleague_id -> Int4,
     }
 }
 
 table! {
-    user_dad_one (id) {
+    user_dad_ones (id) {
         id -> Int4,
-        user_id -> Int4,
+        dad_user_i -> Int4,
         dad_id -> Int4,
     }
 }
 
 table! {
-    user_delete_anketa (id) {
+    user_delete_anketas (id) {
         id -> Int4,
         user_id -> Int4,
-        answer -> Nullable<Bpchar>,
+        answer -> Nullable<Char>,
         other -> Nullable<Varchar>,
+        created -> Timestamp,
     }
 }
 
 table! {
-    user_doc_list_position (id) {
+    user_doc_list_positions (id) {
         id -> Int4,
         user_id -> Int4,
-        list -> Int4,
-        position -> Nullable<Int4>,
-        types -> Bpchar,
+        list_id -> Int4,
+        position -> Nullable<Int2>,
+        types -> Char,
     }
 }
 
 table! {
-    user_good_list_position (id) {
+    user_good_list_positions (id) {
         id -> Int4,
         user_id -> Int4,
-        list -> Int4,
-        position -> Nullable<Int4>,
-        types -> Bpchar,
+        list_id -> Int4,
+        position -> Nullable<Int2>,
+        types -> Char,
     }
 }
 
@@ -215,21 +512,19 @@ table! {
 }
 
 table! {
-    user_grandsons_one (id) {
+    user_grandsons_ones (id) {
         id -> Int4,
-        user_id -> Int4,
+        grandson_user_i -> Int4,
         grandson_id -> Int4,
     }
 }
 
 table! {
-    user_location (id) {
+    user_locations (id) {
         id -> Int4,
         user_id -> Int4,
         city_ru -> Nullable<Varchar>,
         city_en -> Nullable<Varchar>,
-        city_lat -> Nullable<Float8>,
-        city_lon -> Nullable<Float8>,
         region_ru -> Nullable<Varchar>,
         region_en -> Nullable<Varchar>,
         country_ru -> Nullable<Varchar>,
@@ -238,7 +533,7 @@ table! {
 }
 
 table! {
-    user_love_status (id) {
+    user_love_statuss (id) {
         id -> Int4,
         user_id -> Int4,
         male_status -> Nullable<Varchar>,
@@ -247,20 +542,20 @@ table! {
 }
 
 table! {
-    user_mom_one (id) {
+    user_mom_ones (id) {
         id -> Int4,
-        user_id -> Int4,
+        mom_user_i -> Int4,
         mom_id -> Int4,
     }
 }
 
 table! {
-    user_music_list_position (id) {
+    user_music_list_positions (id) {
         id -> Int4,
         user_id -> Int4,
-        list -> Int4,
-        position -> Nullable<Int4>,
-        types -> Bpchar,
+        list_id -> Int4,
+        position -> Nullable<Int2>,
+        types -> Char,
     }
 }
 
@@ -273,20 +568,30 @@ table! {
 }
 
 table! {
-    user_partner_one (id) {
+    user_notifications (id) {
         id -> Int4,
         user_id -> Int4,
+        connection_request -> Bool,
+        connection_confirmed -> Bool,
+        user_invite -> Bool,
+    }
+}
+
+table! {
+    user_partner_ones (id) {
+        id -> Int4,
+        partner_user_i -> Int4,
         partner_id -> Int4,
     }
 }
 
 table! {
-    user_photo_list_position (id) {
+    user_photo_list_positions (id) {
         id -> Int4,
         user_id -> Int4,
-        list -> Int4,
-        position -> Nullable<Int4>,
-        types -> Bpchar,
+        list_id -> Int4,
+        position -> Nullable<Int2>,
+        types -> Char,
     }
 }
 
@@ -327,12 +632,12 @@ table! {
 }
 
 table! {
-    user_post_list_position (id) {
+    user_post_list_positions (id) {
         id -> Int4,
         user_id -> Int4,
-        list -> Int4,
-        position -> Nullable<Int4>,
-        types -> Bpchar,
+        list_id -> Int4,
+        position -> Nullable<Int2>,
+        types -> Char,
     }
 }
 
@@ -355,27 +660,37 @@ table! {
 }
 
 table! {
-    user_private (id) {
+    user_privates (id) {
         id -> Int4,
         user_id -> Int4,
-        can_see_community -> Bpchar,
-        can_see_info -> Bpchar,
-        can_see_friend -> Bpchar,
-        can_send_message -> Bpchar,
-        can_add_in_chat -> Bpchar,
-        can_see_post -> Bpchar,
-        can_see_photo -> Bpchar,
-        can_see_good -> Bpchar,
-        can_see_video -> Bpchar,
-        can_see_music -> Bpchar,
-        can_see_planner -> Bpchar,
-        can_see_doc -> Bpchar,
-        can_see_survey -> Bpchar,
+        can_see_community -> Char,
+        can_see_info -> Char,
+        can_see_friend -> Char,
+        can_send_message -> Char,
+        can_add_in_chat -> Char,
+        can_see_post -> Char,
+        can_see_photo -> Char,
+        can_see_good -> Char,
+        can_see_video -> Char,
+        can_see_music -> Char,
+        can_see_planner -> Char,
+        can_see_doc -> Char,
+        can_see_survey -> Char,
     }
 }
 
 table! {
-    user_profile (id) {
+    user_profile_notifications (id) {
+        id -> Int4,
+        user_id -> Int4,
+        connection_request -> Nullable<Bool>,
+        connection_confirmed -> Nullable<Bool>,
+        community_invite -> Nullable<Bool>,
+    }
+}
+
+table! {
+    user_profiles (id) {
         id -> Int4,
         user_id -> Int4,
         posts -> Nullable<Int4>,
@@ -402,32 +717,30 @@ table! {
 }
 
 table! {
-    user_profile_notifications (id) {
+    user_survey_list_positions (id) {
         id -> Int4,
         user_id -> Int4,
-        connection_request -> Nullable<Bool>,
-        connection_confirmed -> Nullable<Bool>,
-        community_invite -> Nullable<Bool>,
+        list_id -> Int4,
+        position -> Nullable<Int2>,
+        types -> Char,
     }
 }
 
 table! {
-    user_survey_list_position (id) {
+    user_survey_notifications (id) {
         id -> Int4,
         user_id -> Int4,
-        list -> Int4,
-        position -> Nullable<Int4>,
-        types -> Bpchar,
+        vote -> Nullable<Bool>,
     }
 }
 
 table! {
-    user_video_list_position (id) {
+    user_video_list_positions (id) {
         id -> Int4,
         user_id -> Int4,
-        list -> Int4,
-        position -> Nullable<Int4>,
-        types -> Bpchar,
+        list_id -> Int4,
+        position -> Nullable<Int2>,
+        types -> Char,
     }
 }
 
@@ -456,15 +769,11 @@ table! {
         last_name -> Varchar,
         phone -> Varchar,
         types -> Int2,
-        gender -> Bpchar,
-        device -> Bpchar,
-        language -> Bpchar,
+        gender -> Char,
+        device -> Char,
+        language -> Char,
         perm -> Int2,
-<<<<<<< HEAD
-        level -> Nullable<Int2>,
-=======
-        level -> Int2, 
->>>>>>> 3446212 (J)
+        level -> Int2,
         password -> Varchar,
         have_link -> Nullable<Varchar>,
         city -> Nullable<Varchar>,
@@ -472,76 +781,113 @@ table! {
         b_avatar -> Nullable<Varchar>,
         s_avatar -> Nullable<Varchar>,
         email -> Nullable<Varchar>,
-        birthday -> Timestamp,
+        birthday -> Date,
         last_activity -> Timestamp,
     }
 }
 
 joinable!(color_settings -> users (user_id));
-joinable!(featured_uc -> list_uc (list_id));
-joinable!(ip_user -> users (user_id));
-joinable!(news_uc -> list_uc (list_id));
-joinable!(notify_uc -> list_uc (list_id));
+joinable!(communities_memberships -> communitys (community_id));
+joinable!(communities_memberships -> users (user_id));
+joinable!(community_good_notifications -> communitys (community_id));
+joinable!(community_ie_settings -> communities_memberships (community_member));
+joinable!(community_infos -> communitys (community_id));
+joinable!(community_music_notifications -> communitys (community_id));
+joinable!(community_notifications -> communitys (community_id));
+joinable!(community_photo_notifications -> communitys (community_id));
+joinable!(community_post_notifications -> communitys (community_id));
+joinable!(community_privates -> communitys (community_id));
+joinable!(community_subcategorys -> community_categorys (category_id));
+joinable!(community_survey_notifications -> communitys (community_id));
+joinable!(community_video_notifications -> communitys (community_id));
+joinable!(communitys -> community_subcategorys (community_subcategory_id));
+joinable!(communitys -> users (user_id));
+joinable!(ip_users -> users (user_id));
 joinable!(smiles -> smile_categories (smile_categorie_id));
 joinable!(stickers -> sticker_categories (sticker_categorie_id));
-joinable!(user_anketa -> users (user_id));
-joinable!(user_delete_anketa -> users (user_id));
+joinable!(user_anketas -> users (user_id));
+joinable!(user_delete_anketas -> users (user_id));
 joinable!(user_good_notifications -> users (user_id));
-joinable!(user_location -> users (user_id));
-joinable!(user_love_status -> users (user_id));
+joinable!(user_locations -> users (user_id));
+joinable!(user_love_statuss -> users (user_id));
 joinable!(user_music_notifications -> users (user_id));
+joinable!(user_notifications -> users (user_id));
 joinable!(user_photo_notifications -> users (user_id));
 joinable!(user_populate_smiles -> smiles (smile_id));
 joinable!(user_populate_smiles -> users (user_id));
 joinable!(user_populate_stickers -> stickers (sticker_id));
 joinable!(user_populate_stickers -> users (user_id));
 joinable!(user_post_notifications -> users (user_id));
-joinable!(user_private -> users (user_id));
-joinable!(user_profile -> users (user_id));
+joinable!(user_privates -> users (user_id));
 joinable!(user_profile_notifications -> users (user_id));
+joinable!(user_profiles -> users (user_id));
+joinable!(user_survey_notifications -> users (user_id));
 joinable!(user_video_notifications -> users (user_id));
 
 allow_tables_to_appear_in_same_query!(
     color_settings,
+    communities_memberships,
+    community_categorys,
+    community_doc_list_positions,
+    community_good_list_positions,
+    community_good_notifications,
+    community_ie_settings,
+    community_infos,
+    community_music_list_positions,
+    community_music_notifications,
+    community_notifications,
+    community_photo_list_positions,
+    community_photo_notifications,
+    community_post_list_positions,
+    community_post_notifications,
+    community_privates,
+    community_subcategorys,
+    community_survey_list_positions,
+    community_survey_notifications,
+    community_video_list_positions,
+    community_video_notifications,
+    communitys,
     custom_links,
-    featured_uc,
-    ip_user,
-    list_uc,
-    news_uc,
-    notify_uc,
+    featured_user_communities,
+    ip_users,
+    list_user_communities_keys,
+    news_user_communities,
+    notify_user_communities,
     phone_codes,
     smile_categories,
     smiles,
     sticker_categories,
     stickers,
-    user_anketa,
+    user_anketas,
     user_blocks,
-    user_brother_sister,
-    user_children_one,
-    user_colleagues_one,
-    user_dad_one,
-    user_delete_anketa,
-    user_doc_list_position,
-    user_good_list_position,
+    user_brother_sisters,
+    user_children_ones,
+    user_colleagues_ones,
+    user_dad_ones,
+    user_delete_anketas,
+    user_doc_list_positions,
+    user_good_list_positions,
     user_good_notifications,
-    user_grandsons_one,
-    user_location,
-    user_love_status,
-    user_mom_one,
-    user_music_list_position,
+    user_grandsons_ones,
+    user_locations,
+    user_love_statuss,
+    user_mom_ones,
+    user_music_list_positions,
     user_music_notifications,
-    user_partner_one,
-    user_photo_list_position,
+    user_notifications,
+    user_partner_ones,
+    user_photo_list_positions,
     user_photo_notifications,
     user_populate_smiles,
     user_populate_stickers,
-    user_post_list_position,
+    user_post_list_positions,
     user_post_notifications,
-    user_private,
-    user_profile,
+    user_privates,
     user_profile_notifications,
-    user_survey_list_position,
-    user_video_list_position,
+    user_profiles,
+    user_survey_list_positions,
+    user_survey_notifications,
+    user_video_list_positions,
     user_video_notifications,
     users,
 );
