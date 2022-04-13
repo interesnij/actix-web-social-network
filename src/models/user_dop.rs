@@ -195,6 +195,13 @@ pub struct UserLoveStatus {
     pub male_status:    char,
     pub female_status:  char,
 }
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="user_love_statuss"]
+pub struct NewUserPartnerOne {
+    pub user_id:        i32,
+    pub male_status:    char,
+    pub female_status:  char,
+}
 
 /////// UserPartnerOne //////
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
@@ -248,14 +255,14 @@ pub struct NewUserDadOne {
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
 #[belongs_to(User, foreign_key="user_bro_sist")]
 #[belongs_to(User, foreign_key="brother_sister_by_users")]
-pub struct UserBrothersSisters {
+pub struct UserBrothersSister {
     pub id:         i32,
     pub user_id:    i32,
     pub target_id:  i32,
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_brother_sisters"]
-pub struct NewUserBrothersSisters {
+pub struct NewUserBrothersSister {
     pub user_id:    i32,
     pub target_id:  i32,
 }
@@ -280,14 +287,14 @@ pub struct NewUserChildren {
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
 #[belongs_to(User, foreign_key="user_grandsons")]
 #[belongs_to(User, foreign_key="grandsons_by_users")]
-pub struct UserGrandsons {
+pub struct UserGrandson {
     pub id:          i32,
     pub user_id:     i32,
     pub grandson_id: i32,
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_grandsons_ones"]
-pub struct NewUserGrandsons {
+pub struct NewUserGrandson {
     pub user_id:     i32,
     pub grandson_id: i32,
 }
@@ -296,14 +303,14 @@ pub struct NewUserGrandsons {
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
 #[belongs_to(User, foreign_key="user_colleagues")]
 #[belongs_to(User, foreign_key="colleagues_by_users")]
-pub struct UserColleagues {
+pub struct UserColleague {
     pub id:           i32,
     pub user_id:      i32,
     pub colleague_id: i32,
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_colleagues_ones"]
-pub struct NewUserColleagues {
+pub struct NewUserColleague {
     pub user_id:      i32,
     pub colleague_id: i32,
 }
@@ -312,14 +319,14 @@ pub struct NewUserColleagues {
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
 #[belongs_to(User, foreign_key="user_blocks")]
 #[belongs_to(User, foreign_key="blocked_by_users")]
-pub struct UserBlocks {
+pub struct UserBlock {
     pub id:              i32,
     pub user_id:         i32,
     pub blocked_user_id: i32,
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_blocks"]
-pub struct NewUserBlocks {
+pub struct NewUserBlock {
     pub user_id:         i32,
     pub blocked_user_id: i32,
 }
@@ -330,7 +337,7 @@ pub struct NewUserBlocks {
     // 'a' Активный список
 
 #[derive(Debug, Queryable, Serialize, Identifiable)]
-pub struct ListUserCommuntiesKey {
+pub struct ListUserCommunitiesKey {
     pub id:     i32,
     pub types:  char,
     pub name:   String,
@@ -338,7 +345,7 @@ pub struct ListUserCommuntiesKey {
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="list_user_communties_keys"]
-pub struct NewListUserCommuntiesKey {
+pub struct NewListUserCommunitiesKey {
     pub types: char,
     pub name:  String,
     pub owner: i32,
@@ -347,7 +354,7 @@ pub struct NewListUserCommuntiesKey {
 /////// FeaturedUC //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(ListUC)]
-pub struct FeaturedUserCommuntie {
+pub struct FeaturedUserCommunitie {
     pub id:           i32,
     pub owner:        i32,
     pub list_id:      i32,
@@ -358,7 +365,7 @@ pub struct FeaturedUserCommuntie {
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="featured_user_communties"]
-pub struct NewFeaturedUserCommuntie {
+pub struct NewFeaturedUserCommunitie {
     pub owner:        i32,
     pub list_id:      i32,
     pub user_id:      Option<i32>,
@@ -370,7 +377,7 @@ pub struct NewFeaturedUserCommuntie {
 /////// NewsUC //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(ListUC)]
-pub struct NewsUserCommuntie {
+pub struct NewsUserCommunitie {
     pub id:           i32,
     pub owner:        i32,
     pub list_id:      i32,
@@ -381,7 +388,7 @@ pub struct NewsUserCommuntie {
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="news_user_communtiies"]
-pub struct NewNewsListUserCommuntie {
+pub struct NewNewsListUserCommunitie {
     pub owner:        i32,
     pub list_id:      i32,
     pub user_id:      Option<i32>,
@@ -393,7 +400,7 @@ pub struct NewNewsListUserCommuntie {
 /////// NotifyUC //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(ListUC)]
-pub struct NotifyUserCommuntie {
+pub struct NotifyUserCommunitie {
     pub id:           i32,
     pub owner:        i32,
     pub list_id:      i32,
@@ -404,7 +411,7 @@ pub struct NotifyUserCommuntie {
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="notify_user_communtiies"]
-pub struct NewNotifyUserCommuntie {
+pub struct NewNotifyUserCommunitie {
     pub owner:        i32,
     pub list_id:      i32,
     pub user_id:      Option<i32>,
@@ -430,7 +437,7 @@ pub struct NewUserPhotoListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i16,
-    pub types:    char,
+    pub types:    String,
 }
 
 /////// UserPostListPosition //////
@@ -448,7 +455,7 @@ pub struct NewUserPostListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i16,
-    pub types:    char,
+    pub types:    String,
 }
 
 /////// UserMusicListPosition //////
@@ -466,7 +473,7 @@ pub struct NewUserMusicListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i16,
-    pub types:    char,
+    pub types:    String,
 }
 
 /////// UserGoodListPosition //////
@@ -484,7 +491,7 @@ pub struct NewUserGoodListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i16,
-    pub types:    char,
+    pub types:    String,
 }
 
 /////// UserVideoListPosition //////
@@ -502,7 +509,7 @@ pub struct NewUserVideoListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i16,
-    pub types:    char,
+    pub types:    String,
 }
 
 /////// UserSurveyListPosition //////
@@ -520,7 +527,7 @@ pub struct NewUserSurveyListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i16,
-    pub types:    char,
+    pub types:    String,
 }
 
 /////// UserDocListPosition //////
@@ -538,7 +545,7 @@ pub struct NewUserDocListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i16,
-    pub types:    char,
+    pub types:    String,
 }
 
 /////// UserPrivate //////

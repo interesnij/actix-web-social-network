@@ -52,7 +52,7 @@ use crate::models::{
 
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
-#[belongs_to(Community)]
+#[belongs_to(Community)] 
 pub struct Chat {
     pub id:                 i32,
     pub name:               String,

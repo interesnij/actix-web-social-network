@@ -266,7 +266,7 @@ CREATE TABLE featured_user_communties (
 
     CONSTRAINT fk_featured_uc_list
          FOREIGN KEY(list_id)
-             REFERENCES list_uc(id)
+             REFERENCES list_user_communties_keys(id)
 
 );
 -- Ключи новостей -------
@@ -275,13 +275,13 @@ CREATE TABLE news_user_communtiies (
     owner        INT NOT NULL,                  -- кто получает новости
     list_id      INT,
     user_id      INT,                            -- новости друга
-    community    INT,                       -- новости сообщества
+    community_id    INT,                       -- новости сообщества
     mute         BOOLEAN NOT NULL DEFAULT false, -- не получать новости источника
     sleep        TIMESTAMP,                      -- не получать новости источника до указанного времени
 
     CONSTRAINT fk_news_uc_list
          FOREIGN KEY(list_id)
-             REFERENCES list_uc(id)
+             REFERENCES list_user_communties_keys(id)
 );
 -- Ключи уыедомлений -------
 CREATE TABLE notify_user_communtiies (
@@ -289,13 +289,13 @@ CREATE TABLE notify_user_communtiies (
     owner        INT NOT NULL,                  -- кто получает уведомления
     list_id      INT,
     user_id      INT,                            -- уведомления друга
-    community    INT,                       -- уведомления сообщества
+    community_id    INT,                       -- уведомления сообщества
     mute         BOOLEAN NOT NULL DEFAULT false, -- не получать уведомления источника
     sleep        TIMESTAMP,                      -- не получать уведомления источника до указанного времени
 
     CONSTRAINT fk_notify_uc_list
          FOREIGN KEY(list_id)
-             REFERENCES list_uc(id)
+             REFERENCES list_user_communties_keys(id)
 );
 
 ------------------
@@ -306,7 +306,7 @@ CREATE TABLE notify_user_communtiies (
 CREATE TABLE user_photo_list_positions (
     id            SERIAL PRIMARY KEY,
     user_id       INT NOT NULL,     -- Пользователь
-    list          INT NOT NULL,     -- Фотоальбом
+    list_id          INT NOT NULL,     -- Фотоальбом
     position      SMALLINT DEFAULT 0, -- Порядок отображения
     types         "char" NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
@@ -315,7 +315,7 @@ CREATE TABLE user_photo_list_positions (
 CREATE TABLE user_post_list_positions (
     id           SERIAL PRIMARY KEY,
     user_id      INT NOT NULL,     -- Пользователь
-    list         INT NOT NULL,     -- Список записей
+    list_id         INT NOT NULL,     -- Список записей
     position     SMALLINT DEFAULT 0, -- Порядок отображения
     types        "char" NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
@@ -324,7 +324,7 @@ CREATE TABLE user_post_list_positions (
 CREATE TABLE user_music_list_positions (
     id            SERIAL PRIMARY KEY,
     user_id       INT NOT NULL,     -- Пользователь
-    list          INT NOT NULL,     -- Список аудиозаписей
+    list_id          INT NOT NULL,     -- Список аудиозаписей
     position      SMALLINT DEFAULT 0,     -- Порядок отображения
     types         "char" NOT NULL      -- 1 - открыт, 0 - недоступен (например, удален)
 );
@@ -333,7 +333,7 @@ CREATE TABLE user_music_list_positions (
 CREATE TABLE user_good_list_positions (
     id           SERIAL PRIMARY KEY,
     user_id      INT NOT NULL,     -- Пользователь
-    list         INT NOT NULL,     -- Список товаров
+    list_id         INT NOT NULL,     -- Список товаров
     position     SMALLINT DEFAULT 0, -- Порядок отображения
     types        "char" NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
@@ -342,7 +342,7 @@ CREATE TABLE user_good_list_positions (
 CREATE TABLE user_video_list_positions (
     id           SERIAL PRIMARY KEY,
     user_id      INT NOT NULL,     -- Пользователь
-    list         INT NOT NULL,     -- Список видеозаписей
+    list_id         INT NOT NULL,     -- Список видеозаписей
     position     SMALLINT DEFAULT 0, -- Порядок отображения
     types        "char" NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
@@ -351,7 +351,7 @@ CREATE TABLE user_video_list_positions (
 CREATE TABLE user_survey_list_positions (
     id           SERIAL PRIMARY KEY,
     user_id      INT NOT NULL,     -- Пользователь
-    list         INT NOT NULL,     -- Список опросов
+    list_id         INT NOT NULL,     -- Список опросов
     position     SMALLINT DEFAULT 0, -- Порядок отображения
     types        "char" NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
@@ -360,7 +360,7 @@ CREATE TABLE user_survey_list_positions (
 CREATE TABLE user_doc_list_positions (
     id             SERIAL PRIMARY KEY,
     user_id        INT NOT NULL,     -- Пользователь
-    list           INT NOT NULL,     -- Список документов
+    list_id           INT NOT NULL,     -- Список документов
     position       SMALLINT DEFAULT 0, -- Порядок отображения
     types          "char" NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
