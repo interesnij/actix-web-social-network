@@ -23,7 +23,7 @@ CREATE TABLE moderated_reports (
 
     CONSTRAINT fk_moderated_reports_moderated_object
         FOREIGN KEY(moderated_object_id)
-            REFERENCES moderated(id)
+            REFERENCES moderateds(id)
 );
 
 CREATE TABLE moderated_penalties (
@@ -42,7 +42,7 @@ CREATE TABLE moderated_penalties (
 
     CONSTRAINT fk_moderated_penalties_moderated_object
         FOREIGN KEY(moderated_object_id)
-            REFERENCES moderated(id)
+            REFERENCES moderateds(id)
 );
 
 
