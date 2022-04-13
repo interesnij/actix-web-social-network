@@ -330,6 +330,7 @@ pub struct ListUserCommunitiesKey {
     pub owner:  i32,
 }
 #[derive(Deserialize, Insertable)]
+#[table_name="list_user_communities_keys"]
 pub struct NewListUserCommunitiesKey {
     pub types: String,
     pub name:  String,
@@ -348,6 +349,7 @@ pub struct FeaturedUserCommunitie {
     pub sleep:        Option<chrono::NaiveDateTime>,
 }
 #[derive(Deserialize, Insertable)]
+#[table_name="featured_user_communities"]
 pub struct NewFeaturedUserCommunitie {
     pub owner:        i32,
     pub list_id:      i32,
@@ -359,7 +361,7 @@ pub struct NewFeaturedUserCommunitie {
 
 /////// NewsUC //////
 #[derive(Queryable, Serialize, Identifiable, Associations)]
-#[belongs_to(ListUserCommunitiesKey)]
+#[table_name="news_user_communities"]
 pub struct NewsUserCommunitie {
     pub id:           i32,
     pub owner:        i32,
