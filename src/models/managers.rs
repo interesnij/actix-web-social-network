@@ -112,8 +112,8 @@ pub struct NewModerated {
 #[belongs_to(Moderated)]
 pub struct ModerationReport {
     pub id:               i32,
-    pub reporter:         i32,
-    pub moderated_object: i32,
+    pub user_id:         i32,
+    pub moderated_object_id: i32,
     pub description:      Option<String>,
     pub types:            char,
     pub created:          chrono::NaiveDateTime,
@@ -121,8 +121,8 @@ pub struct ModerationReport {
 #[derive(Deserialize, Insertable)]
 #[table_name="moderated_reports"]
 pub struct NewModerationReport {
-    pub reporter:         i32,
-    pub moderated_object: i32,
+    pub user_id:         i32,
+    pub moderated_object_id: i32,
     pub description:      Option<String>,
     pub types:            String,
     pub created:          chrono::NaiveDateTime,
@@ -168,7 +168,7 @@ pub struct NewModerationPenaltie {
 #[belongs_to(User)]
 pub struct ModeratedLog {
     pub id:              i32,
-    pub manager_id:      i32,
+    pub user_id:      i32,
     pub object_id:       i32,
     pub action:          char,
     pub description:     Option<String>,
@@ -179,7 +179,7 @@ pub struct ModeratedLog {
 #[derive(Deserialize, Insertable)]
 #[table_name="moderated_logs"]
 pub struct NewModeratedLog {
-    pub manager_id:      i32,
+    pub user_id:      i32,
     pub object_id:       i32,
     pub action:          String,
     pub description:     Option<String>,

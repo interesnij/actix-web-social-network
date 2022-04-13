@@ -11,7 +11,7 @@ CREATE TABLE moderateds (
 
 CREATE TABLE moderated_reports (
     id                  SERIAL PRIMARY KEY,
-    reporter_id         INT NOT NULL,
+    user_id         INT NOT NULL,
     moderated_object_id INT NOT NULL,
     description         VARCHAR(500),
     types               "char" NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE moderated_penalties (
 
 CREATE TABLE moderated_logs (
     id              SERIAL PRIMARY KEY,
-    manager_id      INT NOT NULL,
+    user_id      INT NOT NULL,
     object_id       INT NOT NULL,
     action          "char" NOT NULL,
     description     VARCHAR(500),
@@ -57,7 +57,7 @@ CREATE TABLE moderated_logs (
     time_to_suspend TIMESTAMP,
 
     CONSTRAINT fk_moderated_logs_manager
-        FOREIGN KEY(manager_id)
+        FOREIGN KEY(user_id)
             REFERENCES users(id)
 );
 
@@ -79,6 +79,6 @@ CREATE TABLE support_users (
     manager_id  INT NOT NULL,
     level       SMALLINT DEFAULT 0,
     points      INT DEFAULT 0,
-    chats       INT DEFAULT 0,
+    chats       SMALLINT DEFAULT 0,
     created     TIMESTAMP NOT NULL
 );
