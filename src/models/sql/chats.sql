@@ -134,15 +134,15 @@ CREATE TABLE message_options (
 
 -- Пересланные сообщения -------
 CREATE TABLE message_transfers (
-    id          SERIAL PRIMARY KEY,            -- id объекта
-    message_transfers_message     INT NOT NULL,                  -- id сообщения
-    message_transfers_transfer    INT NOT NULL,                  -- id пересылаемого сообщения
+    id           SERIAL PRIMARY KEY,            -- id объекта
+    message_id   INT NOT NULL,                  -- id сообщения
+    transfer_id  INT NOT NULL,                  -- id пересылаемого сообщения
 
     CONSTRAINT fk_message_transfers_message    -- связь с сообщением
-        FOREIGN KEY(message_transfers_message)
+        FOREIGN KEY(message_id)
           REFERENCES messages(id),
 
     CONSTRAINT fk_message_transfers_transfer   -- связь с пересылаемым сообщением
-        FOREIGN KEY(message_transfers_transfer)
+        FOREIGN KEY(transfer_id)
             REFERENCES messages(id)
 );

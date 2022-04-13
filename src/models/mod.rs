@@ -4,6 +4,7 @@ mod user_dop;
 mod communities;
 mod posts;
 mod chats;
+mod photos;
 
 pub use self::{
     other::*,
@@ -12,4 +13,5 @@ pub use self::{
     communities::*,
     posts::*,
     chats::*,
+    photos::*,
 };
