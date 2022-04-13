@@ -79,7 +79,7 @@ pub struct NewUserProfile {
 }
 
 /////// UserLocation //////
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Deserialize, Identifiable)]
 #[belongs_to(User)]
 pub struct UserLocation {
     pub id:         i32,
@@ -160,7 +160,7 @@ pub struct UserDeleteAnketa {
 #[table_name="user_delete_anketas"]
 pub struct NewUserDeleteAnketa {
     pub user_id: i32,
-    pub answer:  char,
+    pub answer:  String,
     pub other:   Option<String>,
     pub created: chrono::NaiveDateTime,
 }
@@ -199,8 +199,8 @@ pub struct UserLoveStatus {
 #[table_name="user_love_statuss"]
 pub struct NewUserLoveStatus {
     pub user_id:        i32,
-    pub male_status:    char,
-    pub female_status:  char,
+    pub male_status:    String,
+    pub female_status:  String,
 }
 
 /////// UserPartnerOne //////
@@ -346,7 +346,7 @@ pub struct ListUserCommunitiesKey {
 #[derive(Deserialize, Insertable)]
 #[table_name="list_user_communties_keys"]
 pub struct NewListUserCommunitiesKey {
-    pub types: char,
+    pub types: String,
     pub name:  String,
     pub owner: i32,
 }
