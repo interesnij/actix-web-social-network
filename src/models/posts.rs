@@ -141,7 +141,7 @@ pub struct Post {
     pub id:              i32,
     pub content:         Option<String>,
     pub community_id:    Option<i32>,
-    pub post_category_id:     Option<i32>,
+    pub post_categorie_id:     Option<i32>,
     pub user_id:      i32,
     pub list_id:         i32,
     pub types:           char,
@@ -162,7 +162,7 @@ pub struct Post {
 pub struct NewPost {
     pub content:         Option<String>,
     pub community_id:    Option<i32>,
-    pub post_category_id:     Option<i32>,
+    pub post_categorie_id:     Option<i32>,
     pub user_id:      i32,
     pub list_id:         i32,
     pub types:           String,

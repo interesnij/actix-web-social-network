@@ -36,7 +36,7 @@ CREATE TABLE posts (
     id              SERIAL PRIMARY KEY,
     content         VARCHAR(5000),
     community_id    INT,
-    post_category_id     INT,
+    post_categorie_id     INT,
     user_id      INT NOT NULL,
     list_id         INT NOT NULL,
     types           "char" NOT NULL,
