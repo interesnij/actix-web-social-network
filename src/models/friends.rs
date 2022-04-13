@@ -109,5 +109,5 @@ pub struct NewConnectIeSetting {
     pub can_create_planner:      Option<String>,
     pub can_create_doc:          Option<String>,
     pub can_create_music:        Option<String>,
-    pub can_create_survey:       Option<String>,
+    pub can_create_survey:       Option<String>
 }
