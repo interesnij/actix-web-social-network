@@ -251,7 +251,7 @@ CREATE TABLE list_user_communities_keys (
     id    SERIAL PRIMARY KEY,
     types "char" NOT NULL,      -- тип списка: 0 - неактивен, 1 - основной, 2 - пользовательский
     name  VARCHAR(100) NOT NULL,    -- название
-    owner INT NOT NULL       -- владелец
+    owner INT NOT NULL        -- владелец
 );
 
 -- Ключи рекомендаций -------

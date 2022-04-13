@@ -382,11 +382,10 @@ pub struct NewNewsListUserCommunitie {
 
 /////// NotifyUC //////
 #[derive(Queryable, Serialize, Identifiable, Associations)]
-#[belongs_to(ListUserCommunitiesKey, foreign_key="list")]
 pub struct NotifyUserCommunitie {
     pub id:           i32,
     pub owner:        i32,
-    pub list:         i32,
+    pub list_id:         i32,
     pub user_id:      Option<i32>,
     pub community_id: Option<i32>,
     pub mute:         bool,

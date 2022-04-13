@@ -220,7 +220,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
         };
 
         let mut get_device = "a";
-        for header in &req.headers().into_iter() {
+        for header in req.headers().into_iter() {
             if header.0 == "user-agent" {
                 let _val = format!("{:?}", header.1);
                 if _val.contains("Mobile"){
