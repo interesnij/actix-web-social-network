@@ -569,7 +569,7 @@ CREATE TABLE user_notifications (
     user_id              INT NOT NULL,
     connection_request   BOOLEAN NOT NULL DEFAULT true,
     connection_confirmed BOOLEAN NOT NULL DEFAULT true,
-    community_invite     BOOLEAN NOT NULL DEFAULT true,
+    user_invite          BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT fk_user_notifications
          FOREIGN KEY(user_id)

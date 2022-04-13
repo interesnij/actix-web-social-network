@@ -273,14 +273,14 @@ pub struct NewUserBrothersSister {
 #[derive(Queryable, Serialize, Identifiable)]
 #[belongs_to(User, foreign_key="user_children")]
 #[belongs_to(User, foreign_key="children_by_users")]
-pub struct UserChildren {
+pub struct UserChildrenOne {
     pub id:       i32,
     pub user_id:  i32,
     pub child_id: i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_children_ones"]
-pub struct NewUserChildren {
+pub struct NewUserChildrenOne {
     pub user_id:  i32,
     pub child_id: i32,
 }
@@ -288,14 +288,14 @@ pub struct NewUserChildren {
 /////// UserGrandsons //////
 #[derive(Queryable, Serialize, Identifiable)]
 #[belongs_to(User, foreign_key="grandsons_by_users")]
-pub struct UserGrandson {
+pub struct UserGrandsonOne {
     pub id:          i32,
     pub user_id:     i32,
     pub grandson_id: i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_grandsons_ones"]
-pub struct NewUserGrandson {
+pub struct NewUserGrandsonOne {
     pub user_id:     i32,
     pub grandson_id: i32,
 }
@@ -304,14 +304,14 @@ pub struct NewUserGrandson {
 #[derive(Queryable, Serialize, Identifiable)]
 #[belongs_to(User, foreign_key="user_colleagues")]
 #[belongs_to(User, foreign_key="colleagues_by_users")]
-pub struct UserColleague {
+pub struct UserColleagueOne {
     pub id:           i32,
     pub user_id:      i32,
     pub colleague_id: i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_colleagues_ones"]
-pub struct NewUserColleague {
+pub struct NewUserColleagueOne {
     pub user_id:      i32,
     pub colleague_id: i32,
 }
