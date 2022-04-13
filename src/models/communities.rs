@@ -3,7 +3,7 @@ use crate::schema::{
     community_subcategorys,
     communitys,
     communities_memberships,
-    community_ie_settings,
+    //community_ie_settings,
     community_infos,
     community_privates,
     community_notifications,
