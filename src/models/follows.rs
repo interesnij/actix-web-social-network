@@ -14,8 +14,6 @@ use crate::models::{
 
 /////// Follow //////
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
-#[belongs_to(User), foreign_key="follows_user")]
-#[belongs_to(User), foreign_key="followers_user")]
 pub struct Follow {
     pub id:             i32,
     pub user:           i32,
@@ -34,20 +32,20 @@ pub struct NewFollow {
 
 /////// CommunityFollow //////
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
-#[belongs_to(User), foreign_key="community_follows_user")]
-#[belongs_to(Community), foreign_key="community_follows_community")]
+#[belongs_to(User)]
+#[belongs_to(Community)]
 pub struct CommunityFollow {
     pub id:          i32,
-    pub user:        i32,
-    pub community:   i32,
+    pub user_id:        i32,
+    pub community_id:   i32,
     pub view:        bool,
     pub visited:     i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_follows"]
 pub struct NewCommunityFollow {
-    pub user:        i32,
-    pub community:   i32,
+    pub user_id:        i32,
+    pub community_id:   i32,
     pub view:        bool,
     pub visited:     i32,
 }
@@ -55,10 +53,9 @@ pub struct NewCommunityFollow {
 /////// FollowPrivate //////
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Follow)]
-#[table_name="follow_ie_settings"]
 pub struct FollowIeSetting {
     pub id:                      i32,
-    pub user_id:                 i32,
+    pub follow_id:                 i32,
 
     pub can_see_info:            Option<char>,
     pub can_see_community:       Option<char>,
@@ -96,4 +93,46 @@ pub struct FollowIeSetting {
     pub can_create_doc:          Option<char>,
     pub can_create_music:        Option<char>,
     pub can_create_survey:       Option<char>,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="follow_ie_settings"]
+pub struct NewFollowIeSetting {
+    pub follow_id:                 i32,
+
+    pub can_see_info:            Option<String>,
+    pub can_see_community:       Option<String>,
+    pub can_see_friend:          Option<String>,
+    pub can_send_message:        Option<String>,
+    pub can_add_in_chat:         Option<String>,
+    pub can_see_doc:             Option<String>,
+    pub can_see_music:           Option<String>,
+    pub can_see_survey:          Option<String>,
+    pub can_see_post:            Option<String>,
+    pub can_see_post_comment:    Option<String>,
+    pub can_see_photo:           Option<String>,
+    pub can_see_photo_comment:   Option<String>,
+    pub can_see_good:            Option<String>,
+    pub can_see_good_comment:    Option<String>,
+    pub can_see_video:           Option<String>,
+    pub can_see_video_comment:   Option<String>,
+    pub can_see_planner:         Option<String>,
+    pub can_see_planner_comment: Option<String>,
+
+    pub can_add_post:            Option<String>,
+    pub can_add_photo:           Option<String>,
+    pub can_add_good:            Option<String>,
+    pub can_add_video:           Option<String>,
+    pub can_add_planner:         Option<String>,
+    pub can_add_doc:             Option<String>,
+    pub can_add_music:           Option<String>,
+    pub can_add_survey:          Option<String>,
+
+    pub can_create_post:         Option<String>,
+    pub can_create_photo:        Option<String>,
+    pub can_create_good:         Option<String>,
+    pub can_create_video:        Option<String>,
+    pub can_create_planner:      Option<String>,
+    pub can_create_doc:          Option<String>,
+    pub can_create_music:        Option<String>,
+    pub can_create_survey:       Option<String>,
 }

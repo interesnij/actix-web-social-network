@@ -9,9 +9,7 @@ use crate::models::User;
 
 
 /////// Friend //////
-#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
-#[belongs_to(User), foreign_key="friend_user")]
-#[belongs_to(User), foreign_key="friend_target_user")]
+#[derive(Debug, Queryable, Serialize, Identifiable)]
 pub struct Friend {
     pub id:             i32,
     pub user:           i32,
@@ -30,10 +28,9 @@ pub struct NewFriend {
 /////// FollowPrivate //////
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Friend)]
-#[table_name="connect_ie_settings"]
 pub struct ConnectIeSetting {
     pub id:                      i32,
-    pub user_id:                 i32,
+    pub friend_id:               i32,
 
     pub can_see_info:            Option<char>,
     pub can_see_community:       Option<char>,
@@ -71,4 +68,46 @@ pub struct ConnectIeSetting {
     pub can_create_doc:          Option<char>,
     pub can_create_music:        Option<char>,
     pub can_create_survey:       Option<char>,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="connect_ie_settings"]
+pub struct NewFollowIeSetting {
+    pub follow_id:                 i32,
+
+    pub can_see_info:            Option<String>,
+    pub can_see_community:       Option<String>,
+    pub can_see_friend:          Option<String>,
+    pub can_send_message:        Option<String>,
+    pub can_add_in_chat:         Option<String>,
+    pub can_see_doc:             Option<String>,
+    pub can_see_music:           Option<String>,
+    pub can_see_survey:          Option<String>,
+    pub can_see_post:            Option<String>,
+    pub can_see_post_comment:    Option<String>,
+    pub can_see_photo:           Option<String>,
+    pub can_see_photo_comment:   Option<String>,
+    pub can_see_good:            Option<String>,
+    pub can_see_good_comment:    Option<String>,
+    pub can_see_video:           Option<String>,
+    pub can_see_video_comment:   Option<String>,
+    pub can_see_planner:         Option<String>,
+    pub can_see_planner_comment: Option<String>,
+
+    pub can_add_post:            Option<String>,
+    pub can_add_photo:           Option<String>,
+    pub can_add_good:            Option<String>,
+    pub can_add_video:           Option<String>,
+    pub can_add_planner:         Option<String>,
+    pub can_add_doc:             Option<String>,
+    pub can_add_music:           Option<String>,
+    pub can_add_survey:          Option<String>,
+
+    pub can_create_post:         Option<String>,
+    pub can_create_photo:        Option<String>,
+    pub can_create_good:         Option<String>,
+    pub can_create_video:        Option<String>,
+    pub can_create_planner:      Option<String>,
+    pub can_create_doc:          Option<String>,
+    pub can_create_music:        Option<String>,
+    pub can_create_survey:       Option<String>,
 }

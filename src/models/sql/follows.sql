@@ -35,7 +35,7 @@ CREATE TABLE community_follows (
 
 CREATE TABLE follow_ie_settings (
     id                       SERIAL PRIMARY KEY,
-    user_id                  INT NOT NULL,
+    follow_id                INT NOT NULL,
 
     can_see_info             "char",
     can_see_community        "char",
@@ -75,6 +75,6 @@ CREATE TABLE follow_ie_settings (
     can_create_survey        "char",
 
     CONSTRAINT fk_follow_ie_settings
-        FOREIGN KEY(user_id)
+        FOREIGN KEY(follow_id)
             REFERENCES follows(id)
 );

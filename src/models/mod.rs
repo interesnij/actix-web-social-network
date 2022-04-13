@@ -8,6 +8,8 @@ mod photos;
 mod survey;
 mod videos;
 mod docs;
+mod follows;
+mod friends;
 
 pub use self::{
     other::*,
@@ -20,4 +22,6 @@ pub use self::{
     survey::*,
     videos::*,
     docs::*,
+    follows::*,
+    friends::*,
 };

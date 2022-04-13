@@ -17,7 +17,7 @@ CREATE TABLE friends (
 
 CREATE TABLE connect_ie_settings (
     id                       SERIAL PRIMARY KEY,
-    user_id                  INT NOT NULL,
+    friend_id                INT NOT NULL,
 
     can_see_info             "char",
     can_see_community        "char",
@@ -57,6 +57,6 @@ CREATE TABLE connect_ie_settings (
     can_create_survey        "char",
 
     CONSTRAINT fk_connect_ie_settings
-        FOREIGN KEY(user_id)
+        FOREIGN KEY(friend_id)
             REFERENCES friends(id)
 );
