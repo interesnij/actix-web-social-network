@@ -25,7 +25,7 @@ pub struct PostCategorie {
     pub avatar:   Option<String>,
     pub position: i16,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="post_categories"]
 pub struct NewPostCategorie {
     pub name:     String,
@@ -97,7 +97,7 @@ pub struct PostList {
     pub create_comment:  char,
     pub copy_el:         char,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="post_lists"]
 pub struct NewPostList {
     pub name:            String,
@@ -157,7 +157,7 @@ pub struct Post {
     pub copy:            i32,
     pub position:        i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="posts"]
 pub struct NewPost {
     pub content:         Option<String>,
@@ -206,7 +206,7 @@ pub struct PostComment {
     pub disliked:   i32,
     pub repost:     i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="post_comments"]
 pub struct NewPostComment {
     pub item_id:    i32,
@@ -231,7 +231,7 @@ pub struct UserPostListCollection {
     pub user_id:  i32,
     pub list_id:  i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="user_post_list_collections"]
 pub struct NewUserPostListCollection {
     pub user_id:  i32,
@@ -247,7 +247,7 @@ pub struct CommunityPostListCollection {
     pub community_id:  i32,
     pub list_id:       i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="community_post_list_collections"]
 pub struct NewCommunityPostListCollection {
     pub community_id:  i32,
@@ -271,7 +271,7 @@ pub struct PostListPerm {
     pub create_comment:  Option<char>,
     pub can_copy:        Option<char>,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="post_list_perms"]
 pub struct NewPostListPerm {
     pub user_id:         i32,

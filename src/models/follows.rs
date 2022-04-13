@@ -23,7 +23,7 @@ pub struct Follow {
     pub view:           bool,
     pub visited:        i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="follows"]
 pub struct NewFollow {
     pub user:          i32,
@@ -43,7 +43,7 @@ pub struct CommunityFollow {
     pub view:        bool,
     pub visited:     i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="community_follows"]
 pub struct NewCommunityFollow {
     pub user:        i32,

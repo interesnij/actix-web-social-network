@@ -18,7 +18,7 @@ pub struct Friend {
     pub target_user:    i32,
     pub visited:        i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="friends"]
 pub struct NewFriend {
     pub user:           i32,

@@ -23,7 +23,7 @@ pub struct SoundGenre {
     pub count:    i32,
     pub copy:     i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="sound_genres"]
 pub struct NewSoundGenre {
     pub name:     String,
@@ -58,7 +58,7 @@ pub struct Artist {
     pub position:     i16,
     pub can_see_el:   char,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="artists"]
 pub struct NewArtist {
     pub name:         String,
@@ -94,7 +94,7 @@ pub struct MusicAlbum {
     pub create_el:   char,
     pub copy_el:     char,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="music_albums"]
 pub struct NewMusicAlbum {
     pub name:        String,
@@ -166,7 +166,7 @@ pub struct MusicList {
     pub create_el:    char,
     pub copy_el:      char,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="music_lists"]
 pub struct NewMusicList {
     pub name:         String,
@@ -223,7 +223,7 @@ pub struct Music {
     pub copy:            i32,
     pub position:        i16,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="musics"]
 pub struct NewMusic {
     pub title:           String,
@@ -253,7 +253,7 @@ pub struct UserMusicListCollection {
     pub user_id:  i32,
     pub list_id:  i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="user_music_list_collections"]
 pub struct NewUserMusicListCollection {
     pub user_id:  i32,
@@ -269,7 +269,7 @@ pub struct CommunityMusicListCollection {
     pub community_id:  i32,
     pub list_id:       i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="community_music_list_collections"]
 pub struct NewCommunityMusicListCollection {
     pub community_id:  i32,
@@ -292,7 +292,7 @@ pub struct MusicListPerm {
     pub create_item:     Option<char>,
     pub can_copy:        Option<char>,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="music_list_perms"]
 pub struct NewMusicListPerm {
     pub user_id:         i32,

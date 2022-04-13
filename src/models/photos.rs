@@ -81,7 +81,7 @@ pub struct PhotoList {
     pub create_comment:  char,
     pub copy_el:         char,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="photo_lists"]
 pub struct NewPhotoList {
     pub name:            String,
@@ -140,7 +140,7 @@ pub struct Photo {
     pub copy:            i32,
     pub position:        i16,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="photos"]
 pub struct NewPhoto {
     pub community_id:    Option<i32>,
@@ -190,7 +190,7 @@ pub struct PhotoComment {
     pub disliked:   i32,
     pub repost:     i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="photo_comments"]
 pub struct NewPhotoComment {
     pub item_id:    i32,
@@ -215,7 +215,7 @@ pub struct UserPhotoListCollection {
     pub user_id:  i32,
     pub list_id:  i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="user_photo_list_collections"]
 pub struct NewUserPhotoListCollection {
     pub user_id:  i32,
@@ -231,7 +231,7 @@ pub struct CommunityPhotoListCollection {
     pub community_id:  i32,
     pub list_id:       i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="community_photo_list_collections"]
 pub struct NewCommunityPhotoListCollection {
     pub community_id:  i32,
@@ -256,7 +256,7 @@ pub struct PhotoListPerm {
     pub create_comment:  Option<char>,
     pub can_copy:        Option<char>,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="photo_list_perms"]
 pub struct NewPhotoListPerm {
     pub user_id:         i32,

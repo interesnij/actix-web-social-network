@@ -34,7 +34,7 @@ pub struct Notification {
     pub user_set_id:         i32,
     pub object_set_id:       i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="notifications"]
 pub struct NewNotification {
     pub recipient_id:        i32,
@@ -74,7 +74,7 @@ pub struct WallObject {
     pub user_set_id:         i32,
     pub object_set_id:       i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="wall_objects"]
 pub struct NewWallObject {
     pub recipient_id:        i32,

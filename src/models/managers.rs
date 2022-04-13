@@ -79,7 +79,7 @@ pub struct Moderated {
 
     pub count:           i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="moderateds"]
 pub struct NewModerated {
     pub description:     Option<String>,
@@ -118,7 +118,7 @@ pub struct ModerationReport {
     pub types:            char,
     pub created:          chrono::NaiveDateTime,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="moderated_reports"]
 pub struct NewModerationReport {
     pub reporter:         i32,
@@ -148,7 +148,7 @@ pub struct ModerationPenaltie {
     pub status:              char,
     pub created:             chrono::NaiveDateTime,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="moderated_penalties"]
 pub struct NewModerationPenaltie {
     pub manager_id:          i32,
@@ -176,7 +176,7 @@ pub struct ModeratedLog {
     pub created:         chrono::NaiveDateTime,
     pub time_to_suspend: Option<chrono::NaiveDateTime>,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="moderated_logs"]
 pub struct NewModeratedLog {
     pub manager_id:      i32,
@@ -202,7 +202,7 @@ pub struct StaffLog {
     pub user_id:         i32,
     pub created:         chrono::NaiveDateTime,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="staff_logs"]
 pub struct NewStaffLog {
     pub types:           i16,            // описано в полномочиях пользователя
@@ -223,7 +223,7 @@ pub struct SupportUser {
     pub chats:           i16,
     pub created:         chrono::NaiveDateTime,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="support_users"]
 pub struct NewSupportUser {
     pub manager_id:      i32,

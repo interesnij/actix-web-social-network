@@ -77,7 +77,7 @@ pub struct SurveyList {
     pub create_el:       char,
     pub copy_el:         char,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="survey_lists"]
 pub struct NewSurveyList {
     pub name:            String,
@@ -133,7 +133,7 @@ pub struct Survey {
     pub position:        i16,
     pub vote:            i16,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="surveys"]
 pub struct NewSurvey {
     pub title:           String,
@@ -165,7 +165,7 @@ pub struct UserSurveyListCollection {
     pub user_id:  i32,
     pub list_id:  i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="user_survey_list_collections"]
 pub struct NewUserSurveyListCollection {
     pub user_id:  i32,
@@ -181,7 +181,7 @@ pub struct CommunitySurveyListCollection {
     pub community_id:  i32,
     pub list_id:       i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="community_survey_list_collections"]
 pub struct NewCommunitySurveyListCollection {
     pub community_id:  i32,
@@ -204,7 +204,7 @@ pub struct SurveyListPerm {
     pub create_item:     Option<char>,
     pub can_copy:        Option<char>,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="survey_list_perms"]
 pub struct NewSurveyListPerm {
     pub user_id:         i32,

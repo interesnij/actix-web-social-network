@@ -247,7 +247,7 @@ CREATE TABLE user_blocks (
 ------------------
 ------------------
 -- Список ключей новостей, уведомлений или рекомендаций (если пользователь хочет их группировать) -------
-CREATE TABLE list_user_communties_keys (
+CREATE TABLE list_users_communties_keys (
     id    SERIAL PRIMARY KEY,
     types INT DEFAULT 0,      -- тип списка: 0 - неактивен, 1 - основной, 2 - пользовательский
     name  VARCHAR(100) NOT NULL,    -- название
@@ -270,7 +270,7 @@ CREATE TABLE featured_user_communties (
 
 );
 -- Ключи новостей -------
-CREATE TABLE news_user_communtiies (
+CREATE TABLE news_user_communities (
     id           SERIAL PRIMARY KEY,
     owner        INT NOT NULL,                  -- кто получает новости
     list_id      INT,
@@ -284,7 +284,7 @@ CREATE TABLE news_user_communtiies (
              REFERENCES list_user_communties_keys(id)
 );
 -- Ключи уыедомлений -------
-CREATE TABLE notify_user_communtiies (
+CREATE TABLE notify_user_communities (
     id           SERIAL PRIMARY KEY,
     owner        INT NOT NULL,                  -- кто получает уведомления
     list_id      INT,
@@ -560,4 +560,18 @@ CREATE TABLE user_populate_stickers (
     CONSTRAINT fk_user_populate_stickers_sticker
         FOREIGN KEY(sticker_id)
             REFERENCES stickers(id)
+);
+
+
+-- Уведомления сообщества -------
+CREATE TABLE user_notifications (
+    id                   SERIAL PRIMARY KEY,
+    user_id              INT NOT NULL,
+    connection_request   BOOLEAN NOT NULL DEFAULT true,
+    connection_confirmed BOOLEAN NOT NULL DEFAULT true,
+    community_invite     BOOLEAN NOT NULL DEFAULT true,
+
+    CONSTRAINT fk_user_notifications
+         FOREIGN KEY(user_id)
+             REFERENCES users(id)
 );

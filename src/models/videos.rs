@@ -81,7 +81,7 @@ pub struct VideoList {
     pub create_comment:  char,
     pub copy_el:         char,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="video_lists"]
 pub struct NewVideoList {
     pub name:            String,
@@ -140,7 +140,7 @@ pub struct Video {
     pub copy:            i32,
     pub position:        i16,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="videos"]
 pub struct NewVideo {
     pub title:           String,
@@ -190,7 +190,7 @@ pub struct VideoComment {
     pub disliked:   i32,
     pub repost:     i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="video_comments"]
 pub struct NewVideoComment {
     pub item_id:    i32,
@@ -215,7 +215,7 @@ pub struct UserVideoListCollection {
     pub user_id:  i32,
     pub list_id:  i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="user_video_list_collections"]
 pub struct NewUserVideoListCollection {
     pub user_id:  i32,
@@ -231,7 +231,7 @@ pub struct CommunityVideoListCollection {
     pub community_id:  i32,
     pub list_id:       i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="community_video_list_collections"]
 pub struct NewCommunityVideoListCollection {
     pub community_id:  i32,
@@ -256,7 +256,7 @@ pub struct VideoListPerm {
     pub create_comment:  Option<char>,
     pub can_copy:        Option<char>,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="video_list_perms"]
 pub struct NewVideoListPerm {
     pub user_id:         i32,

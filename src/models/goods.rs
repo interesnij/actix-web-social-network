@@ -81,7 +81,7 @@ pub struct GoodList {
     pub create_comment:  char,
     pub copy_el:         char,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="good_lists"]
 pub struct NewGoodList {
     pub name:            String,
@@ -141,7 +141,7 @@ pub struct Good {
     pub copy:            i32,
     pub position:        i16,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="goods"]
 pub struct NewGood {
     pub title:           String,
@@ -192,7 +192,7 @@ pub struct GoodComment {
     pub disliked:   i32,
     pub repost:     i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="good_comments"]
 pub struct NewGoodComment {
     pub item_id:    i32,
@@ -217,7 +217,7 @@ pub struct UserGoodListCollection {
     pub user_id:  i32,
     pub list_id:  i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="user_good_list_collections"]
 pub struct NewUserGoodListCollection {
     pub user_id:  i32,
@@ -233,7 +233,7 @@ pub struct CommunityGoodListCollection {
     pub community_id:  i32,
     pub list_id:       i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="community_good_list_collections"]
 pub struct NewCommunityGoodListCollection {
     pub community_id:  i32,
@@ -258,7 +258,7 @@ pub struct GoodListPerm {
     pub create_comment:  Option<char>,
     pub can_copy:        Option<char>,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="good_list_perms"]
 pub struct NewGoodListPerm {
     pub user_id:         i32,

@@ -78,7 +78,7 @@ pub struct DocList {
     pub create_el:       char,
     pub copy_el:         char,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="doc_lists"]
 pub struct NewDocList {
     pub name:            String,
@@ -130,7 +130,7 @@ pub struct Doc {
     pub copy:            i32,
     pub position:        i16,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="docs"]
 pub struct NewDoc {
     pub title:           String,
@@ -158,7 +158,7 @@ pub struct UserDocListCollection {
     pub user_id:  i32,
     pub list_id:  i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="user_doc_list_collections"]
 pub struct NewUserDocListCollection {
     pub user_id:  i32,
@@ -174,7 +174,7 @@ pub struct CommunityDocListCollection {
     pub community_id:  i32,
     pub list_id:       i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="community_doc_list_collections"]
 pub struct NewCommunityDocListCollection {
     pub community_id:  i32,
@@ -197,7 +197,7 @@ pub struct DocListPerm {
     pub create_item:     Option<char>,
     pub can_copy:        Option<char>,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="doc_list_perms"]
 pub struct NewDocListPerm {
     pub user_id:         i32,

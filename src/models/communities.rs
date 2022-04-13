@@ -32,7 +32,7 @@ pub struct CommunityCategory {
     pub avatar:   Option<String>,
     pub position: i16,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="community_categorys"]
 pub struct NewCommunityCategory {
     pub name:     String,
@@ -49,7 +49,7 @@ pub struct CommunitySubCategory {
     pub avatar:      Option<String>,
     pub position:    i16,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="community_subcategorys"]
 pub struct NewCommunitySubCategory{
     pub name:        String,
@@ -105,7 +105,7 @@ pub struct Community {
     pub creator_id:  i32,
     pub created:     chrono::NaiveDateTime,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="communitys"]
 pub struct NewCommunity {
     pub name:        String,
@@ -133,7 +133,7 @@ pub struct CommunityMembership {
     pub visited:          i32,
 }
 
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="communities_memberships"]
 pub struct NewCommunityMembership {
     pub user_id:          i32,
@@ -211,7 +211,7 @@ pub struct CommunityInfo {
     pub articles:     i32,
     pub survey:       i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="community_infos"]
 pub struct NewCommunityInfo {
     pub community_id: i32,
@@ -254,7 +254,7 @@ pub struct CommunityPrivate {
     pub can_see_log:      char,
     pub can_see_stat:     char,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="community_privates"]
 pub struct NewCommunityPrivate {
     pub community_id:     i32,
@@ -284,7 +284,7 @@ pub struct CommunityNotifications {
     pub connection_confirmed: bool,
     pub community_invite:     bool,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="community_notifications"]
 pub struct NewCommunityNotifications {
     pub community_id:         i32,
@@ -311,7 +311,7 @@ pub struct CommunityPostNotifications {
     pub comment_reply_liked:    bool,
     pub comment_reply_disliked: bool,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="community_post_notifications"]
 pub struct NewCommunityPostNotifications {
     pub community_id:           i32,
@@ -346,7 +346,7 @@ pub struct CommunityPhotoNotifications {
     pub comment_reply_liked:    bool,
     pub comment_reply_disliked: bool,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="community_photo_notifications"]
 pub struct NewCommunityPhotoNotifications {
     pub community_id:           i32,
@@ -381,7 +381,7 @@ pub struct CommunityVideoNotifications {
     pub comment_reply_liked:    bool,
     pub comment_reply_disliked: bool,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="community_video_notifications"]
 pub struct NewCommunityVideoNotifications {
     pub community_id:           i32,
@@ -416,7 +416,7 @@ pub struct CommunityGoodNotifications {
     pub comment_reply_liked:    bool,
     pub comment_reply_disliked: bool,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="community_good_notifications"]
 pub struct NewCommunityGoodNotifications {
     pub community_id:           i32,
@@ -441,7 +441,7 @@ pub struct CommunityMusicNotifications {
     pub community_id:           i32,
     pub repost:                 bool,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="community_music_notifications"]
 pub struct NewCommunityMusicNotifications {
     pub community_id:           i32,
@@ -457,7 +457,7 @@ pub struct CommunityPhotoListPosition {
     pub position: i16,
     pub types:    char, // 1 - open, 2 - close
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="community_photo_list_positions"]
 pub struct NewCommunityPhotoListPosition {
     pub community_id:  i32,
@@ -475,7 +475,7 @@ pub struct CommunityPostListPosition {
     pub position: i16,
     pub types:    char, // 1 - open, 2 - close
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="community_post_list_positions"]
 pub struct NewCommunityPostListPosition {
     pub community_id:  i32,
@@ -493,7 +493,7 @@ pub struct CommunityMusicListPosition {
     pub position: i16,
     pub types:    char, // 1 - open, 2 - close
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="community_music_list_positions"]
 pub struct NewCommunityMusicListPosition {
     pub community_id:  i32,
@@ -511,7 +511,7 @@ pub struct CommunityGoodListPosition {
     pub position: i16,
     pub types:    char, // 1 - open, 2 - close
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="community_good_list_positions"]
 pub struct NewCommunityGoodListPosition {
     pub community_id:  i32,
@@ -529,7 +529,7 @@ pub struct CommunityVideoListPosition {
     pub position: i16,
     pub types:    char, // 1 - open, 2 - close
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="community_video_list_positions"]
 pub struct NewCommunityVideoListPosition {
     pub community_id:  i32,
@@ -547,7 +547,7 @@ pub struct CommunitySurveyListPosition {
     pub position: i16,
     pub types:    char, // 1 - open, 2 - close
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="community_survey_list_positions"]
 pub struct NewCommunitySurveyListPosition {
     pub community_id:  i32,
@@ -565,7 +565,7 @@ pub struct CommunityDocListPosition {
     pub position: i16,
     pub types:    char, // 1 - open, 2 - close
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="community_doc_list_positions"]
 pub struct NewCommunityDocListPosition {
     pub community_id:  i32,

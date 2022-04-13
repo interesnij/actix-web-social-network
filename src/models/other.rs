@@ -19,7 +19,7 @@ pub struct PhoneCode {
     pub phone:  String,
     pub code:   i32,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="phone_codes"]
 pub struct NewPhoneCode {
     pub phone:  String,
@@ -32,7 +32,7 @@ pub struct CustomLink {
     pub id:   i32,
     pub link: String,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="custom_links"]
 pub struct NewCustomLink {
     pub link: String,
@@ -47,7 +47,7 @@ pub struct StickerCategorie {
     pub creator_id:  Option<i32>,
     pub description: Option<String>,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="sticker_categories"]
 pub struct NewStickerCategorie {
     pub name:        String,
@@ -66,7 +66,7 @@ pub struct Sticker {
     pub sticker_categorie_id: i32,
     pub image:                 String,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="stickers"]
 pub struct NewSticker {
     pub name:        String,
@@ -83,7 +83,7 @@ pub struct SmileCategorie {
     pub position:    i16,
     pub description: Option<String>,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="smile_categories"]
 pub struct NewSmileCategorie {
     pub name:        String,
@@ -101,7 +101,7 @@ pub struct Smile {
     pub smile_categorie_id: i32,
     pub image:            String,
 }
-#[derive(Debug, Deserialize, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="smiles"]
 pub struct NewSmile {
     pub name:        String,
