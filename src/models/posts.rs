@@ -22,14 +22,14 @@ use crate::models::{
 pub struct PostCategorie {
     pub id:       i32,
     pub name:     String,
-    pub avatar:   Option<String>,
+    //pub avatar:   Option<String>,
     pub position: i16,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="post_categories"]
 pub struct NewPostCategorie {
     pub name:     String,
-    pub avatar:   Option<String>,
+    //pub avatar:   Option<String>,
     pub position: i16,
 }
 
@@ -143,7 +143,7 @@ pub struct Post {
     pub community_id:    Option<i32>,
     pub post_categorie_id:     Option<i32>,
     pub user_id:      i32,
-    pub list_id:         i32,
+    pub post_list_id:         i32,
     pub types:           char,
     pub attach:          Option<String>,
     pub comment_enabled: bool,
@@ -164,7 +164,7 @@ pub struct NewPost {
     pub community_id:    Option<i32>,
     pub post_categorie_id:     Option<i32>,
     pub user_id:      i32,
-    pub list_id:         i32,
+    pub post_list_id:         i32,
     pub types:           String,
     pub attach:          Option<String>,
     pub comment_enabled: bool,

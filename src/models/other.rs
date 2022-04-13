@@ -44,7 +44,7 @@ pub struct StickerCategorie {
     pub id:          i32,
     pub name:        String,
     pub position:    i16,
-    pub user_id:  Option<i32>,
+    pub user_id:     Option<i32>,
     pub description: Option<String>,
 }
 #[derive(Deserialize, Insertable)]

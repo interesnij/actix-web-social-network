@@ -1,7 +1,8 @@
 CREATE TABLE post_categories (
     id    SERIAL PRIMARY KEY,
     name  VARCHAR(100),
-    position INT NOT NULL DEFAULT 0
+    --avatar VARCHAR(500),
+    position SMALLINT NOT NULL DEFAULT 0
 );
 
 CREATE TABLE post_lists (
