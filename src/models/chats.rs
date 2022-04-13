@@ -245,17 +245,15 @@ pub struct NewMessageVersion {
 }
 
 /////// MessageTransfers //////
-#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
-#[belongs_to(Message, foreign_key="message_transfers_message")]
-#[belongs_to(Message, foreign_key="message_transfers_transfer")]
+#[derive(Debug, Queryable, Serialize, Identifiable)]
 pub struct MessageTransfer {
-    pub id:         i32,
-    pub message_transfers_message:    i32,
-    pub message_transfers_transfer:   i32,
+    pub id:          i32,
+    pub message_id:  i32,
+    pub transfer_id: i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="message_transfers"]
 pub struct NewMessageTransfer {
-    pub message_transfers_message:    i32,
-    pub message_transfers_transfer:   i32,
+    pub message_id:  i32,
+    pub transfer_id: i32,
 }
