@@ -256,6 +256,6 @@ pub struct MessageTransfer {
 #[derive(Deserialize, Insertable)]
 #[table_name="message_transfers"]
 pub struct NewMessageTransfer {
-    pub message_id:    i32,
-    pub transfer_id:   i32,
+    pub message_transfers_message:    i32,
+    pub message_transfers_transfer:   i32,
 }
