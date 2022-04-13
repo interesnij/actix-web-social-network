@@ -23,7 +23,7 @@ use crate::schema::{
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
 use crate::utils::establish_connection;
-use crate::User;
+use crate::models::User;
 
 /////// CommunityCategories //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
