@@ -131,7 +131,7 @@ pub struct Survey {
     pub repost:          i32,
     pub copy:            i32,
     pub position:        i16,
-    pub vote:            i16,
+    pub vote:            i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="surveys"]
@@ -140,7 +140,7 @@ pub struct NewSurvey {
     pub community_id:    Option<i32>,
     pub user_id:      i32,
     pub survey_list_id:         i32,
-    pub types:           char,
+    pub types:           String,
     pub image:           Option<String>,
     pub is_anonymous:    bool,
     pub is_multiple:     bool,
@@ -152,7 +152,7 @@ pub struct NewSurvey {
     pub repost:          i32,
     pub copy:            i32,
     pub position:        i16,
-    pub vote:            i16,
+    pub vote:            i32,
 }
 
 

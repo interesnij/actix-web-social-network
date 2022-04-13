@@ -48,7 +48,7 @@ CREATE TABLE chat_users (
 
 CREATE TABLE chat_ie_settings (
     id                SERIAL PRIMARY KEY,     -- id объекта
-    chat_users_id     INT NOT NULL,           -- id пользователя
+    chat_user_id     INT NOT NULL,           -- id пользователя
 
     can_add_in_chat   "char",                 -- кто добавляет участников
     can_add_fix       "char",                 -- кто закрепляет сообщения
