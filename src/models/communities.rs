@@ -151,48 +151,48 @@ pub struct NewCommunitiesMembership {
     // 'a' Активно
     // 'b' Не активно
 
-#[derive(Debug, Serialize, Identifiable, Associations)]
+//#[derive(Debug, Serialize, Identifiable, Associations)]
 //#[belongs_to(CommunitiesMembership, foreign_key="community_member")]
-#[table_name="community_ie_settings"]
-pub struct CommunityIeSetting {
-    pub id:                      i32,
-    pub community_member:        i32,
+//#[table_name="community_ie_settings"]
+//pub struct CommunityIeSetting {
+//    pub id:                      i32,
+//    pub community_member:        i32,
 
-    pub can_see_info:            Option<char>,
-    pub can_see_member:          Option<char>,
-    pub can_send_message:        Option<char>,
-    pub can_see_doc:             Option<char>,
-    pub can_see_music:           Option<char>,
-    pub can_see_survey:          Option<char>,
-    pub can_see_post:            Option<char>,
-    pub can_see_post_comment:    Option<char>,
-    pub can_see_photo:           Option<char>,
-    pub can_see_photo_comment:   Option<char>,
-    pub can_see_good:            Option<char>,
-    pub can_see_good_comment:    Option<char>,
-    pub can_see_video:           Option<char>,
-    pub can_see_video_comment:   Option<char>,
-    pub can_see_planner:         Option<char>,
-    pub can_see_planner_comment: Option<char>,
+//    pub can_see_info:            Option<char>,
+//    pub can_see_member:          Option<char>,
+//    pub can_send_message:        Option<char>,
+//    pub can_see_doc:             Option<char>,
+//    pub can_see_music:           Option<char>,
+//    pub can_see_survey:          Option<char>,
+//    pub can_see_post:            Option<char>,
+//    pub can_see_post_comment:    Option<char>,
+//    pub can_see_photo:           Option<char>,
+//    pub can_see_photo_comment:   Option<char>,
+//    pub can_see_good:            Option<char>,
+//    pub can_see_good_comment:    Option<char>,
+//    pub can_see_video:           Option<char>,
+//    pub can_see_video_comment:   Option<char>,
+//    pub can_see_planner:         Option<char>,
+//    pub can_see_planner_comment: Option<char>,
 
-    pub can_add_post:            Option<char>,
-    pub can_add_photo:           Option<char>,
-    pub can_add_good:            Option<char>,
-    pub can_add_video:           Option<char>,
-    pub can_add_planner:         Option<char>,
-    pub can_add_doc:             Option<char>,
-    pub can_add_music:           Option<char>,
-    pub can_add_survey:          Option<char>,
+//    pub can_add_post:            Option<char>,
+//    pub can_add_photo:           Option<char>,
+//    pub can_add_good:            Option<char>,
+//    pub can_add_video:           Option<char>,
+//   pub can_add_planner:         Option<char>,
+//    pub can_add_doc:             Option<char>,
+//    pub can_add_music:           Option<char>,
+//    pub can_add_survey:          Option<char>,
 
-    pub can_create_post:         Option<char>,
-    pub can_create_photo:        Option<char>,
-    pub can_create_good:         Option<char>,
-    pub can_create_video:        Option<char>,
-    pub can_create_planner:      Option<char>,
-    pub can_create_doc:          Option<char>,
-    pub can_create_music:        Option<char>,
-    pub can_create_survey:       Option<char>,
-}
+//   pub can_create_post:         Option<char>,
+//    pub can_create_photo:        Option<char>,
+//    pub can_create_good:         Option<char>,
+//    pub can_create_video:        Option<char>,
+//    pub can_create_planner:      Option<char>,
+//    pub can_create_doc:          Option<char>,
+//    pub can_create_music:        Option<char>,
+//    pub can_create_survey:       Option<char>,
+//}
 
 /////// CommunityInfo //////
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
