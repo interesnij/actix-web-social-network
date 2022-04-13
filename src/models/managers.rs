@@ -107,7 +107,7 @@ pub struct NewModerated {
     // 'y' Отвергнутый
     // 'k' Отвергнутый
 
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(Moderated)]
 pub struct ModerationReport {
@@ -135,7 +135,7 @@ pub struct NewModerationReport {
     // 'b' Закрыто
     // 'c' Вывешен баннер
 
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(Moderated)]
 pub struct ModerationPenaltie {
@@ -164,7 +164,7 @@ pub struct NewModerationPenaltie {
 // 'a' Приостановлено
 // 'b' Закрыто
 // 'c' Вывешен баннер
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 pub struct ModeratedLog {
     pub id:              i32,
@@ -192,7 +192,7 @@ pub struct NewModeratedLog {
 // 'a' Создан
 // 'b' Удален
 // 'c' Вывешен баннер
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 pub struct StaffLog {
     pub id:              i32,

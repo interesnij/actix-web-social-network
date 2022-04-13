@@ -59,7 +59,7 @@ use crate::models::{
     // 'j' Некоторые подписчики
 
 /////// DocList //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 #[belongs_to(User)]
 pub struct DocList {
@@ -110,7 +110,7 @@ pub struct NewDocList {
 // 'i' Удаленый предложенный в сообщество
 // 'y' Удаленый предложенный у пользователя
 
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 #[belongs_to(User)]
 #[belongs_to(DocList)]
@@ -150,7 +150,7 @@ pub struct NewDoc {
 
 
 /////// UserDocListCollection //////
-#[derive(Debug ,Queryable, Serialize, Identifiable)]
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(DocList)]
 pub struct UserDocListCollection {
@@ -166,7 +166,7 @@ pub struct NewUserDocListCollection {
 }
 
 /////// CommunityDocListCollection //////
-#[derive(Debug ,Queryable, Serialize, Identifiable)]
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 #[belongs_to(DocList)]
 pub struct CommunityDocListCollection {
@@ -186,7 +186,7 @@ pub struct NewCommunityDocListCollection {
     // 'b' Не активно
     // 'c' Нет значения
 
-#[derive(Debug ,Queryable, Serialize, Identifiable)]
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(DocList)]
 pub struct DocListPerm {

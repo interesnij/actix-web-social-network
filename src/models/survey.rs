@@ -58,7 +58,7 @@ use crate::models::{
     // 'j' Некоторые подписчики
 
 /////// SurveyList //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 #[belongs_to(User)]
 pub struct SurveyList {
@@ -109,7 +109,7 @@ pub struct NewSurveyList {
 // 'i' Удаленый предложенный в сообщество
 // 'y' Удаленый предложенный у пользователя
 
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 #[belongs_to(User)]
 #[belongs_to(SurveyList)]
@@ -157,7 +157,7 @@ pub struct NewSurvey {
 
 
 /////// UserSurveyListCollection //////
-#[derive(Debug ,Queryable, Serialize, Identifiable)]
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(SurveyList)]
 pub struct UserSurveyListCollection {
@@ -173,7 +173,7 @@ pub struct NewUserSurveyListCollection {
 }
 
 /////// CommunitySurveyListCollection //////
-#[derive(Debug ,Queryable, Serialize, Identifiable)]
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 #[belongs_to(SurveyList)]
 pub struct CommunitySurveyListCollection {
@@ -193,7 +193,7 @@ pub struct NewCommunitySurveyListCollection {
     // 'b' Не активно
     // 'c' Нет значения
 
-#[derive(Debug ,Queryable, Serialize, Identifiable)]
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(SurveyList)]
 pub struct SurveyListPerm {

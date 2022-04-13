@@ -60,7 +60,7 @@ use crate::models::{
     // 'j' Некоторые подписчики
 
 /////// PhotoList //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 #[belongs_to(User)]
 pub struct PhotoList {
@@ -115,7 +115,7 @@ pub struct NewPhotoList {
 // 'i' Удаленый предложенный в сообщество
 // 'y' Удаленый предложенный у пользователя
 
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 #[belongs_to(User)]
 #[belongs_to(PhotoList)]
@@ -172,7 +172,7 @@ pub struct NewPhoto {
     // 'e' Закрытый модератором
     // 'f' Закрытый Удаленый
 
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Photo)]
 #[belongs_to(User)]
 #[belongs_to(Stickers)]
@@ -207,7 +207,7 @@ pub struct NewPhotoComment {
 }
 
 /////// UserPhotoListCollection //////
-#[derive(Debug ,Queryable, Serialize, Identifiable)]
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(PhotoList)]
 pub struct UserPhotoListCollection {
@@ -223,7 +223,7 @@ pub struct NewUserPhotoListCollection {
 }
 
 /////// CommunityPhotoListCollection //////
-#[derive(Debug ,Queryable, Serialize, Identifiable)]
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 #[belongs_to(PhotoList)]
 pub struct CommunityPhotoListCollection {
@@ -243,7 +243,7 @@ pub struct NewCommunityPhotoListCollection {
     // 'b' Не активно
     // 'c' Нет значения
 
-#[derive(Debug ,Queryable, Serialize, Identifiable)]
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(PhotoList)]
 pub struct PhotoListPerm {

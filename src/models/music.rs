@@ -73,7 +73,7 @@ pub struct NewArtist {
 }
 
 /////// MusicAlbum //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Artist)]
 #[belongs_to(User)]
 pub struct MusicAlbum {
@@ -144,7 +144,7 @@ pub struct NewMusicAlbum {
     // 'y' замороженный Фото со страницы
     // 'z' замороженный Фото со стены
     // замороженный '1', '2' ....
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 #[belongs_to(User)]
 pub struct MusicList {
@@ -201,7 +201,7 @@ pub struct NewMusicList {
 // 'i' Удаленый предложенный в сообщество
 // 'y' Удаленый предложенный у пользователя
 
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 #[belongs_to(User)]
 #[belongs_to(MusicList)]
@@ -245,7 +245,7 @@ pub struct NewMusic {
 
 
 /////// UserMusicListCollection //////
-#[derive(Debug ,Queryable, Serialize, Identifiable)]
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(MusicList)]
 pub struct UserMusicListCollection {
@@ -261,7 +261,7 @@ pub struct NewUserMusicListCollection {
 }
 
 /////// CommunityMusicListCollection //////
-#[derive(Debug ,Queryable, Serialize, Identifiable)]
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 #[belongs_to(MusicList)]
 pub struct CommunityMusicListCollection {
@@ -281,7 +281,7 @@ pub struct NewCommunityMusicListCollection {
     // 'b' Не активно
     // 'c' Нет значения
 
-#[derive(Debug ,Queryable, Serialize, Identifiable)]
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(MusicList)]
 pub struct MusicListPerm {

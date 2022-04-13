@@ -13,7 +13,7 @@ use crate::models::{
 
 
 /////// Follow //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User), foreign_key="follows_user")]
 #[belongs_to(User), foreign_key="followers_user")]
 pub struct Follow {
@@ -33,7 +33,7 @@ pub struct NewFollow {
 }
 
 /////// CommunityFollow //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User), foreign_key="community_follows_user")]
 #[belongs_to(Community), foreign_key="community_follows_community")]
 pub struct CommunityFollow {
@@ -53,7 +53,7 @@ pub struct NewCommunityFollow {
 }
 
 /////// FollowPrivate //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Follow)]
 #[table_name="follow_ie_settings"]
 pub struct FollowIeSetting {

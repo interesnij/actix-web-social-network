@@ -86,7 +86,7 @@ pub struct NewCommunitySubCategory{
 }
 
 /////// Community //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(CommunitySubCategorys)]
 #[belongs_to(User)]
 pub struct Community {
@@ -118,7 +118,7 @@ pub struct NewCommunity {
 }
 
 /////// CommunityMembership //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(Community)]
 pub struct CommunityMembership {
@@ -152,7 +152,7 @@ pub struct NewCommunityMembership {
     // 'a' Активно
     // 'b' Не активно
 
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(CommunityMembership)]
 #[table_name="community_ie_settings"]
 pub struct CommunityIeSetting {
@@ -196,7 +196,7 @@ pub struct CommunityIeSetting {
 }
 
 /////// CommunityInfo //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 pub struct CommunityInfo {
     pub id:           i32,
@@ -234,7 +234,7 @@ pub struct NewCommunityInfo {
     // 'e' Некоторые подписчики
     // 'f' Персонал
 
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 pub struct CommunityPrivate {
     pub id:               i32,
@@ -275,7 +275,7 @@ pub struct NewCommunityPrivate {
 }
 
 /////// CommunityNotifications //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 pub struct CommunityNotifications {
     pub id:                   i32,
@@ -294,7 +294,7 @@ pub struct NewCommunityNotifications {
 }
 
 /////// CommunityNotificationsPost //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 pub struct CommunityPostNotifications {
     pub id:                     i32,
@@ -329,7 +329,7 @@ pub struct NewCommunityPostNotifications {
 }
 
 /////// CommunityNotificationsPhoto //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 pub struct CommunityPhotoNotifications {
     pub id:                     i32,
@@ -364,7 +364,7 @@ pub struct NewCommunityPhotoNotifications {
 }
 
 /////// CommunityNotificationsVideo //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 pub struct CommunityVideoNotifications {
     pub id:                     i32,
@@ -399,7 +399,7 @@ pub struct NewCommunityVideoNotifications {
 }
 
 /////// CommunityNotificationsGood //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 pub struct CommunityGoodNotifications {
     pub id:                     i32,
@@ -434,7 +434,7 @@ pub struct NewCommunityGoodNotifications {
 }
 
 /////// CommunityNotificationsMusic //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 pub struct CommunityMusicNotifications {
     pub id:                     i32,

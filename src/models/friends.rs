@@ -9,7 +9,7 @@ use crate::models::User;
 
 
 /////// Friend //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User), foreign_key="friend_user")]
 #[belongs_to(User), foreign_key="friend_target_user")]
 pub struct Friend {
@@ -28,7 +28,7 @@ pub struct NewFriend {
 
 
 /////// FollowPrivate //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Friend)]
 #[table_name="connect_ie_settings"]
 pub struct ConnectIeSetting {

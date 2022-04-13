@@ -60,7 +60,7 @@ use crate::models::{
     // 'j' Некоторые подписчики
 
 /////// GoodList //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 #[belongs_to(User)]
 pub struct GoodList {
@@ -115,7 +115,7 @@ pub struct NewGoodList {
 // 'i' Удаленый предложенный в сообщество
 // 'y' Удаленый предложенный у пользователя
 
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 #[belongs_to(User)]
 #[belongs_to(GoodList)]
@@ -174,7 +174,7 @@ pub struct NewGood {
     // 'e' Закрытый модератором
     // 'f' Закрытый Удаленый
 
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Good)]
 #[belongs_to(User)]
 #[belongs_to(Stickers)]
@@ -209,7 +209,7 @@ pub struct NewGoodComment {
 }
 
 /////// UserGoodListCollection //////
-#[derive(Debug ,Queryable, Serialize, Identifiable)]
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(GoodList)]
 pub struct UserGoodListCollection {
@@ -225,7 +225,7 @@ pub struct NewUserGoodListCollection {
 }
 
 /////// CommunityGoodListCollection //////
-#[derive(Debug ,Queryable, Serialize, Identifiable)]
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 #[belongs_to(GoodList)]
 pub struct CommunityGoodListCollection {
@@ -245,7 +245,7 @@ pub struct NewCommunityGoodListCollection {
     // 'b' Не активно
     // 'c' Нет значения
 
-#[derive(Debug ,Queryable, Serialize, Identifiable)]
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(GoodList)]
 pub struct GoodListPerm {

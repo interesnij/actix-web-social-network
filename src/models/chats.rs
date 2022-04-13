@@ -50,9 +50,9 @@ use crate::models::{
     // 'd' Участники кроме
     // 'e' Некоторые участники
 
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
-#[belongs_to(Community)] 
+#[belongs_to(Community)]
 pub struct Chat {
     pub id:                 i32,
     pub name:               String,
@@ -99,7 +99,7 @@ pub struct NewChat {
     // 'b' Вышедший
     // 'c' Удаленный админом
 
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(Chat)]
 pub struct ChatUser {
@@ -122,7 +122,7 @@ pub struct NewChatUser {
 }
 
 /////// ChatPerm //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(ChatUsers)]
 pub struct ChatIeSetting {
     pub id:               i32,
@@ -166,7 +166,7 @@ pub struct NewChatIeSetting {
     // 32 Закрыто редактированное закрепленное
 
 
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Chat)]
 #[belongs_to(User)]
 #[belongs_to(Post)]
@@ -201,7 +201,7 @@ pub struct NewMessage {
 }
 
 /////// MessageOptions //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Message)]
 pub struct MessageOption {
     pub id:            i32,
@@ -220,7 +220,7 @@ pub struct NewMessageOption {
 }
 
 /////// MessageVersion //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Message)]
 pub struct MessageVersion {
     pub id:            i32,
@@ -245,7 +245,7 @@ pub struct NewMessageVersion {
 }
 
 /////// MessageTransfers //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Message, foreign_key="message_transfers_message")]
 #[belongs_to(Message, foreign_key="message_transfers_transfer")]
 pub struct MessageTransfer {

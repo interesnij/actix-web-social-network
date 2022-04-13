@@ -60,7 +60,7 @@ use crate::models::{
     // 'j' Некоторые подписчики
 
 /////// VideoList //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 #[belongs_to(User)]
 pub struct VideoList {
@@ -115,7 +115,7 @@ pub struct NewVideoList {
 // 'i' Удаленый предложенный в сообщество
 // 'y' Удаленый предложенный у пользователя
 
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 #[belongs_to(User)]
 #[belongs_to(VideoList)]
@@ -172,7 +172,7 @@ pub struct NewVideo {
     // 'e' Закрытый модератором
     // 'f' Закрытый Удаленый
 
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Video)]
 #[belongs_to(User)]
 #[belongs_to(Stickers)]
@@ -207,7 +207,7 @@ pub struct NewVideoComment {
 }
 
 /////// UserVideoListCollection //////
-#[derive(Debug ,Queryable, Serialize, Identifiable)]
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(VideoList)]
 pub struct UserVideoListCollection {
@@ -223,7 +223,7 @@ pub struct NewUserVideoListCollection {
 }
 
 /////// CommunityVideoListCollection //////
-#[derive(Debug ,Queryable, Serialize, Identifiable)]
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 #[belongs_to(VideoList)]
 pub struct CommunityVideoListCollection {
@@ -243,7 +243,7 @@ pub struct NewCommunityVideoListCollection {
     // 'b' Не активно
     // 'c' Нет значения
 
-#[derive(Debug ,Queryable, Serialize, Identifiable)]
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(VideoList)]
 pub struct VideoListPerm {

@@ -47,7 +47,7 @@ use crate::models::{
 };
 
 
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 pub struct UserProfile {
     pub id:             i32,
@@ -81,7 +81,7 @@ pub struct NewUserProfile {
 }
 
 /////// UserLocation //////
-#[derive(Queryable, Serialize, Deserialize, Identifiable)]
+#[derive(Queryable, Serialize, Deserialize, Identifiable, Associations)]
 #[belongs_to(User)]
 pub struct UserLocation {
     pub id:         i32,
@@ -107,7 +107,7 @@ pub struct NewUserLocation {
 }
 
 /////// UserLocation //////
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 pub struct IpUser {
     pub id:       i32,
@@ -122,7 +122,7 @@ pub struct NewIpUser {
 }
 
 /////// UserAnketa //////
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 pub struct UserAnketa {
     pub id:                    i32,
@@ -149,7 +149,7 @@ pub struct NewUserAnketa {
     // 'e' "Соцсеть плохо защищает детей",
     // 'f' "Другая причина",
 
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 pub struct UserDeleteAnketa {
     pub id:      i32,
@@ -189,7 +189,7 @@ pub struct NewUserDeleteAnketa {
 // 'h' "Всё сложно",
 // 'i' "В активном поиске",
 
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 pub struct UserLoveStatus {
     pub id:             i32,
@@ -206,7 +206,7 @@ pub struct NewUserLoveStatus {
 }
 
 /////// UserPartnerOne //////
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User, foreign_key="user_partner_one")]
 #[belongs_to(User, foreign_key="partner_by_user")]
 pub struct UserPartnerOne {
@@ -222,7 +222,7 @@ pub struct NewUserPartnerOne {
 }
 
 /////// UserMomOne //////
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User, foreign_key="user_mom")]
 #[belongs_to(User, foreign_key="mom_by_users")]
 pub struct UserMomOne {
@@ -238,7 +238,7 @@ pub struct NewUserMomOne {
 }
 
 /////// UserDadOne //////
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User, foreign_key="user_dad")]
 #[belongs_to(User, foreign_key="dad_by_users")]
 pub struct UserDadOne {
@@ -254,7 +254,7 @@ pub struct NewUserDadOne {
 }
 
 /////// UserBrothersSisters //////
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User, foreign_key="user_bro_sist")]
 #[belongs_to(User, foreign_key="brother_sister_by_users")]
 pub struct UserBrotherSister {
@@ -270,7 +270,7 @@ pub struct NewUserBrotherSister {
 }
 
 /////// UserChildren //////
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User, foreign_key="user_children")]
 #[belongs_to(User, foreign_key="children_by_users")]
 pub struct UserChildrenOne {
@@ -286,7 +286,7 @@ pub struct NewUserChildrenOne {
 }
 
 /////// UserGrandsons //////
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User, foreign_key="grandsons_by_users")]
 pub struct UserGrandsonsOne {
     pub id:          i32,
@@ -301,7 +301,7 @@ pub struct NewUserGrandsonsOne {
 }
 
 /////// UserColleagues //////
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User, foreign_key="user_colleagues")]
 #[belongs_to(User, foreign_key="colleagues_by_users")]
 pub struct UserColleagueOne {
@@ -317,7 +317,7 @@ pub struct NewUserColleagueOne {
 }
 
 /////// UserBlocks //////
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User, foreign_key="user_blocks")]
 #[belongs_to(User, foreign_key="blocked_by_users")]
 pub struct UserBlock {
@@ -353,7 +353,7 @@ pub struct NewListUserCommunitiesKey {
 }
 
 /////// FeaturedUC //////
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(ListUserCommunitiesKey)]
 pub struct FeaturedUserCommunitie {
     pub id:           i32,
@@ -376,7 +376,7 @@ pub struct NewFeaturedUserCommunitie {
 }
 
 /////// NewsUC //////
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(ListUserCommunitiesKey)]
 pub struct NewsUserCommunitie {
     pub id:           i32,
@@ -399,7 +399,7 @@ pub struct NewNewsListUserCommunitie {
 }
 
 /////// NotifyUC //////
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(ListUserCommunitiesKey)]
 pub struct NotifyUserCommunitie {
     pub id:           i32,
@@ -557,7 +557,7 @@ pub struct NewUserDocListPosition {
     // 'e' Друзья, кроме
     // 'f' Некоторые друзья
 
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 pub struct UserPrivate {
     pub id:                 i32,
@@ -596,7 +596,7 @@ pub struct NewUserPrivate {
 }
 
 /////// UserPopulateSmiles //////
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(Smiles)]
 pub struct UserPopulateSmile {
@@ -614,7 +614,7 @@ pub struct NewUserPopulateSmile {
 }
 
 /////// UserPopulateStickers //////
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(Stickers)]
 pub struct UserPopulateSticker {
@@ -633,7 +633,7 @@ pub struct NewUserPopulateSticker {
 
 
 /////// UserNotifications //////
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 pub struct UserNotification {
     pub id:                   i32,
@@ -652,7 +652,7 @@ pub struct NewUserNotification {
 }
 
 /////// UserNotificationsPost //////
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 pub struct UserPostNotification {
     pub id:                     i32,
@@ -687,7 +687,7 @@ pub struct NewUserPostNotification {
 }
 
 /////// UserSurveyNotification //////
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 pub struct UserSurveyNotification {
     pub id:                  i32,
@@ -702,7 +702,7 @@ pub struct NewUserSurveyNotification {
 }
 
 /////// UserNotificationsPhoto //////
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 pub struct UserPhotoNotification {
     pub id:                     i32,
@@ -737,7 +737,7 @@ pub struct NewUserPhotoNotification {
 }
 
 /////// UserNotificationsVideo //////
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 pub struct UserVideoNotification {
     pub id:                     i32,
@@ -772,7 +772,7 @@ pub struct NewUserVideoNotification {
 }
 
 /////// UserNotificationsGood //////
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 pub struct UserGoodNotification {
     pub id:                     i32,
@@ -807,7 +807,7 @@ pub struct NewUserGoodNotification {
 }
 
 /////// UserNotificationsMusic //////
-#[derive(Queryable, Serialize, Identifiable)]
+#[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 pub struct UserMusicNotification {
     pub id:       i32,

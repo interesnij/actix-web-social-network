@@ -76,7 +76,7 @@ pub struct NewPostCategorie {
         // 'j' Некоторые подписчики
 
 /////// PostList //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 #[belongs_to(User)]
 pub struct PostList {
@@ -132,7 +132,7 @@ pub struct NewPostList {
     // 'y' Удаленый предложенный у пользователя
 
 
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 #[belongs_to(PostCategorie)]
 #[belongs_to(User)]
@@ -188,7 +188,7 @@ pub struct NewPost {
 // 'e' Закрытый модератором
 // 'f' Закрытый Удаленый
 
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Post)]
 #[belongs_to(User)]
 #[belongs_to(Stickers)]
@@ -223,7 +223,7 @@ pub struct NewPostComment {
 }
 
 /////// UserPostListCollection //////
-#[derive(Debug ,Queryable, Serialize, Identifiable)]
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(PostList)]
 pub struct UserPostListCollection {
@@ -239,7 +239,7 @@ pub struct NewUserPostListCollection {
 }
 
 /////// CommunityPostListCollection //////
-#[derive(Debug ,Queryable, Serialize, Identifiable)]
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 #[belongs_to(PostList)]
 pub struct CommunityPostListCollection {
@@ -258,7 +258,7 @@ pub struct NewCommunityPostListCollection {
 // 'a' Активно
 // 'b' Не активно
 // 'c' Нет значения
-#[derive(Debug ,Queryable, Serialize, Identifiable)]
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(PostList)]
 pub struct PostListPerm {
