@@ -110,7 +110,7 @@ pub struct NewModerated {
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(Moderated)]
-pub struct ModerationReport {
+pub struct ModeratedReport {
     pub id:               i32,
     pub user_id:         i32,
     pub moderated_object_id: i32,
@@ -120,7 +120,7 @@ pub struct ModerationReport {
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="moderated_reports"]
-pub struct NewModerationReport {
+pub struct NewModeratedReport {
     pub user_id:         i32,
     pub moderated_object_id: i32,
     pub description:      Option<String>,
@@ -138,7 +138,7 @@ pub struct NewModerationReport {
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(Moderated)]
-pub struct ModerationPenaltie {
+pub struct ModeratedPenaltie {
     pub id:                  i32,
     pub manager_id:          i32,
     pub moderated_object_id: i32,
@@ -150,7 +150,7 @@ pub struct ModerationPenaltie {
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="moderated_penalties"]
-pub struct NewModerationPenaltie {
+pub struct NewModeratedPenaltie {
     pub manager_id:          i32,
     pub moderated_object_id: i32,
     pub expiration:          Option<chrono::NaiveDateTime>,
