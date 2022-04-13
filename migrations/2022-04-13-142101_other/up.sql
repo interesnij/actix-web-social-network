@@ -13,7 +13,7 @@ CREATE TABLE sticker_categories (
     id          SERIAL PRIMARY KEY,
     name        VARCHAR(100),
     position    SMALLINT NOT NULL DEFAULT 0,
-    creator_id  INT,
+    user_id     INT,
     description VARCHAR(200)
 );
 

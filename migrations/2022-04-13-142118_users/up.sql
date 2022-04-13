@@ -1,3 +1,5 @@
+-- Your SQL goes here
+
 -- пользователи -------
 
 CREATE TABLE users (
@@ -563,4 +565,3 @@ CREATE TABLE user_notifications (
          FOREIGN KEY(user_id)
              REFERENCES users(id)
 );
--- Your SQL goes here

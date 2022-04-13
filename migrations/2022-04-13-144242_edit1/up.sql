@@ -1,0 +1,7 @@
+-- Your SQL goes here
+
+ALTER TABLE docs
+ALTER COLUMN copy TYPE INT;
+
+ALTER TABLE docs
+ALTER COLUMN position TYPE SMALLINT;
