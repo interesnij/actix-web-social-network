@@ -8,7 +8,7 @@ mod user;
 //mod survey;
 //mod videos;
 //mod docs;
-//mod follows;
+mod follows;
 mod friends;
 
 pub use self::{
@@ -22,6 +22,6 @@ pub use self::{
     //survey::*,
     //videos::*,
     //docs::*,
-    //follows::*,
+    follows::*,
     friends::*,
 };
