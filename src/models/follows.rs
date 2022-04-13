@@ -55,8 +55,7 @@ pub struct NewCommunityFollow {
 #[belongs_to(Follow)]
 pub struct FollowIeSetting {
     pub id:                      i32,
-    pub follow_id:                 i32,
-
+    pub follow_id:                i32,
     pub can_see_info:            Option<char>,
     pub can_see_community:       Option<char>,
     pub can_see_friend:          Option<char>,
@@ -75,7 +74,6 @@ pub struct FollowIeSetting {
     pub can_see_video_comment:   Option<char>,
     pub can_see_planner:         Option<char>,
     pub can_see_planner_comment: Option<char>,
-
     pub can_copy_post:            Option<char>,
     pub can_copy_photo:           Option<char>,
     pub can_copy_good:            Option<char>,
@@ -84,7 +82,6 @@ pub struct FollowIeSetting {
     pub can_copy_doc:             Option<char>,
     pub can_copy_music:           Option<char>,
     pub can_copy_survey:          Option<char>,
-
     pub can_create_post:         Option<char>,
     pub can_create_photo:        Option<char>,
     pub can_create_good:         Option<char>,
@@ -98,7 +95,6 @@ pub struct FollowIeSetting {
 #[table_name="follow_ie_settings"]
 pub struct NewFollowIeSetting {
     pub follow_id:                 i32,
-
     pub can_see_info:            Option<String>,
     pub can_see_community:       Option<String>,
     pub can_see_friend:          Option<String>,
@@ -117,7 +113,6 @@ pub struct NewFollowIeSetting {
     pub can_see_video_comment:   Option<String>,
     pub can_see_planner:         Option<String>,
     pub can_see_planner_comment: Option<String>,
-
     pub can_copy_post:            Option<String>,
     pub can_copy_photo:           Option<String>,
     pub can_copy_good:            Option<String>,
@@ -126,7 +121,6 @@ pub struct NewFollowIeSetting {
     pub can_copy_doc:             Option<String>,
     pub can_copy_music:           Option<String>,
     pub can_copy_survey:          Option<String>,
-
     pub can_create_post:         Option<String>,
     pub can_create_photo:        Option<String>,
     pub can_create_good:         Option<String>,

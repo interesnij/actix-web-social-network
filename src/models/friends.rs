@@ -31,7 +31,6 @@ pub struct NewFriend {
 pub struct ConnectIeSetting {
     pub id:                      i32,
     pub friend_id:               i32,
-
     pub can_see_info:            Option<char>,
     pub can_see_community:       Option<char>,
     pub can_see_friend:          Option<char>,
@@ -50,7 +49,6 @@ pub struct ConnectIeSetting {
     pub can_see_video_comment:   Option<char>,
     pub can_see_planner:         Option<char>,
     pub can_see_planner_comment: Option<char>,
-
     pub can_copy_post:            Option<char>,
     pub can_copy_photo:           Option<char>,
     pub can_copy_good:            Option<char>,
@@ -59,7 +57,6 @@ pub struct ConnectIeSetting {
     pub can_copy_doc:             Option<char>,
     pub can_copy_music:           Option<char>,
     pub can_copy_survey:          Option<char>,
-
     pub can_create_post:         Option<char>,
     pub can_create_photo:        Option<char>,
     pub can_create_good:         Option<char>,
@@ -73,7 +70,6 @@ pub struct ConnectIeSetting {
 #[table_name="connect_ie_settings"]
 pub struct NewConnectIeSetting {
     pub friend_id:                 i32,
-
     pub can_see_info:            Option<String>,
     pub can_see_community:       Option<String>,
     pub can_see_friend:          Option<String>,
@@ -92,7 +88,6 @@ pub struct NewConnectIeSetting {
     pub can_see_video_comment:   Option<String>,
     pub can_see_planner:         Option<String>,
     pub can_see_planner_comment: Option<String>,
-
     pub can_copy_post:            Option<String>,
     pub can_copy_photo:           Option<String>,
     pub can_copy_good:            Option<String>,
@@ -101,7 +96,6 @@ pub struct NewConnectIeSetting {
     pub can_copy_doc:             Option<String>,
     pub can_copy_music:           Option<String>,
     pub can_copy_survey:          Option<String>,
-
     pub can_create_post:         Option<String>,
     pub can_create_photo:        Option<String>,
     pub can_create_good:         Option<String>,

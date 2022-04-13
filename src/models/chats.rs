@@ -126,7 +126,7 @@ pub struct NewChatUser {
 #[belongs_to(ChatUser)]
 pub struct ChatIeSetting {
     pub id:               i32,
-    pub chat_user_id:    i32,
+    pub chat_user_id:     i32,
     pub can_add_in_chat:  Option<char>,
     pub can_add_fix:      Option<char>,
     pub can_add_admin:    Option<char>,
