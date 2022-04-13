@@ -25,7 +25,7 @@ pub struct NewFriend {
 }
 
 
-/////// FollowPrivate //////
+/////// ConnectIeSetting //////
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Friend)]
 pub struct ConnectIeSetting {
@@ -69,7 +69,7 @@ pub struct ConnectIeSetting {
     pub can_create_music:        Option<char>,
     pub can_create_survey:       Option<char>,
 }
-#[derive(Deserialize, Insertable)]
+#[derive(Deserialize)]
 #[table_name="connect_ie_settings"]
 pub struct NewConnectIeSetting {
     pub friend_id:                 i32,
