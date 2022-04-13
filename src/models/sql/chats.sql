@@ -59,7 +59,7 @@ CREATE TABLE chat_ie_settings (
     can_see_log       "char",                 -- кто видит логи
 
     CONSTRAINT fk_chat_ie_settings            -- связь с пользователем
-        FOREIGN KEY(user_id)
+        FOREIGN KEY(chat_users_id)
             REFERENCES chat_users(id)
 );
 
@@ -139,10 +139,10 @@ CREATE TABLE message_transfers (
     message_transfers_transfer    INT NOT NULL,                  -- id пересылаемого сообщения
 
     CONSTRAINT fk_message_transfers_message    -- связь с сообщением
-        FOREIGN KEY(message_id)
+        FOREIGN KEY(message_transfers_message)
           REFERENCES messages(id),
 
     CONSTRAINT fk_message_transfers_transfer   -- связь с пересылаемым сообщением
-        FOREIGN KEY(transfer_id)
+        FOREIGN KEY(message_transfers_transfer)
             REFERENCES messages(id)
 );
