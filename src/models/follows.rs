@@ -16,7 +16,7 @@ use crate::models::{
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 pub struct Follow {
     pub id:             i32,
-    pub user:           i32,
+    pub user_id:           i32,
     pub followed_user:  i32,
     pub view:           bool,
     pub visited:        i32,
@@ -24,7 +24,7 @@ pub struct Follow {
 #[derive(Deserialize, Insertable)]
 #[table_name="follows"]
 pub struct NewFollow {
-    pub user:          i32,
+    pub user_id:          i32, 
     pub followed_user: i32,
     pub view:          bool,
     pub visited:       i32,

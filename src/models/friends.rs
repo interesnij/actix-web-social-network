@@ -12,14 +12,14 @@ use crate::models::User;
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 pub struct Friend {
     pub id:             i32,
-    pub user:           i32,
+    pub user_id:           i32,
     pub target_user:    i32,
     pub visited:        i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="friends"]
 pub struct NewFriend {
-    pub user:           i32,
+    pub user_id:           i32,
     pub target_user:    i32,
     pub visited:        i32,
 }
