@@ -102,7 +102,7 @@ pub struct NewChat {
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
 #[belongs_to(Chat)]
-pub struct ChatUsers {
+pub struct ChatUser {
     pub id:               i32,
     pub user_id:          i32,
     pub chat_id:          i32,
@@ -113,7 +113,7 @@ pub struct ChatUsers {
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="chat_users"]
-pub struct NewChatUsers {
+pub struct NewChatUser {
     pub user_id:          i32,
     pub chat_id:          i32,
     pub types:            String,
@@ -124,7 +124,7 @@ pub struct NewChatUsers {
 /////// ChatPerm //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(ChatUsers)]
-pub struct ChatPerm {
+pub struct ChatIeSetting {
     pub id:               i32,
     pub user_id:          i32,
     pub can_add_in_chat:  Option<char>,
@@ -136,7 +136,7 @@ pub struct ChatPerm {
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="chat_ie_settings"]
-pub struct NewChatPerm {
+pub struct NewChatIeSetting {
     pub user_id:          i32,
     pub can_add_in_chat:  Option<String>,
     pub can_add_fix:      Option<String>,
@@ -203,7 +203,7 @@ pub struct NewMessage {
 /////// MessageOptions //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Message)]
-pub struct MessageOptions {
+pub struct MessageOption {
     pub id:            i32,
     pub message_id:    i32,
     pub creator_id:    i32,
@@ -212,7 +212,7 @@ pub struct MessageOptions {
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="message_options"]
-pub struct NewMessageOptions {
+pub struct NewMessageOption {
     pub message_id:    i32,
     pub creator_id:    i32,
     pub is_deleted:    bool,
@@ -248,14 +248,14 @@ pub struct NewMessageVersion {
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Message, foreign_key="message_transfers_message")]
 #[belongs_to(Message, foreign_key="message_transfers_transfer")]
-pub struct MessageTransfers {
+pub struct MessageTransfer {
     pub id:            i32,
     pub message_id:    i32,
     pub transfer_id:   i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="message_transfers"]
-pub struct NewMessageTransfers {
+pub struct NewMessageTransfer {
     pub message_id:    i32,
     pub transfer_id:   i32,
 }

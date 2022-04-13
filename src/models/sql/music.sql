@@ -138,7 +138,7 @@ CREATE TABLE community_music_list_collections (
             REFERENCES music_lists(id)
 );
 
-CREATE TABLE music_list_perm (
+CREATE TABLE music_list_perms (
     id            SERIAL PRIMARY KEY,
     user_id       INT NOT NULL,
     list_id       INT NOT NULL,

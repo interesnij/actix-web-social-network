@@ -1,31 +1,31 @@
 use crate::schema::{
-    user_profile,
-    user_location,
-    ip_user,
-    user_anketa,
-    user_delete_anketa,
-    user_love_status,
-    user_partner_one,
-    user_mom_one,
-    user_dad_one,
-    user_brother_sister,
-    user_children_one,
-    user_grandsons_one,
-    user_colleagues_one,
+    user_profiles,
+    user_locations,
+    ip_users,
+    user_anketas,
+    user_delete_anketas,
+    user_love_statuss,
+    user_partner_ones,
+    user_mom_ones,
+    user_dad_ones,
+    user_brother_sisters,
+    user_children_ones,
+    user_grandsons_ones,
+    user_colleagues_ones,
     user_blocks,
-    list_uc,
-    featured_uc,
-    news_uc,
-    notify_uc,
-    user_photo_list_position,
-    user_post_list_position,
-    user_music_list_position,
-    user_good_list_position,
-    user_video_list_position,
-    user_survey_list_position,
-    user_doc_list_position,
+    list_user_communties_keys,
+    featured_user_communties,
+    news_user_communtiies,
+    notify_user_communtiies,
+    user_photo_list_positions,
+    user_post_list_positions,
+    user_music_list_positions,
+    user_good_list_positions,
+    user_video_list_positions,
+    user_survey_list_positions,
+    user_doc_list_positions,
     color_settings,
-    user_private,
+    user_privates,
     user_profile_notifications,
     user_post_notifications,
     user_photo_notifications,
@@ -73,7 +73,7 @@ pub struct UserProfile {
 }
 
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="user_profile"]
+#[table_name="user_profiles"]
 pub struct NewUserProfile {
     pub user_id: i32,
 }
@@ -93,7 +93,7 @@ pub struct UserLocation {
 }
 
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="user_location"]
+#[table_name="user_locations"]
 pub struct NewUserLocation {
     pub user_id:    i32,
     pub city_ru:    Option<String>,
@@ -113,7 +113,7 @@ pub struct IpUser {
     pub ip:       String,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="ip_user"]
+#[table_name="ip_users"]
 pub struct NewIpUser {
     pub user_id: i32,
     pub ip:      String,
@@ -134,7 +134,7 @@ pub struct UserAnketa {
     pub inspiration:           Option<String>,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="user_anketa"]
+#[table_name="user_anketas"]
 pub struct NewUserAnketa {
     pub user_id: i32,
 }
@@ -157,7 +157,7 @@ pub struct UserDeleteAnketa {
     pub created: chrono::NaiveDateTime,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="user_delete_anketa"]
+#[table_name="user_delete_anketas"]
 pub struct NewUserDeleteAnketa {
     pub user_id: i32,
     pub answer:  char,
@@ -198,15 +198,15 @@ pub struct UserLoveStatus {
 
 /////// UserPartnerOne //////
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
-#[belongs_to(User, foreign_key="user_partners")]
-#[belongs_to(User, foreign_key="partner_by_users")]
+#[belongs_to(User, foreign_key="user_partner_one")]
+#[belongs_to(User, foreign_key="partner_by_user")]
 pub struct UserPartnerOne {
     pub id:         i32,
     pub user_id:    i32,
     pub partner_id: i32,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="user_partner_one"]
+#[table_name="user_partner_ones"]
 pub struct NewUserPartnerOne {
     pub user_id:    i32,
     pub partner_id: i32,
@@ -222,7 +222,7 @@ pub struct UserMomOne {
     pub mom_id:  i32,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="user_mom_one"]
+#[table_name="user_mom_ones"]
 pub struct NewUserMomOne {
     pub user_id: i32,
     pub mom_id:  i32,
@@ -238,7 +238,7 @@ pub struct UserDadOne {
     pub dad_id:  i32,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="user_dad_one"]
+#[table_name="user_dad_ones"]
 pub struct NewUserDadOne {
     pub user_id: i32,
     pub dad_id:  i32,
@@ -254,7 +254,7 @@ pub struct UserBrothersSisters {
     pub target_id:  i32,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="user_brother_sister"]
+#[table_name="user_brother_sisters"]
 pub struct NewUserBrothersSisters {
     pub user_id:    i32,
     pub target_id:  i32,
@@ -270,7 +270,7 @@ pub struct UserChildren {
     pub child_id: i32,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="user_children_one"]
+#[table_name="user_children_ones"]
 pub struct NewUserChildren {
     pub user_id:  i32,
     pub child_id: i32,
@@ -286,7 +286,7 @@ pub struct UserGrandsons {
     pub grandson_id: i32,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="user_grandsons_one"]
+#[table_name="user_grandsons_ones"]
 pub struct NewUserGrandsons {
     pub user_id:     i32,
     pub grandson_id: i32,
@@ -302,7 +302,7 @@ pub struct UserColleagues {
     pub colleague_id: i32,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="user_colleagues_one"]
+#[table_name="user_colleagues_ones"]
 pub struct NewUserColleagues {
     pub user_id:      i32,
     pub colleague_id: i32,
@@ -330,15 +330,15 @@ pub struct NewUserBlocks {
     // 'a' Активный список
 
 #[derive(Debug, Queryable, Serialize, Identifiable)]
-pub struct ListUC {
+pub struct ListUserCommuntiesKey {
     pub id:     i32,
     pub types:  char,
     pub name:   String,
     pub owner:  i32,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="list_uc"]
-pub struct NewListUC {
+#[table_name="list_user_communties_keys"]
+pub struct NewListUserCommuntiesKey {
     pub types: char,
     pub name:  String,
     pub owner: i32,
@@ -347,7 +347,7 @@ pub struct NewListUC {
 /////// FeaturedUC //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(ListUC)]
-pub struct FeaturedUC {
+pub struct FeaturedUserCommuntie {
     pub id:           i32,
     pub owner:        i32,
     pub list_id:      i32,
@@ -357,8 +357,8 @@ pub struct FeaturedUC {
     pub sleep:        Option<chrono::NaiveDateTime>,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="featured_uc"]
-pub struct NewFeaturedUC {
+#[table_name="featured_user_communties"]
+pub struct NewFeaturedUserCommuntie {
     pub owner:        i32,
     pub list_id:      i32,
     pub user_id:      Option<i32>,
@@ -370,7 +370,7 @@ pub struct NewFeaturedUC {
 /////// NewsUC //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(ListUC)]
-pub struct NewsUC {
+pub struct NewsUserCommuntie {
     pub id:           i32,
     pub owner:        i32,
     pub list_id:      i32,
@@ -380,8 +380,8 @@ pub struct NewsUC {
     pub sleep:        Option<chrono::NaiveDateTime>,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="news_uc"]
-pub struct NewNewsUC {
+#[table_name="news_user_communtiies"]
+pub struct NewNewsListUserCommuntie {
     pub owner:        i32,
     pub list_id:      i32,
     pub user_id:      Option<i32>,
@@ -393,7 +393,7 @@ pub struct NewNewsUC {
 /////// NotifyUC //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(ListUC)]
-pub struct NotifyUC {
+pub struct NotifyUserCommuntie {
     pub id:           i32,
     pub owner:        i32,
     pub list_id:      i32,
@@ -403,8 +403,8 @@ pub struct NotifyUC {
     pub sleep:        Option<chrono::NaiveDateTime>,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="notify_uc"]
-pub struct NewNotifyUC {
+#[table_name="notify_user_communtiies"]
+pub struct NewNotifyUserCommuntie {
     pub owner:        i32,
     pub list_id:      i32,
     pub user_id:      Option<i32>,
@@ -425,7 +425,7 @@ pub struct UserPhotoListPosition {
     pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="user_photo_list_position"]
+#[table_name="user_photo_list_positions"]
 pub struct NewUserPhotoListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
@@ -443,7 +443,7 @@ pub struct UserPostListPosition {
     pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="user_post_list_position"]
+#[table_name="user_post_list_positions"]
 pub struct NewUserPostListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
@@ -461,7 +461,7 @@ pub struct UserMusicListPosition {
     pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="user_music_list_position"]
+#[table_name="user_music_list_positions"]
 pub struct NewUserMusicListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
@@ -479,7 +479,7 @@ pub struct UserGoodListPosition {
     pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="user_good_list_position"]
+#[table_name="user_good_list_positions"]
 pub struct NewUserGoodListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
@@ -497,7 +497,7 @@ pub struct UserVideoListPosition {
     pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="user_video_list_position"]
+#[table_name="user_video_list_positions"]
 pub struct NewUserVideoListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
@@ -515,7 +515,7 @@ pub struct UserSurveyListPosition {
     pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="user_survey_list_position"]
+#[table_name="user_survey_list_positions"]
 pub struct NewUserSurveyListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
@@ -533,7 +533,7 @@ pub struct UserDocListPosition {
     pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="user_doc_list_position"]
+#[table_name="user_doc_list_positions"]
 pub struct NewUserDocListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
@@ -568,12 +568,30 @@ pub struct UserPrivate {
     pub can_see_doc:        char,
     pub can_see_survey:     char,
 }
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="user_privates"]
+pub struct NewUserPrivate {
+    pub user_id:            i32,
+    pub can_see_community:  String,
+    pub can_see_info:       String,
+    pub can_see_friend:     String,
+    pub can_send_message:   String,
+    pub can_add_in_chat:    String,
+    pub can_see_post:       String,
+    pub can_see_photo:      String,
+    pub can_see_good:       String,
+    pub can_see_video:      String,
+    pub can_see_music:      String,
+    pub can_see_planner:    String,
+    pub can_see_doc:        String,
+    pub can_see_survey:     String,
+}
 
 /////// UserPopulateSmiles //////
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
 #[belongs_to(Smiles)]
-pub struct UserPopulateSmiles {
+pub struct UserPopulateSmile {
     pub id:       i32,
     pub user_id:  i32,
     pub smile_id: i32,
@@ -581,7 +599,7 @@ pub struct UserPopulateSmiles {
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_populate_smiles"]
-pub struct NewUserPopulateSmiles {
+pub struct NewUserPopulateSmile {
     pub user_id:   i32,
     pub smile_id:  i32,
     pub count:     i32,
@@ -591,7 +609,7 @@ pub struct NewUserPopulateSmiles {
 #[derive(Debug ,Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
 #[belongs_to(Stickers)]
-pub struct UserPopulateStickers {
+pub struct UserPopulateSticker {
     pub id:         i32,
     pub user_id:    i32,
     pub sticker_id: i32,
@@ -599,7 +617,7 @@ pub struct UserPopulateStickers {
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_populate_stickers"]
-pub struct NewUserPopulateStickers {
+pub struct NewUserPopulateSticker {
     pub user_id:    i32,
     pub sticker_id: i32,
     pub count:      i32,
@@ -609,7 +627,7 @@ pub struct NewUserPopulateStickers {
 /////// UserNotifications //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
-pub struct UserNotifications {
+pub struct UserNotification {
     pub id:                   i32,
     pub user_id:         i32,
     pub connection_request:   bool,
@@ -618,7 +636,7 @@ pub struct UserNotifications {
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_notifications"]
-pub struct NewUserNotifications {
+pub struct NewUserNotification {
     pub user_id:         i32,
     pub connection_request:   bool,
     pub connection_confirmed: bool,
@@ -628,7 +646,7 @@ pub struct NewUserNotifications {
 /////// UserNotificationsPost //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
-pub struct UserNotificationsPost {
+pub struct UserPostNotification {
     pub id:                     i32,
     pub user_id:           i32,
     pub comment:                bool,
@@ -645,7 +663,7 @@ pub struct UserNotificationsPost {
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_post_notifications"]
-pub struct NewUserNotificationsPost {
+pub struct NewUserPostNotification {
     pub user_id:           i32,
     pub comment:                bool,
     pub comment_reply:          bool,
@@ -660,10 +678,25 @@ pub struct NewUserNotificationsPost {
     pub comment_reply_disliked: bool,
 }
 
+/////// UserSurveyNotification //////
+#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[belongs_to(User)]
+pub struct UserSurveyNotification {
+    pub id:                  i32,
+    pub user_id:             i32,
+    pub vote:                bool,
+}
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="user_survey_notifications"]
+pub struct NewUserSurveyNotification {
+    pub user_id:             i32,
+    pub vote:                bool,
+}
+
 /////// UserNotificationsPhoto //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
-pub struct UserNotificationsPhoto {
+pub struct UserPhotoNotification {
     pub id:                     i32,
     pub user_id:           i32,
     pub comment:                bool,
@@ -680,7 +713,7 @@ pub struct UserNotificationsPhoto {
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_photo_notifications"]
-pub struct NewUserNotificationsPhoto {
+pub struct NewUserPhotoNotification {
     pub user_id:           i32,
     pub comment:                bool,
     pub comment_reply:          bool,
@@ -698,7 +731,7 @@ pub struct NewUserNotificationsPhoto {
 /////// UserNotificationsVideo //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
-pub struct UserNotificationsVideo {
+pub struct UserVideoNotification {
     pub id:                     i32,
     pub user_id:           i32,
     pub comment:                bool,
@@ -715,7 +748,7 @@ pub struct UserNotificationsVideo {
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_video_notifications"]
-pub struct NewUserNotificationsVideo {
+pub struct NewUserVideoNotification {
     pub user_id:           i32,
     pub comment:                bool,
     pub comment_reply:          bool,
@@ -733,7 +766,7 @@ pub struct NewUserNotificationsVideo {
 /////// UserNotificationsGood //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
-pub struct UserNotificationsGood {
+pub struct UserGoodNotification {
     pub id:                     i32,
     pub user_id:           i32,
     pub comment:                bool,
@@ -750,7 +783,7 @@ pub struct UserNotificationsGood {
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_good_notifications"]
-pub struct NewUserNotificationsGood {
+pub struct NewUserGoodNotification {
     pub user_id:           i32,
     pub comment:                bool,
     pub comment_reply:          bool,
@@ -768,14 +801,14 @@ pub struct NewUserNotificationsGood {
 /////// UserNotificationsMusic //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
-pub struct UserNotificationsMusic {
+pub struct UserMusicNotification {
     pub id:       i32,
     pub user_id:  i32,
     pub repost:   bool,
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="user_music_notifications"]
-pub struct NewUserNotificationsMusic {
+pub struct NewUserMusicNotification {
     pub user_id:   i32,
     pub repost:    bool,
 }

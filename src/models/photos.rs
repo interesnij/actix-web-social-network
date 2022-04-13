@@ -4,7 +4,7 @@ use crate::schema::{
     photo_comments,
     user_photo_list_collections,
     community_photo_list_collections,
-    photo_list_perm,
+    photo_list_perms,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
@@ -257,7 +257,7 @@ pub struct PhotoListPerm {
     pub can_copy:        Option<char>,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="photo_list_perm"]
+#[table_name="photo_list_perms"]
 pub struct NewPhotoListPerm {
     pub user_id:         i32,
     pub list_id:         i32,

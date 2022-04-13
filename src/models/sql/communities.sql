@@ -1,5 +1,5 @@
 -- Категории сообществ -------
-CREATE TABLE community_categories (
+CREATE TABLE community_categorys (
     id SERIAL PRIMARY KEY,  -- id объекта
     name VARCHAR(100),           -- название
     avatar VARCHAR(500),            -- аватар
@@ -7,7 +7,7 @@ CREATE TABLE community_categories (
 );
 
 -- Суб-категории сообществ -------
-CREATE TABLE community_subcategories (
+CREATE TABLE community_subcategorys (
     id          SERIAL PRIMARY KEY,       -- id объекта
     name        VARCHAR(100),                  -- название
     category_id INT NOT NULL,             -- id категории
@@ -19,7 +19,7 @@ CREATE TABLE community_subcategories (
             REFERENCES community_categories(id)
 );
 
-CREATE TABLE communities (
+CREATE TABLE communitys (
     id            SERIAL PRIMARY KEY,     -- id объекта
     name          VARCHAR(100) NOT NULL,  -- название
     description   VARCHAR(500),           -- описание
@@ -110,7 +110,7 @@ CREATE TABLE community_ie_settings (
             REFERENCES communities_memberships(id)
 );
 
-CREATE TABLE community_info (
+CREATE TABLE community_infos (
     id           SERIAL PRIMARY KEY,
     community_id INT NOT NULL,
 
@@ -129,7 +129,7 @@ CREATE TABLE community_info (
             REFERENCES communities(id)
 );
 
-CREATE TABLE community_private (
+CREATE TABLE community_privates (
     id                SERIAL PRIMARY KEY,
     community_id      INT NOT NULL,
     can_see_member    "char" NOT NULL, -- Кто видит сообщества
@@ -187,7 +187,7 @@ CREATE TABLE community_post_notifications (
 );
 
 -- Уведомления фотографий -------
-CREATE TABLE community_photo_notifications (
+CREATE TABLE community_photo_notifications ( 
     id                      SERIAL PRIMARY KEY,
     community_id            INT NOT NULL,
     comment                 BOOLEAN NOT NULL DEFAULT true,
@@ -249,6 +249,17 @@ CREATE TABLE community_good_notifications (
              REFERENCES communities(id)
 );
 
+-- Уведомления опросов -------
+CREATE TABLE community_survey_notifications (
+    id                      SERIAL PRIMARY KEY,
+    community_id            INT NOT NULL,
+    vote                    BOOLEAN NOT NULL DEFAULT true,
+
+    CONSTRAINT fk_community_survey_notifications
+         FOREIGN KEY(community_id)
+             REFERENCES communities(id)
+);
+
 -- Уведомления аудиозаписей -------
 CREATE TABLE community_music_notifications (
     id            SERIAL PRIMARY KEY,
@@ -265,7 +276,7 @@ CREATE TABLE community_music_notifications (
 -- Изменение порядка следования списков сообщества
 
 -- Порядок следования фотоальбома -------
-CREATE TABLE community_photo_list_position (
+CREATE TABLE community_photo_list_positions (
     id           SERIAL PRIMARY KEY,
     community_id INT NOT NULL,       -- Сообщество
     list         INT DEFAULT 0,       -- Фотоальбом
@@ -274,7 +285,7 @@ CREATE TABLE community_photo_list_position (
 );
 
 -- Порядок следования списка записей -------
-CREATE TABLE community_post_list_position (
+CREATE TABLE community_post_list_positions (
     id              SERIAL PRIMARY KEY,
     community_id    INT NOT NULL,      -- Сообщество
     list            INT DEFAULT 0,      -- Список записей
@@ -283,7 +294,7 @@ CREATE TABLE community_post_list_position (
 );
 
 -- Порядок следования списка аудиозаписей -------
-CREATE TABLE community_music_list_position (
+CREATE TABLE community_music_list_positions (
     id             SERIAL PRIMARY KEY,  --
     community_id   INT NOT NULL,       -- Сообщество
     list           INT DEFAULT 0,       -- Список аудиозаписей
@@ -292,7 +303,7 @@ CREATE TABLE community_music_list_position (
 );
 
 -- Порядок следования списка товаров -------
-CREATE TABLE community_good_list_position (
+CREATE TABLE community_good_list_positions (
     id           SERIAL PRIMARY KEY,  --
     community_id INT NOT NULL,        -- Сообщество
     list         INT DEFAULT 0,       -- Список товаров
@@ -301,7 +312,7 @@ CREATE TABLE community_good_list_position (
 );
 
 -- Порядок следования списка видеозаписей -------
-CREATE TABLE community_video_list_position (
+CREATE TABLE community_video_list_positions (
     id           SERIAL PRIMARY KEY, --
     community_id INT NOT NULL,      -- Сообщество
     list         INT DEFAULT 0,      -- Список видеозаписей
@@ -310,7 +321,7 @@ CREATE TABLE community_video_list_position (
 );
 
 -- Порядок следования списка опросов -------
-CREATE TABLE community_survey_list_position (
+CREATE TABLE community_survey_list_positions (
     id            SERIAL PRIMARY KEY,
     community_id  INT NOT NULL,      -- Сообщество
     list          INT DEFAULT 0,      -- Список опросов
@@ -319,7 +330,7 @@ CREATE TABLE community_survey_list_position (
 );
 
 -- Порядок следования списка документов -------
-CREATE TABLE community_doc_list_position (
+CREATE TABLE community_doc_list_positions (
     id            SERIAL PRIMARY KEY,
     community_id  INT NOT NULL,      -- Сообщество
     list          INT DEFAULT 0,      -- Список документов

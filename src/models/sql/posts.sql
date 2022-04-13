@@ -136,7 +136,7 @@ CREATE TABLE community_post_list_collections (
 );
 
 -- включения и исключения для пользователей касательно конкретного списка записей -------
-CREATE TABLE post_list_perm (
+CREATE TABLE post_list_perms (
     id              SERIAL PRIMARY KEY,
     user_id         INT NOT NULL,
     list_id         INT NOT NULL,

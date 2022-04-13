@@ -181,12 +181,13 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
         UserDocListPosition, NewUserDocListPosition,
         UserPrivate, NewUserPrivate,
 
-        UserNotificationsMusic, NewUserNotificationsMusic,
-        UserNotificationsGood, NewUserNotificationsGood,
-        UserNotificationsVideo, NewUserNotificationsVideo,
-        UserNotificationsPhoto, NewUserNotificationsPhoto,
-        UserNotificationsPost, NewUserNotificationsPost,
-        UserNotifications, NewUserNotifications,
+        UserPhotoNotification, NewUserPhotoNotification,
+        UserGoodNotification, NewUserGoodNotification,
+        UserVideoNotification, NewUserVideoNotification,
+        UserMusicNotification, NewUserMusicNotification,
+        UserPostNotification, NewUserPostNotification,
+        UserSurveyNotification, NewUserSurveyNotification,
+        UserNotification, NewUserNotification,
     };
 
     if is_signed_in(&session) {
@@ -215,7 +216,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             if ipaddr.contains(&"91.239.184.81".to_string()) {
                 get_perm = 60;
             };
-            println!("{:?}", location200.city.name_ru);
+            println!("{:?}", location200.city_ru);
         };
 
         let mut get_device = "a";

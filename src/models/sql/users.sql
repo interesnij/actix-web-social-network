@@ -1,4 +1,3 @@
--- MyEnum (rust перечисление) = my_enum (тип поля postgre) = MyEnumMapping (схема)
 -- пользователи -------
 
 CREATE TABLE users (
@@ -27,7 +26,7 @@ CREATE TABLE users (
 );
 
 -- профили пользователей -------
-CREATE TABLE user_profile (
+CREATE TABLE user_profiles (
     id             SERIAL PRIMARY KEY,
     user_id        INT NOT NULL,
     posts          INT DEFAULT 0,
@@ -57,7 +56,7 @@ CREATE TABLE user_profile (
 );
 
 -- местоположения пользователей -------
-CREATE TABLE user_location (
+CREATE TABLE user_locations (
     id SERIAL PRIMARY KEY,
     user_id     INT NOT NULL,
     city_ru     VARCHAR(100),
@@ -73,7 +72,7 @@ CREATE TABLE user_location (
 );
 
 -- айпи пользователей -------
-CREATE TABLE ip_user (
+CREATE TABLE ip_users (
     id      SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
     ip      VARCHAR,
@@ -84,7 +83,7 @@ CREATE TABLE ip_user (
 );
 
 -- Анкета аккаунта -------
-CREATE TABLE user_anketa (
+CREATE TABLE user_anketas (
     id                    SERIAL PRIMARY KEY,
     user_id               INT NOT NULL,
     political_preferences VARCHAR(500),
@@ -101,7 +100,7 @@ CREATE TABLE user_anketa (
 );
 
 -- Причина удаления аккаунта -------
-CREATE TABLE user_delete_anketa (
+CREATE TABLE user_delete_anketas (
     id      SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
     answer  "char",
@@ -114,7 +113,7 @@ CREATE TABLE user_delete_anketa (
 );
 
 -- Статус отношений -------
-CREATE TABLE user_love_status (
+CREATE TABLE user_love_statuss (
     id            SERIAL PRIMARY KEY,
     user_id       INT NOT NULL,
     male_status   VARCHAR(6),
@@ -126,7 +125,7 @@ CREATE TABLE user_love_status (
 );
 
 -- Муж/Жена -------
-CREATE TABLE user_partner_one (
+CREATE TABLE user_partner_ones (
     id          SERIAL PRIMARY KEY,
     user_id     INT NOT NULL,
     partner_id  INT NOT NULL,
@@ -141,7 +140,7 @@ CREATE TABLE user_partner_one (
 );
 
 -- Мама -------
-CREATE TABLE user_mom_one (
+CREATE TABLE user_mom_ones (
     id      SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
     mom_id  INT NOT NULL,
@@ -156,7 +155,7 @@ CREATE TABLE user_mom_one (
 );
 
 -- Папа -------
-CREATE TABLE user_dad_one (
+CREATE TABLE user_dad_ones (
     id      SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
     dad_id  INT NOT NULL,
@@ -171,7 +170,7 @@ CREATE TABLE user_dad_one (
 );
 
 -- Братья, сёстры -------
-CREATE TABLE user_brother_sister (
+CREATE TABLE user_brother_sisters (
     id        SERIAL PRIMARY KEY,
     user_id   INT NOT NULL,
     target_id INT NOT NULL,
@@ -186,7 +185,7 @@ CREATE TABLE user_brother_sister (
 );
 
 -- Дети -------
-CREATE TABLE user_children_one (
+CREATE TABLE user_children_ones (
     id        SERIAL PRIMARY KEY,
     user_id   INT NOT NULL,
     child_id  INT NOT NULL,
@@ -201,7 +200,7 @@ CREATE TABLE user_children_one (
 );
 
 -- Внуки -------
-CREATE TABLE user_grandsons_one (
+CREATE TABLE user_grandsons_ones (
     id          SERIAL PRIMARY KEY,
     user_id     INT NOT NULL,
     grandson_id INT NOT NULL,
@@ -216,7 +215,7 @@ CREATE TABLE user_grandsons_one (
 );
 
 -- Коллеги -------
-CREATE TABLE user_colleagues_one (
+CREATE TABLE user_colleagues_ones (
     id            SERIAL PRIMARY KEY,
     user_id       INT NOT NULL,
     colleague_id  INT NOT NULL,
@@ -248,7 +247,7 @@ CREATE TABLE user_blocks (
 ------------------
 ------------------
 -- Список ключей новостей, уведомлений или рекомендаций (если пользователь хочет их группировать) -------
-CREATE TABLE list_uc (
+CREATE TABLE list_user_communties_keys (
     id    SERIAL PRIMARY KEY,
     types INT DEFAULT 0,      -- тип списка: 0 - неактивен, 1 - основной, 2 - пользовательский
     name  VARCHAR(100) NOT NULL,    -- название
@@ -256,7 +255,7 @@ CREATE TABLE list_uc (
 );
 
 -- Ключи рекомендаций -------
-CREATE TABLE featured_uc (
+CREATE TABLE featured_user_communties (
     id            SERIAL PRIMARY KEY,
     owner         INT NOT NULL,                  -- кто получает рекомендации
     list_id       INT,                             -- список, если есть
@@ -271,7 +270,7 @@ CREATE TABLE featured_uc (
 
 );
 -- Ключи новостей -------
-CREATE TABLE news_uc (
+CREATE TABLE news_user_communtiies (
     id           SERIAL PRIMARY KEY,
     owner        INT NOT NULL,                  -- кто получает новости
     list_id      INT,
@@ -285,7 +284,7 @@ CREATE TABLE news_uc (
              REFERENCES list_uc(id)
 );
 -- Ключи уыедомлений -------
-CREATE TABLE notify_uc (
+CREATE TABLE notify_user_communtiies (
     id           SERIAL PRIMARY KEY,
     owner        INT NOT NULL,                  -- кто получает уведомления
     list_id      INT,
@@ -304,7 +303,7 @@ CREATE TABLE notify_uc (
 -- Изменение порядка следования списков пользователя
 
 -- Порядок следования фотоальбома -------
-CREATE TABLE user_photo_list_position (
+CREATE TABLE user_photo_list_positions (
     id            SERIAL PRIMARY KEY,
     user_id       INT NOT NULL,     -- Пользователь
     list          INT NOT NULL,     -- Фотоальбом
@@ -313,7 +312,7 @@ CREATE TABLE user_photo_list_position (
 );
 
 -- Порядок следования списка записей -------
-CREATE TABLE user_post_list_position (
+CREATE TABLE user_post_list_positions (
     id           SERIAL PRIMARY KEY,
     user_id      INT NOT NULL,     -- Пользователь
     list         INT NOT NULL,     -- Список записей
@@ -322,7 +321,7 @@ CREATE TABLE user_post_list_position (
 );
 
 -- Порядок следования списка аудиозаписей -------
-CREATE TABLE user_music_list_position (
+CREATE TABLE user_music_list_positions (
     id            SERIAL PRIMARY KEY,
     user_id       INT NOT NULL,     -- Пользователь
     list          INT NOT NULL,     -- Список аудиозаписей
@@ -331,7 +330,7 @@ CREATE TABLE user_music_list_position (
 );
 
 -- Порядок следования списка товаров -------
-CREATE TABLE user_good_list_position (
+CREATE TABLE user_good_list_positions (
     id           SERIAL PRIMARY KEY,
     user_id      INT NOT NULL,     -- Пользователь
     list         INT NOT NULL,     -- Список товаров
@@ -340,7 +339,7 @@ CREATE TABLE user_good_list_position (
 );
 
 -- Порядок следования списка видеозаписей -------
-CREATE TABLE user_video_list_position (
+CREATE TABLE user_video_list_positions (
     id           SERIAL PRIMARY KEY,
     user_id      INT NOT NULL,     -- Пользователь
     list         INT NOT NULL,     -- Список видеозаписей
@@ -349,7 +348,7 @@ CREATE TABLE user_video_list_position (
 );
 
 -- Порядок следования списка опросов -------
-CREATE TABLE user_survey_list_position (
+CREATE TABLE user_survey_list_positions (
     id           SERIAL PRIMARY KEY,
     user_id      INT NOT NULL,     -- Пользователь
     list         INT NOT NULL,     -- Список опросов
@@ -358,7 +357,7 @@ CREATE TABLE user_survey_list_position (
 );
 
 -- Порядок следования списка документов -------
-CREATE TABLE user_doc_list_position (
+CREATE TABLE user_doc_list_positions (
     id             SERIAL PRIMARY KEY,
     user_id        INT NOT NULL,     -- Пользователь
     list           INT NOT NULL,     -- Список документов
@@ -384,7 +383,7 @@ CREATE TABLE color_settings (
 -- Настройки приватности пользователя -------
 -- 1:Все пользователи; 4:Друзья; 5:Друзья и друзья друзей;6:Только я
 -- 17:Друзья, кроме; 18:Некоторые друзья
-CREATE TABLE user_private (
+CREATE TABLE user_privates (
     id                SERIAL PRIMARY KEY,
     user_id           INT NOT NULL,
     can_see_community "char" NOT NULL, -- Кто видит сообщества
@@ -500,6 +499,17 @@ CREATE TABLE user_good_notifications (
     comment_reply_disliked  BOOLEAN DEFAULT true,
 
     CONSTRAINT fk_user_good_notifications
+         FOREIGN KEY(user_id)
+             REFERENCES users(id)
+);
+
+-- Уведомления опросов -------
+CREATE TABLE user_survey_notifications (
+    id                      SERIAL PRIMARY KEY,
+    user_id                 INT NOT NULL,
+    vote                    BOOLEAN DEFAULT true,
+
+    CONSTRAINT fk_user_survey_notifications
          FOREIGN KEY(user_id)
              REFERENCES users(id)
 );

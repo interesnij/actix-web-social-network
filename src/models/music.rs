@@ -6,7 +6,7 @@ use crate::schema::{
     music,
     user_music_list_collections,
     community_music_list_collections,
-    music_list_perm,
+    music_list_perms,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
@@ -293,7 +293,7 @@ pub struct MusicListPerm {
     pub can_copy:        Option<char>,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="music_list_perm"]
+#[table_name="music_list_perms"]
 pub struct NewMusicListPerm {
     pub user_id:         i32,
     pub list_id:         i32,

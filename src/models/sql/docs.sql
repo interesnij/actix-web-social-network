@@ -87,7 +87,7 @@ CREATE TABLE community_doc_list_collections (
             REFERENCES doc_lists(id)
 );
 
-CREATE TABLE doc_list_perm (
+CREATE TABLE doc_list_perms (
     id            SERIAL PRIMARY KEY,
     user_id       INT NOT NULL,
     list_id       INT NOT NULL,

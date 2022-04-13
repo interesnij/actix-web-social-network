@@ -152,7 +152,7 @@ CREATE TABLE community_good_list_collections (
             REFERENCES good_lists(id)
 );
 
-CREATE TABLE good_list_perm (
+CREATE TABLE good_list_perms (
     id              SERIAL PRIMARY KEY,
     user_id         INT NOT NULL,
     list_id         INT NOT NULL,

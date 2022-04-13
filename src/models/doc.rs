@@ -3,7 +3,7 @@ use crate::schema::{
     docs,
     user_doc_list_collections,
     community_doc_list_collections,
-    doc_list_perm,
+    doc_list_perms,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
@@ -198,7 +198,7 @@ pub struct DocListPerm {
     pub can_copy:        Option<char>,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="doc_list_perm"]
+#[table_name="doc_list_perms"]
 pub struct NewDocListPerm {
     pub user_id:         i32,
     pub list_id:         i32,

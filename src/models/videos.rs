@@ -4,7 +4,7 @@ use crate::schema::{
     video_comments,
     user_video_list_collections,
     community_video_list_collections,
-    video_list_perm,
+    video_list_perms,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
@@ -257,7 +257,7 @@ pub struct VideoListPerm {
     pub can_copy:        Option<char>,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="video_list_perm"]
+#[table_name="video_list_perms"]
 pub struct NewVideoListPerm {
     pub user_id:         i32,
     pub list_id:         i32,

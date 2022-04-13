@@ -89,7 +89,7 @@ CREATE TABLE community_survey_list_collections (
             REFERENCES survey_lists(id)
 );
 
-CREATE TABLE survey_list_perm (
+CREATE TABLE survey_list_perms (
     id            SERIAL PRIMARY KEY,
     user_id       INT NOT NULL,
     list_id       INT NOT NULL,

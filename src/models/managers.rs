@@ -138,7 +138,7 @@ pub struct NewModerationReport {
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(User)]
 #[belongs_to(Moderated)]
-pub struct ModerationPenalty {
+pub struct ModerationPenaltie {
     pub id:                  i32,
     pub manager_id:          i32,
     pub moderated_object_id: i32,
@@ -150,7 +150,7 @@ pub struct ModerationPenalty {
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="moderated_penalties"]
-pub struct NewModerationPenalty {
+pub struct NewModerationPenaltie {
     pub manager_id:          i32,
     pub moderated_object_id: i32,
     pub expiration:          Option<chrono::NaiveDateTime>,

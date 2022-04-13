@@ -4,21 +4,21 @@ use crate::schema::{
     communities,
     communities_memberships,
     community_ie_settings,
-    community_info,
-    community_private,
+    community_infos,
+    community_privates,
     community_notifications,
     community_post_notifications,
     community_photo_notifications,
     community_video_notifications,
     community_good_notifications,
     community_music_notifications,
-    community_photo_list_position,
-    community_post_list_position,
-    community_music_list_position,
-    community_good_list_position,
-    community_video_list_position,
-    community_survey_list_position,
-    community_doc_list_position,
+    community_photo_list_positions,
+    community_post_list_positions,
+    community_music_list_positions,
+    community_good_list_positions,
+    community_video_list_positions,
+    community_survey_list_positions,
+    community_doc_list_positions,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
@@ -26,15 +26,15 @@ use crate::utils::establish_connection;
 
 /////// CommunityCategories //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
-pub struct CommunityCategories {
+pub struct CommunityCategory {
     pub id:       i32,
     pub name:     String,
     pub avatar:   Option<String>,
     pub position: i16,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="community_categories"]
-pub struct NewCommunityCategories {
+#[table_name="community_categorys"]
+pub struct NewCommunityCategory {
     pub name:     String,
     pub avatar:   Option<String>,
     pub position: i16,
@@ -42,7 +42,7 @@ pub struct NewCommunityCategories {
 
 /////// CommunitySubCategories //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
-pub struct CommunitySubCategories {
+pub struct CommunitySubCategory {
     pub id:          i32,
     pub name:        String,
     pub category_id: i32,
@@ -50,8 +50,8 @@ pub struct CommunitySubCategories {
     pub position:    i16,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="community_subcategories"]
-pub struct NewCommunitySubCategories {
+#[table_name="community_subcategorys"]
+pub struct NewCommunitySubCategory{
     pub name:        String,
     pub category_id: i32,
     pub avatar:      Option<String>,
@@ -87,7 +87,7 @@ pub struct NewCommunitySubCategories {
 
 /////// Community //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
-#[belongs_to(CommunitySubCategories)]
+#[belongs_to(CommunitySubCategorys)]
 #[belongs_to(User)]
 pub struct Community {
     pub id:          i32,
@@ -106,7 +106,7 @@ pub struct Community {
     pub created:     chrono::NaiveDateTime,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="communities"]
+#[table_name="communitys"]
 pub struct NewCommunity {
     pub name:        String,
     pub types:       i16,
@@ -155,7 +155,7 @@ pub struct NewCommunityMembership {
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(CommunityMembership)]
 #[table_name="community_ie_settings"]
-pub struct CommunityMemberPerm {
+pub struct CommunityIeSetting {
     pub id:                      i32,
     pub user_id:                 i32,
 
@@ -212,7 +212,7 @@ pub struct CommunityInfo {
     pub survey:       i32,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="community_info"]
+#[table_name="community_infos"]
 pub struct NewCommunityInfo {
     pub community_id: i32,
     pub posts:        i32,
@@ -255,7 +255,7 @@ pub struct CommunityPrivate {
     pub can_see_stat:     char,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="community_info"]
+#[table_name="community_privates"]
 pub struct NewCommunityPrivate {
     pub community_id:     i32,
     pub can_see_member:   String,
@@ -296,7 +296,7 @@ pub struct NewCommunityNotifications {
 /////// CommunityNotificationsPost //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Community)]
-pub struct CommunityNotificationsPost {
+pub struct CommunityPostNotifications {
     pub id:                     i32,
     pub community_id:           i32,
     pub comment:                bool,
@@ -313,7 +313,7 @@ pub struct CommunityNotificationsPost {
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="community_post_notifications"]
-pub struct NewCommunityNotificationsPost {
+pub struct NewCommunityPostNotifications {
     pub community_id:           i32,
     pub comment:                bool,
     pub comment_reply:          bool,
@@ -331,7 +331,7 @@ pub struct NewCommunityNotificationsPost {
 /////// CommunityNotificationsPhoto //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Community)]
-pub struct CommunityNotificationsPhoto {
+pub struct CommunityPhotoNotifications {
     pub id:                     i32,
     pub community_id:           i32,
     pub comment:                bool,
@@ -348,7 +348,7 @@ pub struct CommunityNotificationsPhoto {
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="community_photo_notifications"]
-pub struct NewCommunityNotificationsPhoto {
+pub struct NewCommunityPhotoNotifications {
     pub community_id:           i32,
     pub comment:                bool,
     pub comment_reply:          bool,
@@ -366,7 +366,7 @@ pub struct NewCommunityNotificationsPhoto {
 /////// CommunityNotificationsVideo //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Community)]
-pub struct CommunityNotificationsVideo {
+pub struct CommunityVideoNotifications {
     pub id:                     i32,
     pub community_id:           i32,
     pub comment:                bool,
@@ -383,7 +383,7 @@ pub struct CommunityNotificationsVideo {
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="community_video_notifications"]
-pub struct NewCommunityNotificationsVideo {
+pub struct NewCommunityVideoNotifications {
     pub community_id:           i32,
     pub comment:                bool,
     pub comment_reply:          bool,
@@ -401,7 +401,7 @@ pub struct NewCommunityNotificationsVideo {
 /////// CommunityNotificationsGood //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Community)]
-pub struct CommunityNotificationsGood {
+pub struct CommunityGoodNotifications {
     pub id:                     i32,
     pub community_id:           i32,
     pub comment:                bool,
@@ -418,7 +418,7 @@ pub struct CommunityNotificationsGood {
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="community_good_notifications"]
-pub struct NewCommunityNotificationsGood {
+pub struct NewCommunityGoodNotifications {
     pub community_id:           i32,
     pub comment:                bool,
     pub comment_reply:          bool,
@@ -436,14 +436,14 @@ pub struct NewCommunityNotificationsGood {
 /////// CommunityNotificationsMusic //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Community)]
-pub struct CommunityNotificationsMusic {
+pub struct CommunityMusicNotifications {
     pub id:                     i32,
     pub community_id:           i32,
     pub repost:                 bool,
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="community_music_notifications"]
-pub struct NewCommunityNotificationsMusic {
+pub struct NewCommunityMusicNotifications {
     pub community_id:           i32,
     pub repost:                 bool,
 }
@@ -458,7 +458,7 @@ pub struct CommunityPhotoListPosition {
     pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="community_photo_list_position"]
+#[table_name="community_photo_list_positions"]
 pub struct NewCommunityPhotoListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
@@ -476,7 +476,7 @@ pub struct CommunityPostListPosition {
     pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="community_post_list_position"]
+#[table_name="community_post_list_positions"]
 pub struct NewCommunityPostListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
@@ -494,7 +494,7 @@ pub struct CommunityMusicListPosition {
     pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="community_music_list_position"]
+#[table_name="community_music_list_positions"]
 pub struct NewCommunityMusicListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
@@ -512,7 +512,7 @@ pub struct CommunityGoodListPosition {
     pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="community_good_list_position"]
+#[table_name="community_good_list_positions"]
 pub struct NewCommunityGoodListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
@@ -530,7 +530,7 @@ pub struct CommunityVideoListPosition {
     pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="community_video_list_position"]
+#[table_name="community_video_list_positions"]
 pub struct NewCommunityVideoListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
@@ -548,7 +548,7 @@ pub struct CommunitySurveyListPosition {
     pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="community_survey_list_position"]
+#[table_name="community_survey_list_positions"]
 pub struct NewCommunitySurveyListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
@@ -566,7 +566,7 @@ pub struct CommunityDocListPosition {
     pub types:    char, // 1 - open, 2 - close
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="community_doc_list_position"]
+#[table_name="community_doc_list_positions"]
 pub struct NewCommunityDocListPosition {
     pub community_id:  i32,
     pub list_id:  i32,

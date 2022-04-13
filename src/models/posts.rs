@@ -5,7 +5,7 @@ use crate::schema::{
     post_comments,
     user_post_list_collections,
     community_post_list_collections,
-    post_list_perm,
+    post_list_perms,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
@@ -19,7 +19,7 @@ use crate::models::{
 
 /////// CommunityCategories //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
-pub struct PostCategories {
+pub struct PostCategorie {
     pub id:       i32,
     pub name:     String,
     pub avatar:   Option<String>,
@@ -27,7 +27,7 @@ pub struct PostCategories {
 }
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="post_categories"]
-pub struct NewPostCategories {
+pub struct NewPostCategorie {
     pub name:     String,
     pub avatar:   Option<String>,
     pub position: i16,
@@ -134,7 +134,7 @@ pub struct NewPostList {
 
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Community)]
-#[belongs_to(PostCategories)]
+#[belongs_to(PostCategorie)]
 #[belongs_to(User)]
 #[belongs_to(PostList)]
 pub struct Post {
@@ -272,7 +272,7 @@ pub struct PostListPerm {
     pub can_copy:        Option<char>,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="post_list_perm"]
+#[table_name="post_list_perms"]
 pub struct NewPostListPerm {
     pub user_id:         i32,
     pub list_id:         i32,

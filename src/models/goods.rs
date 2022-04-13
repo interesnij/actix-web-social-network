@@ -4,7 +4,7 @@ use crate::schema::{
     good_comments,
     user_good_list_collections,
     community_good_list_collections,
-    good_list_perm,
+    good_list_perms,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
@@ -259,7 +259,7 @@ pub struct GoodListPerm {
     pub can_copy:        Option<char>,
 }
 #[derive(Debug, Deserialize, Insertable)]
-#[table_name="good_list_perm"]
+#[table_name="good_list_perms"]
 pub struct NewGoodListPerm {
     pub user_id:         i32,
     pub list_id:         i32,

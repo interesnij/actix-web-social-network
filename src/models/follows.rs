@@ -56,7 +56,7 @@ pub struct NewCommunityFollow {
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 #[belongs_to(Follow)]
 #[table_name="follow_ie_settings"]
-pub struct FollowPerm {
+pub struct FollowIeSetting {
     pub id:                      i32,
     pub user_id:                 i32,
 
