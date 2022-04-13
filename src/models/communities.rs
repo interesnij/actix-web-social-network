@@ -100,7 +100,7 @@ pub struct Community {
     pub b_avatar:    Option<String>,
     pub s_avatar:    Option<String>,
     pub cover:       Option<String>,
-    pub community_subcategory_id: i32,
+    pub community_subcategorys_id: i32,
     pub user_id:  i32,
     pub created:     chrono::NaiveDateTime,
 }
@@ -111,7 +111,7 @@ pub struct NewCommunity {
     pub types:       i16,
     pub perm:        String,
     pub level:       i16,
-    pub community_subcategory_id: i32,
+    pub community_subcategorys_id: i32,
     pub user_id:  i32,
     pub created:     chrono::NaiveDateTime,
 }
