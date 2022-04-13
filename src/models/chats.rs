@@ -126,7 +126,7 @@ pub struct NewChatUser {
 #[belongs_to(ChatUser)]
 pub struct ChatIeSetting {
     pub id:               i32,
-    pub chat_users_id:    i32,
+    pub chat_user_id:    i32,
     pub can_add_in_chat:  Option<char>,
     pub can_add_fix:      Option<char>,
     pub can_add_admin:    Option<char>,
@@ -137,7 +137,7 @@ pub struct ChatIeSetting {
 #[derive(Deserialize, Insertable)]
 #[table_name="chat_ie_settings"]
 pub struct NewChatIeSetting {
-    pub chat_users_id:    i32,
+    pub chat_user_id:    i32,
     pub can_add_in_chat:  Option<String>,
     pub can_add_fix:      Option<String>,
     pub can_add_admin:    Option<String>,

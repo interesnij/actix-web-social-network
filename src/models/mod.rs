@@ -5,6 +5,7 @@ mod communities;
 mod posts;
 mod chats;
 mod photos;
+mod survey;
 
 pub use self::{
     other::*,
@@ -14,4 +15,5 @@ pub use self::{
     posts::*,
     chats::*,
     photos::*,
+    survey::*,
 };
