@@ -226,7 +226,7 @@ pub struct MessageVersion {
     pub id:            i32,
     pub message_id:    i32,
     pub sticker_id:    Option<i32>,
-    pub post_id:     Option<i32>,
+    pub repost_id:     Option<i32>,
     pub parent_id:     Option<i32>,
     pub created:       chrono::NaiveDateTime,
     pub content:       Option<String>,
@@ -237,7 +237,7 @@ pub struct MessageVersion {
 pub struct NewMessageVersion {
     pub message_id:    i32,
     pub sticker_id:    Option<i32>,
-    pub post_id:     Option<i32>,
+    pub repost_id:     Option<i32>,
     pub parent_id:     Option<i32>,
     pub created:       chrono::NaiveDateTime,
     pub content:       Option<String>,
