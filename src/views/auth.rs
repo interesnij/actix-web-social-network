@@ -215,7 +215,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             if ipaddr.contains(&"91.239.184.81".to_string()) {
                 get_perm = 60;
             };
-            println!("{:?}", location200.city_ru);
+            println!("{:?}", location200.city.city_ru);
         };
 
         let mut get_device = "a";
