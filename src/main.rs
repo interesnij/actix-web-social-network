@@ -18,13 +18,11 @@ async fn main() -> std::io::Result<()> {
     use actix_files::Files;
     use crate::routes::routes;
     use actix_redis::RedisSession;
-    use actix_session::Session;
     use actix_web::{middleware, web, App, HttpServer, http::header};
 
     HttpServer::new(|| {
         let static_files = Files::new("/static", "static/").show_files_listing();
         let media_files = Files::new("/media", "media/").show_files_listing();
-        //let cors = Cors::default();
         let private_key = actix_web::cookie::Key::generate();
         //let cors = Cors::default()
         //    .allowed_origin("151.248.120.138:9015")

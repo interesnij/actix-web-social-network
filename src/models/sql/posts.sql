@@ -59,7 +59,7 @@ CREATE TABLE posts (
             REFERENCES users(id),
 
     CONSTRAINT fk_posts_category
-        FOREIGN KEY(post_category_id)
+        FOREIGN KEY(post_categorie_id)
             REFERENCES post_categories(id),
 
     CONSTRAINT fk_posts_community

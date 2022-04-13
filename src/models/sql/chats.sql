@@ -59,7 +59,7 @@ CREATE TABLE chat_ie_settings (
     can_see_log       "char",                 -- кто видит логи
 
     CONSTRAINT fk_chat_ie_settings            -- связь с пользователем
-        FOREIGN KEY(chat_users_id)
+        FOREIGN KEY(chat_user_id)
             REFERENCES chat_users(id)
 );
 
@@ -69,7 +69,7 @@ CREATE TABLE messages (
     chat_id      INT NOT NULL,                  -- id чата
     parent_id    INT,                           -- сообщение-родитель
     sticker_id   INT,                           -- id стикера
-    repost_id    INT,                           -- id поста
+    post_id    INT,                           -- id поста
     created      TIMESTAMP NOT NULL,            -- когда создано
     content      VARCHAR(5000),                 -- текст
     unread       BOOLEAN NOT NULL DEFAULT true, -- не прочитано?
@@ -94,7 +94,7 @@ CREATE TABLE messages (
           REFERENCES stickers(id),
 
     CONSTRAINT fk_message_post               -- связь с постом (репост в сообщения)
-        FOREIGN KEY(repost_id)
+        FOREIGN KEY(post_id)
           REFERENCES posts(id)
 );
 
