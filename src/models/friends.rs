@@ -26,8 +26,8 @@ pub struct NewFriend {
 
 
 /////// ConnectIeSetting //////
-#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
-#[belongs_to(Friend)]
+#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[table_name="connect_ie_settings"]
 pub struct ConnectIeSetting {
     pub id:                      i32,
     pub friend_id:               i32,
@@ -57,17 +57,12 @@ pub struct ConnectIeSetting {
     pub can_copy_doc:             Option<char>,
     pub can_copy_music:           Option<char>,
     pub can_copy_survey:          Option<char>,
-    pub can_create_post:         Option<char>,
-    pub can_create_photo:        Option<char>,
-    pub can_create_good:         Option<char>,
-    pub can_create_video:        Option<char>,
-    pub can_create_planner:      Option<char>,
-    pub can_create_doc:          Option<char>,
-    pub can_create_music:        Option<char>,
-    pub can_create_survey:       Option<char>,
-}
-#[derive(Deserialize, Insertable)]
-#[table_name="connect_ie_settings"]
-pub struct NewConnectIeSetting {
-    pub friend_id:                 i32,
+    pub can_create_post:          Option<char>,
+    pub can_create_photo:         Option<char>,
+    pub can_create_good:          Option<char>,
+    pub can_create_video:         Option<char>,
+    pub can_create_planner:       Option<char>,
+    pub can_create_doc:           Option<char>,
+    pub can_create_music:         Option<char>,
+    pub can_create_survey:        Option<char>,
 }
