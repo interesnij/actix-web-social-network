@@ -69,7 +69,7 @@ pub struct ConnectIeSetting {
     pub can_create_music:        Option<char>,
     pub can_create_survey:       Option<char>,
 }
-#[derive(Deserialize)]
+#[derive(Deserialize, Insertable)]
 #[table_name="connect_ie_settings"]
 pub struct NewConnectIeSetting {
     pub friend_id:                 i32,

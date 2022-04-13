@@ -94,7 +94,7 @@ pub struct FollowIeSetting {
     pub can_create_music:        Option<char>,
     pub can_create_survey:       Option<char>,
 }
-#[derive(Deserialize)]
+#[derive(Deserialize, Insertable)]
 #[table_name="follow_ie_settings"]
 pub struct NewFollowIeSetting {
     pub follow_id:                 i32,
