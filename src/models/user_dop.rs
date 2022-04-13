@@ -197,7 +197,7 @@ pub struct UserLoveStatus {
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_love_statuss"]
-pub struct NewUserPartnerOne {
+pub struct NewUserLoveStatus {
     pub user_id:        i32,
     pub male_status:    char,
     pub female_status:  char,
