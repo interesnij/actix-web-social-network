@@ -258,7 +258,7 @@ pub struct UserBrotherSister {
 #[table_name="user_brother_sisters"]
 pub struct NewUserBrotherSister {
     pub brother_user_i:    i32,
-    pub target_id:  i32,
+    pub brother_target_id:  i32,
 }
 
 /////// UserChildren //////
@@ -580,7 +580,7 @@ pub struct NewUserPrivate {
 /////// UserPopulateSmiles //////
 #[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
-#[belongs_to(Smile, foreign_key="smile_id")]
+#[belongs_to(Smile)]
 pub struct UserPopulateSmile {
     pub id:       i32,
     pub user_id:  i32,
@@ -598,7 +598,7 @@ pub struct NewUserPopulateSmile {
 /////// UserPopulateStickers //////
 #[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
-#[belongs_to(Stickers)]
+#[belongs_to(Sticker)]
 pub struct UserPopulateSticker {
     pub id:         i32,
     pub user_id:    i32,
