@@ -1,7 +1,7 @@
 use crate::schema::{
-    community_categories,
-    community_subcategories,
-    communities,
+    community_categorys,
+    community_subcategorys,
+    communitys,
     communities_memberships,
     community_ie_settings,
     community_infos,
