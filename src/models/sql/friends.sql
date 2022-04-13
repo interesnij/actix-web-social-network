@@ -15,7 +15,7 @@ CREATE TABLE friends (
              REFERENCES users(id)
 );
 
-CREATE TABLE connect_ie_settings (
+CREATE TABLE friends_ie_settings (
     id                       SERIAL PRIMARY KEY,
     friend_id                INT NOT NULL,
 
@@ -56,7 +56,7 @@ CREATE TABLE connect_ie_settings (
     can_create_music         "char",
     can_create_survey        "char",
 
-    CONSTRAINT fk_connect_ie_settings
+    CONSTRAINT fk_friends_ie_settings
         FOREIGN KEY(friend_id)
             REFERENCES friends(id)
 );

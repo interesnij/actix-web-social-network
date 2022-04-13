@@ -1,6 +1,6 @@
 use crate::schema::{
     friends,
-    connect_ie_settings,
+    friends_ie_settings,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};

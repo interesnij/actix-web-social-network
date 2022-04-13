@@ -14,7 +14,10 @@ ALTER TABLE Customers
 ALTER COLUMN FirstName TYPE VARCHAR(50);
 
 -- переименовываем таблицу
-ALTER TALBE table_name RENAME TO new_table_name;
+ALTER TABLE table_name RENAME TO new_table_name;
+
+-- удаляем ключ один ко многим
+Alter table название таблицы drop constraint ключ;
 
 -- таблица не ставится почему то
 CREATE TABLE community_member_ie_settings (
