@@ -127,11 +127,11 @@ CREATE TABLE user_love_statuss (
 -- Муж/Жена -------
 CREATE TABLE user_partner_ones (
     id          SERIAL PRIMARY KEY,
-    user_id     INT NOT NULL,
+    partner_user_i     INT NOT NULL,
     partner_id  INT NOT NULL,
 
     CONSTRAINT fk_user_partner_one_user
-         FOREIGN KEY(user_id)
+         FOREIGN KEY(partner_user_i)
              REFERENCES users(id),
 
     CONSTRAINT fk_user_partner_one_partner
@@ -142,11 +142,11 @@ CREATE TABLE user_partner_ones (
 -- Мама -------
 CREATE TABLE user_mom_ones (
     id      SERIAL PRIMARY KEY,
-    user_id INT NOT NULL,
+    mom_user_i INT NOT NULL,
     mom_id  INT NOT NULL,
 
     CONSTRAINT fk_user_mom_one_user
-         FOREIGN KEY(user_id)
+         FOREIGN KEY(mom_user_i)
              REFERENCES users(id),
 
     CONSTRAINT fk_user_mom_one_mom
@@ -157,11 +157,11 @@ CREATE TABLE user_mom_ones (
 -- Папа -------
 CREATE TABLE user_dad_ones (
     id      SERIAL PRIMARY KEY,
-    user_id INT NOT NULL,
+    dad_user_i INT NOT NULL,
     dad_id  INT NOT NULL,
 
     CONSTRAINT fk_user_dad_one_user
-         FOREIGN KEY(user_id)
+         FOREIGN KEY(dad_user_i)
              REFERENCES users(id),
 
     CONSTRAINT fk_user_dad_one_dad
@@ -172,26 +172,26 @@ CREATE TABLE user_dad_ones (
 -- Братья, сёстры -------
 CREATE TABLE user_brother_sisters (
     id        SERIAL PRIMARY KEY,
-    user_id   INT NOT NULL,
-    target_id INT NOT NULL,
+    brother_user_i   INT NOT NULL,
+    brother_target_id INT NOT NULL,
 
     CONSTRAINT fk_user_brother_sister_one_user
-         FOREIGN KEY(user_id)
+         FOREIGN KEY(brother_user_i)
              REFERENCES users(id),
 
     CONSTRAINT fk_user_brother_sister_one_target
-         FOREIGN KEY(target_id)
+         FOREIGN KEY(brother_target_id)
              REFERENCES users(id)
 );
 
 -- Дети -------
 CREATE TABLE user_children_ones (
     id        SERIAL PRIMARY KEY,
-    user_id   INT NOT NULL,
+    child_user_i   INT NOT NULL,
     child_id  INT NOT NULL,
 
     CONSTRAINT fk_user_children_sister_one_user
-         FOREIGN KEY(user_id)
+         FOREIGN KEY(child_user_i)
              REFERENCES users(id),
 
     CONSTRAINT fk_user_children_sister_one_child
@@ -202,11 +202,11 @@ CREATE TABLE user_children_ones (
 -- Внуки -------
 CREATE TABLE user_grandsons_ones (
     id          SERIAL PRIMARY KEY,
-    user_id     INT NOT NULL,
+    grandson_user_i     INT NOT NULL,
     grandson_id INT NOT NULL,
 
     CONSTRAINT fk_user_grandsons_sister_one_user
-         FOREIGN KEY(user_id)
+         FOREIGN KEY(grandson_user_i)
              REFERENCES users(id),
 
     CONSTRAINT fk_user_grandsons_sister_one_grandson
@@ -217,11 +217,11 @@ CREATE TABLE user_grandsons_ones (
 -- Коллеги -------
 CREATE TABLE user_colleagues_ones (
     id            SERIAL PRIMARY KEY,
-    user_id       INT NOT NULL,
+    user_colleague_i       INT NOT NULL,
     colleague_id  INT NOT NULL,
 
     CONSTRAINT fk_user_colleagues_sister_one_user
-         FOREIGN KEY(user_id)
+         FOREIGN KEY(user_colleague_i)
              REFERENCES users(id),
 
     CONSTRAINT fk_user_colleagues_sister_one_colleague
@@ -232,11 +232,11 @@ CREATE TABLE user_colleagues_ones (
 -- Черный список -------
 CREATE TABLE user_blocks (
     id               SERIAL PRIMARY KEY,
-    user_id          INT NOT NULL,
+    user_block_i          INT NOT NULL,
     blocked_user_id  INT NOT NULL,
 
     CONSTRAINT fk_user_blocks_user
-         FOREIGN KEY(user_id)
+         FOREIGN KEY(user_block_i)
              REFERENCES users(id),
 
     CONSTRAINT fk_user_blocks_blocked_user
@@ -262,11 +262,7 @@ CREATE TABLE featured_user_communities (
     user_id       INT,                  -- рекомендуемый друг
     community_id  INT,                  -- рекомендуемое сообщество
     mute          BOOLEAN NOT NULL DEFAULT false, -- не получать рекомендации источника
-    sleep         TIMESTAMP,                       -- не получать рекомендации источника до указанного времени
-
-    CONSTRAINT fk_featured_uc_list
-         FOREIGN KEY(list_id)
-             REFERENCES list_user_communities_keys(id)
+    sleep         TIMESTAMP                       -- не получать рекомендации источника до указанного времени
 
 );
 -- Ключи новостей -------
@@ -277,11 +273,7 @@ CREATE TABLE news_user_communities (
     user_id      INT,                            -- новости друга
     community_id    INT,                       -- новости сообщества
     mute         BOOLEAN NOT NULL DEFAULT false, -- не получать новости источника
-    sleep        TIMESTAMP,                      -- не получать новости источника до указанного времени
-
-    CONSTRAINT fk_news_uc_list
-         FOREIGN KEY(list_id)
-             REFERENCES list_user_communities_keys(id)
+    sleep        TIMESTAMP                     -- не получать новости источника до указанного времени
 );
 -- Ключи уыедомлений -------
 CREATE TABLE notify_user_communities (
@@ -291,11 +283,7 @@ CREATE TABLE notify_user_communities (
     user_id      INT,                            -- уведомления друга
     community_id    INT,                       -- уведомления сообщества
     mute         BOOLEAN NOT NULL DEFAULT false, -- не получать уведомления источника
-    sleep        TIMESTAMP,                      -- не получать уведомления источника до указанного времени
-
-    CONSTRAINT fk_notify_uc_list
-         FOREIGN KEY(list_id)
-             REFERENCES list_user_communities_keys(id)
+    sleep        TIMESTAMP                      -- не получать уведомления источника до указанного времени
 );
 
 ------------------

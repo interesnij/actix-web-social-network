@@ -217,7 +217,7 @@ pub struct UserPartnerOne {
 #[derive(Deserialize, Insertable)]
 #[table_name="user_partner_ones"]
 pub struct NewUserPartnerOne {
-    pub user_id:    i32,
+    pub partner_user_i:    i32,
     pub partner_id: i32,
 }
 
@@ -233,7 +233,7 @@ pub struct UserMomOne {
 #[derive(Deserialize, Insertable)]
 #[table_name="user_mom_ones"]
 pub struct NewUserMomOne {
-    pub user_id: i32,
+    pub mom_user_i: i32,
     pub mom_id:  i32,
 }
 
@@ -249,7 +249,7 @@ pub struct UserDadOne {
 #[derive(Deserialize, Insertable)]
 #[table_name="user_dad_ones"]
 pub struct NewUserDadOne {
-    pub user_id: i32,
+    pub dad_user_i: i32,
     pub dad_id:  i32,
 }
 
@@ -265,7 +265,7 @@ pub struct UserBrotherSister {
 #[derive(Deserialize, Insertable)]
 #[table_name="user_brother_sisters"]
 pub struct NewUserBrotherSister {
-    pub user_id:    i32,
+    pub brother_user_i:    i32,
     pub target_id:  i32,
 }
 
@@ -281,7 +281,7 @@ pub struct UserChildrenOne {
 #[derive(Deserialize, Insertable)]
 #[table_name="user_children_ones"]
 pub struct NewUserChildrenOne {
-    pub user_id:  i32,
+    pub child_user_i:  i32,
     pub child_id: i32,
 }
 
@@ -297,7 +297,7 @@ pub struct UserGrandsonsOne {
 #[derive(Deserialize, Insertable)]
 #[table_name="user_grandsons_ones"]
 pub struct NewUserGrandsonsOne {
-    pub user_id:     i32,
+    pub grandson_user_i:     i32,
     pub grandson_id: i32,
 }
 
@@ -313,7 +313,7 @@ pub struct UserColleaguesOne {
 #[derive(Deserialize, Insertable)]
 #[table_name="user_colleagues_ones"]
 pub struct NewUserColleaguesOne {
-    pub user_id:      i32,
+    pub user_colleague_i:      i32,
     pub colleague_id: i32,
 }
 
@@ -329,7 +329,7 @@ pub struct UserBlock {
 #[derive(Deserialize, Insertable)]
 #[table_name="user_blocks"]
 pub struct NewUserBlock {
-    pub user_id:         i32,
+    pub user_block_i:         i32,
     pub blocked_user_id: i32,
 }
 
@@ -346,7 +346,6 @@ pub struct ListUserCommunitiesKey {
     pub owner:  i32,
 }
 #[derive(Deserialize, Insertable)]
-#[table_name="list_user_communities_keys"]
 pub struct NewListUserCommunitiesKey {
     pub types: String,
     pub name:  String,
@@ -355,7 +354,6 @@ pub struct NewListUserCommunitiesKey {
 
 /////// FeaturedUC //////
 #[derive(Queryable, Serialize, Identifiable, Associations)]
-#[belongs_to(ListUserCommunitiesKey)]
 pub struct FeaturedUserCommunitie {
     pub id:           i32,
     pub owner:        i32,
@@ -366,7 +364,6 @@ pub struct FeaturedUserCommunitie {
     pub sleep:        Option<chrono::NaiveDateTime>,
 }
 #[derive(Deserialize, Insertable)]
-#[table_name="featured_user_communities"]
 pub struct NewFeaturedUserCommunitie {
     pub owner:        i32,
     pub list_id:      i32,
@@ -599,7 +596,7 @@ pub struct NewUserPrivate {
 /////// UserPopulateSmiles //////
 #[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
-#[belongs_to(Smiles, foreign_key="smile_id")]
+#[belongs_to(Smile, foreign_key="smile_id")]
 pub struct UserPopulateSmile {
     pub id:       i32,
     pub user_id:  i32,
