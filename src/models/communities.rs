@@ -86,7 +86,7 @@ pub struct NewCommunitySubcategory {
 
 /////// Community //////
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
-#[belongs_to(CommunitySubcategorys)]
+#[belongs_to(CommunitySubcategory)]
 #[belongs_to(User)]
 pub struct Community {
     pub id:          i32,
