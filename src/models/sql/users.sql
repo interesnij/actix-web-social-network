@@ -247,7 +247,7 @@ CREATE TABLE user_blocks (
 ------------------
 ------------------
 -- Список ключей новостей, уведомлений или рекомендаций (если пользователь хочет их группировать) -------
-CREATE TABLE list_users_communties_keys (
+CREATE TABLE list_user_communties_keys (
     id    SERIAL PRIMARY KEY,
     types INT DEFAULT 0,      -- тип списка: 0 - неактивен, 1 - основной, 2 - пользовательский
     name  VARCHAR(100) NOT NULL,    -- название
