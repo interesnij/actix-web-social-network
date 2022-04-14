@@ -200,7 +200,7 @@ pub struct PostComment {
     pub parent_id:  Option<i32>,
     pub content:    Option<String>,
     pub attach:     Option<String>,
-    pub types:      char,
+    pub types:      String,
     pub created:    chrono::NaiveDateTime,
     pub liked:      i32,
     pub disliked:   i32,
@@ -265,11 +265,11 @@ pub struct PostListPerm {
     pub id:              i32,
     pub user_id:         i32,
     pub post_list_id:         i32,
-    pub can_see_item:    Option<char>,
-    pub can_see_comment: Option<char>,
-    pub create_item:     Option<char>,
-    pub create_comment:  Option<char>,
-    pub can_copy:        Option<char>,
+    pub can_see_item:    Option<String>,
+    pub can_see_comment: Option<String>,
+    pub create_item:     Option<String>,
+    pub create_comment:  Option<String>,
+    pub can_copy:        Option<String>,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="post_list_perms"]

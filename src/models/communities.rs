@@ -94,7 +94,7 @@ pub struct Community {
     pub description: Option<String>,
     pub status:      Option<String>,
     pub types:       i16,
-    pub perm:        char,
+    pub perm:        String,
     pub level:       i16,
     pub have_link:   Option<String>,
     pub b_avatar:    Option<String>,
@@ -189,20 +189,20 @@ pub struct NewCommunityInfo {
 pub struct CommunityPrivate {
     pub id:               i32,
     pub community_id:     i32,
-    pub can_see_member:   char,
-    pub can_see_info:     char,
-    pub can_send_message: char,
-    pub can_see_post:     char,
-    pub can_see_photo:    char,
-    pub can_see_good:     char,
-    pub can_see_video:    char,
-    pub can_see_music:    char,
-    pub can_see_planner:  char,
-    pub can_see_doc:      char,
-    pub can_see_survey:   char,
-    pub can_see_settings: char,
-    pub can_see_log:      char,
-    pub can_see_stat:     char,
+    pub can_see_member:   String,
+    pub can_see_info:     String,
+    pub can_send_message: String,
+    pub can_see_post:     String,
+    pub can_see_photo:    String,
+    pub can_see_good:     String,
+    pub can_see_video:    String,
+    pub can_see_music:    String,
+    pub can_see_planner:  String,
+    pub can_see_doc:      String,
+    pub can_see_survey:   String,
+    pub can_see_settings: String,
+    pub can_see_log:      String,
+    pub can_see_stat:     String,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_privates"]
@@ -405,7 +405,7 @@ pub struct CommunityPhotoListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i16,
-    pub types:    char, // 1 - open, 2 - close
+    pub types:    String, // 1 - open, 2 - close
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_photo_list_positions"]
@@ -423,7 +423,7 @@ pub struct CommunityPostListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i16,
-    pub types:    char, // 1 - open, 2 - close
+    pub types:    String, // 1 - open, 2 - close
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_post_list_positions"]
@@ -441,7 +441,7 @@ pub struct CommunityMusicListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i16,
-    pub types:    char, // 1 - open, 2 - close
+    pub types:    String, // 1 - open, 2 - close
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_music_list_positions"]
@@ -459,7 +459,7 @@ pub struct CommunityGoodListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i16,
-    pub types:    char, // 1 - open, 2 - close
+    pub types:    String, // 1 - open, 2 - close
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_good_list_positions"]
@@ -477,7 +477,7 @@ pub struct CommunityVideoListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i16,
-    pub types:    char, // 1 - open, 2 - close
+    pub types:    String, // 1 - open, 2 - close
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_video_list_positions"]
@@ -495,7 +495,7 @@ pub struct CommunitySurveyListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i16,
-    pub types:    char, // 1 - open, 2 - close
+    pub types:    String, // 1 - open, 2 - close
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_survey_list_positions"]
@@ -513,7 +513,7 @@ pub struct CommunityDocListPosition {
     pub community_id:  i32,
     pub list_id:  i32,
     pub position: i16,
-    pub types:    char, // 1 - open, 2 - close
+    pub types:    String, // 1 - open, 2 - close
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_doc_list_positions"]

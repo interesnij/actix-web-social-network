@@ -64,13 +64,13 @@ pub struct Chat {
     pub position:           i16,
     pub members:            i32,
     pub created:            chrono::NaiveDateTime,
-    pub can_add_members:    char,
-    pub can_fix_item:       char,
-    pub can_mention:        char,
-    pub can_add_admin:      char,
-    pub can_add_design:     char,
-    pub can_see_settings:   char,
-    pub can_see_log:        char,
+    pub can_add_members:    String,
+    pub can_fix_item:       String,
+    pub can_mention:        String,
+    pub can_add_admin:      String,
+    pub can_add_design:     String,
+    pub can_see_settings:   String,
+    pub can_see_log:        String,
 }
 
 #[derive(Deserialize, Insertable)]
@@ -106,7 +106,7 @@ pub struct ChatUser {
     pub id:               i32,
     pub user_id:          i32,
     pub chat_id:          i32,
-    pub types:            char,
+    pub types:            String,
     pub is_administrator: bool,
     pub created:          chrono::NaiveDateTime,
     pub no_disturb:       Option<chrono::NaiveDateTime>,
@@ -127,12 +127,12 @@ pub struct NewChatUser {
 pub struct ChatIeSetting {
     pub id:               i32,
     pub chat_user_id:     i32,
-    pub can_add_in_chat:  Option<char>,
-    pub can_add_fix:      Option<char>,
-    pub can_add_admin:    Option<char>,
-    pub can_add_design:   Option<char>,
-    pub can_see_settings: Option<char>,
-    pub can_see_log:      Option<char>,
+    pub can_add_in_chat:  Option<String>,
+    pub can_add_fix:      Option<String>,
+    pub can_add_admin:    Option<String>,
+    pub can_add_design:   Option<String>,
+    pub can_see_settings: Option<String>,
+    pub can_see_log:      Option<String>,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="chat_ie_settings"]

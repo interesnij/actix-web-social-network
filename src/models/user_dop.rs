@@ -170,7 +170,7 @@ pub struct NewUserAnketa {
 pub struct UserDeleteAnketa {
     pub id:      i32,
     pub user_id: i32,
-    pub answer:  char,
+    pub answer:  String,
     pub other:   Option<String>,
     pub created: chrono::NaiveDateTime,
 }
@@ -210,8 +210,8 @@ pub struct NewUserDeleteAnketa {
 pub struct UserLoveStatus {
     pub id:             i32,
     pub user_id:        i32,
-    pub male_status:    char,
-    pub female_status:  char,
+    pub male_status:    String,
+    pub female_status:  String,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_love_statuss"]
@@ -341,7 +341,7 @@ pub struct NewUserBlock {
 #[derive(Queryable, Serialize, Identifiable)]
 pub struct ListUserCommunitiesKey {
     pub id:     i32,
-    pub types:  char,
+    pub types:  String,
     pub name:   String,
     pub owner:  i32,
 }
@@ -429,7 +429,7 @@ pub struct UserPhotoListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i16,
-    pub types:    char, // 1 - open, 2 - close
+    pub types:    String, // 1 - open, 2 - close
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_photo_list_positions"]
@@ -447,7 +447,7 @@ pub struct UserPostListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i16,
-    pub types:    String, // a - open, b - close 
+    pub types:    String, // a - open, b - close
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_post_list_positions"]
@@ -465,7 +465,7 @@ pub struct UserMusicListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i16,
-    pub types:    char, // 1 - open, 2 - close
+    pub types:    String, // 1 - open, 2 - close
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_music_list_positions"]
@@ -483,7 +483,7 @@ pub struct UserGoodListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i16,
-    pub types:    char, // 1 - open, 2 - close
+    pub types:    String, // 1 - open, 2 - close
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_good_list_positions"]
@@ -501,7 +501,7 @@ pub struct UserVideoListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i16,
-    pub types:    char, // 1 - open, 2 - close
+    pub types:    String, // 1 - open, 2 - close
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_video_list_positions"]
@@ -519,7 +519,7 @@ pub struct UserSurveyListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i16,
-    pub types:    char, // 1 - open, 2 - close
+    pub types:    String, // 1 - open, 2 - close
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_survey_list_positions"]
@@ -537,7 +537,7 @@ pub struct UserDocListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i16,
-    pub types:    char, // 1 - open, 2 - close
+    pub types:    String, // 1 - open, 2 - close
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_doc_list_positions"]
@@ -561,20 +561,20 @@ pub struct NewUserDocListPosition {
 pub struct UserPrivate {
     pub id:                 i32,
     pub user_id:            i32,
-    pub can_see_all:        char,
-    pub can_see_community:  char,
-    pub can_see_info:       char,
-    pub can_see_friend:     char,
-    pub can_send_message:   char,
-    pub can_add_in_chat:    char,
-    pub can_see_post:       char,
-    pub can_see_photo:      char,
-    pub can_see_good:       char,
-    pub can_see_video:      char,
-    pub can_see_music:      char,
-    pub can_see_planner:    char,
-    pub can_see_doc:        char,
-    pub can_see_survey:     char,
+    pub can_see_all:        String,
+    pub can_see_community:  String,
+    pub can_see_info:       String,
+    pub can_see_friend:     String,
+    pub can_send_message:   String,
+    pub can_add_in_chat:    String,
+    pub can_see_post:       String,
+    pub can_see_photo:      String,
+    pub can_see_good:       String,
+    pub can_see_video:      String,
+    pub can_see_music:      String,
+    pub can_see_planner:    String,
+    pub can_see_doc:        String,
+    pub can_see_survey:     String,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_privates"]

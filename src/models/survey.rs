@@ -66,16 +66,16 @@ pub struct SurveyList {
     pub name:            String,
     pub community_id:    Option<i32>,
     pub user_id:      i32,
-    pub types:           char,
+    pub types:           String,
     pub description:     Option<String>,
     pub created:         chrono::NaiveDateTime,
     pub count:           i32,
     pub repost:          i32,
     pub copy:            i32,
     pub position:        i16,
-    pub can_see_el:      char,
-    pub create_el:       char,
-    pub copy_el:         char,
+    pub can_see_el:      String,
+    pub create_el:       String,
+    pub copy_el:         String,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="survey_lists"]
@@ -119,7 +119,7 @@ pub struct Survey {
     pub community_id:    Option<i32>,
     pub user_id:      i32,
     pub survey_list_id:         i32,
-    pub types:           char,
+    pub types:           String,
     pub image:           Option<String>,
     pub is_anonymous:    bool,
     pub is_multiple:     bool,
@@ -200,9 +200,9 @@ pub struct SurveyListPerm {
     pub id:              i32,
     pub user_id:         i32,
     pub survey_list_id:         i32,
-    pub can_see_item:    Option<char>,
-    pub create_item:     Option<char>,
-    pub can_copy:        Option<char>,
+    pub can_see_item:    Option<String>,
+    pub create_item:     Option<String>,
+    pub can_copy:        Option<String>,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="survey_list_perms"]

@@ -72,7 +72,7 @@ pub struct Moderated {
     pub id:              i32,
     pub description:     Option<String>,
     pub verified:        bool,
-    pub status:          char,
+    pub status:          String,
     pub types:           i16,
     pub object_id:       i32,
     pub created:         chrono::NaiveDateTime,
@@ -115,7 +115,7 @@ pub struct ModeratedReport {
     pub user_id:         i32,
     pub moderated_id: i32,
     pub description:      Option<String>,
-    pub types:            char,
+    pub types:            String,
     pub created:          chrono::NaiveDateTime,
 }
 #[derive(Deserialize, Insertable)]
@@ -145,7 +145,7 @@ pub struct ModeratedPenaltie {
     pub expiration:          Option<chrono::NaiveDateTime>,
     pub types:               i16, // описан в самом начале, одно и то же - объект.
     pub object_id:           i32,
-    pub status:              char,
+    pub status:              String,
     pub created:             chrono::NaiveDateTime,
 }
 #[derive(Deserialize, Insertable)]
@@ -170,7 +170,7 @@ pub struct ModeratedLog {
     pub id:              i32,
     pub user_id:      i32,
     pub object_id:       i32,
-    pub action:          char,
+    pub action:          String,
     pub description:     Option<String>,
     pub types:           i16,            // описан в самом начале, одно и то же - объект.
     pub created:         chrono::NaiveDateTime,
@@ -197,7 +197,7 @@ pub struct NewModeratedLog {
 pub struct StaffLog {
     pub id:              i32,
     pub types:           i16,            // описано в полномочиях пользователя
-    pub action:          char,           // создано-удалено и так далее
+    pub action:          String,           // создано-удалено и так далее
     pub manager_id:      i32,
     pub user_id:         i32,
     pub created:         chrono::NaiveDateTime,

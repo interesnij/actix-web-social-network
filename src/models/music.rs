@@ -56,7 +56,7 @@ pub struct Artist {
     pub repost:       i32,
     pub copy:         i32,
     pub position:     i16,
-    pub can_see_el:   char,
+    pub can_see_el:   String,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="artists"]
@@ -90,9 +90,9 @@ pub struct MusicAlbum {
     pub copy:        i32,
     pub position:    i16,
 
-    pub can_see_el:  char,
-    pub create_el:   char,
-    pub copy_el:     char,
+    pub can_see_el:  String,
+    pub create_el:   String,
+    pub copy_el:     String,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="music_albums"]
@@ -152,7 +152,7 @@ pub struct MusicList {
     pub name:         String,
     pub community_id: i32,
     pub user_id:   i32,
-    pub types:        char,
+    pub types:        String,
     pub description:  Option<String>,
     pub image:        Option<String>,
     pub created:      chrono::NaiveDateTime,
@@ -162,9 +162,9 @@ pub struct MusicList {
     pub copy:         i32,
     pub position:     i16,
 
-    pub can_see_el:   char,
-    pub create_el:    char,
-    pub copy_el:      char,
+    pub can_see_el:   String,
+    pub create_el:    String,
+    pub copy_el:      String,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="music_lists"]
@@ -172,7 +172,7 @@ pub struct NewMusicList {
     pub name:         String,
     pub community_id: i32,
     pub user_id:   i32,
-    pub types:        char,
+    pub types:        String,
     pub description:  Option<String>,
     pub image:        Option<String>,
     pub created:      chrono::NaiveDateTime,
@@ -213,7 +213,7 @@ pub struct Music {
     pub music_list_id:         i32,
     pub genre_id:        Option<i32>,
     pub album_id:        Option<i32>,
-    pub types:           char,
+    pub types:           String,
     pub file:            String,
     pub image:           Option<i32>,
     pub created:         chrono::NaiveDateTime,
@@ -232,7 +232,7 @@ pub struct NewMusic {
     pub music_list_id:         i32,
     pub genre_id:        Option<i32>,
     pub album_id:        Option<i32>,
-    pub types:           char,
+    pub types:           String,
     pub file:            String,
     pub image:           Option<i32>,
     pub created:         chrono::NaiveDateTime,
@@ -288,9 +288,9 @@ pub struct MusicListPerm {
     pub id:              i32,
     pub user_id:         i32,
     pub music_list_id:         i32,
-    pub can_see_item:    Option<char>,
-    pub create_item:     Option<char>,
-    pub can_copy:        Option<char>,
+    pub can_see_item:    Option<String>,
+    pub create_item:     Option<String>,
+    pub can_copy:        Option<String>,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="music_list_perms"]
