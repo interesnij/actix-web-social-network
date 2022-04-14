@@ -330,11 +330,11 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             repost:          0,
             copy:            0,
             position:        0,
-            can_see_el:      'a',
-            can_see_comment: 'a',
-            create_el:       'g',
-            create_comment:  'a',
-            copy_el:         'g',
+            can_see_el:      'a'.to_string(),
+            can_see_comment: 'a'.to_string(),
+            create_el:       'g'.to_string(),
+            create_comment:  'a'.to_string(),
+            copy_el:         'g'.to_string(),
         };
         let _posts_list = diesel::insert_into(schema::post_lists::table)
             .values(&_new_posts_list)
@@ -345,7 +345,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             user_id:  _new_user.id,
             list_id:  _posts_list.id,
             position: 0,
-            types:    'a',
+            types:    'a'.to_string(),
         };
         let _posts_list_position = diesel::insert_into(schema::user_post_list_positions::table)
             .values(&_new_posts_list_position)
