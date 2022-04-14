@@ -254,7 +254,6 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
         };
 
         // записываем местоположение нового пользователя
-
         let _geo_url = "http://api.sypexgeo.net/J5O6d/json/".to_owned() + &ipaddr;
         let _geo_request = reqwest::get(_geo_url).await.expect("E.");
         let new_request = _geo_request.text().await.unwrap();
@@ -272,6 +271,25 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             .values(&_user_location)
             .get_result::<UserLocation>(&_connection)
             .expect("Error saving user_location.");
+
+        // записываем IP нового пользователя
+        let _user_ip = NewIpUser {
+            user_id: _new_user.id,
+            ip: ipaddr,
+        };
+        diesel::insert_into(schema::ip_users::table)
+            .values(&_user_ip)
+            .get_result::<IpUser>(&_connection)
+            .expect("Error saving user_ip.");
+
+        // записываем профиль нового пользователя
+        let _user_profile = NewUserProfile {
+            user_id: _new_user.id,
+        };
+        diesel::insert_into(schema::user_profiles::table)
+            .values(&_user_profile)
+            .get_result::<UserProfile>(&_connection)
+            .expect("Error saving user_profile.");
 
         set_current_user(&session, &_session_user);
     }
