@@ -40,7 +40,7 @@ CREATE TABLE user_profiles (
     tracks         INT DEFAULT 0,
     videos         INT DEFAULT 0,
     articles       INT DEFAULT 0,
-    _time          TIMESTAMP,
+    timer          FLOAT,
     height         FLOAT,
     activity       VARCHAR(500),
     interests      VARCHAR(500),
