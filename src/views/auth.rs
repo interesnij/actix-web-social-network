@@ -187,6 +187,14 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
         UserPostNotification, NewUserPostNotification,
         UserSurveyNotification, NewUserSurveyNotification,
         UserNotification, NewUserNotification,
+
+        PostList, NewPostList,
+        PhotoList, NewPhotoList,
+        DocList, NewDocList,
+        VideoList, NewVideoList,
+        SurveyList, NewSurveyList,
+        MusicList, NewMusicList,
+        GoodList, NewGoodList,
     };
      // Если пользователь не аноним, то отправляем его на страницу новостей
     if is_signed_in(&session) {
