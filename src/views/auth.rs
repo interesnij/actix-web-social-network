@@ -186,7 +186,6 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
         UserMusicNotification, NewUserMusicNotification,
         UserPostNotification, NewUserPostNotification,
         UserSurveyNotification, NewUserSurveyNotification,
-        UserDocNotification, NewUserDocNotification,
         UserNotification, NewUserNotification,
     };
      // Если пользователь не аноним, то отправляем его на страницу новостей
@@ -261,13 +260,13 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
 
         _user_location = NewUserLocation {
             user_id: _new_user.id,
-            city_ru: location200.city.name_ru,
-            city_en: location200.city.name_en,
-            region_ru: location200.region.name_ru,
-            region_en: location200.region.name_en,
-            country_ru: location200.country.name_ru,
-            country_en: location200.country.name_en,
-        }
+            city_ru: Some(location200.city.name_ru),
+            city_en: Some(location200.city.name_en),
+            region_ru: Some(location200.region.name_ru),
+            region_en: Some(location200.region.name_en),
+            country_ru: Some(location200.country.name_ru),
+            country_en: Some(location200.country.name_en),
+        };
         diesel::insert_into(schema::user_locations::table)
             .values(&_user_location)
             .get_result::<UserLocation>(&_connection)
