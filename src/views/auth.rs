@@ -258,7 +258,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             phone: _new_user.phone,
         };
 
-        _user_location = NewUserLocation {
+        let _user_location = NewUserLocation {
             user_id: _new_user.id,
             city_ru: Some(location200.city.name_ru),
             city_en: Some(location200.city.name_en),
