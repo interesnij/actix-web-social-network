@@ -18,7 +18,7 @@ CREATE TABLE artists (
     copy        INT NOT NULL,
     position    SMALLINT NOT NULL,
 
-    can_see_el  "char" NOT NULL,
+    can_see_el  "char" NOT NULL
 );
 
 CREATE TABLE music_albums (
@@ -58,10 +58,10 @@ CREATE TABLE music_lists (
     image           VARCHAR(500),
     created         TIMESTAMP NOT NULL,
 
-    count           INT DEFAULT NOT NULL,
-    repost          INT DEFAULT NOT NULL,
-    copy            INT DEFAULT NOT NULL,
-    position        SMALLINT DEFAULT NOT NULL,
+    count           INT NOT NULL,
+    repost          INT NOT NULL,
+    copy            INT NOT NULL,
+    position        SMALLINT NOT NULL,
 
     can_see_el      "char" NOT NULL,
     create_el       "char" NOT NULL,
@@ -142,9 +142,9 @@ CREATE TABLE music_list_perms (
     id            SERIAL PRIMARY KEY,
     user_id       INT NOT NULL,
     music_list_id       INT NOT NULL,
-    can_see_item  NOT NULL,
-    create_item   NOT NULL,
-    can_copy      NOT NULL,
+    can_see_item  INT NOT NULL,
+    create_item   INT NOT NULL,
+    can_copy      INT NOT NULL,
 
    CONSTRAINT fk_music_list_perm_user
         FOREIGN KEY(user_id)
