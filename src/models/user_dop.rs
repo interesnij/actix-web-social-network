@@ -132,13 +132,13 @@ pub struct NewUserLocation {
 pub struct IpUser {
     pub id:       i32,
     pub user_id:  i32,
-    pub ip:       String,
+    pub ip:       Option<String>,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="ip_users"]
 pub struct NewIpUser {
     pub user_id: i32,
-    pub ip:      String,
+    pub ip:      Option<String>,
 }
 
 /////// UserAnketa //////

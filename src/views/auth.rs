@@ -275,7 +275,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
         // записываем IP нового пользователя
         let _user_ip = NewIpUser {
             user_id: _new_user.id,
-            ip: ipaddr.to_string(), 
+            ip: Some(ipaddr),  
         };
         diesel::insert_into(schema::ip_users::table)
             .values(&_user_ip)
