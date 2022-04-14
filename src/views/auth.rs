@@ -317,7 +317,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             user_id:         _new_user.id,
             types:           String,
             description:     None,
-            created:         chrono::NaiveDateTime,
+            created:         NaiveDateTime::new(d, t),
             count:           0,
             repost:          0,
             copy:            0,
