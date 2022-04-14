@@ -60,7 +60,7 @@ pub fn get_default_template_2(req: HttpRequest, session: Session) -> (String, te
 
     if is_signed_in(&session) {
         let _request_user = get_current_user(&session);
-        println!("{:?}", _request_user.id);
+        println!("request_user {:?}", _request_user);
         match _request_user {
             Ok(s) => data.insert("request_user", &users
                 .filter(schema::users::id.eq(s.id))
