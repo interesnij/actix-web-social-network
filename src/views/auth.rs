@@ -330,11 +330,11 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             repost:          0,
             copy:            0,
             position:        0,
-            can_see_el:      'a'.to_string(),
-            can_see_comment: 'a'.to_string(),
-            create_el:       'g'.to_string(),
-            create_comment:  'a'.to_string(),
-            copy_el:         'g'.to_string(),
+            can_see_el:      "a",
+            can_see_comment: "a",
+            create_el:       "g",
+            create_comment:  "a",
+            copy_el:         "g",
         };
         let _posts_list = diesel::insert_into(schema::post_lists::table)
             .values(&_new_posts_list)
