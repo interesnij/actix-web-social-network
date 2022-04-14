@@ -142,13 +142,13 @@ pub async fn login(mut payload: Multipart, session: Session, req: HttpRequest) -
 }
 
 #[derive(Debug, Deserialize)]
-pub struct UserLocation {
+pub struct UserLoc {
     pub city:      CityLocation,
     pub region:    RegionLocation,
     pub country:   CountryLocation,
 }
 #[derive(Debug, Deserialize)]
-pub struct CityLocation {
+pub struct CityLoc {
     pub name_ru:    String,
     pub name_en:    String,
 }
@@ -158,52 +158,50 @@ pub struct RegionLocation {
     pub name_en:    String,
 }
 #[derive(Debug, Deserialize)]
-pub struct CountryLocation {
+pub struct CountryLoc {
     pub name_ru:    String,
     pub name_en:    String,
 }
 
 pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responder {
     use crate::schema::users::dsl::users;
-    use crate::schema::user_locations::dsl::user_locations;
     use crate::utils::{hash_password, set_current_user, to_home};
     use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
     use crate::models::{
-        //UserLocation, NewUserLocation,
-        //UserProfile, NewUserProfile,
-        //IpUser, NewIpUser,
-        //UserPhotoListPosition, NewUserPhotoListPosition,
-        //UserPostListPosition, NewUserPostListPosition,
-        //UserMusicListPosition, NewUserMusicListPosition,
-        //UserGoodListPosition, NewUserGoodListPosition,
-        //UserVideoListPosition, NewUserVideoListPosition,
-        //UserSurveyListPosition, NewUserSurveyListPosition,
-        //UserDocListPosition, NewUserDocListPosition,
-        //UserPrivate, NewUserPrivate,
+        UserLocation, NewUserLocation,
+        UserProfile, NewUserProfile,
+        IpUser, NewIpUser,
+        UserPhotoListPosition, NewUserPhotoListPosition,
+        UserPostListPosition, NewUserPostListPosition,
+        UserMusicListPosition, NewUserMusicListPosition,
+        UserGoodListPosition, NewUserGoodListPosition,
+        UserVideoListPosition, NewUserVideoListPosition,
+        UserSurveyListPosition, NewUserSurveyListPosition,
+        UserDocListPosition, NewUserDocListPosition,
+        UserPrivate, NewUserPrivate,
 
-        //UserPhotoNotification, NewUserPhotoNotification,
-        //UserGoodNotification, NewUserGoodNotification,
-        //UserVideoNotification, NewUserVideoNotification,
-        //UserMusicNotification, NewUserMusicNotification,
-        //UserPostNotification, NewUserPostNotification,
-        //UserSurveyNotification, NewUserSurveyNotification,
-        //UserNotification, NewUserNotification,
+        UserPhotoNotification, NewUserPhotoNotification,
+        UserGoodNotification, NewUserGoodNotification,
+        UserVideoNotification, NewUserVideoNotification,
+        UserMusicNotification, NewUserMusicNotification,
+        UserPostNotification, NewUserPostNotification,
+        UserSurveyNotification, NewUserSurveyNotification,
+        UserDocNotification, NewUserDocNotification,
+        UserNotification, NewUserNotification,
     };
-
+     // Если пользователь не аноним, то отправляем его на страницу новостей
     if is_signed_in(&session) {
         to_home();
     }
 
     let _connection = establish_connection();
     let params = web::Query::<NewUserForm>::from_query(&req.query_string());
-    println!("!!!!");
     if params.is_ok() {
         println!("params ok!");
 
-        let location200: UserLocation;
         let params_2 = params.unwrap();
         let mut get_perm = 1;
-        let mut location200: UserLocation;
+        let mut location200: UserLoc;
         let mut ipaddr: String;
 
         if let Some(val) = &req.peer_addr() {
@@ -261,7 +259,19 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             phone: _new_user.phone,
         };
 
-
+        _user_location = NewUserLocation {
+            user_id: _new_user.id,
+            city_ru: location200.city.name_ru,
+            city_en: location200.city.name_en,
+            region_ru: location200.region.name_ru,
+            region_en: location200.region.name_en,
+            country_ru: location200.country.name_ru,
+            country_en: location200.country.name_en,
+        }
+        diesel::insert_into(schema::user_locations::table)
+            .values(&_user_location)
+            .get_result::<UserLocation>(&_connection)
+            .expect("Error saving user_location.");
 
         set_current_user(&session, &_session_user);
     }
