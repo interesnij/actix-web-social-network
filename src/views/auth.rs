@@ -200,15 +200,10 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
 
         let params_2 = params.unwrap();
         let mut get_perm = 1;
-        let mut location200: UserLoc;
         let mut ipaddr: String;
 
         if let Some(val) = &req.peer_addr() {
             ipaddr = val.ip().to_string();
-            let _url = "http://api.sypexgeo.net/J5O6d/json/".to_owned() + &ipaddr;
-            let __request = reqwest::get(_url).await.expect("E.");
-            let new_request = __request.text().await.unwrap();
-            location200 = serde_json::from_str(&new_request).unwrap();
             if ipaddr.contains(&"91.239.184.81".to_string()) {
                 get_perm = 60;
             };
@@ -258,6 +253,11 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             phone: _new_user.phone,
         };
 
+        // записываем местоположение нового пользователя
+        let _url = "http://api.sypexgeo.net/J5O6d/json/".to_owned() + &ipaddr;
+        let _geo_request = reqwest::get(_url).await.expect("E.");
+        let new_request = _geo_request.text().await.unwrap();
+        let location200: UserLoc = serde_json::from_str(&new_request).unwrap();
         let _user_location = NewUserLocation {
             user_id: _new_user.id,
             city_ru: Some(location200.city.name_ru),
