@@ -260,12 +260,12 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
 
         let _user_location = NewUserLocation {
             user_id: _new_user.id,
-            city_ru: Some(&location200.city.name_ru),
-            city_en: Some(&location200.city.name_en),
-            region_ru: Some(&location200.region.name_ru),
-            region_en: Some(&location200.region.name_en),
-            country_ru: Some(&location200.country.name_ru),
-            country_en: Some(&location200.country.name_en),
+            city_ru: Some(location200.city.name_ru),
+            city_en: Some(location200.city.name_en),
+            region_ru: Some(location200.region.name_ru),
+            region_en: Some(location200.region.name_en),
+            country_ru: Some(location200.country.name_ru),
+            country_en: Some(location200.country.name_en),
         };
         diesel::insert_into(schema::user_locations::table)
             .values(&_user_location)
