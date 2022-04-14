@@ -141,10 +141,10 @@ CREATE TABLE community_music_list_collections (
 CREATE TABLE music_list_perms (
     id            SERIAL PRIMARY KEY,
     user_id       INT NOT NULL,
-    music_list_id       INT NOT NULL,
-    can_see_item  INT NOT NULL,
-    create_item   INT NOT NULL,
-    can_copy      INT NOT NULL,
+    music_list_id INT NOT NULL,
+    can_see_item  "char",
+    create_item   "char",
+    can_copy      "char",
 
    CONSTRAINT fk_music_list_perm_user
         FOREIGN KEY(user_id)

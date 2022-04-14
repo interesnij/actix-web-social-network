@@ -3,7 +3,7 @@ use crate::schema::{
     artists,
     music_albums,
     music_lists,
-    music,
+    musics,
     user_music_list_collections,
     community_music_list_collections,
     music_list_perms,
@@ -296,7 +296,7 @@ pub struct MusicListPerm {
 #[table_name="music_list_perms"]
 pub struct NewMusicListPerm {
     pub user_id:         i32,
-    pub music_list_id:         i32,
+    pub music_list_id:   i32,
     pub can_see_item:    Option<String>,
     pub create_item:     Option<String>,
     pub can_copy:        Option<String>,
