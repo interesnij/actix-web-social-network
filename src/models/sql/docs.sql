@@ -13,9 +13,7 @@ CREATE TABLE doc_lists (
     position        SMALLINT NOT NULL,
 
     can_see_el      "char" NOT NULL,
-    can_see_comment "char" NOT NULL,
     create_el       "char" NOT NULL,
-    create_comment  "char" NOT NULL,
     copy_el         "char" NOT NULL,
 
     CONSTRAINT fk_doc_lists_creator
