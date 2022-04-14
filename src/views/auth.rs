@@ -296,15 +296,15 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             tracks: 0,
             videos: 0,
             articles: 0,
-            _time: NaiveDateTime,
+            _time: NaiveDateTime(NaiveDate::from_ymd(0, 0, 0), NaiveTime::from_hms_milli(0, 0, 0, 0)),
             height: (0.0),
-            activity: Null,
-            interests: Null,
-            favorite_music: Null,
-            favorite_films: Null,
-            favorite_books: Null,
-            favorite_game: Null,
-            about: Null,
+            activity: None,
+            interests: None,
+            favorite_music: None,
+            favorite_films: None,
+            favorite_books: None,
+            favorite_game: None,
+            about: None,
         };
         diesel::insert_into(schema::user_profiles::table)
             .values(&_user_profile)
