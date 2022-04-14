@@ -150,8 +150,8 @@ pub struct NewMusicAlbum {
 pub struct MusicList {
     pub id:           i32,
     pub name:         String,
-    pub community_id: i32,
-    pub user_id:   i32,
+    pub community_id: Option<i32>,
+    pub user_id:      i32,
     pub types:        String,
     pub description:  Option<String>,
     pub image:        Option<String>,
@@ -170,7 +170,7 @@ pub struct MusicList {
 #[table_name="music_lists"]
 pub struct NewMusicList {
     pub name:         String,
-    pub community_id: i32,
+    pub community_id: Option<i32>,,
     pub user_id:   i32,
     pub types:        String,
     pub description:  Option<String>,
