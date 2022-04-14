@@ -77,7 +77,27 @@ pub struct UserProfile {
 #[derive(Deserialize, Insertable)]
 #[table_name="user_profiles"]
 pub struct NewUserProfile {
-    pub user_id: i32,
+    pub user_id:        i32,
+    pub posts:          i32,
+    pub views_post:     i32,
+    pub friends:        i32,
+    pub follows:        i32,
+    pub communities:    i32,
+    pub photos:         i32,
+    pub goods:          i32,
+    pub docs:           i32,
+    pub tracks:         i32,
+    pub videos:         i32,
+    pub articles:       i32,
+    pub _time:          chrono::NaiveDateTime,
+    pub height:         Option<f32>,
+    pub activity:       Option<String>,
+    pub interests:      Option<String>,
+    pub favorite_music: Option<String>,
+    pub favorite_films: Option<String>,
+    pub favorite_books: Option<String>,
+    pub favorite_game:  Option<String>,
+    pub about:          Option<String>,
 }
 
 /////// UserLocation //////

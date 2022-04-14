@@ -285,6 +285,26 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
         // записываем профиль нового пользователя
         let _user_profile = NewUserProfile {
             user_id: _new_user.id,
+            posts: 0,
+            views_post: 0,
+            friends: 0,
+            follows: 0,
+            communities: 0,
+            photos: 0,
+            goods: 0,
+            docs: 0,
+            tracks: 0,
+            videos: 0,
+            articles: 0,
+            _time: NaiveDateTime,
+            height: (0.0),
+            activity: Null,
+            interests: Null,
+            favorite_music: Null,
+            favorite_films: Null,
+            favorite_books: Null,
+            favorite_game: Null,
+            about: Null,
         };
         diesel::insert_into(schema::user_profiles::table)
             .values(&_user_profile)
