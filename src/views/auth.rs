@@ -254,8 +254,8 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
         };
 
         // записываем местоположение нового пользователя
-        let _url = "http://api.sypexgeo.net/J5O6d/json/".to_owned() + &ipaddr;
-        let _geo_request = reqwest::get(_url).await.expect("E.");
+        let _geo_url = "http://api.sypexgeo.net/J5O6d/json/".to_owned() + ipaddr;
+        let _geo_request = reqwest::get(_geo_url).await.expect("E.");
         let new_request = _geo_request.text().await.unwrap();
         let location200: UserLoc = serde_json::from_str(&new_request).unwrap();
         let _user_location = NewUserLocation {
