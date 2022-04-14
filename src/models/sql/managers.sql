@@ -6,7 +6,7 @@ CREATE TABLE moderateds (
     types         SMALLINT NOT NULL,
     object_id     INT NOT NULL,
     created       TIMESTAMP NOT NULL,
-    count         INT DEFAULT NOT NULL
+    count         INT NOT NULL
 );
 
 CREATE TABLE moderated_reports (
