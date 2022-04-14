@@ -319,7 +319,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
 
         // создаем список записей нового пользователя,
         // а также запись в позициях списков записей
-        let _new_posts_list = NewPhotoList {
+        let _new_posts_list = NewPostList {
             name:            "Список записей".to_string(),
             community_id:    None,
             user_id:         _new_user.id,
