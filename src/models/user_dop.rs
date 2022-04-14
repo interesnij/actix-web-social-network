@@ -24,7 +24,7 @@ use crate::schema::{
     user_video_list_positions,
     user_survey_list_positions,
     user_doc_list_positions,
-    color_settings,
+    design_settings,
     user_privates,
     user_notifications,
     user_profile_notifications,
@@ -779,7 +779,7 @@ pub struct NewUserVideoNotification {
 #[belongs_to(User)]
 pub struct UserGoodNotification {
     pub id:                     i32,
-    pub user_id:           i32,
+    pub user_id:                i32,
     pub comment:                bool,
     pub comment_reply:          bool,
     pub mention:                bool,
@@ -824,17 +824,17 @@ pub struct NewUserMusicNotification {
     pub repost:    bool,
 }
 
-/////// color_settings //////
+/////// design_settings //////
 #[derive(Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
-pub struct ColorSetting {
-    pub id:      i32,
-    pub user_id: i32,
-    pub color:   String,
+pub struct DesignSetting {
+    pub id:         i32,
+    pub user_id:    i32,
+    pub background: String,
 }
 #[derive(Deserialize, Insertable)]
-#[table_name="color_settings"]
-pub struct NewColorSetting {
-    pub user_id:  i32,
-    pub color:    String,
+#[table_name="design_settings"]
+pub struct NewDesignSetting {
+    pub user_id:    i32,
+    pub background: String,
 }

@@ -171,7 +171,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
         UserLocation, NewUserLocation,
         UserProfile, NewUserProfile,
         IpUser, NewIpUser,
-        ColorSetting, NewColorSetting,
+        DesignSetting, NewDesignSetting,
         UserPhotoListPosition, NewUserPhotoListPosition,
         UserPostListPosition, NewUserPostListPosition,
         UserMusicListPosition, NewUserMusicListPosition,
@@ -764,14 +764,14 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             .expect("Error saving user_survey_notification.");
 
         // записываем уведомления роликов нового пользователя
-        let _color_setting = NewColorSetting {
-            user_id:  _new_user.id,
-            color:    "a".to_string(),
+        let _design_settings = NewDesignSetting {
+            user_id:    _new_user.id,
+            background: "a".to_string(), 
         };
-        diesel::insert_into(schema::color_settings::table)
-            .values(&_color_setting)
-            .get_result::<ColorSetting>(&_connection)
-            .expect("Error saving color_settings.");
+        diesel::insert_into(schema::design_settings::table)
+            .values(&_design_settings)
+            .get_result::<DesignSetting>(&_connection)
+            .expect("Error saving design_settings.");
 
         set_current_user(&session, &_session_user);
     }

@@ -356,12 +356,12 @@ CREATE TABLE user_doc_list_positions (
 -- Приватность пользователя
 
 -- Настройка дизайна -------
-CREATE TABLE color_settings (
-    id        SERIAL PRIMARY KEY,
-    user_id   INT NOT NULL,
-    color     "char" NOT NULL,
+CREATE TABLE design_settings ( 
+    id         SERIAL PRIMARY KEY,
+    user_id    INT NOT NULL,
+    background "char" NOT NULL,
 
-    CONSTRAINT fk_color_settings
+    CONSTRAINT fk_design_settings
          FOREIGN KEY(user_id)
              REFERENCES users(id)
 );
@@ -473,17 +473,17 @@ CREATE TABLE user_video_notifications (
 CREATE TABLE user_good_notifications (
     id                      SERIAL PRIMARY KEY,
     user_id                 INT NOT NULL,
-    comment                 BOOLEAN DEFAULT true,
-    comment_reply           BOOLEAN DEFAULT true,
-    mention                 BOOLEAN DEFAULT true,
-    comment_mention         BOOLEAN DEFAULT true,
-    repost                  BOOLEAN DEFAULT true,
-    liked                   BOOLEAN DEFAULT true,
-    disliked                BOOLEAN DEFAULT true,
-    comment_liked           BOOLEAN DEFAULT true,
-    comment_disliked        BOOLEAN DEFAULT true,
-    comment_reply_liked     BOOLEAN DEFAULT true,
-    comment_reply_disliked  BOOLEAN DEFAULT true,
+    comment                 BOOLEAN NOT NULL DEFAULT true,
+    comment_reply           BOOLEAN NOT NULL DEFAULT true,
+    mention                 BOOLEAN NOT NULL DEFAULT true,
+    comment_mention         BOOLEAN NOT NULL DEFAULT true,
+    repost                  BOOLEAN NOT NULL DEFAULT true,
+    liked                   BOOLEAN NOT NULL DEFAULT true,
+    disliked                BOOLEAN NOT NULL DEFAULT true,
+    comment_liked           BOOLEAN NOT NULL DEFAULT true,
+    comment_disliked        BOOLEAN NOT NULL DEFAULT true,
+    comment_reply_liked     BOOLEAN NOT NULL DEFAULT true,
+    comment_reply_disliked  BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT fk_user_good_notifications
          FOREIGN KEY(user_id)
@@ -495,7 +495,7 @@ CREATE TABLE user_survey_notifications (
     id                      SERIAL PRIMARY KEY,
     user_id                 INT NOT NULL,
     vote                    BOOLEAN NOT NULL DEFAULT true,
-    repost                  BOOLEAN NOT NULL DEFAULT true, 
+    repost                  BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT fk_user_survey_notifications
          FOREIGN KEY(user_id)
