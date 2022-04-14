@@ -309,6 +309,41 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             .get_result::<UserProfile>(&_connection)
             .expect("Error saving user_profile.");
 
+        // создаем список записей нового пользователя,
+        // а также запись в позициях списков записей
+        let _new_posts_list = NewPhotoList {
+            name:            "Список записей".to_string(),
+            community_id:    None,
+            user_id:         _new_user.id,
+            types:           String,
+            description:     None,
+            created:         chrono::NaiveDateTime,
+            count:           0,
+            repost:          0,
+            copy:            0,
+            position:        0,
+            can_see_el:      'a',
+            can_see_comment: 'a',
+            create_el:       'g',
+            create_comment:  'a',
+            copy_el:         'g',
+        };
+        let _posts_list = diesel::insert_into(schema::post_lists::table)
+            .values(&_new_posts_list)
+            .get_result::<PostList>(&_connection)
+            .expect("Error saving post_list.");
+
+        let _new_posts_list_position = NewUserPostListPosition {
+            user_id:  _new_user.id,
+            list_id:  _posts_list.id,
+            position: 0,
+            types:    'a',
+        };
+        let _posts_list_position = diesel::insert_into(schema::user_post_list_positions::table)
+            .values(&_new_posts_list_position)
+            .get_result::<UserPostListPosition>(&_connection)
+            .expect("Error saving post_list_position.");
+
         set_current_user(&session, &_session_user);
     }
     HttpResponse::Ok().body(format!("ok"))
