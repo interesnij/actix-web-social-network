@@ -319,6 +319,11 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
 
         // создаем список записей нового пользователя,
         // а также запись в позициях списков записей
+        let _can_see_el = 'a';
+        let _can_see_comment = 'a';
+        let _create_el = 'g';
+        let _create_comment = 'a';
+        let _copy_el = 'g';
         let _new_posts_list = NewPostList {
             name:            "Список записей".to_string(),
             community_id:    None,
@@ -330,11 +335,11 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             repost:          0,
             copy:            0,
             position:        0,
-            can_see_el:      "a".to_string(),
-            can_see_comment: "a".to_string(),
-            create_el:       "g".to_string(),
-            create_comment:  "a".to_string(),
-            copy_el:         "g".to_string(),
+            can_see_el:      _can_see_el.to_string(),
+            can_see_comment: _can_see_comment.to_string(),
+            create_el:       _create_el.to_string(),
+            create_comment:  _create_comment.to_string(),
+            copy_el:         _copy_el.to_string(),
         };
         let _posts_list = diesel::insert_into(schema::post_lists::table)
             .values(&_new_posts_list)
