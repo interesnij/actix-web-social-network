@@ -63,8 +63,8 @@ pub struct UserProfile {
     pub tracks:         i32,
     pub videos:         i32,
     pub articles:       i32,
-    pub timer:          u64,
-    pub height:         u64,
+    pub timer:          f64,
+    pub height:         f64,
     pub activity:       Option<String>,
     pub interests:      Option<String>,
     pub favorite_music: Option<String>,
@@ -89,8 +89,8 @@ pub struct NewUserProfile {
     pub tracks:         i32,
     pub videos:         i32,
     pub articles:       i32,
-    pub timer:          u64,
-    pub height:         u64,
+    pub timer:          f64,
+    pub height:         f64,
     pub activity:       Option<String>,
     pub interests:      Option<String>,
     pub favorite_music: Option<String>,
@@ -565,6 +565,7 @@ pub struct NewUserDocListPosition {
 pub struct UserPrivate {
     pub id:                 i32,
     pub user_id:            i32,
+    pub can_see_all:        char,
     pub can_see_community:  char,
     pub can_see_info:       char,
     pub can_see_friend:     char,
@@ -583,6 +584,7 @@ pub struct UserPrivate {
 #[table_name="user_privates"]
 pub struct NewUserPrivate {
     pub user_id:            i32,
+    pub can_see_all:        String,
     pub can_see_community:  String,
     pub can_see_info:       String,
     pub can_see_friend:     String,

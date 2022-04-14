@@ -40,8 +40,8 @@ CREATE TABLE user_profiles (
     tracks         INT DEFAULT 0,
     videos         INT DEFAULT 0,
     articles       INT DEFAULT 0,
-    timer          FLOAT,
-    height         FLOAT,
+    timer          DECIMAL,
+    height         DECIMAL,
     activity       VARCHAR(500),
     interests      VARCHAR(500),
     favorite_music VARCHAR(500),
@@ -374,6 +374,7 @@ CREATE TABLE color_settings (
 CREATE TABLE user_privates (
     id                SERIAL PRIMARY KEY,
     user_id           INT NOT NULL,
+    can_see_all       "char" NOT NULL, -- Для кого профиль открыт...
     can_see_community "char" NOT NULL, -- Кто видит сообщества
     can_see_info      "char" NOT NULL,      -- Кто видит информацию
     can_see_friend    "char" NOT NULL,    -- Кто видит друзей

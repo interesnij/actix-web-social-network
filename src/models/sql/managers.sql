@@ -22,14 +22,14 @@ CREATE TABLE moderated_reports (
             REFERENCES users(id),
 
     CONSTRAINT fk_moderated_reports_moderated_object
-        FOREIGN KEY(moderated_object_id)
+        FOREIGN KEY(moderated_id)
             REFERENCES moderateds(id)
 );
 
 CREATE TABLE moderated_penalties (
     id                  SERIAL PRIMARY KEY,
     user_id          INT NOT NULL,
-    moderated_object INT NOT NULL,
+    moderated_id INT NOT NULL,
     expiration          TIMESTAMP,
     types               SMALLINT NOT NULL,
     object_id           INT NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE moderated_penalties (
             REFERENCES users(id),
 
     CONSTRAINT fk_moderated_penalties_moderated_object
-        FOREIGN KEY(moderated_object_id)
+        FOREIGN KEY(moderated_id)
             REFERENCES moderateds(id)
 );
 
