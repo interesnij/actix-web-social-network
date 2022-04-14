@@ -1,6 +1,6 @@
 CREATE TABLE post_categories (
     id    SERIAL PRIMARY KEY,
-    name  VARCHAR(100),
+    name  VARCHAR(100) NOT NULL,
     --avatar VARCHAR(500),
     position SMALLINT NOT NULL DEFAULT 0
 );
@@ -9,14 +9,14 @@ CREATE TABLE post_lists (
     id              SERIAL PRIMARY KEY,
     name            VARCHAR(100) NOT NULL,
     community_id    INT,
-    user_id      INT NOT NULL,
+    user_id         INT NOT NULL,
     types           "char" NOT NULL,
     description     VARCHAR(500),
     created         TIMESTAMP NOT NULL,
-    count           INT DEFAULT 0,
-    repost          INT DEFAULT 0,
-    copy            INT DEFAULT 0,
-    position        SMALLINT DEFAULT 0,
+    count           INT NOT NULL,
+    repost          INT NOT NULL,
+    copy            INT NOT NULL,
+    position        SMALLINT NOT NULL,
 
     can_see_el      "char" NOT NULL,
     can_see_comment "char" NOT NULL,
@@ -36,23 +36,23 @@ CREATE TABLE post_lists (
 CREATE TABLE posts (
     id              SERIAL PRIMARY KEY,
     content         VARCHAR(5000),
-    community_id    INT,
-    post_categorie_id     INT,
-    user_id      INT NOT NULL,
-    post_list_id         INT NOT NULL,
+    community_id      INT,
+    post_categorie_id INT,
+    user_id           INT NOT NULL,
+    post_list_id      INT NOT NULL,
     types           "char" NOT NULL,
     attach          VARCHAR(200),
     comment_enabled BOOLEAN NOT NULL DEFAULT true,
     votes_on        BOOLEAN NOT NULL DEFAULT true,
     created         TIMESTAMP NOT NULL,
 
-    comment         INT DEFAULT 0,
-    view            INT DEFAULT 0,
-    liked           INT DEFAULT 0,
-    disliked        INT DEFAULT 0,
-    repost          INT DEFAULT 0,
-    copy            INT DEFAULT 0,
-    position        INT DEFAULT 0,
+    comment         INT NOT NULL,
+    view            INT NOT NULL,
+    liked           INT NOT NULL,
+    disliked        INT NOT NULL,
+    repost          INT NOT NULL,
+    copy            INT NOT NULL,
+    position        INT NOT NULL,
 
     CONSTRAINT fk_posts_creator
         FOREIGN KEY(user_id)
@@ -74,7 +74,7 @@ CREATE TABLE posts (
 CREATE TABLE post_comments (
     id          SERIAL PRIMARY KEY,
     post_id     INT NOT NULL,
-    user_id  INT NOT NULL,
+    user_id     INT NOT NULL,
     sticker_id  INT,
     parent_id   INT,
     content     VARCHAR(1000),
@@ -82,9 +82,9 @@ CREATE TABLE post_comments (
     types       "char" NOT NULL,
     created     TIMESTAMP NOT NULL,
 
-    liked       INT DEFAULT 0,
-    disliked    INT DEFAULT 0,
-    repost      INT DEFAULT 0,
+    liked       INT NOT NULL,
+    disliked    INT NOT NULL,
+    repost      INT NOT NULL,
 
     CONSTRAINT fk_post_comment
         FOREIGN KEY(post_id)
@@ -125,7 +125,7 @@ CREATE TABLE user_post_list_collections (
 CREATE TABLE community_post_list_collections (
     id            SERIAL PRIMARY KEY,
     community_id  INT NOT NULL,
-    post_list_id       INT NOT NULL,
+    post_list_id  INT NOT NULL,
 
    CONSTRAINT fk_community_post_list_collections_community
         FOREIGN KEY(community_id)
@@ -140,7 +140,7 @@ CREATE TABLE community_post_list_collections (
 CREATE TABLE post_list_perms (
     id              SERIAL PRIMARY KEY,
     user_id         INT NOT NULL,
-    post_list_id         INT NOT NULL,
+    post_list_id    INT NOT NULL,
     can_see_item    "char",
     can_see_comment "char",
     create_item     "char",

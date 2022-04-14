@@ -177,7 +177,7 @@ pub struct Message {
     pub chat_id:       i32,
     pub parent_id:     Option<i32>,
     pub sticker_id:    Option<i32>,
-    pub post_id:     Option<i32>,
+    pub post_id:       Option<i32>,
     pub created:       chrono::NaiveDateTime,
     pub content:       Option<String>,
     pub unread:        bool,

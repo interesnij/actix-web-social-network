@@ -1,9 +1,9 @@
 CREATE TABLE sound_genres (
     id    SERIAL PRIMARY KEY,
-    name  VARCHAR(100),
+    name  VARCHAR(100) NOT NULL,
 
-    count INT DEFAULT 0,
-    copy  INT DEFAULT 0
+    count INT NOT NULL,
+    copy  INT NOT NULL
 );
 
 CREATE TABLE artists (
@@ -13,10 +13,10 @@ CREATE TABLE artists (
     image       VARCHAR(500),
     created     TIMESTAMP NOT NULL,
 
-    count       INT DEFAULT 0,
-    repost      INT DEFAULT 0,
-    copy        INT DEFAULT 0,
-    position    SMALLINT DEFAULT 0
+    count       INT NOT NULL,
+    repost      INT NOT NULL,
+    copy        INT NOT NULL,
+    position    SMALLINT NOT NULL,
 
     can_see_el  "char" NOT NULL,
 );
@@ -25,15 +25,15 @@ CREATE TABLE music_albums (
     id              SERIAL PRIMARY KEY,
     name            VARCHAR(100) NOT NULL,
     artist_id       INT,
-    user_id      INT NOT NULL,
+    user_id         INT NOT NULL,
     description     VARCHAR(500),
     image           VARCHAR(500),
     created         TIMESTAMP NOT NULL,
 
-    count           INT DEFAULT 0,
-    repost          INT DEFAULT 0,
-    copy            INT DEFAULT 0,
-    position        SMALLINT DEFAULT 0,
+    count           INT NOT NULL,
+    repost          INT NOT NULL,
+    copy            INT NOT NULL,
+    position        SMALLINT NOT NULL,
 
     can_see_el      "char" NOT NULL,
     create_el       "char" NOT NULL,
@@ -52,16 +52,16 @@ CREATE TABLE music_lists (
     id              SERIAL PRIMARY KEY,
     name            VARCHAR(100) NOT NULL,
     community_id    INT,
-    user_id      INT NOT NULL,
+    user_id         INT NOT NULL,
     types           "char" NOT NULL,
     description     VARCHAR(500),
     image           VARCHAR(500),
     created         TIMESTAMP NOT NULL,
 
-    count           INT DEFAULT 0,
-    repost          INT DEFAULT 0,
-    copy            INT DEFAULT 0,
-    position        SMALLINT DEFAULT 0,
+    count           INT DEFAULT NOT NULL,
+    repost          INT DEFAULT NOT NULL,
+    copy            INT DEFAULT NOT NULL,
+    position        SMALLINT DEFAULT NOT NULL,
 
     can_see_el      "char" NOT NULL,
     create_el       "char" NOT NULL,
@@ -80,8 +80,8 @@ CREATE TABLE musics (
     id            SERIAL PRIMARY KEY,
     title         VARCHAR(100) NOT NULL,
     community_id  INT,
-    user_id    INT NOT NULL,
-    music_list_id       INT NOT NULL,
+    user_id       INT NOT NULL,
+    music_list_id INT NOT NULL,
     genre_id      INT,
     album_id      INT,
     types         "char" NOT NULL,
@@ -89,10 +89,10 @@ CREATE TABLE musics (
     image         VARCHAR(500),
     created       TIMESTAMP NOT NULL,
 
-    view          INT DEFAULT 0,
-    repost        INT DEFAULT 0,
-    copy          INT DEFAULT 0,
-    position      SMALLINT DEFAULT 0,
+    view          INT NOT NULL,
+    repost        INT NOT NULL,
+    copy          INT NOT NULL,
+    position      SMALLINT NOT NULL,
 
     CONSTRAINT fk_music_creator
         FOREIGN KEY(user_id)

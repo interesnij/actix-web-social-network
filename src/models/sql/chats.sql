@@ -7,8 +7,8 @@ CREATE TABLE chats (
     description       VARCHAR(500),              -- описание
     community_id      INT,                       -- id сообщества
     user_id           INT NOT NULL,              -- id создателя
-    position          SMALLINT DEFAULT 0,             -- порядковый номер
-    members           INT DEFAULT 0,             -- кол-во участников
+    position          SMALLINT NOT NULL,             -- порядковый номер
+    members           INT NOT NULL,             -- кол-во участников
     created           TIMESTAMP NOT NULL,        -- когда создан
 
     can_add_members   "char" NOT NULL,                       -- кто добавляет участников
@@ -69,7 +69,7 @@ CREATE TABLE messages (
     chat_id      INT NOT NULL,                  -- id чата
     parent_id    INT,                           -- сообщение-родитель
     sticker_id   INT,                           -- id стикера
-    post_id    INT,                           -- id поста
+    post_id      INT,                           -- id поста
     created      TIMESTAMP NOT NULL,            -- когда создано
     content      VARCHAR(5000),                 -- текст
     unread       BOOLEAN NOT NULL DEFAULT true, -- не прочитано?

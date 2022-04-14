@@ -4,7 +4,7 @@ CREATE TABLE friends (
     id             SERIAL PRIMARY KEY,
     user_id        INT NOT NULL,
     target_user_id INT NOT NULL,
-    visited        INT DEFAULT 0,
+    visited        INT NOT NULL,
 
     CONSTRAINT fk_friends_user
          FOREIGN KEY(user_id)

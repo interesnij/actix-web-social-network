@@ -3,15 +3,15 @@ CREATE TABLE photo_lists (
     id               SERIAL PRIMARY KEY,
     name             VARCHAR(100) NOT NULL,
     community_id     INT,
-    user_id       INT NOT NULL,
+    user_id          INT NOT NULL,
     types            "char" NOT NULL,
     description      VARCHAR(500),
     cover_photo      VARCHAR(500),
     created          TIMESTAMP NOT NULL,
-    count            INT DEFAULT 0,
-    repost           INT DEFAULT 0,
-    copy             INT DEFAULT 0,
-    position         SMALLINT DEFAULT 0,
+    count            INT NOT NULL,
+    repost           INT NOT NULL,
+    copy             INT NOT NULL,
+    position         SMALLINT NOT NULL,
 
     can_see_el       "char" NOT NULL,
     can_see_comment  "char" NOT NULL,
@@ -32,8 +32,8 @@ CREATE TABLE photo_lists (
 CREATE TABLE photos (
     id              SERIAL PRIMARY KEY,
     community_id    INT,
-    user_id      INT NOT NULL,
-    photo_list_id         INT NOT NULL,
+    user_id         INT NOT NULL,
+    photo_list_id   INT NOT NULL,
     types           "char" NOT NULL,
     preview         VARCHAR(500) NOT NULL,
     file            VARCHAR(500) NOT NULL,
@@ -42,13 +42,13 @@ CREATE TABLE photos (
     votes_on        BOOLEAN NOT NULL DEFAULT true,
     created         TIMESTAMP NOT NULL,
 
-    comment         INT DEFAULT 0,
-    view            INT DEFAULT 0,
-    liked           INT DEFAULT 0,
-    disliked        INT DEFAULT 0,
-    repost          INT DEFAULT 0,
-    copy            INT DEFAULT 0,
-    position        SMALLINT DEFAULT 0,
+    comment         INT NOT NULL,
+    view            INT NOT NULL,
+    liked           INT NOT NULL,
+    disliked        INT NOT NULL,
+    repost          INT NOT NULL,
+    copy            INT NOT NULL,
+    position        SMALLINT NOT NULL,
 
     CONSTRAINT fk_photos_creator
         FOREIGN KEY(user_id)
@@ -66,8 +66,8 @@ CREATE TABLE photos (
 
 CREATE TABLE photo_comments (
     id          SERIAL PRIMARY KEY,
-    photo_id     INT NOT NULL,
-    user_id  INT NOT NULL,
+    photo_id    INT NOT NULL,
+    user_id     INT NOT NULL,
     sticker_id  INT,
     parent_id   INT,
     content     VARCHAR(1000),
@@ -75,9 +75,9 @@ CREATE TABLE photo_comments (
     created     TIMESTAMP NOT NULL,
     types       "char" NOT NULL,
 
-    liked       INT DEFAULT 0,
-    disliked    INT DEFAULT 0,
-    repost      INT DEFAULT 0,
+    liked       INT NOT NULL,
+    disliked    INT NOT NULL,
+    repost      INT NOT NULL,
 
     CONSTRAINT fk_photo_comment
         FOREIGN KEY(photo_id)
@@ -132,7 +132,7 @@ CREATE TABLE community_photo_list_collections (
 CREATE TABLE photo_list_perms (
     id              SERIAL PRIMARY KEY,
     user_id         INT NOT NULL,
-    photo_list_id         INT NOT NULL,
+    photo_list_id   INT NOT NULL,
     can_see_item    "char",
     can_see_comment "char",
     create_item     "char",

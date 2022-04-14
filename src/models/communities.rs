@@ -145,55 +145,6 @@ pub struct NewCommunitiesMembership {
     pub visited:          i32,
 }
 
-/////// CommunityMemberPerm //////
-/////// Исключения/ включения подписчиков сообщества //////
-    // 'c' Нет значения
-    // 'a' Активно
-    // 'b' Не активно
-
-//#[derive(Debug, Serialize, Identifiable, Associations)]
-//#[belongs_to(CommunitiesMembership, foreign_key="community_member")]
-//#[table_name="community_member_ie_settings"]
-//pub struct CommunityIeSetting {
-//    pub id:                      i32,
-//    pub community_member:        i32,
-
-//    pub can_see_info:            Option<char>,
-//    pub can_see_member:          Option<char>,
-//    pub can_send_message:        Option<char>,
-//    pub can_see_doc:             Option<char>,
-//    pub can_see_music:           Option<char>,
-//    pub can_see_survey:          Option<char>,
-//    pub can_see_post:            Option<char>,
-//    pub can_see_post_comment:    Option<char>,
-//    pub can_see_photo:           Option<char>,
-//    pub can_see_photo_comment:   Option<char>,
-//    pub can_see_good:            Option<char>,
-//    pub can_see_good_comment:    Option<char>,
-//    pub can_see_video:           Option<char>,
-//    pub can_see_video_comment:   Option<char>,
-//    pub can_see_planner:         Option<char>,
-//    pub can_see_planner_comment: Option<char>,
-
-//    pub can_copy_post:            Option<char>,
-//    pub can_copy_photo:           Option<char>,
-//    pub can_copy_good:            Option<char>,
-//    pub can_copy_video:           Option<char>,
-//    pub can_copy_planner:         Option<char>,
-//    pub can_copy_doc:             Option<char>,
-//    pub can_copy_music:           Option<char>,
-//    pub can_copy_survey:          Option<char>,
-
-//    pub can_create_post:         Option<char>,
-//    pub can_create_photo:        Option<char>,
-//    pub can_create_good:         Option<char>,
-//    pub can_create_video:        Option<char>,
-//    pub can_create_planner:      Option<char>,
-//    pub can_create_doc:          Option<char>,
-//    pub can_create_music:        Option<char>,
-//    pub can_create_survey:       Option<char>,
-//}
-
 /////// CommunityInfo //////
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]

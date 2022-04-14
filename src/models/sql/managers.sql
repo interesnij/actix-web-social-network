@@ -6,7 +6,7 @@ CREATE TABLE moderateds (
     types         SMALLINT NOT NULL,
     object_id     INT NOT NULL,
     created       TIMESTAMP NOT NULL,
-    count         INT DEFAULT 0
+    count         INT DEFAULT NOT NULL
 );
 
 CREATE TABLE moderated_reports (
@@ -48,7 +48,7 @@ CREATE TABLE moderated_penalties (
 
 CREATE TABLE moderated_logs (
     id              SERIAL PRIMARY KEY,
-    user_id      INT NOT NULL,
+    user_id         INT NOT NULL,
     object_id       INT NOT NULL,
     action          "char" NOT NULL,
     description     VARCHAR(500),
@@ -77,8 +77,8 @@ CREATE TABLE staff_logs (
 CREATE TABLE support_users (
     id          SERIAL PRIMARY KEY,
     manager_id  INT NOT NULL,
-    level       SMALLINT DEFAULT 0,
-    points      INT DEFAULT 0,
-    chats       SMALLINT DEFAULT 0,
+    level       SMALLINT NOT NULL,
+    points      INT NOT NULL,
+    chats       SMALLINT NOT NULL,
     created     TIMESTAMP NOT NULL
 );

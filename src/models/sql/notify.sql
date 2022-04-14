@@ -1,9 +1,9 @@
 CREATE TABLE notifications (
     id                    SERIAL PRIMARY KEY,
     recipient_id          INT,
-    user_id            INT NOT NULL,
+    user_id               INT NOT NULL,
     created               TIMESTAMP NOT NULL,
-    verb                  VARCHAR(150),
+    verb                  VARCHAR(150) NOT NULL,
     status                "char" NOT NULL,
     types                 SMALLINT NOT NULL,
     object_id             INT NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE notifications (
 
 CREATE TABLE wall_objects (
     id                    SERIAL PRIMARY KEY,
-    user_id            INT NOT NULL,
+    user_id               INT NOT NULL,
     created               TIMESTAMP NOT NULL,
     verb                  VARCHAR(150) NOT NULL,
     status                "char" NOT NULL,

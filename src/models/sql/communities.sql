@@ -1,18 +1,18 @@
 -- Категории сообществ -------
 CREATE TABLE community_categorys (
     id SERIAL PRIMARY KEY,  -- id объекта
-    name VARCHAR(100),           -- название
+    name VARCHAR(100) NOT NULL,           -- название
     avatar VARCHAR(500),            -- аватар
-    position SMALLINT DEFAULT 0     -- порядковый номер
+    position SMALLINT NOT NULL     -- порядковый номер
 );
 
 -- Суб-категории сообществ -------
 CREATE TABLE community_subcategorys (
     id          SERIAL PRIMARY KEY,       -- id объекта
-    name        VARCHAR(100),                  -- название
+    name        VARCHAR(100) NOT NULL,                  -- название
     category_id INT NOT NULL,             -- id категории
     avatar      VARCHAR(500),                     -- аватар
-    position    SMALLINT DEFAULT 0,            -- порядковый номер
+    position    SMALLINT NOT NULL,            -- порядковый номер
 
     CONSTRAINT fk_community_subcategories -- связь с категорией
         FOREIGN KEY(category_id)
@@ -26,7 +26,7 @@ CREATE TABLE communitys (
     status        "char" NOT NULL,          -- статус
     types         SMALLINT NOT NULL,      -- тип
     perm          "char" NOT NULL,          -- приватность
-    level         SMALLINT DEFAULT 100,   -- уровень доверия
+    level         SMALLINT NOT NULL DEFAULT 100,   -- уровень доверия
     have_link     VARCHAR(100),           -- красивая ссылка
     b_avatar      VARCHAR(500),           -- большой аватар
     s_avatar      VARCHAR(500),           -- маленький аватар
@@ -70,15 +70,15 @@ CREATE TABLE community_infos (
     id           SERIAL PRIMARY KEY,
     community_id INT NOT NULL,
 
-    posts        INT DEFAULT 0,
-    members      INT DEFAULT 0,
-    photos       INT DEFAULT 0,
-    goods        INT DEFAULT 0,
-    tracks       INT DEFAULT 0,
-    videos       INT DEFAULT 0,
-    docs         INT DEFAULT 0,
-    articles     INT DEFAULT 0,
-    survey       INT DEFAULT 0,
+    posts        INT NOT NULL,
+    members      INT NOT NULL,
+    photos       INT NOT NULL,
+    goods        INT NOT NULL,
+    tracks       INT NOT NULL,
+    videos       INT NOT NULL,
+    docs         INT NOT NULL,
+    articles     INT NOT NULL,
+    survey       INT NOT NULL,
 
     CONSTRAINT fk_community_info
         FOREIGN KEY(community_id)
@@ -235,8 +235,8 @@ CREATE TABLE community_music_notifications (
 CREATE TABLE community_photo_list_positions (
     id           SERIAL PRIMARY KEY,
     community_id INT NOT NULL,       -- Сообщество
-    list_id         INT DEFAULT 0,       -- Фотоальбом
-    position     SMALLINT DEFAULT 0,       -- Порядок отображения
+    list_id      INT NOT NULL,       -- Фотоальбом
+    position     SMALLINT NOT NULL,       -- Порядок отображения
     types        "char" NOT NULL        -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
@@ -244,8 +244,8 @@ CREATE TABLE community_photo_list_positions (
 CREATE TABLE community_post_list_positions (
     id              SERIAL PRIMARY KEY,
     community_id    INT NOT NULL,      -- Сообщество
-    list_id            INT DEFAULT 0,      -- Список записей
-    position        SMALLINT DEFAULT 0,      -- Порядок отображения
+    list_id         INT NOT NULL,      -- Список записей
+    position        SMALLINT NOT NULL,      -- Порядок отображения
     types           "char" NOT NULL       -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
@@ -253,8 +253,8 @@ CREATE TABLE community_post_list_positions (
 CREATE TABLE community_music_list_positions (
     id             SERIAL PRIMARY KEY,  --
     community_id   INT NOT NULL,       -- Сообщество
-    list_id           INT DEFAULT 0,       -- Список аудиозаписей
-    position       SMALLINT DEFAULT 0,       -- Порядок отображения
+    list_id        INT NOT NULL,       -- Список аудиозаписей
+    position       SMALLINT NOT NULL,       -- Порядок отображения
     types          "char" NOT NULL        -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
@@ -262,8 +262,8 @@ CREATE TABLE community_music_list_positions (
 CREATE TABLE community_good_list_positions (
     id           SERIAL PRIMARY KEY,  --
     community_id INT NOT NULL,        -- Сообщество
-    list_id         INT DEFAULT 0,       -- Список товаров
-    position     SMALLINT DEFAULT 0,       -- Порядок отображения
+    list_id      INT NOT NULL,       -- Список товаров
+    position     SMALLINT NOT NULL,       -- Порядок отображения
     types        "char" NOT NULL        -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
@@ -271,8 +271,8 @@ CREATE TABLE community_good_list_positions (
 CREATE TABLE community_video_list_positions (
     id           SERIAL PRIMARY KEY, --
     community_id INT NOT NULL,      -- Сообщество
-    list_id         INT DEFAULT 0,      -- Список видеозаписей
-    position     SMALLINT DEFAULT 0,      -- Порядок отображения
+    list_id      INT NOT NULL,      -- Список видеозаписей
+    position     SMALLINT NOT NULL,      -- Порядок отображения
     types        "char" NOT NULL       -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
@@ -280,8 +280,8 @@ CREATE TABLE community_video_list_positions (
 CREATE TABLE community_survey_list_positions (
     id            SERIAL PRIMARY KEY,
     community_id  INT NOT NULL,      -- Сообщество
-    list_id          INT DEFAULT 0,      -- Список опросов
-    position      SMALLINT DEFAULT 0,      -- Порядок отображения
+    list_id       INT NOT NULL,      -- Список опросов
+    position      SMALLINT NOT NULL,      -- Порядок отображения
     types         "char" NOT NULL       -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
@@ -289,7 +289,7 @@ CREATE TABLE community_survey_list_positions (
 CREATE TABLE community_doc_list_positions (
     id            SERIAL PRIMARY KEY,
     community_id  INT NOT NULL,      -- Сообщество
-    list_id          INT DEFAULT 0,      -- Список документов
-    position      SMALLINT DEFAULT 0,      -- Порядок отображения
+    list_id       INT NOT NULL,      -- Список документов
+    position      SMALLINT NOT NULL,      -- Порядок отображения
     types         "char" NOT NULL       -- 1 - открыт, 0 - недоступен (например, удален)
 );

@@ -3,14 +3,14 @@ CREATE TABLE survey_lists (
     id            SERIAL PRIMARY KEY,
     name          VARCHAR(100) NOT NULL,
     community_id  INT,
-    user_id    INT NOT NULL,
+    user_id       INT NOT NULL,
     types         "char" NOT NULL,
     description   VARCHAR(500),
     created       TIMESTAMP NOT NULL,
-    count         INT DEFAULT 0,
-    repost        INT DEFAULT 0,
-    copy          INT DEFAULT 0,
-    position      SMALLINT DEFAULT 0,
+    count         INT NOT NULL,
+    repost        INT NOT NULL,
+    copy          INT NOT NULL,
+    position      SMALLINT NOT NULL,
 
     can_see_el    "char" NOT NULL,
     create_el     "char" NOT NULL,
@@ -28,9 +28,9 @@ CREATE TABLE survey_lists (
 CREATE TABLE surveys (
     id            SERIAL PRIMARY KEY,
     title         VARCHAR(100) NOT NULL,
-    community_id  INT,
-    user_id    INT NOT NULL,
-    survey_list_id       INT NOT NULL,
+    community_id    INT,
+    user_id         INT NOT NULL,
+    survey_list_id  INT NOT NULL,
     types         "char" NOT NULL,
     image         VARCHAR(500),
     is_anonymous  BOOLEAN NOT NULL DEFAULT false,
@@ -39,11 +39,11 @@ CREATE TABLE surveys (
     time_end      TIMESTAMP,
     created       TIMESTAMP NOT NULL,
 
-    view        INT DEFAULT 0,
-    repost        INT DEFAULT 0,
-    copy          INT DEFAULT 0,
-    position      SMALLINT DEFAULT 0,
-    vote          INT DEFAULT 0,
+    view          INT NOT NULL,
+    repost        INT NOT NULL,
+    copy          INT NOT NULL,
+    position      SMALLINT NOT NULL,
+    vote          INT NOT NULL,
 
     CONSTRAINT fk_surveys_creator
         FOREIGN KEY(user_id)
@@ -90,9 +90,9 @@ CREATE TABLE community_survey_list_collections (
 );
 
 CREATE TABLE survey_list_perms (
-    id            SERIAL PRIMARY KEY,
-    user_id       INT NOT NULL,
-    survey_list_id       INT NOT NULL,
+    id              SERIAL PRIMARY KEY,
+    user_id         INT NOT NULL,
+    survey_list_id  INT NOT NULL,
     can_see_item  "char",
     create_item   "char",
     can_copy      "char",

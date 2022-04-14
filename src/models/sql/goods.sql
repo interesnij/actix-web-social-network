@@ -3,7 +3,7 @@ CREATE TABLE good_categories (
     id        SERIAL PRIMARY KEY,
     name      VARCHAR(100) NOT NULL,
     avatar    VARCHAR(500),
-    position  SMALLINT DEFAULT 0
+    position  SMALLINT NOT NULL
 );
 
 -- Суб-категории товаров -------
@@ -12,7 +12,7 @@ CREATE TABLE good_subcategories (
     name        VARCHAR(200) NOT NULL,
     category_id INT NOT NULL,
     avatar      VARCHAR(500),
-    position    SMALLINT DEFAULT 0,
+    position    SMALLINT NOT NULL,
 
     CONSTRAINT fk_good_subcategories
         FOREIGN KEY(category_id)
@@ -27,10 +27,10 @@ CREATE TABLE good_lists (
     types           "char" NOT NULL,
     description     VARCHAR(500),
     created         TIMESTAMP NOT NULL,
-    count           INT DEFAULT 0,
-    repost          INT DEFAULT 0,
-    copy            INT DEFAULT 0,
-    position        SMALLINT DEFAULT 0,
+    count           INT NOT NULL,
+    repost          INT NOT NULL,
+    copy            INT NOT NULL,
+    position        SMALLINT NOT NULL,
 
     can_see_el      "char" NOT NULL,
     can_see_comment "char" NOT NULL,
@@ -52,8 +52,8 @@ CREATE TABLE goods (
     title           VARCHAR(100) NOT NULL,
     community_id    INT,
     category_id     INT,
-    user_id      INT NOT NULL,
-    good_list_id         INT NOT NULL,
+    user_id         INT NOT NULL,
+    good_list_id    INT NOT NULL,
     price           INT,
     types           "char" NOT NULL,
     description     VARCHAR(500),
@@ -62,13 +62,13 @@ CREATE TABLE goods (
     votes_on        BOOLEAN NOT NULL DEFAULT true,
     created         TIMESTAMP NOT NULL,
 
-    comment         INT DEFAULT 0,
-    view            INT DEFAULT 0,
-    liked           INT DEFAULT 0,
-    disliked        INT DEFAULT 0,
-    repost          INT DEFAULT 0,
-    copy            INT DEFAULT 0,
-    position        SMALLINT DEFAULT 0,
+    comment         INT NOT NULL,
+    view            INT NOT NULL,
+    liked           INT NOT NULL,
+    disliked        INT NOT NULL,
+    repost          INT NOT NULL,
+    copy            INT NOT NULL,
+    position        SMALLINT NOT NULL,
 
     CONSTRAINT fk_goods_creator
         FOREIGN KEY(user_id)
@@ -90,7 +90,7 @@ CREATE TABLE goods (
 CREATE TABLE good_comments (
     id          SERIAL PRIMARY KEY,
     good_id     INT NOT NULL,
-    user_id  INT NOT NULL,
+    user_id     INT NOT NULL,
     sticker_id  INT,
     parent_id   INT,
     content     VARCHAR(1000),
@@ -98,9 +98,9 @@ CREATE TABLE good_comments (
     types       "char" NOT NULL,
     created     TIMESTAMP NOT NULL,
 
-    liked       INT DEFAULT 0,
-    disliked    INT DEFAULT 0,
-    repost      INT DEFAULT 0,
+    liked       INT NOT NULL,
+    disliked    INT NOT NULL,
+    repost      INT NOT NULL,
 
     CONSTRAINT fk_good_comment
         FOREIGN KEY(good_id)
@@ -141,7 +141,7 @@ CREATE TABLE user_good_list_collections (
 CREATE TABLE community_good_list_collections (
     id           SERIAL PRIMARY KEY,
     community_id INT NOT NULL,
-    good_list_id      INT NOT NULL,
+    good_list_id INT NOT NULL,
 
    CONSTRAINT fk_community_good_list_collections_community
         FOREIGN KEY(community_id)
@@ -155,7 +155,7 @@ CREATE TABLE community_good_list_collections (
 CREATE TABLE good_list_perms (
     id              SERIAL PRIMARY KEY,
     user_id         INT NOT NULL,
-    good_list_id         INT NOT NULL,
+    good_list_id    INT NOT NULL,
     can_see_item    "char",
     can_see_comment "char",
     create_item     "char",
