@@ -13,6 +13,7 @@ mod friends;
 mod managers;
 mod notify;
 mod goods;
+mod music;
 
 pub use self::{
     other::*,
@@ -30,4 +31,5 @@ pub use self::{
     managers::*,
     notify::*,
     goods::*,
+    music::*,
 };
