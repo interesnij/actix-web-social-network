@@ -76,7 +76,7 @@ pub struct NewPostCategorie {
         // 'j' Некоторые подписчики
 
 /////// PostList //////
-#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
+#[derive(Serialize, Identifiable, Queryable, Associations)]
 #[belongs_to(Community)]
 #[belongs_to(User)]
 pub struct PostList {
