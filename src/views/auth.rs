@@ -209,7 +209,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             };
             //println!("{:?}", location200.city.name_ru);
         };
-
+        let new_ip = &ipaddr;
         let mut get_device = "a";
         for header in req.headers().into_iter() {
             if header.0 == "user-agent" {
@@ -254,7 +254,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
         };
 
         // записываем местоположение нового пользователя
-        let new_ip = ipaddr;
+
         let _geo_url = "http://api.sypexgeo.net/J5O6d/json/".to_owned() + &new_ip;
         let _geo_request = reqwest::get(_geo_url).await.expect("E.");
         let new_request = _geo_request.text().await.unwrap();
