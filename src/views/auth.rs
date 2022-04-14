@@ -171,6 +171,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
         UserLocation, NewUserLocation,
         UserProfile, NewUserProfile,
         IpUser, NewIpUser,
+        ColorSetting, NewColorSetting,
         UserPhotoListPosition, NewUserPhotoListPosition,
         UserPostListPosition, NewUserPostListPosition,
         UserMusicListPosition, NewUserMusicListPosition,
@@ -625,6 +626,152 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             .values(&_new_surveys_list_position)
             .get_result::<UserSurveyListPosition>(&_connection)
             .expect("Error saving survey_list_position.");
+
+        // записываем приватность нового пользователя
+        let _user_private = NewUserPrivate {
+            user_id:            _new_user.id,
+            can_see_all:        "a".to_string(),
+            can_see_community:  "a".to_string(),
+            can_see_info:       "a".to_string(),
+            can_see_friend:     "a".to_string(),
+            can_send_message:   "a".to_string(),
+            can_add_in_chat:    "a".to_string(),
+            can_see_post:       "a".to_string(),
+            can_see_photo:      "a".to_string(),
+            can_see_good:       "a".to_string(),
+            can_see_video:      "a".to_string(),
+            can_see_music:      "a".to_string(),
+            can_see_planner:    "a".to_string(),
+            can_see_doc:        "a".to_string(),
+            can_see_survey:     "a".to_string(),
+        };
+        diesel::insert_into(schema::user_privates::table)
+            .values(&_user_private)
+            .get_result::<UserPrivate>(&_connection)
+            .expect("Error saving user_private.");
+
+        // записываем уведомления профиля нового пользователя
+        let _user_notification = NewUserNotification {
+            user_id:              _new_user.id,
+            connection_request:   true,
+            connection_confirmed: true,
+            user_invite:          true,
+        };
+        diesel::insert_into(schema::user_notifications::table)
+            .values(&_user_notification)
+            .get_result::<UserNotification>(&_connection)
+            .expect("Error saving user_notification.");
+
+        // записываем уведомления записей нового пользователя
+        let _user_post_notification = NewUserPostNotification {
+            user_id:                _new_user.id,
+            comment:                true,
+            comment_reply:          true,
+            mention:                true,
+            comment_mention:        true,
+            repost:                 true,
+            liked:                  true,
+            disliked:               true,
+            comment_liked:          true,
+            comment_disliked:       true,
+            comment_reply_liked:    true,
+            comment_reply_disliked: true,
+        };
+        diesel::insert_into(schema::user_post_notifications::table)
+            .values(&_user_post_notification)
+            .get_result::<UserPostNotification>(&_connection)
+            .expect("Error saving user_photo_notification.");
+
+        // записываем уведомления фотографий нового пользователя
+        let _user_photo_notification = NewUserPhotoNotification {
+            user_id:                _new_user.id,
+            comment:                true,
+            comment_reply:          true,
+            mention:                true,
+            comment_mention:        true,
+            repost:                 true,
+            liked:                  true,
+            disliked:               true,
+            comment_liked:          true,
+            comment_disliked:       true,
+            comment_reply_liked:    true,
+            comment_reply_disliked: true,
+        };
+        diesel::insert_into(schema::user_photo_notifications::table)
+            .values(&_user_photo_notification)
+            .get_result::<UserPhotoNotification>(&_connection)
+            .expect("Error saving user_photo_notification.");
+
+        // записываем уведомления товаров нового пользователя
+        let _user_good_notification = NewUserGoodNotification {
+            user_id:                _new_user.id,
+            comment:                true,
+            comment_reply:          true,
+            mention:                true,
+            comment_mention:        true,
+            repost:                 true,
+            liked:                  true,
+            disliked:               true,
+            comment_liked:          true,
+            comment_disliked:       true,
+            comment_reply_liked:    true,
+            comment_reply_disliked: true,
+        };
+        diesel::insert_into(schema::user_good_notifications::table)
+            .values(&_user_good_notification)
+            .get_result::<UserGoodNotification>(&_connection)
+            .expect("Error saving user_good_notification.");
+
+        // записываем уведомления роликов нового пользователя
+        let _user_video_notification = NewUserVideoNotification {
+            user_id:                _new_user.id,
+            comment:                true,
+            comment_reply:          true,
+            mention:                true,
+            comment_mention:        true,
+            repost:                 true,
+            liked:                  true,
+            disliked:               true,
+            comment_liked:          true,
+            comment_disliked:       true,
+            comment_reply_liked:    true,
+            comment_reply_disliked: true,
+        };
+        diesel::insert_into(schema::user_video_notifications::table)
+            .values(&_user_video_notification)
+            .get_result::<UserVideoNotification>(&_connection)
+            .expect("Error saving user_video_notification.");
+
+        // записываем уведомления роликов нового пользователя
+        let _user_music_notification = NewUserMusicNotification {
+            user_id:                _new_user.id,
+            repost:                 true,
+        };
+        diesel::insert_into(schema::user_music_notifications::table)
+            .values(&_user_music_notification)
+            .get_result::<UserMusicNotification>(&_connection)
+            .expect("Error saving user_music_notification.");
+
+        // записываем уведомления роликов нового пользователя
+        let _user_survey_notification = NewUserSurveyNotification {
+            user_id:  _new_user.id,
+            vote:     true,
+            repost:   true,
+        };
+        diesel::insert_into(schema::user_survey_notifications::table)
+            .values(&_user_survey_notification)
+            .get_result::<UserSurveyNotification>(&_connection)
+            .expect("Error saving user_survey_notification.");
+
+        // записываем уведомления роликов нового пользователя
+        let _color_setting = NewColorSetting {
+            user_id:  _new_user.id,
+            color:    "a".to_string(),
+        };
+        diesel::insert_into(schema::color_settings::table)
+            .values(&_color_setting)
+            .get_result::<ColorSetting>(&_connection)
+            .expect("Error saving color_settings.");
 
         set_current_user(&session, &_session_user);
     }

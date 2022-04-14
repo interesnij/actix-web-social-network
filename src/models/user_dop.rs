@@ -694,12 +694,14 @@ pub struct UserSurveyNotification {
     pub id:                  i32,
     pub user_id:             i32,
     pub vote:                bool,
+    pub repost:              bool,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_survey_notifications"]
 pub struct NewUserSurveyNotification {
     pub user_id:             i32,
     pub vote:                bool,
+    pub repost:              bool,
 }
 
 /////// UserNotificationsPhoto //////
@@ -820,4 +822,19 @@ pub struct UserMusicNotification {
 pub struct NewUserMusicNotification {
     pub user_id:   i32,
     pub repost:    bool,
+}
+
+/////// color_settings //////
+#[derive(Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(User)]
+pub struct ColorSetting {
+    pub id:      i32,
+    pub user_id: i32,
+    pub color:   String,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="color_settings"]
+pub struct NewColorSetting {
+    pub user_id:  i32,
+    pub color:    String,
 }

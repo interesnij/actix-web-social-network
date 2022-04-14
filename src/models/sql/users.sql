@@ -495,6 +495,7 @@ CREATE TABLE user_survey_notifications (
     id                      SERIAL PRIMARY KEY,
     user_id                 INT NOT NULL,
     vote                    BOOLEAN NOT NULL DEFAULT true,
+    repost                  BOOLEAN NOT NULL DEFAULT true, 
 
     CONSTRAINT fk_user_survey_notifications
          FOREIGN KEY(user_id)
