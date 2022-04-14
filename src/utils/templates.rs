@@ -60,6 +60,7 @@ pub fn get_default_template_2(req: HttpRequest, session: Session) -> (String, te
 
     if is_signed_in(&session) {
         let _request_user = get_current_user(&session);
+        println!(":?", Ok(_request_user));
         match _request_user {
             Ok(s) => data.insert("request_user", &users
                 .filter(schema::users::id.eq(s.id))
@@ -67,6 +68,7 @@ pub fn get_default_template_2(req: HttpRequest, session: Session) -> (String, te
                 .expect("E")[0]),
             _ => data.insert("request_user", &false),
         }
+        data.insert("full_name", &false);
     } else {
         data.insert("is_authenticated", &false);
     }
