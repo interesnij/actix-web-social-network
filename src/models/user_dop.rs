@@ -447,7 +447,7 @@ pub struct UserPostListPosition {
     pub user_id:  i32,
     pub list_id:  i32,
     pub position: i16,
-    pub types:    char, // a - open, b - close 
+    pub types:    String, // a - open, b - close 
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_post_list_positions"]
