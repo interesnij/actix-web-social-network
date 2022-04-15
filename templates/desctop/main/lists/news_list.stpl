@@ -1,5 +1,14 @@
-<html>
-  <body>
-    <%= test %>
-  </body>
-</html>
+<% include!("../../../base_block/base_header.stpl"); %>
+
+<div class="main-container" data-type="page_feed">
+    <div class="row">
+        <div class="col-md-8 mt-3">
+          {{ request_user.perm }}
+        </div>
+        <div class="col-12 col-md-4">
+
+        </div>
+    </div>
+</div>
+
+<% include!("../../../base_block/base_footer.stpl"); %>
