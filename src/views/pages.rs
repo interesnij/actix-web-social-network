@@ -60,7 +60,7 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok()
                 .content_type("text/html; charset=utf-8")
-                .body(body));
+                .body(body))
         }
         else {
             let body = MobileNewsListTemplate { test: true }
@@ -68,7 +68,7 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok()
                 .content_type("text/html; charset=utf-8")
-                .body(body));
+                .body(body))
         }
     } else {
         if _type == "desctop/".to_string() {
@@ -77,7 +77,7 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok()
                 .content_type("text/html; charset=utf-8")
-                .body(body));
+                .body(body))
         }
         else {
             let body = MobileAuthTemplate { test: true }
@@ -85,7 +85,7 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok()
                 .content_type("text/html; charset=utf-8")
-                .body(body));
+                .body(body))
         }
     }
 }
