@@ -21,7 +21,7 @@ pub fn get_folder(req: HttpRequest) -> String {
 }
 
 pub fn get_request_user_data(session: Session) -> (
-        i32, String, String, String, String, String, String, i16, String, String, String
+        i32, String, String, i16, String, String, String, i16, String, String, String
     ) {
 
     let _connection = establish_connection();
@@ -57,12 +57,12 @@ pub fn get_request_user_data(session: Session) -> (
             _user.device,
             _user.language,
             _user.perm,
-            _user.have_link,
-            _user.s_avatar,
+            Some(_user.have_link),
+            Some(_user.s_avatar),
             background.to_string(),
         )
     } else {
-        (0, "".to_string(), "".to_string(), "".to_string(), "".to_string(), "".to_string(), "".to_string(), 0, "".to_string(), "".to_string(), "".to_string())
+        (0, "".to_string(), "".to_string(), 0, "".to_string(), "".to_string(), "".to_string(), 0, "".to_string(), "".to_string(), "".to_string())
     }
 }
 
