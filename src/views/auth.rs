@@ -776,11 +776,8 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
 
 #[derive(Deserialize, Debug)]
 struct PhoneJson {
-    //status: bool,
-    //ucaller_id: i32,
-    phone: String,
-    //phone_id: String,
-    code: String,
+    phone: i64,
+    code: i32,
 }
 pub async fn phone_send(_phone: web::Path<String>) -> impl Responder {
     let req_phone = _phone.to_string();
@@ -806,7 +803,7 @@ pub async fn phone_send(_phone: web::Path<String>) -> impl Responder {
             let int_code: i32 = phone200.code.parse().unwrap();
             let new_phone_code = NewPhoneCode {
                 phone: phone200.phone.to_string(),
-                code:  int_code,
+                code:  phone200.code,
             };
             diesel::insert_into(schema::phone_codes::table)
                 .values(&new_phone_code)
