@@ -23,8 +23,9 @@ pub struct SParams {
     pub q: String,
 }
 
+static user_device = get_folder(session: Session, req: HttpRequest);
 #[derive(TemplateOnce)]
-#[template(path = "desctop/main/auth/auth.stpl")]
+#[template(path = user_device + "main/auth/auth.stpl")]
 struct DesctopAuthTemplate {
     test: bool,
 }
