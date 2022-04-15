@@ -27,10 +27,10 @@ pub fn get_request_user(session: Session) -> Result<User, bool> {
     let _connection = establish_connection();
     let _request_user = get_current_user(&session);
     match _request_user {
-        Ok(s) => users
+        Ok(s) => Ok(users
             .filter(schema::users::id.eq(s.id))
             .load::<User>(&_connection)
-            .expect("E")[0],
+            .expect("E")[0]),
         _ => false
     }
 }
