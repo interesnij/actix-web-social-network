@@ -57,9 +57,11 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
         if _type == "desctop/".to_string() {
             let body = DesctopNewsListTemplate { test: true }
             .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))
-            .except("e");
-            HttpResponse::Ok().body(body)
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR));
+            match body {
+                Ok(_) => HttpResponse::Ok().body(body),
+                _ => continue,
+            }
         }
         else {
             let body = MobileNewsListTemplate { test: true }
@@ -81,4 +83,6 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
             HttpResponse::Ok().body(body)
         }
     }
+    response_text = "ok".to_string();
+    HttpResponse::Ok().body(response_text)
 }
