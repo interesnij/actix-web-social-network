@@ -4,6 +4,7 @@ use crate::utils::{is_signed_in, get_current_user, establish_connection};
 use crate::schema;
 use diesel::prelude::*;
 use std::option::Option;
+use crate::errors::AuthError;
 
 
 pub fn get_folder(req: HttpRequest) -> String {
@@ -26,9 +27,11 @@ pub fn get_request_user_data(session: Session) -> (
     ) {
 
     let _connection = establish_connection();
-    let _request_user = get_current_user(&session);
+    //let _request_user = get_current_user(&session);
     let mut user_id = 0;
-    if let Some(user) = session.get::<String>("user")? {
+    if let Some(user) = session.get::<String>("user")
+        .map_err(|_| AuthError::AuthenticationError(String::from(msg)))
+        .unwrap() {
         user_id = user.id;
     }
     if user_id != 0 {
