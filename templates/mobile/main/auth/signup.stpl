@@ -34,7 +34,7 @@
                       </div>
                     </div>
 
-                    <% include!("./birtday.stpl"); %>
+                    <% include!("birtday.stpl"); %>
 
                 <div class="col mt-2 mb-2">
                     <div class="custom-control custom-checkbox">
