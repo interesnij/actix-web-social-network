@@ -21,7 +21,7 @@ pub fn get_folder(req: HttpRequest) -> String {
 }
 
 pub fn get_request_user_data(session: Session) -> (
-        i32, String, String, String, String, String, String, i8, String, String, String
+        i32, String, String, String, String, String, String, i16, String, String, String
     ) {
 
     let _connection = establish_connection();
@@ -44,7 +44,7 @@ pub fn get_request_user_data(session: Session) -> (
             .load::<User>(&_connection)
             .expect("E")[0];
         let _design = design_settings
-            .filter(schema::design_settings::user_id.eq(&request_user.id))
+            .filter(schema::design_settings::user_id.eq(&_request_user.id))
             .load::<DesignSetting>(&_connection)
             .expect("E");
         let background = &_design[0].background;
