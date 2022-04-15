@@ -3,7 +3,6 @@ use actix_web::{
     Responder,
     HttpResponse,
     web,
-    http::header::LOCATION,
 };
 use serde::{Deserialize, Serialize};
 //use tera::Context;
@@ -17,7 +16,7 @@ use crate::utils::{
 };
 use diesel::prelude::*;
 use crate::schema;
-use crate::models::{User, NewUser, SessionUser, LoginUser};
+use crate::models::{User, NewUser, SessionUser};
 use actix_session::Session;
 use crate::errors::AuthError;
 use actix_multipart::{Field, Multipart};
@@ -164,8 +163,7 @@ pub struct CountryLoc {
 }
 
 pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responder {
-    use crate::schema::users::dsl::users;
-    use crate::utils::{hash_password, set_current_user, to_home};
+    use crate::utils::{hash_password, set_current_user};
     use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
     use crate::models::{
         UserLocation, NewUserLocation,
@@ -778,7 +776,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
     HttpResponse::Ok().body(format!("ok"))
 }
 
-pub async fn phone_window(session: Session, req: HttpRequest) -> impl Responder {
+pub async fn phone_window() -> impl Responder {
     //let (_type, _is_host_admin) = get_default_template(req);
     //let mut data = Context::new();
     let _template = "<form class='h-sm-auto final_process_form'>
@@ -814,10 +812,10 @@ struct PhoneJson {
     phone_id: String,
     code: i32,
 }
-pub async fn phone_send(session: Session, req: HttpRequest, _phone: web::Path<String>) -> impl Responder {
+pub async fn phone_send(_phone: web::Path<String>) -> impl Responder {
     let req_phone = _phone.to_string();
     if req_phone.len() > 8 {
-        use crate::models::{User, PhoneCode, NewPhoneCode};
+        use crate::models::{PhoneCode, NewPhoneCode};
         use schema::{users::dsl::users, phone_codes::dsl::phone_codes};
 
         let _connection = establish_connection();

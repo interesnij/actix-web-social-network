@@ -5,30 +5,13 @@ pub use self::{
 use argonautica::{Hasher, Verifier};
 use actix_session::Session;
 use diesel::prelude::*;
-//use tera::Tera;
-use lazy_static::lazy_static;
 use actix_web::{
   http::header::{CONTENT_TYPE, LOCATION},
   HttpRequest,
   HttpResponse
 };
-
-use crate::{errors::AuthError, vars, models::SessionUser};
 use crate::models::User;
-
-//lazy_static! {
-//    pub static ref TEMPLATES: Tera = {
-//        let mut tera = match Tera::new("templates/**/*") {
-//            Ok(t) => t,
-//            Err(e) => {
-//                println!("Template parsing error(s): {}", e);
-//                ::std::process::exit(1);
-//            }
-//        };
-//        tera.autoescape_on(vec!["html", ".sql"]);
-//        tera
-//    };
-//}
+use crate::{errors::AuthError, vars, models::SessionUser};
 
 pub fn establish_connection() -> PgConnection {
     use dotenv::dotenv;
