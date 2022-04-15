@@ -3,13 +3,12 @@ use actix_web::{
     Responder,
     HttpResponse,
     web,
+    error::InternalError,
+    http::StatusCode,
 };
 use serde::{Deserialize, Serialize};
-//use tera::Context;
 use crate::utils::{
     establish_connection,
-    //get_default_template,
-    //TEMPLATES,
     is_signed_in,
     to_home,
     verify,
