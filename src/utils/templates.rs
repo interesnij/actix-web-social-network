@@ -30,7 +30,7 @@ pub fn get_request_user_data(session: Session) -> (
     //let _request_user = get_current_user(&session);
     let mut user_id = 0;
     if let Some(user) = session.get::<String>("user")
-        .map_err(|_| AuthError::AuthenticationError(String::from(msg)))
+        .map_err(|_| AuthError::AuthenticationError(String::from("Не удалось извлечь пользователя из сеанса")))
         .unwrap() {
         user_id = user.id;
     }
