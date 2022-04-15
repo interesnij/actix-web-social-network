@@ -21,7 +21,7 @@ pub fn get_folder(req: HttpRequest) -> String {
     _type
 }
 
-pub fn get_request_user(session: Session) -> Result<User, Error> {
+pub fn get_request_user(session: Session) -> Result<User, bool> {
     use crate::schema::users::dsl::users;
 
     let _connection = establish_connection();
@@ -31,7 +31,7 @@ pub fn get_request_user(session: Session) -> Result<User, Error> {
             .filter(schema::users::id.eq(s.id))
             .load::<User>(&_connection)
             .expect("E")[0],
-        _ => None
+        _ => false
     }
 }
 
