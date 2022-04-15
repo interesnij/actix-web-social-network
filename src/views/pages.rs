@@ -59,8 +59,8 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR));
             match body {
-                Ok(T) => HttpResponse::Ok().body(T),
-                Err(E) => HttpResponse::Ok().body("Error".to_string()),
+                Ok(t) => HttpResponse::Ok().body(T),
+                Err(e) => HttpResponse::Ok().body("Error".to_string()),
             };
         }
         else {
@@ -68,8 +68,8 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR));
             match body {
-                Ok(T) => HttpResponse::Ok().body(T),
-                Err(E) => HttpResponse::Ok().body("Error".to_string()),
+                Ok(t) => HttpResponse::Ok().body(T),
+                Err(e) => HttpResponse::Ok().body("Error".to_string()),
             };
         }
     } else {
@@ -78,8 +78,8 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR));
             match body {
-                Ok(T) => HttpResponse::Ok().body(T),
-                Err(E) => HttpResponse::Ok().body("Error".to_string()),
+                Ok(t) => HttpResponse::Ok().body(T),
+                Err(e) => HttpResponse::Ok().body("Error".to_string()),
             };
         }
         else {
@@ -87,8 +87,8 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR));
             match body {
-                Ok(T) => HttpResponse::Ok().body(T),
-                Err(E) => HttpResponse::Ok().body("Error".to_string()),
+                Ok(t) => HttpResponse::Ok().body(T),
+                Err(e) => HttpResponse::Ok().body("Error".to_string()),
             };
         }
     }
