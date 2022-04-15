@@ -67,20 +67,29 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
             let body = MobileNewsListTemplate { test: true }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR));
-            HttpResponse::Ok().body(body);
+            match body {
+                Ok(T) => HttpResponse::Ok().body(T),
+                Err(E) => HttpResponse::Ok().body("Error".to_string()),
+            };
         }
     } else {
         if _type == "desctop/".to_string() {
             let body = DesctopAuthTemplate { test: true }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR));
-            HttpResponse::Ok().body(body);
+            match body {
+                Ok(T) => HttpResponse::Ok().body(T),
+                Err(E) => HttpResponse::Ok().body("Error".to_string()),
+            };
         }
         else {
             let body = MobileAuthTemplate { test: true }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR));
-            HttpResponse::Ok().body(body);
+            match body {
+                Ok(T) => HttpResponse::Ok().body(T),
+                Err(E) => HttpResponse::Ok().body("Error".to_string()),
+            };
         }
     }
     let response_text = "ok".to_string();
