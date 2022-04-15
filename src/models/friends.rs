@@ -1,7 +1,7 @@
 use crate::schema::friends;
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
-use crate::utils::establish_connection;
+//use crate::utils::establish_connection;
 use crate::models::User;
 
 

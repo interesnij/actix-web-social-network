@@ -8,14 +8,14 @@ pub enum AuthError {
     #[display(fmt = "DuplicateValue: {}", _0)]
     DuplicateValue(String),
 
-    #[display(fmt = "BadId")]
-    BadId,
+    //#[display(fmt = "BadId")]
+    //BadId,
 
     #[display(fmt = "NotFound: {}", _0)]
     NotFound(String),
 
-    #[display(fmt = "ProcessError: {}", _0)]
-    ProcessError(String),
+    //#[display(fmt = "ProcessError: {}", _0)]
+    //ProcessError(String),
 
     #[display(fmt = "AuthenticationError: {}", _0)]
     AuthenticationError(String),

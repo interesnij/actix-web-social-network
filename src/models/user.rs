@@ -1,7 +1,7 @@
 use crate::schema::users;
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
-use crate::utils::establish_connection;
+//use crate::utils::establish_connection;
 
 ///// Типы пользоватетеля
     // 1 стандартный тип пользователя
