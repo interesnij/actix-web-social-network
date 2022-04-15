@@ -40,8 +40,8 @@ struct DesctopNewsListTemplate {
     device:     String,
     language:   String,
     perm:       i16,
-    have_link:  String,
-    s_avatar:   String,
+    have_link:  Option<String>,
+    s_avatar:   Option<String>,
     background: String,
 }
 
@@ -61,8 +61,8 @@ struct MobileNewsListTemplate {
     device:     String,
     language:   String,
     perm:       i16,
-    have_link:  String,
-    s_avatar:   String,
+    have_link:  Option<String>,
+    s_avatar:   Option<String>,
     background: String,
 }
 
