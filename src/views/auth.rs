@@ -778,7 +778,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
 struct PhoneJson {
     status: bool,
     ucaller_id: i32,
-    phone: i64,
+    phone: String,
     phone_id: String,
     code: i32,
 }
