@@ -47,7 +47,7 @@ pub fn get_request_user_data(session: Session) -> (
             DesignSetting,
             User
         };
-        let _user = users
+        let _user = &users
             .filter(schema::users::id.eq(&user_id))
             .load::<User>(&_connection)
             .expect("E")[0];
