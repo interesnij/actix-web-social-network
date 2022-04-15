@@ -28,11 +28,11 @@ pub enum AuthError {
 impl ResponseError for AuthError {
     fn error_response(&self) -> HttpResponse {
         match self {
-            AuthError::BadId => HttpResponse::BadRequest().json("Invalid ID"),
+            //AuthError::BadId => HttpResponse::BadRequest().json("Invalid ID"),
 
             AuthError::NotFound(ref message) => HttpResponse::NotFound().json(message),
 
-            AuthError::ProcessError(ref message) => HttpResponse::InternalServerError().json(message),
+            //AuthError::ProcessError(ref message) => HttpResponse::InternalServerError().json(message),
 
             AuthError::AuthenticationError(ref message) => HttpResponse::Unauthorized().json(message),
 
