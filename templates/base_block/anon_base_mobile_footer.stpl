@@ -2,7 +2,7 @@
 </span>
 </div>
 <br><br><br>
-<% include!("./../anon_tab.stpl"); %>
+<% include!("./anon_tab.stpl"); %> 
 
 <div class='card video_fullscreen' style='display:none;'>
 <span class="video_btn_big" style="top: 30px; position: absolute;right: 12%;">
