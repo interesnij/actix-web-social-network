@@ -3,6 +3,7 @@ use actix_session::Session;
 use crate::utils::{is_signed_in, get_current_user, establish_connection};
 use crate::schema;
 use diesel::prelude::*;
+use std::option::Option;
 
 
 pub fn get_folder(req: HttpRequest) -> String {
@@ -21,7 +22,7 @@ pub fn get_folder(req: HttpRequest) -> String {
 }
 
 pub fn get_request_user_data(session: Session) -> (
-        i32, String, String, i16, String, String, String, i16, String, String, String
+        i32, String, String, i16, String, String, String, i16, Option, Option, String
     ) {
 
     let _connection = establish_connection();
@@ -62,7 +63,7 @@ pub fn get_request_user_data(session: Session) -> (
             background.to_string(),
         )
     } else {
-        (0, "".to_string(), "".to_string(), 0, "".to_string(), "".to_string(), "".to_string(), 0, "".to_string(), "".to_string(), "".to_string())
+        (0, "".to_string(), "".to_string(), 0, "".to_string(), "".to_string(), "".to_string(), 0, None, None, "".to_string())
     }
 }
 
