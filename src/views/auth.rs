@@ -44,7 +44,7 @@ pub async fn mobile_signup(session: Session) -> actix_web::Result<HttpResponse> 
         to_home();
     }
 
-    let body = NobileSignupTemplate { message: "Привет!".to_string() }
+    let body = NobileSignupTemplate { title: "Регистрация!".to_string() }
     .render_once()
     .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
     Ok(HttpResponse::Ok()
