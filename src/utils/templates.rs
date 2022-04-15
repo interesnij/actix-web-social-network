@@ -19,19 +19,14 @@ pub fn get_folder(req: HttpRequest) -> String {
     _type
 }
 
-pub fn get_data(req: HttpRequest, session: Session) -> (String, User) {
-    let _type = get_folder(req);
-    for header in req.headers().into_iter() {
-        if header.0 == "user-agent" {
-            let _val = format!("{:?}", header.1);
-            if _val.contains("Mobile"){
-                _type = "mobile/".to_string();
-            } else {
-                _type = "desctop/".to_string();
-            };
-        }
-    };
-    (_type, get_current_user(&session))
+pub fn get_request_user(session: Session) -> User {
+    let _request_user = get_current_user(&session);
+    match _request_user {
+        Ok(s) => &users
+            .filter(schema::users::id.eq(s.id))
+            .load::<User>(&_connection)
+            .expect("E")[0],
+        _ => Null
 }
 
 pub fn get_default_template_2(req: HttpRequest, session: Session) -> (String) {
