@@ -648,7 +648,7 @@ on('body', 'click', '#register_ajax', function() {
 
     //_span.querySelector(".user_name").innerHTML = first_name.value + " " + last_name.value;
     container = document.body.querySelector(".main-container");
-    container.innerHTML = _span.responseText;
+    container.innerHTML = _span.innerHTML;
 
     final_form = container.querySelector(".final_process_form");
     final_form.append(create_hide_input ("first_name", first_name.value, "first_name"));
