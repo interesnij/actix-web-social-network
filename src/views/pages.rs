@@ -53,7 +53,7 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
         _auth = true;
     }
 
-    let _type = get_folder(req, session);
+    let _type = get_folder(req);
     if _auth == true {
         if _type == "desctop/".to_string() {
             let body = DesctopNewsListTemplate { test: true }
