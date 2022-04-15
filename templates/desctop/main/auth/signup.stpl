@@ -11,7 +11,7 @@
                 <hr class="my-0">
                 <input type="password" name="password2" id="password2" autocomplete="new-password" class="form-control form-control-lg" placeholder="Повторите пароль">
 
-                {% include 'desctop/main/auth/birtday.html' %}
+                <% include!("./birtday.stpl"); %>
             </div>
             <div class="row mt-2 mb-2 no-gutters">
               <div class="col-6">
