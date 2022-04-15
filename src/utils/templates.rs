@@ -41,16 +41,16 @@ pub fn get_request_user_data(session: Session) -> (
             User
         };
         let _user = users
-            .filter(schema::users::id.eq(_request_user.id))
+            .filter(schema::users::id.eq(&user_id))
             .load::<User>(&_connection)
             .expect("E")[0];
         let _design = design_settings
-            .filter(schema::design_settings::user_id.eq(&_request_user.id))
+            .filter(schema::design_settings::user_id.eq(&user_id))
             .load::<DesignSetting>(&_connection)
             .expect("E");
         let background = &_design[0].background;
         (
-            _user.id,
+            user_id,
             _user.first_name,
             _user.last_name,
             _user.types,
