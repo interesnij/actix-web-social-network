@@ -22,14 +22,39 @@ use crate::errors::AuthError;
 use actix_multipart::{Field, Multipart};
 use std::borrow::BorrowMut;
 use futures_util::stream::StreamExt as _;
+use sailfish::TemplateOnce;
 
 
 pub fn auth_routes(config: &mut web::ServiceConfig) {
     config.route("/phone_send/{phone}/", web::get().to(phone_send));
     config.route("/phone_verify/{phone}/{code}/", web::get().to(phone_verify));
     config.route("/signup/", web::get().to(process_signup));
+    config.route("/mob_register/", web::get().to(mobile_signup));
     config.route("/login/", web::post().to(login));
     config.route("/logout/", web::get().to(logout));
+}
+
+#[derive(TemplateOnce)]
+#[template(path = "mobile/main/auth/signup.stpl")]
+struct NobileSignupTemplate {
+    message: String,
+}
+
+pub async fn mobile_signup(session: Session) -> Responder {
+    if is_signed_in(&session) {
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body("Привет!".to_string()))
+        }
+    }
+
+    let body = NobileSignupTemplate { message: "Привет!".to_string() }
+    .render_once()
+    .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+    Ok(HttpResponse::Ok()
+        .content_type("text/html; charset=utf-8")
+        .body(body))
+    }
 }
 
 pub async fn logout(session: Session) -> HttpResponse {

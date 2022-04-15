@@ -1,6 +1,5 @@
-{% extends "base_anon_mobile.html" %}
-{% block title %}Регистрация | трезвый.рус{% endblock %}
-{% block content %}
+<% include!("../../../base_block/anon_base_mobile_header.stpl"); %>
+
 <div class="main-container wrapper justify-content-center" style="height: 85vh !important;padding-top:0">
     <div class="container">
                 <h4 class="font-weight-light mb-3 text-center">Регистрация</h4>
@@ -34,7 +33,8 @@
                         </div>
                       </div>
                     </div>
-                    {% include 'mobile/main/auth/birtday.html' %}
+
+                    <% include!("./birtday.stpl"); %>
 
                 <div class="col mt-2 mb-2">
                     <div class="custom-control custom-checkbox">
@@ -52,4 +52,5 @@
               </form>
     </div>
 </div>
-{% endblock %}
+
+<% include!("../../../base_block/anon_base_mobile_footer.stpl"); %>
