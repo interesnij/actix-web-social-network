@@ -7,7 +7,7 @@ use actix_web::{
     http::{header::Header, StatusCode},
 };
 use serde::Deserialize;
-use crate::utils::{is_signed_in, establish_connection, get_folder, get_request_user};
+use crate::utils::{is_signed_in, establish_connection, get_folder, get_request_user_data};
 use crate::schema;
 use diesel::prelude::*;
 use actix_session::Session;

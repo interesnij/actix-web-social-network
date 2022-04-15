@@ -59,10 +59,10 @@ pub fn get_request_user_data(session: Session) -> (
             _user.perm,
             _user.have_link,
             _user.s_avatar,
-            background,
+            background.to_string(),
         )
     } else {
-        (0, "".to_string(), "".to_string(), "".to_string(), "".to_string(), "".to_string(), "".to_string(), "".to_string(), 0.to_string(), "".to_string(), "".to_string())
+        (0, "".to_string(), "".to_string(), "".to_string(), "".to_string(), "".to_string(), "".to_string(), 0, "".to_string(), "".to_string(), "".to_string())
     }
 }
 
