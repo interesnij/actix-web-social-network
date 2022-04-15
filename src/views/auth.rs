@@ -799,8 +799,6 @@ pub async fn phone_send(session: Session, req: HttpRequest, _phone: web::Path<St
             let new_request = __request.text().await.unwrap();
             println!("{:?}", new_request);
             let phone200: PhoneJson = serde_json::from_str(&new_request).unwrap();
-
-            let new_code: i32 = phone200.code.parse().unwrap()
             let new_phone_code = NewPhoneCode {
                 phone: _phone.to_string(),
                 code:  phone200.code,
