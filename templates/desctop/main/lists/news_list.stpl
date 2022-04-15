@@ -4,6 +4,9 @@
     <div class="row">
         <div class="col-md-8 mt-3">
           <%= fio %>  - <%= s_avatar %>
+          <% if s_avatar { %>
+              s_avatar!
+          <% } %>
         </div>
         <div class="col-12 col-md-4">
 
