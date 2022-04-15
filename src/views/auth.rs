@@ -40,7 +40,7 @@ struct NobileSignupTemplate {
     message: String,
 }
 
-pub async fn mobile_signup(session: Session) -> Responder {
+pub async fn mobile_signup(session: Session) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
