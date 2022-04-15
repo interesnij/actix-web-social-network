@@ -71,21 +71,21 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
     let _type = get_folder(req);
     if is_signed_in(&session) {
 
-        let (request_id, first_name, last_name, types, gender, device, language, perm, have_link, s_avatar, background) = get_request_user_data(session);
+        let (_request_id, _first_name, _last_name, _types, _gender, _device, _language, _perm, _have_link, _s_avatar, _background) = get_request_user_data(session);
 
         if _type == "desctop/".to_string() {
             let body = DesctopNewsListTemplate {
-                request_id: request_id,
-                first_name: first_name,
-                last_name:  last_name,
-                types:      types,
-                gender:     gender,
-                device:     device,
-                language:   language,
-                perm:       perm,
-                have_link:  Some(have_link),
-                s_avatar:   Some(s_avatar),
-                background: background,
+                request_id: _request_id,
+                first_name: _first_name,
+                last_name:  _last_name,
+                types:      _types,
+                gender:     _gender,
+                device:     _device,
+                language:   _language,
+                perm:       _perm,
+                have_link:  Some(_have_link),
+                s_avatar:   Some(_s_avatar),
+                background: _background,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -95,17 +95,17 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
         }
         else {
             let body = MobileNewsListTemplate {
-                request_id: request_id,
-                first_name: first_name,
-                last_name:  last_name,
-                types:      types,
-                gender:     gender,
-                device:     device,
-                language:   language,
-                perm:       perm,
-                have_link:  Some(have_link),
-                s_avatar:   Some(s_avatar),
-                background: background,
+                request_id: _request_id,
+                first_name: _first_name,
+                last_name:  _last_name,
+                types:      _types,
+                gender:     _gender,
+                device:     _device,
+                language:   _language,
+                perm:       _perm,
+                have_link:  Some(_have_link),
+                s_avatar:   Some(_s_avatar),
+                background: _background,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
