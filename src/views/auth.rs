@@ -41,9 +41,7 @@ struct NobileSignupTemplate {
 
 pub async fn mobile_signup(session: Session) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body("Привет!".to_string()))
+        to_home();
     }
 
     let body = NobileSignupTemplate { message: "Привет!".to_string() }
