@@ -27,11 +27,11 @@ pub fn get_request_user_data(session: Session) -> (
 
     let _connection = establish_connection();
     let _request_user = get_current_user(&session);
-    match _request_user {
-        Ok(s) => s.id,
-        _ => 0
-    };
-    if _request_user != 0 {
+    let mut user_id = 0;
+    if let Some(user) = session.get::<String>("user")? {
+        user_id = user.id;
+    }
+    if user_id != 0 {
         use crate::schema::{
             design_settings::dsl::design_settings,
             users::dsl::users,
