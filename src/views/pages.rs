@@ -29,11 +29,12 @@ pub struct SParams {
 #[derive(TemplateOnce)]
 #[template(path = "desctop/main/auth/auth.stpl")]
 struct DesctopAuthTemplate {
-    codes: Vec<PhoneCode>,
+    title: String,
 }
 #[derive(TemplateOnce)]
 #[template(path = "desctop/main/lists/news_list.stpl")]
 struct DesctopNewsListTemplate {
+    title:      String,
     request_id: i32,
     fio:        String,
     types:      i16,
@@ -48,13 +49,14 @@ struct DesctopNewsListTemplate {
 #[derive(TemplateOnce)]
 #[template(path = "mobile/main/auth/auth.stpl")]
 struct MobileAuthTemplate {
-    test: bool,
+    title: String,
 }
 #[derive(TemplateOnce)]
 #[template(path = "mobile/main/lists/news_list.stpl")]
 struct MobileNewsListTemplate {
+    title:      String,
     request_id: i32,
-    fio: String,
+    fio:        String,
     types:      i16,
     gender:     String,
     language:   String,
@@ -73,6 +75,7 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
 
         if _type == "desctop/".to_string() {
             let body = DesctopNewsListTemplate {
+                title:      "Новости".to_string(),
                 request_id: _request_id,
                 fio:        _fio,
                 types:      _types,
@@ -91,6 +94,7 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
         }
         else {
             let body = MobileNewsListTemplate {
+                title:      "Новости".to_string(),
                 request_id: _request_id,
                 fio:        _fio,
                 types:      _types,
@@ -115,7 +119,7 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
             let items = phone_codes
                 .load::<PhoneCode>(&_connection)
                 .expect("Error.");
-            let body = DesctopAuthTemplate { codes: items }
+            let body = DesctopAuthTemplate { title: "Трезвый.рус | Вход".to_string() }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok()
@@ -123,7 +127,7 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
                 .body(body))
         }
         else {
-            let body = MobileAuthTemplate { test: true }
+            let body = MobileAuthTemplate { title: "Трезвый.рус | Вход".to_string() }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok()
@@ -137,6 +141,7 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
 #[derive(TemplateOnce)]
 #[template(path = "desctop/main/lists/featured_list.stpl")]
 struct DesctopFeaturedListTemplate {
+    title:      String,
     request_id: i32,
     fio:        String,
     types:      i16,
@@ -150,6 +155,7 @@ struct DesctopFeaturedListTemplate {
 #[derive(TemplateOnce)]
 #[template(path = "mobile/main/lists/featured_list.stpl")]
 struct MobileFeaturedListTemplate {
+    title:      String,
     request_id: i32,
     fio:        String,
     types:      i16,
@@ -168,6 +174,7 @@ pub async fn featured_list(session: Session, req: HttpRequest) -> actix_web::Res
 
         if _type == "desctop/".to_string() {
             let body = DesctopFeaturedListTemplate {
+                title:      "Рекомендации".to_string(),
                 request_id: _request_id,
                 fio:        _fio,
                 types:      _types,
@@ -186,6 +193,7 @@ pub async fn featured_list(session: Session, req: HttpRequest) -> actix_web::Res
         }
         else {
             let body = MobileFeaturedListTemplate {
+                title:      "Рекомендации".to_string(),
                 request_id: _request_id,
                 fio:        _fio,
                 types:      _types,
