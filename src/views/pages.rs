@@ -88,6 +88,4 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
                 .body(body));
         }
     }
-    let response_text = "ok".to_string();
-    HttpResponse::Ok().body(response_text)
 }
