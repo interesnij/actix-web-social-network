@@ -86,5 +86,6 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
             Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
             .body(body))
+        }
     }
 }
