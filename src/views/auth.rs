@@ -815,8 +815,6 @@ struct PhoneJson {
     code: i32,
 }
 pub async fn phone_send(session: Session, req: HttpRequest, _phone: web::Path<String>) -> impl Responder {
-    let (_type, _is_host_admin) = get_default_template(req);
-    let mut data = Context::new();
     let req_phone = _phone.to_string();
     if req_phone.len() > 8 {
         use crate::models::{User, PhoneCode, NewPhoneCode};

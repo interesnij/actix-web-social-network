@@ -26,23 +26,23 @@ pub struct SParams {
 #[derive(TemplateOnce)]
 #[template(path = "desctop/main/auth/auth.stpl")]
 struct DesctopAuthTemplate {
-    test: true,
+    test: bool,
 }
 #[derive(TemplateOnce)]
 #[template(path = "desctop/main/lists/news_list.stpl")]
 struct DesctopNewsListTemplate {
-    test: true,
+    test: bool,
 }
 
 #[derive(TemplateOnce)]
 #[template(path = "mobile/main/auth/auth.stpl")]
 struct MobileAuthTemplate {
-    test: true,
+    test: bool,
 }
 #[derive(TemplateOnce)]
 #[template(path = "mobile/main/lists/news_list.stpl")]
 struct MobileNewsListTemplate {
-    test: true,
+    test: bool,
 }
 
 pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
