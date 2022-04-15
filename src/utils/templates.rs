@@ -27,6 +27,7 @@ pub fn get_request_user(session: Session) -> User {
             .load::<User>(&_connection)
             .expect("E")[0],
         _ => Null
+    }
 }
 
 pub fn get_default_template_2(req: HttpRequest, session: Session) -> (String) {
