@@ -2,8 +2,8 @@
 <div class="col-auto sidebar-inner left_panel_menu desctop_nav">
     <div class="nav flex-column nav-pills faqnav pos_sticky" style="padding-right: 15px;">
         <a class="ajax" href="
-        <% if get_link.is_empty() { %>
-            <%= get_link %>
+        <% if have_link.is_empty() { %>
+            <%= have_link %>
         <% } else { %>
           /id<%= request_id %>}/
         <% } %>
