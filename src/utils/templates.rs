@@ -33,7 +33,7 @@ pub fn get_request_user_data(session: Session) -> (
     if let Some(user_str) = session.get::<String>("user")
         .map_err(|_| AuthError::AuthenticationError(String::from("Не удалось извлечь пользователя из сеанса")))
         .unwrap() {
-            user: SessionUser = serde_json::from_str(&user_str);
+            let user: SessionUser = serde_json::from_str(&user_str).expect("E.");
             user_id = user.id;
         }
     if user_id != 0 {
@@ -68,7 +68,7 @@ pub fn get_request_user_data(session: Session) -> (
             background.to_string(),
         )
     } else {
-        (0, "".to_string(), "".to_string(), 0, "".to_string(), "".to_string(), "".to_string(), 0, None, None, "".to_string())
+        (0, "".to_string(), "".to_string(), 0, "".to_string(), "".to_string(), "".to_string(), 0, "".to_string(), "".to_string(), "".to_string())
     }
 }
 
