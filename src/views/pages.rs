@@ -12,6 +12,7 @@ use crate::schema;
 use diesel::prelude::*;
 use actix_session::Session;
 use sailfish::TemplateOnce;
+use crate::models::PhoneCode;
 
 
 pub fn pages_routes(config: &mut web::ServiceConfig) {
@@ -26,7 +27,7 @@ pub struct SParams {
 #[derive(TemplateOnce)]
 #[template(path = "desctop/main/auth/auth.stpl")]
 struct DesctopAuthTemplate {
-    test: bool,
+    codes: Vec<PhoneCode>,
 }
 #[derive(TemplateOnce)]
 #[template(path = "desctop/main/lists/news_list.stpl")]
@@ -72,7 +73,10 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
         }
     } else {
         if _type == "desctop/".to_string() {
-            let body = DesctopAuthTemplate { test: true }
+            let items = schema::phone_codes
+                .load::<PhoneCode>(&_connection)
+                .expect("Error.");
+            let body = DesctopAuthTemplate { codes: items }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok()
