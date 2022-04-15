@@ -7,7 +7,7 @@
     <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/static/styles/bootstrap.min.css" media="all" />
     <link rel="stylesheet" href="/static/styles/default.css?ver11" />
-    <link class="my_color_settings" rel="stylesheet" href="/static/styles/color/a.css" />
+    <link class="my_color_settings" rel="stylesheet" href="/static/styles/color/<%= background %>.css" />
     <link rel="stylesheet" href="/static/styles/video.css" media="none" onload="if(media!='all')media='all'" />
     <link rel="stylesheet" href="/static/styles/load.css" media="none" onload="if(media!='all')media='all'" />
 </head>
