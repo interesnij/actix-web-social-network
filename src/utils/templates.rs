@@ -56,10 +56,10 @@ pub fn get_request_user_data(session: Session) -> (
             .load::<DesignSetting>(&_connection)
             .expect("E");
         let background = &_design[0].background;
-        if _user.have_link.is_ok() {
+        if _user.have_link.is_some() {
             have_link = _user.have_link
         }
-        if _user.s_avatar.is_ok() {
+        if _user.s_avatar.is_some() {
             s_avatar = _user.s_avatar
         }
         (
