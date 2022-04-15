@@ -27,7 +27,7 @@
     </button>
     <button href="
       <% if have_link.is_empty() { %>
-        /id<%= request_id %>}/
+        /id<%= request_id %>/
       <% } else { %>
         <%= have_link %>
       <% } %>
