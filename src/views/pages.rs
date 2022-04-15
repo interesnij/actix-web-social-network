@@ -61,7 +61,7 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
             match body {
                 Ok => HttpResponse::Ok().body(body),
                 Err => HttpResponse::Ok().body("Error".to_string()),
-            }
+            };
         }
         else {
             let body = MobileNewsListTemplate { test: true }
