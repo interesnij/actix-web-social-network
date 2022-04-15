@@ -9,6 +9,7 @@
           <% } else { %>
             Есть аватар!
           <% } %>
+          <%= have_link %> 
         </div>
         <div class="col-12 col-md-4">
 
