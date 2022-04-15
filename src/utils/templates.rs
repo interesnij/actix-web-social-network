@@ -21,7 +21,7 @@ pub fn get_folder(req: HttpRequest) -> String {
 }
 
 pub fn get_request_user_data(session: Session) -> (
-        i32, String, String, String, String, String, String, String, i8, String, String
+        i32, String, String, String, String, String, String, i8, String, String, String
     ) {
 
     let _connection = establish_connection();
@@ -39,7 +39,7 @@ pub fn get_request_user_data(session: Session) -> (
             DesignSetting,
             User
         };
-        _user = users
+        let _user = users
             .filter(schema::users::id.eq(_request_user.id))
             .load::<User>(&_connection)
             .expect("E")[0];
