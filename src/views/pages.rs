@@ -60,35 +60,32 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok()
                 .content_type("text/html; charset=utf-8")
-                .body(body))
+                .body(body));
         }
         else {
             let body = MobileNewsListTemplate { test: true }
             .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR));
-            match body {
-                Ok(t) => HttpResponse::Ok().body(body),
-                Err(e) => HttpResponse::Ok().body("Error".to_string()),
-            };
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body));
         }
     } else {
         if _type == "desctop/".to_string() {
             let body = DesctopAuthTemplate { test: true }
             .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR));
-            match body {
-                Ok(t) => HttpResponse::Ok().body(body),
-                Err(e) => HttpResponse::Ok().body("Error".to_string()),
-            };
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body));
         }
         else {
             let body = MobileAuthTemplate { test: true }
             .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR));
-            match body {
-                Ok(t) => HttpResponse::Ok().body(body),
-                Err(e) => HttpResponse::Ok().body("Error".to_string()),
-            };
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body));
         }
     }
     let response_text = "ok".to_string();
