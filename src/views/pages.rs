@@ -52,7 +52,7 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
     let _type = get_folder(req);
     if is_signed_in(&session) {
         use crate::schema::design_settings::dsl::design_settings;
-        use crate::DesignSetting;
+        use crate::models::DesignSetting;
 
         let request_user = get_request_user(session);
         let _design = design_settings

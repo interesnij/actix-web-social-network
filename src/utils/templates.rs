@@ -32,7 +32,7 @@ pub fn get_request_user(session: Session) -> User {
     }
 }
 
-pub fn get_default_template_2(req: HttpRequest, session: Session) -> (String) {
+pub fn get_default_template_2(req: HttpRequest, session: Session) -> String {
     use crate::schema::users::dsl::users;
     use crate::models::User;
     use diesel::prelude::*;
