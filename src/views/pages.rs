@@ -23,7 +23,7 @@ pub struct SParams {
     pub q: String,
 }
 
-static user_device: std::string::String = get_folder(req: HttpRequest, session: Session);
+static user_device: std::string::String = get_folder(HttpRequest, Session);
 #[derive(TemplateOnce)]
 #[template(path = user_device + "main/auth/auth.stpl")]
 struct DesctopAuthTemplate {
