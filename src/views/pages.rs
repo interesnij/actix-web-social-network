@@ -45,7 +45,7 @@ struct MobileNewsListTemplate {
     test: bool,
 }
 
-pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
+pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let _connection = establish_connection();
     let mut _auth = false;
     if is_signed_in(&session) {
