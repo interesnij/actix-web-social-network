@@ -22,7 +22,7 @@ pub fn get_folder(req: HttpRequest) -> String {
 }
 
 pub fn get_request_user_data(session: Session) -> (
-        i32, String, String, i16, String, String, String, i16, Option, Option, String
+        i32, String, String, i16, String, String, String, i16, Option<T>, Option<T>, String
     ) {
 
     let _connection = establish_connection();
