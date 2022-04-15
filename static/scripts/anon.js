@@ -617,7 +617,7 @@ on('body', 'click', '#register_ajax', function() {
     form.querySelector("#password1").style.border = "1px #FF0000 solid";
     toast_error("Пароль - обязательное поле!");
     return
-  }else if (!form.querySelector("#password2").value){
+  } else if (!form.querySelector("#password2").value){
     form.querySelector("#password2").style.border = "1px #FF0000 solid";
     toast_error("Введите пароль еще раз!");
     return
@@ -635,12 +635,9 @@ on('body', 'click', '#register_ajax', function() {
       form.querySelector("#date_year").style.border = "1px #FF0000 solid";
       toast_error("Год рождения - обязательное поле!");
       return
-  } else { this.disabled = true }
-
-  reg_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  reg_link.open( 'GET', "/phone_window/", true );
-  reg_link.onreadystatechange = function () {
-  if ( reg_link.readyState == 4 && reg_link.status == 200 ) {
+  } else {
+    this.disabled = true
+  }
 
     //_span.querySelector(".user_name").innerHTML = first_name.value + " " + last_name.value;
     container = document.body.querySelector(".main-container");
@@ -658,8 +655,6 @@ on('body', 'click', '#register_ajax', function() {
         + "-" + form.querySelector("#date_month").value +
         "-" + form.querySelector("#date_day").value, "birthday"));
     final_form.append(create_hide_input ("gender", form.querySelector("#customradio1").value,"gender"));
-  }};
-  reg_link.send( );
 });
 
 on('body', 'click', '#logg', function() {
