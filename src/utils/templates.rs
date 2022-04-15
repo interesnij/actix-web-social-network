@@ -4,7 +4,7 @@ use crate::utils::{is_signed_in, get_current_user, establish_connection};
 //use tera::Context;
 
 
-pub fn get_folder(req: HttpRequest, session: Session) -> String {
+pub fn get_folder(req: HttpRequest) -> String {
     let mut _type = "".to_string();
     for header in req.headers().into_iter() {
         if header.0 == "user-agent" {
