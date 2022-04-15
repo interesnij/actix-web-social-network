@@ -776,11 +776,11 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
 
 #[derive(Deserialize, Debug)]
 struct PhoneJson {
-    status: bool,
-    ucaller_id: i32,
+    //status: bool,
+    //ucaller_id: i32,
     phone: String,
-    phone_id: String,
-    code: i32,
+    //phone_id: String,
+    code: String,
 }
 pub async fn phone_send(_phone: web::Path<String>) -> impl Responder {
     let req_phone = _phone.to_string();
