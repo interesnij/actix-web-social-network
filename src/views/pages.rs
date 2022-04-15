@@ -83,8 +83,8 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
                 device:     device,
                 language:   language,
                 perm:       perm,
-                have_link:  have_link,
-                s_avatar:   s_avatar,
+                have_link:  Some(have_link),
+                s_avatar:   Some(s_avatar),
                 background: background,
             }
             .render_once()
@@ -103,8 +103,8 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
                 device:     device,
                 language:   language,
                 perm:       perm,
-                have_link:  have_link,
-                s_avatar:   s_avatar,
+                have_link:  Some(have_link),
+                s_avatar:   Some(s_avatar),
                 background: background,
             }
             .render_once()

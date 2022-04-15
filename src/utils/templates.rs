@@ -29,11 +29,11 @@ pub fn get_request_user_data(session: Session) -> (
     let _connection = establish_connection();
     //let _request_user = get_current_user(&session);
     let mut user_id = 0;
-    if let Some(user) = session.get::<String>("user")
+    if let Some(user_str) = session.get::<String>("user")
         .map_err(|_| AuthError::AuthenticationError(String::from("Не удалось извлечь пользователя из сеанса")))
         .unwrap() {
-        user_id = user.id;
-    }
+            user_id = serde_json::from_str(&user_str).id;
+        }
     if user_id != 0 {
         use crate::schema::{
             design_settings::dsl::design_settings,
