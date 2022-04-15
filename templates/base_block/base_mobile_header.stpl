@@ -26,9 +26,9 @@
   <body class="fixed-header" data-video="first_player" data-csrf="csrf_token">
         <div id="ajax" class="userpic" data-id="<%= request_id %>" data-pk="
           <% if have_link.is_empty() { %>
-            <%= have_link %> 
+              /id<%= request_id %>}/
           <% } else { %>
-            /id<%= request_id %>}/
-            <% } %>
+            <%= have_link %>
+          <% } %> 
         " data-device="mobile" data-name="<%= fio %>" style="padding-right:0px; padding-left:0px;">
           <span id="reload_block">

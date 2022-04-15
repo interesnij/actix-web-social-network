@@ -35,11 +35,13 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right profile-dropdown">
 
-                        <a class="dropdown-item ajax" href="<% if have_link.is_empty() { %>
-                            <%= have_link %>
-                        <% } else { %>
-                          /id<%= request_id %>}/
-                        <% } %>"> 
+                        <a class="dropdown-item ajax" href="
+                          <% if have_link.is_empty() { %>
+                            /id<%= request_id %>}/
+                          <% } else { %>
+                            <%= have_link %> 
+                          <% } %>
+                        ">
                             <div class="row align-items-center">
                                 <div class="col">Моя страница</div>
                                 <div class="col-auto">
