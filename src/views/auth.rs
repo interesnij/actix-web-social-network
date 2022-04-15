@@ -800,7 +800,7 @@ pub async fn phone_send(session: Session, req: HttpRequest, _phone: web::Path<St
             println!("{:?}", new_request);
 
             let phone200: PhoneJson = serde_json::from_str(&new_request).unwrap();
-            let code_i32: i32 = phone200.code.parse().unxrap();
+            let code_i32: i32 = phone200.code.parse().unwrap();
             let new_phone_code = NewPhoneCode {
                 phone: _phone.to_string(),
                 code:  code_i32,
