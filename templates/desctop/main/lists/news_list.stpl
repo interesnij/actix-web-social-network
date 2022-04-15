@@ -6,8 +6,7 @@
           <%= fio %>  - <%= s_avatar %>
           <% if s_avatar.is_empty() { %>
               Нет аватара!
-          <% } %>
-          <% else { %>
+          <% } else { %>
             Есть аватар!
           <% } %>
         </div>
