@@ -781,6 +781,7 @@ pub async fn phone_send(_phone: web::Path<String>) -> impl Responder {
     let req_phone = _phone.to_string();
     if req_phone.len() > 8 {
         use crate::models::{PhoneCode, NewPhoneCode};
+        use crate::models::user::users::dsl::users;
 
         let _connection = establish_connection();
         let _some_user = schema::users

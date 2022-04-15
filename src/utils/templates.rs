@@ -1,9 +1,8 @@
 use actix_web::HttpRequest;
 use actix_session::Session;
-use crate::utils::{is_signed_in, get_current_user, establish_connection};
+use crate::utils::establish_connection;
 use crate::schema;
 use diesel::prelude::*;
-use std::option::Option;
 use crate::errors::AuthError;
 
 
