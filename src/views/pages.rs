@@ -7,7 +7,7 @@ use actix_web::{
     http::{header::Header, StatusCode},
 };
 use serde::Deserialize;
-use crate::utils::{is_signed_in, establish_connection, get_folder, get_current_user};
+use crate::utils::{is_signed_in, establish_connection, get_folder, get_request_user};
 use crate::schema;
 use diesel::prelude::*;
 use actix_session::Session;
@@ -54,7 +54,7 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
         use crate::schema::design_settings::dsl::design_settings;
         use crate::DesignSetting;
 
-        let request_user = get_request_user(&session); 
+        let request_user = get_request_user(&session);
         let _design = design_settings
             .filter(schema::design_settings::user_id.eq(&request_user.id))
             .load::<DesignSetting>(&_connection)

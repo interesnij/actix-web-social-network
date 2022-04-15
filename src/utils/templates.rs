@@ -26,7 +26,7 @@ pub fn get_request_user(session: Session) -> User {
             .filter(schema::users::id.eq(s.id))
             .load::<User>(&_connection)
             .expect("E")[0],
-        _ => Null
+        _ => None
     }
 }
 
