@@ -2,14 +2,16 @@ use actix_web::{
     HttpRequest,
     Responder,
     HttpResponse,
+    error::InternalError,
     web,
-    http::header::Header
+    http::{header::Header, StatusCode},
 };
 use serde::Deserialize;
-use crate::utils::{is_signed_in, establish_connection, TEMPLATES};
+use crate::utils::{is_signed_in, establish_connection, get_folder};
 use crate::schema;
 use diesel::prelude::*;
 use actix_session::Session;
+use sailfish::TemplateOnce;
 
 
 pub fn pages_routes(config: &mut web::ServiceConfig) {
@@ -21,23 +23,68 @@ pub struct SParams {
     pub q: String,
 }
 
-pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
-    use crate::utils::get_default_template_2;
+#[derive(TemplateOnce)]
+#[template(path = "desctop/main/auth/auth.stpl")]
+struct DesctopAuthTemplate {
+    test: true,
+}
+#[derive(TemplateOnce)]
+#[template(path = "desctop/main/lists/news_list.stpl")]
+struct DesctopNewsListTemplate {
+    test: true,
+}
 
+#[derive(TemplateOnce)]
+#[template(path = "mobile/main/auth/auth.stpl")]
+struct MobileAuthTemplate {
+    test: true,
+}
+#[derive(TemplateOnce)]
+#[template(path = "mobile/main/lists/news_list.stpl")]
+struct MobileNewsListTemplate {
+    test: true,
+}
+
+pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
     let _connection = establish_connection();
-    let mut _template : String;
     let mut _auth = false;
     if is_signed_in(&session) {
         _auth = true;
     }
 
-    let (_type, mut data) = get_default_template_2(req, session);
+    let _type = get_folder(req, session);
     if _auth == true {
-        _template = _type + &"main/lists/news_list.html".to_string();
+        if _type == "desctop/".to_string() {
+            let body = DesctopNewsListTemplate { test: true }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body(body))
+        }
+        else {
+            let body = MobileNewsListTemplate { test: true }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body(body))
+        }
     } else {
-        _template = _type + &"main/auth/auth.html".to_string();
+        if _type == "desctop/".to_string() {
+            let body = DesctopAuthTemplate { test: true }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body(body))
+        }
+        else {
+            let body = MobileAuthTemplate { test: true }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body(body))
     }
-
-    let _rendered = TEMPLATES.render(&_template, &data).unwrap();
-    HttpResponse::Ok().body(_rendered)
 }

@@ -6,11 +6,11 @@ use actix_web::{
     http::header::LOCATION,
 };
 use serde::{Deserialize, Serialize};
-use tera::Context;
+//use tera::Context;
 use crate::utils::{
     establish_connection,
-    get_default_template,
-    TEMPLATES,
+    //get_default_template,
+    //TEMPLATES,
     is_signed_in,
     to_home,
     verify,
@@ -766,7 +766,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
         // записываем уведомления роликов нового пользователя
         let _design_settings = NewDesignSetting {
             user_id:    _new_user.id,
-            background: "a".to_string(), 
+            background: "a".to_string(),
         };
         diesel::insert_into(schema::design_settings::table)
             .values(&_design_settings)
@@ -779,11 +779,31 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
 }
 
 pub async fn phone_window(session: Session, req: HttpRequest) -> impl Responder {
-    let (_type, _is_host_admin) = get_default_template(req);
-    let mut data = Context::new();
-    let _template = _type + &"main/auth/phone_window.html".to_string();
-    let rendered = TEMPLATES.render(&_template, &data).unwrap();
-    HttpResponse::Ok().body(rendered)
+    //let (_type, _is_host_admin) = get_default_template(req);
+    //let mut data = Context::new();
+    let _template = "<form class='h-sm-auto final_process_form'>
+      <h1 class='font-weight-light mb-3 mt-4 text-center user_name'></h1>
+      <p class='text-center'>
+        Вам нужно подтвердить с помощью телефона свой профиль, и в будущем использовать номер телефона
+        в качестве логина к профилю соцсети трезвый.рус.
+      </p>
+      <div class='row'>
+        <div class='col-md-2'></div>
+        <div class='col-md-4' style='display: inline-flex;margin-top: 12px;margin-bottom: 12px;'>
+          <input type='number' id='phone' min='0' onkeyup='phone_check();' class='form-control border-0' placeholder='Телефон'>
+          <hr class='my-0'>
+        </div>
+        <div class='col-md-4' style='margin-top: 12px;'>
+          <button type='button' disabled='disabled' id='phone_send' class='btn btn-primary pink-gradient'>Получить код</button>
+        </div>
+        <div class='col-md-2'></div>
+      </div>
+      <div id='jsondata' style='margin-top:50px'></div>
+
+      <div id='jsondata2' style='margin-top:50px'></div>
+    </form>";
+    //let rendered = TEMPLATES.render(&_template, &data).unwrap();
+    HttpResponse::Ok().body(_template)
 }
 
 #[derive(Deserialize, Debug)]
