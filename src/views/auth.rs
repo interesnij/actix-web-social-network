@@ -45,7 +45,6 @@ pub async fn mobile_signup(session: Session) -> Responder {
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
             .body("Привет!".to_string()))
-        }
     }
 
     let body = NobileSignupTemplate { message: "Привет!".to_string() }
@@ -54,7 +53,6 @@ pub async fn mobile_signup(session: Session) -> Responder {
     Ok(HttpResponse::Ok()
         .content_type("text/html; charset=utf-8")
         .body(body))
-    }
 }
 
 pub async fn logout(session: Session) -> HttpResponse {
