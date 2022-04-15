@@ -16,7 +16,7 @@
                           <span class="api_response"></span>
                             <div class="card">
                                 <div class="card-body p-0">
-                                    <input type="text" name="username" id="id_username" class="form-control text-center form-control-lg border-0" placeholder="Телефон">
+                                    <input type="text" name="phone" id="id_username" class="form-control text-center form-control-lg border-0" placeholder="Телефон">
                                     <hr class="my-0">
                                     <input type="password" name="password" id="id_password" class="form-control text-center form-control-lg border-0" placeholder="Пароль">
                                 </div>

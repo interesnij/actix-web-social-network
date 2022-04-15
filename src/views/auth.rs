@@ -36,7 +36,7 @@ pub fn auth_routes(config: &mut web::ServiceConfig) {
 #[derive(TemplateOnce)]
 #[template(path = "mobile/main/auth/signup.stpl")]
 struct NobileSignupTemplate {
-    message: String,
+    title: String,
 }
 
 pub async fn mobile_signup(session: Session) -> actix_web::Result<HttpResponse> {
