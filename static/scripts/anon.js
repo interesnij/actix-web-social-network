@@ -647,7 +647,7 @@ on('body', 'click', '#register_ajax', function() {
     _span.innerHTML = elem;
 
     //_span.querySelector(".user_name").innerHTML = first_name.value + " " + last_name.value;
-    //container = document.body.querySelector(".main-container");
+    container = document.body.querySelector(".main-container");
     container.innerHTML = _span.responseText;
 
     final_form = container.querySelector(".final_process_form");
