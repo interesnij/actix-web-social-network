@@ -32,7 +32,16 @@ struct DesctopAuthTemplate {
 #[derive(TemplateOnce)]
 #[template(path = "desctop/main/lists/news_list.stpl")]
 struct DesctopNewsListTemplate {
-    request_user: User,
+    request_id: i32,
+    first_name: String,
+    last_name:  String,
+    types:      String,
+    gender:     String,
+    device:     String,
+    language:   String,
+    perm:       i8,
+    have_link:  String,
+    s_avatar:   String,
     background: String,
 }
 
@@ -44,25 +53,40 @@ struct MobileAuthTemplate {
 #[derive(TemplateOnce)]
 #[template(path = "mobile/main/lists/news_list.stpl")]
 struct MobileNewsListTemplate {
-    test: bool,
+    request_id: i32,
+    first_name: String,
+    last_name:  String,
+    types:      String,
+    gender:     String,
+    device:     String,
+    language:   String,
+    perm:       i8,
+    have_link:  String,
+    s_avatar:   String,
+    background: String,
 }
 
 pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let _connection = establish_connection();
     let _type = get_folder(req);
     if is_signed_in(&session) {
-        use crate::schema::design_settings::dsl::design_settings;
-        use crate::models::DesignSetting;
 
-        let request_user = get_request_user(session);
-        let _design = design_settings
-            .filter(schema::design_settings::user_id.eq(&request_user.id))
-            .load::<DesignSetting>(&_connection)
-            .expect("E");
-        let background = &_design[0].background;
+        let (request_id, first_name, last_name, types, gender, device, language, perm, have_link, s_avatar, background) = get_request_user_data(session);
 
         if _type == "desctop/".to_string() {
-            let body = DesctopNewsListTemplate {request_user: request_user, background: background.to_string()}
+            let body = DesctopNewsListTemplate {
+                request_id: request_id,
+                first_name: first_name,
+                last_name:  last_name,
+                types:      types,
+                gender:     gender,
+                device:     device,
+                language:   language,
+                perm:       perm,
+                have_link:  have_link,
+                s_avatar:   s_avatar,
+                background: background,
+            }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok()
@@ -70,7 +94,19 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
                 .body(body))
         }
         else {
-            let body = DesctopNewsListTemplate {request_user: request_user, background: background.to_string()}
+            let body = MobileNewsListTemplate {
+                request_id: request_id,
+                first_name: first_name,
+                last_name:  last_name,
+                types:      types,
+                gender:     gender,
+                device:     device,
+                language:   language,
+                perm:       perm,
+                have_link:  have_link,
+                s_avatar:   s_avatar,
+                background: background,
+            }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok()
