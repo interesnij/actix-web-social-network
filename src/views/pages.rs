@@ -60,7 +60,7 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR));
             match body {
                 Ok(_) => HttpResponse::Ok().body(body),
-                _ => continue,
+                _ => println!("Error!"),
             }
         }
         else {
