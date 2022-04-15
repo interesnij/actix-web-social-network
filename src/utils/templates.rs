@@ -30,6 +30,8 @@ pub fn get_request_user_data(session: Session) -> (
     let _connection = establish_connection();
     //let _request_user = get_current_user(&session);
     let mut user_id = 0;
+    let mut have_link = "".to_string();
+    let mut s_avatar = "".to_string();
     if let Some(user_str) = session.get::<String>("user")
         .map_err(|_| AuthError::AuthenticationError(String::from("Не удалось извлечь пользователя из сеанса")))
         .unwrap() {
@@ -54,6 +56,12 @@ pub fn get_request_user_data(session: Session) -> (
             .load::<DesignSetting>(&_connection)
             .expect("E");
         let background = &_design[0].background;
+        if _user.have_link.is_ok() {
+            have_link = _user.have_link
+        }
+        if _user.s_avatar.is_ok() {
+            s_avatar = _user.s_avatar
+        }
         (
             user_id,
             _user.first_name,
@@ -63,8 +71,8 @@ pub fn get_request_user_data(session: Session) -> (
             _user.device,
             _user.language,
             _user.perm,
-            _user.have_link,
-            _user.s_avatar,
+            have_link,
+            s_avatar,
             background.to_string(),
         )
     } else {
