@@ -73,7 +73,9 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
         }
     } else {
         if _type == "desctop/".to_string() {
-            let items = schema::phone_codes
+            use crate::models::other::phone_codes::dsl::phone_codes;
+
+            let items = phone_codes
                 .load::<PhoneCode>(&_connection)
                 .expect("Error.");
             let body = DesctopAuthTemplate { codes: items }
