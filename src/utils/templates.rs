@@ -1,7 +1,7 @@
 use actix_web::HttpRequest;
 use actix_session::Session;
 use crate::utils::{is_signed_in, get_current_user, establish_connection};
-//use tera::Context;
+use crate::models::User;
 
 
 pub fn get_folder(req: HttpRequest) -> String {
@@ -17,6 +17,21 @@ pub fn get_folder(req: HttpRequest) -> String {
         }
     };
     _type
+}
+
+pub fn get_data(req: HttpRequest, session: Session) -> (String, User) {
+    let _type = get_folder(req);
+    for header in req.headers().into_iter() {
+        if header.0 == "user-agent" {
+            let _val = format!("{:?}", header.1);
+            if _val.contains("Mobile"){
+                _type = "mobile/".to_string();
+            } else {
+                _type = "desctop/".to_string();
+            };
+        }
+    };
+    (_type, get_current_user(&session))
 }
 
 pub fn get_default_template_2(req: HttpRequest, session: Session) -> (String) {
@@ -38,12 +53,6 @@ pub fn get_default_template_2(req: HttpRequest, session: Session) -> (String) {
             };
         }
     };
-    //let mut data = Context::new();
-
-    let _val = format!("{:?}", Some(req.peer_addr()));
-    //if _val.contains(&"91.239.184.81".to_string()) {
-    //    data.insert("is_host_admin", &true);
-    //};
 
     if is_signed_in(&session) {
         let _request_user = get_current_user(&session);

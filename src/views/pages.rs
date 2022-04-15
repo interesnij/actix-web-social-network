@@ -7,12 +7,12 @@ use actix_web::{
     http::{header::Header, StatusCode},
 };
 use serde::Deserialize;
-use crate::utils::{is_signed_in, establish_connection, get_folder};
+use crate::utils::{is_signed_in, establish_connection, get_data};
 use crate::schema;
 use diesel::prelude::*;
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::PhoneCode;
+use crate::models::{PhoneCode, User};
 
 
 pub fn pages_routes(config: &mut web::ServiceConfig) {
@@ -32,7 +32,8 @@ struct DesctopAuthTemplate {
 #[derive(TemplateOnce)]
 #[template(path = "desctop/main/lists/news_list.stpl")]
 struct DesctopNewsListTemplate {
-    test: bool,
+    request_user: User,
+    background: String,
 }
 
 #[derive(TemplateOnce)]
@@ -48,15 +49,20 @@ struct MobileNewsListTemplate {
 
 pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let _connection = establish_connection();
-    let mut _auth = false;
-    if is_signed_in(&session) {
-        _auth = true;
-    }
-
     let _type = get_folder(req);
-    if _auth == true {
+    if is_signed_in(&session) {
+        use crate::schema::design_settings::dsl::design_settings;
+        use crate::DesignSetting;
+
+        let request_user = get_current_user(&session);
+        let _design = design_settings
+            .filter(schema::design_settings::user_id.eq(&request_user.id))
+            .load::<DesignSetting>(&_connection)
+            .expect("E");
+        let background = _design[0].background;
+
         if _type == "desctop/".to_string() {
-            let body = DesctopNewsListTemplate { test: true }
+            let body = DesctopNewsListTemplate {request_user: request_user, background: background}
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok()
@@ -64,16 +70,17 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
                 .body(body))
         }
         else {
-            let body = MobileNewsListTemplate { test: true }
+            let body = DesctopNewsListTemplate {request_user: request_user, background: background}
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok()
                 .content_type("text/html; charset=utf-8")
                 .body(body))
         }
+
     } else {
         if _type == "desctop/".to_string() {
-            use crate::schema::phone_codes::dsl::phone_codes; 
+            use crate::schema::phone_codes::dsl::phone_codes;
 
             let items = phone_codes
                 .load::<PhoneCode>(&_connection)
