@@ -1,10 +1,6 @@
 
 <% include!("../../../base_block/anon_base_header.stpl"); %>
 
-<% for item in codes.iter() { %>
-      <p><%= item.phone %> - <%= item.code %></p>
-    <% } %>
-
 <div class="main-container h-100 h-sm-auto">
             <div class="row h-100 h-sm-auto">
     <div class="col-md-8 order-md-1 mt-3">
