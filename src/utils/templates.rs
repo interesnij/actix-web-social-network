@@ -23,7 +23,7 @@ pub fn get_folder(req: HttpRequest) -> String {
 }
 
 pub fn get_request_user_data(session: Session) -> (
-        i32, String, String, i16, String, String, String, i16, String, String, String
+        i32, String, i16, String, String, i16, String, String, String
     ) {
     use crate::models::SessionUser;
 
@@ -57,26 +57,24 @@ pub fn get_request_user_data(session: Session) -> (
             .expect("E");
         let background = &_design[0].background;
         if _user.have_link.is_some() {
-            have_link = _user.have_link.expect("E.")
+            have_link = _user.have_link.as_ref().expect("E.")
         }
         if _user.s_avatar.is_some() {
-            s_avatar = _user.s_avatar.expect("E.")
+            s_avatar = _user.s_avatar.as_ref().expect("E.")
         }
         (
             user_id,
-            _user.first_name,
-            _user.last_name,
-            _user.types,
-            _user.gender,
-            _user.device,
-            _user.language,
-            _user.perm,
+            _user.get_full_name(),
+            _user.types.clone(),
+            _user.gender.clone(),
+            _user.language.clone(),
+            _user.perm.clone(),
             have_link,
             s_avatar,
             background.to_string(),
         )
     } else {
-        (0, "".to_string(), "".to_string(), 0, "".to_string(), "".to_string(), "".to_string(), 0, "".to_string(), "".to_string(), "".to_string())
+        (0, "".to_string(), 0, "".to_string(), "".to_string(), 0, "".to_string(), "".to_string(), "".to_string())
     }
 }
 

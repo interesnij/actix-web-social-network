@@ -33,11 +33,9 @@ struct DesctopAuthTemplate {
 #[template(path = "desctop/main/lists/news_list.stpl")]
 struct DesctopNewsListTemplate {
     request_id: i32,
-    first_name: String,
-    last_name:  String,
+    fio:        String,
     types:      i16,
     gender:     String,
-    device:     String,
     language:   String,
     perm:       i16,
     have_link:  String,
@@ -54,11 +52,9 @@ struct MobileAuthTemplate {
 #[template(path = "mobile/main/lists/news_list.stpl")]
 struct MobileNewsListTemplate {
     request_id: i32,
-    first_name: String,
-    last_name:  String,
+    fio: String,
     types:      i16,
     gender:     String,
-    device:     String,
     language:   String,
     perm:       i16,
     have_link:  String,
@@ -71,16 +67,14 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
     let _type = get_folder(req);
     if is_signed_in(&session) {
 
-        let (_request_id, _first_name, _last_name, _types, _gender, _device, _language, _perm, _have_link, _s_avatar, _background) = get_request_user_data(session);
+        let (_request_id, _fio, _types, _gender, _language, _perm, _have_link, _s_avatar, _background) = get_request_user_data(session);
 
         if _type == "desctop/".to_string() {
             let body = DesctopNewsListTemplate {
                 request_id: _request_id,
-                first_name: _first_name,
-                last_name:  _last_name,
+                fio:        _fio,
                 types:      _types,
                 gender:     _gender,
-                device:     _device,
                 language:   _language,
                 perm:       _perm,
                 have_link:  _have_link,
@@ -96,11 +90,9 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
         else {
             let body = MobileNewsListTemplate {
                 request_id: _request_id,
-                first_name: _first_name,
-                last_name:  _last_name,
+                fio:        _fio,
                 types:      _types,
                 gender:     _gender,
-                device:     _device,
                 language:   _language,
                 perm:       _perm,
                 have_link:  _have_link,
