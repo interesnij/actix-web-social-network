@@ -112,18 +112,17 @@ pub async fn login_form(payload: &mut Multipart) -> LoginUser2 {
 
     while let Some(item) = payload.next().await {
         let mut field: Field = item.expect("split_payload err");
-        let name = field.name();
-            while let Some(chunk) = field.next().await {
-                let data = chunk.expect("split_payload err chunk");
-                if let Ok(s) = std::str::from_utf8(&data) {
-                    let data_string = s.to_string();
-                    if field.name() == "phone" {
-                        form.phone = data_string
-                    } else if field.name() == "password" {
-                        form.password = data_string
-                    }
+        while let Some(chunk) = field.next().await {
+            let data = chunk.expect("split_payload err chunk");
+            if let Ok(s) = std::str::from_utf8(&data) {
+                let data_string = s.to_string();
+                if field.name() == "phone" {
+                    form.phone = data_string
+                } else if field.name() == "password" {
+                    form.password = data_string
                 }
             }
+        }
     }
     form
 }
@@ -778,14 +777,13 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
 struct PhoneJson {
     code: String,
 }
-pub async fn phone_send(session: Session, req: HttpRequest, _phone: web::Path<String>) -> impl Responder {
+pub async fn phone_send(_phone: web::Path<String>) -> impl Responder {
     let req_phone = _phone.to_string();
     if req_phone.len() > 8 {
-        use crate::models::{User, PhoneCode, NewPhoneCode};
-        use schema::{users::dsl::users, phone_codes::dsl::phone_codes};
+        use crate::models::{PhoneCode, NewPhoneCode};
 
         let _connection = establish_connection();
-        let _some_user = users
+        let _some_user = schema::users
             .filter(schema::users::phone.eq(&req_phone))
             .load::<User>(&_connection)
             .expect("E");

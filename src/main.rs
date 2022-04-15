@@ -18,7 +18,7 @@ async fn main() -> std::io::Result<()> {
     use actix_files::Files;
     use crate::routes::routes;
     use actix_redis::RedisSession;
-    use actix_web::{App, HttpServer, http::header};
+    use actix_web::{App, HttpServer};
 
     HttpServer::new(|| {
         let static_files = Files::new("/static", "static/").show_files_listing();

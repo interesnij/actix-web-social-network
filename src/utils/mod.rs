@@ -10,7 +10,6 @@ use actix_web::{
   HttpRequest,
   HttpResponse
 };
-use crate::models::User;
 use crate::{errors::AuthError, vars, models::SessionUser};
 
 pub fn establish_connection() -> PgConnection {

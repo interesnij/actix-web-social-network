@@ -4,15 +4,14 @@ use actix_web::{
     HttpResponse,
     error::InternalError,
     web,
-    http::{header::Header, StatusCode},
+    http::StatusCode,
 };
 use serde::Deserialize;
 use crate::utils::{is_signed_in, establish_connection, get_folder, get_request_user_data};
-use crate::schema;
 use diesel::prelude::*;
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::{PhoneCode, User};
+use crate::models::PhoneCode;
 
 
 pub fn pages_routes(config: &mut web::ServiceConfig) {

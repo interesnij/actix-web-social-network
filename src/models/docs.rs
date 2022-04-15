@@ -11,7 +11,6 @@ use serde::{Serialize, Deserialize};
 use crate::models::{
     User,
     Community,
-    Sticker,
 };
 
 
