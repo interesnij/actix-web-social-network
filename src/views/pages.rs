@@ -57,11 +57,8 @@ pub async fn index(session: Session, req: HttpRequest) -> impl Responder {
         if _type == "desctop/".to_string() {
             let body = DesctopNewsListTemplate { test: true }
             .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR));
-            match body {
-                Ok(t) => HttpResponse::Ok().body(body),
-                Err(e) => HttpResponse::Ok().body("Error".to_string()),
-            };
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            HttpResponse::Ok().body(body)
         }
         else {
             let body = MobileNewsListTemplate { test: true }
