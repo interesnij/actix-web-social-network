@@ -62,7 +62,7 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
         let background = &_design[0].background;
 
         if _type == "desctop/".to_string() {
-            let body = DesctopNewsListTemplate {request_user: request_user, background: background}
+            let body = DesctopNewsListTemplate {request_user: request_user, background: background.to_string()}
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok()
@@ -70,7 +70,7 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
                 .body(body))
         }
         else {
-            let body = DesctopNewsListTemplate {request_user: request_user, background: background}
+            let body = DesctopNewsListTemplate {request_user: request_user, background: background.to_string()}
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok()
