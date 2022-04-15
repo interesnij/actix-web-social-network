@@ -73,7 +73,7 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
         }
     } else {
         if _type == "desctop/".to_string() {
-            use crate::chema::phone_codes::dsl::phone_codes;
+            use crate::schema::phone_codes::dsl::phone_codes; 
 
             let items = phone_codes
                 .load::<PhoneCode>(&_connection)
