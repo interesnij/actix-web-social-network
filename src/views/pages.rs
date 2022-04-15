@@ -59,7 +59,7 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
             .filter(schema::design_settings::user_id.eq(&request_user.id))
             .load::<DesignSetting>(&_connection)
             .expect("E");
-        let background = _design[0].background;
+        let background = &_design[0].background;
 
         if _type == "desctop/".to_string() {
             let body = DesctopNewsListTemplate {request_user: request_user, background: background}

@@ -22,6 +22,8 @@ pub fn get_folder(req: HttpRequest) -> String {
 
 pub fn get_request_user(session: Session) -> User {
     use crate::schema::users::dsl::users;
+    
+    let _connection = establish_connection();
     let _request_user = get_current_user(&session);
     match _request_user {
         Ok(s) => &users
