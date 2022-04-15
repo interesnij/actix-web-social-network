@@ -3,6 +3,7 @@ use actix_session::Session;
 use crate::utils::{is_signed_in, get_current_user, establish_connection};
 use crate::models::User;
 use crate::schema;
+use diesel::prelude::*;
 
 
 pub fn get_folder(req: HttpRequest) -> String {
@@ -22,11 +23,11 @@ pub fn get_folder(req: HttpRequest) -> String {
 
 pub fn get_request_user(session: Session) -> User {
     use crate::schema::users::dsl::users;
-    
+
     let _connection = establish_connection();
     let _request_user = get_current_user(&session);
     match _request_user {
-        Ok(s) => &users
+        Ok(s) => users
             .filter(schema::users::id.eq(s.id))
             .load::<User>(&_connection)
             .expect("E")[0],
