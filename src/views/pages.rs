@@ -203,6 +203,6 @@ pub async fn featured_list(session: Session, req: HttpRequest) -> actix_web::Res
                 .body(body))
         }
     } else {
-        to_home()
+        Ok(to_home())
     }
 }
