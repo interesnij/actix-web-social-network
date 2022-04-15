@@ -40,8 +40,8 @@ struct DesctopNewsListTemplate {
     device:     String,
     language:   String,
     perm:       i16,
-    have_link:  Option<String>,
-    s_avatar:   Option<String>,
+    have_link:  String,
+    s_avatar:   String,
     background: String,
 }
 
@@ -61,8 +61,8 @@ struct MobileNewsListTemplate {
     device:     String,
     language:   String,
     perm:       i16,
-    have_link:  Option<String>,
-    s_avatar:   Option<String>,
+    have_link:  String,
+    s_avatar:   String,
     background: String,
 }
 
@@ -83,8 +83,8 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
                 device:     _device,
                 language:   _language,
                 perm:       _perm,
-                have_link:  Some(_have_link),
-                s_avatar:   Some(_s_avatar),
+                have_link:  _have_link,
+                s_avatar:   _s_avatar,
                 background: _background,
             }
             .render_once()
@@ -103,8 +103,8 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
                 device:     _device,
                 language:   _language,
                 perm:       _perm,
-                have_link:  Some(_have_link),
-                s_avatar:   Some(_s_avatar),
+                have_link:  _have_link,
+                s_avatar:   _s_avatar,
                 background: _background,
             }
             .render_once()

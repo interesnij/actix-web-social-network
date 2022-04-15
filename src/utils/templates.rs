@@ -23,8 +23,9 @@ pub fn get_folder(req: HttpRequest) -> String {
 }
 
 pub fn get_request_user_data(session: Session) -> (
-        i32, String, String, i16, String, String, String, i16, Option<String>, Option<String>, String
+        i32, String, String, i16, String, String, String, i16, String, String, String
     ) {
+    use crate::models::SessionUser;
 
     let _connection = establish_connection();
     //let _request_user = get_current_user(&session);
@@ -32,7 +33,8 @@ pub fn get_request_user_data(session: Session) -> (
     if let Some(user_str) = session.get::<String>("user")
         .map_err(|_| AuthError::AuthenticationError(String::from("Не удалось извлечь пользователя из сеанса")))
         .unwrap() {
-            user_id = serde_json::from_str(&user_str).id;
+            user: SessionUser = serde_json::from_str(&user_str);
+            user_id = user.id;
         }
     if user_id != 0 {
         use crate::schema::{
@@ -61,8 +63,8 @@ pub fn get_request_user_data(session: Session) -> (
             _user.device,
             _user.language,
             _user.perm,
-            Some(_user.have_link),
-            Some(_user.s_avatar),
+            _user.have_link,
+            _user.s_avatar,
             background.to_string(),
         )
     } else {
