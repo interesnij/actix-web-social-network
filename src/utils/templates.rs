@@ -57,10 +57,10 @@ pub fn get_request_user_data(session: Session) -> (
             .expect("E");
         let background = &_design[0].background;
         if _user.have_link.is_some() {
-            have_link = _user.have_link.as_ref().expect("E.")
+            have_link = _user.have_link.as_ref().expect("E.").to_string()
         }
         if _user.s_avatar.is_some() {
-            s_avatar = _user.s_avatar.as_ref().expect("E.")
+            s_avatar = _user.s_avatar.as_ref().expect("E.").to_string()
         }
         (
             user_id,
