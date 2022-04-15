@@ -34,7 +34,7 @@
           <div class="col-md-1 col-lg-2 col-xl-2 clean_panel"></div>
             <div class="col-auto sidebar-inner position-relative ">
                 <br>
-                <% include!("../../../base_block/anon_desctop_nav.stpl"); %>
+                <% include!("./anon_desctop_nav.stpl"); %>
             </div>
             <div class="col-md-8 col-lg-8 col-xl-6 desctop_version" id="ajax">
               <span id="reload_block">
