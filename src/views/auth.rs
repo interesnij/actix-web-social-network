@@ -33,7 +33,7 @@ pub fn auth_routes(config: &mut web::ServiceConfig) {
     config.route("/logout/", web::get().to(logout));
 }
 
-pub async fn logout(session: &Session) -> HttpResponse {
+pub async fn logout(session: Session) -> HttpResponse {
     session.clear();
     HttpResponse::Ok().body(format!("ok"))
 }
