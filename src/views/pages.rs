@@ -114,11 +114,6 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
 
     } else {
         if _type == "desctop/".to_string() {
-            use crate::schema::phone_codes::dsl::phone_codes;
-
-            let items = phone_codes
-                .load::<PhoneCode>(&_connection)
-                .expect("Error.");
             let body = DesctopAuthTemplate { title: "Трезвый.рус | Вход".to_string() }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
