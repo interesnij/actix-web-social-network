@@ -782,10 +782,10 @@ struct PhoneJson {
     phone_id: String,
     code: i32,
 }
-pub async fn phone_send(_phone: web::Path<String>) -> impl Responder {
+pub async fn phone_send(session: Session, req: HttpRequest, _phone: web::Path<String>) -> impl Responder {
     let req_phone = _phone.to_string();
     if req_phone.len() > 8 {
-        use crate::models::{PhoneCode, NewPhoneCode};
+        use crate::models::{User, PhoneCode, NewPhoneCode};
         use schema::{users::dsl::users, phone_codes::dsl::phone_codes};
 
         let _connection = establish_connection();
@@ -803,6 +803,7 @@ pub async fn phone_send(_phone: web::Path<String>) -> impl Responder {
             let new_request = __request.text().await.unwrap();
             println!("{:?}", new_request);
             let phone200: PhoneJson = serde_json::from_str(&new_request).unwrap();
+
             let new_phone_code = NewPhoneCode {
                 phone: phone200.phone.to_string(),
                 code:  phone200.code,
