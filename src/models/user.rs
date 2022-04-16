@@ -532,7 +532,7 @@ impl User {
         return self.perm > 9 || self.types == 7;
     }
     pub fn get_online(&self) -> bool {
-        use chrono::NaiveDateTime;
+        use chrono::{NaiveDateTime, NaiveDate, NaiveTime};
         use time::Duration;
 
         let d = NaiveDate::from_ymd(2015, 6, 3);
