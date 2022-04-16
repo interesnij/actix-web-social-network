@@ -147,7 +147,7 @@ impl User {
             3 => 23,
             _ => 1,
         };
-        diesel::update(&self)
+        diesel::update(self)
             .set(schema::users::types.eq(close_case))
             .get_result::<User>(&_connection)
             .expect("E");
