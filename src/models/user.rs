@@ -539,7 +539,7 @@ impl User {
         let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
         return self.last_activity.checked_add_signed(Duration::seconds(301)) > NaiveDateTime::new(d, t).checked_add_signed(Duration::seconds(1));
     }
-} сейчас === сейчас минус три минуты
+}
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct SessionUser {
