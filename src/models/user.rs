@@ -465,7 +465,7 @@ impl User {
             return "Почта не указана".to_string();
         }
     }
-    pub fn calculate_age(&self) -> u8 {
+    pub fn calculate_age(&self) -> i32 {
         use chrono::{NaiveDate, Datelike};
         let birthday = self.birthday;
         let d = NaiveDate::from_ymd(2015, 6, 3);
