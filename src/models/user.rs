@@ -114,15 +114,15 @@ impl User {
             return "/id".to_string() + &uid + &"/".to_string();
         }
     }
-    pub fn get_s_avatar_30(&self) -> DOMTree<String> {
-        html!(
+    pub fn get_s_avatar_30(&self) -> String {
+        //html!(
             if self.s_avatar.is_some() {
                 return "<img src='<".to_owned() + &self.s_avatar.as_deref().unwrap() + "alt='img' />";
             }
             else {
                 return "<img src='/static/images/icons/avatar30.svg' alt='img' />".to_string();
             }
-        )
+    //    )
     }
 }
 
