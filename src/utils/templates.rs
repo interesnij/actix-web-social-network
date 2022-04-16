@@ -22,9 +22,9 @@ pub fn get_folder(req: HttpRequest) -> String {
     _type
 }
 
-pub fn get_request_user_data(session: Session) -> (Vec<User>, String) {
+pub fn get_request_user_data(session: Session) -> (User, String) {
     use crate::models::SessionUser;
-    use crate::schema::{ 
+    use crate::schema::{
         design_settings::dsl::design_settings,
         users::dsl::users,
     };
@@ -44,14 +44,21 @@ pub fn get_request_user_data(session: Session) -> (Vec<User>, String) {
             .load::<DesignSetting>(&_connection)
             .expect("E");
         let background = &_design[0].background;
+
         (users
             .filter(schema::users::id.eq(user_id))
             .load::<User>(&_connection)
-            .expect("E"), background.to_string())
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap(), background.to_string())
     } else {
         (users
             .filter(schema::users::id.eq(1))
             .load::<User>(&_connection)
-            .expect("E"), "".to_string())
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap(), "".to_string())
     }
 }

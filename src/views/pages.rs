@@ -33,9 +33,9 @@ struct DesctopAuthTemplate {
 }
 #[derive(TemplateOnce)]
 #[template(path = "desctop/main/lists/news_list.stpl")]
-struct DesctopNewsListTemplate<'a> {
+struct DesctopNewsListTemplate {
     title:        String,
-    request_user: &'a User,
+    request_user: User,
     background:   String,
 }
 
@@ -46,9 +46,9 @@ struct MobileAuthTemplate {
 }
 #[derive(TemplateOnce)]
 #[template(path = "mobile/main/lists/news_list.stpl")]
-struct MobileNewsListTemplate<'a> {
+struct MobileNewsListTemplate {
     title:        String,
-    request_user: &'a User,
+    request_user: User,
     background:   String,
 }
 
@@ -62,7 +62,7 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
         if _type == "desctop/".to_string() {
             let body = DesctopNewsListTemplate {
                 title:        "Новости".to_string(),
-                request_user: &_request_user[0],
+                request_user: _request_user,
                 background:   _background,
             }
             .render_once()
@@ -74,7 +74,7 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
         else {
             let body = MobileNewsListTemplate {
                 title:        "Новости".to_string(),
-                request_user: &_request_user[0],
+                request_user: _request_user,
                 background:   _background,
             }
             .render_once()
@@ -105,18 +105,19 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
 }
 
 // контекст шаблонов рекомендаций записей
+//DesctopFeaturedListTemplate<'a> == request_user: &'a User
 #[derive(TemplateOnce)]
 #[template(path = "desctop/main/lists/featured_list.stpl")]
-struct DesctopFeaturedListTemplate<'a> {
+struct DesctopFeaturedListTemplate {
     title:        String,
-    request_user: &'a User,
+    request_user: User,
     background:   String,
 }
 #[derive(TemplateOnce)]
 #[template(path = "mobile/main/lists/featured_list.stpl")]
-struct MobileFeaturedListTemplate<'a> {
+struct MobileFeaturedListTemplate {
     title:        String,
-    request_user: &'a User,
+    request_user: User,
     background:   String,
 }
 pub async fn featured_list(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
@@ -128,7 +129,7 @@ pub async fn featured_list(session: Session, req: HttpRequest) -> actix_web::Res
         if _type == "desctop/".to_string() {
             let body = DesctopFeaturedListTemplate {
                 title:      "Рекомендации".to_string(),
-                request_user: &_request_user[0],
+                request_user: _request_user,
                 background:   _background,
             }
             .render_once()
@@ -140,7 +141,7 @@ pub async fn featured_list(session: Session, req: HttpRequest) -> actix_web::Res
         else {
             let body = MobileFeaturedListTemplate {
                 title:      "Рекомендации".to_string(),
-                request_user: &_request_user[0],
+                request_user: _request_user,
                 background:   _background,
             }
             .render_once()
