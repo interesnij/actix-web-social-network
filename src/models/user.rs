@@ -508,7 +508,7 @@ impl User {
         return self.perm > 9;
     }
     pub fn is_suspended(&self) -> bool {
-        return 40 > self.typed && self.typed > 30;
+        return 40 > self.types && self.types > 30;
     }
 }
 
