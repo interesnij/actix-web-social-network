@@ -21,8 +21,8 @@ pub fn get_folder(req: HttpRequest) -> String {
     };
     _type
 }
-
-pub fn get_request_user_data_2(session: Session) -> (&User, String) {
+//&'static
+pub fn get_request_user_data_2(session: Session) -> (User, String) {
     use crate::models::SessionUser;
 
     let _connection = establish_connection();
@@ -45,8 +45,8 @@ pub fn get_request_user_data_2(session: Session) -> (&User, String) {
             DesignSetting,
             User
         };
-        let _user = &users
-            .filter(schema::users::id.eq(&user_id))
+        let _user = users
+            .filter(schema::users::id.eq(user_id))
             .load::<User>(&_connection)
             .expect("E")[0];
         let _design = design_settings
@@ -57,7 +57,7 @@ pub fn get_request_user_data_2(session: Session) -> (&User, String) {
         (_user, background.to_string())
     } else {
         use crate::schema::users::dsl::users;
-        let _user = &users
+        let _user = users
             .filter(schema::users::id.eq(1))
             .load::<User>(&_connection)
             .expect("E")[0];
