@@ -654,8 +654,6 @@ impl User {
     pub fn get_featured_friends_count(&self) -> usize {
         return self.get_featured_friends_ids().len();
     }
-
-
     pub fn get_featured_communities_ids(&self) -> Vec<i32> {
         use crate::schema::featured_user_communities::dsl::featured_user_communities;
         use crate::models::FeaturedUserCommunitie;
@@ -709,7 +707,7 @@ impl User {
     pub fn get_featured_communities_count(&self) -> usize {
         return self.get_featured_communities_ids().len();
     }
-    pub fn is_blocked_with_user_with_id(&self, user_id: i32) -> bool {
+    pub fn is_blocked_user_with_id(&self, user_id: i32) -> bool {
         use crate::schema::user_blocks::dsl::user_blocks;
         use crate::models::UserBlock;
 
@@ -794,6 +792,153 @@ impl User {
             .unwrap();
         return community.user_id == self.id;
     }
+    pub fn is_staffed_user(&self) -> bool {
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+        use crate::models::CommunityMembership;
+
+        let _connection = establish_connection();
+        let all_memberships = communities_memberships
+            .filter(schema::communities_memberships::user_id.eq(self.id))
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E");
+
+        for _item in all_memberships.iter() {
+            if _item.is_administrator || _item.is_moderator || _item.is_editor || _item.is_advertiser {
+                return true;
+            }
+        };
+        return false;
+    }
+    pub fn is_administrator_of_community(&self, community_id: i32) -> bool {
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+        use crate::models::CommunityMembership;
+
+        let _connection = establish_connection();
+        let all_memberships = communities_memberships
+            .filter(schema::communities_memberships::user_id.eq(self.id))
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E");
+
+        for _item in all_memberships.iter() {
+            if _item.is_administrator {
+                return true;
+            }
+        };
+        return false;
+    }
+    pub fn is_editor_of_community(&self, community_id: i32) -> bool {
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+        use crate::models::CommunityMembership;
+
+        let _connection = establish_connection();
+        let all_memberships = communities_memberships
+            .filter(schema::communities_memberships::user_id.eq(self.id))
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E");
+
+        for _item in all_memberships.iter() {
+            if _item.is_editor {
+                return true;
+            }
+        };
+        return false;
+    }
+    pub fn is_moderator_of_community(&self, community_id: i32) -> bool {
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+        use crate::models::CommunityMembership;
+
+        let _connection = establish_connection();
+        let all_memberships = communities_memberships
+            .filter(schema::communities_memberships::user_id.eq(self.id))
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E");
+
+        for _item in all_memberships.iter() {
+            if _item.is_moderator {
+                return true;
+            }
+        };
+        return false;
+    }
+    pub fn is_advertiser_of_community(&self, community_id: i32) -> bool {
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+        use crate::models::CommunityMembership;
+
+        let _connection = establish_connection();
+        let all_memberships = communities_memberships
+            .filter(schema::communities_memberships::user_id.eq(self.id))
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E");
+
+        for _item in all_memberships.iter() {
+            if _item.is_advertiser {
+                return true;
+            }
+        };
+        return false;
+    }
+    pub fn is_following_user_with_id(&self, user_id: i32) -> bool {
+        use crate::schema::follows::dsl::follows;
+        use crate::models::Follow;
+
+        let _connection = establish_connection();
+        let all_follows = follows
+            .filter(schema::follows::user_id.eq(self.id))
+            .filter(schema::follows::followed_user.eq(user_id))
+            .load::<Follow>(&_connection)
+            .expect("E.");
+        return follows.len() > 0;
+    }
+    pub fn is_followers_user_with_id(&self, user_id: i32) -> bool {
+        use crate::schema::follows::dsl::follows;
+        use crate::models::Follow;
+
+        let _connection = establish_connection();
+        let all_follows = follows
+            .filter(schema::follows::followed_user.eq(self.id))
+            .filter(schema::follows::user_id.eq(user_id))
+            .load::<Follow>(&_connection)
+            .expect("E.");
+        return follows.len() > 0;
+    }
+    pub fn is_followers_user_view(&self, user_id: i32) -> bool {
+        use crate::schema::follows::dsl::follows;
+        use crate::models::Follow;
+
+        let _connection = establish_connection();
+        let all_follows = follows
+            .filter(schema::follows::followed_user.eq(self.id))
+            .filter(schema::follows::user_id.eq(user_id))
+            .filter(schema::follows::view.eq(true))
+            .load::<Follow>(&_connection)
+            .expect("E.");
+        return follows.len() > 0;
+    }
+    pub fn get_buttons_profile(&self, user_id: i32) -> String {
+        let mut suffix: String = "".to_string();
+        if self.perm > 19 {
+            suffix = "staff_".to_string();
+        }
+        if self.is_blocked_user_with_id(user_id) {
+            return "desctop/users/button/" + &suffix + &"blocked_user.html".to_string();
+        }
+        else if self.is_connected_with_user_with_id(user_id){
+            return "desctop/users/button/" + &suffix + &"frend_user.html".to_string();
+        }
+        else if self.is_followers_user_view(user_id){
+            return "desctop/users/button/" + &suffix + &"follow_user.html".to_string();
+        }
+        else if self.is_following_user_with_id(user_id){
+            return "desctop/users/button/" + &suffix + &"following_user.html".to_string();
+        }
+        else if self.is_followers_user_with_id(user_id){
+            return "desctop/users/button/" + &suffix + &"follow_view_user.html".to_string();
+        }
+        else {
+            return "desctop/users/button/" + &suffix + &"default_user.html".to_string();
+        }
+    }
+    
 }
 
 #[derive(Debug, Serialize, Deserialize)]
