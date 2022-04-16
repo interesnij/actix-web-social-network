@@ -443,6 +443,32 @@ impl User {
             .load::<Sticker>(&_connection)
             .expect("E.");
     }
+    pub fn get_color_background(&self) -> String {
+        use crate::schema::design_settings::dsl::design_settings;
+
+        let _connection = establish_connection();
+        let _designs = design_settings
+            .filter(schema::design_settings::user_id.eq(&self.id))
+            .load::<DesignSetting>(&_connection)
+            .expect("E");
+        if _designs.len() > 0 {
+            return &_designs[0].background.to_string();
+        } else {
+            return "white".to_string();
+        }
+    }
+    pub fn get_email_status(&self) -> String {
+        if self.email.is_some() {
+            return self.email.as_deref().unwrap();
+        } else {
+            return "Почта не указана".to_string();
+        }
+    }
+    pub fn calculate_age(&self) -> u8 {
+        let d = NaiveDate::from_ymd(2015, 6, 3);
+        return d.year - self.birthday.year() - ((d.month, d.day) < (self.birthday.month(), self.birthday.day()));
+    }
+
 }
 
 #[derive(Debug, Serialize, Deserialize)]
