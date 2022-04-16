@@ -887,7 +887,7 @@ impl User {
             .filter(schema::follows::followed_user.eq(user_id))
             .load::<Follow>(&_connection)
             .expect("E.");
-        return follows.len() > 0;
+        return all_follows.len() > 0;
     }
     pub fn is_followers_user_with_id(&self, user_id: i32) -> bool {
         use crate::schema::follows::dsl::follows;
@@ -899,7 +899,7 @@ impl User {
             .filter(schema::follows::user_id.eq(user_id))
             .load::<Follow>(&_connection)
             .expect("E.");
-        return follows.len() > 0;
+        return all_follows.len() > 0;
     }
     pub fn is_followers_user_view(&self, user_id: i32) -> bool {
         use crate::schema::follows::dsl::follows;
@@ -912,7 +912,7 @@ impl User {
             .filter(schema::follows::view.eq(true))
             .load::<Follow>(&_connection)
             .expect("E.");
-        return follows.len() > 0;
+        return all_follows.len() > 0;
     }
     pub fn get_buttons_profile(&self, user_id: i32) -> String {
         let mut suffix: String = "".to_string();
@@ -920,25 +920,25 @@ impl User {
             suffix = "staff_".to_string();
         }
         if self.is_blocked_user_with_id(user_id) {
-            return "desctop/users/button/" + &suffix + &"blocked_user.html".to_string();
+            return "desctop/users/button/".to_owned() + &suffix + &"blocked_user.html".to_string();
         }
         else if self.is_connected_with_user_with_id(user_id){
-            return "desctop/users/button/" + &suffix + &"frend_user.html".to_string();
+            return "desctop/users/button/".to_owned() + &suffix + &"frend_user.html".to_string();
         }
         else if self.is_followers_user_view(user_id){
-            return "desctop/users/button/" + &suffix + &"follow_user.html".to_string();
+            return "desctop/users/button/".to_owned() + &suffix + &"follow_user.html".to_string();
         }
         else if self.is_following_user_with_id(user_id){
-            return "desctop/users/button/" + &suffix + &"following_user.html".to_string();
+            return "desctop/users/button/".to_owned() + &suffix + &"following_user.html".to_string();
         }
         else if self.is_followers_user_with_id(user_id){
-            return "desctop/users/button/" + &suffix + &"follow_view_user.html".to_string();
+            return "desctop/users/button/".to_owned() + &suffix + &"follow_view_user.html".to_string();
         }
         else {
-            return "desctop/users/button/" + &suffix + &"default_user.html".to_string();
+            return "desctop/users/button/".to_owned() + &suffix + &"default_user.html".to_string();
         }
     }
-    
+
 }
 
 #[derive(Debug, Serialize, Deserialize)]
