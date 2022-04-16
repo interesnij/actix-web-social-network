@@ -115,14 +115,13 @@ impl User {
         }
     }
     pub fn get_s_avatar_30(&self) -> String {
-        //html!(
             if self.s_avatar.is_some() {
-                return "<img src='<".to_owned() + &self.s_avatar.as_deref().unwrap() + "alt='img' />";
+                let img = "<img src='<".to_owned() + &self.s_avatar.as_deref().unwrap() + "alt='img' />";
+                return html_escape::encode_text(img);
             }
             else {
-                return "<img src='/static/images/icons/avatar30.svg' alt='img' />".to_string();
+                return encode_text("<img src='/static/images/icons/avatar30.svg' alt='img' />".to_string());
             }
-    //    )
     }
 }
 
