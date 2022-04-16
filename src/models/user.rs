@@ -355,6 +355,19 @@ impl User {
             .load::<Message>(&_connection)
             .expect("E.");
     }
+    pub fn get_favourite_messages_count(&self) -> i32 {
+        use crate::schema::message_options::dsl::message_options;
+        use crate::models::MessageOption;
+
+        let _connection = establish_connection();
+        return message_options
+            .filter(schema::message_options::user_id.eq(self.id))
+            .filter(schema::message_options::is_favourite.eq(true))
+            .load::<MessageOption>(&_connection)
+            .expect("E")
+            .len();
+        ;
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
