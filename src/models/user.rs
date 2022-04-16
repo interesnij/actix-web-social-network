@@ -721,7 +721,79 @@ impl User {
             .expect("E.");
         return all_blocks.len() > 0;
     }
+    pub fn is_connected_with_user_with_id(&self, user_id: i32) -> bool {
+        use crate::schema::friends::dsl::friends;
+        use crate::models::Friend;
 
+        let _connection = establish_connection();
+        let all_friends = friends
+            .filter(schema::friends::user_id.eq(user_id))
+            .filter(schema::friends::target_user_id.eq(self.id))
+            .load::<Friend>(&_connection)
+            .expect("E.");
+        return all_friends.len() > 0;
+    }
+    pub fn is_staff_of_community(&self, community_id: i32) -> bool {
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+        use crate::models::CommunitiesMembership;
+
+        let _connection = establish_connection();
+        let _member = communities_memberships
+            .filter(schema::communities_memberships::user_id.eq(self.id))
+            .filter(schema::communities_memberships::community_id.eq(community_id))
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E.")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        if _member.is_administrator || _member.is_moderator || _member.is_editor ||_member.is_advertiser {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    pub fn is_member_of_community(&self, community_id: i32) -> bool {
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+        use crate::models::CommunitiesMembership;
+
+        let _connection = establish_connection();
+        let _members = communities_memberships
+            .filter(schema::communities_memberships::user_id.eq(self.id))
+            .filter(schema::communities_memberships::community_id.eq(community_id))
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E.");
+        if _members.len() > 0 {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    pub fn is_follow_from_community(&self, community_id: i32) -> bool {
+        use crate::schema::community_follows::dsl::community_follows;
+        use crate::models::CommunityFollow;
+
+        let _connection = establish_connection();
+        let follows = community_follows
+            .filter(schema::community_follows::user_id.eq(self.id))
+            .filter(schema::community_follows::community_id.eq(community_id))
+            .load::<CommunityFollow>(&_connection)
+            .expect("E.");
+        return follows.len() > 0;
+    }
+    pub fn is_creator_community(&self, community_id: i32) -> bool {
+        use crate::schema::communitys::dsl::communitys;
+        use crate::models::Community;
+
+        let _connection = establish_connection();
+        let community = communitys
+            .filter(schema::communitys::id.eq(community_id))
+            .load::<Community>(&_connection)
+            .expect("E.")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        return community.user_id == self.id;
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
