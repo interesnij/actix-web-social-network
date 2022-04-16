@@ -631,6 +631,24 @@ impl User {
         };
         return stack;
     }
+    pub fn get_featured_friends(&self) -> Vec<User> {
+        use crate::schema::users::dsl::users;
+        use diesel::dsl::any;
+
+        return users
+            .filter(schema::users::id.eq(any(self.get_featured_friends_ids())))
+            .load::<User>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_6_featured_friends(&self) -> Vec<User> {
+        use crate::schema::users::dsl::users;
+        use diesel::dsl::any;
+
+        return users
+            .filter(schema::users::id.eq(any(self.get_6_featured_friends_ids())))
+            .load::<User>(&_connection)
+            .expect("E.");
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
