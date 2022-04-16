@@ -467,8 +467,9 @@ impl User {
     }
     pub fn calculate_age(&self) -> u8 {
         use chrono::NaiveDate;
+        let birthday = self.birthday;
         let d = NaiveDate::from_ymd(2015, 6, 3);
-        return d.year() - self.birthday.year() - ((d.month(), d.day()) < (self.birthday.month(), self.birthday.day()));
+        return d.year() - birthday.year() - ((d.month(), d.day()) < (birthday.month(), birthday.day()));
     }
 
 }
