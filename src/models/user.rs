@@ -203,6 +203,8 @@ impl User {
         use crate::schema::chats::dsl::chats;
         use crate::models::Chat;
 
+        let _connection = establish_connection();
+
         let manager_chats = chats
             .filter(schema::chats::user_id.eq(self.id))
             .filter(schema::chats::types.eq(3))
@@ -215,12 +217,11 @@ impl User {
             use crate::models::{NewChat, ChatUser, NewChatUser};
             use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
 
-            let _connection = establish_connection();
             let d = NaiveDate::from_ymd(2015, 6, 3);
             let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
             let new_manager_chat = NewChat{
                 name: Some("Рассылка служународу.рус".to_string()),
-                types: 3, 
+                types: 3,
                 community_id: None,
                 user_id: self.id,
                 position: 10,
