@@ -116,10 +116,10 @@ impl User {
     }
     pub fn get_s_avatar(&self) -> String {
             if self.s_avatar.is_some() {
-                return self.s_avatar.as_deref().unwrap()".to_string();
+                return self.s_avatar.as_deref().unwrap().to_string();
             }
             else {
-                return "/static/images/icons/avatar30." + &"svg".to_string();
+                return "/static/images/icons/avatar30.svg".to_string();
             }
     }
 }
