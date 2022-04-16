@@ -330,8 +330,7 @@ impl User {
             .order(schema::user_locations::id.desc())
             .load::<UserLocation>(&_connection)
             .expect("E");
-        let last_location = &all_user_locations[0];
-        return last_location;
+        return &all_user_locations[0];
     }
 
 }
