@@ -616,7 +616,7 @@ impl User {
         };
         return stack;
     }
-    pub fn get_6_featured_friends_ids(&self) -> Vec<i32>[0..6] {
+    pub fn get_6_featured_friends_ids(&self) -> Vec<i32>::[0..6] {
         return self.get_featured_friends_ids().to_vec()[0..6];
     }
 }
