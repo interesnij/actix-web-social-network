@@ -496,7 +496,7 @@ impl User {
         let _connection = establish_connection();
         let _supp_users = support_users
             .filter(schema::support_users::manager_id.eq(&self.id))
-            .load::<DesignSetting>(&_connection)
+            .load::<SupportUser>(&_connection)
             .expect("E");
         if _supp_users.len() > 0 {
             return true;
@@ -508,7 +508,7 @@ impl User {
         return self.perm > 9;
     }
     pub fn is_suspended(&self) -> bool {
-        return 40 > self.typed > 30;
+        return 40 > self.typed && self.typed > 30;
     }
 }
 
