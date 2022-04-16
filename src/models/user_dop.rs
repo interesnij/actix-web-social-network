@@ -358,7 +358,7 @@ pub struct NewListUserCommunitiesKey {
 pub struct FeaturedUserCommunitie {
     pub id:           i32,
     pub owner:        i32,
-    pub list_id:      i32,
+    pub list_id:      Option<i32>,
     pub user_id:      Option<i32>,
     pub community_id: Option<i32>,
     pub mute:         bool,
@@ -368,7 +368,7 @@ pub struct FeaturedUserCommunitie {
 #[table_name="featured_user_communities"]
 pub struct NewFeaturedUserCommunitie {
     pub owner:        i32,
-    pub list_id:      i32,
+    pub list_id:      Option<i32>,
     pub user_id:      Option<i32>,
     pub community_id: Option<i32>,
     pub mute:         bool,

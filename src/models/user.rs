@@ -608,7 +608,7 @@ impl User {
         let _connection = establish_connection();
         let mut stack = Vec::new();
         let featured_friends = featured_user_communities
-            .filter(schema::featured_user_communities::owner.eq(Some(self.id)))
+            .filter(schema::featured_user_communities::owner.eq(self.id))
             .load::<FeaturedUserCommunitie>(&_connection)
             .expect("E.");
         for _item in featured_friends.iter() {
