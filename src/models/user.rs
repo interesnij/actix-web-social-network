@@ -651,6 +651,9 @@ impl User {
             .load::<User>(&_connection)
             .expect("E.");
     }
+    pub fn get_featured_friends_count(&self) -> usize {
+        return self.get_featured_friends_ids().len();
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
