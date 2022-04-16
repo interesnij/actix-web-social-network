@@ -537,7 +537,10 @@ impl User {
 
         let d = NaiveDate::from_ymd(2015, 6, 3);
         let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
-        NaiveDateTime::new(d, t) < self.last_activity.checked_add_signed(Duration::seconds(300));
+        NaiveDateTime::new(d, t) < self.last_activity
+            .as_deref()
+            .unwrap()
+            .checked_add_signed(Duration::seconds(300));
     }
 }
 
