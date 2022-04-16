@@ -135,6 +135,24 @@ impl User {
     pub fn get_code(&self) -> String {
         return "use".to_string() + &self.get_str_id();
     }
+    pub fn close_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = self.types;
+        let close_case = match user_types {
+            1 => 21,
+            3 => 23,
+            7 => 27,
+            6 => 26,
+            1 => 21,
+            3 => 23,
+            _ => 1,
+        };
+        diesel::update(&self)
+            .set(schema::users::types.eq(close_case))
+            .get_result::<User>(&_connection)
+            .expect("E");
+       return true;
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
