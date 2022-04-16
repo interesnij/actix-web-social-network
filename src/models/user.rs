@@ -5,7 +5,7 @@ use crate::utils::establish_connection;
 use diesel::prelude::*;
 use crate::schema;
 use crate::models::{
-    Chat, Message, UserLocation,
+    Chat, Message, UserLocation, Post,
 };
 
 ///// Типы пользоватетеля
@@ -356,7 +356,7 @@ impl User {
             .load::<Message>(&_connection)
             .expect("E.");
     }
-    pub fn get_favourite_messages_count(&self) -> usize {
+    pub fn favourite_messages_count(&self) -> usize {
         use crate::schema::message_options::dsl::message_options;
         use crate::models::MessageOption;
 
@@ -367,7 +367,39 @@ impl User {
             .load::<MessageOption>(&_connection)
             .expect("E")
             .len();
-        ;
+    }
+    pub fn get_fixed_posts(&self) -> Vec<Post> {
+        use crate::schema::posts::dsl::posts;
+
+        let _connection = establish_connection();
+        return posts
+            .filter(schema::posts::user_id.eq(self.id))
+            .filter(schema::posts::types.eq('b'))
+            .order(schema::posts::created.desc())
+            .load::<Post>(&_connection)
+            .expect("E");
+    }
+    pub fn get_fixed_posts_ids(&self) -> Vec<i32> {
+        user_fixed_posts = self.get_fixed_posts();
+        let mut stack = Vec::new();
+        for _item in user_fixed_posts.iter() {
+            stack.push(_item.id);
+        };
+        return stack;
+    }
+    pub fn count_fix_items(&self) -> usize {
+        return self.get_fixed_posts().len();
+    }
+    pub fn is_can_fixed_post(&self) -> bool {
+        return self.count_fix_items() < 10;
+    }
+    pub fn get_verb_gender(&self, str: String) -> String {
+        if self.gender == 'b' {
+            return "W".to_string() + &str;
+        }
+        else {
+            return str;
+        }
     }
 }
 
