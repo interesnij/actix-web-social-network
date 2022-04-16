@@ -537,7 +537,7 @@ impl User {
 
         let d = NaiveDate::from_ymd(2015, 6, 3);
         let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
-        let last_activity = self.last_activity.as_deref().unwrap();
+        let last_activity = self.last_activity;
         NaiveDateTime::new(d, t) < last_activity.checked_add_signed(Duration::seconds(300));
     }
 }
