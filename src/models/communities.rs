@@ -92,7 +92,7 @@ pub struct Community {
     pub id:          i32,
     pub name:        String,
     pub description: Option<String>,
-    pub status:      Option<String>,
+    pub status:      String,
     pub types:       i16,
     pub perm:        String,
     pub level:       i16,
@@ -108,6 +108,7 @@ pub struct Community {
 #[table_name="communitys"]
 pub struct NewCommunity {
     pub name:        String,
+    pub status:      String,
     pub types:       i16,
     pub perm:        String,
     pub level:       i16,
