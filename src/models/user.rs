@@ -5,7 +5,7 @@ use crate::utils::establish_connection;
 use diesel::prelude::*;
 use crate::schema;
 use crate::models::{
-    Chat, Message, UserLocation, Post, Smile, Sticker,
+    Chat, Message, UserLocation, Post, Smile, Sticker, Community,
 };
 
 ///// Типы пользоватетеля
@@ -531,12 +531,78 @@ impl User {
     pub fn is_child_safety(&self) -> bool {
         return self.perm > 9 || self.types == 7;
     }
-    pub fn get_online(&self) -> bool {
+    pub fn is_online(&self) -> bool {
         use chrono::{NaiveDateTime, NaiveDate, NaiveTime, Duration};
 
         let d = NaiveDate::from_ymd(2015, 6, 3);
         let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
         return self.last_activity.checked_add_signed(Duration::seconds(301)) > NaiveDateTime::new(d, t).checked_add_signed(Duration::seconds(1));
+    }
+    pub fn is_desctop(&self) -> bool {
+        return self.device == "a";
+    }
+    pub fn is_mobile(&self) -> bool {
+        return self.device == "b";
+    }
+    pub fn get_online_status(&self) -> String {
+        if self.is_online() {
+            return "Онлайн".to_string();
+        }
+        else {
+            if self.is_woman() {
+                return "Была ".to_string() + &self.last_activity;
+            } else {
+                return "Был ".to_string() + &self.last_activity;
+            }
+        }
+    }
+    pub fn get_blocked_users(&self) -> Vec<User> {
+        use crate::schema::user_blocks::dsl::user_blocks;
+        use crate::schema::users::dsl::users;
+        use crate::models::UserBlock;
+        use diesel::dsl::any;
+
+        let _connection = establish_connection();
+        let all_user_blocks = user_blocks
+            .filter(schema::user_blocks::user_block_i.eq(self.id))
+            .order(schema::user_blocks::id.desc())
+            .load::<UserBlock>(&_connection)
+            .expect("E");
+        let mut stack = Vec::new();
+        for _item in all_user_blocks.iter() {
+            stack.push(_item.blocked_user_id);
+        };
+        return users
+            .filter(schema::users::id.eq(any(stack)))
+            .load::<User>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_staffed_communities(&self) -> Vec<Community> {
+        use crate::schema::communitys::dsl::communitys;
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+        use crate::models::CommunitiesMembership;
+        use diesel::dsl::any;
+
+        let _connection = establish_connection();
+        let all_staff_memberships = communities_memberships
+            .filter(schema::communities_memberships::user_id.eq(self.id))
+            .filter(
+                schema::communities_memberships::is_administrator.eq(true) ||
+                schema::communities_memberships::is_moderator.eq(true) ||
+                schema::communities_memberships::is_editor.eq(true) ||
+                schema::communities_memberships::is_advertiser.eq(true)
+            )
+            .order(schema::communities_memberships::visited.desc())
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E");
+        let mut stack = Vec::new();
+        for _item in all_staff_memberships.iter() {
+            stack.push(_item.community_id);
+        };
+        return communitys
+            .filter(schema::communitys::id.eq(any(stack)))
+            .load::<Community>(&_connection)
+            .expect("E.");
     }
 }
 
