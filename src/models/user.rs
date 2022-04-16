@@ -635,6 +635,7 @@ impl User {
         use crate::schema::users::dsl::users;
         use diesel::dsl::any;
 
+        let _connection = establish_connection();
         return users
             .filter(schema::users::id.eq(any(self.get_featured_friends_ids())))
             .load::<User>(&_connection)
@@ -644,6 +645,7 @@ impl User {
         use crate::schema::users::dsl::users;
         use diesel::dsl::any;
 
+        let _connection = establish_connection();
         return users
             .filter(schema::users::id.eq(any(self.get_6_featured_friends_ids())))
             .load::<User>(&_connection)
