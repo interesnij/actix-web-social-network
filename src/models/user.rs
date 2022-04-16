@@ -550,9 +550,9 @@ impl User {
         }
         else {
             if self.is_woman() {
-                return "Была ".to_string() + &self.last_activity;
+                return "Была ".to_string() + &self.last_activity.to_string();
             } else {
-                return "Был ".to_string() + &self.last_activity;
+                return "Был ".to_string() + &self.last_activity.to_string();
             }
         }
     }
@@ -584,14 +584,15 @@ impl User {
         use diesel::dsl::any;
 
         let _connection = establish_connection();
-        let all_staff_memberships = communities_memberships
+        let all_memberships = communities_memberships
             .filter(schema::communities_memberships::user_id.eq(self.id))
-            .filter(
-                schema::communities_memberships::is_administrator.eq(true) ||
-                schema::communities_memberships::is_moderator.eq(true) ||
-                schema::communities_memberships::is_editor.eq(true) ||
-                schema::communities_memberships::is_advertiser.eq(true)
-            )
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E");
+        let staff_memberships = all_memberships
+            .filter(schema::communities_memberships::is_administrator.eq(true))
+            .or_filter(schema::communities_memberships::is_moderator.eq(true))
+            .or_filter(schema::communities_memberships::is_editor.eq(true))
+            .or_filter(schema::communities_memberships::is_advertiser.eq(true))
             .order(schema::communities_memberships::visited.desc())
             .load::<CommunitiesMembership>(&_connection)
             .expect("E");
