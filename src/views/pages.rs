@@ -33,7 +33,7 @@ struct DesctopAuthTemplate {
 }
 #[derive(TemplateOnce)]
 #[template(path = "desctop/main/lists/news_list.stpl")]
-struct DesctopNewsListTemplate {
+struct DesctopNewsListTemplate<'a> {
     title:        String,
     request_user: &'a User,
     background:   String,
@@ -41,7 +41,7 @@ struct DesctopNewsListTemplate {
 
 #[derive(TemplateOnce)]
 #[template(path = "mobile/main/auth/auth.stpl")]
-struct MobileAuthTemplate<'a> {
+struct MobileAuthTemplate {
     title: String,
 }
 #[derive(TemplateOnce)]
