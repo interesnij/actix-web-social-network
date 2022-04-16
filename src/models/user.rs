@@ -605,6 +605,7 @@ impl User {
         use crate::schema::featured_user_communities::dsl::featured_user_communities;
         use crate::models::FeaturedUserCommunitie;
 
+        let _connection = establish_connection();
         let mut stack = Vec::new();
         let featured_friends = featured_user_communities
             .filter(schema::featured_user_communities::owner.eq(Some(self.id)))
