@@ -119,7 +119,7 @@ impl User {
             return "<img src='<".to_owned() + &self.s_avatar.as_deref().unwrap() + "alt='img' />";
         }
         else {
-            return "<img src='/static/inages/icons/avatar30.svg' alt='img' />".to_string();
+            return "<img src='/static/images/icons/avatar30.svg' alt='img' />".to_string();
         }
     }
 }
