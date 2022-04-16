@@ -616,7 +616,7 @@ impl User {
         };
         return stack;
     }
-    pub fn get_6_featured_friends_ids(&self) -> Vec<i32> {
+    pub fn get_6_featured_friends_ids(&self) -> Vec<&i32> {
         let mut stack = Vec::new();
         let featured_friends = self.get_featured_friends_ids();
         let mut i = 0;
