@@ -471,7 +471,45 @@ impl User {
         let d = NaiveDate::from_ymd(2015, 6, 3);
         return d.year() - birthday.year();
     }
+    pub fn is_women(&self) -> bool {
+        return self.gender == "b";
+    }
+    pub fn is_men(&self) -> bool {
+        return self.gender == "a";
+    }
+    pub fn is_supermanager(&self) -> bool {
+        return self.perm == 60;
+    }
+    pub fn is_administrator(&self) -> bool {
+        return self.perm > 39;
+    }
+    pub fn is_advertiser(&self) -> bool {
+        return self.perm > 29;
+    }
+    pub fn is_manager(&self) -> bool {
+        return self.perm > 19;
+    }
+    pub fn is_support(&self) -> bool {
+        use crate::schema::support_users::dsl::support_users;
+        use crate::models::SupportUser;
 
+        let _connection = establish_connection();
+        let _supp_users = support_users
+            .filter(schema::support_users::manager_id.eq(&self.id))
+            .load::<DesignSetting>(&_connection)
+            .expect("E");
+        if _supp_users.len() > 0 {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    pub fn is_moderator(&self) -> bool {
+        return self.perm > 9;
+    }
+    pub fn is_suspended(&self) -> bool {
+        return 40 > self.typed > 30;
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
