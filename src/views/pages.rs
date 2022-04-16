@@ -62,7 +62,7 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
         if _type == "desctop/".to_string() {
             let body = DesctopNewsListTemplate {
                 title:        "Новости".to_string(),
-                request_user: _request_user,
+                request_user: _request_user[0],
                 background:   _background,
             }
             .render_once()
@@ -74,7 +74,7 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
         else {
             let body = MobileNewsListTemplate {
                 title:        "Новости".to_string(),
-                request_user: _request_user,
+                request_user: _request_user[0],
                 background:   _background,
             }
             .render_once()
@@ -128,7 +128,7 @@ pub async fn featured_list(session: Session, req: HttpRequest) -> actix_web::Res
         if _type == "desctop/".to_string() {
             let body = DesctopFeaturedListTemplate {
                 title:      "Рекомендации".to_string(),
-                request_user: _request_user,
+                request_user: _request_user[0],
                 background:   _background,
             }
             .render_once()
@@ -140,7 +140,7 @@ pub async fn featured_list(session: Session, req: HttpRequest) -> actix_web::Res
         else {
             let body = MobileFeaturedListTemplate {
                 title:      "Рекомендации".to_string(),
-                request_user: _request_user,
+                request_user: _request_user[0],
                 background:   _background,
             }
             .render_once()
