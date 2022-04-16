@@ -36,8 +36,8 @@
                     <div class="dropdown-menu dropdown-menu-right profile-dropdown">
 
                         <a class="dropdown-item ajax" href="
-                          <% if request_user.is_some.is_empty() { %>
-                            /id<%= request_user.request_id %>/
+                          <% if request_user.is_some() { %>
+                            /id<%= request_user.id %>/
                           <% } else { %>
                             <%= request_user.have_link %>
                           <% } %>

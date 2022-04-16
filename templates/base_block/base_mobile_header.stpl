@@ -25,7 +25,7 @@
   <body class="fixed-header" data-video="first_player" data-csrf="csrf_token">
         <div id="ajax" class="userpic" data-id="<%= request_user.id %>" data-pk="
           <% if request_user.have_link.is_some() { %>
-              /id<%= request_user.request_id %>/
+              /id<%= request_user.id %>/
           <% } else { %>
             <%= request_user.have_link %>
           <% } %>
