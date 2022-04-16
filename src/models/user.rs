@@ -119,7 +119,7 @@ impl User {
                 return self.s_avatar.as_deref().unwrap()".to_string();
             }
             else {
-                return "/static/images/icons/avatar30" + &".svg".to_string();
+                return "/static/images/icons/avatar30." + &"svg".to_string();
             }
     }
 }
