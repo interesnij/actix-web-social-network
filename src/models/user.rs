@@ -325,12 +325,11 @@ impl User {
         use crate::schema::user_locations::dsl::user_locations;
 
         let _connection = establish_connection();
-        let all_user_locations = user_locations
+        return &user_locations
             .filter(schema::user_locations::user_id.eq(self.id))
             .order(schema::user_locations::id.desc())
             .load::<UserLocation>(&_connection)
-            .expect("E");
-        return &all_user_locations[0];
+            .expect("E")[0];
     }
 
 }
