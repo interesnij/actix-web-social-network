@@ -105,6 +105,13 @@ impl User {
     pub fn get_full_name(&self) -> String {
         self.first_name.clone() + &" ".to_string() + &self.last_name.clone()
     }
+    pub fn get_link(&self) -> String {
+        if self.have_link.is_some() {
+            Some(self.have_link)
+        }
+        let uid: String = self.id.parse().unwrap();
+        "/id".to_string() + uid + "/".to_string()
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
