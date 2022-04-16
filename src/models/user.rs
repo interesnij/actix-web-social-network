@@ -531,6 +531,14 @@ impl User {
     pub fn is_child_safety(&self) -> bool {
         return self.perm > 9 || self.types == 7;
     }
+    pub fn get_online(&self) -> bool {
+        use chrono::NaiveDateTime;
+        use time::Duration;
+
+        let d = NaiveDate::from_ymd(2015, 6, 3);
+        let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
+        NaiveDateTime::new(d, t) < self.last_activity.checked_add_signed(Duration::seconds(300));
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
