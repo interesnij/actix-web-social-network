@@ -11,7 +11,7 @@ use crate::utils::{is_signed_in, establish_connection, get_folder, get_request_u
 use diesel::prelude::*;
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::PhoneCode;
+use crate::models::{PhoneCode, User};
 
 
 pub fn pages_routes(config: &mut web::ServiceConfig) {
