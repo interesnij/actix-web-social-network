@@ -56,7 +56,7 @@ pub fn get_request_user_data_2(session: Session) -> (User, String) {
         let background = &_design[0].background;
         (_user, background.to_string())
     } else {
-        (User, "".to_string())
+        (User{id=1}, "".to_string())
     }
 }
 
