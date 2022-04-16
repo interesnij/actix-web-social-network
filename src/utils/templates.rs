@@ -22,14 +22,15 @@ pub fn get_folder(req: HttpRequest) -> String {
     _type
 }
 //&'static
-pub fn get_request_user_data_2(session: Session) -> (&'static User, String) {
+pub fn get_request_user_data_2(session: Session) -> (user::User, String) {
     use crate::models::SessionUser;
+    use crate::schema::{
+        design_settings::dsl::design_settings,
+        users::dsl::users,
+    };
 
     let _connection = establish_connection();
-    //let _request_user = get_current_user(&session);
     let mut user_id = 0;
-    let mut have_link = "".to_string();
-    let mut s_avatar = "".to_string();
     if let Some(user_str) = session.get::<String>("user")
         .map_err(|_| AuthError::AuthenticationError(String::from("Не удалось извлечь пользователя из сеанса")))
         .unwrap() {
@@ -37,26 +38,18 @@ pub fn get_request_user_data_2(session: Session) -> (&'static User, String) {
             user_id = user.id;
         }
     if user_id != 0 {
-        use crate::schema::{
-            design_settings::dsl::design_settings,
-            users::dsl::users,
-        };
-        use crate::models::{
-            DesignSetting,
-            User
-        };
+        use crate::models::DesignSetting;
         let _design = design_settings
             .filter(schema::design_settings::user_id.eq(&user_id))
             .load::<DesignSetting>(&_connection)
             .expect("E");
         let background = &_design[0].background;
-        (&users
-            .filter(schema::users::id.eq(1))
+        (users
+            .filter(schema::users::id.eq(user_id))
             .load::<User>(&_connection)
             .expect("E")[0], background.to_string())
     } else {
-        use crate::schema::users::dsl::users;
-        (&users
+        (users
             .filter(schema::users::id.eq(1))
             .load::<User>(&_connection)
             .expect("E")[0], "".to_string())
