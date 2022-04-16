@@ -453,20 +453,20 @@ impl User {
             .load::<DesignSetting>(&_connection)
             .expect("E");
         if _designs.len() > 0 {
-            return &_designs[0].background.to_string();
+            return _designs[0].background.to_string();
         } else {
             return "white".to_string();
         }
     }
     pub fn get_email_status(&self) -> String {
         if self.email.is_some() {
-            return self.email.as_deref().unwrap();
+            return self.email.as_deref().unwrap().to_string();
         } else {
             return "Почта не указана".to_string();
         }
     }
     pub fn calculate_age(&self) -> u8 {
-        use chrono::NaiveDate;
+        use chrono::{NaiveDate, Datelike};
         let birthday = self.birthday;
         let d = NaiveDate::from_ymd(2015, 6, 3);
         return d.year() - birthday.year() - ((d.month(), d.day()) < (birthday.month(), birthday.day()));
