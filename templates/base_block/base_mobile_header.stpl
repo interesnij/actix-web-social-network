@@ -24,10 +24,10 @@
 </head>
   <body class="fixed-header" data-video="first_player" data-csrf="csrf_token">
         <div id="ajax" class="userpic" data-id="<%= request_user.id %>" data-pk="
-          <% if request_user.have_link.is_empty() { %>
+          <% if request_user.have_link.is_some() { %>
               /id<%= request_user.request_id %>/
           <% } else { %>
             <%= request_user.have_link %>
           <% } %>
-        " data-device="mobile" data-name="<%= request_user.get_full_name %>" style="padding-right:0px; padding-left:0px;">
+        " data-device="mobile" data-name="<%= request_user.get_full_name() %>" style="padding-right:0px; padding-left:0px;">
           <span id="reload_block">

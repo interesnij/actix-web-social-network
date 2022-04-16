@@ -26,7 +26,7 @@
         </span>
     </button>
     <button href="
-      <% if request_user.have_link.is_empty() { %>
+      <% if request_user.have_link.is_some() { %>
         /id<%= request_user.request_id %>/
       <% } else { %>
         <%= request_user.have_link %>
