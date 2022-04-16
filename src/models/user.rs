@@ -616,8 +616,12 @@ impl User {
         };
         return stack;
     }
-    pub fn get_6_featured_friends_ids(&self) -> slice: &mut [i32] {
-        return self.get_featured_friends_ids()[..6];
+    pub fn get_6_featured_friends_ids(&self) -> Vec<i32> {
+        let mut stack = Vec::new();
+        for _item in self.get_featured_friends_ids()[..6].iter() {
+            stack.push(_item);
+        };
+        return stack;
     }
 }
 
