@@ -816,6 +816,7 @@ impl User {
         let _connection = establish_connection();
         let all_memberships = communities_memberships
             .filter(schema::communities_memberships::user_id.eq(self.id))
+            .filter(schema::communities_memberships::community_id.eq(community_id))
             .load::<CommunitiesMembership>(&_connection)
             .expect("E");
 
@@ -833,6 +834,7 @@ impl User {
         let _connection = establish_connection();
         let all_memberships = communities_memberships
             .filter(schema::communities_memberships::user_id.eq(self.id))
+            .filter(schema::communities_memberships::community_id.eq(community_id))
             .load::<CommunitiesMembership>(&_connection)
             .expect("E");
 
@@ -850,6 +852,7 @@ impl User {
         let _connection = establish_connection();
         let all_memberships = communities_memberships
             .filter(schema::communities_memberships::user_id.eq(self.id))
+            .filter(schema::communities_memberships::community_id.eq(community_id))
             .load::<CommunitiesMembership>(&_connection)
             .expect("E");
 
@@ -867,6 +870,7 @@ impl User {
         let _connection = establish_connection();
         let all_memberships = communities_memberships
             .filter(schema::communities_memberships::user_id.eq(self.id))
+            .filter(schema::communities_memberships::community_id.eq(community_id))
             .load::<CommunitiesMembership>(&_connection)
             .expect("E");
 
