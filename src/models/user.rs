@@ -687,12 +687,12 @@ impl User {
         return stack;
     }
     pub fn get_featured_communities(&self) -> Vec<Community> {
-        use crate::schema::communities::dsl::communities;
+        use crate::schema::communitys::dsl::communitys;
         use diesel::dsl::any;
 
         let _connection = establish_connection();
-        return users
-            .filter(schema::communities::id.eq(any(self.get_featured_communities_ids())))
+        return communitys
+            .filter(schema::communitys::id.eq(any(self.get_featured_communities_ids())))
             .load::<Community>(&_connection)
             .expect("E.");
     }
@@ -701,8 +701,8 @@ impl User {
         use diesel::dsl::any;
 
         let _connection = establish_connection();
-        return users
-            .filter(schema::communities::id.eq(any(self.get_6_featured_communities_ids())))
+        return communitys
+            .filter(schema::communitys::id.eq(any(self.get_6_featured_communities_ids())))
             .load::<Community>(&_connection)
             .expect("E.");
     }
@@ -714,13 +714,12 @@ impl User {
         use crate::models::UserBlock;
 
         let _connection = establish_connection();
-        return user_blocks
+        all_blocks = user_blocks
             .filter(schema::user_blocks::blocked_user_id.eq(user_id))
             .filter(schema::user_blocks::user_block_i.eq(self.id))
             .load::<UserBlock>(&_connection)
-            .count()
-            .expect("E.") > 0;
-        //return blocks.len() > 0;
+            .expect("E.");
+        return all_blocks.len() > 0;
     }
 
 }
