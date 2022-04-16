@@ -4,6 +4,9 @@ use serde::{Serialize, Deserialize};
 use crate::utils::establish_connection;
 use diesel::prelude::*;
 use crate::schema;
+use crate::models::{
+    Chat, Message, UserLocation,
+};
 
 ///// Типы пользоватетеля
     // 1 стандартный тип пользователя
@@ -201,7 +204,6 @@ impl User {
     }
     pub fn get_or_create_manager_chat_pk(&self) -> i32 {
         use crate::schema::chats::dsl::chats;
-        use crate::models::Chat;
 
         let _connection = establish_connection();
 
@@ -247,13 +249,91 @@ impl User {
                 is_administrator: false,
                 created: NaiveDateTime::new(d, t),
             };
-            let chat_user = diesel::insert_into(schema::chat_users::table)
+            diesel::insert_into(schema::chat_users::table)
                 .values(&new_chat_user)
                 .get_result::<ChatUser>(&_connection)
                 .expect("E.");
             return manager_chat.id;
         }
     }
+    pub fn get_or_create_support_chat_pk(&self) -> i32 {
+        use crate::schema::chats::dsl::chats;
+
+        let _connection = establish_connection();
+
+        let manager_chats = chats
+            .filter(schema::chats::user_id.eq(self.id))
+            .filter(schema::chats::types.between(10,16))
+            .load::<Chat>(&_connection)
+            .expect("E");
+        if manager_chats.len() > 0 {
+            return manager_chats[0].id
+        } else {
+            use crate::schema::chat_users::dsl::chat_users;
+            use crate::models::{NewChat, ChatUser, NewChatUser};
+            use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
+
+            let d = NaiveDate::from_ymd(2015, 6, 3);
+            let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
+            let new_manager_chat = NewChat{
+                name: Some("Рассылка служународу.рус".to_string()),
+                types: 11,
+                community_id: None,
+                user_id: self.id,
+                position: 10,
+                members: 1,
+                created: NaiveDateTime::new(d, t),
+                can_add_members:  "f".to_string(),
+                can_fix_item:     "b".to_string(),
+                can_mention:      "f".to_string(),
+                can_add_admin:    "f".to_string(),
+                can_add_design:   "f".to_string(),
+                can_see_settings: "f".to_string(),
+                can_see_log:      "f".to_string(),
+            };
+            let manager_chat = diesel::insert_into(schema::chats::table)
+                .values(&new_manager_chat)
+                .get_result::<Chat>(&_connection)
+                .expect("E.");
+
+            let new_chat_user = NewChatUser{
+                user_id: self.id,
+                chat_id: manager_chat.id,
+                types: "a".to_string(),
+                is_administrator: false,
+                created: NaiveDateTime::new(d, t),
+            };
+            diesel::insert_into(schema::chat_users::table)
+                .values(&new_chat_user)
+                .get_result::<ChatUser>(&_connection)
+                .expect("E.");
+            return manager_chat.id;
+        }
+    }
+    pub fn get_deleted_support_chats(&self) -> Vec<Chat> {
+        use crate::schema::chats::dsl::chats;
+
+        let _connection = establish_connection();
+        return chats
+            .filter(schema::chats::user_id.eq(self.id))
+            .filter(schema::chats::types.between(40,46))
+            .order(schema::chats::id.desc())
+            .load::<Chat>(&_connection)
+            .expect("E");
+    }
+    pub fn get_last_location(&self) -> UserLocation {
+        use crate::schema::user_locations::dsl::user_locations;
+
+        let _connection = establish_connection();
+        all_user_locations = user_locations
+            .filter(schema::user_locations::user_id.eq(self.id))
+            .order(schema::user_locations::id.desc())
+            .load::<UserLocation>(&_connection)
+            .expect("E");
+        let last_location = &all_user_locations[0];
+        return last_location;
+    }
+
 }
 
 #[derive(Debug, Serialize, Deserialize)]
