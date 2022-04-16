@@ -606,8 +606,8 @@ impl User {
         use crate::models::FeaturedUserCommunitie;
 
         let mut stack = Vec::new();
-        featured_friends = featured_user_communities
-            .filter(schema::featured_user_communities::owner.eq(self.id))
+        let featured_friends = featured_user_communities
+            .filter(schema::featured_user_communities::owner.eq(Some(self.id)))
             .load::<FeaturedUserCommunitie>(&_connection)
             .expect("E.");
         for _item in featured_friends.iter() {
@@ -616,7 +616,7 @@ impl User {
         return stack;
     }
     pub fn get_6_featured_friends_ids(&self) -> Vec<i32> {
-        return self.get_featured_friends_ids()[:6];
+        return self.get_featured_friends_ids()[0..6];
     }
 }
 
