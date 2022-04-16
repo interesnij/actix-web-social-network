@@ -510,6 +510,27 @@ impl User {
     pub fn is_suspended(&self) -> bool {
         return 40 > self.types && self.types > 30;
     }
+    pub fn is_have_warning_banner(&self) -> bool {
+        return 50 > self.types && self.types > 40;
+    }
+    pub fn is_deleted(&self) -> bool {
+        return 20 > self.types && self.types > 10;
+    }
+    pub fn is_closed(&self) -> bool {
+        return 30 > self.types && self.types > 20;
+    }
+    pub fn is_identified_send(&self) -> bool {
+        return self.types == 6;
+    }
+    pub fn is_identified(&self) -> bool {
+        return self.types == 7;
+    }
+    pub fn is_child(&self) -> bool {
+        return self.types == 3;
+    }
+    pub fn is_child_safety(&self) -> bool {
+        return self.perm > 9 || self.types == 7;
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
