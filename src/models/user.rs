@@ -445,6 +445,7 @@ impl User {
     }
     pub fn get_color_background(&self) -> String {
         use crate::schema::design_settings::dsl::design_settings;
+        use crate::models::DesignSetting;
 
         let _connection = establish_connection();
         let _designs = design_settings
@@ -465,6 +466,7 @@ impl User {
         }
     }
     pub fn calculate_age(&self) -> u8 {
+        use chrono::NaiveDate;
         let d = NaiveDate::from_ymd(2015, 6, 3);
         return d.year - self.birthday.year() - ((d.month, d.day) < (self.birthday.month(), self.birthday.day()));
     }
