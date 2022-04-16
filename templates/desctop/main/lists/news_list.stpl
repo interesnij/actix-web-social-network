@@ -3,7 +3,8 @@
 <div class="main-container" data-type="page_feed">
     <div class="row">
         <div class="col-md-8 mt-3">
-          Возраст <%= request_user.calculate_age() %>
+          Возраст <%= request_user.calculate_age() %> <br>
+          Онлайн  <%= request_user.get_online() %>
         </div>
         <div class="col-12 col-md-4">
           <% include!("./menu.stpl"); %>
