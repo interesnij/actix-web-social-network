@@ -338,6 +338,7 @@ impl User {
         use crate::schema::messages::dsl::messages;
         use crate::schema::message_options::dsl::message_options;
         use crate::models::MessageOption;
+        use diesel::dsl::any;
 
         let _connection = establish_connection();
         let all_option_messages = message_options
