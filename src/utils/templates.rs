@@ -48,20 +48,20 @@ pub fn get_request_user_data_2(session: Session) -> (User, String) {
         let _user = users
             .filter(schema::users::id.eq(user_id))
             .load::<User>(&_connection)
-            .expect("E")[0];
+            .expect("E");
         let _design = design_settings
             .filter(schema::design_settings::user_id.eq(&user_id))
             .load::<DesignSetting>(&_connection)
             .expect("E");
         let background = &_design[0].background;
-        (_user, background.to_string())
+        (_user[0], background.to_string())
     } else {
         use crate::schema::users::dsl::users;
         let _user = users
             .filter(schema::users::id.eq(1))
             .load::<User>(&_connection)
-            .expect("E")[0];
-        (_user, "".to_string())
+            .expect("E");
+        (_user[0], "".to_string())
     }
 }
 
