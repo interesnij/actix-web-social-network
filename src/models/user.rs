@@ -533,7 +533,7 @@ impl User {
     }
     pub fn get_online(&self) -> bool {
         use chrono::{NaiveDateTime, NaiveDate, NaiveTime};
-        use time::Duration;
+        use std::time::Duration;
 
         let d = NaiveDate::from_ymd(2015, 6, 3);
         let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
