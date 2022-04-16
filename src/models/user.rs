@@ -343,7 +343,7 @@ impl User {
         let all_option_messages = message_options
             .filter(schema::message_options::user_id.eq(self.id))
             .filter(schema::message_options::is_favourite.eq(true))
-            .order(schema::chats::id.desc())
+            .order(schema::message_options::id.desc())
             .load::<MessageOption>(&_connection)
             .expect("E");
         let mut stack = Vec::new();
@@ -355,7 +355,7 @@ impl User {
             .load::<Message>(&_connection)
             .expect("E.");
     }
-    pub fn get_favourite_messages_count(&self) -> i32 {
+    pub fn get_favourite_messages_count(&self) -> usize {
         use crate::schema::message_options::dsl::message_options;
         use crate::models::MessageOption;
 
