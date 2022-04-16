@@ -619,7 +619,9 @@ impl User {
     pub fn get_6_featured_friends_ids(&self) -> Vec<i32> {
         let mut stack = Vec::new();
         let featured_friends = self.get_featured_friends_ids();
-        for (i, _item) in featured_friends.iter().enumerate() {
+        let mut i = 0;
+        for _item in featured_friends.iter() {
+            i += 1;
             if i < 6 {
                 stack.push(_item);
             }
