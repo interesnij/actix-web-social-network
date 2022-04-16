@@ -709,6 +709,19 @@ impl User {
     pub fn get_featured_communities_count(&self) -> usize {
         return self.get_featured_communities_ids().len();
     }
+    pub fn is_blocked_with_user_with_id(&self, user_id: i32) -> bool {
+        use crate::schema::user_blocks::dsl::user_blocks;
+        use crate::models::UserBlock;
+
+        let _connection = establish_connection();
+        return user_blocks
+            .filter(schema::user_blocks::blocked_user_id.eq(user_id))
+            .filter(schema::user_blocks::user_block_i.eq(self.id))
+            .load::<UserBlock>(&_connection)
+            .count()
+            .expect("E.") > 0;
+        //return blocks.len() > 0;
+    }
 
 }
 
