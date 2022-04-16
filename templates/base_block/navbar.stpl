@@ -25,7 +25,7 @@
                 <div class="dropdown text-hide-xs d-inline-block">
                     <a class="btn header-color-secondary username drop">
                        <figure class="userpic" data-id="<%= request_user.id %>" data-pk="<%= request_user.get_link() %>" data-name="<%= request_user.get_full_name() %>" data-device="comp">
-                        <%= request_user.get_s_avatar_30() %>
+                          <img src="<%= request_user.get_s_avatar_30() %>" alt="img" />
                        </figure>
                        <h5 class="text-hide-xs"><span class="header-color-primary">Мой профиль</span></h5>
                     </a>
