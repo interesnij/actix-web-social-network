@@ -22,7 +22,7 @@ pub fn get_folder(req: HttpRequest) -> String {
     _type
 }
 
-pub fn get_request_user_data_2(session: Session) -> (User, String) {
+pub fn get_request_user_data_2(session: Session) -> (&User, String) {
     use crate::models::SessionUser;
 
     let _connection = establish_connection();
