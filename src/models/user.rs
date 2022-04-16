@@ -143,7 +143,55 @@ impl User {
             3 => 23,
             7 => 27,
             6 => 26,
-            _ => 1,
+            _ => self.types,
+        };
+        diesel::update(self)
+            .set(schema::users::types.eq(close_case))
+            .get_result::<User>(&_connection)
+            .expect("E");
+       return true;
+    }
+    pub fn unclose_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = self.types;
+        let close_case = match user_types {
+            21 => 1,
+            23 => 3,
+            27 => 7,
+            26 => 6,
+            _ => self.types,
+        };
+        diesel::update(self)
+            .set(schema::users::types.eq(close_case))
+            .get_result::<User>(&_connection)
+            .expect("E");
+       return true;
+    }
+    pub fn suspend_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = self.types;
+        let close_case = match user_types {
+            1 => 31,
+            3 => 33,
+            7 => 37,
+            6 => 36,
+            _ => self.types,
+        };
+        diesel::update(self)
+            .set(schema::users::types.eq(close_case))
+            .get_result::<User>(&_connection)
+            .expect("E");
+       return true;
+    }
+    pub fn unsuspend_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = self.types;
+        let close_case = match user_types {
+            31 => 1,
+            33 => 3,
+            37 => 7,
+            36 => 6,
+            _ => self.types,
         };
         diesel::update(self)
             .set(schema::users::types.eq(close_case))
