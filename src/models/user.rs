@@ -205,20 +205,21 @@ impl User {
 
         let manager_chats = chats
             .filter(schema::chats::user_id.eq(self.id))
-            .filter(schema::chats::typed.eq(3))
+            .filter(schema::chats::types.eq(3))
             .load::<Chat>(&_connection)
             .expect("E");
         if manager_chats.len() > 0 {
-            return &manager_chats[0].id
+            return manager_chats[0].id
         } else {
             use crate::schema::chat_users::dsl::chat_users;
             use crate::models::{NewChat, ChatUser, NewChatUser};
             use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
 
+            let _connection = establish_connection();
             let d = NaiveDate::from_ymd(2015, 6, 3);
             let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
             let new_manager_chat = NewChat{
-                name: "Рассылка служународу.рус".to_string(),
+                name: Some("Рассылка служународу.рус".to_string()),
                 types: 3,
                 community_id: None,
                 user_id: self.id,

@@ -49,13 +49,14 @@ use crate::models::{
     // 'c' Создатель и админы
     // 'd' Участники кроме
     // 'e' Некоторые участники
+    // 'f' Никто!
 
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(Community)]
 pub struct Chat {
     pub id:                 i32,
-    pub name:               String,
+    pub name:               Option<String>,
     pub types:              i16,
     pub image:              Option<String>,
     pub description:        Option<String>,
@@ -76,7 +77,7 @@ pub struct Chat {
 #[derive(Deserialize, Insertable)]
 #[table_name="chats"]
 pub struct NewChat {
-    pub name:               String,
+    pub name:               Option<String>,
     pub types:              i16,
     pub community_id:       Option<i32>,
     pub user_id:            i32,
