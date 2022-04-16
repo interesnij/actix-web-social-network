@@ -321,7 +321,7 @@ impl User {
             .load::<Chat>(&_connection)
             .expect("E");
     }
-    //&'static 
+    //&'static
     pub fn get_last_location(&self) -> UserLocation {
         use crate::schema::user_locations::dsl::user_locations;
 
@@ -330,7 +330,7 @@ impl User {
             .filter(schema::user_locations::user_id.eq(self.id))
             .order(schema::user_locations::id.desc())
             .load::<UserLocation>(&_connection)
-            .expect("E").into_iter().nth(0);
+            .expect("E").into_iter().nth(0).as_deref().unwrap();
     }
 
 }
