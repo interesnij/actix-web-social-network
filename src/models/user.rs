@@ -697,7 +697,7 @@ impl User {
             .expect("E.");
     }
     pub fn get_6_featured_communities(&self) -> Vec<Community> {
-        use crate::schema::communities::dsl::communities;
+        use crate::schema::communitys::dsl::communitys;
         use diesel::dsl::any;
 
         let _connection = establish_connection();
@@ -714,7 +714,7 @@ impl User {
         use crate::models::UserBlock;
 
         let _connection = establish_connection();
-        all_blocks = user_blocks
+        let all_blocks = user_blocks
             .filter(schema::user_blocks::blocked_user_id.eq(user_id))
             .filter(schema::user_blocks::user_block_i.eq(self.id))
             .load::<UserBlock>(&_connection)
