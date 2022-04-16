@@ -35,20 +35,20 @@ struct DesctopAuthTemplate {
 #[template(path = "desctop/main/lists/news_list.stpl")]
 struct DesctopNewsListTemplate {
     title:        String,
-    request_user: &User,
+    request_user: 'a User,
     background:   String,
 }
 
 #[derive(TemplateOnce)]
 #[template(path = "mobile/main/auth/auth.stpl")]
-struct MobileAuthTemplate {
+struct MobileAuthTemplate<'a> {
     title: String,
 }
 #[derive(TemplateOnce)]
 #[template(path = "mobile/main/lists/news_list.stpl")]
-struct MobileNewsListTemplate {
+struct MobileNewsListTemplate<'a> {
     title:        String,
-    request_user: &User,
+    request_user: 'a User,
     background:   String,
 }
 
@@ -107,16 +107,16 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
 // контекст шаблонов рекомендаций записей
 #[derive(TemplateOnce)]
 #[template(path = "desctop/main/lists/featured_list.stpl")]
-struct DesctopFeaturedListTemplate {
+struct DesctopFeaturedListTemplate<'a> {
     title:        String,
-    request_user: &User,
+    request_user: 'a User,
     background:   String,
 }
 #[derive(TemplateOnce)]
 #[template(path = "mobile/main/lists/featured_list.stpl")]
-struct MobileFeaturedListTemplate {
+struct MobileFeaturedListTemplate<'a> {
     title:        String,
-    request_user: &User,
+    request_user: 'a User,
     background:   String,
 }
 pub async fn featured_list(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
