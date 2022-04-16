@@ -5,7 +5,7 @@ use crate::utils::establish_connection;
 use diesel::prelude::*;
 use crate::schema;
 use crate::models::{
-    Chat, Message, UserLocation, Post,
+    Chat, Message, UserLocation, Post, Smile, Sticker,
 };
 
 ///// Типы пользоватетеля
@@ -400,6 +400,48 @@ impl User {
         else {
             return str;
         }
+    }
+    pub fn get_populate_smiles(&self) -> Vec<Smile> {
+        use crate::schema::smiles::dsl::smiles;
+        use crate::schema::user_populate_smiles::dsl::user_populate_smiles;
+        use crate::models::UserPopulateSmile;
+        use diesel::dsl::any;
+
+        let _connection = establish_connection();
+        let all_populate_smiles = user_populate_smiles
+            .filter(schema::user_populate_smiles::user_id.eq(self.id))
+            .order(schema::user_populate_smiles::id.desc())
+            .load::<UserPopulateSmile>(&_connection)
+            .expect("E");
+        let mut stack = Vec::new();
+        for _item in all_populate_smiles.iter() {
+            stack.push(_item.smile_id);
+        };
+        return smiles
+            .filter(schema::smiles::id.eq(any(stack)))
+            .load::<Smile>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_populate_stickers(&self) -> Vec<Sticker> {
+        use crate::schema::stickers::dsl::stickers;
+        use crate::schema::user_populate_stickers::dsl::user_populate_stickers;
+        use crate::models::UserPopulateSticker;
+        use diesel::dsl::any;
+
+        let _connection = establish_connection();
+        let all_populate_stickers = user_populate_stickers
+            .filter(schema::user_populate_stickers::user_id.eq(self.id))
+            .order(schema::user_populate_stickers::id.desc())
+            .load::<UserPopulateSticker>(&_connection)
+            .expect("E");
+        let mut stack = Vec::new();
+        for _item in all_populate_stickers.iter() {
+            stack.push(_item.sticker_id);
+        };
+        return stickers
+            .filter(schema::stickers::id.eq(any(stack)))
+            .load::<Sticker>(&_connection)
+            .expect("E.");
     }
 }
 
