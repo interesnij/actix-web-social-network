@@ -612,7 +612,7 @@ impl User {
             .load::<FeaturedUserCommunitie>(&_connection)
             .expect("E.");
         for _item in featured_friends.iter() {
-            stack.push(_item.user_id);
+            stack.push(Some(_item.user_id));
         };
         return stack;
     }
