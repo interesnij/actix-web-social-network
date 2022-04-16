@@ -107,13 +107,15 @@ impl User {
     pub fn get_full_name(&self) -> String {
         self.first_name.clone() + &" ".to_string() + &self.last_name.clone()
     }
+    pub fn get_str_id(&self) -> String {
+        return self.id.to_string();
+    }
     pub fn get_link(&self) -> String {
         if self.have_link.is_some() {
             return self.have_link.as_deref().unwrap().to_string();
         }
         else {
-            let uid: String = self.id.to_string();
-            return "/id".to_string() + &uid + &"/".to_string();
+            return "/id".to_string() + &self.get_str_id() + &"/".to_string();
         }
     }
     pub fn get_s_avatar(&self) -> String {
@@ -126,6 +128,12 @@ impl User {
     }
     pub fn get_description(&self) -> String {
         return "<a href='".to_string() + &self.get_link() + &"' target='_blank'>".to_string() + &self.get_full_name() + &"</a>".to_string();
+    }
+    pub fn is_user(&self) -> bool {
+        return true;
+    }
+    pub fn get_code(&self) -> String {
+        return "use".to_string() + &self.get_str_id();
     }
 }
 
