@@ -220,7 +220,7 @@ impl User {
             let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
             let new_manager_chat = NewChat{
                 name: Some("Рассылка служународу.рус".to_string()),
-                types: 3,
+                types: 3, 
                 community_id: None,
                 user_id: self.id,
                 position: 10,
