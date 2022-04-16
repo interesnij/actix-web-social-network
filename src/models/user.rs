@@ -549,7 +549,7 @@ impl User {
             return "Онлайн".to_string();
         }
         else {
-            if self.is_woman() {
+            if self.is_women() {
                 return "Была ".to_string() + &self.last_activity.to_string();
             } else {
                 return "Был ".to_string() + &self.last_activity.to_string();
@@ -586,22 +586,18 @@ impl User {
         let _connection = establish_connection();
         let all_memberships = communities_memberships
             .filter(schema::communities_memberships::user_id.eq(self.id))
-            .load::<CommunitiesMembership>(&_connection)
-            .expect("E");
-        let staff_memberships = all_memberships
-            .filter(schema::communities_memberships::is_administrator.eq(true))
-            .or_filter(schema::communities_memberships::is_moderator.eq(true))
-            .or_filter(schema::communities_memberships::is_editor.eq(true))
-            .or_filter(schema::communities_memberships::is_advertiser.eq(true))
             .order(schema::communities_memberships::visited.desc())
             .load::<CommunitiesMembership>(&_connection)
             .expect("E");
-        let mut stack = Vec::new();
-        for _item in all_staff_memberships.iter() {
-            stack.push(_item.community_id);
+
+        let mut community_ids = Vec::new();
+        for _item in all_memberships.iter() {
+            if _item.is_administrator || _item.is_moderator || _item.is_editor || _item.is_advertiser {
+                community_ids.push(_item.community_id);
+            }
         };
         return communitys
-            .filter(schema::communitys::id.eq(any(stack)))
+            .filter(schema::communitys::id.eq(any(community_ids)))
             .load::<Community>(&_connection)
             .expect("E.");
     }
