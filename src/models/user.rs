@@ -321,7 +321,6 @@ impl User {
             .load::<Chat>(&_connection)
             .expect("E");
     }
-    //&'static
     pub fn get_last_location(&self) -> UserLocation {
         use crate::schema::user_locations::dsl::user_locations;
 
@@ -335,7 +334,27 @@ impl User {
             .nth(0)
             .unwrap();
     }
+    pub fn get_favourite_messages(&self) -> Vec<Message> {
+        use crate::schema::messages::dsl::messages;
+        use crate::schema::message_options::dsl::message_options;
+        use crate::models::MessageOption;
 
+        let _connection = establish_connection();
+        let all_option_messages = message_options
+            .filter(schema::message_options::user_id.eq(self.id))
+            .filter(schema::message_options::is_favourite.eq(true))
+            .order(schema::chats::id.desc())
+            .load::<MessageOption>(&_connection)
+            .expect("E");
+        let mut stack = Vec::new();
+        for _item in all_option_messages.iter() {
+            stack.push(_item.message_id);
+        };
+        return messages
+            .filter(schema::messages::id.eq(any(stack)))
+            .load::<Message>(&_connection)
+            .expect("E.");
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
