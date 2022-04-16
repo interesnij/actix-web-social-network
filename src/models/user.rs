@@ -654,6 +654,62 @@ impl User {
     pub fn get_featured_friends_count(&self) -> usize {
         return self.get_featured_friends_ids().len();
     }
+
+
+    pub fn get_featured_communities_ids(&self) -> Vec<i32> {
+        use crate::schema::featured_user_communities::dsl::featured_user_communities;
+        use crate::models::FeaturedUserCommunitie;
+
+        let _connection = establish_connection();
+        let mut stack = Vec::new();
+        let featured_communities = featured_user_communities
+            .filter(schema::featured_user_communities::owner.eq(self.id))
+            .load::<FeaturedUserCommunitie>(&_connection)
+            .expect("E.");
+        for _item in featured_communities.iter() {
+            stack.push(_item.community_id.unwrap());
+        };
+        return stack;
+    }
+    pub fn get_6_featured_communities_ids(&self) -> Vec<i32> {
+        use crate::schema::featured_user_communities::dsl::featured_user_communities;
+        use crate::models::FeaturedUserCommunitie;
+
+        let _connection = establish_connection();
+        let mut stack = Vec::new();
+        let featured_communities = &featured_user_communities
+            .filter(schema::featured_user_communities::owner.eq(self.id))
+            .load::<FeaturedUserCommunitie>(&_connection)
+            .expect("E.")[..6];
+        for _item in featured_communities.iter() {
+            stack.push(_item.community_id.unwrap());
+        };
+        return stack;
+    }
+    pub fn get_featured_communities(&self) -> Vec<Community> {
+        use crate::schema::communities::dsl::communities;
+        use diesel::dsl::any;
+
+        let _connection = establish_connection();
+        return users
+            .filter(schema::communities::id.eq(any(self.get_featured_communities_ids())))
+            .load::<Community>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_6_featured_communities(&self) -> Vec<Community> {
+        use crate::schema::communities::dsl::communities;
+        use diesel::dsl::any;
+
+        let _connection = establish_connection();
+        return users
+            .filter(schema::communities::id.eq(any(self.get_6_featured_communities_ids())))
+            .load::<Community>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_featured_communities_count(&self) -> usize {
+        return self.get_featured_communities_ids().len();
+    }
+
 }
 
 #[derive(Debug, Serialize, Deserialize)]
