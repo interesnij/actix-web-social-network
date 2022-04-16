@@ -22,7 +22,7 @@ pub fn get_folder(req: HttpRequest) -> String {
     _type
 }
 //&'static
-pub fn get_request_user_data_2(session: Session) -> (user::User, String) {
+pub fn get_request_user_data_2(session: Session) -> (User, String) {
     use crate::models::SessionUser;
     use crate::schema::{
         design_settings::dsl::design_settings,
