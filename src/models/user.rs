@@ -794,7 +794,7 @@ impl User {
     }
     pub fn is_staffed_user(&self) -> bool {
         use crate::schema::communities_memberships::dsl::communities_memberships;
-        use crate::models::CommunityMembership;
+        use crate::models::CommunitiesMembership;
 
         let _connection = establish_connection();
         let all_memberships = communities_memberships
@@ -811,7 +811,7 @@ impl User {
     }
     pub fn is_administrator_of_community(&self, community_id: i32) -> bool {
         use crate::schema::communities_memberships::dsl::communities_memberships;
-        use crate::models::CommunityMembership;
+        use crate::models::CommunitiesMembership;
 
         let _connection = establish_connection();
         let all_memberships = communities_memberships
@@ -828,7 +828,7 @@ impl User {
     }
     pub fn is_editor_of_community(&self, community_id: i32) -> bool {
         use crate::schema::communities_memberships::dsl::communities_memberships;
-        use crate::models::CommunityMembership;
+        use crate::models::CommunitiesMembership;
 
         let _connection = establish_connection();
         let all_memberships = communities_memberships
@@ -845,7 +845,7 @@ impl User {
     }
     pub fn is_moderator_of_community(&self, community_id: i32) -> bool {
         use crate::schema::communities_memberships::dsl::communities_memberships;
-        use crate::models::CommunityMembership;
+        use crate::models::CommunitiesMembership;
 
         let _connection = establish_connection();
         let all_memberships = communities_memberships
@@ -862,7 +862,7 @@ impl User {
     }
     pub fn is_advertiser_of_community(&self, community_id: i32) -> bool {
         use crate::schema::communities_memberships::dsl::communities_memberships;
-        use crate::models::CommunityMembership;
+        use crate::models::CommunitiesMembership;
 
         let _connection = establish_connection();
         let all_memberships = communities_memberships
