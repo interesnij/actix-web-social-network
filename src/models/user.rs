@@ -1,7 +1,9 @@
 use crate::schema::users;
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
-//use crate::utils::establish_connection;
+use crate::utils::establish_connection;
+use diesel::prelude::*;
+use crate::schema;
 
 ///// Типы пользоватетеля
     // 1 стандартный тип пользователя
@@ -121,6 +123,9 @@ impl User {
             else {
                 return "/static/images/icons/avatar30.svg".to_string();
             }
+    }
+    pub fn get_description(&self) -> String {
+        return "<a href='".to_string() + &self.get_link() + "' target='_blank'>".to_string() + &self.get_full_name() + "</a>".to_string();
     }
 }
 
