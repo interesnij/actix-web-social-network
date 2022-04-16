@@ -117,10 +117,10 @@ impl User {
     pub fn get_s_avatar_30(&self) -> String {
             if self.s_avatar.is_some() {
                 let img = "<img src='<".to_owned() + &self.s_avatar.as_deref().unwrap() + "alt='img' />";
-                return html_escape::encode_text(img).to_string();
+                return html_escape::encode_text(&img).to_string();
             }
             else {
-                return encode_text("<img src='/static/images/icons/avatar30.svg' alt='img' />").to_string();
+                return html_escape::encode_text("<img src='/static/images/icons/avatar30.svg' alt='img' />").to_string();
             }
     }
 }
