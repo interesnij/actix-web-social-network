@@ -469,7 +469,7 @@ impl User {
         use chrono::{NaiveDate, Datelike};
         let birthday = self.birthday;
         let d = NaiveDate::from_ymd(2015, 6, 3);
-        return d.year() - birthday.year() - ((d.month(), d.day()) < (birthday.month(), birthday.day()));
+        return d.year() - birthday.year();
     }
 
 }
