@@ -617,9 +617,17 @@ impl User {
         return stack;
     }
     pub fn get_6_featured_friends_ids(&self) -> Vec<i32> {
+        use crate::schema::featured_user_communities::dsl::featured_user_communities;
+        use crate::models::FeaturedUserCommunitie;
+
+        let _connection = establish_connection();
         let mut stack = Vec::new();
-        for _item in self.get_featured_friends_ids()[..6].iter() {
-            stack.push(_item);
+        let featured_friends = featured_user_communities
+            .filter(schema::featured_user_communities::owner.eq(self.id))
+            .load::<FeaturedUserCommunitie>(&_connection)
+            .expect("E.")[..6];
+        for _item in featured_friends.iter() {
+            stack.push(_item.user_id.unwrap());
         };
         return stack;
     }
