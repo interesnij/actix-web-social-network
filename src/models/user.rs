@@ -374,13 +374,13 @@ impl User {
         let _connection = establish_connection();
         return posts
             .filter(schema::posts::user_id.eq(self.id))
-            .filter(schema::posts::types.eq('b'))
+            .filter(schema::posts::types.eq("b"))
             .order(schema::posts::created.desc())
             .load::<Post>(&_connection)
             .expect("E");
     }
     pub fn get_fixed_posts_ids(&self) -> Vec<i32> {
-        user_fixed_posts = self.get_fixed_posts();
+        let user_fixed_posts = self.get_fixed_posts();
         let mut stack = Vec::new();
         for _item in user_fixed_posts.iter() {
             stack.push(_item.id);
@@ -394,7 +394,7 @@ impl User {
         return self.count_fix_items() < 10;
     }
     pub fn get_verb_gender(&self, str: String) -> String {
-        if self.gender == 'b' {
+        if self.gender == "b" {
             return "W".to_string() + &str;
         }
         else {
