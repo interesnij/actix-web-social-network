@@ -1001,7 +1001,7 @@ impl User {
         return self.get_profile().posts > 0;
     }
 
-    pub fn count_no_view_followers(&self) -> i32 {
+    pub fn count_no_view_followers(&self) -> usize {
         use crate::schema::follows::dsl::follows;
         use crate::models::Follow;
 
@@ -1011,7 +1011,7 @@ impl User {
             .filter(schema::follows::view.eq(false))
             .load::<Follow>(&_connection)
             .expect("E.");
-        return all_follows.len() > 0;
+        return all_follows.len();
     }
     pub fn count_following(&self) -> usize {
         use crate::schema::follows::dsl::follows;
