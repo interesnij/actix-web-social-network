@@ -2283,7 +2283,7 @@ impl User {
             .load::<User>(&_connection)
             .expect("E.");
     }
-    pub fn get_common_friends_of_community_count_ru(&self, community_id: i32) -> i32  {
+    pub fn get_common_friends_of_community_count_ru(&self, community_id: i32) -> String  {
         use crate::utils::get_count_for_ru;
 
         return get_count_for_ru (
