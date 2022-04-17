@@ -5,7 +5,7 @@ use crate::utils::establish_connection;
 use diesel::prelude::*;
 use crate::schema;
 use crate::models::{
-    Chat, Message, UserLocation, Post, Smile, Sticker, Community, UserProfile
+    Chat, Message, UserLocation, Post, Smile, Sticker, Community, UserProfile, Friend,
 };
 
 ///// Типы пользоватетеля
@@ -269,7 +269,6 @@ impl User {
         if manager_chats.len() > 0 {
             return manager_chats[0].id
         } else {
-            use crate::schema::chat_users::dsl::chat_users;
             use crate::models::{NewChat, ChatUser, NewChatUser};
             use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
 
@@ -780,7 +779,6 @@ impl User {
     }
     pub fn is_creator_community(&self, community_id: i32) -> bool {
         use crate::schema::communitys::dsl::communitys;
-        use crate::models::Community;
 
         let _connection = establish_connection();
         let community = communitys
@@ -1076,8 +1074,6 @@ impl User {
         return self.get_profile().friends;
     }
     pub fn plus_photos(&self, count: i32) -> bool {
-        use crate::models::UserProfile;
-
         let profile = self.get_profile();
         let _connection = establish_connection();
         diesel::update(&profile)
@@ -1085,6 +1081,209 @@ impl User {
             .get_result::<UserProfile>(&_connection)
             .expect("Error.");
         return true;
+    }
+    pub fn plus_goods(&self, count: i32) -> bool {
+        let profile = self.get_profile();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::user_profiles::goods.eq(profile.goods + count))
+            .get_result::<UserProfile>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn plus_posts(&self, count: i32) -> bool {
+        let profile = self.get_profile();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::user_profiles::posts.eq(profile.posts + count))
+            .get_result::<UserProfile>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn plus_videos(&self, count: i32) -> bool {
+        let profile = self.get_profile();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::user_profiles::videos.eq(profile.videos + count))
+            .get_result::<UserProfile>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn plus_docs(&self, count: i32) -> bool {
+        let profile = self.get_profile();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::user_profiles::docs.eq(profile.docs + count))
+            .get_result::<UserProfile>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn plus_tracks(&self, count: i32) -> bool {
+        let profile = self.get_profile();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::user_profiles::tracks.eq(profile.tracks + count))
+            .get_result::<UserProfile>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn plus_communities(&self, count: i32) -> bool {
+        let profile = self.get_profile();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::user_profiles::communities.eq(profile.communities + count))
+            .get_result::<UserProfile>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn plus_articles(&self, count: i32) -> bool {
+        let profile = self.get_profile();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::user_profiles::articles.eq(profile.articles + count))
+            .get_result::<UserProfile>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn plus_follows(&self, count: i32) -> bool {
+        let profile = self.get_profile();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::user_profiles::follows.eq(profile.follows + count))
+            .get_result::<UserProfile>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn plus_friends(&self, count: i32) -> bool {
+        let profile = self.get_profile();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::user_profiles::friends.eq(profile.friends + count))
+            .get_result::<UserProfile>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_photos(&self, count: i32) -> bool {
+        let profile = self.get_profile();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::user_profiles::photos.eq(profile.photos - count))
+            .get_result::<UserProfile>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_goods(&self, count: i32) -> bool {
+        let profile = self.get_profile();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::user_profiles::goods.eq(profile.goods - count))
+            .get_result::<UserProfile>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_posts(&self, count: i32) -> bool {
+        let profile = self.get_profile();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::user_profiles::posts.eq(profile.posts - count))
+            .get_result::<UserProfile>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_videos(&self, count: i32) -> bool {
+        let profile = self.get_profile();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::user_profiles::videos.eq(profile.videos - count))
+            .get_result::<UserProfile>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_docs(&self, count: i32) -> bool {
+        let profile = self.get_profile();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::user_profiles::docs.eq(profile.docs - count))
+            .get_result::<UserProfile>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_tracks(&self, count: i32) -> bool {
+        let profile = self.get_profile();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::user_profiles::tracks.eq(profile.tracks - count))
+            .get_result::<UserProfile>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_communities(&self, count: i32) -> bool {
+        let profile = self.get_profile();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::user_profiles::communities.eq(profile.communities - count))
+            .get_result::<UserProfile>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_articles(&self, count: i32) -> bool {
+        let profile = self.get_profile();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::user_profiles::articles.eq(profile.articles - count))
+            .get_result::<UserProfile>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_follows(&self, count: i32) -> bool {
+        let profile = self.get_profile();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::user_profiles::follows.eq(profile.follows - count))
+            .get_result::<UserProfile>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_friends(&self, count: i32) -> bool {
+        let profile = self.get_profile();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::user_profiles::friends.eq(profile.friends - count))
+            .get_result::<UserProfile>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+
+    pub fn get_friends(&self) -> Vec<Friend> {
+        use crate::schema::friends::dsl::friends;
+
+        let _connection = establish_connection();
+        return friends
+            .filter(schema::friends::user_id.eq(user_id))
+            .order(schema::friends::visited.desc())
+            .load::<Friend>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_communities(&self) -> Vec<Community> {
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+        use crate::schema::communitys::dsl::communitys;
+        use crate::models::CommunitiesMembership;
+        use diesel::dsl::any;
+
+        let _connection = establish_connection();
+        let _user_communities = communities_memberships
+            .filter(schema::communities_memberships::user_id.eq(self.id))
+            .order(schema::communities_memberships::visited.desc())
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E.");
+        let mut stack = Vec::new();
+        for _item in _user_communities.iter() {
+            stack.push(_item.community_id);
+        };
+        return communitys
+            .filter(schema::communitys::id.eq(any(stack)))
+            .load::<Community>(&_connection)
+            .expect("E.");
     }
 }
 
