@@ -2308,6 +2308,29 @@ impl User {
             " друзей".to_string(),
         );
     }
+    pub fn get_users_ids_for_main_news(&self) -> Vec<User> {
+        use crate::schema::users::dsl::users;
+        use crate::schema::news_user_communities::dsl::news_user_communities;
+        use crate::models::NewsUserCommunitie;
+        use chrono::{NaiveDateTime, NaiveDate, NaiveTime, Duration};
+
+        let _connection = establish_connection();
+
+        let d = NaiveDate::from_ymd(2015, 6, 3);
+        let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
+        let time = self.last_activity.checked_add_signed(Duration::seconds(301)) > NaiveDateTime::new(d, t).checked_add_signed(Duration::seconds(1));
+        let news_users = news_user_communities
+            .filter(schema::news_user_communities::owner.eq(self.id))
+            .filter(schema::news_user_communities::mute.eq(false))
+            .filter(schema::news_user_communities::sleep.lt(NaiveDateTime::new(d, t).checked_add_signed(Duration::seconds(1)))
+            .load::<NewsUserCommunitie>(&_connection)
+            .expect("E.");
+        let mut stack = Vec::new();
+        for member in news_users.iter() {
+            stack.push(member.user_id.unwrap());
+        }
+        return stack;
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]

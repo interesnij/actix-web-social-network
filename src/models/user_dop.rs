@@ -385,7 +385,6 @@ pub struct NewFeaturedUserCommunitie {
 
 /////// NewsUC //////
 #[derive(Queryable, Serialize, Identifiable, Associations)]
-#[table_name="news_user_communities"]
 pub struct NewsUserCommunitie {
     pub id:           i32,
     pub owner:        i32,
