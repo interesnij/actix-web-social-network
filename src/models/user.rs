@@ -2170,7 +2170,7 @@ impl User {
         use crate::schema::users::dsl::users;
 
         let _connection = establish_connection();
-        followers =  follows
+        let followers =  follows
             .filter(schema::follows::followed_user.eq(self.id))
             .order(schema::follows::visited.desc())
             .load::<Follow>(&_connection)
