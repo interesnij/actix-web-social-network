@@ -1327,8 +1327,10 @@ impl User {
             .load::<Community>(&_connection)
             .expect("E.");
     }
-    pub fn get_online_friends(&self) -> Vec<&User> {
+    pub fn get_online_friends(&self) -> Vec<User> {
         use crate::schema::users::dsl::users;
+        use chrono::{NaiveDateTime, NaiveDate, NaiveTime, Duration};
+        use diesel::dsl::any;
 
         let _connection = establish_connection();
         let mut stack = Vec::new();
