@@ -1328,21 +1328,13 @@ impl User {
             .expect("E.");
     }
     pub fn get_online_friends(&self) -> Vec<User> {
-        use crate::schema::users::dsl::users;
-        use diesel::dsl::any;
-        use chrono::{NaiveDateTime, NaiveDate, NaiveTime};
-        use std::time::Duration;
-
-        let _connection = establish_connection();
-        let d = NaiveDate::from_ymd(2015, 6, 3);
-        let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
-        //let now_minus_300 = NaiveDateTime::new(d, t).signed_duration_since(Duration::from_secs(300));
-
-        return users
-            .filter(schema::users::id.eq(any(self.get_friends_ids())))
-            .filter(schema::users::last_activity.gt(NaiveDateTime::new(d, t).plusMinutes(3)))
-            .load::<User>(&_connection)
-            .expect("E.");
+        let mut stack = Vec::new();
+        for user in self.get_friends().iter() {
+            if user.is_online() {
+                stack.push(_item.community_id);
+            }
+        };
+        return stack;
     }
 }
 
