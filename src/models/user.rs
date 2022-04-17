@@ -2457,8 +2457,36 @@ impl User {
             .load::<Chat>(&_connection)
             .expect("E.");
     }
-    pub fn get_all_chats(&self) -> Vec<Chat, User> {
-        return self.get_friends() + self.get_all_chats();
+    pub fn is_administrator_of_chat(&self, chat_id: i32) -> bool {
+        use crate::schema::chat_users::dsl::chat_users;
+        use crate::models::ChatUser;
+
+        let _connection = establish_connection();
+        let all_chats = chat_users
+            .filter(schema::chat_users::user_id.eq(self.id))
+            .filter(schema::chat_users::chat_id.eq(chat_id))
+            .filter(schema::chat_users::types.eq("a"))
+            .load::<ChatUser>(&_connection)
+            .expect("E");
+
+        for _item in all_chats.iter() {
+            if _item.is_administrator {
+                return true;
+            }
+        };
+        return false;
+    }
+    pub fn is_member_of_chat(&self, chat_id: i32) -> bool {
+        use crate::schema::chat_users::dsl::chat_users;
+        use crate::models::ChatUser;
+
+        let _connection = establish_connection();
+        return chat_users
+            .filter(schema::chat_users::user_id.eq(self.id))
+            .filter(schema::chat_users::chat_id.eq(chat_id))
+            .filter(schema::chat_users::types.eq("a"))
+            .load::<ChatUser>(&_connection)
+            .expect("E").len() > 0;
     }
 }
 
