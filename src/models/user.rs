@@ -888,7 +888,6 @@ impl User {
     }
     pub fn is_following_user_with_id(&self, user_id: i32) -> bool {
         use crate::schema::follows::dsl::follows;
-        use crate::models::Follow;
 
         let _connection = establish_connection();
         let all_follows = follows
@@ -900,7 +899,6 @@ impl User {
     }
     pub fn is_followers_user_with_id(&self, user_id: i32) -> bool {
         use crate::schema::follows::dsl::follows;
-        use crate::models::Follow;
 
         let _connection = establish_connection();
         let all_follows = follows
@@ -912,7 +910,6 @@ impl User {
     }
     pub fn is_followers_user_view(&self, user_id: i32) -> bool {
         use crate::schema::follows::dsl::follows;
-        use crate::models::Follow;
 
         let _connection = establish_connection();
         let all_follows = follows
@@ -964,7 +961,6 @@ impl User {
     }
     pub fn is_have_followings(&self) -> bool {
         use crate::schema::follows::dsl::follows;
-        use crate::models::Follow;
 
         let _connection = establish_connection();
         let all_follows = follows
@@ -1020,7 +1016,6 @@ impl User {
     }
     pub fn count_following(&self) -> usize {
         use crate::schema::follows::dsl::follows;
-        use crate::models::Follow;
 
         let _connection = establish_connection();
         let all_follows = follows
@@ -2257,6 +2252,29 @@ impl User {
         for int in self_friends.iter() {
             if user_friends.iter().any(|i| i==int) {
                 stack.push(int);
+            }
+        }
+        return users
+            .filter(schema::users::id.eq_any(stack))
+            .filter(schema::users::types.lt(11))
+            .load::<User>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_common_friends_of_user(&self, community_id: i32) -> Vec<User> {
+        use crate::schema::communitys::dsl::communitys;
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+        use crate::models::CommunityMembership;
+
+        let _connection = establish_connection();
+        let self_friends = self.get_friends_ids();
+        let members_of_community = communities_memberships
+            .filter(schema::communities_memberships::community_id.eq(community_id))
+            .load::<CommunityMembership>(&_connection)
+            .expect("E.");
+        let mut stack = Vec::new();
+        for member in members_of_community.iter() {
+            if self_friends.iter().any(|i| i==member.user_id) {
+                stack.push(member.user_id);
             }
         }
         return users
