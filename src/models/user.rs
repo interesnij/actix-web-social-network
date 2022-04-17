@@ -1050,7 +1050,6 @@ impl User {
     pub fn count_posts(&self) -> i32 {
         return self.get_profile().posts;
     }
-
     pub fn count_articles(&self) -> i32 {
         return self.get_profile().articles;
     }
@@ -1066,6 +1065,26 @@ impl User {
             " сообщества".to_string(),
             " сообществ".to_string(),
         );
+    }
+    pub fn count_tracks(&self) -> i32 {
+        return self.get_profile().tracks;
+    }
+    pub fn count_videos(&self) -> i32 {
+        return self.get_profile().videos;
+    }
+    pub fn count_friends(&self) -> i32 {
+        return self.get_profile().friends;
+    }
+    pub fn plus_photos(&self, count: i32) -> bool {
+        use crate::schema::user_profiles::dsl::user_profiles;
+        use crate::models::UserProfile;
+        
+        let profile = self.get_profile();
+        diesel::update(&profile)
+            .set((schema::user_profiles::photos.eq(profile.photos + 1)))
+            .get_result::<UserProfile>(&_connection)
+            .expect("Error.");
+        return true;
     }
 }
 
