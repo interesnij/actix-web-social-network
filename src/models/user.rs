@@ -1396,10 +1396,11 @@ impl User {
         let _good_lists  = good_lists
             .filter(schema::good_lists::user_id.eq(self.id))
             .filter(schema::good_lists::types.eq("a"))
+            .limit(1)
             .load::<GoodList>(&_connection)
             .expect("E.");
         if _good_lists.len() > 0 {
-            return _good_lists[0]
+            return _good_lists
         }
         else {
             use crate::models::{NewGoodList, UserGoodListPosition, NewUserGoodListPosition};
