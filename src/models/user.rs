@@ -1268,7 +1268,7 @@ impl User {
         };
         return stack;
     }
-    pub fn get_friend_and_friend_of_friend_ids(&self) -> Vec<&i32> {
+    pub fn get_friend_and_friend_of_friend_ids(&self) -> Vec<i32> {
         use crate::schema::friends::dsl::friends;
 
         let _connection = establish_connection();
