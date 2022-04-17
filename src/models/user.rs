@@ -2435,6 +2435,28 @@ impl User {
             return "Предупреждение за нарушение правил соцсети трезвый.рус".to_string();
         }
     }
+    pub fn get_all_chats(&self) -> Vec<Chat> {
+        use crate::schema::chat_users::dsl::chat_users;
+        use crate::schema::chats::dsl::chats;
+        use crate::models::{ChatUser, Chat};
+
+        let _connection = establish_connection();
+        let members_of_chats = chat_users
+            .filter(schema::chat_users::user_id.eq(self.id))
+            .filter(schema::chat_users::types.eq("a"))
+            .load::<ChatUser>(&_connection)
+            .expect("E.");
+        let mut stack = Vec::new();
+        for member in members_of_chats.iter() {
+            stack.push(member.chat_id);
+        }
+        return chats
+            .filter(schema::chats::id.eq_any(stack))
+            .filter(schema::chats::types.lt(20))
+            .order(schema::chats::created.desc())
+            .load::<Chat>(&_connection)
+            .expect("E.");
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
