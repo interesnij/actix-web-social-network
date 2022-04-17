@@ -1055,13 +1055,13 @@ impl User {
         let b = count % 100;
         let count_str: String = count.parse().unwrap();
         if a == 1 && b != 11 {
-            return count_str + &" ".to_string() + word1;
+            return count_str + &" ".to_string() + &word1;
         }
         else if a >= 2 && a <= 4 && (b < 10 || b >= 20) {
-            return count_str + &" ".to_string() + word2;
+            return count_str + &" ".to_string() + &word2;
         }
         else {
-            return count_str + &" ".to_string() + word3;
+            return count_str + &" ".to_string() + &word3;
         }
     }
 
