@@ -1045,6 +1045,9 @@ impl User {
     pub fn count_goods(&self) -> i32 {
         return self.get_profile().goods;
     }
+    pub fn count_tracks(&self) -> i32 {
+        return self.get_profile().tracks;
+    }
     pub fn count_photos(&self) -> i32 {
         return self.get_profile().photos;
     }
@@ -2097,6 +2100,71 @@ impl User {
             .filter(schema::good_lists::community_id.eq_any(self.get_staffed_communities_ids()))
             .filter(schema::good_lists::types.eq_any(vec!["a", "b"]))
             .load::<GoodList>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_6_photos(&self) -> Vec<Photo> {
+        use crate::schema::photos::dsl::photos;
+
+        let _connection = establish_connection();
+        return photos
+            .filter(schema::photos::user_id.eq(self.id))
+            .filter(schema::photos::types.eq("a"))
+            .filter(schema::photos::community_id.is_null())
+            .order(schema::photos::created.desc())
+            .limit(6)
+            .load::<Photo>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_6_docs(&self) -> Vec<Photo> {
+        use crate::schema::docs::dsl::docs;
+
+        let _connection = establish_connection();
+        return docs
+            .filter(schema::docs::user_id.eq(self.id))
+            .filter(schema::docs::types.eq("a"))
+            .filter(schema::docs::community_id.is_null())
+            .order(schema::docs::created.desc())
+            .limit(6)
+            .load::<Doc>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_6_tracks(&self) -> Vec<Music> {
+        use crate::schema::musics::dsl::musics;
+
+        let _connection = establish_connection();
+        return musics
+            .filter(schema::musics::user_id.eq(self.id))
+            .filter(schema::musics::types.eq("a"))
+            .filter(schema::musics::community_id.is_null())
+            .order(schema::musics::created.desc())
+            .limit(6)
+            .load::<Music>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_2_videos(&self) -> Vec<Video> {
+        use crate::schema::videos::dsl::videos;
+
+        let _connection = establish_connection();
+        return videos
+            .filter(schema::videos::user_id.eq(self.id))
+            .filter(schema::videos::types.eq("a"))
+            .filter(schema::videos::community_id.is_null())
+            .order(schema::videos::created.desc())
+            .limit(2)
+            .load::<Video>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_3_goods(&self) -> Vec<Good> {
+        use crate::schema::videos::dsl::videos;
+
+        let _connection = establish_connection();
+        return goods
+            .filter(schema::goods::user_id.eq(self.id))
+            .filter(schema::goods::types.eq("a"))
+            .filter(schema::goods::community_id.is_null())
+            .order(schema::goods::created.desc())
+            .limit(2)
+            .load::<Good>(&_connection)
             .expect("E.");
     }
 }
