@@ -1284,7 +1284,7 @@ impl User {
                 }
             }
         }
-        return stack.retain(|&x| x != self.id);
+        return stack;
     }
 
     pub fn get_friends(&self) -> Vec<Friend> {
