@@ -8,6 +8,7 @@ use crate::models::{
     Chat, Message, UserLocation, Smile, Sticker, Community, UserProfile, Friend,
     Post, Photo, Music, Video, Survey, Doc, Good,
     PostList, PhotoList, MusicList, VideoList, SurveyList, DocList, GoodList,
+    Follow,
 };
 
 ///// Типы пользоватетеля
@@ -2162,6 +2163,27 @@ impl User {
             .order(schema::goods::created.desc())
             .limit(2)
             .load::<Good>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_followers(&self) -> Vec<User> {
+        use crate::schema::follows::dsl::follows;
+        use crate::schema::users::dsl::users;
+
+        let _connection = establish_connection();
+        followers =  follows
+            .filter(schema::follows::followed_user.eq(self.id))
+            .order(schema::follows::visited.desc())
+            .load::<Follow>(&_connection)
+            .expect("E.");
+
+        let mut stack = Vec::new();
+        for _item in followers.iter() {
+            stack.push(_item.user_id);
+        };
+        return users
+            .filter(schema::users::id.eq_any(stack))
+            .filter(schema::users::types.lt(11))
+            .load::<User>(&_connection)
             .expect("E.");
     }
 }
