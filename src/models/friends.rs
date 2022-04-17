@@ -1,4 +1,4 @@
-use crate::schema::{friends, friend_perms};
+use crate::schema::{friends, friend_perms2};
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
 //use crate::utils::establish_connection;
@@ -27,12 +27,12 @@ pub struct NewFriend {
 pub struct FriendPerm {
     pub id:              i32,
     pub user_id:         i32,
-    //pub can_see_info:      Option<String>,
-    //pub can_see_community: Option<String>,
-    //pub can_see_friend:      Option<String>,
-    //pub can_send_message: Option<String>,
-    //pub can_add_in_chat:      Option<String>,
-    //pub can_see_doc: Option<String>,
+    pub can_see_info:      Option<String>,
+    pub can_see_community: Option<String>,
+    pub can_see_friend:      Option<String>,
+    pub can_send_message: Option<String>,
+    pub can_add_in_chat:      Option<String>,
+    pub can_see_doc: Option<String>,
     //pub can_see_music:      Option<String>,
     //pub can_see_survey: Option<String>,
     //pub can_see_post:      Option<String>,
@@ -65,7 +65,13 @@ pub struct FriendPerm {
 
 }
 #[derive(Deserialize, Insertable)]
-#[table_name="friend_perms"]
+#[table_name="friend_perms2"]
 pub struct NewFriendPerm {
     pub user_id:         i32,
+    pub can_see_info:      Option<String>,
+    pub can_see_community: Option<String>,
+    pub can_see_friend:      Option<String>,
+    pub can_send_message: Option<String>,
+    pub can_add_in_chat:      Option<String>,
+    pub can_see_doc: Option<String>,
 }
