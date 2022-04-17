@@ -5,7 +5,7 @@ use crate::utils::establish_connection;
 use diesel::prelude::*;
 use crate::schema;
 use crate::models::{
-    Chat, Message, UserLocation, Post, Smile, Sticker, Community,
+    Chat, Message, UserLocation, Post, Smile, Sticker, Community, UserProfile
 };
 
 ///// Типы пользоватетеля
@@ -942,7 +942,140 @@ impl User {
             return "desctop/users/button/".to_owned() + &suffix + &"default_user.html".to_string();
         }
     }
+    pub fn get_profile(&self) -> UserProfile {
+        use crate::schema::user_profiles::dsl::user_profiles;
 
+        let _connection = establish_connection();
+        return user_profiles
+            .filter(schema::user_profiles::id.eq(self.id))
+            .load::<UserProfile>(&_connection)
+            .expect("E.")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+    pub fn is_have_followers(&self) -> bool {
+        return self.get_profile().follows > 0
+    }
+    pub fn is_have_followings(&self) -> bool {
+        use crate::schema::follows::dsl::follows;
+        use crate::models::Follow;
+
+        let _connection = establish_connection();
+        let all_follows = follows
+            .filter(schema::follows::user_id.eq(self.id))
+            .load::<Follow>(&_connection)
+            .expect("E.");
+        return all_follows.len() > 0;
+    }
+    pub fn is_have_blacklist(&self) -> bool {
+        use crate::schema::user_blocks::dsl::user_blocks;
+        use crate::models::UserBlock;
+
+        let _connection = establish_connection();
+        let all_user_blocks = user_blocks
+            .filter(schema::user_blocks::user_block_i.eq(self.id))
+            .load::<UserBlock>(&_connection)
+            .expect("E.");
+        return all_user_blocks.len() > 0;
+    }
+    pub fn is_have_friends(&self) -> bool {
+        return self.get_profile().friends > 0;
+    }
+    pub fn is_have_communities(&self) -> bool {
+        return self.get_profile().communities > 0;
+    }
+    pub fn is_have_music(&self) -> bool {
+        return self.get_profile().tracks > 0;
+    }
+    pub fn is_have_photo(&self) -> bool {
+        return self.get_profile().photos > 0;
+    }
+    pub fn is_have_video(&self) -> bool {
+        return self.get_profile().videos > 0;
+    }
+    pub fn is_have_doc(&self) -> bool {
+        return self.get_profile().docs > 0;
+    }
+    pub fn is_have_post(&self) -> bool {
+        return self.get_profile().posts > 0;
+    }
+
+    pub fn count_no_view_followers(&self) -> i32 {
+        use crate::schema::follows::dsl::follows;
+        use crate::models::Follow;
+
+        let _connection = establish_connection();
+        let all_follows = follows
+            .filter(schema::follows::followed_user.eq(self.id))
+            .filter(schema::follows::view.eq(false))
+            .load::<Follow>(&_connection)
+            .expect("E.");
+        return all_follows.len() > 0;
+    }
+    pub fn count_following(&self) -> usize {
+        use crate::schema::follows::dsl::follows;
+        use crate::models::Follow;
+
+        let _connection = establish_connection();
+        let all_follows = follows
+            .filter(schema::follows::user_id.eq(self.id))
+            .load::<Follow>(&_connection)
+            .expect("E.");
+        return all_follows.len();
+    }
+    pub fn count_followers(&self) -> i32 {
+        return self.get_profile().follows;
+    }
+    pub fn count_blacklist(&self) -> usize {
+        use crate::schema::user_blocks::dsl::user_blocks;
+        use crate::models::UserBlock;
+
+        let _connection = establish_connection();
+        let all_user_blocks = user_blocks
+            .filter(schema::user_blocks::user_block_i.eq(self.id))
+            .load::<UserBlock>(&_connection)
+            .expect("E.");
+        return all_user_blocks.len();
+    }
+    pub fn count_goods(&self) -> i32 {
+        return self.get_profile().goods;
+    }
+    pub fn count_followers(&self) -> i32 {
+        return self.get_profile().follows;
+    }
+    pub fn count_photos(&self) -> i32 {
+        return self.get_profile().photos;
+    }
+    pub fn count_docs(&self) -> i32 {
+        return self.get_profile().docs;
+    }
+    pub fn count_posts(&self) -> i32 {
+        return self.get_profile().posts;
+    }
+    pub fn get_count_for_ru(count:i32, word1: String, word2: String, word3: String) -> String {
+        let (a, b) = count % 10, count % 100;
+        count_str: String = count.parse().unwrap();
+        if a == 1 && b != 11 {
+            return count_str + &" " + word1;
+        }
+        else if a >= 2 && a <= 4 && (b < 10 || b >= 20){
+            return count_str + &" " + word2;
+        }
+        else {
+            return count_str + &" " + word3;
+        }
+    }
+
+    pub fn count_articles(&self) -> i32 {
+        return self.get_profile().articles;
+    }
+    pub fn count_communities(&self) -> i32 {
+        return self.get_profile().communities;
+    }
+    pub fn count_posts(&self) -> i32 {
+        return self.get_profile().posts;
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
