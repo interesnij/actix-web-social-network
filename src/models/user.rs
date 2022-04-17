@@ -1332,7 +1332,7 @@ impl User {
         use diesel::dsl::any;
 
         let mut stack = Vec::new();
-        friends = users
+        let friends = users
             .filter(schema::users::id.eq(any(self.get_friends_ids())))
             .load::<User>(&_connection)
             .expect("E.");
