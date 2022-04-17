@@ -1254,6 +1254,39 @@ impl User {
         return true;
     }
 
+    pub fn get_friends_ids(&self) -> Vec<i32> {
+        use crate::schema::friends::dsl::friends;
+
+        let _connection = establish_connection();
+        let mut stack = Vec::new();
+        let _friends = friends
+            .filter(schema::friends::user_id.eq(self.id))
+            .load::<Friend>(&_connection)
+            .expect("E.");
+        for _item in _friends.iter() {
+            stack.push(_item.target_user_id);
+        };
+        return stack;
+    }
+    pub fn get_friend_and_friend_of_friend_ids(&self) -> Vec<i32> {
+        use crate::schema::friends::dsl::friends;
+
+        let _connection = establish_connection();
+        let mut stack = Vec::new();
+        let user_friends = self.get_friends();
+        for _item in user_friends.iter() {
+            stack.push(_item.target_user_id);
+        };
+        for friend in friends {
+            for f in friend.get_friends().iter() {
+                if stack.iter().any(|&i| i!=f.target_user_id) {
+                    stack.push(f.target_user_id);
+                }
+            }
+        }
+        return stack.retain(|&x| x != self.id);
+    }
+
     pub fn get_friends(&self) -> Vec<Friend> {
         use crate::schema::friends::dsl::friends;
 
