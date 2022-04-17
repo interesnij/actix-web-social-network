@@ -1076,7 +1076,6 @@ impl User {
         return self.get_profile().friends;
     }
     pub fn plus_photos(&self, count: i32) -> bool {
-        use crate::schema::user_profiles::dsl::user_profiles;
         use crate::models::UserProfile;
 
         let profile = self.get_profile();
