@@ -1333,7 +1333,6 @@ impl User {
         use diesel::dsl::any;
 
         let _connection = establish_connection();
-        let mut stack = Vec::new();
         let d = NaiveDate::from_ymd(2015, 6, 3);
         let t = NaiveTime::from_hms_milli(12, 34, 56, 789) - Duration::seconds(300);
 
