@@ -1831,7 +1831,7 @@ impl User {
             .into_iter()
             .nth(0)
             .unwrap()
-            .list;
+            .list_id;
         }
         else {
             return self.get_post_list().id;
