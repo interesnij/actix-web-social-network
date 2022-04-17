@@ -1041,9 +1041,6 @@ impl User {
     pub fn count_goods(&self) -> i32 {
         return self.get_profile().goods;
     }
-    pub fn count_followers(&self) -> i32 {
-        return self.get_profile().follows;
-    }
     pub fn count_photos(&self) -> i32 {
         return self.get_profile().photos;
     }
