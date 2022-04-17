@@ -40,6 +40,10 @@ CREATE TABLE user_profiles (
     tracks         INT NOT NULL,
     videos         INT NOT NULL,
     articles       INT NOT NULL,
+    --messages      INT NOT NULL,
+    --planners      INT NOT NULL,
+    --surveys      INT NOT NULL,
+    --avatar_id      INT NOT NULL,
     activity       VARCHAR(500),
     interests      VARCHAR(500),
     favorite_music VARCHAR(500),
@@ -356,7 +360,7 @@ CREATE TABLE user_doc_list_positions (
 -- Приватность пользователя
 
 -- Настройка дизайна -------
-CREATE TABLE design_settings ( 
+CREATE TABLE design_settings (
     id         SERIAL PRIMARY KEY,
     user_id    INT NOT NULL,
     background "char" NOT NULL,

@@ -1396,6 +1396,7 @@ impl User {
         let _good_lists  = good_lists
             .filter(schema::good_lists::user_id.eq(self.id))
             .filter(schema::good_lists::types.eq("a"))
+            .filter(schema::good_lists::community_id.is_null())
             .limit(1)
             .load::<GoodList>(&_connection)
             .expect("E.");
@@ -1453,6 +1454,7 @@ impl User {
         let _music_lists  = music_lists
             .filter(schema::music_lists::user_id.eq(self.id))
             .filter(schema::music_lists::types.eq("a"))
+            .filter(schema::muic_lists::community_id.is_null())
             .limit(1)
             .load::<MusicList>(&_connection)
             .expect("E.");
@@ -1509,6 +1511,7 @@ impl User {
         let _video_lists  = video_lists
             .filter(schema::video_lists::user_id.eq(self.id))
             .filter(schema::video_lists::types.eq("a"))
+            .filter(schema::video_lists::community_id.is_null())
             .limit(1)
             .load::<VideoList>(&_connection)
             .expect("E.");
@@ -1566,6 +1569,7 @@ impl User {
         let _photo_lists  = photo_lists
             .filter(schema::photo_lists::user_id.eq(self.id))
             .filter(schema::photo_lists::types.eq("a"))
+            .filter(schema::photo_lists::community_id.is_null())
             .limit(1)
             .load::<PhotoList>(&_connection)
             .expect("E.");
@@ -1624,6 +1628,7 @@ impl User {
         let _photo_lists  = photo_lists
             .filter(schema::photo_lists::user_id.eq(self.id))
             .filter(schema::photo_lists::types.eq("d"))
+            .filter(schema::photo_lists::community_id.is_null())
             .limit(1)
             .load::<PhotoList>(&_connection)
             .expect("E.");
@@ -1641,6 +1646,122 @@ impl User {
             }
         }
         return 0;
+    }
+    pub fn get_post_list(&self) -> PostList {
+        use crate::schema::post_lists::dsl::post_lists;
+
+        let _connection = establish_connection();
+        let _post_lists  = post_lists
+            .filter(schema::post_lists::user_id.eq(self.id))
+            .filter(schema::post_lists::types.eq("a"))
+            .filter(schema::post_lists::community_id.is_null())
+            .limit(1)
+            .load::<PostList>(&_connection)
+            .expect("E.");
+        if _post_lists.len() > 0 {
+            return _post_lists
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        }
+        else {
+            use crate::models::{NewPostList, UserPostListPosition, NewUserPostListPosition};
+            let d = NaiveDate::from_ymd(2015, 6, 3);
+            let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
+            use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
+
+            let new_list = NewPostList{
+                    name:          "Основной список".to_string(),
+                    community_id:   None,
+                    user_id:        self.id,
+                    types:          "a".to_string(),
+                    description:     None,
+                    created:         NaiveDateTime::new(d, t),
+                    count:           0,
+                    repost:          0,
+                    copy:            0,
+                    position:        0,
+                    can_see_el:      "a".to_string(),
+                    can_see_comment: "a".to_string(),
+                    create_el:       "g".to_string(),
+                    create_comment:  "a".to_string(),
+                    copy_el:         "g".to_string(),
+                };
+            let _posts_list = diesel::insert_into(schema::post_lists::table)
+                .values(&new_list)
+                .get_result::<PostList>(&_connection)
+                .expect("Error saving post_list.");
+
+            let _new_posts_list_position = NewUserPostListPosition {
+                user_id:  self.id,
+                list_id:  _posts_list.id,
+                position: 1,
+                types:    "a".to_string(),
+            };
+            let _posts_list_position = diesel::insert_into(schema::user_post_list_positions::table)
+                .values(&_new_posts_list_position)
+                .get_result::<UserPostListPosition>(&_connection)
+                .expect("Error saving post_list_position.");
+            return _posts_list;
+        }
+    }
+    pub fn get_doc_list(&self) -> DocList {
+        use crate::schema::doc_lists::dsl::doc_lists;
+
+        let _connection = establish_connection();
+        let _doc_lists  = doc_lists
+            .filter(schema::doc_lists::user_id.eq(self.id))
+            .filter(schema::doc_lists::types.eq("a"))
+            .filter(schema::doc_lists::community_id.is_null())
+            .limit(1)
+            .load::<DocList>(&_connection)
+            .expect("E.");
+        if _doc_lists.len() > 0 {
+            return _doc_lists
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        }
+        else {
+            use crate::models::{NewDocList, UserDocListPosition, NewUserDocListPosition};
+            let d = NaiveDate::from_ymd(2015, 6, 3);
+            let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
+            use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
+
+            let new_list = NewDocList{
+                    name:          "Основной список".to_string(),
+                    community_id:   None,
+                    user_id:        self.id,
+                    types:          "a".to_string(),
+                    description:     None,
+                    created:         NaiveDateTime::new(d, t),
+                    count:           0,
+                    repost:          0,
+                    copy:            0,
+                    position:        0,
+                    can_see_el:      "a".to_string(),
+                    can_see_comment: "a".to_string(),
+                    create_el:       "g".to_string(),
+                    create_comment:  "a".to_string(),
+                    copy_el:         "g".to_string(),
+                };
+            let _docs_list = diesel::insert_into(schema::doc_lists::table)
+                .values(&new_list)
+                .get_result::<DocList>(&_connection)
+                .expect("Error saving doc_list.");
+
+            let _new_docs_list_position = NewUserDocListPosition {
+                user_id:  self.id,
+                list_id:  _docs_list.id,
+                position: 1,
+                types:    "a".to_string(),
+            };
+            let _docs_list_position = diesel::insert_into(schema::user_doc_list_positions::table)
+                .values(&_new_docs_list_position)
+                .get_result::<UserDocListPosition>(&_connection)
+                .expect("Error saving doc_list_position.");
+            return _docs_list;
+        }
     }
 }
 
