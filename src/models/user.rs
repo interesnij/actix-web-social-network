@@ -1327,7 +1327,7 @@ impl User {
             .load::<Community>(&_connection)
             .expect("E.");
     }
-    pub fn get_online_friends(&self) -> Vec<User> {
+    pub fn get_online_friends(&self) -> Vec<&User> {
         let mut stack = Vec::new();
         for user in self.get_friends().iter() {
             if user.is_online() {
