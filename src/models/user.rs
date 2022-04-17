@@ -1393,7 +1393,7 @@ impl User {
         use crate::schema::good_lists::dsl::good_lists;
 
         let _connection = establish_connection();
-        _good_lists  = good_lists
+        let _good_lists  = good_lists
             .filter(schema::good_lists::user_id.eq(self.id))
             .filter(schema::good_lists::types.eq("a"))
             .load::<GoodList>(&_connection)
@@ -1407,11 +1407,11 @@ impl User {
             let d = NaiveDate::from_ymd(2015, 6, 3);
             let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
             use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
-            
+
             let new_list = NewGoodList{
                     name:          "Основной список".to_string(),
                     community_id:   None,
-                    user_id:        user.id,
+                    user_id:        self.id,
                     types:          "a".to_string(),
                     description:     None,
                     created:         NaiveDateTime::new(d, t),
@@ -1431,7 +1431,7 @@ impl User {
                 .expect("Error saving good_list.");
 
             let _new_goods_list_position = NewUserGoodListPosition {
-                user_id:  _new_user.id,
+                user_id:  self.id,
                 list_id:  _goods_list.id,
                 position: 1,
                 types:    "a".to_string(),
