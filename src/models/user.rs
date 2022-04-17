@@ -1401,6 +1401,9 @@ impl User {
             .expect("E.");
         if _good_lists.len() > 0 {
             return _good_lists
+            .into_iter()
+            .nth(0)
+            .unwrap();
         }
         else {
             use crate::models::{NewGoodList, UserGoodListPosition, NewUserGoodListPosition};
