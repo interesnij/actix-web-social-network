@@ -1073,9 +1073,6 @@ impl User {
             " сообществ".to_string(),
         );
     }
-    pub fn count_tracks(&self) -> i32 {
-        return self.get_profile().tracks;
-    }
     pub fn count_videos(&self) -> i32 {
         return self.get_profile().videos;
     }
