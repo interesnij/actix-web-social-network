@@ -1259,7 +1259,7 @@ impl User {
 
         let _connection = establish_connection();
         return friends
-            .filter(schema::friends::user_id.eq(user_id))
+            .filter(schema::friends::user_id.eq(self.id))
             .order(schema::friends::visited.desc())
             .load::<Friend>(&_connection)
             .expect("E.");
