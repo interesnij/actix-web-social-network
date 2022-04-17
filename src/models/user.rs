@@ -2273,7 +2273,7 @@ impl User {
             .expect("E.");
         let mut stack = Vec::new();
         for member in members_of_community.iter() {
-            if self_friends.iter().any(|i| i==member.user_id) {
+            if self_friends.iter().any(|i| i==&member.user_id) {
                 stack.push(member.user_id);
             }
         }
