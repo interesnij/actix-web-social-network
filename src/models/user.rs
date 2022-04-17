@@ -1628,7 +1628,7 @@ impl User {
             .expect("E.");
         if _photo_lists.len() > 0 {
             use crate::schema::photos::dsl::photos;
-            list = _photo_lists.into_iter().nth(0).unwrap();
+            let list = _photo_lists.into_iter().nth(0).unwrap();
             let _photos  = photos
                 .filter(schema::photo_lists::types.eq("a"))
                 .limit(1)
