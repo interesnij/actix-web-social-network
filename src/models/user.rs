@@ -1283,7 +1283,7 @@ impl User {
             stack.push(_item.target_user_id);
         };
         for friend in self.get_friends().iter() {
-            user_friend_friends = friends
+            let user_friend_friends = friends
                 .filter(schema::friends::user_id.eq(friend.id))
                 .load::<Friend>(&_connection)
                 .expect("E.");
