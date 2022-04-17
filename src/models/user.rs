@@ -2247,6 +2247,19 @@ impl User {
             .load::<User>(&_connection)
             .expect("E.");
     }
+    pub fn get_common_friends_of_user(&self, user: User) -> Vec<User> {
+        use crate::schema::friends::dsl::friends;
+        use crate::schema::users::dsl::users;
+
+        let a = self.get_friends_ids();
+        let b = user.get_friends_ids();
+        let matching = a.iter().zip(&b).filter(|&(a, b)| a == b)
+        return users
+            .filter(schema::users::id.eq_any(matching))
+            .filter(schema::users::types.lt(11))
+            .load::<User>(&_connection)
+            .expect("E.");
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
