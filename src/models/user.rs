@@ -217,7 +217,6 @@ impl User {
         if manager_chats.len() > 0 {
             return manager_chats[0].id
         } else {
-            use crate::schema::chat_users::dsl::chat_users;
             use crate::models::{NewChat, ChatUser, NewChatUser};
             use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
 
@@ -724,7 +723,6 @@ impl User {
     }
     pub fn is_connected_with_user_with_id(&self, user_id: i32) -> bool {
         use crate::schema::friends::dsl::friends;
-        use crate::models::Friend;
 
         let _connection = establish_connection();
         let all_friends = friends
@@ -1815,6 +1813,28 @@ impl User {
                 .get_result::<UserSurveyListPosition>(&_connection)
                 .expect("Error saving survey_list_position.");
             return _surveys_list;
+        }
+    }
+    pub fn get_selected_post_list_pk(&self) -> i32 {
+        use crate::schema::user_post_list_positions::dsl::user_post_list_positions;
+        use crate::models::UserPostListPosition;
+
+        let _connection = establish_connection();
+        let _post_list_positions  = user_post_list_positions
+            .filter(schema::user_post_list_positions::user_id.eq(self.id))
+            .filter(schema::user_post_list_positions::types.eq("a"))
+            .limit(1)
+            .load::<UserPostListPosition>(&_connection)
+            .expect("E.");
+        if _post_list_positions.len() > 0 {
+            return _survey_lists
+            .into_iter()
+            .nth(0)
+            .unwrap()
+            .list;
+        }
+        else {
+            return self.get_post_list().id;
         }
     }
 }
