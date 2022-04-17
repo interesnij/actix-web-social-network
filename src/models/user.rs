@@ -2308,7 +2308,7 @@ impl User {
             " друзей".to_string(),
         );
     }
-    pub fn get_users_ids_for_main_news(&self) -> Vec<User> {
+    pub fn get_users_ids_for_main_news(&self) -> Vec<i32> {
         use crate::schema::users::dsl::users;
         use crate::schema::news_user_communities::dsl::news_user_communities;
         use crate::models::NewsUserCommunitie;

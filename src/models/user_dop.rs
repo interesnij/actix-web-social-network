@@ -388,7 +388,7 @@ pub struct NewFeaturedUserCommunitie {
 pub struct NewsUserCommunitie {
     pub id:           i32,
     pub owner:        i32,
-    pub list_id:      i32,
+    pub list_id:      Option<i32>,
     pub user_id:      Option<i32>,
     pub community_id: Option<i32>,
     pub mute:         bool,
@@ -398,7 +398,7 @@ pub struct NewsUserCommunitie {
 #[table_name="news_user_communities"]
 pub struct NewNewsListUserCommunitie {
     pub owner:        i32,
-    pub list_id:      i32,
+    pub list_id:      Option<i32>,
     pub user_id:      Option<i32>,
     pub community_id: Option<i32>,
     pub mute:         bool,
@@ -410,7 +410,7 @@ pub struct NewNewsListUserCommunitie {
 pub struct NotifyUserCommunitie {
     pub id:           i32,
     pub owner:        i32,
-    pub list_id:         i32,
+    pub list_id:      Option<i32>,
     pub user_id:      Option<i32>,
     pub community_id: Option<i32>,
     pub mute:         bool,
@@ -420,7 +420,7 @@ pub struct NotifyUserCommunitie {
 #[table_name="notify_user_communities"]
 pub struct NewNotifyUserCommunitie {
     pub owner:        i32,
-    pub list_id:      i32,
+    pub list_id:      Option<i32>,
     pub user_id:      Option<i32>,
     pub community_id: Option<i32>,
     pub mute:         bool,
