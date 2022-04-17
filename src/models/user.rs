@@ -1389,7 +1389,7 @@ impl User {
             .load::<Post>(&_connection)
             .expect("E.");
     }
-    pub fn get_good_list(&self) -> Vec<GoodList> {
+    pub fn get_good_list(&self) -> GoodList {
         use crate::schema::good_lists::dsl::good_lists;
 
         let _connection = establish_connection();
