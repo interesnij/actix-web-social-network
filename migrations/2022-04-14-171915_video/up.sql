@@ -2,7 +2,7 @@
 
 CREATE TABLE video_categories (
     id SERIAL PRIMARY KEY,
-    name VARCHAR,
+    name VARCHAR NOT NULL,
     position INT NOT NULL DEFAULT 0
 );
 
@@ -11,14 +11,14 @@ CREATE TABLE video_lists (
     id              SERIAL PRIMARY KEY,
     name            VARCHAR(100) NOT NULL,
     community_id    INT,
-    user_id      INT NOT NULL,
+    user_id         INT NOT NULL,
     types           "char" NOT NULL,
     description     VARCHAR(500),
     created         TIMESTAMP NOT NULL,
-    count           INT DEFAULT 0,
-    repost          INT DEFAULT 0,
-    copy            INT DEFAULT 0,
-    position        SMALLINT DEFAULT 0,
+    count           INT NOT NULL,
+    repost          INT NOT NULL,
+    copy            INT NOT NULL,
+    position        SMALLINT NOT NULL,
 
     can_see_el      "char" NOT NULL,
     can_see_comment "char" NOT NULL,
@@ -39,8 +39,8 @@ CREATE TABLE videos (
     id              SERIAL PRIMARY KEY,
     title           VARCHAR(100) NOT NULL,
     community_id    INT,
-    user_id      INT NOT NULL,
-    video_list_id         INT NOT NULL,
+    user_id         INT NOT NULL,
+    video_list_id   INT NOT NULL,
     types           "char" NOT NULL,
     preview         VARCHAR(500),
     image           VARCHAR(500),
@@ -50,13 +50,13 @@ CREATE TABLE videos (
     votes_on        BOOLEAN NOT NULL DEFAULT true,
     created         TIMESTAMP NOT NULL,
 
-    comment         INT DEFAULT 0,
-    view            INT DEFAULT 0,
-    liked           INT DEFAULT 0,
-    disliked        INT DEFAULT 0,
-    repost          INT DEFAULT 0,
-    copy            INT DEFAULT 0,
-    position        SMALLINT DEFAULT 0,
+    comment         INT NOT NULL,
+    view            INT NOT NULL,
+    liked           INT NOT NULL,
+    disliked        INT NOT NULL,
+    repost          INT NOT NULL,
+    copy            INT NOT NULL,
+    position        SMALLINT NOT NULL,
 
     CONSTRAINT fk_videos_creator
         FOREIGN KEY(user_id)
@@ -73,8 +73,8 @@ CREATE TABLE videos (
 
 CREATE TABLE video_comments (
     id          SERIAL PRIMARY KEY,
-    video_id     INT NOT NULL,
-    user_id  INT NOT NULL,
+    video_id    INT NOT NULL,
+    user_id     INT NOT NULL,
     sticker_id  INT,
     parent_id   INT,
     content     VARCHAR(1000),
@@ -82,9 +82,9 @@ CREATE TABLE video_comments (
     attach      VARCHAR(200),
     created     TIMESTAMP NOT NULL,
 
-    liked       INT DEFAULT 0,
-    disliked    INT DEFAULT 0,
-    repost      INT DEFAULT 0,
+    liked       INT NOT NULL,
+    disliked    INT NOT NULL,
+    repost      INT NOT NULL,
 
     CONSTRAINT fk_video_comment
         FOREIGN KEY(video_id)

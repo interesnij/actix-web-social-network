@@ -5,19 +5,17 @@ CREATE TABLE doc_lists (
     id              SERIAL PRIMARY KEY,
     name            VARCHAR(100) NOT NULL,
     community_id    INT,
-    user_id      INT NOT NULL,
+    user_id         INT NOT NULL,
     types           "char" NOT NULL,
     description     VARCHAR(500),
     created         TIMESTAMP NOT NULL,
-    count           INT DEFAULT 0,
-    repost          INT DEFAULT 0,
-    copy            INT DEFAULT 0,
-    position        SMALLINT DEFAULT 0,
+    count           INT NOT NULL,
+    repost          INT NOT NULL,
+    copy            INT NOT NULL,
+    position        SMALLINT NOT NULL,
 
     can_see_el      "char" NOT NULL,
-    can_see_comment "char" NOT NULL,
     create_el       "char" NOT NULL,
-    create_comment  "char" NOT NULL,
     copy_el         "char" NOT NULL,
 
     CONSTRAINT fk_doc_lists_creator
@@ -33,17 +31,17 @@ CREATE TABLE docs (
     id           SERIAL PRIMARY KEY,
     title        VARCHAR(200) NOT NULL,
     community_id INT,
-    user_id   INT NOT NULL,
-    doc_list_id      INT NOT NULL,
+    user_id      INT NOT NULL,
+    doc_list_id  INT NOT NULL,
     types        "char" NOT NULL,
     types_2      "char" NOT NULL,
     file         VARCHAR(500) NOT NULL,
     created      TIMESTAMP NOT NULL,
 
-    view         INT DEFAULT 0,
-    repost       INT DEFAULT 0,
-    copy         SMALLINT DEFAULT 0,
-    position     INT DEFAULT 0,
+    view         INT NOT NULL,
+    repost       INT NOT NULL,
+    copy         INT NOT NULL,
+    position     SMALLINT NOT NULL,
 
     CONSTRAINT fk_docs_creator
         FOREIGN KEY(user_id)
@@ -78,7 +76,7 @@ CREATE TABLE user_doc_list_collections (
 CREATE TABLE community_doc_list_collections (
     id           SERIAL PRIMARY KEY,
     community_id INT NOT NULL,
-    doc_list_id      INT NOT NULL,
+    doc_list_id  INT NOT NULL,
 
    CONSTRAINT fk_community_doc_list_collections_community
         FOREIGN KEY(community_id)
@@ -105,4 +103,3 @@ CREATE TABLE doc_list_perms (
         FOREIGN KEY(doc_list_id)
             REFERENCES doc_lists(id)
 );
-

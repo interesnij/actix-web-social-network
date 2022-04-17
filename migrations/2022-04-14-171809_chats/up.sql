@@ -1,3 +1,4 @@
+-- Your SQL goes here
 
 CREATE TABLE chats (
     id                SERIAL PRIMARY KEY,
@@ -7,8 +8,8 @@ CREATE TABLE chats (
     description       VARCHAR(500),              -- описание
     community_id      INT,                       -- id сообщества
     user_id           INT NOT NULL,              -- id создателя
-    position          SMALLINT DEFAULT 0,             -- порядковый номер
-    members           INT DEFAULT 0,             -- кол-во участников
+    position          SMALLINT NOT NULL,             -- порядковый номер
+    members           INT NOT NULL,             -- кол-во участников
     created           TIMESTAMP NOT NULL,        -- когда создан
 
     can_add_members   "char" NOT NULL,                       -- кто добавляет участников
@@ -50,7 +51,7 @@ CREATE TABLE chat_ie_settings (
     id                SERIAL PRIMARY KEY,     -- id объекта
     chat_user_id     INT NOT NULL,           -- id пользователя
 
-    can_add_in_chat   "char",                 -- кто добавляет участников
+    can_add_in_chat   "char",                  -- кто добавляет участников
     can_add_fix       "char",                 -- кто закрепляет сообщения
     can_send_mention  "char",                 -- кто упоминает о чате
     can_add_admin     "char",                 -- кто работает с админами
@@ -69,7 +70,7 @@ CREATE TABLE messages (
     chat_id      INT NOT NULL,                  -- id чата
     parent_id    INT,                           -- сообщение-родитель
     sticker_id   INT,                           -- id стикера
-    repost_id    INT,                           -- id поста
+    post_id      INT,                           -- id поста
     created      TIMESTAMP NOT NULL,            -- когда создано
     content      VARCHAR(5000),                 -- текст
     unread       BOOLEAN NOT NULL DEFAULT true, -- не прочитано?
@@ -94,7 +95,7 @@ CREATE TABLE messages (
           REFERENCES stickers(id),
 
     CONSTRAINT fk_message_post               -- связь с постом (репост в сообщения)
-        FOREIGN KEY(repost_id)
+        FOREIGN KEY(post_id)
           REFERENCES posts(id)
 );
 
@@ -146,4 +147,3 @@ CREATE TABLE message_transfers (
         FOREIGN KEY(transfer_id)
             REFERENCES messages(id)
 );
--- Your SQL goes here

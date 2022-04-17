@@ -31,19 +31,17 @@ CREATE TABLE users (
 CREATE TABLE user_profiles (
     id             SERIAL PRIMARY KEY,
     user_id        INT NOT NULL,
-    posts          INT DEFAULT 0,
-    views_post     INT DEFAULT 0,
-    friends        INT DEFAULT 0,
-    follows        INT DEFAULT 0,
-    communities    INT DEFAULT 0,
-    photos         INT DEFAULT 0,
-    goods          INT DEFAULT 0,
-    docs           INT DEFAULT 0,
-    tracks         INT DEFAULT 0,
-    videos         INT DEFAULT 0,
-    articles       INT DEFAULT 0,
-    _time          TIMESTAMP,
-    height         FLOAT,
+    posts          INT NOT NULL,
+    views_post     INT NOT NULL,
+    friends        INT NOT NULL,
+    follows        INT NOT NULL,
+    communities    INT NOT NULL,
+    photos         INT NOT NULL,
+    goods          INT NOT NULL,
+    docs           INT NOT NULL,
+    tracks         INT NOT NULL,
+    videos         INT NOT NULL,
+    articles       INT NOT NULL,
     activity       VARCHAR(500),
     interests      VARCHAR(500),
     favorite_music VARCHAR(500),
@@ -77,7 +75,7 @@ CREATE TABLE user_locations (
 CREATE TABLE ip_users (
     id      SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
-    ip      VARCHAR,
+    ip      VARCHAR NOT NULL,
 
     CONSTRAINT fk_ip_user
         FOREIGN KEY(user_id)
@@ -105,7 +103,7 @@ CREATE TABLE user_anketas (
 CREATE TABLE user_delete_anketas (
     id      SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
-    answer  "char",
+    answer  "char" NOT NULL,
     other   VARCHAR(200),
     created TIMESTAMP NOT NULL,
 
@@ -297,7 +295,7 @@ CREATE TABLE user_photo_list_positions (
     id            SERIAL PRIMARY KEY,
     user_id       INT NOT NULL,     -- Пользователь
     list_id          INT NOT NULL,     -- Фотоальбом
-    position      SMALLINT DEFAULT 0, -- Порядок отображения
+    position      SMALLINT NOT NULL, -- Порядок отображения
     types         "char" NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
@@ -306,7 +304,7 @@ CREATE TABLE user_post_list_positions (
     id           SERIAL PRIMARY KEY,
     user_id      INT NOT NULL,     -- Пользователь
     list_id         INT NOT NULL,     -- Список записей
-    position     SMALLINT DEFAULT 0, -- Порядок отображения
+    position     SMALLINT NOT NULL, -- Порядок отображения
     types        "char" NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
@@ -315,7 +313,7 @@ CREATE TABLE user_music_list_positions (
     id            SERIAL PRIMARY KEY,
     user_id       INT NOT NULL,     -- Пользователь
     list_id          INT NOT NULL,     -- Список аудиозаписей
-    position      SMALLINT DEFAULT 0,     -- Порядок отображения
+    position      SMALLINT NOT NULL,     -- Порядок отображения
     types         "char" NOT NULL      -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
@@ -324,7 +322,7 @@ CREATE TABLE user_good_list_positions (
     id           SERIAL PRIMARY KEY,
     user_id      INT NOT NULL,     -- Пользователь
     list_id         INT NOT NULL,     -- Список товаров
-    position     SMALLINT DEFAULT 0, -- Порядок отображения
+    position     SMALLINT NOT NULL, -- Порядок отображения
     types        "char" NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
@@ -333,7 +331,7 @@ CREATE TABLE user_video_list_positions (
     id           SERIAL PRIMARY KEY,
     user_id      INT NOT NULL,     -- Пользователь
     list_id         INT NOT NULL,     -- Список видеозаписей
-    position     SMALLINT DEFAULT 0, -- Порядок отображения
+    position     SMALLINT NOT NULL, -- Порядок отображения
     types        "char" NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
@@ -342,7 +340,7 @@ CREATE TABLE user_survey_list_positions (
     id           SERIAL PRIMARY KEY,
     user_id      INT NOT NULL,     -- Пользователь
     list_id         INT NOT NULL,     -- Список опросов
-    position     SMALLINT DEFAULT 0, -- Порядок отображения
+    position     SMALLINT NOT NULL, -- Порядок отображения
     types        "char" NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
@@ -350,8 +348,8 @@ CREATE TABLE user_survey_list_positions (
 CREATE TABLE user_doc_list_positions (
     id             SERIAL PRIMARY KEY,
     user_id        INT NOT NULL,     -- Пользователь
-    list_id           INT NOT NULL,     -- Список документов
-    position       SMALLINT DEFAULT 0, -- Порядок отображения
+    list_id        INT NOT NULL,     -- Список документов
+    position       SMALLINT NOT NULL, -- Порядок отображения
     types          "char" NOT NULL     -- 1 - открыт, 0 - недоступен (например, удален)
 );
 
@@ -360,12 +358,12 @@ CREATE TABLE user_doc_list_positions (
 -- Приватность пользователя
 
 -- Настройка дизайна -------
-CREATE TABLE color_settings (
-    id        SERIAL PRIMARY KEY,
-    user_id   INT NOT NULL,
-    color     VARCHAR(50) NOT NULL,
+CREATE TABLE design_settings ( 
+    id         SERIAL PRIMARY KEY,
+    user_id    INT NOT NULL,
+    background "char" NOT NULL,
 
-    CONSTRAINT fk_color_settings
+    CONSTRAINT fk_design_settings
          FOREIGN KEY(user_id)
              REFERENCES users(id)
 );
@@ -376,6 +374,7 @@ CREATE TABLE color_settings (
 CREATE TABLE user_privates (
     id                SERIAL PRIMARY KEY,
     user_id           INT NOT NULL,
+    can_see_all       "char" NOT NULL, -- Для кого профиль открыт...
     can_see_community "char" NOT NULL, -- Кто видит сообщества
     can_see_info      "char" NOT NULL,      -- Кто видит информацию
     can_see_friend    "char" NOT NULL,    -- Кто видит друзей
@@ -400,9 +399,9 @@ CREATE TABLE user_privates (
 CREATE TABLE user_profile_notifications (
     id                   SERIAL PRIMARY KEY,
     user_id              INT NOT NULL,
-    connection_request   BOOLEAN DEFAULT true,
-    connection_confirmed BOOLEAN DEFAULT true,
-    community_invite     BOOLEAN DEFAULT true,
+    connection_request   BOOLEAN NOT NULL DEFAULT true,
+    connection_confirmed BOOLEAN NOT NULL DEFAULT true,
+    community_invite     BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT fk_user_profile_notifications
          FOREIGN KEY(user_id)
@@ -476,17 +475,17 @@ CREATE TABLE user_video_notifications (
 CREATE TABLE user_good_notifications (
     id                      SERIAL PRIMARY KEY,
     user_id                 INT NOT NULL,
-    comment                 BOOLEAN DEFAULT true,
-    comment_reply           BOOLEAN DEFAULT true,
-    mention                 BOOLEAN DEFAULT true,
-    comment_mention         BOOLEAN DEFAULT true,
-    repost                  BOOLEAN DEFAULT true,
-    liked                   BOOLEAN DEFAULT true,
-    disliked                BOOLEAN DEFAULT true,
-    comment_liked           BOOLEAN DEFAULT true,
-    comment_disliked        BOOLEAN DEFAULT true,
-    comment_reply_liked     BOOLEAN DEFAULT true,
-    comment_reply_disliked  BOOLEAN DEFAULT true,
+    comment                 BOOLEAN NOT NULL DEFAULT true,
+    comment_reply           BOOLEAN NOT NULL DEFAULT true,
+    mention                 BOOLEAN NOT NULL DEFAULT true,
+    comment_mention         BOOLEAN NOT NULL DEFAULT true,
+    repost                  BOOLEAN NOT NULL DEFAULT true,
+    liked                   BOOLEAN NOT NULL DEFAULT true,
+    disliked                BOOLEAN NOT NULL DEFAULT true,
+    comment_liked           BOOLEAN NOT NULL DEFAULT true,
+    comment_disliked        BOOLEAN NOT NULL DEFAULT true,
+    comment_reply_liked     BOOLEAN NOT NULL DEFAULT true,
+    comment_reply_disliked  BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT fk_user_good_notifications
          FOREIGN KEY(user_id)
@@ -497,7 +496,8 @@ CREATE TABLE user_good_notifications (
 CREATE TABLE user_survey_notifications (
     id                      SERIAL PRIMARY KEY,
     user_id                 INT NOT NULL,
-    vote                    BOOLEAN DEFAULT true,
+    vote                    BOOLEAN NOT NULL DEFAULT true,
+    repost                  BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT fk_user_survey_notifications
          FOREIGN KEY(user_id)
@@ -508,7 +508,7 @@ CREATE TABLE user_survey_notifications (
 CREATE TABLE user_music_notifications (
     id         SERIAL PRIMARY KEY,
     user_id    INT NOT NULL,
-    repost     BOOLEAN DEFAULT true,
+    repost     BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT fk_user_music_notifications
          FOREIGN KEY(user_id)
@@ -525,7 +525,7 @@ CREATE TABLE user_populate_smiles (
     id        SERIAL PRIMARY KEY,
     user_id   INT NOT NULL,
     smile_id  INT NOT NULL,
-    count     INT DEFAULT 0,
+    count     INT NOT NULL DEFAULT 0,
 
     CONSTRAINT fk_user_populate_smiles_user
          FOREIGN KEY(user_id)
@@ -541,7 +541,7 @@ CREATE TABLE user_populate_stickers (
     id          SERIAL PRIMARY KEY,
     user_id     INT NOT NULL,
     sticker_id  INT NOT NULL,
-    count       INT DEFAULT 0,
+    count       INT NOT NULL DEFAULT 0,
 
     CONSTRAINT fk_user_populate_stickers_user
          FOREIGN KEY(user_id)
