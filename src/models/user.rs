@@ -1476,6 +1476,7 @@ impl User {
                     user_id:        self.id,
                     types:          "a".to_string(),
                     description:     None,
+                    image:           None,
                     created:         NaiveDateTime::new(d, t),
                     count:           0,
                     repost:          0,
