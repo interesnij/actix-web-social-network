@@ -24,7 +24,7 @@ pub struct NewFriend {
 
 /////// Friend //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
-pub struct FriendPerm2 {
+pub struct FriendPerm {
     pub id:              i32,
     pub user_id:         i32,
     pub can_see_info:      Option<String>,
@@ -66,7 +66,7 @@ pub struct FriendPerm2 {
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="friend_perms2"]
-pub struct NewFriendPerm2 {
+pub struct NewFriendPerm {
     pub user_id:         i32,
     pub can_see_info:      Option<String>,
     pub can_see_community: Option<String>,
