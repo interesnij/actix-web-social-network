@@ -1054,16 +1054,17 @@ impl User {
         return self.get_profile().posts;
     }
     pub fn get_count_for_ru(count:i32, word1: String, word2: String, word3: String) -> String {
-        let (a, b) = count % 10, count % 100;
-        count_str: String = count.parse().unwrap();
+        let a = count % 10;
+        let b = count % 100;
+        let count_str: String = count.parse().unwrap();
         if a == 1 && b != 11 {
-            return count_str + &" " + word1;
+            return count_str + &" ".to_string() + word1;
         }
-        else if a >= 2 && a <= 4 && (b < 10 || b >= 20){
-            return count_str + &" " + word2;
+        else if a >= 2 && a <= 4 && (b < 10 || b >= 20) {
+            return count_str + &" ".to_string() + word2;
         }
         else {
-            return count_str + &" " + word3;
+            return count_str + &" ".to_string() + word3;
         }
     }
 
