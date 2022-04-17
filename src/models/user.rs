@@ -2457,14 +2457,8 @@ impl User {
             .load::<Chat>(&_connection)
             .expect("E.");
     }
-    pub fn get_chats(&self) -> Vec<Chat> {
-        let mut chat_stack = Vec::new();
-        for chat in self.get_all_chats().iter() {
-            //if chat.user_id == self.id || chat.members > 0 {
-                chat_stack.push(chat.clone());
-            //}
-        }
-        return chat_stack;
+    pub fn get_all_chats(&self) -> Vec<Chat, User> {
+        return self.get_friends() + self.get_all_chats();
     }
 }
 
