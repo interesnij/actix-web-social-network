@@ -1827,7 +1827,7 @@ impl User {
             .load::<UserPostListPosition>(&_connection)
             .expect("E.");
         if _post_list_positions.len() > 0 {
-            return _survey_lists
+            return _post_list_positions
             .into_iter()
             .nth(0)
             .unwrap()
