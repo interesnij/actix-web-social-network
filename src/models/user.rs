@@ -1631,7 +1631,8 @@ impl User {
             use crate::schema::photos::dsl::photos;
             let list = _photo_lists.into_iter().nth(0).unwrap();
             let _photos  = photos
-                .filter(schema::photo_lists::types.eq("a"))
+                .filter(schema::photos::list_id.eq(list.id))
+                .filter(schema::photos::types.eq("a"))
                 .limit(1)
                 .load::<Photo>(&_connection)
                 .expect("E.");
