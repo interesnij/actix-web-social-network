@@ -1277,7 +1277,7 @@ impl User {
         for _item in user_friends.iter() {
             stack.push(_item.target_user_id);
         };
-        for friend in friends {
+        for friend in user_friends {
             for f in friend.get_friends().iter() {
                 if stack.iter().any(|&i| i!=f.target_user_id) {
                     stack.push(f.target_user_id);
