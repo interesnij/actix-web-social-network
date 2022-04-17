@@ -2461,7 +2461,7 @@ impl User {
         let mut chat_stack = Vec::new();
         for chat in self.get_all_chats().iter() {
             //if chat.user_id == self.id || chat.members > 0 {
-                chat_stack.push(chat);
+                chat_stack.push(chat.clone());
             //}
         }
         return chat_stack;
