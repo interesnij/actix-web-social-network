@@ -1268,7 +1268,7 @@ impl User {
         };
         return stack;
     }
-    pub fn get_friend_and_friend_of_friend_ids(&self) -> Vec<i32> {
+    pub fn get_friend_and_friend_of_friend_ids(&self) -> Vec<&i32> {
         use crate::schema::friends::dsl::friends;
 
         let _connection = establish_connection();
@@ -1278,14 +1278,14 @@ impl User {
         for _item in get_friends_ids.iter() {
             stack.push(_item);
         };
-        //for friend in user_friends {
-        //    let get_friend_friends_ids = friend.get_friends_ids();
-        //    for f in get_friend_friends_ids.iter() {
-        //        if stack.iter().any(|&i| i!=f) {
-        //            stack.push(f);
-        //        }
-        //    }
-        //}
+        for friend in user_friends {
+            let get_friend_friends_ids = friend.get_friends_ids();
+            for f in get_friend_friends_ids.iter() {
+                if stack.iter().any(|&i| i!=f) {
+                    stack.push(f);
+                }
+            }
+        }
         return stack;
     }
 
