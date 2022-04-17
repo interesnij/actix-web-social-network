@@ -2322,7 +2322,7 @@ impl User {
         let news_users = news_user_communities
             .filter(schema::news_user_communities::owner.eq(self.id))
             .filter(schema::news_user_communities::mute.eq(false))
-            .filter(schema::news_user_communities::sleep.lt(NaiveDateTime::new(d, t).checked_add_signed(Duration::seconds(1)))
+            .filter(schema::news_user_communities::sleep.lt(NaiveDateTime::new(d, t).checked_add_signed(Duration::seconds(1))))
             .load::<NewsUserCommunitie>(&_connection)
             .expect("E.");
         let mut stack = Vec::new();
