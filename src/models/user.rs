@@ -2285,9 +2285,24 @@ impl User {
     }
     pub fn get_common_friends_of_community_count_ru(&self, community_id: i32) -> String  {
         use crate::utils::get_count_for_ru;
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+        use crate::models::CommunitiesMembership;
+
+        let _connection = establish_connection();
+        let self_friends = self.get_friends_ids();
+        let members_of_community = communities_memberships
+            .filter(schema::communities_memberships::community_id.eq(community_id))
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E.");
+        let mut count = 0;
+        for member in members_of_community.iter() {
+            if self_friends.iter().any(|i| i==&member.user_id) {
+                count += 1;
+            }
+        }
 
         return get_count_for_ru (
-            self.get_common_friends_of_community(community_id),
+            count,
             " друг".to_string(),
             " друга".to_string(),
             " друзей".to_string(),
