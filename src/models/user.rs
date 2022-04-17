@@ -1331,6 +1331,7 @@ impl User {
         use crate::schema::users::dsl::users;
         use diesel::dsl::any;
 
+        let _connection = establish_connection();
         let mut stack = Vec::new();
         let friends = users
             .filter(schema::users::id.eq(any(self.get_friends_ids())))
