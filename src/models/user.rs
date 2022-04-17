@@ -1336,7 +1336,7 @@ impl User {
         let _connection = establish_connection();
         let d = NaiveDate::from_ymd(2015, 6, 3);
         let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
-        let now_minus_300 = NaiveDateTime::new(d, t).signed_duration_since(Duration::seconds(300));
+        let now_minus_300 = NaiveDateTime::new(d, t).signed_duration_since(Duration::from_secs(300));
 
         return users
             .filter(schema::users::id.eq(any(self.get_friends_ids())))
