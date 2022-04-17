@@ -2214,7 +2214,7 @@ impl User {
         let _connection = establish_connection();
         if self.types == 3 {
             return users
-                .filter(schema::users::types.eg(7))
+                .filter(schema::users::types.eq(7))
                 .or_filter(schema::users::perm.lt(9))
                 .load::<User>(&_connection)
                 .expect("E.");
