@@ -1338,7 +1338,7 @@ impl User {
 
         return users
             .filter(schema::users::id.eq(any(self.get_friends_ids())))
-            .filter(schema::users::last_activity.gt(NaiveDateTime::new(d, t).signed_duration_since(Duration::seconds(300)))
+            .filter(schema::users::last_activity.gt(NaiveDateTime::new(d, t).signed_duration_since(Duration::seconds(300))))
             .load::<User>(&_connection)
             .expect("E.");
     }
