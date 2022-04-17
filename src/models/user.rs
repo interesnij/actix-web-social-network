@@ -1337,7 +1337,7 @@ impl User {
             .filter(schema::users::id.eq(any(self.get_friends_ids())))
             .load::<User>(&_connection)
             .expect("E.");
-        for user in friends.iter() {
+        for user in &friends.iter() {
             if user.is_online() {
                 stack.push(user);
             }
