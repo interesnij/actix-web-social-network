@@ -470,9 +470,15 @@ table! {
 }
 
 table! {
-    friend_perms (id) {
+    friend_perms2 (id) {
         id -> Int4,
         user_id -> Int4,
+        can_see_info -> Nullable<Char>,
+        can_see_community -> Nullable<Char>,
+        can_see_friend -> Nullable<Char>,
+        can_send_message -> Nullable<Char>,
+        can_add_in_chat -> Nullable<Char>,
+        can_see_doc -> Nullable<Char>,
     }
 }
 
@@ -1669,7 +1675,7 @@ joinable!(doc_lists -> users (user_id));
 joinable!(docs -> communitys (community_id));
 joinable!(docs -> doc_lists (doc_list_id));
 joinable!(docs -> users (user_id));
-joinable!(friend_perms -> users (user_id));
+joinable!(friend_perms2 -> users (user_id));
 joinable!(good_comments -> goods (good_id));
 joinable!(good_comments -> stickers (sticker_id));
 joinable!(good_comments -> users (user_id));
@@ -1819,7 +1825,7 @@ allow_tables_to_appear_in_same_query!(
     docs,
     featured_user_communities,
     follows,
-    friend_perms,
+    friend_perms2,
     friends,
     good_categories,
     good_comments,
@@ -1882,26 +1888,26 @@ allow_tables_to_appear_in_same_query!(
     user_mom_ones,
     user_music_list_collections,
     user_music_list_positions,
-    //user_music_notifications,
+    user_music_notifications,
     user_notifications,
     user_partner_ones,
     user_photo_list_collections,
     user_photo_list_positions,
-    //user_photo_notifications,
+    user_photo_notifications,
     user_populate_smiles,
     user_populate_stickers,
     user_post_list_collections,
     user_post_list_positions,
-    //user_post_notifications,
+    user_post_notifications,
     user_privates,
-    //user_profile_notifications,
+    user_profile_notifications,
     user_profiles,
     user_survey_list_collections,
     user_survey_list_positions,
-    //user_survey_notifications,
+    user_survey_notifications,
     user_video_list_collections,
     user_video_list_positions,
-    //user_video_notifications,
+    user_video_notifications,
     users,
     video_categories,
     video_comments,
