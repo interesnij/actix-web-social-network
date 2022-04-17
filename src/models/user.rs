@@ -1082,7 +1082,7 @@ impl User {
         let profile = self.get_profile();
         let _connection = establish_connection();
         diesel::update(&profile)
-            .set(schema::user_profiles::photos.eq(profile.photos + 1))
+            .set(schema::user_profiles::photos.eq(profile.photos + count))
             .get_result::<UserProfile>(&_connection)
             .expect("Error.");
         return true;
