@@ -1345,7 +1345,7 @@ impl User {
     pub fn get_online_friends_count(&self) -> usize {
         return self.get_online_friends().len();
     }
-    pub fn get_6_online_friends(&self) -> Vec<User> {
+    pub fn get_6_online_friends(&self) -> users: &[User] {
         use crate::schema::users::dsl::users;
         use chrono::{NaiveDateTime, NaiveDate, NaiveTime, Duration};
         use diesel::dsl::any;
