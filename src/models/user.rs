@@ -623,8 +623,9 @@ impl User {
         let mut stack = Vec::new();
         let featured_friends = &featured_user_communities
             .filter(schema::featured_user_communities::owner.eq(self.id))
+            .limit()
             .load::<FeaturedUserCommunitie>(&_connection)
-            .expect("E.")[..6];
+            .expect("E.");
         for _item in featured_friends.iter() {
             stack.push(_item.user_id.unwrap());
         };
@@ -676,8 +677,9 @@ impl User {
         let mut stack = Vec::new();
         let featured_communities = &featured_user_communities
             .filter(schema::featured_user_communities::owner.eq(self.id))
+            .limit()
             .load::<FeaturedUserCommunitie>(&_connection)
-            .expect("E.")[..6];
+            .expect("E.");
         for _item in featured_communities.iter() {
             stack.push(_item.community_id.unwrap());
         };
@@ -1345,7 +1347,7 @@ impl User {
     pub fn get_online_friends_count(&self) -> usize {
         return self.get_online_friends().len();
     }
-    pub fn get_6_online_friends(&self) -> [User] {
+    pub fn get_6_online_friends(&self) -> Vec<User> {
         use crate::schema::users::dsl::users;
         use chrono::{NaiveDateTime, NaiveDate, NaiveTime, Duration};
         use diesel::dsl::any;
@@ -1357,8 +1359,9 @@ impl User {
         return users
             .filter(schema::users::id.eq(any(self.get_friends_ids())))
             .filter(schema::users::last_activity.gt(NaiveDateTime::new(d, t)))
+            .limit(6)
             .load::<User>(&_connection)
-            .expect("E.")[..6];
+            .expect("E.");
     }
 }
 
