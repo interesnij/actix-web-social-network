@@ -1055,13 +1055,13 @@ impl User {
         let b = count % 100;
         let count_str: String = count.to_string().parse().unwrap();
         if a == 1 && b != 11 {
-            return count_str + &" ".to_string() + &word1;
+            return count_str + &word1;
         }
         else if a >= 2 && a <= 4 && (b < 10 || b >= 20) {
-            return count_str + &" ".to_string() + &word2;
+            return count_str + &word2;
         }
         else {
-            return count_str + &" ".to_string() + &word3;
+            return count_str + &word3;
         }
     }
 
@@ -1071,9 +1071,14 @@ impl User {
     pub fn count_communities(&self) -> i32 {
         return self.get_profile().communities;
     }
-    //pub fn count_posts(&self) -> i32 {
-    //    return self.get_profile().posts;
-    //}
+    pub fn count_communities_ru(&self) -> String {
+        return self.get_count_for_ru(
+            self.count_communities(),
+            " сообщество".to_string(),
+            " сообщества".to_string(),
+            " сообществ".to_string(),
+        );
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
