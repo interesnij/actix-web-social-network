@@ -1053,7 +1053,7 @@ impl User {
     pub fn get_count_for_ru(count:i32, word1: String, word2: String, word3: String) -> String {
         let a = count % 10;
         let b = count % 100;
-        let count_str: String = count.parse().unwrap();
+        let count_str: String = count.to_string().parse().unwrap();
         if a == 1 && b != 11 {
             return count_str + &" ".to_string() + &word1;
         }
