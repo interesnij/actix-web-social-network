@@ -1331,7 +1331,7 @@ impl User {
         use crate::schema::users::dsl::users;
         use diesel::dsl::any;
         use chrono::{NaiveDateTime, NaiveDate, NaiveTime};
-        use std:time::Duration;
+        use std::time::Duration;
 
         let _connection = establish_connection();
         let d = NaiveDate::from_ymd(2015, 6, 3);
