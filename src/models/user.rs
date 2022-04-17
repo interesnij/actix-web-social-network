@@ -1288,7 +1288,7 @@ impl User {
     }
 
     pub fn get_friends(&self) -> Vec<User> {
-        use crate::users::friends::dsl::users;
+        use crate::schema::users::dsl::users;
         use diesel::dsl::any;
 
         let _connection = establish_connection();
