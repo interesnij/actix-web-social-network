@@ -1,4 +1,4 @@
-use crate::schema::{friends, friends_perms};
+use crate::schema::{friends, friend_perms};
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
 //use crate::utils::establish_connection;
