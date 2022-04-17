@@ -2251,11 +2251,16 @@ impl User {
         use crate::schema::users::dsl::users;
 
         let _connection = establish_connection();
-        let a = self.get_friends_ids();
-        let b = user.get_friends_ids();
-        let matching = a.iter().zip(&b).filter(|&(a, b)| a == b).unwrap();
+        let self_friends = self.get_friends_ids();
+        let user_friends = user.get_friends_ids();
+        let mut stack = Vec::new();
+        for int in self_friends.iter() {
+            if user_friends.iter().any(|&i| i==int) {
+                stack.push(int);
+            }
+        }
         return users
-            .filter(schema::users::id.eq_any(vec![matching]))
+            .filter(schema::users::id.eq_any(stack))
             .filter(schema::users::types.lt(11))
             .load::<User>(&_connection)
             .expect("E.");
