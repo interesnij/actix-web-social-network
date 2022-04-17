@@ -2253,7 +2253,7 @@ impl User {
 
         let a = self.get_friends_ids();
         let b = user.get_friends_ids();
-        let matching = a.iter().zip(&b).filter(|&(a, b)| a == b)
+        let matching = a.iter().zip(&b).filter(|&(a, b)| a == b);
         return users
             .filter(schema::users::id.eq_any(matching))
             .filter(schema::users::types.lt(11))
