@@ -2261,7 +2261,7 @@ impl User {
             .expect("E.");
     }
     pub fn get_common_friends_of_user(&self, community_id: i32) -> Vec<User> {
-        use crate::schema::communitys::dsl::communitys;
+        use crate::schema::users::dsl::users;
         use crate::schema::communities_memberships::dsl::communities_memberships;
         use crate::models::CommunityMembership;
 
