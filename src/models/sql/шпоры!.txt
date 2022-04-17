@@ -17,3 +17,8 @@ let new_tag = NewTagItems{
         .get_result::<TagItems>(&_connection)
         .expect("Error.");
 =============
+_post_list_positions
+      .into_iter()
+      .nth(0)
+      .unwrap()
+============
