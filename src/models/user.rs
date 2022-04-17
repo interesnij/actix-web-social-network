@@ -2255,7 +2255,7 @@ impl User {
         let user_friends = user.get_friends_ids();
         let mut stack = Vec::new();
         for int in self_friends.iter() {
-            if user_friends.iter().any(|&i| i==int) {
+            if user_friends.iter().any(|&i| i==&int) {
                 stack.push(int);
             }
         }
