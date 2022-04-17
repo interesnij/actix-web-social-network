@@ -601,7 +601,7 @@ impl User {
 
         let _connection = establish_connection();
         return communitys
-            .filter(schema::communitys::id.eq_any(vec![self.get_staffed_communities_ids()]))
+            .filter(schema::communitys::id.eq_any(self.get_staffed_communities_ids()))
             .load::<Community>(&_connection)
             .expect("E.");
     }
