@@ -1074,9 +1074,9 @@ impl User {
     pub fn count_communities(&self) -> i32 {
         return self.get_profile().communities;
     }
-    pub fn count_posts(&self) -> i32 {
-        return self.get_profile().posts;
-    }
+    //pub fn count_posts(&self) -> i32 {
+    //    return self.get_profile().posts;
+    //}
 }
 
 #[derive(Debug, Serialize, Deserialize)]
