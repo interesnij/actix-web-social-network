@@ -577,11 +577,9 @@ impl User {
             .load::<User>(&_connection)
             .expect("E.");
     }
-    pub fn get_staffed_communities(&self) -> Vec<Community> {
-        use crate::schema::communitys::dsl::communitys;
+    pub fn get_staffed_communities_ids(&self) -> Vec<i32> {
         use crate::schema::communities_memberships::dsl::communities_memberships;
         use crate::models::CommunitiesMembership;
-        use diesel::dsl::any;
 
         let _connection = establish_connection();
         let all_memberships = communities_memberships
@@ -596,8 +594,13 @@ impl User {
                 community_ids.push(_item.community_id);
             }
         };
+        return community_ids;
+    }
+    pub fn get_staffed_communities(&self) -> Vec<Community> {
+        use crate::schema::communitys::dsl::communitys;
+
         return communitys
-            .filter(schema::communitys::id.eq(any(community_ids)))
+            .filter(schema::communitys::id.eq_any(vec![self.get_staffed_communities_ids()]))
             .load::<Community>(&_connection)
             .expect("E.");
     }
@@ -1836,6 +1839,162 @@ impl User {
         else {
             return self.get_post_list().id;
         }
+    }
+    pub fn get_selected_photo_list_pk(&self) -> i32 {
+        use crate::schema::user_photo_list_positions::dsl::user_photo_list_positions;
+        use crate::models::UserPhotoListPosition;
+
+        let _connection = establish_connection();
+        let _photo_list_positions  = user_photo_list_positions
+            .filter(schema::user_photo_list_positions::user_id.eq(self.id))
+            .filter(schema::user_photo_list_positions::types.eq("a"))
+            .limit(1)
+            .load::<UserPhotoListPosition>(&_connection)
+            .expect("E.");
+        if _photo_list_positions.len() > 0 {
+            return _photo_list_positions
+            .into_iter()
+            .nth(0)
+            .unwrap()
+            .list_id;
+        }
+        else {
+            return self.get_photo_list().id;
+        }
+    }
+    pub fn get_selected_doc_list_pk(&self) -> i32 {
+        use crate::schema::user_doc_list_positions::dsl::user_doc_list_positions;
+        use crate::models::UserDocListPosition;
+
+        let _connection = establish_connection();
+        let _doc_list_positions  = user_doc_list_positions
+            .filter(schema::user_doc_list_positions::user_id.eq(self.id))
+            .filter(schema::user_doc_list_positions::types.eq("a"))
+            .limit(1)
+            .load::<UserDocListPosition>(&_connection)
+            .expect("E.");
+        if _doc_list_positions.len() > 0 {
+            return _doc_list_positions
+            .into_iter()
+            .nth(0)
+            .unwrap()
+            .list_id;
+        }
+        else {
+            return self.get_doc_list().id;
+        }
+    }
+    pub fn get_selected_good_list_pk(&self) -> i32 {
+        use crate::schema::user_good_list_positions::dsl::user_good_list_positions;
+        use crate::models::UserGoodListPosition;
+
+        let _connection = establish_connection();
+        let _good_list_positions  = user_good_list_positions
+            .filter(schema::user_good_list_positions::user_id.eq(self.id))
+            .filter(schema::user_good_list_positions::types.eq("a"))
+            .limit(1)
+            .load::<UserGoodListPosition>(&_connection)
+            .expect("E.");
+        if _good_list_positions.len() > 0 {
+            return _good_list_positions
+            .into_iter()
+            .nth(0)
+            .unwrap()
+            .list_id;
+        }
+        else {
+            return self.get_good_list().id;
+        }
+    }
+    pub fn get_selected_music_list_pk(&self) -> i32 {
+        use crate::schema::user_music_list_positions::dsl::user_music_list_positions;
+        use crate::models::UserMusicListPosition;
+
+        let _connection = establish_connection();
+        let _music_list_positions  = user_music_list_positions
+            .filter(schema::user_music_list_positions::user_id.eq(self.id))
+            .filter(schema::user_music_list_positions::types.eq("a"))
+            .limit(1)
+            .load::<UserMusicListPosition>(&_connection)
+            .expect("E.");
+        if _music_list_positions.len() > 0 {
+            return _music_list_positions
+            .into_iter()
+            .nth(0)
+            .unwrap()
+            .list_id;
+        }
+        else {
+            return self.get_music_list().id;
+        }
+    }
+    pub fn get_selected_video_list_pk(&self) -> i32 {
+        use crate::schema::user_video_list_positions::dsl::user_video_list_positions;
+        use crate::models::UserVideoListPosition;
+
+        let _connection = establish_connection();
+        let _video_list_positions  = user_video_list_positions
+            .filter(schema::user_video_list_positions::user_id.eq(self.id))
+            .filter(schema::user_video_list_positions::types.eq("a"))
+            .limit(1)
+            .load::<UserVideoListPosition>(&_connection)
+            .expect("E.");
+        if _video_list_positions.len() > 0 {
+            return _video_list_positions
+            .into_iter()
+            .nth(0)
+            .unwrap()
+            .list_id;
+        }
+        else {
+            return self.get_video_list().id;
+        }
+    }
+    pub fn get_selected_survey_list_pk(&self) -> i32 {
+        use crate::schema::user_survey_list_positions::dsl::user_survey_list_positions;
+        use crate::models::UserSurveyListPosition;
+
+        let _connection = establish_connection();
+        let _survey_list_positions  = user_survey_list_positions
+            .filter(schema::user_survey_list_positions::user_id.eq(self.id))
+            .filter(schema::user_survey_list_positions::types.eq("a"))
+            .limit(1)
+            .load::<UserSurveyListPosition>(&_connection)
+            .expect("E.");
+        if _survey_list_positions.len() > 0 {
+            return _survey_list_positions
+            .into_iter()
+            .nth(0)
+            .unwrap()
+            .list_id;
+        }
+        else {
+            return self.get_survey_list().id;
+        }
+    }
+    pub fn get_post_lists(&self) -> Vec<PostList> {
+        use crate::schema::post_lists::dsl::post_lists;
+
+        let _connection = establish_connection();
+        return post_lists
+            .filter(schema::post_lists::user_id.eq(self.id))
+            .filter(schema::post_lists::types.eq_any(vec!["a", "b"]))
+            .filter(schema::post_lists::community_id.is_null())
+            .limit(1)
+            .load::<PostList>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_post_lists_from_staffed_comunities(&self) -> Vec<PostList> {
+        use crate::schema::post_lists::dsl::post_lists;
+
+        let _connection = establish_connection();
+        return post_lists
+            .filter(schema::post_lists::community_id.eq_any(self.get_staffed_communities_ids()))
+            .filter(schema::post_lists::types.eq_any(vec!["a", "b"]))
+            .filter(schema::post_lists::community_id.is_null())
+            .limit(1)
+            .load::<PostList>(&_connection)
+            .expect("E.");
     }
 }
 
