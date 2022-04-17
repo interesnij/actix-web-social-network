@@ -1274,13 +1274,22 @@ impl User {
         let _connection = establish_connection();
         let mut stack = Vec::new();
 
-        for _item in &self.get_friends_ids().iter() {
-            stack.push(_item);
+        let user_friends = friends
+            .filter(schema::friends::user_id.eq(self.id))
+            .load::<Friend>(&_connection)
+            .expect("E.");
+
+        for _item in user_friends.iter() {
+            stack.push(_item.target_user_id);
         };
         for friend in self.get_friends().iter() {
-            for f in &friend.get_friends_ids().iter() {
-                if stack.iter().any(|&i| i!=f) {
-                    stack.push(f);
+            user_friend_friends = friends
+                .filter(schema::friends::user_id.eq(friend.id))
+                .load::<Friend>(&_connection)
+                .expect("E.");
+            for f in user_friend_friends.iter() {
+                if stack.iter().any(|&i| i!=f.target_user_id) {
+                    stack.push(f.target_user_id);
                 }
             }
         }
