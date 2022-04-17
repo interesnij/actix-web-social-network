@@ -1454,7 +1454,7 @@ impl User {
         let _music_lists  = music_lists
             .filter(schema::music_lists::user_id.eq(self.id))
             .filter(schema::music_lists::types.eq("a"))
-            .filter(schema::muic_lists::community_id.is_null())
+            .filter(schema::music_lists::community_id.is_null())
             .limit(1)
             .load::<MusicList>(&_connection)
             .expect("E.");
@@ -1740,9 +1740,7 @@ impl User {
                     copy:            0,
                     position:        0,
                     can_see_el:      "a".to_string(),
-                    can_see_comment: "a".to_string(),
                     create_el:       "g".to_string(),
-                    create_comment:  "a".to_string(),
                     copy_el:         "g".to_string(),
                 };
             let _docs_list = diesel::insert_into(schema::doc_lists::table)
@@ -1761,6 +1759,62 @@ impl User {
                 .get_result::<UserDocListPosition>(&_connection)
                 .expect("Error saving doc_list_position.");
             return _docs_list;
+        }
+    }
+    pub fn get_survey_list(&self) -> SurveyList {
+        use crate::schema::survey_lists::dsl::survey_lists;
+
+        let _connection = establish_connection();
+        let _survey_lists  = survey_lists
+            .filter(schema::survey_lists::user_id.eq(self.id))
+            .filter(schema::survey_lists::types.eq("a"))
+            .filter(schema::survey_lists::community_id.is_null())
+            .limit(1)
+            .load::<SurveyList>(&_connection)
+            .expect("E.");
+        if _survey_lists.len() > 0 {
+            return _survey_lists
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        }
+        else {
+            use crate::models::{NewSurveyList, UserSurveyListPosition, NewUserSurveyListPosition};
+            let d = NaiveDate::from_ymd(2015, 6, 3);
+            let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
+            use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
+
+            let new_list = NewSurveyList{
+                    name:          "Основной список".to_string(),
+                    community_id:   None,
+                    user_id:        self.id,
+                    types:          "a".to_string(),
+                    description:     None,
+                    created:         NaiveDateTime::new(d, t),
+                    count:           0,
+                    repost:          0,
+                    copy:            0,
+                    position:        0,
+                    can_see_el:      "a".to_string(),
+                    create_el:       "g".to_string(),
+                    copy_el:         "g".to_string(),
+                };
+            let _surveys_list = diesel::insert_into(schema::survey_lists::table)
+                .values(&new_list)
+                .get_result::<SurveyList>(&_connection)
+                .expect("Error saving survey_list.");
+
+            let _new_surveys_list_position = NewUserSurveyListPosition {
+                user_id:  self.id,
+                list_id:  _surveys_list.id,
+                position: 1,
+                types:    "a".to_string(),
+            };
+            let _surveys_list_position = diesel::insert_into(schema::user_survey_list_positions::table)
+                .values(&_new_surveys_list_position)
+                .get_result::<UserSurveyListPosition>(&_connection)
+                .expect("Error saving survey_list_position.");
+            return _surveys_list;
         }
     }
 }
