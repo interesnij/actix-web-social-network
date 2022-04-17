@@ -38,6 +38,10 @@ CREATE TABLE friends_perms (
     can_create_doc           "char",
     can_create_music         "char",
     can_create_survey        "char",
+
+    CONSTRAINT fk_friends_perms
+         FOREIGN KEY(user_id)
+             REFERENCES users(id)
 );
 
 CREATE TABLE follows_perms (
@@ -79,12 +83,16 @@ CREATE TABLE follows_perms (
     can_create_planner       "char",
     can_create_doc           "char",
     can_create_music         "char",
-    can_create_survey        "char"
+    can_create_survey        "char",
+
+    CONSTRAINT fk_follows_perms
+         FOREIGN KEY(user_id)
+             REFERENCES users(id)
 );
 
-CREATE TABLE community_member_ie_settings (
+CREATE TABLE community_members_perm (
     id                      SERIAL PRIMARY KEY,
-    community_member        INT NOT NULL,
+    user_id                 INT NOT NULL,
 
     can_see_info            "char",
     can_see_member          "char",
@@ -103,14 +111,14 @@ CREATE TABLE community_member_ie_settings (
     can_see_planner         "char",
     can_see_planner_comment "char",
 
-    can_copy_post            "char",
-    can_copy_photo           "char",
-    can_copy_good            "char",
-    can_copy_video           "char",
-    can_copy_planner         "char",
-    can_copy_doc             "char",
-    can_copy_music           "char",
-    can_copy_survey          "char",
+    can_copy_post           "char",
+    can_copy_photo          "char",
+    can_copy_good           "char",
+    can_copy_video          "char",
+    can_copy_planner        "char",
+    can_copy_doc            "char",
+    can_copy_music          "char",
+    can_copy_survey         "char",
 
     can_create_post         "char",
     can_create_photo        "char",
@@ -121,7 +129,7 @@ CREATE TABLE community_member_ie_settings (
     can_create_music        "char",
     can_create_survey       "char",
 
-    CONSTRAINT fk_community_ie_settings
+    CONSTRAINT fk_community_members_perm
         FOREIGN KEY(community_member)
             REFERENCES communities_memberships(id)
 );
