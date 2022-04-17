@@ -1328,8 +1328,15 @@ impl User {
             .expect("E.");
     }
     pub fn get_online_friends(&self) -> Vec<&User> {
+        use crate::schema::users::dsl::users;
+        use diesel::dsl::any;
+
         let mut stack = Vec::new();
-        for user in self.get_friends().iter() {
+        friends = users
+            .filter(schema::users::id.eq(any(self.get_friends_ids())))
+            .load::<User>(&_connection)
+            .expect("E.");
+        for user in friends.iter() {
             if user.is_online() {
                 stack.push(user);
             }
