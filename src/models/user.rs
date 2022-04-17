@@ -2435,7 +2435,7 @@ impl User {
             return "Предупреждение за нарушение правил соцсети трезвый.рус".to_string();
         }
     }
-    pub fn get_all_chats(&self) -> Vec<Chat> {
+    pub fn get_all_chats(&self) -> Vec<&Chat> {
         use crate::schema::chat_users::dsl::chat_users;
         use crate::schema::chats::dsl::chats;
         use crate::models::{ChatUser, Chat};
