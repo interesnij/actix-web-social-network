@@ -2412,7 +2412,7 @@ impl User {
             .into_iter()
             .nth(0)
             .unwrap();
-        return Some(penaltie.expiration).unwrap().to_string();
+        return penaltie.expiration.as_deref().unwrap().to_string(); 
     }
 }
 
