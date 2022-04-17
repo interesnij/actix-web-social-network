@@ -1078,10 +1078,11 @@ impl User {
     pub fn plus_photos(&self, count: i32) -> bool {
         use crate::schema::user_profiles::dsl::user_profiles;
         use crate::models::UserProfile;
-        
+
         let profile = self.get_profile();
+        let _connection = establish_connection();
         diesel::update(&profile)
-            .set((schema::user_profiles::photos.eq(profile.photos + 1)))
+            .set(schema::user_profiles::photos.eq(profile.photos + 1))
             .get_result::<UserProfile>(&_connection)
             .expect("Error.");
         return true;
