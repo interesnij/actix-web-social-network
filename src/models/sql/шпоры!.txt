@@ -5,3 +5,15 @@ for _item in _friends.iter() {
         stack.push(_item.target_user_id);
     };
 ============
+.order(schema::chats::id.desc())
+============
+let new_tag = NewTagItems{
+        tag_id: *tag_id.1,
+        service_id: 0,
+        tag_created: chrono::Local::now().naive_utc(),
+    };
+    diesel::insert_into(tags_items::table)
+        .values(&new_tag)
+        .get_result::<TagItems>(&_connection)
+        .expect("Error.");
+=============

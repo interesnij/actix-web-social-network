@@ -5,7 +5,9 @@ use crate::utils::establish_connection;
 use diesel::prelude::*;
 use crate::schema;
 use crate::models::{
-    Chat, Message, UserLocation, Post, Smile, Sticker, Community, UserProfile, Friend,
+    Chat, Message, UserLocation, Smile, Sticker, Community, UserProfile, Friend,
+    Post, Photo, Music, Video, Survey, Doc, Good,
+    PostList, PhotoList, MusicList, VideoList, SurveyList, DocList, GoodList,
 };
 
 ///// Типы пользоватетеля
@@ -1362,6 +1364,85 @@ impl User {
             .limit(6)
             .load::<User>(&_connection)
             .expect("E.");
+    }
+    pub fn get_draft_posts(&self) -> Vec<Post> {
+        use crate::schema::posts::dsl::posts;
+
+        let _connection = establish_connection();
+        return posts
+            .filter(schema::posts::user_id.eq(self.id))
+            .filter(schema::posts::types.eq("f"))
+            .filter(schema::posts::community_id.is_null())
+            .order(schema::posts::created.desc())
+            .load::<Post>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_draft_posts_of_community_with_pk(&self, community_id: i32) -> Vec<Post> {
+        use crate::schema::posts::dsl::posts;
+
+        let _connection = establish_connection();
+        return posts
+            .filter(schema::posts::user_id.eq(self.id))
+            .filter(schema::posts::types.eq("f"))
+            .filter(schema::posts::community_id.eq(community_id))
+            .order(schema::posts::created.desc())
+            .load::<Post>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_good_list(&self) -> Vec<GoodList> {
+        use crate::schema::good_lists::dsl::good_lists;
+
+        let _connection = establish_connection();
+        _good_lists  = good_lists
+            .filter(schema::good_lists::user_id.eq(self.id))
+            .filter(schema::good_lists::types.eq("a"))
+            .load::<GoodList>(&_connection)
+            .expect("E.");
+        if _good_lists.len() > 0 {
+            return _good_lists[0]
+        }
+        else {
+            use crate::models::{NewGoodList, UserGoodListPosition, NewUserGoodListPosition};
+            use crate::schema::user_good_list_positions::dsl::user_good_list_positions;
+            let d = NaiveDate::from_ymd(2015, 6, 3);
+            let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
+            use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
+            
+            let new_list = NewGoodList{
+                    name:          "Основной список".to_string(),
+                    community_id:   None,
+                    user_id:        user.id,
+                    types:          "a".to_string(),
+                    description:     None,
+                    created:         NaiveDateTime::new(d, t),
+                    count:           0,
+                    repost:          0,
+                    copy:            0,
+                    position:        0,
+                    can_see_el:      "a".to_string(),
+                    can_see_comment: "a".to_string(),
+                    create_el:       "g".to_string(),
+                    create_comment:  "a".to_string(),
+                    copy_el:         "g".to_string(),
+                };
+            let _goods_list = diesel::insert_into(schema::good_lists::table)
+                .values(&new_list)
+                .get_result::<GoodList>(&_connection)
+                .expect("Error saving good_list.");
+
+            let _new_goods_list_position = NewUserGoodListPosition {
+                user_id:  _new_user.id,
+                list_id:  _goods_list.id,
+                position: 1,
+                types:    "a".to_string(),
+            };
+            let _goods_list_position = diesel::insert_into(schema::user_good_list_positions::table)
+                .values(&_new_goods_list_position)
+                .get_result::<UserGoodListPosition>(&_connection)
+                .expect("Error saving good_list_position.");
+
+            return _goods_list;
+        }
     }
 }
 
