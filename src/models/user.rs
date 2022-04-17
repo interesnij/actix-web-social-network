@@ -1331,7 +1331,7 @@ impl User {
         let mut stack = Vec::new();
         for user in self.get_friends().iter() {
             if user.is_online() {
-                stack.push(user.community_id);
+                stack.push(user);
             }
         };
         return stack;
