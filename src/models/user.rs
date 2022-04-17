@@ -2460,9 +2460,9 @@ impl User {
     pub fn get_chats(&self) -> Vec<Chat> {
         let mut chat_stack = Vec::new();
         for chat in self.get_all_chats().iter() {
-            if chat.user_id == self.id || chat.members > 0 {
+            //if chat.user_id == self.id || chat.members > 0 {
                 chat_stack.push(chat);
-            }
+            //}
         }
         return chat_stack;
     }
