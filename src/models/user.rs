@@ -1274,11 +1274,13 @@ impl User {
         let _connection = establish_connection();
         let mut stack = Vec::new();
         let user_friends = self.get_friends();
-        for _item in self.get_friends_ids().iter() {
+        let get_friends_ids = self.get_friends_ids();
+        for _item in get_friends_ids.iter() {
             stack.push(_item);
         };
         for friend in user_friends {
-            for f in friend.get_friends_ids().iter() {
+            let get_friend_friends_ids = friend.get_friends_ids();
+            for f in get_friend_friends_ids.iter() {
                 if stack.iter().any(|&i| i!=f) {
                     stack.push(f);
                 }
