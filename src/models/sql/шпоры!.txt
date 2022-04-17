@@ -1,4 +1,5 @@
 ============
+use diesel::dsl::any;
 let mut stack = Vec::new();
 for _item in _friends.iter() {
         stack.push(_item.target_user_id);

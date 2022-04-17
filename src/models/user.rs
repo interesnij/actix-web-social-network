@@ -1287,14 +1287,14 @@ impl User {
         return stack;
     }
 
-    pub fn get_friends(&self) -> Vec<Friend> {
-        use crate::schema::friends::dsl::friends;
+    pub fn get_friends(&self) -> Vec<User> {
+        use crate::users::friends::dsl::users;
+        use diesel::dsl::any;
 
         let _connection = establish_connection();
-        return friends
-            .filter(schema::friends::user_id.eq(self.id))
-            .order(schema::friends::visited.desc())
-            .load::<Friend>(&_connection)
+        return users
+            .filter(schema::users::user_id.eq(any(self.get_friends_ids())))
+            .load::<User>(&_connection)
             .expect("E.");
     }
     pub fn get_communities(&self) -> Vec<Community> {
