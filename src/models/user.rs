@@ -1058,7 +1058,7 @@ impl User {
         return self.get_profile().communities;
     }
     pub fn count_communities_ru(&self) -> String {
-        user crate::utils::get_count_for_ru;
+        use crate::utils::get_count_for_ru;
 
         return get_count_for_ru(
             self.count_communities(),
