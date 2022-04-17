@@ -2263,13 +2263,13 @@ impl User {
     pub fn get_common_friends_of_community(&self, community_id: i32) -> Vec<User> {
         use crate::schema::users::dsl::users;
         use crate::schema::communities_memberships::dsl::communities_memberships;
-        use crate::models::CommunityMembership;
+        use crate::models::CommunitiesMembership;
 
         let _connection = establish_connection();
         let self_friends = self.get_friends_ids();
         let members_of_community = communities_memberships
             .filter(schema::communities_memberships::community_id.eq(community_id))
-            .load::<CommunityMembership>(&_connection)
+            .load::<CommunitiesMembership>(&_connection)
             .expect("E.");
         let mut stack = Vec::new();
         for member in members_of_community.iter() {
@@ -2282,6 +2282,16 @@ impl User {
             .filter(schema::users::types.lt(11))
             .load::<User>(&_connection)
             .expect("E.");
+    }
+    pub fn get_common_friends_of_community_count_ru(&self, community_id: i32) -> i32  {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            self.get_common_friends_of_community(community_id),
+            " друг".to_string(),
+            " друга".to_string(),
+            " друзей".to_string(),
+        );
     }
 }
 
