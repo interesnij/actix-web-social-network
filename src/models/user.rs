@@ -2112,7 +2112,7 @@ impl User {
             .load::<Photo>(&_connection)
             .expect("E.");
     }
-    pub fn get_6_docs(&self) -> Vec<Photo> {
+    pub fn get_6_docs(&self) -> Vec<Doc> {
         use crate::schema::docs::dsl::docs;
 
         let _connection = establish_connection();
@@ -2152,7 +2152,7 @@ impl User {
             .expect("E.");
     }
     pub fn get_3_goods(&self) -> Vec<Good> {
-        use crate::schema::videos::dsl::videos;
+        use crate::schema::goods::dsl::goods;
 
         let _connection = establish_connection();
         return goods
