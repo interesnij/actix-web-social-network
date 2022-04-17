@@ -2495,8 +2495,8 @@ impl User {
         let chats = self.get_all_chats();
         let mut count = 0;
         for chat in chats {
-            if chat_users
-                .filter(schema::messages::chat_id.eq(chat_id))
+            if messages
+                .filter(schema::messages::chat_id.eq(chat.id))
                 .filter(schema::messages::unread.eq(true))
                 .filter(schema::messages::user_id.ne(self.id))
                 .filter(schema::messages::types.lt(10))
