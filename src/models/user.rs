@@ -1994,6 +1994,111 @@ impl User {
             .load::<PostList>(&_connection)
             .expect("E.");
     }
+    pub fn get_survey_lists(&self) -> Vec<SurveyList> {
+        use crate::schema::survey_lists::dsl::survey_lists;
+
+        let _connection = establish_connection();
+        return survey_lists
+            .filter(schema::survey_lists::user_id.eq(self.id))
+            .filter(schema::survey_lists::types.eq_any(vec!["a", "b"]))
+            .filter(schema::survey_lists::community_id.is_null())
+            .load::<SurveyList>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_survey_lists_from_staffed_comunities(&self) -> Vec<SurveyList> {
+        use crate::schema::survey_lists::dsl::survey_lists;
+
+        let _connection = establish_connection();
+        return survey_lists
+            .filter(schema::survey_lists::community_id.eq_any(self.get_staffed_communities_ids()))
+            .filter(schema::survey_lists::types.eq_any(vec!["a", "b"]))
+            .load::<SurveyList>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_photo_lists(&self) -> Vec<PhotoList> {
+        use crate::schema::photo_lists::dsl::photo_lists;
+
+        let _connection = establish_connection();
+        return photo_lists
+            .filter(schema::photo_lists::user_id.eq(self.id))
+            .filter(schema::photo_lists::types.eq_any(vec!["a", "b", "d", "e"]))
+            .filter(schema::photo_lists::community_id.is_null())
+            .load::<PhotoList>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_photo_lists_from_staffed_comunities(&self) -> Vec<PhotoList> {
+        use crate::schema::photo_lists::dsl::photo_lists;
+
+        let _connection = establish_connection();
+        return photo_lists
+            .filter(schema::photo_lists::community_id.eq_any(self.get_staffed_communities_ids()))
+            .filter(schema::photo_lists::types.eq_any(vec!["a", "b", "d", "e"]))
+            .load::<PhotoList>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_video_lists(&self) -> Vec<VideoList> {
+        use crate::schema::video_lists::dsl::video_lists;
+
+        let _connection = establish_connection();
+        return video_lists
+            .filter(schema::video_lists::user_id.eq(self.id))
+            .filter(schema::video_lists::types.eq_any(vec!["a", "b"]))
+            .filter(schema::video_lists::community_id.is_null())
+            .load::<VideoList>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_video_lists_from_staffed_comunities(&self) -> Vec<VideoList> {
+        use crate::schema::video_lists::dsl::video_lists;
+
+        let _connection = establish_connection();
+        return video_lists
+            .filter(schema::video_lists::community_id.eq_any(self.get_staffed_communities_ids()))
+            .filter(schema::video_lists::types.eq_any(vec!["a", "b"]))
+            .load::<VideoList>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_music_lists(&self) -> Vec<MusicList> {
+        use crate::schema::music_lists::dsl::music_lists;
+
+        let _connection = establish_connection();
+        return music_lists
+            .filter(schema::music_lists::user_id.eq(self.id))
+            .filter(schema::music_lists::types.eq_any(vec!["a", "b"]))
+            .filter(schema::music_lists::community_id.is_null())
+            .load::<MusicList>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_music_lists_from_staffed_comunities(&self) -> Vec<MusicList> {
+        use crate::schema::music_lists::dsl::music_lists;
+
+        let _connection = establish_connection();
+        return music_lists
+            .filter(schema::music_lists::community_id.eq_any(self.get_staffed_communities_ids()))
+            .filter(schema::music_lists::types.eq_any(vec!["a", "b"]))
+            .load::<MusicList>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_good_lists(&self) -> Vec<GoodList> {
+        use crate::schema::good_lists::dsl::good_lists;
+
+        let _connection = establish_connection();
+        return good_lists
+            .filter(schema::good_lists::user_id.eq(self.id))
+            .filter(schema::good_lists::types.eq_any(vec!["a", "b"]))
+            .filter(schema::good_lists::community_id.is_null())
+            .load::<GoodList>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_good_lists_from_staffed_comunities(&self) -> Vec<GoodList> {
+        use crate::schema::good_lists::dsl::good_lists;
+
+        let _connection = establish_connection();
+        return good_lists
+            .filter(schema::good_lists::community_id.eq_any(self.get_staffed_communities_ids()))
+            .filter(schema::good_lists::types.eq_any(vec!["a", "b"]))
+            .load::<GoodList>(&_connection)
+            .expect("E.");
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]

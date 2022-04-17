@@ -846,7 +846,7 @@ pub async fn phone_verify(param: web::Path<(String,i32)>) -> impl Responder {
     let _connection = establish_connection();
     let _phone = param.0.to_string();
     let _code = param.1;
-    let mut response_text : String;
+    let response_text : String;
 
     let _phone_codes = phone_codes
         .filter(schema::phone_codes::phone.eq(&_phone))
