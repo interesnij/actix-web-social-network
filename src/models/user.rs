@@ -2376,7 +2376,7 @@ impl User {
         }
         return stack;
     }
-    pub fn get_communities_ids_for_main_news(&self) -> Vec<i32> {
+    pub fn get_communities_ids_for_main_notifications(&self) -> Vec<i32> {
         use crate::schema::notify_user_communities::dsl::notify_user_communities;
         use crate::models::NotifyUserCommunitie;
         use chrono::{NaiveDateTime, NaiveDate, NaiveTime, Duration};
