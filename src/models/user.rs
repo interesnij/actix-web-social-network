@@ -1981,7 +1981,6 @@ impl User {
             .filter(schema::post_lists::user_id.eq(self.id))
             .filter(schema::post_lists::types.eq_any(vec!["a", "b"]))
             .filter(schema::post_lists::community_id.is_null())
-            .limit(1)
             .load::<PostList>(&_connection)
             .expect("E.");
     }
@@ -1992,8 +1991,6 @@ impl User {
         return post_lists
             .filter(schema::post_lists::community_id.eq_any(self.get_staffed_communities_ids()))
             .filter(schema::post_lists::types.eq_any(vec!["a", "b"]))
-            .filter(schema::post_lists::community_id.is_null())
-            .limit(1)
             .load::<PostList>(&_connection)
             .expect("E.");
     }
