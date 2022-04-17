@@ -2318,7 +2318,7 @@ impl User {
 
         let d = NaiveDate::from_ymd(2015, 6, 3);
         let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
-        let time = self.last_activity.checked_add_signed(Duration::seconds(301)) > NaiveDateTime::new(d, t).checked_add_signed(Duration::seconds(1));
+        //let time = self.last_activity.checked_add_signed(Duration::seconds(301)) > NaiveDateTime::new(d, t).checked_add_signed(Duration::seconds(1));
         let news_users = news_user_communities
             .filter(schema::news_user_communities::owner.eq(self.id))
             .filter(schema::news_user_communities::mute.eq(false))
