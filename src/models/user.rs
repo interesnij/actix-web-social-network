@@ -1407,7 +1407,6 @@ impl User {
         }
         else {
             use crate::models::{NewGoodList, UserGoodListPosition, NewUserGoodListPosition};
-            use crate::schema::user_good_list_positions::dsl::user_good_list_positions;
             let d = NaiveDate::from_ymd(2015, 6, 3);
             let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
             use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
@@ -1465,7 +1464,6 @@ impl User {
         }
         else {
             use crate::models::{NewMusicList, UserMusicListPosition, NewUserMusicListPosition};
-            use crate::schema::user_music_list_positions::dsl::user_music_list_positions;
             let d = NaiveDate::from_ymd(2015, 6, 3);
             let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
             use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
@@ -1522,7 +1520,6 @@ impl User {
         }
         else {
             use crate::models::{NewVideoList, UserVideoListPosition, NewUserVideoListPosition};
-            use crate::schema::user_video_list_positions::dsl::user_video_list_positions;
             let d = NaiveDate::from_ymd(2015, 6, 3);
             let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
             use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
@@ -1561,6 +1558,87 @@ impl User {
                 .expect("Error saving video_list_position.");
             return _videos_list;
         }
+    }
+    pub fn get_photo_list(&self) -> PhotoList {
+        use crate::schema::photo_lists::dsl::photo_lists;
+
+        let _connection = establish_connection();
+        let _photo_lists  = photo_lists
+            .filter(schema::photo_lists::user_id.eq(self.id))
+            .filter(schema::photo_lists::types.eq("a"))
+            .limit(1)
+            .load::<PhotoList>(&_connection)
+            .expect("E.");
+        if _photo_lists.len() > 0 {
+            return _photo_lists
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        }
+        else {
+            use crate::models::{NewPhotoList, UserPhotoListPosition, NewUserPhotoListPosition};
+            let d = NaiveDate::from_ymd(2015, 6, 3);
+            let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
+            use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
+
+            let new_list = NewPhotoList{
+                    name:          "Основной список".to_string(),
+                    community_id:   None,
+                    user_id:        self.id,
+                    types:          "a".to_string(),
+                    description:     None,
+                    created:         NaiveDateTime::new(d, t),
+                    count:           0,
+                    repost:          0,
+                    copy:            0,
+                    position:        0,
+                    can_see_el:      "a".to_string(),
+                    can_see_comment: "a".to_string(),
+                    create_el:       "g".to_string(),
+                    create_comment:  "a".to_string(),
+                    copy_el:         "g".to_string(),
+                };
+            let _photos_list = diesel::insert_into(schema::photo_lists::table)
+                .values(&new_list)
+                .get_result::<PhotoList>(&_connection)
+                .expect("Error saving photo_list.");
+
+            let _new_photos_list_position = NewUserPhotoListPosition {
+                user_id:  self.id,
+                list_id:  _photos_list.id,
+                position: 1,
+                types:    "a".to_string(),
+            };
+            let _photos_list_position = diesel::insert_into(schema::user_photo_list_positions::table)
+                .values(&_new_photos_list_position)
+                .get_result::<UserPhotoListPosition>(&_connection)
+                .expect("Error saving photo_list_position.");
+            return _photos_list;
+        }
+    }
+    pub fn get_avatar_pk(&self) -> i32 {
+        use crate::schema::photo_lists::dsl::photo_lists;
+
+        let _connection = establish_connection();
+        let _photo_lists  = photo_lists
+            .filter(schema::photo_lists::user_id.eq(self.id))
+            .filter(schema::photo_lists::types.eq("d"))
+            .limit(1)
+            .load::<PhotoList>(&_connection)
+            .expect("E.");
+        if _photo_lists.len() > 0 {
+            use crate::schema::photos::dsl::photos;
+            list = _photo_lists.into_iter().nth(0).unwrap();
+            let _photos  = photos
+                .filter(schema::photo_lists::types.eq("a"))
+                .limit(1)
+                .load::<Photo>(&_connection)
+                .expect("E.");
+            if _photos.len() > 0 {
+                return _photos.into_iter().nth(0).unwrap().id;
+            }
+        }
+        return 0;
     }
 }
 
