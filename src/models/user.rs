@@ -1342,6 +1342,24 @@ impl User {
             .load::<User>(&_connection)
             .expect("E.");
     }
+    pub fn get_online_friends_count(&self) -> usize {
+        return self.get_online_friends().len();
+    }
+    pub fn get_6_online_friends(&self) -> Vec<User> {
+        use crate::schema::users::dsl::users;
+        use chrono::{NaiveDateTime, NaiveDate, NaiveTime, Duration};
+        use diesel::dsl::any;
+
+        let _connection = establish_connection();
+        let d = NaiveDate::from_ymd(2015, 6, 3);
+        let t = NaiveTime::from_hms_milli(12, 34, 56, 789) - Duration::seconds(300);
+
+        return users
+            .filter(schema::users::id.eq(any(self.get_friends_ids())))
+            .filter(schema::users::last_activity.gt(NaiveDateTime::new(d, t)))
+            .load::<User>(&_connection)
+            .expect("E.")[..6];
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
