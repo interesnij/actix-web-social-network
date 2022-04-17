@@ -1354,7 +1354,7 @@ impl User {
         let d = NaiveDate::from_ymd(2015, 6, 3);
         let t = NaiveTime::from_hms_milli(12, 34, 56, 789) - Duration::seconds(300);
 
-        return users
+        return &users
             .filter(schema::users::id.eq(any(self.get_friends_ids())))
             .filter(schema::users::last_activity.gt(NaiveDateTime::new(d, t)))
             .load::<User>(&_connection)
