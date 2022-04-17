@@ -1340,7 +1340,7 @@ impl User {
 
         return users
             .filter(schema::users::id.eq(any(self.get_friends_ids())))
-            .filter(schema::users::last_activity.gt(NaiveDateTime::new(d, t)))
+            .filter(schema::users::last_activity.gt(NaiveDateTime::new(d, t).plusMinutes(3)))
             .load::<User>(&_connection)
             .expect("E.");
     }
