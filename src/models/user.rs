@@ -623,7 +623,7 @@ impl User {
         let mut stack = Vec::new();
         let featured_friends = &featured_user_communities
             .filter(schema::featured_user_communities::owner.eq(self.id))
-            .limit()
+            .limit(6)
             .load::<FeaturedUserCommunitie>(&_connection)
             .expect("E.");
         for _item in featured_friends.iter() {
@@ -677,7 +677,7 @@ impl User {
         let mut stack = Vec::new();
         let featured_communities = &featured_user_communities
             .filter(schema::featured_user_communities::owner.eq(self.id))
-            .limit()
+            .limit(6)
             .load::<FeaturedUserCommunitie>(&_connection)
             .expect("E.");
         for _item in featured_communities.iter() {
