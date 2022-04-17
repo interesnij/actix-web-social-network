@@ -2186,6 +2186,67 @@ impl User {
             .load::<User>(&_connection)
             .expect("E.");
     }
+    pub fn get_6_followers(&self) -> Vec<User> {
+        use crate::schema::follows::dsl::follows;
+        use crate::schema::users::dsl::users;
+
+        let _connection = establish_connection();
+        let followers =  follows
+            .filter(schema::follows::followed_user.eq(self.id))
+            .order(schema::follows::visited.desc())
+            .limit(6)
+            .load::<Follow>(&_connection)
+            .expect("E.");
+
+        let mut stack = Vec::new();
+        for _item in followers.iter() {
+            stack.push(_item.user_id);
+        };
+        return users
+            .filter(schema::users::id.eq_any(stack))
+            .filter(schema::users::types.lt(11))
+            .load::<User>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_all_users(&self) -> Vec<User> {
+        use crate::schema::users::dsl::users;
+
+        let _connection = establish_connection();
+        if self.types == 3 {
+            return users
+                .filter(schema::users::types.eg(7))
+                .or_filter(schema::users::perm.lt(9))
+                .load::<User>(&_connection)
+                .expect("E.");
+        }
+        else {
+            return users
+                .filter(schema::users::types.gt(10))
+                .load::<User>(&_connection)
+                .expect("E.");
+        }
+    }
+    pub fn get_followings(&self) -> Vec<User> {
+        use crate::schema::follows::dsl::follows;
+        use crate::schema::users::dsl::users;
+
+        let _connection = establish_connection();
+        let followers =  follows
+            .filter(schema::follows::user_id.eq(self.id))
+            .order(schema::follows::visited.desc())
+            .load::<Follow>(&_connection)
+            .expect("E.");
+
+        let mut stack = Vec::new();
+        for _item in followers.iter() {
+            stack.push(_item.followed_user);
+        };
+        return users
+            .filter(schema::users::id.eq_any(stack))
+            .filter(schema::users::types.lt(11))
+            .load::<User>(&_connection)
+            .expect("E.");
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
