@@ -1329,20 +1329,17 @@ impl User {
     }
     pub fn get_online_friends(&self) -> Vec<&User> {
         use crate::schema::users::dsl::users;
-        use diesel::dsl::any;
 
         let _connection = establish_connection();
         let mut stack = Vec::new();
-        let friends = users
+        let d = NaiveDate::from_ymd(2015, 6, 3);
+        let t = NaiveTime::from_hms_milli(12, 34, 56, 789) - Duration::seconds(300);
+
+        return users
             .filter(schema::users::id.eq(any(self.get_friends_ids())))
+            .filter(schema::users::last_activity.gt(NaiveDateTime::new(d, t)))
             .load::<User>(&_connection)
             .expect("E.");
-        for user in &friends.iter() {
-            if user.is_online() {
-                stack.push(user);
-            }
-        };
-        return stack;
     }
 }
 
