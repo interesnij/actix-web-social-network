@@ -2488,6 +2488,36 @@ impl User {
             .load::<ChatUser>(&_connection)
             .expect("E").len() > 0;
     }
+    pub fn is_member_of_chat(&self) -> i32 {
+        use crate::schema::chat_users::dsl::chat_users;
+        use crate::models::ChatUser;
+
+        let _connection = establish_connection();
+        return chat_users
+            .filter(schema::chat_users::user_id.eq(self.id))
+            .filter(schema::chat_users::chat_id.eq(chat_id))
+            .filter(schema::chat_users::types.eq("a"))
+            .load::<ChatUser>(&_connection)
+            .expect("E").len() > 0;
+    }
+    pub fn get_unread_chats(&self) -> i32 {
+        use crate::schema::messages::dsl::messages;
+
+        let chats = self.get_all_chats();
+        let mut count = 0;
+        for chat in chats {
+            if chat_users
+                .filter(schema::messages::chat_id.eq(chat_id))
+                .filter(schema::messages::unread.eq(true))
+                .filter(schema::messages::user_id.ne(self.id))
+                .filter(schema::messages::types.lt(10))
+                .load::<Message>(&_connection)
+                .expect("E").len() > 0 {
+                    count += 1;
+                }
+        }
+        return count
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
