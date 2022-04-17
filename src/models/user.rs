@@ -2450,12 +2450,20 @@ impl User {
         for member in members_of_chats.iter() {
             stack.push(member.chat_id);
         }
-        return chats
+        let all_chats = chats
             .filter(schema::chats::id.eq_any(stack))
             .filter(schema::chats::types.lt(20))
             .order(schema::chats::created.desc())
             .load::<Chat>(&_connection)
             .expect("E.");
+
+        let mut chat_stack = Vec::new();
+        for chat in all_chats.iter() {
+            if chat.user_id == self.id || chat.members > 0 {
+                chat_stack.push(chat);
+            }
+        }
+        return chat_stack;
     }
 }
 
