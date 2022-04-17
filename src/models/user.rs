@@ -2390,7 +2390,7 @@ impl User {
             .filter(schema::notify_user_communities::user_id.is_null())
             .filter(schema::notify_user_communities::mute.eq(false))
             .filter(schema::notify_user_communities::sleep.lt(NaiveDateTime::new(d, t).checked_add_signed(Duration::seconds(1))))
-            .load::<NewsUserCommunitie>(&_connection)
+            .load::<NotifyUserCommunitie>(&_connection)
             .expect("E.");
         let mut stack = Vec::new();
         for member in news_users.iter() {
