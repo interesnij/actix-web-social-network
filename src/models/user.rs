@@ -599,6 +599,7 @@ impl User {
     pub fn get_staffed_communities(&self) -> Vec<Community> {
         use crate::schema::communitys::dsl::communitys;
 
+        let _connection = establish_connection();
         return communitys
             .filter(schema::communitys::id.eq_any(vec![self.get_staffed_communities_ids()]))
             .load::<Community>(&_connection)
