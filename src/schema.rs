@@ -1853,7 +1853,7 @@ allow_tables_to_appear_in_same_query!(
     featured_user_communities,
     follows,
     friends,
-    friends_perms,
+    //friends_perms,
     good_categories,
     good_comments,
     good_list_perms,
