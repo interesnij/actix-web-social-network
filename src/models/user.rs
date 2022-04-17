@@ -1278,14 +1278,14 @@ impl User {
         for _item in get_friends_ids.iter() {
             stack.push(_item);
         };
-        for friend in user_friends {
-            let get_friend_friends_ids = friend.get_friends_ids();
-            for f in get_friend_friends_ids.iter() {
-                if stack.iter().any(|&i| i!=f) {
-                    stack.push(f);
-                }
-            }
-        }
+        //for friend in user_friends {
+        //    let get_friend_friends_ids = friend.get_friends_ids();
+        //    for f in get_friend_friends_ids.iter() {
+        //        if stack.iter().any(|&i| i!=f) {
+        //            stack.push(f);
+        //        }
+        //    }
+        //}
         return stack;
     }
 
