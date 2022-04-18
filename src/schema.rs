@@ -479,6 +479,54 @@ table! {
 }
 
 table! {
+    friends_visible_perms (id) {
+        id -> Int4,
+        user_id -> Int4,
+        can_see_info -> Nullable<Char>,
+        can_see_community -> Nullable<Char>,
+        can_see_friend -> Nullable<Char>,
+        can_send_message -> Nullable<Char>,
+        can_add_in_chat -> Nullable<Char>,
+        can_see_doc -> Nullable<Char>,
+        can_see_music -> Nullable<Char>,
+        can_see_survey -> Nullable<Char>,
+        can_see_post -> Nullable<Char>,
+        can_see_post_comment -> Nullable<Char>,
+        can_see_photo -> Nullable<Char>,
+        can_see_photo_comment -> Nullable<Char>,
+        can_see_good -> Nullable<Char>,
+        can_see_good_comment -> Nullable<Char>,
+        can_see_video -> Nullable<Char>,
+        can_see_video_comment -> Nullable<Char>,
+        can_see_planner -> Nullable<Char>,
+        can_see_planner_comment -> Nullable<Char>,
+    }
+}
+
+table! {
+    friends_work_perms (id) {
+        id -> Int4,
+        user_id -> Int4,
+        can_copy_post -> Nullable<Char>,
+        can_copy_photo -> Nullable<Char>,
+        can_copy_good -> Nullable<Char>,
+        can_copy_video -> Nullable<Char>,
+        can_copy_planner -> Nullable<Char>,
+        can_copy_doc -> Nullable<Char>,
+        can_copy_music -> Nullable<Char>,
+        can_copy_survey -> Nullable<Char>,
+        can_work_post -> Nullable<Char>,
+        can_work_photo -> Nullable<Char>,
+        can_work_good -> Nullable<Char>,
+        can_work_video -> Nullable<Char>,
+        can_work_planner -> Nullable<Char>,
+        can_work_doc -> Nullable<Char>,
+        can_work_music -> Nullable<Char>,
+        can_work_survey -> Nullable<Char>,
+    }
+}
+
+table! {
     good_categories (id) {
         id -> Int4,
         name -> Varchar,
@@ -755,47 +803,6 @@ table! {
         repost -> Int4,
         copy -> Int4,
         position -> Int2,
-    }
-}
-
-table! {
-    new_friends_perms (id) {
-        id -> Int4,
-        user_id -> Int4,
-        can_see_info -> Nullable<Char>,
-        can_see_community -> Nullable<Char>,
-        can_see_friend -> Nullable<Char>,
-        can_send_message -> Nullable<Char>,
-        can_add_in_chat -> Nullable<Char>,
-        can_see_doc -> Nullable<Char>,
-        can_see_music -> Nullable<Char>,
-        can_see_survey -> Nullable<Char>,
-        can_see_post -> Nullable<Char>,
-        can_see_post_comment -> Nullable<Char>,
-        can_see_photo -> Nullable<Char>,
-        can_see_photo_comment -> Nullable<Char>,
-        can_see_good -> Nullable<Char>,
-        can_see_good_comment -> Nullable<Char>,
-        can_see_video -> Nullable<Char>,
-        can_see_video_comment -> Nullable<Char>,
-        can_see_planner -> Nullable<Char>,
-        can_see_planner_comment -> Nullable<Char>,
-        can_copy_post -> Nullable<Char>,
-        can_copy_photo -> Nullable<Char>,
-        can_copy_good -> Nullable<Char>,
-        can_copy_video -> Nullable<Char>,
-        can_copy_planner -> Nullable<Char>,
-        can_copy_doc -> Nullable<Char>,
-        can_copy_music -> Nullable<Char>,
-        can_copy_survey -> Nullable<Char>,
-        c_post -> Nullable<Char>,
-        c_photo -> Nullable<Char>,
-        c_good -> Nullable<Char>,
-        c_video -> Nullable<Char>,
-        c_planner -> Nullable<Char>,
-        c_doc -> Nullable<Char>,
-        c_music -> Nullable<Char>,
-        c_survey -> Nullable<Char>,
     }
 }
 
@@ -1703,6 +1710,8 @@ joinable!(doc_lists -> users (user_id));
 joinable!(docs -> communitys (community_id));
 joinable!(docs -> doc_lists (doc_list_id));
 joinable!(docs -> users (user_id));
+joinable!(friends_visible_perms -> users (user_id));
+joinable!(friends_work_perms -> users (user_id));
 joinable!(good_comments -> goods (good_id));
 joinable!(good_comments -> stickers (sticker_id));
 joinable!(good_comments -> users (user_id));
@@ -1737,7 +1746,6 @@ joinable!(music_lists -> users (user_id));
 joinable!(musics -> communitys (community_id));
 joinable!(musics -> music_lists (music_list_id));
 joinable!(musics -> users (user_id));
-joinable!(new_friends_perms -> users (user_id));
 joinable!(photo_comments -> photos (photo_id));
 joinable!(photo_comments -> stickers (sticker_id));
 joinable!(photo_comments -> users (user_id));
@@ -1854,6 +1862,8 @@ allow_tables_to_appear_in_same_query!(
     featured_user_communities,
     follows,
     friends,
+    friends_visible_perms,
+    friends_work_perms,
     good_categories,
     good_comments,
     good_list_perms,
@@ -1874,7 +1884,6 @@ allow_tables_to_appear_in_same_query!(
     music_list_perms,
     music_lists,
     musics,
-    new_friends_perms,
     news_user_communities,
     notifications,
     notify_user_communities,
@@ -1885,4 +1894,62 @@ allow_tables_to_appear_in_same_query!(
     photos,
     post_categories,
     post_comments,
+    post_list_perms,
+    post_lists,
+    posts,
+    smile_categories,
+    smiles,
+    sound_genres,
+    staff_logs,
+    sticker_categories,
+    stickers,
+    support_users,
+    survey_list_perms,
+    survey_lists,
+    surveys,
+    user_anketas,
+    user_blocks,
+    user_brother_sisters,
+    user_children_ones,
+    user_colleagues_ones,
+    user_dad_ones,
+    user_delete_anketas,
+    user_doc_list_collections,
+    user_doc_list_positions,
+    user_good_list_collections,
+    user_good_list_positions,
+    user_good_notifications,
+    user_grandsons_ones,
+    user_locations,
+    user_love_statuss,
+    user_mom_ones,
+    user_music_list_collections,
+    user_music_list_positions,
+    user_music_notifications,
+    user_notifications,
+    user_partner_ones,
+    user_photo_list_collections,
+    user_photo_list_positions,
+    user_photo_notifications,
+    user_populate_smiles,
+    user_populate_stickers,
+    user_post_list_collections,
+    user_post_list_positions,
+    user_post_notifications,
+    user_privates,
+    user_profile_notifications,
+    user_profiles,
+    user_survey_list_collections,
+    user_survey_list_positions,
+    user_survey_notifications,
+    user_video_list_collections,
+    user_video_list_positions,
+    user_video_notifications,
+    users,
+    video_categories,
+    video_comments,
+    video_list_perms,
+    video_lists,
+    videos,
+    wall_objects,
 );
