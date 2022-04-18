@@ -3102,6 +3102,50 @@ impl User {
         use crate::utils::get_users_from_ids;
         return get_users_from_ids(self.get_can_see_doc_include_users_ids());
     }
+
+    pub fn get_can_see_survey_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_see_survey.eq("b"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_survey_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_see_survey.eq("a"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_survey_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_survey_exclude_users_ids());
+    }
+    pub fn get_can_see_survey_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_survey_include_users_ids());
+    }
+
     pub fn get_private_model(&self) -> UserPrivate {
         use crate::schema::user_privates::dsl::user_privates;
 
