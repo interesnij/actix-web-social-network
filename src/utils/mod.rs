@@ -10,6 +10,7 @@ use actix_web::{
   HttpRequest,
   HttpResponse
 };
+use crate::schema;
 use crate::{errors::AuthError, vars, models::SessionUser};
 use crate::models::User;
 
