@@ -3076,7 +3076,7 @@ impl User {
         }
 
         let private = self.get_private_model();
-        let char = private.can_see_info.to_string();
+        let char: String = private.can_see_info.to_string();
         let private_case = match char {
             "a" => true,
             "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
