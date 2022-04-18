@@ -73,7 +73,14 @@ ALTER TABLE table_name ADD COLUMN new_field
 BOOLEAN NOT NULL DEFAULT TRUE;
 
 -- добавление поля с автоинкрементом и primary key в таблицу
-ALTER TABLE test1 ADD COLUMN id SERIAL PRIMARY KEY;
+ALTER TABLE new_friends_perms ADD COLUMN can_copy_post "char";
+ALTER TABLE new_friends_perms ADD COLUMN can_copy_photo "char";
+ALTER TABLE new_friends_perms ADD COLUMN can_copy_good "char";
+ALTER TABLE new_friends_perms ADD COLUMN can_copy_video "char";
+ALTER TABLE new_friends_perms ADD COLUMN can_copy_planner "char";
+ALTER TABLE new_friends_perms ADD COLUMN can_copy_doc "char";
+ALTER TABLE new_friends_perms ADD COLUMN can_copy_music "char";
+ALTER TABLE new_friends_perms ADD COLUMN can_copy_survey "char";
 
 -- Удаление поля из таблицы
 ALTER TABLE new_friends_perms DROP COLUMN can_copy_post;

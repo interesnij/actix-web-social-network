@@ -44,6 +44,15 @@ pub struct NewFriendsPerm {
     pub can_see_video_comment:   Option<String>,
     pub can_see_planner:         Option<String>,
     pub can_see_planner_comment: Option<String>,
+
+    pub can_copy_post:    Option<String>,
+    pub can_copy_photo:   Option<String>,
+    pub can_copy_good:    Option<String>,
+    pub can_copy_video:   Option<String>,
+    pub can_copy_planner: Option<String>,
+    pub can_copy_doc:     Option<String>,
+    pub can_copy_music:   Option<String>,
+    pub can_copy_survey:  Option<String>,
 }
 
 #[derive(Deserialize, Insertable)]
