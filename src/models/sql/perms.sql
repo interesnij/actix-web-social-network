@@ -20,6 +20,7 @@ CREATE TABLE friends_visible_perms (
     can_see_video_comment    "char",
     can_see_planner          "char",
     can_see_planner_comment  "char",
+    can_see_all              "char",
 
     CONSTRAINT fk_friends_visible_perms
          FOREIGN KEY(user_id)

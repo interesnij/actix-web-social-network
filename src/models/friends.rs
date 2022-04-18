@@ -52,6 +52,7 @@ pub struct FriendsVisiblePerm {
     pub can_see_video_comment:   Option<String>,
     pub can_see_planner:         Option<String>,
     pub can_see_planner_comment: Option<String>,
+    pub can_see_all:             Option<String>,
 }
 
 #[derive(Deserialize, Insertable)]
@@ -78,6 +79,7 @@ pub struct NewFriendsVisiblePerm {
     pub can_see_video_comment:   Option<String>,
     pub can_see_planner:         Option<String>,
     pub can_see_planner_comment: Option<String>,
+    pub can_see_all:             Option<String>,
 }
 
 #[derive(Debug, Queryable, Serialize, Identifiable)]
