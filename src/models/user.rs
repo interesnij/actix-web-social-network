@@ -938,7 +938,7 @@ impl User {
         if self.perm > 19 {
             suffix = "staff_".to_string();
         }
-        if self.is_blocked_user_with_id(user_id) {
+        if self.is_user_in_block(user_id) {
             return "desctop/users/button/".to_owned() + &suffix + &"blocked_user.html".to_string();
         }
         else if self.is_connected_with_user_with_id(user_id){
@@ -3874,7 +3874,7 @@ impl User {
         let _new = NewNewsUserCommunitie {
             owner: self.id,
             list_id: None,
-            user_id: Some(*user_id),
+            user_id: Some(user_id),
             mute: false,
             sleep: None,
         };
