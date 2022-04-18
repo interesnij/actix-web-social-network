@@ -76,7 +76,7 @@ BOOLEAN NOT NULL DEFAULT TRUE;
 ALTER TABLE test1 ADD COLUMN id SERIAL PRIMARY KEY;
 
 -- Удаление поля из таблицы
-ALTER TABLE table_name DROP COLUMN new_field;
+ALTER TABLE new_friends_perms DROP COLUMN can_copy_post;
 
 -- переименовать поле
 ALTER TABLE table_name RENAME old_field TO new_field;
