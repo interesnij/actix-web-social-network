@@ -3669,7 +3669,7 @@ impl User {
         bool_stack.push(bool_can_see_survey);
         return bool_stack;
     }
-    pub fn set_friends_visible_perms(&self, action: String, users_ids: Vec<i8>, r#type: String) -> bool {
+    pub fn set_friends_visible_perms(&self, action: String, users_ids: Vec<i8>, types: String) -> bool {
         use crate::models::{Friend, FriendsVisiblePerm};
         use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
         use crate::schema::friends::dsl::friends;
@@ -3686,7 +3686,7 @@ impl User {
         };
         diesel::delete(friends_visible_perms.filter(schema::friends_visible_perms::user_id.eq_any(friends_stack))).execute(&_connection).expect("E");
 
-        if type == "can_see_community".to_string() {
+        if types == "can_see_community".to_string() {
             for user_id in users_ids {
                 let _new_perm = NewFriendsVisiblePerm::add_can_see_community(
                     user_id: user_id,
@@ -3698,7 +3698,7 @@ impl User {
                     .expect("Error.");
             }
         }
-        else if type == "can_see_info".to_string() {
+        else if types == "can_see_info".to_string() {
             for user_id in users_ids {
                 let _new_perm = NewFriendsVisiblePerm::add_can_see_info(
                     user_id: user_id,
@@ -3710,7 +3710,7 @@ impl User {
                     .expect("Error.");
             }
         }
-        else if type == "can_see_friend".to_string() {
+        else if types == "can_see_friend".to_string() {
             for user_id in users_ids {
                 let _new_perm = NewFriendsVisiblePerm::add_can_see_friend (
                     user_id: user_id,
@@ -3722,7 +3722,7 @@ impl User {
                     .expect("Error.");
             }
         }
-        else if type == "can_send_message".to_string() {
+        else if types == "can_send_message".to_string() {
             for user_id in users_ids {
                 let _new_perm = NewFriendsVisiblePerm::add_can_send_message (
                     user_id: user_id,
@@ -3734,7 +3734,7 @@ impl User {
                     .expect("Error.");
             }
         }
-        else if type == "can_add_in_chat".to_string() {
+        else if types == "can_add_in_chat".to_string() {
             for user_id in users_ids {
                 let _new_perm = NewFriendsVisiblePerm::add_can_add_in_chat (
                     user_id: user_id,
@@ -3746,7 +3746,7 @@ impl User {
                     .expect("Error.");
             }
         }
-        else if type == "can_see_post".to_string() {
+        else if types == "can_see_post".to_string() {
             for user_id in users_ids {
                 let _new_perm = NewFriendsVisiblePerm::add_can_see_post (
                     user_id: user_id,
@@ -3758,7 +3758,7 @@ impl User {
                     .expect("Error.");
             }
         }
-        else if type == "can_see_photo".to_string() {
+        else if types == "can_see_photo".to_string() {
             for user_id in users_ids {
                 let _new_perm = NewFriendsVisiblePerm::add_can_see_photo (
                     user_id: user_id,
@@ -3770,7 +3770,7 @@ impl User {
                     .expect("Error.");
             }
         }
-        else if type == "can_see_good".to_string() {
+        else if types == "can_see_good".to_string() {
             for user_id in users_ids {
                 let _new_perm = NewFriendsVisiblePerm::add_can_see_good (
                     user_id: user_id,
@@ -3782,7 +3782,7 @@ impl User {
                     .expect("Error.");
             }
         }
-        else if type == "can_see_video".to_string() {
+        else if types == "can_see_video".to_string() {
             for user_id in users_ids {
                 let _new_perm = NewFriendsVisiblePerm::add_can_see_video (
                     user_id: user_id,
@@ -3794,7 +3794,7 @@ impl User {
                     .expect("Error.");
             }
         }
-        else if type == "can_see_music".to_string() {
+        else if types == "can_see_music".to_string() {
             for user_id in users_ids {
                 let _new_perm = NewFriendsVisiblePerm::add_can_see_music (
                     user_id: user_id,
@@ -3806,7 +3806,7 @@ impl User {
                     .expect("Error.");
             }
         }
-        else if type == "can_see_planner".to_string() {
+        else if types == "can_see_planner".to_string() {
             for user_id in users_ids {
                 let _new_perm = NewFriendsVisiblePerm::add_can_see_planner (
                     user_id: user_id,
@@ -3818,7 +3818,7 @@ impl User {
                     .expect("Error.");
             }
         }
-        else if type == "can_see_doc".to_string() {
+        else if types == "can_see_doc".to_string() {
             for user_id in users_ids {
                 let _new_perm = NewFriendsVisiblePerm::add_can_see_doc (
                     user_id: user_id,
@@ -3830,7 +3830,7 @@ impl User {
                     .expect("Error.");
             }
         }
-        else if type == "can_see_survey".to_string() {
+        else if types == "can_see_survey".to_string() {
             for user_id in users_ids {
                 let _new_perm = NewFriendsVisiblePerm::add_can_see_survey (
                     user_id: user_id,
@@ -3842,7 +3842,7 @@ impl User {
                     .expect("Error.");
             }
         }
-        else if type == "can_see_all".to_string() {
+        else if types == "can_see_all".to_string() {
             for user_id in users_ids {
                 let _new_perm = NewFriendsVisiblePerm::add_can_see_all (
                     user_id: user_id,

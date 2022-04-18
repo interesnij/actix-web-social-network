@@ -58,7 +58,6 @@ pub struct FriendsVisiblePerm {
 #[derive(Deserialize, Insertable)]
 #[table_name="friends_visible_perms"]
 pub struct NewFriendsVisiblePerm {
-    pub id:        i32,
     pub user_id:   i32,
 
     pub can_see_info:            Option<String>,
