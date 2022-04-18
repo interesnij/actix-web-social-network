@@ -1,4 +1,4 @@
-use crate::schema::{friends, test_perms};
+use crate::schema::{friends, friends_perms};
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
 //use crate::utils::establish_connection;
@@ -24,7 +24,7 @@ pub struct NewFriend {
 
 /////// Friend //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
-pub struct TestPerm {
+pub struct FriendsPerm {
     pub id:              i32,
     pub user_id:         i32,
     pub can_see_info:      Option<String>,
@@ -65,8 +65,8 @@ pub struct TestPerm {
 
 }
 #[derive(Deserialize, Insertable)]
-#[table_name="test_perms"]
-pub struct NewTestPerm {
+#[table_name="friends_perms"]
+pub struct NewFriendsPerm {
     pub user_id:         i32,
     pub can_see_info:      Option<String>,
     pub can_see_community: Option<String>,
