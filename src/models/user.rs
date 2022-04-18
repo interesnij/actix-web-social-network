@@ -714,7 +714,8 @@ impl User {
     pub fn get_featured_communities_count(&self) -> usize {
         return self.get_featured_communities_ids().len();
     }
-    pub fn is_blocked_user_with_id(&self, user_id: i32) -> bool {
+    pub fn is_user_in_block(&self, user_id: i32) -> bool {
+        // user_id заблокирован у self
         use crate::schema::user_blocks::dsl::user_blocks;
         use crate::models::UserBlock;
 
@@ -722,6 +723,18 @@ impl User {
         let all_blocks = user_blocks
             .filter(schema::user_blocks::blocked_user_id.eq(user_id))
             .filter(schema::user_blocks::user_block_i.eq(self.id))
+            .load::<UserBlock>(&_connection)
+            .expect("E.");
+        return all_blocks.len() > 0;
+    }
+    pub fn is_self_user_in_block(&self, user_id: i32) -> bool {
+        use crate::schema::user_blocks::dsl::user_blocks;
+        use crate::models::UserBlock;
+
+        let _connection = establish_connection();
+        let all_blocks = user_blocks
+            .filter(schema::user_blocks::user_block_i.eq(user_id))
+            .filter(schema::user_blocks::blocked_user_id.eq(self.id))
             .load::<UserBlock>(&_connection)
             .expect("E.");
         return all_blocks.len() > 0;
@@ -3853,6 +3866,72 @@ impl User {
         }
         return true;
     }
+    pub fn add_news_subscriber(&self, user_id: i32) -> bool {
+        use crate::models::{NewsUserCommunitie, NewNewsUserCommunitie};
+        use crate::schema::news_user_communities::dsl::news_user_communities;
+
+        let _connection = establish_connection();
+        let _new = NewNewsUserCommunitie {
+            owner: self.id,
+            list_id: None,
+            user_id: Some(*user_id),
+            mute: false,
+            sleep: None,
+        };
+        diesel::insert_into(schema::news_user_communities::table)
+            .values(&_new)
+            .get_result::<NewsUserCommunitie>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn add_news_subscriber_in_list(&self, user_id: i32, list_id: i32) -> bool {
+        use crate::models::{NewsUserCommunitie, NewNewsUserCommunitie};
+        use crate::schema::news_user_communities::dsl::news_user_communities;
+
+        let _connection = establish_connection();
+        let _new = NewNewsUserCommunitie {
+            owner: self.id,
+            list_id: Some(*list_id),
+            user_id: Some(*user_id),
+            mute: false,
+            sleep: None,
+        };
+        diesel::insert_into(schema::news_user_communities::table)
+            .values(&_new)
+            .get_result::<NewsUserCommunitie>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn delete_news_subscriber(&self, user_id: i32) -> bool {
+        use crate::models::NewsUserCommunitie;
+        use crate::schema::news_user_communities::dsl::news_user_communities;
+
+        let _connection = establish_connection();
+        diesel::delete(news_user_communities.filter(schema::news_user_communities::owner.eq(self.id), schema::news_user_communities::user_id.eq(user_id)).execute(&_connection).expect("E");
+        return true;
+    }
+
+    pub fn follow_user(&self, user: User) -> bool {
+        if self.id == user.id || self.is_self_user_in_block(&user.id) || self.is_followers_user_with_id(&user.id) || self.is_following_user_with_id(&user.id) {
+            return false;
+        }
+        use crate::models::NewFollow;
+        use crate::schema::follows::dsl::follows;
+
+        let _connection = establish_connection();
+
+        let _new_follow = NewFollow {
+            user_id: self.id,
+            followed_user: user.id,
+            view: false,
+            visited: 0,
+        };
+        diesel::insert_into(schema::follows::table)
+            .values(&_new_follow)
+            .get_result::<Follow>(&_connection)
+            .expect("Error.");
+        user.plus_follows(1);
+
 }
 
 #[derive(Debug, Serialize, Deserialize)]
