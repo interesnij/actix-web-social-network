@@ -3058,7 +3058,7 @@ impl User {
         use crate::utils::get_users_from_ids;
         return get_users_from_ids(self.get_can_see_doc_include_users_ids());
     }
-    pub fn get_private_model(&self) -> Vec<UserPrivate> {
+    pub fn get_private_model(&self) -> UserPrivate {
         use crate::schema::user_privates::dsl::user_privates;
 
         let _connection = establish_connection();
