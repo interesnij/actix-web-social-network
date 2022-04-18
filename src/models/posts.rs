@@ -311,14 +311,14 @@ pub struct NewPostVote {
 #[belongs_to(PostComment)]
 pub struct PostCommentVote {
     pub id:              i32,
-    pub vote:            i32,
+    pub vote:            i16,
     pub user_id:         i32,
     pub post_comment_id: i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="post_comment_votes"]
 pub struct NewPostCommentVote {
-    pub vote:            i32,
+    pub vote:            i16,
     pub user_id:         i32,
     pub post_comment_id: i32,
 }
