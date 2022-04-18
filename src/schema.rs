@@ -479,7 +479,7 @@ table! {
 }
 
 table! {
-    friends_perms (id) {
+    test_perms (id) {
         id -> Int4,
         user_id -> Int4,
         can_see_info -> Nullable<Char>,
