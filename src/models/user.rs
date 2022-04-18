@@ -3425,7 +3425,7 @@ impl User {
         };
         bool_stack.push(bool_can_see_good);
 
-        let can_see_video = can_see_video.can_see_good;
+        let can_see_video = private.can_see_video;
         let bool_can_see_video = match can_see_video.as_str() {
             "a" => true,
             "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
@@ -3437,7 +3437,7 @@ impl User {
         };
         bool_stack.push(bool_can_see_video);
 
-        let can_see_music = can_see_music.can_see_good;
+        let can_see_music = private.can_see_music;
         let bool_can_see_music = match can_see_music.as_str() {
             "a" => true,
             "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
@@ -3449,7 +3449,7 @@ impl User {
         };
         bool_stack.push(bool_can_see_music);
 
-        let can_see_planner = can_see_planner.can_see_good;
+        let can_see_planner = private.can_see_planner;
         let bool_can_see_planner = match can_see_planner.as_str() {
             "a" => true,
             "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
@@ -3461,7 +3461,7 @@ impl User {
         };
         bool_stack.push(bool_can_see_planner);
 
-        let can_see_doc = can_see_doc.can_see_good;
+        let can_see_doc = private.can_see_doc;
         let bool_can_see_doc = match can_see_doc.as_str() {
             "a" => true,
             "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
@@ -3473,7 +3473,7 @@ impl User {
         };
         bool_stack.push(bool_can_see_doc);
 
-        let can_see_survey = can_see_survey.can_see_good;
+        let can_see_survey = private.can_see_survey;
         let bool_can_see_survey = match can_see_survey.as_str() {
             "a" => true,
             "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
