@@ -3688,7 +3688,7 @@ impl User {
 
         if types == "can_see_community".to_string() {
             for user_id in users_ids.iter() {
-                let _new_perm = NewFriendsVisiblePerm::add_can_see_community(*user_id, action);
+                let _new_perm = NewFriendsVisiblePerm::add_can_see_community(*user_id, action.clone());
                 diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
                     .get_result::<FriendsVisiblePerm>(&_connection)
