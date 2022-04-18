@@ -1,4 +1,4 @@
-CREATE TABLE new_friends_perms (
+CREATE TABLE friends_visible_perms (
     id                      SERIAL PRIMARY KEY,
     user_id                 INT NOT NULL,
 
@@ -21,7 +21,34 @@ CREATE TABLE new_friends_perms (
     can_see_planner          "char",
     can_see_planner_comment  "char",
 
-    CONSTRAINT fk_new_friends_perms
+    CONSTRAINT fk_friends_visible_perms
+         FOREIGN KEY(user_id)
+             REFERENCES users(id)
+);
+
+CREATE TABLE friends_work_perms (
+    id                      SERIAL PRIMARY KEY,
+    user_id                 INT NOT NULL,
+
+    can_copy_post            "char",
+    can_copy_photo           "char",
+    can_copy_good            "char",
+    can_copy_video           "char",
+    can_copy_planner         "char",
+    can_copy_doc             "char",
+    can_copy_music           "char",
+    can_copy_survey          "char",
+
+    can_work_post          "char",
+    can_work_photo         "char",
+    can_work_good          "char",
+    can_work_video         "char",
+    can_work_planner       "char",
+    can_work_doc           "char",
+    can_work_music         "char",
+    can_work_survey        "char",
+
+    CONSTRAINT fk_friends_work_perms
          FOREIGN KEY(user_id)
              REFERENCES users(id)
 );
