@@ -3699,7 +3699,7 @@ impl User {
             for user_id in users_ids.iter() {
                 let _new_perm = NewFriendsVisiblePerm::add_can_see_info(
                     *user_id,
-                    action,
+                    action.clone(),
                 );
                 diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
@@ -3711,7 +3711,7 @@ impl User {
             for user_id in users_ids.iter() {
                 let _new_perm = NewFriendsVisiblePerm::add_can_see_friend (
                     *user_id,
-                    action,
+                    action.clone(),
                 );
                 diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
@@ -3723,7 +3723,7 @@ impl User {
             for user_id in users_ids.iter() {
                 let _new_perm = NewFriendsVisiblePerm::add_can_send_message (
                     *user_id,
-                    action,
+                    action.clone(),
                 );
                 diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
@@ -3735,7 +3735,7 @@ impl User {
             for user_id in users_ids.iter() {
                 let _new_perm = NewFriendsVisiblePerm::add_can_add_in_chat (
                     *user_id,
-                    action,
+                    action.clone(),
                 );
                 diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
@@ -3747,7 +3747,7 @@ impl User {
             for user_id in users_ids.iter() {
                 let _new_perm = NewFriendsVisiblePerm::add_can_see_post (
                     *user_id,
-                    action,
+                    action.clone(),
                 );
                 diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
@@ -3759,7 +3759,7 @@ impl User {
             for user_id in users_ids.iter() {
                 let _new_perm = NewFriendsVisiblePerm::add_can_see_photo (
                     *user_id,
-                    action,
+                    action.clone(),
                 );
                 diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
@@ -3771,7 +3771,7 @@ impl User {
             for user_id in users_ids.iter() {
                 let _new_perm = NewFriendsVisiblePerm::add_can_see_good (
                     *user_id,
-                    action,
+                    action.clone(),
                 );
                 diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
@@ -3783,7 +3783,7 @@ impl User {
             for user_id in users_ids.iter() {
                 let _new_perm = NewFriendsVisiblePerm::add_can_see_video (
                     *user_id,
-                    action,
+                    action.clone(),
                 );
                 diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
@@ -3795,7 +3795,7 @@ impl User {
             for user_id in users_ids.iter() {
                 let _new_perm = NewFriendsVisiblePerm::add_can_see_music (
                     *user_id,
-                    action,
+                    action.clone(),
                 );
                 diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
@@ -3807,7 +3807,7 @@ impl User {
             for user_id in users_ids.iter() {
                 let _new_perm = NewFriendsVisiblePerm::add_can_see_planner (
                     *user_id,
-                    action,
+                    action.clone(),
                 );
                 diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
@@ -3819,7 +3819,7 @@ impl User {
             for user_id in users_ids.iter() {
                 let _new_perm = NewFriendsVisiblePerm::add_can_see_doc (
                     *user_id,
-                    action,
+                    action.clone(),
                 );
                 diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
@@ -3831,7 +3831,7 @@ impl User {
             for user_id in users_ids.iter() {
                 let _new_perm = NewFriendsVisiblePerm::add_can_see_survey (
                     *user_id,
-                    action,
+                    action.clone(),
                 );
                 diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
@@ -3843,7 +3843,7 @@ impl User {
             for user_id in users_ids.iter() {
                 let _new_perm = NewFriendsVisiblePerm::add_can_see_all (
                     *user_id,
-                    action,
+                    action.clone(),
                 );
                 diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
