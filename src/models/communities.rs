@@ -3,7 +3,6 @@ use crate::schema::{
     community_subcategorys,
     communitys,
     communities_memberships,
-    //community_ie_settings,
     community_infos,
     community_privates,
     community_notifications,
@@ -19,6 +18,8 @@ use crate::schema::{
     community_video_list_positions,
     community_survey_list_positions,
     community_doc_list_positions,
+    community_visible_perms,
+    community_work_perms,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
@@ -523,4 +524,104 @@ pub struct NewCommunityDocListPosition {
     pub list_id:  i32,
     pub position: i16,
     pub types:    String,
+}
+
+
+#[derive(Debug, Queryable, Serialize, Identifiable)]
+pub struct CommunityVisiblePerm {
+    pub id:                      i32,
+    pub user_id:                 i32,
+    pub can_see_info:            Option<String>,
+    pub can_see_community:       Option<String>,
+    pub can_see_friend:          Option<String>,
+    pub can_send_message:        Option<String>,
+    pub can_add_in_chat:         Option<String>,
+    pub can_see_doc:             Option<String>,
+    pub can_see_music:           Option<String>,
+    pub can_see_survey:          Option<String>,
+    pub can_see_post:            Option<String>,
+    pub can_see_post_comment:    Option<String>,
+    pub can_see_photo:           Option<String>,
+    pub can_see_photo_comment:   Option<String>,
+    pub can_see_good:            Option<String>,
+    pub can_see_good_comment:    Option<String>,
+    pub can_see_video:           Option<String>,
+    pub can_see_video_comment:   Option<String>,
+    pub can_see_planner:         Option<String>,
+    pub can_see_planner_comment: Option<String>,
+}
+
+#[derive(Deserialize, Insertable)]
+#[table_name="community_visible_perms"]
+pub struct NewCommunityVisiblePerm {
+    pub id:        i32,
+    pub user_id:   i32,
+
+    pub can_see_info:            Option<String>,
+    pub can_see_community:       Option<String>,
+    pub can_see_friend:          Option<String>,
+    pub can_send_message:        Option<String>,
+    pub can_add_in_chat:         Option<String>,
+    pub can_see_doc:             Option<String>,
+    pub can_see_music:           Option<String>,
+    pub can_see_survey:          Option<String>,
+    pub can_see_post:            Option<String>,
+    pub can_see_post_comment:    Option<String>,
+    pub can_see_photo:           Option<String>,
+    pub can_see_photo_comment:   Option<String>,
+    pub can_see_good:            Option<String>,
+    pub can_see_good_comment:    Option<String>,
+    pub can_see_video:           Option<String>,
+    pub can_see_video_comment:   Option<String>,
+    pub can_see_planner:         Option<String>,
+    pub can_see_planner_comment: Option<String>,
+}
+
+#[derive(Debug, Queryable, Serialize, Identifiable)]
+pub struct CommunityWorkPerm {
+    pub id:               i32,
+    pub user_id:          i32,
+
+    pub can_copy_post:    Option<String>,
+    pub can_copy_photo:   Option<String>,
+    pub can_copy_good:    Option<String>,
+    pub can_copy_video:   Option<String>,
+    pub can_copy_planner: Option<String>,
+    pub can_copy_doc:     Option<String>,
+    pub can_copy_music:   Option<String>,
+    pub can_copy_survey:  Option<String>,
+
+    pub can_work_post:    Option<String>,
+    pub can_work_photo:   Option<String>,
+    pub can_work_good:    Option<String>,
+    pub can_work_video:   Option<String>,
+    pub can_work_planner: Option<String>,
+    pub can_work_doc:     Option<String>,
+    pub can_work_music:   Option<String>,
+    pub can_work_survey:  Option<String>,
+}
+
+#[derive(Deserialize, Insertable)]
+#[table_name="community_work_perms"]
+pub struct NewCommunityWorkPerm {
+    pub id:        i32,
+    pub user_id:   i32,
+
+    pub can_copy_post:    Option<String>,
+    pub can_copy_photo:   Option<String>,
+    pub can_copy_good:    Option<String>,
+    pub can_copy_video:   Option<String>,
+    pub can_copy_planner: Option<String>,
+    pub can_copy_doc:     Option<String>,
+    pub can_copy_music:   Option<String>,
+    pub can_copy_survey:  Option<String>,
+
+    pub can_work_post:    Option<String>,
+    pub can_work_photo:   Option<String>,
+    pub can_work_good:    Option<String>,
+    pub can_work_video:   Option<String>,
+    pub can_work_planner: Option<String>,
+    pub can_work_doc:     Option<String>,
+    pub can_work_music:   Option<String>,
+    pub can_work_survey:  Option<String>,
 }

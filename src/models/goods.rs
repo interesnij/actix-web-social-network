@@ -5,6 +5,8 @@ use crate::schema::{
     user_good_list_collections,
     community_good_list_collections,
     good_list_perms,
+    good_votes,
+    good_comment_votes,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
@@ -270,4 +272,41 @@ pub struct NewGoodListPerm {
     pub create_item:     Option<String>,
     pub create_comment:  Option<String>,
     pub can_copy:        Option<String>,
+}
+
+/////// GoodVote//////
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(User)]
+#[belongs_to(Good)]
+pub struct GoodVote {
+    pub id:              i32,
+    pub vote:            i32,
+    pub user_id:         i32,
+    pub good_id:         i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="good_votes"]
+pub struct NewGoodVote {
+    pub vote:            i32,
+    pub user_id:         i32,
+    pub good_id:         i32,
+}
+
+
+/////// GoodCommentVote //////
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(User)]
+#[belongs_to(GoodComment)]
+pub struct GoodCommentVote {
+    pub id:              i32,
+    pub vote:            i32,
+    pub user_id:         i32,
+    pub good_comment_id: i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="good_comment_votes"]
+pub struct NewGoodCommentVote {
+    pub vote:            i32,
+    pub user_id:         i32,
+    pub good_comment_id: i32,
 }

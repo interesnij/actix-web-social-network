@@ -5,6 +5,8 @@ use crate::schema::{
     user_video_list_collections,
     community_video_list_collections,
     video_list_perms,
+    video_votes,
+    video_comment_votes,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
@@ -270,4 +272,42 @@ pub struct NewVideoListPerm {
     pub create_item:     Option<String>,
     pub create_comment:  Option<String>,
     pub can_copy:        Option<String>,
+}
+
+
+/////// VideoVote//////
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(User)]
+#[belongs_to(Video)]
+pub struct VideoVote {
+    pub id:              i32,
+    pub vote:            i32,
+    pub user_id:         i32,
+    pub video_id:         i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="video_votes"]
+pub struct NewVideoVote {
+    pub vote:            i32,
+    pub user_id:         i32,
+    pub video_id:         i32,
+}
+
+
+/////// VideoCommentVote //////
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(User)]
+#[belongs_to(VideoComment)]
+pub struct VideoCommentVote {
+    pub id:              i32,
+    pub vote:            i32,
+    pub user_id:         i32,
+    pub video_comment_id: i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="video_comment_votes"]
+pub struct NewVideoCommentVote {
+    pub vote:            i32,
+    pub user_id:         i32,
+    pub video_comment_id: i32,
 }

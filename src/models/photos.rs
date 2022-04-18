@@ -5,6 +5,8 @@ use crate::schema::{
     user_photo_list_collections,
     community_photo_list_collections,
     photo_list_perms,
+    photo_votes,
+    photo_comment_votes,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
@@ -269,4 +271,42 @@ pub struct NewPhotoListPerm {
     pub create_item:     Option<String>,
     pub create_comment:  Option<String>,
     pub can_copy:        Option<String>,
+}
+
+
+/////// PhotoVote//////
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(User)]
+#[belongs_to(Photo)]
+pub struct PhotoVote {
+    pub id:              i32,
+    pub vote:            i32,
+    pub user_id:         i32,
+    pub photo_id:         i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="photo_votes"]
+pub struct NewPhotoVote {
+    pub vote:            i32,
+    pub user_id:         i32,
+    pub photo_id:         i32,
+}
+
+
+/////// PhotoCommentVote //////
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(User)]
+#[belongs_to(PhotoComment)]
+pub struct PhotoCommentVote {
+    pub id:              i32,
+    pub vote:            i32,
+    pub user_id:         i32,
+    pub photo_comment_id: i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="photo_comment_votes"]
+pub struct NewPhotoCommentVote {
+    pub vote:            i32,
+    pub user_id:         i32,
+    pub photo_comment_id: i32,
 }

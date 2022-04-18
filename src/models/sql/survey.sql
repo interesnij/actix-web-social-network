@@ -105,3 +105,29 @@ CREATE TABLE survey_list_perms (
         FOREIGN KEY(survey_list_id)
             REFERENCES survey_lists(id)
 );
+
+CREATE TABLE survey_answers (
+    id           SERIAL PRIMARY KEY,
+    content      VARCHAR (100) NOT NULL,
+    survey_id    INT NOT NULL,
+    vote         INT NOT NULL,
+    position     INT NOT NULL,
+
+   CONSTRAINT fk_survey_answers_survey
+        FOREIGN KEY(survey_id)
+            REFERENCES surveys(id)
+);
+
+CREATE TABLE survey_votes (
+    id               SERIAL PRIMARY KEY,
+    user_id          INT NOT NULL,
+    survey_answer_id INT NOT NULL,
+
+   CONSTRAINT fk_survey_votes_user
+        FOREIGN KEY(user_id)
+            REFERENCES users(id),
+
+   CONSTRAINT fk_survey_votes_answer
+        FOREIGN KEY(survey_answer_id)
+            REFERENCES survey_answers(id)
+);

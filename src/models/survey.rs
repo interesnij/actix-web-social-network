@@ -4,6 +4,8 @@ use crate::schema::{
     user_survey_list_collections,
     community_survey_list_collections,
     survey_list_perms,
+    survey_answers,
+    survey_votes,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
@@ -212,4 +214,38 @@ pub struct NewSurveyListPerm {
     pub can_see_item:    Option<String>,
     pub create_item:     Option<String>,
     pub can_copy:        Option<String>,
+}
+
+
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(Survey)]
+pub struct SurveyAnswer {
+    pub id:          i32,
+    pub content:     String,
+    pub survey_id:   i32,
+    pub vote:        i32,
+    pub position:       i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="survey_answers"]
+pub struct NewSurveyAnswer {
+    pub content:     String,
+    pub survey_id:   i32,
+    pub vote:        i32,
+    pub position:       i32,
+}
+
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(User)]
+#[belongs_to(SurveyAnswer)]
+pub struct SurveyVote {
+    pub id:               i32,
+    pub user_id:          i32,
+    pub survey_answer_id: i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="survey_votes"]
+pub struct NewSurveyVote  {
+    pub user_id:          i32,
+    pub survey_answer_id: i32,
 }
