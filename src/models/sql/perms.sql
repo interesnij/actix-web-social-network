@@ -1,4 +1,4 @@
-CREATE TABLE friends_perms (
+CREATE TABLE new_friends_perms (
     id                       SERIAL PRIMARY KEY,
     friend_id                INT NOT NULL,
 
@@ -39,7 +39,7 @@ CREATE TABLE friends_perms (
     can_create_music         "char",
     can_create_survey        "char",
 
-    CONSTRAINT fk_friends_perms
+    CONSTRAINT fk_new_friends_perms
          FOREIGN KEY(user_id)
              REFERENCES users(id)
 );
