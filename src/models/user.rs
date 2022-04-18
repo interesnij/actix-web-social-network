@@ -2569,7 +2569,7 @@ impl User {
         let _connection = establish_connection();
         let items = friends_visible_perms
             .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
-            .filter(schema::friends_visible_perms::can_see_community.eq("a".unwrap()))
+            .filter(schema::friends_visible_perms::can_see_community.eq("a"))
             .load::<FriendsVisiblePerm>(&_connection)
             .expect("E");
 
