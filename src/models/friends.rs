@@ -82,6 +82,124 @@ pub struct NewFriendsVisiblePerm {
     pub can_see_all:             Option<String>,
 }
 
+impl NewFriendsVisiblePerm {
+    pub fn add_can_see_info(user_id: i32, can_see_info: String) -> Self {
+        NewFriendsVisiblePerm {
+            user_id: user_id,
+            can_see_info: Some(can_see_info),
+        }
+    }
+    pub fn add_can_see_community(user_id: i32, can_see_community: String) -> Self {
+        NewFriendsVisiblePerm {
+            user_id: user_id,
+            can_see_community: Some(can_see_community),
+        }
+    }
+    pub fn add_can_see_friend(user_id: i32, can_see_friend: String) -> Self {
+        NewFriendsVisiblePerm {
+            user_id: user_id,
+            can_see_friend: Some(can_see_friend),
+        }
+    }
+    pub fn add_can_send_message(user_id: i32, can_send_message: String) -> Self {
+        NewFriendsVisiblePerm {
+            user_id: user_id,
+            can_send_message: Some(can_send_message),
+        }
+    }
+    pub fn add_can_add_in_chat(user_id: i32, can_add_in_chat: String) -> Self {
+        NewFriendsVisiblePerm {
+            user_id: user_id,
+            can_add_in_chat: Some(can_add_in_chat),
+        }
+    }
+    pub fn add_can_see_doc(user_id: i32, can_see_doc: String) -> Self {
+        NewFriendsVisiblePerm {
+            user_id: user_id,
+            can_see_doc: Some(can_see_doc),
+        }
+    }
+    pub fn add_can_see_music(user_id: i32, can_see_music: String) -> Self {
+        NewFriendsVisiblePerm {
+            user_id: user_id,
+            can_see_music: Some(can_see_music),
+        }
+    }
+    pub fn add_can_see_survey(user_id: i32, can_see_survey: String) -> Self {
+        NewFriendsVisiblePerm {
+            user_id: user_id,
+            can_see_survey: Some(can_see_survey),
+        }
+    }
+    pub fn add_can_see_post(user_id: i32, can_see_post: String) -> Self {
+        NewFriendsVisiblePerm {
+            user_id: user_id,
+            can_see_post: Some(can_see_post),
+        }
+    }
+    pub fn add_can_see_post_comment(user_id: i32, can_see_post_comment: String) -> Self {
+        NewFriendsVisiblePerm {
+            user_id: user_id,
+            can_see_post_comment: Some(can_see_post_comment),
+        }
+    }
+    pub fn add_can_see_photo(user_id: i32, can_see_photo: String) -> Self {
+        NewFriendsVisiblePerm {
+            user_id: user_id,
+            can_see_photo: Some(can_see_photo),
+        }
+    }
+    pub fn add_can_see_photo_comment(user_id: i32, can_see_photo_comment: String) -> Self {
+        NewFriendsVisiblePerm {
+            user_id: user_id,
+            can_see_photo_comment: Some(can_see_photo_comment),
+        }
+    }
+    pub fn add_can_see_good(user_id: i32, can_see_good: String) -> Self {
+        NewFriendsVisiblePerm {
+            user_id: user_id,
+            can_see_good: Some(can_see_good),
+        }
+    }
+    pub fn add_can_see_good_comment(user_id: i32, can_see_good_comment: String) -> Self {
+        NewFriendsVisiblePerm {
+            user_id: user_id,
+            can_see_good_comment: Some(can_see_good_comment),
+        }
+    }
+    pub fn add_can_see_video(user_id: i32, can_see_video: String) -> Self {
+        NewFriendsVisiblePerm {
+            user_id: user_id,
+            can_see_video: Some(can_see_video),
+        }
+    }
+    pub fn add_can_see_video_comment(user_id: i32, can_see_video_comment: String) -> Self {
+        NewFriendsVisiblePerm {
+            user_id: user_id,
+            can_see_video_comment: Some(can_see_video_comment),
+        }
+    }
+    pub fn add_can_see_planner(user_id: i32, can_see_planner: String) -> Self {
+        NewFriendsVisiblePerm {
+            user_id: user_id,
+            can_see_planner: Some(can_see_planner),
+        }
+    }
+    pub fn add_can_see_planner_comment(user_id: i32, can_see_planner_comment: String) -> Self {
+        NewFriendsVisiblePerm {
+            user_id: user_id,
+            can_see_planner_comment: Some(can_see_planner_comment),
+        }
+    }
+    pub fn add_can_see_all(user_id: i32, can_see_all: String) -> Self {
+        NewFriendsVisiblePerm {
+            user_id: user_id,
+            can_see_all: Some(can_see_all),
+        }
+    }
+}
+
+
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 pub struct FriendsWorkPerm {
     pub id:               i32,

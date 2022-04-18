@@ -3669,6 +3669,193 @@ impl User {
         bool_stack.push(bool_can_see_survey);
         return bool_stack;
     }
+    pub fn set_friends_visible_perms(&self, action: String, users_ids: Vec<i8>, type: String) -> bool {
+        use crate::models::{Friend, FriendsVisiblePerm};
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::schema::friends::dsl::friends;
+
+        let _connection = establish_connection();
+
+        let _friends = friends
+            .filter(schema::friends::target_user_id.eq_any(users_ids))
+            .load::<Friend>(&_connection)
+            .expect("E");
+        let mut friends_stack = Vec::new();
+        for _item in _friends.iter() {
+            friends_stack.push(_item.target_user_id);
+        };
+        diesel::delete(friends_visible_perms.filter(schema::friends_visible_perms::user_id.eq_any(friends_stack))).execute(&_connection).expect("E");
+
+        if type == "can_see_community".to_string() {
+            for user_id in users_ids {
+                let _new_perm = NewFriendsVisiblePerm::add_can_see_community(
+                    user_id: user_id,
+                    can_see_community: action,
+                );
+                diesel::insert_into(friends_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if type == "can_see_info".to_string() {
+            for user_id in users_ids {
+                let _new_perm = NewFriendsVisiblePerm::add_can_see_info(
+                    user_id: user_id,
+                    can_see_info: action,
+                );
+                diesel::insert_into(friends_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if type == "can_see_friend".to_string() {
+            for user_id in users_ids {
+                let _new_perm = NewFriendsVisiblePerm::add_can_see_friend (
+                    user_id: user_id,
+                    can_see_friend: action,
+                );
+                diesel::insert_into(friends_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if type == "can_send_message".to_string() {
+            for user_id in users_ids {
+                let _new_perm = NewFriendsVisiblePerm::add_can_send_message (
+                    user_id: user_id,
+                    can_send_message: action,
+                );
+                diesel::insert_into(friends_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if type == "can_add_in_chat".to_string() {
+            for user_id in users_ids {
+                let _new_perm = NewFriendsVisiblePerm::add_can_add_in_chat (
+                    user_id: user_id,
+                    can_add_in_chat: action,
+                );
+                diesel::insert_into(friends_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if type == "can_see_post".to_string() {
+            for user_id in users_ids {
+                let _new_perm = NewFriendsVisiblePerm::add_can_see_post (
+                    user_id: user_id,
+                    can_see_post: action,
+                );
+                diesel::insert_into(friends_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if type == "can_see_photo".to_string() {
+            for user_id in users_ids {
+                let _new_perm = NewFriendsVisiblePerm::add_can_see_photo (
+                    user_id: user_id,
+                    can_see_photo: action,
+                );
+                diesel::insert_into(friends_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if type == "can_see_good".to_string() {
+            for user_id in users_ids {
+                let _new_perm = NewFriendsVisiblePerm::add_can_see_good (
+                    user_id: user_id,
+                    can_see_good: action,
+                );
+                diesel::insert_into(friends_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if type == "can_see_video".to_string() {
+            for user_id in users_ids {
+                let _new_perm = NewFriendsVisiblePerm::add_can_see_video (
+                    user_id: user_id,
+                    can_see_video: action,
+                );
+                diesel::insert_into(friends_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if type == "can_see_music".to_string() {
+            for user_id in users_ids {
+                let _new_perm = NewFriendsVisiblePerm::add_can_see_music (
+                    user_id: user_id,
+                    can_see_music: action,
+                );
+                diesel::insert_into(friends_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if type == "can_see_planner".to_string() {
+            for user_id in users_ids {
+                let _new_perm = NewFriendsVisiblePerm::add_can_see_planner (
+                    user_id: user_id,
+                    can_see_planner: action,
+                );
+                diesel::insert_into(friends_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if type == "can_see_doc".to_string() {
+            for user_id in users_ids {
+                let _new_perm = NewFriendsVisiblePerm::add_can_see_doc (
+                    user_id: user_id,
+                    can_see_doc: action,
+                );
+                diesel::insert_into(friends_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if type == "can_see_survey".to_string() {
+            for user_id in users_ids {
+                let _new_perm = NewFriendsVisiblePerm::add_can_see_survey (
+                    user_id: user_id,
+                    can_see_survey: action,
+                );
+                diesel::insert_into(friends_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if type == "can_see_all".to_string() {
+            for user_id in users_ids {
+                let _new_perm = NewFriendsVisiblePerm::add_can_see_all (
+                    user_id: user_id,
+                    can_see_all: action,
+                );
+                diesel::insert_into(friends_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        return true;
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
