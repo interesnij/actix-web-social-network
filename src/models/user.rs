@@ -3577,9 +3577,6 @@ impl User {
     }
 
     pub fn get_anon_profile_all_can_see(&self) -> Vec<bool> {
-        if self.id == user_id {
-            return vec![true, true, true, true, true, true, true, true, true, true, true, true];
-        }
         let private = self.get_private_model();
 
         let can_see_all = private.can_see_all;
