@@ -3694,7 +3694,7 @@ impl User {
                 );
                 diesel::insert_into(friends_visible_perms::table)
                     .values(&_new_perm)
-                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
             }
         }
@@ -3706,7 +3706,7 @@ impl User {
                 );
                 diesel::insert_into(friends_visible_perms::table)
                     .values(&_new_perm)
-                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
             }
         }
@@ -3718,7 +3718,7 @@ impl User {
                 );
                 diesel::insert_into(friends_visible_perms::table)
                     .values(&_new_perm)
-                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
             }
         }
@@ -3730,7 +3730,7 @@ impl User {
                 );
                 diesel::insert_into(friends_visible_perms::table)
                     .values(&_new_perm)
-                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
             }
         }
@@ -3742,7 +3742,7 @@ impl User {
                 );
                 diesel::insert_into(friends_visible_perms::table)
                     .values(&_new_perm)
-                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
             }
         }
@@ -3754,7 +3754,7 @@ impl User {
                 );
                 diesel::insert_into(friends_visible_perms::table)
                     .values(&_new_perm)
-                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
             }
         }
@@ -3766,7 +3766,7 @@ impl User {
                 );
                 diesel::insert_into(friends_visible_perms::table)
                     .values(&_new_perm)
-                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
             }
         }
@@ -3778,7 +3778,7 @@ impl User {
                 );
                 diesel::insert_into(friends_visible_perms::table)
                     .values(&_new_perm)
-                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
             }
         }
@@ -3790,7 +3790,7 @@ impl User {
                 );
                 diesel::insert_into(friends_visible_perms::table)
                     .values(&_new_perm)
-                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
             }
         }
@@ -3802,7 +3802,7 @@ impl User {
                 );
                 diesel::insert_into(friends_visible_perms::table)
                     .values(&_new_perm)
-                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
             }
         }
@@ -3814,7 +3814,7 @@ impl User {
                 );
                 diesel::insert_into(friends_visible_perms::table)
                     .values(&_new_perm)
-                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
             }
         }
@@ -3826,7 +3826,7 @@ impl User {
                 );
                 diesel::insert_into(friends_visible_perms::table)
                     .values(&_new_perm)
-                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
             }
         }
@@ -3838,7 +3838,7 @@ impl User {
                 );
                 diesel::insert_into(friends_visible_perms::table)
                     .values(&_new_perm)
-                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
             }
         }
@@ -3850,7 +3850,7 @@ impl User {
                 );
                 diesel::insert_into(friends_visible_perms::table)
                     .values(&_new_perm)
-                    .get_result::<NewFriendsVisiblePerm>(&_connection)
+                    .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
             }
         }
