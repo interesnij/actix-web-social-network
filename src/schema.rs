@@ -788,6 +788,14 @@ table! {
         can_copy_doc -> Nullable<Char>,
         can_copy_music -> Nullable<Char>,
         can_copy_survey -> Nullable<Char>,
+        can_create_post -> Nullable<Char>,
+        can_create_photo -> Nullable<Char>,
+        can_create_good -> Nullable<Char>,
+        can_create_video -> Nullable<Char>,
+        can_create_planner -> Nullable<Char>,
+        can_create_doc -> Nullable<Char>,
+        can_create_music -> Nullable<Char>,
+        can_create_survey -> Nullable<Char>,
     }
 }
 
@@ -1924,10 +1932,10 @@ allow_tables_to_appear_in_same_query!(
     user_profiles,
     user_survey_list_collections,
     user_survey_list_positions,
-    //user_survey_notifications,
+    user_survey_notifications,
     user_video_list_collections,
     user_video_list_positions,
-    //user_video_notifications,
+    user_video_notifications,
     users,
     video_categories,
     video_comments,
