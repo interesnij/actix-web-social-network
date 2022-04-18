@@ -18,32 +18,32 @@ use crate::models::{User, Community};
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 pub struct Notification {
     pub id:                  i32,
-    pub recipient_id:        i32,
-    pub user_id:          i32,
+    pub recipient_id:        Option<i32>,
+    pub user_id:             i32,
     pub created:             chrono::NaiveDateTime,
     pub verb:                String,
     pub status:              String,
     pub types:               i16,  // описан в модерации тип объекта
     pub object_id:           i32,
-    pub community_id:        i32,
-    pub action_community_id: i32,
-    pub user_set_id:         i32,
-    pub object_set_id:       i32,
+    pub community_id:        Option<i32>,
+    pub action_community_id: Option<i32>,
+    pub user_set_id:         Option<i32>,
+    pub object_set_id:       Option<i32>,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="notifications"]
 pub struct NewNotification {
-    pub recipient_id:        i32,
-    pub user_id:          i32,
+    pub recipient_id:        Option<i32>,
+    pub user_id:             i32,
     pub created:             chrono::NaiveDateTime,
     pub verb:                String,
     pub status:              String,
     pub types:               i16,  // описан в модерации тип объекта
     pub object_id:           i32,
-    pub community_id:        i32,
-    pub action_community_id: i32,
-    pub user_set_id:         i32,
-    pub object_set_id:       i32,
+    pub community_id:        Option<i32>,
+    pub action_community_id: Option<i32>,
+    pub user_set_id:         Option<i32>,
+    pub object_set_id:       Option<i32>,
 }
 
 /////// Notification //////
@@ -56,28 +56,28 @@ pub struct NewNotification {
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 pub struct WallObject {
     pub id:                  i32,
-    pub user_id:          i32,
+    pub user_id:             i32,
     pub created:             chrono::NaiveDateTime,
     pub verb:                String,
     pub status:              String,
     pub types:               i16,  // описан в модерации тип объекта
     pub object_id:           i32,
-    pub community_id:        i32,
-    pub action_community_id: i32,
-    pub user_set_id:         i32,
-    pub object_set_id:       i32,
+    pub community_id:        Option<i32>,
+    pub action_community_id: Option<i32>,
+    pub user_set_id:         Option<i32>,
+    pub object_set_id:       Option<i32>,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="wall_objects"]
 pub struct NewWallObject {
-    pub user_id:        i32,
+    pub user_id:             i32,
     pub created:             chrono::NaiveDateTime,
     pub verb:                String,
     pub status:              String,
     pub types:               i16,  // описан в модерации тип объекта
     pub object_id:           i32,
-    pub community_id:        i32,
-    pub action_community_id: i32,
-    pub user_set_id:         i32,
-    pub object_set_id:       i32,
+    pub community_id:        Option<i32>,
+    pub action_community_id: Option<i32>,
+    pub user_set_id:         Option<i32>,
+    pub object_set_id:       Option<i32>,
 }
