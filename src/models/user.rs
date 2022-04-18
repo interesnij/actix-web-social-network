@@ -3842,7 +3842,7 @@ impl User {
         else if types == "can_see_all".to_string() {
             for user_id in users_ids.iter() {
                 let _new_perm = NewFriendsVisiblePerm::add_can_see_all (
-                    user_id,
+                    *user_id,
                     action,
                 );
                 diesel::insert_into(schema::friends_visible_perms::table)
