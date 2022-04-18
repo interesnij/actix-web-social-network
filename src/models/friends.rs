@@ -26,6 +26,10 @@ pub struct NewFriend {
 }
 
 
+/////// Варианты значения полей приватности //////
+    // "a" Может совершать действия
+    // "b" Не может совершать действия
+
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 pub struct FriendsVisiblePerm {
     pub id:                      i32,

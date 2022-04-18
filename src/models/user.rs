@@ -2546,6 +2546,38 @@ impl User {
             return "".to_string();
         }
     }
+    pub fn get_can_see_community_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_see_community.eq("b".unwrap()))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+    }
+    pub fn get_can_see_community_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_see_community.eq("a".unwrap()))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
