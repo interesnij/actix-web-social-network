@@ -2546,6 +2546,50 @@ impl User {
             return "".to_string();
         }
     }
+
+    pub fn get_can_see_all_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_see_all.eq("b"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_all_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_see_all.eq("a"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_all_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_all_exclude_users_ids());
+    }
+    pub fn get_can_see_all_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_all_include_users_ids());
+    }
+
     pub fn get_can_see_community_exclude_users_ids(&self) -> Vec<i32> {
         use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
         use crate::models::FriendsVisiblePerm;
@@ -3074,7 +3118,6 @@ impl User {
         if self.id == user_id {
             return true;
         }
-
         let private = self.get_private_model();
         let char = private.can_see_info;
         return match char.as_str() {
@@ -3087,7 +3130,367 @@ impl User {
             _ => false,
         };
     }
+    pub fn is_user_can_add_in_chat(&self, user_id: i32) -> bool {
+        if self.id == user_id {
+            return false;
+        }
+        let private = self.get_private_model();
+        let char = private.can_add_in_chat;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_post(&self, user_id: i32) -> bool {
+        if self.id == user_id {
+            return true;
+        }
+        let private = self.get_private_model();
+        let char = private.can_see_post;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_community(&self, user_id: i32) -> bool {
+        if self.id == user_id {
+            return true;
+        }
+        let private = self.get_private_model();
+        let char = private.can_see_community;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_photo(&self, user_id: i32) -> bool {
+        if self.id == user_id {
+            return true;
+        }
+        let private = self.get_private_model();
+        let char = private.can_see_photo;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_video(&self, user_id: i32) -> bool {
+        if self.id == user_id {
+            return true;
+        }
+        let private = self.get_private_model();
+        let char = private.can_see_video;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_music(&self, user_id: i32) -> bool {
+        if self.id == user_id {
+            return true;
+        }
+        let private = self.get_private_model();
+        let char = private.can_see_music;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_doc(&self, user_id: i32) -> bool {
+        if self.id == user_id {
+            return true;
+        }
+        let private = self.get_private_model();
+        let char = private.can_see_doc;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_friend(&self, user_id: i32) -> bool {
+        if self.id == user_id {
+            return true;
+        }
+        let private = self.get_private_model();
+        let char = private.can_see_friend;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_good(&self, user_id: i32) -> bool {
+        if self.id == user_id {
+            return true;
+        }
+        let private = self.get_private_model();
+        let char = private.can_see_good;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_survey(&self, user_id: i32) -> bool {
+        if self.id == user_id {
+            return true;
+        }
+        let private = self.get_private_model();
+        let char = private.can_see_survey;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_send_message(&self, user_id: i32) -> bool {
+        if self.id == user_id {
+            return true;
+        }
+        let private = self.get_private_model();
+        let char = private.can_send_message;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn get_profile_all_can_see(&self, user_id: i32) -> Vec<bool> {
+        if self.id == user_id {
+            return vec!["true", "true", "true", "true", "true", "true", "true", "true", "true", "true", "true", "true", "true", "true"];
+        }
+        let private = self.get_private_model();
 
+        let can_see_all = private.can_see_all;
+        bool_can_see_all = match can_see_all.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_all_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_all_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        if bool_can_see_all == false {
+            return vec!["false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false"];
+        }
+
+        let mut bool_stack = Vec::new();
+        bool_stack.push(true)
+
+        let can_see_community = private.can_see_community;
+        bool_can_see_community = match can_see_community.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_community_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_community_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_community);
+
+        let can_see_info = private.can_see_info;
+        bool_can_see_info = match can_see_info.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_info);
+
+        let can_see_friend = private.can_see_friend;
+        bool_can_see_friend = match can_see_friend.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_friend_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_friend_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_friend);
+
+        let can_send_message = private.can_send_message;
+        bool_can_send_message = match can_send_message.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_send_message_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_send_message_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_send_message);
+
+        let can_add_in_chat = private.can_add_in_chat;
+        bool_can_add_in_chat = match can_add_in_chat.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_add_in_chat_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_add_in_chat_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_add_in_chat);
+
+        let can_see_post = private.can_see_post;
+        bool_can_see_post = match can_see_post.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_post_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_post_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_post);
+
+        let can_see_photo = private.can_see_photo;
+        bool_can_see_photo = match can_see_photo.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_photo_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_photo_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_photo);
+
+        let can_see_good = private.can_see_good;
+        bool_can_see_good = match can_see_good.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_good_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_good_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_good);
+
+        let can_see_video = can_see_video.can_see_good;
+        bool_can_see_video = match can_see_video.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_video_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_video_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_video);
+
+        let can_see_music = can_see_music.can_see_good;
+        bool_can_see_music = match can_see_music.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_music_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_music_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_music);
+
+        let can_see_planner = can_see_planner.can_see_good;
+        bool_can_see_planner = match can_see_planner.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_planner_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_planner_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_planner);
+
+        let can_see_doc = can_see_doc.can_see_good;
+        bool_can_see_doc = match can_see_doc.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_doc_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_doc_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_doc);
+
+        let can_see_survey = can_see_survey.can_see_good;
+        bool_can_see_survey = match can_see_survey.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_survey_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_survey_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_survey);
+
+        return bool_stack;
+    }
+    pub fn is_anon_user_can_see_post(&self) -> bool {
+        let private = self.get_private_model();
+        return private.can_see_post == "a".to_string();
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
