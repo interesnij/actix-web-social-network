@@ -2535,7 +2535,7 @@ impl User {
 
         let mut count = self.count_user_notifications();
         if self.is_staffed_user() {
-            for community in self.get_staffed_communities().iter() {
+            for _community in self.get_staffed_communities().iter() {
                 count += 1;
             }
         }
@@ -2579,6 +2579,14 @@ impl User {
             stack.push(_item.user_id);
         };
         return stack;
+    }
+    pub fn get_can_see_community_exclude_users_ids(&self) -> Vec<User> {
+        use crate::ulils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_community_exclude_users_ids());
+    }
+    pub fn get_can_see_community_include_users_ids(&self) -> Vec<User> {
+        use crate::ulils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_community_include_users_ids());
     }
 }
 

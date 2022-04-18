@@ -11,6 +11,7 @@ use actix_web::{
   HttpResponse
 };
 use crate::{errors::AuthError, vars, models::SessionUser};
+use crate::models::User;
 
 pub fn establish_connection() -> PgConnection {
     use dotenv::dotenv;
@@ -104,4 +105,15 @@ pub fn get_count_for_ru(count:i32, word1: String, word2: String, word3: String) 
     else {
         return count_str + &word3;
     }
+}
+
+pub fn get_users_from_ids(ids:Vec<i32>) -> Vec<User> {
+    use crate::schema::users::dsl::users;
+
+    let _connection = establish_connection();
+    return users
+        .filter(schema::users::id.eq_any(ids))
+        .filter(schema::users::types.lt(10))
+        .load::<User>(&_connection)
+        .expect("E");
 }
