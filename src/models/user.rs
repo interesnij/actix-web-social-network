@@ -3692,7 +3692,7 @@ impl User {
                     user_id: user_id,
                     can_see_community: action,
                 );
-                diesel::insert_into(friends_visible_perms::table)
+                diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
                     .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
@@ -3704,7 +3704,7 @@ impl User {
                     user_id: user_id,
                     can_see_info: action,
                 );
-                diesel::insert_into(friends_visible_perms::table)
+                diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
                     .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
@@ -3716,7 +3716,7 @@ impl User {
                     user_id: user_id,
                     can_see_friend: action,
                 );
-                diesel::insert_into(friends_visible_perms::table)
+                diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
                     .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
@@ -3728,7 +3728,7 @@ impl User {
                     user_id: user_id,
                     can_send_message: action,
                 );
-                diesel::insert_into(friends_visible_perms::table)
+                diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
                     .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
@@ -3740,7 +3740,7 @@ impl User {
                     user_id: user_id,
                     can_add_in_chat: action,
                 );
-                diesel::insert_into(friends_visible_perms::table)
+                diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
                     .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
@@ -3752,7 +3752,7 @@ impl User {
                     user_id: user_id,
                     can_see_post: action,
                 );
-                diesel::insert_into(friends_visible_perms::table)
+                diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
                     .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
@@ -3764,7 +3764,7 @@ impl User {
                     user_id: user_id,
                     can_see_photo: action,
                 );
-                diesel::insert_into(friends_visible_perms::table)
+                diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
                     .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
@@ -3776,7 +3776,7 @@ impl User {
                     user_id: user_id,
                     can_see_good: action,
                 );
-                diesel::insert_into(friends_visible_perms::table)
+                diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
                     .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
@@ -3788,7 +3788,7 @@ impl User {
                     user_id: user_id,
                     can_see_video: action,
                 );
-                diesel::insert_into(friends_visible_perms::table)
+                diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
                     .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
@@ -3800,7 +3800,7 @@ impl User {
                     user_id: user_id,
                     can_see_music: action,
                 );
-                diesel::insert_into(friends_visible_perms::table)
+                diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
                     .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
@@ -3812,7 +3812,7 @@ impl User {
                     user_id: user_id,
                     can_see_planner: action,
                 );
-                diesel::insert_into(friends_visible_perms::table)
+                diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
                     .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
@@ -3824,7 +3824,7 @@ impl User {
                     user_id: user_id,
                     can_see_doc: action,
                 );
-                diesel::insert_into(friends_visible_perms::table)
+                diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
                     .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
@@ -3836,7 +3836,7 @@ impl User {
                     user_id: user_id,
                     can_see_survey: action,
                 );
-                diesel::insert_into(friends_visible_perms::table)
+                diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
                     .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
@@ -3848,7 +3848,7 @@ impl User {
                     user_id: user_id,
                     can_see_all: action,
                 );
-                diesel::insert_into(friends_visible_perms::table)
+                diesel::insert_into(schema::friends_visible_perms::table)
                     .values(&_new_perm)
                     .get_result::<FriendsVisiblePerm>(&_connection)
                     .expect("Error.");
