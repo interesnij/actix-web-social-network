@@ -67,7 +67,7 @@ pub struct NewFriendsPerm {
 
 #[derive(Deserialize, Insertable)]
 #[table_name="new_friends_perms"]
-pub struct NewGoodList {
+pub struct NewNewFriendsPerm {
     pub id:        i32,
     pub user_id:   i32,
 }
