@@ -12,6 +12,7 @@ mod utils;
 #[macro_use]
 mod views;
 
+#![recursion_limit="512"]
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     use actix_cors::Cors;
