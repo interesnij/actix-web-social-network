@@ -3327,7 +3327,7 @@ impl User {
         }
 
         let mut bool_stack = Vec::new();
-        bool_stack.push(true)
+        bool_stack.push(true);
 
         let can_see_community = private.can_see_community;
         bool_can_see_community = match can_see_community.as_str() {
