@@ -1825,7 +1825,6 @@ allow_tables_to_appear_in_same_query!(
     docs,
     featured_user_communities,
     follows,
-    friend_perms2,
     friends,
     good_categories,
     good_comments,
