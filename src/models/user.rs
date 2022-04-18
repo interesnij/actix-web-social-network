@@ -2588,6 +2588,476 @@ impl User {
         use crate::utils::get_users_from_ids;
         return get_users_from_ids(self.get_can_see_community_include_users_ids());
     }
+    pub fn get_can_see_info_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_see_info.eq("b"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_info_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_see_info.eq("a"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_info_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_info_exclude_users_ids());
+    }
+    pub fn get_can_see_info_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_info_include_users_ids());
+    }
+
+    pub fn get_can_see_friend_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_see_friend.eq("b"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_friend_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_see_friend.eq("a"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_friend_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_friend_exclude_users_ids());
+    }
+    pub fn get_can_see_friend_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_friend_include_users_ids());
+    }
+    pub fn get_can_send_message_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_send_message.eq("b"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_send_message_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_send_message.eq("a"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_send_message_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_send_message_exclude_users_ids());
+    }
+    pub fn get_can_send_message_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_send_message_include_users_ids());
+    }
+
+    pub fn get_can_add_in_chat_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_add_in_chat.eq("b"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_add_in_chat_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_add_in_chat.eq("a"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_add_in_chat_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_add_in_chat_exclude_users_ids());
+    }
+    pub fn get_can_add_in_chat_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_add_in_chat_include_users_ids());
+    }
+    pub fn get_can_see_post_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_see_post.eq("b"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_post_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_see_post.eq("a"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_post_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_post_exclude_users_ids());
+    }
+    pub fn get_can_see_post_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_post_include_users_ids());
+    }
+
+    pub fn get_can_see_photo_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_see_photo.eq("b"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_photo_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_see_photo.eq("a"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_photo_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_photo_exclude_users_ids());
+    }
+    pub fn get_can_see_photo_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_photo_include_users_ids());
+    }
+
+    pub fn get_can_see_good_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_see_good.eq("b"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_good_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_see_good.eq("a"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_good_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_good_exclude_users_ids());
+    }
+    pub fn get_can_see_good_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_good_include_users_ids());
+    }
+
+    pub fn get_can_see_video_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_see_video.eq("b"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_video_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_see_video.eq("a"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_video_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_video_exclude_users_ids());
+    }
+    pub fn get_can_see_video_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_video_include_users_ids());
+    }
+
+    pub fn get_can_see_music_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_see_music.eq("b"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_music_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_see_music.eq("a"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_music_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_music_exclude_users_ids());
+    }
+    pub fn get_can_see_music_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_music_include_users_ids());
+    }
+
+    pub fn get_can_see_planner_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_see_planner.eq("b"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_planner_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_see_planner.eq("a"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_planner_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_planner_exclude_users_ids());
+    }
+    pub fn get_can_see_planner_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_planner_include_users_ids());
+    }
+
+    pub fn get_can_see_doc_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_see_doc.eq("b"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_doc_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
+        use crate::models::FriendsVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = friends_visible_perms
+            .filter(schema::friends_visible_perms::user_id.eq_any(self.get_friends_ids()))
+            .filter(schema::friends_visible_perms::can_see_doc.eq("a"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_doc_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_doc_exclude_users_ids());
+    }
+    pub fn get_can_see_doc_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_doc_include_users_ids());
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
