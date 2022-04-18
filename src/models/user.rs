@@ -3367,7 +3367,7 @@ impl User {
             _ => false,
         };
         if bool_can_see_all == false {
-            return vec![false, false, false, false, false, false, false, false, false, false, false, false, false, false];
+            return vec![false, false, false, false, self.is_user_can_send_message(user_id), self.is_user_can_add_in_chat(user_id), false, false, false, false, false, false, false, false];
         }
 
         let mut bool_stack = Vec::new();
@@ -3534,6 +3534,158 @@ impl User {
     pub fn is_anon_user_can_see_post(&self) -> bool {
         let private = self.get_private_model();
         return private.can_see_post == "a".to_string();
+    }
+    pub fn is_anon_user_can_see_all(&self) -> bool {
+        let private = self.get_private_model();
+        return private.can_see_all == "a".to_string();
+    }
+    pub fn is_anon_user_can_see_photo(&self) -> bool {
+        let private = self.get_private_model();
+        return private.can_see_photo == "a".to_string();
+    }
+    pub fn is_anon_user_can_see_community(&self) -> bool {
+        let private = self.get_private_model();
+        return private.can_see_community == "a".to_string();
+    }
+    pub fn is_anon_user_can_see_friend(&self) -> bool {
+        let private = self.get_private_model();
+        return private.can_see_friend == "a".to_string();
+    }
+    pub fn is_anon_user_can_see_doc(&self) -> bool {
+        let private = self.get_private_model();
+        return private.can_see_doc == "a".to_string();
+    }
+    pub fn is_anon_user_can_see_music(&self) -> bool {
+        let private = self.get_private_model();
+        return private.can_see_music == "a".to_string();
+    }
+    pub fn is_anon_user_can_see_video(&self) -> bool {
+        let private = self.get_private_model();
+        return private.can_see_video == "a".to_string();
+    }
+    pub fn is_anon_user_can_see_good(&self) -> bool {
+        let private = self.get_private_model();
+        return private.can_see_good == "a".to_string();
+    }
+    pub fn is_anon_user_can_see_planner(&self) -> bool {
+        let private = self.get_private_model();
+        return private.can_see_planner == "a".to_string();
+    }
+    pub fn is_anon_user_can_see_survey(&self) -> bool {
+        let private = self.get_private_model();
+        return private.can_see_survey == "a".to_string();
+    }
+
+    pub fn get_anon_profile_all_can_see(&self) -> Vec<bool> {
+        if self.id == user_id {
+            return vec![true, true, true, true, true, true, true, true, true, true, true, true];
+        }
+        let private = self.get_private_model();
+
+        let can_see_all = private.can_see_all;
+        let bool_can_see_all = match can_see_all.as_str() {
+            "a" => true,
+            _ => false,
+        };
+        if bool_can_see_all == false {
+            return vec![false, false, false, false, false, false, false, false, false, false, false, false];
+        }
+
+        let mut bool_stack = Vec::new();
+        bool_stack.push(true);
+
+        let can_see_community = private.can_see_community;
+        let bool_can_see_community = match can_see_community.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_community_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_community_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_community);
+
+        let can_see_info = private.can_see_info;
+        let bool_can_see_info = match can_see_info.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_info);
+
+        let can_see_friend = private.can_see_friend;
+        let bool_can_see_friend = match can_see_friend.as_str() {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_friend_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_friend_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_friend);
+
+        let can_see_post = private.can_see_post;
+        let bool_can_see_post = match can_see_post.as_str() {
+            "a" => true,
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_post);
+
+        let can_see_photo = private.can_see_photo;
+        let bool_can_see_photo = match can_see_photo.as_str() {
+            "a" => true,
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_photo);
+
+        let can_see_good = private.can_see_good;
+        let bool_can_see_good = match can_see_good.as_str() {
+            "a" => true,
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_good);
+
+        let can_see_video = private.can_see_video;
+        let bool_can_see_video = match can_see_video.as_str() {
+            "a" => true,
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_video);
+
+        let can_see_music = private.can_see_music;
+        let bool_can_see_music = match can_see_music.as_str() {
+            "a" => true,
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_music);
+
+        let can_see_planner = private.can_see_planner;
+        let bool_can_see_planner = match can_see_planner.as_str() {
+            "a" => true,
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_planner);
+
+        let can_see_doc = private.can_see_doc;
+        let bool_can_see_doc = match can_see_doc.as_str() {
+            "a" => true,
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_doc);
+
+        let can_see_survey = private.can_see_survey;
+        let bool_can_see_survey = match can_see_survey.as_str() {
+            "a" => true,
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_survey);
+        return bool_stack;
     }
 }
 
