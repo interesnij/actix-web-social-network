@@ -3670,7 +3670,7 @@ impl User {
         return bool_stack;
     }
     pub fn set_friends_visible_perms(&self, action: String, users_ids: Vec<i32>, types: String) -> bool {
-        use crate::models::{Friend, FriendsVisiblePerm};
+        use crate::models::{Friend, FriendsVisiblePerm, NewFriendsVisiblePerm};
         use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
         use crate::schema::friends::dsl::friends;
 
