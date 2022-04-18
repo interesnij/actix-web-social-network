@@ -470,7 +470,16 @@ table! {
 }
 
 table! {
-    friend_perms2 (id) {
+    friends (id) {
+        id -> Int4,
+        user_id -> Int4,
+        target_user_id -> Int4,
+        visited -> Int4,
+    }
+}
+
+table! {
+    friends_perms (id) {
         id -> Int4,
         user_id -> Int4,
         can_see_info -> Nullable<Char>,
@@ -479,15 +488,6 @@ table! {
         can_send_message -> Nullable<Char>,
         can_add_in_chat -> Nullable<Char>,
         can_see_doc -> Nullable<Char>,
-    }
-}
-
-table! {
-    friends (id) {
-        id -> Int4,
-        user_id -> Int4,
-        target_user_id -> Int4,
-        visited -> Int4,
     }
 }
 
@@ -1675,7 +1675,6 @@ joinable!(doc_lists -> users (user_id));
 joinable!(docs -> communitys (community_id));
 joinable!(docs -> doc_lists (doc_list_id));
 joinable!(docs -> users (user_id));
-joinable!(friend_perms2 -> users (user_id));
 joinable!(good_comments -> goods (good_id));
 joinable!(good_comments -> stickers (sticker_id));
 joinable!(good_comments -> users (user_id));
@@ -1826,6 +1825,7 @@ allow_tables_to_appear_in_same_query!(
     featured_user_communities,
     follows,
     friends,
+    friends_perms,
     good_categories,
     good_comments,
     good_list_perms,
@@ -1897,16 +1897,16 @@ allow_tables_to_appear_in_same_query!(
     user_populate_stickers,
     user_post_list_collections,
     user_post_list_positions,
-    //user_post_notifications,
+    user_post_notifications,
     user_privates,
-    //user_profile_notifications,
+    user_profile_notifications,
     user_profiles,
     user_survey_list_collections,
     user_survey_list_positions,
-    //user_survey_notifications,
+    user_survey_notifications,
     user_video_list_collections,
     user_video_list_positions,
-    //user_video_notifications,
+    user_video_notifications,
     users,
     video_categories,
     video_comments,
