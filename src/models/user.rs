@@ -8,7 +8,7 @@ use crate::models::{
     Chat, Message, UserLocation, Smile, Sticker, Community, UserProfile, Friend,
     Post, Photo, Music, Video, Survey, Doc, Good,
     PostList, PhotoList, MusicList, VideoList, SurveyList, DocList, GoodList,
-    Follow, Notification,
+    Follow, Notification, UserPrivate,
 };
 
 ///// Типы пользоватетеля
@@ -3058,6 +3058,37 @@ impl User {
         use crate::utils::get_users_from_ids;
         return get_users_from_ids(self.get_can_see_doc_include_users_ids());
     }
+    pub fn get_private_model(&self) -> Vec<UserPrivate> {
+        use crate::schema::user_privates::dsl::user_privates;
+
+        let _connection = establish_connection();
+        return user_privates
+            .filter(schema::user_privates::id.eq(self.id))
+            .load::<UserPrivate>(&_connection)
+            .expect("E.")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+    pub fn is_user_can_see_info(&self, user_id: i32) -> bool {
+        if self.id == user_id {
+            return true;
+        }
+
+        let private = self.get_private_model();
+        let char = private.can_see_info;
+        let private_case = match char {
+            "a" => true,
+            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+            "d" => false,
+            "e" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        return private_case;
+    }
+
 }
 
 #[derive(Debug, Serialize, Deserialize)]
