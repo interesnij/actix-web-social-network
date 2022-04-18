@@ -101,7 +101,7 @@ pub struct FriendsWorkPerm {
 }
 
 #[derive(Deserialize, Insertable)]
-#[table_name="new_work_perms"]
+#[table_name="friends_work_perms"]
 pub struct NewFriendsWorkPerm {
     pub id:        i32,
     pub user_id:   i32,
