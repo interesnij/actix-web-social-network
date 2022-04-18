@@ -280,14 +280,14 @@ pub struct NewGoodListPerm {
 #[belongs_to(Good)]
 pub struct GoodVote {
     pub id:              i32,
-    pub vote:            i32,
+    pub vote:            i16,
     pub user_id:         i32,
     pub good_id:         i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="good_votes"]
 pub struct NewGoodVote {
-    pub vote:            i32,
+    pub vote:            i16,
     pub user_id:         i32,
     pub good_id:         i32,
 }
@@ -299,14 +299,14 @@ pub struct NewGoodVote {
 #[belongs_to(GoodComment)]
 pub struct GoodCommentVote {
     pub id:              i32,
-    pub vote:            i32,
+    pub vote:            i16,
     pub user_id:         i32,
     pub good_comment_id: i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="good_comment_votes"]
 pub struct NewGoodCommentVote {
-    pub vote:            i32,
+    pub vote:            i16,
     pub user_id:         i32,
     pub good_comment_id: i32,
 }

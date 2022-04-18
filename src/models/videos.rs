@@ -281,14 +281,14 @@ pub struct NewVideoListPerm {
 #[belongs_to(Video)]
 pub struct VideoVote {
     pub id:              i32,
-    pub vote:            i32,
+    pub vote:            i16,
     pub user_id:         i32,
     pub video_id:         i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="video_votes"]
 pub struct NewVideoVote {
-    pub vote:            i32,
+    pub vote:            i16,
     pub user_id:         i32,
     pub video_id:         i32,
 }
@@ -300,14 +300,14 @@ pub struct NewVideoVote {
 #[belongs_to(VideoComment)]
 pub struct VideoCommentVote {
     pub id:              i32,
-    pub vote:            i32,
+    pub vote:            i16,
     pub user_id:         i32,
     pub video_comment_id: i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="video_comment_votes"]
 pub struct NewVideoCommentVote {
-    pub vote:            i32,
+    pub vote:            i16,
     pub user_id:         i32,
     pub video_comment_id: i32,
 }

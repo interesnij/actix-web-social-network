@@ -292,14 +292,14 @@ pub struct NewPostListPerm {
 #[belongs_to(Post)]
 pub struct PostVote {
     pub id:              i32,
-    pub vote:            i32,
+    pub vote:            i16,
     pub user_id:         i32,
     pub post_id:         i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="post_votes"]
 pub struct NewPostVote {
-    pub vote:            i32,
+    pub vote:            i16,
     pub user_id:         i32,
     pub post_id:         i32,
 }

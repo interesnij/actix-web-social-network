@@ -1,8 +1,8 @@
 use crate::schema::{
     follows,
     community_follows,
-    friends_visible_perms,
-    friends_work_perms,
+    follows_visible_perms,
+    follows_work_perms,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};

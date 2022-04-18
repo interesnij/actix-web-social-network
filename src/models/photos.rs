@@ -280,14 +280,14 @@ pub struct NewPhotoListPerm {
 #[belongs_to(Photo)]
 pub struct PhotoVote {
     pub id:              i32,
-    pub vote:            i32,
+    pub vote:            i16,
     pub user_id:         i32,
     pub photo_id:         i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="photo_votes"]
 pub struct NewPhotoVote {
-    pub vote:            i32,
+    pub vote:            i16,
     pub user_id:         i32,
     pub photo_id:         i32,
 }
@@ -299,14 +299,14 @@ pub struct NewPhotoVote {
 #[belongs_to(PhotoComment)]
 pub struct PhotoCommentVote {
     pub id:              i32,
-    pub vote:            i32,
+    pub vote:            i16,
     pub user_id:         i32,
     pub photo_comment_id: i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="photo_comment_votes"]
 pub struct NewPhotoCommentVote {
-    pub vote:            i32,
+    pub vote:            i16,
     pub user_id:         i32,
     pub photo_comment_id: i32,
 }
