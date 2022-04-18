@@ -8,7 +8,7 @@ use crate::models::{
     Chat, Message, UserLocation, Smile, Sticker, Community, UserProfile, Friend,
     Post, Photo, Music, Video, Survey, Doc, Good,
     PostList, PhotoList, MusicList, VideoList, SurveyList, DocList, GoodList,
-    Follow,
+    Follow, Notification,
 };
 
 ///// Типы пользоватетеля
@@ -2488,7 +2488,7 @@ impl User {
             .load::<ChatUser>(&_connection)
             .expect("E").len() > 0;
     }
-    pub fn get_unread_chats(&self) -> i32 {
+    pub fn count_unread_chats(&self) -> i32 {
         use crate::schema::messages::dsl::messages;
 
         let _connection = establish_connection();
@@ -2506,6 +2506,45 @@ impl User {
                 }
         }
         return count
+    }
+    pub fn get_user_notifications(&self) -> Vec<Notification> {
+        use crate::schema::notifications::dsl::notifications;
+
+        let _connection = establish_connection();
+        return notifications
+            .filter(schema::notifications::user_id.eq_any(self.get_users_ids_for_main_notifications()))
+            .or_filter(schema::notifications::community_id.eq_any(self.get_communities_ids_for_main_notifications()))
+            .filter(schema::notifications::user_set_id.is_null())
+            .filter(schema::notifications::object_set_id.is_null())
+            .load::<Notification>(&_connection)
+            .expect("E");
+    }
+    pub fn count_user_notifications(&self) -> usize {
+        use crate::schema::notifications::dsl::notifications;
+
+        let _connection = establish_connection();
+        return notifications
+            .filter(schema::notifications::recipient_id.eq(self.id))
+            .filter(schema::notifications::community_id.is_null())
+            .filter(schema::notifications::status.eq("a"))
+            .load::<Notification>(&_connection)
+            .expect("E").len();
+    }
+    pub fn unread_notify_count(&self) -> String {
+        use crate::schema::notifications::dsl::notifications;
+
+        let mut count = self.count_user_notifications();
+        if self.is_staffed_user() {
+            for community in self.get_staffed_communities().iter() {
+                count += 1;
+            }
+        }
+        if count > 0 {
+            return count.to_string();
+        }
+        else {
+            return "".to_string();
+        }
     }
 }
 
