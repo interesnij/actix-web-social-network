@@ -3677,7 +3677,7 @@ impl User {
         let _connection = establish_connection();
 
         let _friends = friends
-            .filter(schema::friends::target_user_id.eq_any(users_ids))
+            .filter(schema::friends::target_user_id.eq_any(&users_ids))
             .load::<Friend>(&_connection)
             .expect("E");
         let mut friends_stack = Vec::new();
