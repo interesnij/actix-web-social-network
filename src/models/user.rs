@@ -3313,7 +3313,7 @@ impl User {
         let private = self.get_private_model();
 
         let can_see_all = private.can_see_all;
-        bool_can_see_all = match can_see_all.as_str() {
+        let bool_can_see_all = match can_see_all.as_str() {
             "a" => true,
             "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
             "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
@@ -3330,7 +3330,7 @@ impl User {
         bool_stack.push(true);
 
         let can_see_community = private.can_see_community;
-        bool_can_see_community = match can_see_community.as_str() {
+        let bool_can_see_community = match can_see_community.as_str() {
             "a" => true,
             "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
             "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
@@ -3342,7 +3342,7 @@ impl User {
         bool_stack.push(bool_can_see_community);
 
         let can_see_info = private.can_see_info;
-        bool_can_see_info = match can_see_info.as_str() {
+        let bool_can_see_info = match can_see_info.as_str() {
             "a" => true,
             "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
             "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
@@ -3354,7 +3354,7 @@ impl User {
         bool_stack.push(bool_can_see_info);
 
         let can_see_friend = private.can_see_friend;
-        bool_can_see_friend = match can_see_friend.as_str() {
+        let bool_can_see_friend = match can_see_friend.as_str() {
             "a" => true,
             "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
             "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
@@ -3366,7 +3366,7 @@ impl User {
         bool_stack.push(bool_can_see_friend);
 
         let can_send_message = private.can_send_message;
-        bool_can_send_message = match can_send_message.as_str() {
+        let bool_can_send_message = match can_send_message.as_str() {
             "a" => true,
             "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
             "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
@@ -3378,7 +3378,7 @@ impl User {
         bool_stack.push(bool_can_send_message);
 
         let can_add_in_chat = private.can_add_in_chat;
-        bool_can_add_in_chat = match can_add_in_chat.as_str() {
+        let bool_can_add_in_chat = match can_add_in_chat.as_str() {
             "a" => true,
             "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
             "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
@@ -3390,7 +3390,7 @@ impl User {
         bool_stack.push(bool_can_add_in_chat);
 
         let can_see_post = private.can_see_post;
-        bool_can_see_post = match can_see_post.as_str() {
+        let bool_can_see_post = match can_see_post.as_str() {
             "a" => true,
             "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
             "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
@@ -3402,7 +3402,7 @@ impl User {
         bool_stack.push(bool_can_see_post);
 
         let can_see_photo = private.can_see_photo;
-        bool_can_see_photo = match can_see_photo.as_str() {
+        let bool_can_see_photo = match can_see_photo.as_str() {
             "a" => true,
             "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
             "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
@@ -3414,7 +3414,7 @@ impl User {
         bool_stack.push(bool_can_see_photo);
 
         let can_see_good = private.can_see_good;
-        bool_can_see_good = match can_see_good.as_str() {
+        let bool_can_see_good = match can_see_good.as_str() {
             "a" => true,
             "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
             "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
@@ -3426,7 +3426,7 @@ impl User {
         bool_stack.push(bool_can_see_good);
 
         let can_see_video = can_see_video.can_see_good;
-        bool_can_see_video = match can_see_video.as_str() {
+        let bool_can_see_video = match can_see_video.as_str() {
             "a" => true,
             "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
             "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
@@ -3438,7 +3438,7 @@ impl User {
         bool_stack.push(bool_can_see_video);
 
         let can_see_music = can_see_music.can_see_good;
-        bool_can_see_music = match can_see_music.as_str() {
+        let bool_can_see_music = match can_see_music.as_str() {
             "a" => true,
             "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
             "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
@@ -3450,7 +3450,7 @@ impl User {
         bool_stack.push(bool_can_see_music);
 
         let can_see_planner = can_see_planner.can_see_good;
-        bool_can_see_planner = match can_see_planner.as_str() {
+        let bool_can_see_planner = match can_see_planner.as_str() {
             "a" => true,
             "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
             "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
@@ -3462,7 +3462,7 @@ impl User {
         bool_stack.push(bool_can_see_planner);
 
         let can_see_doc = can_see_doc.can_see_good;
-        bool_can_see_doc = match can_see_doc.as_str() {
+        let bool_can_see_doc = match can_see_doc.as_str() {
             "a" => true,
             "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
             "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
@@ -3474,7 +3474,7 @@ impl User {
         bool_stack.push(bool_can_see_doc);
 
         let can_see_survey = can_see_survey.can_see_good;
-        bool_can_see_survey = match can_see_survey.as_str() {
+        let bool_can_see_survey = match can_see_survey.as_str() {
             "a" => true,
             "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
             "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
