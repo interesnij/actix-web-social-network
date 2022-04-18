@@ -2581,11 +2581,11 @@ impl User {
         return stack;
     }
     pub fn get_can_see_community_exclude_users(&self) -> Vec<User> {
-        use crate::ulils::get_users_from_ids;
+        use crate::utils::get_users_from_ids;
         return get_users_from_ids(self.get_can_see_community_exclude_users_ids());
     }
     pub fn get_can_see_community_include_users(&self) -> Vec<User> {
-        use crate::ulils::get_users_from_ids;
+        use crate::utils::get_users_from_ids;
         return get_users_from_ids(self.get_can_see_community_include_users_ids());
     }
 }
