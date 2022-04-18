@@ -479,19 +479,6 @@ table! {
 }
 
 table! {
-    friends_perms (id) {
-        id -> Int4,
-        user_id -> Int4,
-        can_see_info -> Nullable<Char>,
-        can_see_community -> Nullable<Char>,
-        can_see_friend -> Nullable<Char>,
-        can_send_message -> Nullable<Char>,
-        can_add_in_chat -> Nullable<Char>,
-        can_see_doc -> Nullable<Char>,
-    }
-}
-
-table! {
     good_categories (id) {
         id -> Int4,
         name -> Varchar,
@@ -768,6 +755,47 @@ table! {
         repost -> Int4,
         copy -> Int4,
         position -> Int2,
+    }
+}
+
+table! {
+    new_friends_perms (id) {
+        id -> Int4,
+        user_id -> Int4,
+        can_see_info -> Nullable<Char>,
+        can_see_community -> Nullable<Char>,
+        can_see_friend -> Nullable<Char>,
+        can_send_message -> Nullable<Char>,
+        can_add_in_chat -> Nullable<Char>,
+        can_see_doc -> Nullable<Char>,
+        can_see_music -> Nullable<Char>,
+        can_see_survey -> Nullable<Char>,
+        can_see_post -> Nullable<Char>,
+        can_see_post_comment -> Nullable<Char>,
+        can_see_photo -> Nullable<Char>,
+        can_see_photo_comment -> Nullable<Char>,
+        can_see_good -> Nullable<Char>,
+        can_see_good_comment -> Nullable<Char>,
+        can_see_video -> Nullable<Char>,
+        can_see_video_comment -> Nullable<Char>,
+        can_see_planner -> Nullable<Char>,
+        can_see_planner_comment -> Nullable<Char>,
+        can_copy_post -> Nullable<Char>,
+        can_copy_photo -> Nullable<Char>,
+        can_copy_good -> Nullable<Char>,
+        can_copy_video -> Nullable<Char>,
+        can_copy_planner -> Nullable<Char>,
+        can_copy_doc -> Nullable<Char>,
+        can_copy_music -> Nullable<Char>,
+        can_copy_survey -> Nullable<Char>,
+        can_create_post -> Nullable<Char>,
+        can_create_photo -> Nullable<Char>,
+        can_create_good -> Nullable<Char>,
+        can_create_video -> Nullable<Char>,
+        can_create_planner -> Nullable<Char>,
+        can_create_doc -> Nullable<Char>,
+        can_create_music -> Nullable<Char>,
+        can_create_survey -> Nullable<Char>,
     }
 }
 
@@ -1709,6 +1737,7 @@ joinable!(music_lists -> users (user_id));
 joinable!(musics -> communitys (community_id));
 joinable!(musics -> music_lists (music_list_id));
 joinable!(musics -> users (user_id));
+joinable!(new_friends_perms -> users (user_id));
 joinable!(photo_comments -> photos (photo_id));
 joinable!(photo_comments -> stickers (sticker_id));
 joinable!(photo_comments -> users (user_id));
@@ -1825,7 +1854,6 @@ allow_tables_to_appear_in_same_query!(
     featured_user_communities,
     follows,
     friends,
-    friends_perms,
     good_categories,
     good_comments,
     good_list_perms,
@@ -1846,6 +1874,7 @@ allow_tables_to_appear_in_same_query!(
     music_list_perms,
     music_lists,
     musics,
+    new_friends_perms,
     news_user_communities,
     notifications,
     notify_user_communities,
@@ -1892,21 +1921,21 @@ allow_tables_to_appear_in_same_query!(
     user_partner_ones,
     user_photo_list_collections,
     user_photo_list_positions,
-    //user_photo_notifications,
+    user_photo_notifications,
     user_populate_smiles,
     user_populate_stickers,
     user_post_list_collections,
     user_post_list_positions,
     user_post_notifications,
     user_privates,
-    //user_profile_notifications,
+    user_profile_notifications,
     user_profiles,
     user_survey_list_collections,
     user_survey_list_positions,
-    //user_survey_notifications,
+    user_survey_notifications,
     user_video_list_collections,
     user_video_list_positions,
-    //user_video_notifications,
+    user_video_notifications,
     users,
     video_categories,
     video_comments,
