@@ -3597,11 +3597,6 @@ impl User {
         let can_see_community = private.can_see_community;
         let bool_can_see_community = match can_see_community.as_str() {
             "a" => true,
-            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
-            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
-            "d" => false,
-            "e" => !self.get_can_see_community_exclude_users_ids().iter().any(|&i| i==user_id),
-            "f" => self.get_can_see_community_include_users_ids().iter().any(|&i| i==user_id),
             _ => false,
         };
         bool_stack.push(bool_can_see_community);
@@ -3609,11 +3604,6 @@ impl User {
         let can_see_info = private.can_see_info;
         let bool_can_see_info = match can_see_info.as_str() {
             "a" => true,
-            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
-            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
-            "d" => false,
-            "e" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
-            "f" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
             _ => false,
         };
         bool_stack.push(bool_can_see_info);
@@ -3621,11 +3611,6 @@ impl User {
         let can_see_friend = private.can_see_friend;
         let bool_can_see_friend = match can_see_friend.as_str() {
             "a" => true,
-            "b" => self.get_friends_ids().iter().any(|&i| i==user_id),
-            "c" => self.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
-            "d" => false,
-            "e" => !self.get_can_see_friend_exclude_users_ids().iter().any(|&i| i==user_id),
-            "f" => self.get_can_see_friend_include_users_ids().iter().any(|&i| i==user_id),
             _ => false,
         };
         bool_stack.push(bool_can_see_friend);
