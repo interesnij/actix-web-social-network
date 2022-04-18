@@ -2561,6 +2561,7 @@ impl User {
         for _item in items.iter() {
             stack.push(_item.user_id);
         };
+        return stack;
     }
     pub fn get_can_see_community_include_users_ids(&self) -> Vec<i32> {
         use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
@@ -2577,6 +2578,7 @@ impl User {
         for _item in items.iter() {
             stack.push(_item.user_id);
         };
+        return stack;
     }
 }
 
