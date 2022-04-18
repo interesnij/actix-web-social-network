@@ -1737,7 +1737,7 @@ joinable!(music_lists -> users (user_id));
 joinable!(musics -> communitys (community_id));
 joinable!(musics -> music_lists (music_list_id));
 joinable!(musics -> users (user_id));
-joinable!(new_friends_perms -> users (user_id));
+//joinable!(new_friends_perms -> users (user_id));
 joinable!(photo_comments -> photos (photo_id));
 joinable!(photo_comments -> stickers (sticker_id));
 joinable!(photo_comments -> users (user_id));
@@ -1874,7 +1874,7 @@ allow_tables_to_appear_in_same_query!(
     music_list_perms,
     music_lists,
     musics,
-    new_friends_perms,
+    //new_friends_perms,
     news_user_communities,
     notifications,
     notify_user_communities,
