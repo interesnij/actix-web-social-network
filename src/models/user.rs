@@ -4362,6 +4362,8 @@ impl User {
         use crate::schema::community_banner_users::dsl::community_banner_users;
         use crate::models::CommunityBannerUser;
 
+        let _connection = establish_connection();
+
         return community_banner_users
             .filter(schema::community_banner_users::community_id.eq(community_id))
             .filter(schema::community_banner_users::user_id.eq(self.id))

@@ -20,6 +20,7 @@ use crate::schema::{
     community_doc_list_positions,
     community_visible_perms,
     community_work_perms,
+    community_banner_users,
 };
 use crate::schema;
 use diesel::prelude::*;
@@ -261,15 +262,6 @@ impl Community {
             .expect("Error.");
         return true;
     }
-    pub fn plus_communities(&self, count: i32) -> bool {
-        let profile = self.get_info_model();
-        let _connection = establish_connection();
-        diesel::update(&profile)
-            .set(schema::community_infos::communities.eq(profile.communities + count))
-            .get_result::<CommunityInfo>(&_connection)
-            .expect("Error.");
-        return true;
-    }
     pub fn plus_articles(&self, count: i32) -> bool {
         let profile = self.get_info_model();
         let _connection = establish_connection();
@@ -414,6 +406,7 @@ impl Community {
         if !user.is_banned_from_community(self.id) {
             return false;
         }
+        let _connection = establish_connection();
         diesel::delete(community_banner_users
                 .filter(schema::community_banner_users::community_id.eq(self.id))
                 .filter(schema::community_banner_users::user_id.eq(user.id))
@@ -438,7 +431,7 @@ impl Community {
                     owner: user_id,
                     list_id: None,
                     user_id: None,
-                    community_id: Some(community_id),
+                    community_id: Some(self.id),
                     mute: false,
                     sleep: None,
                 };
