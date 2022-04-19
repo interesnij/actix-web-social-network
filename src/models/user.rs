@@ -4351,6 +4351,7 @@ impl User {
     }
     pub fn plus_community_visited(&self, community_id: i32) -> bool {
         use crate::schema::communities_memberships::dsl::communities_memberships;
+        use crate::models::CommunityMembership;
 
         let _connection = establish_connection();
         let _member = communities_memberships
