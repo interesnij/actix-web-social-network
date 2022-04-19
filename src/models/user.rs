@@ -4142,7 +4142,7 @@ impl User {
         let _follow = follows.filter(schema::follows::user_id.eq(self.id)).load::<Follow>(&_connection).expect("E");
         if _follow.len() > 0 {
             diesel::delete(follows.filter(schema::follows::user_id.eq(self.id))).execute(&_connection).expect("E");
-            delete_new_subscriber(user.id);
+            self.delete_new_subscriber(user.id);
             user.minus_follows(1);
             return true;
         }
