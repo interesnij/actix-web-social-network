@@ -4214,13 +4214,13 @@ impl User {
 
         diesel::delete(
             friends
-                .filter(schema::friends::user_id.eq(self.id)))
+                .filter(schema::friends::user_id.eq(self.id))
                 .filter(schema::friends::target_user_id.eq(user.id)))
                 .execute(&_connection)
                 .expect("E");
         diesel::delete(
             friends
-                .filter(schema::friends::target_user_id.eq(self.id)))
+                .filter(schema::friends::target_user_id.eq(self.id))
                 .filter(schema::friends::user_id.eq(user.id)))
                 .execute(&_connection)
                 .expect("E");
