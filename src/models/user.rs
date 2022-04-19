@@ -4002,7 +4002,7 @@ impl User {
         use crate::schema::notify_user_communities::dsl::notify_user_communities;
 
         let _connection = establish_connection();
-        if news_user_communities
+        if notify_user_communities
             .filter(schema::notify_user_communities::owner.eq(self.id))
             .filter(schema::notify_user_communities::user_id.eq(user_id))
             .load::<NotifyUserCommunitie>(&_connection)
