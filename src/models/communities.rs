@@ -25,6 +25,8 @@ use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
 use crate::utils::establish_connection;
 use crate::models::User;
+use crate::schema;
+
 
 /////// CommunityCategories //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
