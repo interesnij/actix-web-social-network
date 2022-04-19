@@ -3943,7 +3943,7 @@ impl User {
         let _list = list_user_communities_keys.filter(schema::list_user_communities_keys::id.eq(list_id)).load::<ListUserCommunitiesKey>(&_connection).expect("E");
 
         if _new.len() > 0 && _new[0].owner == self.id && _list.len() > 0 && _list[0].owner == list.id {
-            diesel::update(_new)
+            diesel::update(news_user_communities.filter(schema::news_user_communities::id.eq(new_id)))
                 .set(schema::news_user_communities::list_id.eq(_list.id))
                 .get_result::<NewsUserCommunitie>(&_connection)
                 .expect("Error.");
@@ -3958,7 +3958,7 @@ impl User {
         let _connection = establish_connection();
         let _new = news_user_communities.filter(schema::news_user_communities::id.eq(new_id)).load::<NewsUserCommunitie>(&_connection).expect("E");
         if _new.len() > 0 && _new[0].owner == self.id {
-            diesel::delete(news_user_communities.filter(schema::news_user_communities::id.eq(*self.id))).execute(&_connection).expect("E");
+            diesel::delete(news_user_communities.filter(schema::news_user_communities::id.eq(self.id))).execute(&_connection).expect("E");
             return true;
         }
         return false;
@@ -3971,7 +3971,7 @@ impl User {
         let _new = news_user_communities.filter(schema::news_user_communities::id.eq(new_id)).load::<NewsUserCommunitie>(&_connection).expect("E");
         if _new.len() > 0 && _new[0].owner == self.id {
             diesel::update(&_new[0])
-                .set(schema::news_user_communities::list_id.eq(None))
+                .set(schema::news_user_communities::list_id.is_null())
                 .get_result::<NewsUserCommunitie>(&_connection)
                 .expect("Error.");
                 return true;
@@ -4008,7 +4008,7 @@ impl User {
 
         if _notify.len() > 0 && _notify[0].owner == self.id && _list.len() > 0 && _list[0].owner == list.id {
             diesel::update(notify_user_communities.filter(schema::notify_user_communities::id.eq(notify_id)))
-                .set(schema::notify_user_communities::list_id.eq(_list.id))
+                .set(schema::notify_user_communities::list_id.eq(_list[0].id))
                 .get_result::<NotifyUserCommunitie>(&_connection)
                 .expect("Error.");
             return true;
@@ -4035,7 +4035,7 @@ impl User {
         let _notify = notify_user_communities.filter(schema::notify_user_communities::id.eq(notify_id)).load::<NotifyUserCommunitie>(&_connection).expect("E");
         if _notify.len() > 0 && _notify[0].owner == self.id {
             diesel::update(notify_user_communities.filter(schema::notify_user_communities::id.eq(notify_id)))
-                .set(schema::notify_user_communities::list_id.eq(None))
+                .set(schema::notify_user_communities::list_id.is_null())
                 .get_result::<NotifyUserCommunitie>(&_connection)
                 .expect("Error.");
                 return true;

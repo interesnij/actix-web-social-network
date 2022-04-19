@@ -273,7 +273,7 @@ CREATE TABLE news_user_communities (
     owner        INT NOT NULL,                  -- кто получает новости
     list_id      INT,
     user_id      INT,                            -- новости друга
-    community_id    INT,                       -- новости сообщества
+    community_id INT,                       -- новости сообщества
     mute         BOOLEAN NOT NULL DEFAULT false, -- не получать новости источника
     sleep        TIMESTAMP                     -- не получать новости источника до указанного времени
 );
@@ -283,7 +283,7 @@ CREATE TABLE notify_user_communities (
     owner        INT NOT NULL,                  -- кто получает уведомления
     list_id      INT,
     user_id      INT,                            -- уведомления друга
-    community_id    INT,                       -- уведомления сообщества
+    community_id INT,                       -- уведомления сообщества
     mute         BOOLEAN NOT NULL DEFAULT false, -- не получать уведомления источника
     sleep        TIMESTAMP                      -- не получать уведомления источника до указанного времени
 );
