@@ -785,14 +785,14 @@ impl User {
         use crate::schema::communitys::dsl::communitys;
 
         let _connection = establish_connection();
-        let communitys
+        let com = communitys
             .filter(schema::communitys::id.eq(community_id))
             .load::<Community>(&_connection)
             .expect("E.")
             .into_iter()
             .nth(0)
             .unwrap();
-        return community.user_id == self.id;
+        return com.user_id == self.id;
     }
     pub fn is_staffed_user(&self) -> bool {
         use crate::schema::communities_memberships::dsl::communities_memberships;
