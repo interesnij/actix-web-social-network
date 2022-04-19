@@ -16,10 +16,10 @@ let new_tag = NewTagItems{
         service_id: 0,
         tag_created: chrono::Local::now().naive_utc(),
     };
-    diesel::insert_into(tags_items::table)
-        .values(&new_tag)
-        .get_result::<TagItems>(&_connection)
-        .expect("Error.");
+diesel::insert_into(schema::tags_items::table)
+    .values(&new_tag)
+    .get_result::<TagItems>(&_connection)
+    .expect("Error.");
 ===============
 let _blog_id : i32 = *_id;
 let _blog = blogs.filter(schema::blogs::id.eq(_blog_id)).load::<Blog>(&_connection).expect("E");
