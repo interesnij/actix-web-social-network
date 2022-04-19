@@ -190,7 +190,7 @@ impl Community {
         use crate::schema::community_infos::dsl::community_infos;
 
         let _connection = establish_connection();
-        let infos = community_infos
+        return community_infos
             .filter(schema::community_infos::id.eq(self.id))
             .load::<CommunityInfo>(&_connection)
             .expect("E.")
