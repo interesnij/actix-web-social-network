@@ -269,10 +269,7 @@ impl User {
             return manager_chats[0].id
         } else {
             use crate::models::{NewChat, ChatUser, NewChatUser};
-            use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
 
-            let d = NaiveDate::from_ymd(2015, 6, 3);
-            let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
             let new_manager_chat = NewChat{
                 name: Some("Рассылка служународу.рус".to_string()),
                 types: 11,
@@ -280,7 +277,7 @@ impl User {
                 user_id: self.id,
                 position: 10,
                 members: 1,
-                created: NaiveDateTime::new(d, t),
+                created: chrono::Local::now().naive_utc(),
                 can_add_members:  "f".to_string(),
                 can_fix_item:     "b".to_string(),
                 can_mention:      "f".to_string(),
@@ -299,7 +296,7 @@ impl User {
                 chat_id: manager_chat.id,
                 types: "a".to_string(),
                 is_administrator: false,
-                created: NaiveDateTime::new(d, t),
+                created: chrono::Local::now().naive_utc(),
             };
             diesel::insert_into(schema::chat_users::table)
                 .values(&new_chat_user)
@@ -1443,9 +1440,6 @@ impl User {
         }
         else {
             use crate::models::{NewGoodList, UserGoodListPosition, NewUserGoodListPosition};
-            let d = NaiveDate::from_ymd(2015, 6, 3);
-            let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
-            use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
 
             let new_list = NewGoodList{
                     name:          "Основной список".to_string(),
@@ -1453,7 +1447,7 @@ impl User {
                     user_id:        self.id,
                     types:          "a".to_string(),
                     description:     None,
-                    created:         NaiveDateTime::new(d, t),
+                    created:         chrono::Local::now().naive_utc(),
                     count:           0,
                     repost:          0,
                     copy:            0,
@@ -1501,9 +1495,6 @@ impl User {
         }
         else {
             use crate::models::{NewMusicList, UserMusicListPosition, NewUserMusicListPosition};
-            let d = NaiveDate::from_ymd(2015, 6, 3);
-            let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
-            use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
 
             let new_list = NewMusicList{
                     name:          "Основной список".to_string(),
@@ -1512,7 +1503,7 @@ impl User {
                     types:          "a".to_string(),
                     description:     None,
                     image:           None,
-                    created:         NaiveDateTime::new(d, t),
+                    created:         chrono::Local::now().naive_utc(),
                     count:           0,
                     repost:          0,
                     copy:            0,
@@ -1558,9 +1549,6 @@ impl User {
         }
         else {
             use crate::models::{NewVideoList, UserVideoListPosition, NewUserVideoListPosition};
-            let d = NaiveDate::from_ymd(2015, 6, 3);
-            let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
-            use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
 
             let new_list = NewVideoList{
                     name:          "Основной список".to_string(),
@@ -1568,7 +1556,7 @@ impl User {
                     user_id:        self.id,
                     types:          "a".to_string(),
                     description:     None,
-                    created:         NaiveDateTime::new(d, t),
+                    created:         chrono::Local::now().naive_utc(),
                     count:           0,
                     repost:          0,
                     copy:            0,
@@ -1616,9 +1604,6 @@ impl User {
         }
         else {
             use crate::models::{NewPhotoList, UserPhotoListPosition, NewUserPhotoListPosition};
-            let d = NaiveDate::from_ymd(2015, 6, 3);
-            let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
-            use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
 
             let new_list = NewPhotoList{
                     name:          "Основной список".to_string(),
@@ -1627,7 +1612,7 @@ impl User {
                     types:          "a".to_string(),
                     description:     None,
                     cover_photo:     None,
-                    created:         NaiveDateTime::new(d, t),
+                    created:         chrono::Local::now().naive_utc(),
                     count:           0,
                     repost:          0,
                     copy:            0,
@@ -1701,9 +1686,6 @@ impl User {
         }
         else {
             use crate::models::{NewPostList, UserPostListPosition, NewUserPostListPosition};
-            let d = NaiveDate::from_ymd(2015, 6, 3);
-            let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
-            use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
 
             let new_list = NewPostList{
                     name:          "Основной список".to_string(),
@@ -1711,7 +1693,7 @@ impl User {
                     user_id:        self.id,
                     types:          "a".to_string(),
                     description:     None,
-                    created:         NaiveDateTime::new(d, t),
+                    created:         chrono::Local::now().naive_utc(),
                     count:           0,
                     repost:          0,
                     copy:            0,
@@ -1759,9 +1741,6 @@ impl User {
         }
         else {
             use crate::models::{NewDocList, UserDocListPosition, NewUserDocListPosition};
-            let d = NaiveDate::from_ymd(2015, 6, 3);
-            let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
-            use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
 
             let new_list = NewDocList{
                     name:          "Основной список".to_string(),
@@ -1769,7 +1748,7 @@ impl User {
                     user_id:        self.id,
                     types:          "a".to_string(),
                     description:     None,
-                    created:         NaiveDateTime::new(d, t),
+                    created:         chrono::Local::now().naive_utc(),
                     count:           0,
                     repost:          0,
                     copy:            0,
@@ -1815,9 +1794,6 @@ impl User {
         }
         else {
             use crate::models::{NewSurveyList, UserSurveyListPosition, NewUserSurveyListPosition};
-            let d = NaiveDate::from_ymd(2015, 6, 3);
-            let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
-            use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
 
             let new_list = NewSurveyList{
                     name:          "Основной список".to_string(),
@@ -1825,7 +1801,7 @@ impl User {
                     user_id:        self.id,
                     types:          "a".to_string(),
                     description:     None,
-                    created:         NaiveDateTime::new(d, t),
+                    created:         chrono::Local::now().naive_utc(),
                     count:           0,
                     repost:          0,
                     copy:            0,
