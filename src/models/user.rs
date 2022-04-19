@@ -4316,7 +4316,7 @@ impl User {
             .get_result::<UserBlock>(&_connection)
             .expect("Error.");
         self.delete_new_subscriber(user.id);
-        self.delete_notify_subscriber(user_id);
+        self.delete_notify_subscriber(user.id);
         return true;
     }
     pub fn unblock_user(&self, user: User) -> bool {
