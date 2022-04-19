@@ -7,7 +7,7 @@ use actix_web::{
     web,
 };
 use serde::Deserialize;
-use crate::utils::{is_signed_in, establish_connection, get_folder, get_request_user_data, to_home};
+use crate::utils::{is_signed_in, establish_connection, get_folder, get_request_user_data};
 //use diesel::prelude::*;
 use actix_session::Session;
 use sailfish::TemplateOnce;
@@ -151,6 +151,8 @@ pub async fn featured_list(session: Session, req: HttpRequest) -> actix_web::Res
                 .body(body))
         }
     } else {
-        Ok(to_home())
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body("o"))
     }
 }

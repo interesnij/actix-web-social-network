@@ -10,7 +10,6 @@ use serde::{Deserialize, Serialize};
 use crate::utils::{
     establish_connection,
     is_signed_in,
-    to_home,
     verify,
 };
 use diesel::prelude::*;
@@ -41,7 +40,9 @@ struct NobileSignupTemplate {
 
 pub async fn mobile_signup(session: Session) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        to_home();
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body("o"))
     }
 
     let body = NobileSignupTemplate { title: "Регистрация!".to_string() }
@@ -106,14 +107,18 @@ fn handle_sign_in(data: LoginUser2,
             if is_json {
                 Ok(HttpResponse::Ok().json(user))
             } else {
-                Ok(to_home())
+                Ok(HttpResponse::Ok()
+                    .content_type("text/html; charset=utf-8")
+                    .body("o"))
             }
         },
         Err(err) => {
             if is_json {
                 Ok(HttpResponse::Unauthorized().json(err.to_string()))
             } else {
-                Ok(to_home())
+                Ok(HttpResponse::Ok()
+                    .content_type("text/html; charset=utf-8")
+                    .body("o"))
             }
         },
     }
@@ -149,7 +154,9 @@ pub async fn login_form(payload: &mut Multipart) -> LoginUser2 {
 
 pub async fn login(mut payload: Multipart, session: Session, req: HttpRequest) -> impl Responder {
     if is_signed_in(&session) {
-        to_home();
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body("o"))
     }
     let form = login_form(payload.borrow_mut()).await;
     println!("{:?}", form.phone.clone());
@@ -214,7 +221,9 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
     };
      // Если пользователь не аноним, то отправляем его на страницу новостей
     if is_signed_in(&session) {
-        to_home();
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body("o"))
     }
 
     let _connection = establish_connection();

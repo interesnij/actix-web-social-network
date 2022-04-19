@@ -89,10 +89,6 @@ pub fn get_current_user(session: &Session) -> Result<SessionUser, AuthError> {
 //        )
 //}
 
-pub fn to_home() -> bool {
-  return true
-}
-
 pub fn get_count_for_ru(count:i32, word1: String, word2: String, word3: String) -> String {
     let a = count % 10;
     let b = count % 100;
