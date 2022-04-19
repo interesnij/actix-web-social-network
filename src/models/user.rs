@@ -4150,7 +4150,7 @@ impl User {
     }
 
     pub fn frend_user(&self, user: User) -> bool {
-        if self.id == user.id || self.is_self_user_in_block(user.id) || self.is_followers_user_with_id(user.id) || !self.is_following_user_with_id(user.id) {
+        if self.id == user.id || self.is_followers_user_with_id(user.id) || !self.is_following_user_with_id(user.id) {
             return false;
         }
         use crate::models::NewFriend;
@@ -4169,7 +4169,22 @@ impl User {
             .get_result::<Friend>(&_connection)
             .expect("Error.");
 
-        diesel::delete(follows.filter(schema::follows::followed_user.eq(self.id))).execute(&_connection).expect("E");
+        let _new_friend_2 = NewFriend {
+            user_id: user.id,
+            target_user_id: self.id,
+            visited: 0,
+        };
+        diesel::insert_into(schema::friends::table)
+            .values(&_new_friend_2)
+            .get_result::<Friend>(&_connection)
+            .expect("Error.");
+
+        diesel::delete(
+            follows
+                .filter(schema::follows::user_id.eq(user.id))
+                .filter(schema::follows::followed_user_id.eq(self.id)))
+                .execute(&_connection)
+                .expect("E");
         diesel::delete(
             featured_user_communities
                 .filter(schema::featured_user_communities::owner.eq(self.id))
@@ -4183,6 +4198,49 @@ impl User {
         if user.is_user_can_see_all(self.id) == false {
             self.add_new_subscriber(user.id);
             self.get_or_create_featured_objects(user);
+        }
+        return true;
+    }
+    pub fn unfrend_user(&self, user: User) -> bool {
+        if self.id == user.id || !self.is_connected_with_user_with_id(user.id) {
+            return false;
+        }
+        use crate::models::NewFollow;
+        use crate::schema::follows::dsl::follows;
+        use crate::schema::friends::dsl::friends;
+        use crate::schema::featured_user_communities::dsl::featured_user_communities;
+
+        let _connection = establish_connection();
+
+        diesel::delete(
+            friends
+                .filter(schema::friends::user_id.eq(self.id)))
+                .filter(schema::friends::target_user_id.eq(user.id)))
+                .execute(&_connection)
+                .expect("E");
+        diesel::delete(
+            friends
+                .filter(schema::friends::target_user_id.eq(self.id)))
+                .filter(schema::friends::user_id.eq(user.id)))
+                .execute(&_connection)
+                .expect("E");
+
+        let _new_follow = NewFollow {
+            user_id: user.id,
+            followed_user: self.id,
+            view: true,
+            visited: 0,
+        };
+        diesel::insert_into(schema::follows::table)
+            .values(&_new_follow)
+            .get_result::<Follow>(&_connection)
+            .expect("Error.");
+
+        user.minus_friends(1);
+        self.minus_friends(1);
+        self.plus_follows(1);
+        if user.is_user_can_see_all(self.id) == false {
+            self.delete_new_subscriber(user.id);
         }
         return true;
     }
