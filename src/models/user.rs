@@ -4148,6 +4148,44 @@ impl User {
         }
         return false;
     }
+
+    pub fn frend_user(&self, user: User) -> bool {
+        if self.id == user.id || self.is_self_user_in_block(user.id) || self.is_followers_user_with_id(user.id) || !self.is_following_user_with_id(user.id) {
+            return false;
+        }
+        use crate::models::NewFriend;
+        use crate::schema::follows::dsl::follows;
+        use crate::schema::friends::dsl::friends;
+        use crate::schema::featured_user_communities::dsl::featured_user_communities;
+
+        let _connection = establish_connection();
+        let _new_friend = NewFriend {
+            user_id: self.id,
+            target_user_id: user.id,
+            visited: 0,
+        };
+        diesel::insert_into(schema::friends::table)
+            .values(&_new_friend)
+            .get_result::<Friend>(&_connection)
+            .expect("Error.");
+
+        diesel::delete(follows.filter(schema::follows::followed_user.eq(self.id))).execute(&_connection).expect("E");
+        diesel::delete(
+            featured_user_communities
+                .filter(schema::featured_user_communities::owner.eq(self.id))
+                .filter(schema::featured_user_communities::user_id.eq(user.id)))
+                .execute(&_connection)
+                .expect("E");
+
+        user.plus_friends(1);
+        self.plus_friends(1);
+        self.minus_follows(1);
+        if user.is_user_can_see_all(self.id) == false {
+            self.add_new_subscriber(user.id);
+            self.get_or_create_featured_objects(user);
+        }
+        return true;
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
