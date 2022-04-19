@@ -221,7 +221,7 @@ impl User {
             use crate::models::{NewChat, ChatUser, NewChatUser};
 
             let new_manager_chat = NewChat{
-                name: Some("Рассылка служународу.рус".to_string()),
+                name: Some("Рассылка новостей".to_string()),
                 types: 3,
                 community_id: None,
                 user_id: self.id,
@@ -333,7 +333,6 @@ impl User {
         use crate::schema::messages::dsl::messages;
         use crate::schema::message_options::dsl::message_options;
         use crate::models::MessageOption;
-        use diesel::dsl::any;
 
         let _connection = establish_connection();
         let all_option_messages = message_options
@@ -347,7 +346,7 @@ impl User {
             stack.push(_item.message_id);
         };
         return messages
-            .filter(schema::messages::id.eq(any(stack)))
+            .filter(schema::messages::id.eq_any(stack))
             .load::<Message>(&_connection)
             .expect("E.");
     }
@@ -400,12 +399,11 @@ impl User {
         use crate::schema::smiles::dsl::smiles;
         use crate::schema::user_populate_smiles::dsl::user_populate_smiles;
         use crate::models::UserPopulateSmile;
-        use diesel::dsl::any;
 
         let _connection = establish_connection();
         let all_populate_smiles = user_populate_smiles
             .filter(schema::user_populate_smiles::user_id.eq(self.id))
-            .order(schema::user_populate_smiles::id.desc())
+            .order(schema::user_populate_smiles::count.desc())
             .load::<UserPopulateSmile>(&_connection)
             .expect("E");
         let mut stack = Vec::new();
@@ -413,7 +411,7 @@ impl User {
             stack.push(_item.smile_id);
         };
         return smiles
-            .filter(schema::smiles::id.eq(any(stack)))
+            .filter(schema::smiles::id.eq_any(stack))
             .load::<Smile>(&_connection)
             .expect("E.");
     }
@@ -421,12 +419,11 @@ impl User {
         use crate::schema::stickers::dsl::stickers;
         use crate::schema::user_populate_stickers::dsl::user_populate_stickers;
         use crate::models::UserPopulateSticker;
-        use diesel::dsl::any;
 
         let _connection = establish_connection();
         let all_populate_stickers = user_populate_stickers
             .filter(schema::user_populate_stickers::user_id.eq(self.id))
-            .order(schema::user_populate_stickers::id.desc())
+            .order(schema::user_populate_stickers::count.desc())
             .load::<UserPopulateSticker>(&_connection)
             .expect("E");
         let mut stack = Vec::new();
@@ -434,7 +431,7 @@ impl User {
             stack.push(_item.sticker_id);
         };
         return stickers
-            .filter(schema::stickers::id.eq(any(stack)))
+            .filter(schema::stickers::id.eq_any(stack))
             .load::<Sticker>(&_connection)
             .expect("E.");
     }
@@ -489,15 +486,10 @@ impl User {
         use crate::models::SupportUser;
 
         let _connection = establish_connection();
-        let _supp_users = support_users
+        return _supp_users = support_users
             .filter(schema::support_users::manager_id.eq(&self.id))
             .load::<SupportUser>(&_connection)
-            .expect("E");
-        if _supp_users.len() > 0 {
-            return true;
-        } else {
-            return false;
-        }
+            .expect("E") > 0;
     }
     pub fn is_moderator(&self) -> bool {
         return self.perm > 9;
@@ -554,7 +546,6 @@ impl User {
     pub fn get_blocked_users(&self) -> Vec<User> {
         use crate::schema::user_blocks::dsl::user_blocks;
         use crate::schema::users::dsl::users;
-        use diesel::dsl::any;
 
         let _connection = establish_connection();
         let all_user_blocks = user_blocks
@@ -567,7 +558,7 @@ impl User {
             stack.push(_item.blocked_user_id);
         };
         return users
-            .filter(schema::users::id.eq(any(stack)))
+            .filter(schema::users::id.eq(any_stack))
             .load::<User>(&_connection)
             .expect("E.");
     }
@@ -607,6 +598,8 @@ impl User {
         let mut stack = Vec::new();
         let featured_friends = featured_user_communities
             .filter(schema::featured_user_communities::owner.eq(self.id))
+            .filter(schema::featured_user_communities::community_id.is_null())
+            .order(schema::featured_user_communities::id.desc())
             .load::<FeaturedUserCommunitie>(&_connection)
             .expect("E.");
         for _item in featured_friends.iter() {
@@ -622,6 +615,8 @@ impl User {
         let mut stack = Vec::new();
         let featured_friends = &featured_user_communities
             .filter(schema::featured_user_communities::owner.eq(self.id))
+            .filter(schema::featured_user_communities::community_id.is_null())
+            .order(schema::featured_user_communities::id.desc())
             .limit(6)
             .load::<FeaturedUserCommunitie>(&_connection)
             .expect("E.");
@@ -632,21 +627,19 @@ impl User {
     }
     pub fn get_featured_friends(&self) -> Vec<User> {
         use crate::schema::users::dsl::users;
-        use diesel::dsl::any;
 
         let _connection = establish_connection();
         return users
-            .filter(schema::users::id.eq(any(self.get_featured_friends_ids())))
+            .filter(schema::users::id.eq_any(self.get_featured_friends_ids()))
             .load::<User>(&_connection)
             .expect("E.");
     }
     pub fn get_6_featured_friends(&self) -> Vec<User> {
         use crate::schema::users::dsl::users;
-        use diesel::dsl::any;
 
         let _connection = establish_connection();
         return users
-            .filter(schema::users::id.eq(any(self.get_6_featured_friends_ids())))
+            .filter(schema::users::id.eq_any(self.get_6_featured_friends_ids()))
             .load::<User>(&_connection)
             .expect("E.");
     }
@@ -661,6 +654,8 @@ impl User {
         let mut stack = Vec::new();
         let featured_communities = featured_user_communities
             .filter(schema::featured_user_communities::owner.eq(self.id))
+            .filter(schema::featured_user_communities::user_id.is_null())
+            .order(schema::featured_user_communities::id.desc())
             .load::<FeaturedUserCommunitie>(&_connection)
             .expect("E.");
         for _item in featured_communities.iter() {
@@ -676,6 +671,8 @@ impl User {
         let mut stack = Vec::new();
         let featured_communities = &featured_user_communities
             .filter(schema::featured_user_communities::owner.eq(self.id))
+            .filter(schema::featured_user_communities::user_id.is_null())
+            .order(schema::featured_user_communities::id.desc())
             .limit(6)
             .load::<FeaturedUserCommunitie>(&_connection)
             .expect("E.");
@@ -712,34 +709,34 @@ impl User {
         use crate::schema::user_blocks::dsl::user_blocks;
 
         let _connection = establish_connection();
-        let all_blocks = user_blocks
+        return all_blocks = user_blocks
             .filter(schema::user_blocks::blocked_user_id.eq(user_id))
             .filter(schema::user_blocks::user_block_i.eq(self.id))
             .load::<UserBlock>(&_connection)
-            .expect("E.");
-        return all_blocks.len() > 0;
+            .expect("E.")
+            .len() > 0;
     }
     pub fn is_self_user_in_block(&self, user_id: i32) -> bool {
         use crate::schema::user_blocks::dsl::user_blocks;
 
         let _connection = establish_connection();
-        let all_blocks = user_blocks
+        return all_blocks = user_blocks
             .filter(schema::user_blocks::user_block_i.eq(user_id))
             .filter(schema::user_blocks::blocked_user_id.eq(self.id))
             .load::<UserBlock>(&_connection)
-            .expect("E.");
-        return all_blocks.len() > 0;
+            .expect("E.")
+            .len() > 0;
     }
     pub fn is_connected_with_user_with_id(&self, user_id: i32) -> bool {
         use crate::schema::friends::dsl::friends;
 
         let _connection = establish_connection();
-        let all_friends = friends
+        return all_friends = friends
             .filter(schema::friends::user_id.eq(user_id))
             .filter(schema::friends::target_user_id.eq(self.id))
             .load::<Friend>(&_connection)
-            .expect("E.");
-        return all_friends.len() > 0;
+            .expect("E.")
+            .len() > 0;
     }
     pub fn is_staff_of_community(&self, community_id: i32) -> bool {
         use crate::schema::communities_memberships::dsl::communities_memberships;
@@ -765,28 +762,24 @@ impl User {
         use crate::models::CommunitiesMembership;
 
         let _connection = establish_connection();
-        let _members = communities_memberships
+        return _members = communities_memberships
             .filter(schema::communities_memberships::user_id.eq(self.id))
             .filter(schema::communities_memberships::community_id.eq(community_id))
             .load::<CommunitiesMembership>(&_connection)
-            .expect("E.");
-        if _members.len() > 0 {
-            return true;
-        } else {
-            return false;
-        }
+            .expect("E.")
+            .len() > 0;
     }
     pub fn is_follow_from_community(&self, community_id: i32) -> bool {
         use crate::schema::community_follows::dsl::community_follows;
         use crate::models::CommunityFollow;
 
         let _connection = establish_connection();
-        let follows = community_follows
+        return follows = community_follows
             .filter(schema::community_follows::user_id.eq(self.id))
             .filter(schema::community_follows::community_id.eq(community_id))
             .load::<CommunityFollow>(&_connection)
-            .expect("E.");
-        return follows.len() > 0;
+            .expect("E.")
+            .len() > 0;
     }
     pub fn is_creator_community(&self, community_id: i32) -> bool {
         use crate::schema::communitys::dsl::communitys;
@@ -894,12 +887,11 @@ impl User {
         use crate::schema::follows::dsl::follows;
 
         let _connection = establish_connection();
-        let all_follows = follows
+        return all_follows = follows
             .filter(schema::follows::user_id.eq(self.id))
             .filter(schema::follows::followed_user.eq(user_id))
             .load::<Follow>(&_connection)
-            .expect("E.");
-        return all_follows.len() > 0;
+            .expect("E.").len() > 0;
     }
     pub fn is_followers_user_with_id(&self, user_id: i32) -> bool {
         use crate::schema::follows::dsl::follows;
@@ -909,8 +901,8 @@ impl User {
             .filter(schema::follows::followed_user.eq(self.id))
             .filter(schema::follows::user_id.eq(user_id))
             .load::<Follow>(&_connection)
-            .expect("E.");
-        return all_follows.len() > 0;
+            .expect("E.")
+            .len() > 0;
     }
     pub fn is_followers_user_view(&self, user_id: i32) -> bool {
         use crate::schema::follows::dsl::follows;
@@ -921,8 +913,8 @@ impl User {
             .filter(schema::follows::user_id.eq(user_id))
             .filter(schema::follows::view.eq(true))
             .load::<Follow>(&_connection)
-            .expect("E.");
-        return all_follows.len() > 0;
+            .expect("E.")
+            .len() > 0;
     }
     pub fn get_buttons_profile(&self, user_id: i32) -> String {
         let mut suffix: String = "".to_string();
@@ -967,21 +959,21 @@ impl User {
         use crate::schema::follows::dsl::follows;
 
         let _connection = establish_connection();
-        let all_follows = follows
+        return all_follows = follows
             .filter(schema::follows::user_id.eq(self.id))
             .load::<Follow>(&_connection)
-            .expect("E.");
-        return all_follows.len() > 0;
+            .expect("E.")
+            .len() > 0;
     }
     pub fn is_have_blacklist(&self) -> bool {
         use crate::schema::user_blocks::dsl::user_blocks;
 
         let _connection = establish_connection();
-        let all_user_blocks = user_blocks
+        return all_user_blocks = user_blocks
             .filter(schema::user_blocks::user_block_i.eq(self.id))
             .load::<UserBlock>(&_connection)
-            .expect("E.");
-        return all_user_blocks.len() > 0;
+            .expect("E.")
+            .len() > 0;
     }
     pub fn is_have_friends(&self) -> bool {
         return self.get_profile().friends > 0;
@@ -1009,22 +1001,22 @@ impl User {
         use crate::schema::follows::dsl::follows;
 
         let _connection = establish_connection();
-        let all_follows = follows
+        return all_follows = follows
             .filter(schema::follows::followed_user.eq(self.id))
             .filter(schema::follows::view.eq(false))
             .load::<Follow>(&_connection)
-            .expect("E.");
-        return all_follows.len();
+            .expect("E.")
+            .len() > 0;
     }
     pub fn count_following(&self) -> usize {
         use crate::schema::follows::dsl::follows;
 
         let _connection = establish_connection();
-        let all_follows = follows
+        return all_follows = follows
             .filter(schema::follows::user_id.eq(self.id))
             .load::<Follow>(&_connection)
-            .expect("E.");
-        return all_follows.len();
+            .expect("E.")
+            .len();
     }
     pub fn count_followers(&self) -> i32 {
         return self.get_profile().follows;
@@ -1033,11 +1025,11 @@ impl User {
         use crate::schema::user_blocks::dsl::user_blocks;
 
         let _connection = establish_connection();
-        let all_user_blocks = user_blocks
+        return all_user_blocks = user_blocks
             .filter(schema::user_blocks::user_block_i.eq(self.id))
             .load::<UserBlock>(&_connection)
-            .expect("E.");
-        return all_user_blocks.len();
+            .expect("E.")
+            .len();
     }
     pub fn count_goods(&self) -> i32 {
         return self.get_profile().goods;
@@ -1317,11 +1309,10 @@ impl User {
 
     pub fn get_friends(&self) -> Vec<User> {
         use crate::schema::users::dsl::users;
-        use diesel::dsl::any;
 
         let _connection = establish_connection();
         return users
-            .filter(schema::users::id.eq(any(self.get_friends_ids())))
+            .filter(schema::users::id.eq_any(self.get_friends_ids()))
             .load::<User>(&_connection)
             .expect("E.");
     }
@@ -1346,7 +1337,6 @@ impl User {
         use crate::schema::communities_memberships::dsl::communities_memberships;
         use crate::schema::communitys::dsl::communitys;
         use crate::models::CommunitiesMembership;
-        use diesel::dsl::any;
 
         let _connection = establish_connection();
         let _user_communities = communities_memberships
@@ -1359,14 +1349,13 @@ impl User {
             stack.push(_item.community_id);
         };
         return communitys
-            .filter(schema::communitys::id.eq(any(stack)))
+            .filter(schema::communitys::id.eq_any(stack))
             .load::<Community>(&_connection)
             .expect("E.");
     }
     pub fn get_online_friends(&self) -> Vec<User> {
         use crate::schema::users::dsl::users;
         use chrono::{NaiveDateTime, NaiveDate, NaiveTime, Duration};
-        use diesel::dsl::any;
 
         let _connection = establish_connection();
         let d = NaiveDate::from_ymd(2015, 6, 3);
@@ -1384,14 +1373,13 @@ impl User {
     pub fn get_6_online_friends(&self) -> Vec<User> {
         use crate::schema::users::dsl::users;
         use chrono::{NaiveDateTime, NaiveDate, NaiveTime, Duration};
-        use diesel::dsl::any;
 
         let _connection = establish_connection();
         let d = NaiveDate::from_ymd(2015, 6, 3);
         let t = NaiveTime::from_hms_milli(12, 34, 56, 789) - Duration::seconds(300);
 
         return users
-            .filter(schema::users::id.eq(any(self.get_friends_ids())))
+            .filter(schema::users::id.eq_any(self.get_friends_ids()))
             .filter(schema::users::last_activity.gt(NaiveDateTime::new(d, t)))
             .limit(6)
             .load::<User>(&_connection)
@@ -2543,8 +2531,6 @@ impl User {
             .expect("E").len();
     }
     pub fn unread_notify_count(&self) -> String {
-        //use crate::schema::notifications::dsl::notifications;
-
         let mut count = self.count_user_notifications();
         if self.is_staffed_user() {
             for _community in self.get_staffed_communities().iter() {
@@ -3912,7 +3898,10 @@ impl User {
         use crate::schema::list_user_communities_keys::dsl::list_user_communities_keys;
 
         let _connection = establish_connection();
-        let _new = news_user_communities.filter(schema::news_user_communities::id.eq(new_id)).load::<NewsUserCommunitie>(&_connection).expect("E");
+        let _new = news_user_communities
+            .filter(schema::news_user_communities::id.eq(new_id))
+            .load::<NewsUserCommunitie>(&_connection)
+            .expect("E");
         let _list = list_user_communities_keys
             .filter(schema::list_user_communities_keys::id.eq(list_id))
             .load::<ListUserCommunitiesKey>(&_connection)
@@ -3932,7 +3921,11 @@ impl User {
         use crate::schema::news_user_communities::dsl::news_user_communities;
 
         let _connection = establish_connection();
-        let _new = news_user_communities.filter(schema::news_user_communities::user_id.eq(user_id)).load::<NewsUserCommunitie>(&_connection).expect("E");
+        let _new = news_user_communities
+            .filter(schema::news_user_communities::owner.eq(self.id))
+            .filter(schema::news_user_communities::user_id.eq(user_id))
+            .load::<NewsUserCommunitie>(&_connection)
+            .expect("E");
         if _new.len() > 0 && _new[0].owner == self.id {
             diesel::delete(news_user_communities.filter(schema::news_user_communities::user_id.eq(user_id))).execute(&_connection).expect("E");
             return true;
@@ -4011,7 +4004,11 @@ impl User {
         use crate::schema::notify_user_communities::dsl::notify_user_communities;
 
         let _connection = establish_connection();
-        let _notify = notify_user_communities.filter(schema::notify_user_communities::user_id.eq(user_id)).load::<NotifyUserCommunitie>(&_connection).expect("E");
+        let _notify = notify_user_communities
+            .filter(schema::notify_user_communities::owner.eq(self.id))
+            .filter(schema::notify_user_communities::user_id.eq(user_id))
+            .load::<NotifyUserCommunitie>(&_connection)
+            .expect("E");
         if _notify.len() > 0 && _notify[0].owner == self.id {
             diesel::delete(notify_user_communities.filter(schema::notify_user_communities::user_id.eq(user_id))).execute(&_connection).expect("E");
             return true;
@@ -4048,9 +4045,11 @@ impl User {
         let _connection = establish_connection();
         for friend_id in user.get_6_friends_ids().iter() {
             if !self.is_connected_with_user_with_id(*friend_id) && featured_user_communities
+                .filter(schema::featured_user_communities::owner.eq(self.id))
                 .filter(schema::featured_user_communities::user_id.eq(friend_id))
                 .load::<FeaturedUserCommunitie>(&_connection)
-                .expect("E").len() == 0 {
+                .expect("E")
+                .len() == 0 {
                     let new_featured = NewFeaturedUserCommunitie {
                             owner: self.id,
                             list_id: None,
@@ -4067,7 +4066,8 @@ impl User {
             }
             for community_id in user.get_6_communities_ids().iter() {
                 if !self.is_member_of_community(*community_id) && featured_user_communities
-                    .filter(schema::featured_user_communities::user_id.eq(community_id))
+                    .filter(schema::featured_user_communities::owner.eq(self.id))
+                    .filter(schema::featured_user_communities::community_id.eq(community_id))
                     .load::<FeaturedUserCommunitie>(&_connection)
                     .expect("E").len() == 0 {
                         let new_featured = NewFeaturedUserCommunitie {
@@ -4120,9 +4120,19 @@ impl User {
         use crate::schema::follows::dsl::follows;
 
         let _connection = establish_connection();
-        let _follow = follows.filter(schema::follows::user_id.eq(self.id)).load::<Follow>(&_connection).expect("E");
+        let _follow = follows
+            .filter(schema::follows::user_id.eq(self.id))
+            .filter(schema::follows::followed_user.eq(user.id))
+            .load::<Follow>(&_connection)
+            .expect("E");
         if _follow.len() > 0 {
-            diesel::delete(follows.filter(schema::follows::user_id.eq(self.id))).execute(&_connection).expect("E");
+            diesel::delete(
+                    follows
+                        .filter(schema::follows::followed_user.eq(user.id))
+                        .filter(schema::follows::user_id.eq(self.id))
+                )
+                .execute(&_connection)
+                .expect("E");
             self.delete_new_subscriber(user.id);
             user.minus_follows(1);
             return true;
@@ -4136,7 +4146,6 @@ impl User {
         }
         use crate::models::NewFriend;
         use crate::schema::follows::dsl::follows;
-        //use crate::schema::friends::dsl::friends;
         use crate::schema::featured_user_communities::dsl::featured_user_communities;
 
         let _connection = establish_connection();
