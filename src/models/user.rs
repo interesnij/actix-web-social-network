@@ -3990,8 +3990,8 @@ impl User {
         let _notify = notify_user_communities.filter(schema::notify_user_communities::id.eq(notify_id)).load::<NotifyUserCommunitie>(&_connection).expect("E");
         let _list = list_user_communities_keys.filter(schema::list_user_communities_keys::id.eq(list_id)).load::<ListUserCommunitiesKey>(&_connection).expect("E");
 
-        if _notify.owner == self.pk && _list.owner == self.pk {
-            diesel::update(_notify)
+        if _notify.pop().owner == self.id && _list.pop().owner == self.id {
+            diesel::update(notify_user_communities.filter(schema::notify_user_communities::id.eq(notify_id)))
                 .set(schema::notify_user_communities::list_id.eq(_list.id))
                 .get_result::<NotifyUserCommunitie>(&_connection)
                 .expect("Error.");
@@ -4005,8 +4005,8 @@ impl User {
 
         let _connection = establish_connection();
         let _notify = notify_user_communities.filter(schema::notify_user_communities::id.eq(notify_id)).load::<NotifyUserCommunitie>(&_connection).expect("E");
-        if _notify.owner == self.pk {
-            diesel::delete(_notify).execute(&_connection).expect("E");
+        if _notify.pop().owner == self.id {
+            diesel::delete(notify_user_communities.filter(schema::notify_user_communities::id.eq(notify_id))).execute(&_connection).expect("E");
             return true;
         }
         return false;
@@ -4017,8 +4017,8 @@ impl User {
 
         let _connection = establish_connection();
         let _notify = notify_user_communities.filter(schema::notify_user_communities::id.eq(notify_id)).load::<NotifyUserCommunitie>(&_connection).expect("E");
-        if _notify.owner == self.pk {
-            diesel::update(_notify)
+        if _notify.pop().owner == self.id {
+            diesel::update(notify_user_communities.filter(schema::notify_user_communities::id.eq(notify_id)))
                 .set(schema::notify_user_communities::list_id.eq(None))
                 .get_result::<NotifyUserCommunitie>(&_connection)
                 .expect("Error.");
@@ -4032,38 +4032,38 @@ impl User {
 
         let _connection = establish_connection();
         for friend_id in user.get_6_friends_ids().iter() {
-            if !self.is_connected_with_user_with_id(&friend_id) && featured_user_communities
-                .filter(schema::featured_user_communities::user_id.eq(&friend_id))
+            if !self.is_connected_with_user_with_id(friend_id) && featured_user_communities
+                .filter(schema::featured_user_communities::user_id.eq(friend_id))
                 .load::<FeaturedUserCommunitie>(&_connection)
                 .expect("E").len() == 0 {
                     let new_featured = NewFeaturedUserCommunitie {
                             owner: self.id,
                             list_id: None,
-                            user_id: Some(&friend_id),
+                            user_id: Some(friend_id),
                             community_id: None,
                             mute: false,
                             sleep: None,
                         };
-                        diesel::insert_into(featured_user_communities::table)
+                        diesel::insert_into(schema::featured_user_communities::table)
                             .values(&new_featured)
                             .get_result::<FeaturedUserCommunitie>(&_connection)
                             .expect("Error.");
                 }
             }
             for community_id in user.get_6_communities_ids().iter() {
-                if !self.is_member_of_community(&community_id) && featured_user_communities
-                    .filter(schema::featured_user_communities::user_id.eq(&community_id))
+                if !self.is_member_of_community(community_id) && featured_user_communities
+                    .filter(schema::featured_user_communities::user_id.eq(community_id))
                     .load::<FeaturedUserCommunitie>(&_connection)
                     .expect("E").len() == 0 {
                         let new_featured = NewFeaturedUserCommunitie {
                                 owner: self.id,
                                 list_id: None,
                                 user_id: None,
-                                community_id: Some(&community_id),
+                                community_id: Some(community_id),
                                 mute: false,
                                 sleep: None,
                             };
-                            diesel::insert_into(featured_user_communities::table)
+                            diesel::insert_into(schema::featured_user_communities::table)
                                 .values(&new_featured)
                                 .get_result::<FeaturedUserCommunitie>(&_connection)
                                 .expect("Error.");
@@ -4073,7 +4073,7 @@ impl User {
     }
 
     pub fn follow_user(&self, user: User) -> bool {
-        if self.id == user.id || self.is_self_user_in_block(&user.id) || self.is_followers_user_with_id(&user.id) || self.is_following_user_with_id(&user.id) {
+        if self.id == user.id || self.is_self_user_in_block(&user.id) || self.is_followers_user_with_id(user.id) || self.is_following_user_with_id(user.id) {
             return false;
         }
         use crate::models::NewFollow;
@@ -4091,7 +4091,7 @@ impl User {
             .get_result::<Follow>(&_connection)
             .expect("Error.");
         user.plus_follows(1);
-        if user.is_user_can_see_all(self.id) {
+        if user.is_user_can_see_all(self.id) == true {
             self.add_new_subscriber(user.id);
             self.get_or_create_featured_objects(user);
         }
