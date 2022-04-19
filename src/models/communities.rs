@@ -197,17 +197,17 @@ impl Community {
         }
         else {
             let new_info = NewCommunityInfo {
-                pub community_id: self.id,
-                pub posts:        0,
-                pub members:      0,
-                pub photos:       0,
-                pub goods:        0,
-                pub tracks:       0,
-                pub videos:       0,
-                pub docs:         0,
-                pub articles:     0,
-                pub survey:       0,
-                pub planners:     0,
+                community_id: self.id,
+                posts:        0,
+                members:      0,
+                photos:       0,
+                goods:        0,
+                tracks:       0,
+                videos:       0,
+                docs:         0,
+                articles:     0,
+                survey:       0,
+                planners:     0,
             };
             let result = diesel::insert_into(schema::community_infos::table)
                 .values(&new_info)
