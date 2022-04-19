@@ -193,30 +193,10 @@ impl Community {
         let infos = community_infos
             .filter(schema::community_infos::id.eq(self.id))
             .load::<CommunityInfo>(&_connection)
-            .expect("E.");
-        if infos.len() > 0 {
-            return infos[0].clone()
-        }
-        else {
-            let new_info = NewCommunityInfo {
-                community_id: self.id,
-                posts:        0,
-                members:      0,
-                photos:       0,
-                goods:        0,
-                tracks:       0,
-                videos:       0,
-                docs:         0,
-                articles:     0,
-                survey:       0,
-                planners:     0,
-            };
-            let result = diesel::insert_into(schema::community_infos::table)
-                .values(&new_info)
-                .get_result::<CommunityInfo>(&_connection)
-                .expect("Error.");
-            return result;
-        }
+            .expect("E.")
+            .into_iter()
+            .nth(0)
+            .unwrap()
     }
 
 }
