@@ -79,7 +79,9 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            to_home()
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body))
         }
 
     } else {
@@ -95,7 +97,9 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
             let body = MobileAuthTemplate { title: "Трезвый.рус | Вход".to_string() }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            to_home()
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body))
         }
     }
 }
@@ -142,9 +146,10 @@ pub async fn featured_list(session: Session, req: HttpRequest) -> actix_web::Res
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            to_home()
-        }
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body))
     } else {
-        to_home()
+        Ok(to_home())
     }
 }
