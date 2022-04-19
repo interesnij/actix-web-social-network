@@ -3979,8 +3979,8 @@ impl User {
                 mute: _new[0].mute,
                 sleep: _new[0].sleep,
             };
-            diesel::update(&_new[0])
-                .set(schema::news_user_communities::list_id.is_null())
+            diesel::update(news_user_communities.filter(schema::news_user_communities::id.eq(new_id)))
+                .set(_new)
                 .get_result::<NewsUserCommunitie>(&_connection)
                 .expect("Error.");
                 return true;
