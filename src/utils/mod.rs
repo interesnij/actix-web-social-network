@@ -89,7 +89,7 @@ pub fn get_current_user(session: &Session) -> Result<SessionUser, AuthError> {
 //        )
 //}
 
-pub fn to_home() -> HttpResponse {
+pub fn to_home() -> bool {
   return true
 }
 
