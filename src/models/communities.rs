@@ -179,7 +179,7 @@ impl Community {
             return "/public".to_string() + &self.get_str_id() + &"/".to_string();
         }
     }
-    pub fn get_link(&self) -> String {
+    pub fn get_slug(&self) -> String {
         if self.have_link.is_some() {
             return "@".to_string() + &self.have_link.as_deref().unwrap().to_string();
         }
