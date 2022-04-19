@@ -394,7 +394,7 @@ pub struct NewsUserCommunitie {
     pub mute:         bool,
     pub sleep:        Option<chrono::NaiveDateTime>,
 }
-#[derive(Deserialize, Insertable)]
+#[derive(Deserialize, Insertable, AsChangeset)]
 #[table_name="news_user_communities"]
 pub struct NewNewsUserCommunitie {
     pub owner:        i32,
@@ -416,7 +416,7 @@ pub struct NotifyUserCommunitie {
     pub mute:         bool,
     pub sleep:        Option<chrono::NaiveDateTime>,
 }
-#[derive(Deserialize, Insertable)]
+#[derive(Deserialize, Insertable, AsChangeset)]
 #[table_name="notify_user_communities"]
 pub struct NewNotifyUserCommunitie {
     pub owner:        i32,
