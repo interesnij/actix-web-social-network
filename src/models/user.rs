@@ -219,10 +219,7 @@ impl User {
             return manager_chats[0].id
         } else {
             use crate::models::{NewChat, ChatUser, NewChatUser};
-            use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
 
-            let d = NaiveDate::from_ymd(2015, 6, 3);
-            let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
             let new_manager_chat = NewChat{
                 name: Some("Рассылка служународу.рус".to_string()),
                 types: 3,
@@ -230,7 +227,7 @@ impl User {
                 user_id: self.id,
                 position: 10,
                 members: 1,
-                created: NaiveDateTime::new(d, t),
+                created: chrono::Local::now().naive_utc(),,
                 can_add_members:  "f".to_string(),
                 can_fix_item:     "b".to_string(),
                 can_mention:      "f".to_string(),
