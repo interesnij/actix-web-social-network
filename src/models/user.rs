@@ -2479,7 +2479,7 @@ impl User {
     pub fn get_all_chats(&self) -> Vec<Chat> {
         use crate::schema::chat_users::dsl::chat_users;
         use crate::schema::chats::dsl::chats;
-        use crate::models::Chat;
+        use crate::models::ChatUser;
 
         let _connection = establish_connection();
         let members_of_chats = chat_users
