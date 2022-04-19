@@ -246,7 +246,7 @@ impl User {
                 chat_id: manager_chat.id,
                 types: "a".to_string(),
                 is_administrator: false,
-                created: NaiveDateTime::new(d, t),
+                created: chrono::Local::now().naive_utc(),,
             };
             diesel::insert_into(schema::chat_users::table)
                 .values(&new_chat_user)
