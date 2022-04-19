@@ -489,7 +489,7 @@ impl User {
         return support_users
             .filter(schema::support_users::manager_id.eq(&self.id))
             .load::<SupportUser>(&_connection)
-            .expect("E") > 0;
+            .expect("E").len() > 0;
     }
     pub fn is_moderator(&self) -> bool {
         return self.perm > 9;
@@ -558,7 +558,7 @@ impl User {
             stack.push(_item.blocked_user_id);
         };
         return users
-            .filter(schema::users::id.eq(any_stack))
+            .filter(schema::users::id.eq_any(_stack))
             .load::<User>(&_connection)
             .expect("E.");
     }
@@ -908,7 +908,7 @@ impl User {
         use crate::schema::follows::dsl::follows;
 
         let _connection = establish_connection();
-        return all_follows = follows
+        return follows
             .filter(schema::follows::followed_user.eq(self.id))
             .filter(schema::follows::user_id.eq(user_id))
             .filter(schema::follows::view.eq(true))
@@ -1001,7 +1001,7 @@ impl User {
         use crate::schema::follows::dsl::follows;
 
         let _connection = establish_connection();
-        return all_follows = follows
+        return follows
             .filter(schema::follows::followed_user.eq(self.id))
             .filter(schema::follows::view.eq(false))
             .load::<Follow>(&_connection)
