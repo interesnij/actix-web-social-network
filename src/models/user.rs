@@ -3924,6 +3924,7 @@ impl User {
             owner: self.id,
             list_id: None,
             user_id: Some(user_id),
+            community_id: None,
             mute: false,
             sleep: None,
         };
@@ -3988,6 +3989,7 @@ impl User {
             owner: self.id,
             list_id: None,
             user_id: Some(user_id),
+            community_id: None,
             mute: false,
             sleep: None,
         };
@@ -4028,14 +4030,22 @@ impl User {
         return false;
     }
     pub fn delete_notification_subscriber_from_list(&self, notify_id: i32) -> bool {
-        use crate::models::NotifyUserCommunitie;
+        use crate::models::{NotifyUserCommunitie, NewNotifyUserCommunitie};
         use crate::schema::notify_user_communities::dsl::notify_user_communities;
 
         let _connection = establish_connection();
         let _notify = notify_user_communities.filter(schema::notify_user_communities::id.eq(notify_id)).load::<NotifyUserCommunitie>(&_connection).expect("E");
         if _notify.len() > 0 && _notify[0].owner == self.id {
+            let _new = NewNotifyUserCommunitie {
+                owner: self.id,
+                list_id: None,
+                user_id: Some(_notify.user_id),
+                community_id: None,
+                mute: _notify.mute,
+                sleep: _notify.sleep,
+            };
             diesel::update(notify_user_communities.filter(schema::notify_user_communities::id.eq(notify_id)))
-                .set(schema::notify_user_communities::list_id.eq(None)) 
+                .set(_new)
                 .get_result::<NotifyUserCommunitie>(&_connection)
                 .expect("Error.");
                 return true;
