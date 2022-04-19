@@ -153,6 +153,6 @@ pub async fn featured_list(session: Session, req: HttpRequest) -> actix_web::Res
     } else {
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
-            .body("o"))
+            .body("o"));
     }
 }
