@@ -3952,14 +3952,14 @@ impl User {
         }
         return false;
     }
-    pub fn delete_new_subscriber(&self, new_id: i32) -> bool {
+    pub fn delete_new_subscriber(&self, user_id: i32) -> bool {
         use crate::models::NewsUserCommunitie;
         use crate::schema::news_user_communities::dsl::news_user_communities;
 
         let _connection = establish_connection();
-        let _new = news_user_communities.filter(schema::news_user_communities::id.eq(new_id)).load::<NewsUserCommunitie>(&_connection).expect("E");
+        let _new = news_user_communities.filter(schema::news_user_communities::user_id.eq(user_id)).load::<NewsUserCommunitie>(&_connection).expect("E");
         if _new.len() > 0 && _new[0].owner == self.id {
-            diesel::delete(news_user_communities.filter(schema::news_user_communities::id.eq(self.id))).execute(&_connection).expect("E");
+            diesel::delete(news_user_communities.filter(schema::news_user_communities::user_id.eq(user_id))).execute(&_connection).expect("E");
             return true;
         }
         return false;
@@ -4025,14 +4025,14 @@ impl User {
         }
         return false;
     }
-    pub fn delete_notification_subscriber(&self, notify_id: i32) -> bool {
+    pub fn delete_notification_subscriber(&self, user_id: i32) -> bool {
         use crate::models::NotifyUserCommunitie;
         use crate::schema::notify_user_communities::dsl::notify_user_communities;
 
         let _connection = establish_connection();
-        let _notify = notify_user_communities.filter(schema::notify_user_communities::id.eq(notify_id)).load::<NotifyUserCommunitie>(&_connection).expect("E");
+        let _notify = notify_user_communities.filter(schema::notify_user_communities::user_id.eq(user_id)).load::<NotifyUserCommunitie>(&_connection).expect("E");
         if _notify.len() > 0 && _notify[0].owner == self.id {
-            diesel::delete(notify_user_communities.filter(schema::notify_user_communities::id.eq(notify_id))).execute(&_connection).expect("E");
+            diesel::delete(notify_user_communities.filter(schema::notify_user_communities::user_id.eq(user_id))).execute(&_connection).expect("E");
             return true;
         }
         return false;
@@ -4132,6 +4132,22 @@ impl User {
         return true;
     }
 
+    pub fn unfollow_user(&self, user: User) -> bool {
+        if self.id == user.id || !self.is_following_user_with_id(user.id) {
+            return false;
+        }
+        use crate::schema::follows::dsl::follows;
+
+        let _connection = establish_connection();
+        let _follow = follows.filter(schema::follows::user_id.eq(self.id)).load::<Follow>(&_connection).expect("E");
+        if _follow.len() > 0 {
+            diesel::delete(follows.filter(schema::follows::user_id.eq(self.id))).execute(&_connection).expect("E");
+            delete_new_subscriber(user.id);
+            user.minus_follows(1);
+            return true;
+        }
+        return false;
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
