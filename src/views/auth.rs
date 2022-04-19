@@ -244,7 +244,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             }
         };
 
-        let mut get_language = "a";
+        let get_language = "a";
         let mut get_gender = "a";
         if params_2.gender.clone() == "Fem".to_string() {
             get_gender = "b";

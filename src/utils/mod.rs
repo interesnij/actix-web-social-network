@@ -6,7 +6,7 @@ use argonautica::{Hasher, Verifier};
 use actix_session::Session;
 use diesel::prelude::*;
 use actix_web::{
-  http::header::{CONTENT_TYPE, LOCATION},
+  http::header::{CONTENT_TYPE},
   HttpRequest,
   HttpResponse
 };
@@ -90,7 +90,7 @@ pub fn get_current_user(session: &Session) -> Result<SessionUser, AuthError> {
 //}
 
 pub fn to_home() -> HttpResponse {
-  HttpResponse::Found().header(LOCATION, "/").finish()
+  return true
 }
 
 pub fn get_count_for_ru(count:i32, word1: String, word2: String, word3: String) -> String {

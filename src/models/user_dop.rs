@@ -27,7 +27,7 @@ use crate::schema::{
     design_settings,
     user_privates,
     user_notifications,
-    user_profile_notifications,
+    //user_profile_notifications,
     user_post_notifications,
     user_photo_notifications,
     user_video_notifications,

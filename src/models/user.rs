@@ -560,7 +560,6 @@ impl User {
     pub fn get_blocked_users(&self) -> Vec<User> {
         use crate::schema::user_blocks::dsl::user_blocks;
         use crate::schema::users::dsl::users;
-        use crate::models::UserBlock;
         use diesel::dsl::any;
 
         let _connection = establish_connection();
@@ -717,7 +716,6 @@ impl User {
     pub fn is_user_in_block(&self, user_id: i32) -> bool {
         // user_id заблокирован у self
         use crate::schema::user_blocks::dsl::user_blocks;
-        use crate::models::UserBlock;
 
         let _connection = establish_connection();
         let all_blocks = user_blocks
@@ -984,7 +982,6 @@ impl User {
     }
     pub fn is_have_blacklist(&self) -> bool {
         use crate::schema::user_blocks::dsl::user_blocks;
-        use crate::models::UserBlock;
 
         let _connection = establish_connection();
         let all_user_blocks = user_blocks
@@ -1017,7 +1014,6 @@ impl User {
 
     pub fn count_no_view_followers(&self) -> usize {
         use crate::schema::follows::dsl::follows;
-        use crate::models::Follow;
 
         let _connection = establish_connection();
         let all_follows = follows
@@ -1042,7 +1038,6 @@ impl User {
     }
     pub fn count_blacklist(&self) -> usize {
         use crate::schema::user_blocks::dsl::user_blocks;
-        use crate::models::UserBlock;
 
         let _connection = establish_connection();
         let all_user_blocks = user_blocks
@@ -2378,7 +2373,7 @@ impl User {
         return stack;
     }
     pub fn get_communities_ids_for_main_news(&self) -> Vec<i32> {
-        use crate::schema::users::dsl::users;
+        //use crate::schema::users::dsl::users;
         use crate::schema::news_user_communities::dsl::news_user_communities;
         use crate::models::NewsUserCommunitie;
         use chrono::{NaiveDateTime, NaiveDate, NaiveTime, Duration};
@@ -2484,7 +2479,7 @@ impl User {
     pub fn get_all_chats(&self) -> Vec<Chat> {
         use crate::schema::chat_users::dsl::chat_users;
         use crate::schema::chats::dsl::chats;
-        use crate::models::{ChatUser, Chat};
+        use crate::models::Chat;
 
         let _connection = establish_connection();
         let members_of_chats = chat_users
@@ -2577,7 +2572,7 @@ impl User {
             .expect("E").len();
     }
     pub fn unread_notify_count(&self) -> String {
-        use crate::schema::notifications::dsl::notifications;
+        //use crate::schema::notifications::dsl::notifications;
 
         let mut count = self.count_user_notifications();
         if self.is_staffed_user() {
@@ -3732,7 +3727,7 @@ impl User {
         return bool_stack;
     }
     pub fn set_friends_visible_perms(&self, action: String, users_ids: Vec<i32>, types: String) -> bool {
-        use crate::models::{Friend, FriendsVisiblePerm, NewFriendsVisiblePerm};
+        use crate::models::{FriendsVisiblePerm, NewFriendsVisiblePerm};
         use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
         use crate::schema::friends::dsl::friends;
 
@@ -4126,7 +4121,7 @@ impl User {
             return false;
         }
         use crate::models::NewFollow;
-        use crate::schema::follows::dsl::follows;
+        //use crate::schema::follows::dsl::follows;
 
         let _connection = establish_connection();
         let _new_follow = NewFollow {
@@ -4170,7 +4165,7 @@ impl User {
         }
         use crate::models::NewFriend;
         use crate::schema::follows::dsl::follows;
-        use crate::schema::friends::dsl::friends;
+        //use crate::schema::friends::dsl::friends;
         use crate::schema::featured_user_communities::dsl::featured_user_communities;
 
         let _connection = establish_connection();
@@ -4223,7 +4218,7 @@ impl User {
         use crate::models::NewFollow;
         use crate::schema::follows::dsl::follows;
         use crate::schema::friends::dsl::friends;
-        use crate::schema::featured_user_communities::dsl::featured_user_communities;
+        //use crate::schema::featured_user_communities::dsl::featured_user_communities;
 
         let _connection = establish_connection();
 
@@ -4264,7 +4259,7 @@ impl User {
         if self.id == user.id || self.is_user_in_block(user.id) {
             return false;
         }
-        use crate::schema::user_blocks::dsl::user_blocks;
+        //use crate::schema::user_blocks::dsl::user_blocks;
         use crate::models::NewUserBlock;
 
         let _connection = establish_connection();
