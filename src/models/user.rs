@@ -4039,10 +4039,10 @@ impl User {
             let _new = NewNotifyUserCommunitie {
                 owner: self.id,
                 list_id: None,
-                user_id: Some(_notify.user_id),
+                user_id: Some(_notify[0].user_id),
                 community_id: None,
-                mute: _notify.mute,
-                sleep: _notify.sleep,
+                mute: _notify[0].mute,
+                sleep: _notify[0].sleep,
             };
             diesel::update(notify_user_communities.filter(schema::notify_user_communities::id.eq(notify_id)))
                 .set(_new)
