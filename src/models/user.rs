@@ -4343,7 +4343,7 @@ impl User {
             .filter(schema::friends::target_user_id.eq(user_id))
             .load::<Friend>(&_connection)
             .expect("E");
-        diesel::update(_connect)
+        diesel::update(&_connect[0])
                 .set(schema::friends::visited.eq(_connect[0].visited + 1))
                 .get_result::<Friend>(&_connection)
                 .expect("Error.");
@@ -4358,7 +4358,7 @@ impl User {
             .filter(schema::communities_memberships::community_id.eq(community_id))
             .load::<CommunityMembership>(&_connection)
             .expect("E");
-        diesel::update(_connect)
+        diesel::update(&_member[0])
                 .set(schema::communities_memberships::visited.eq(_member[0].visited + 1))
                 .get_result::<CommunityMembership>(&_connection)
                 .expect("Error.");
