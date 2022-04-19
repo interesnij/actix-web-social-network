@@ -396,7 +396,7 @@ pub struct NewsUserCommunitie {
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="news_user_communities"]
-pub struct NewNewsListUserCommunitie {
+pub struct NewNewsUserCommunitie {
     pub owner:        i32,
     pub list_id:      Option<i32>,
     pub user_id:      Option<i32>,
