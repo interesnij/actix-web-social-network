@@ -195,7 +195,7 @@ impl Community {
             .load::<CommunityInfo>(&_connection)
             .expect("E.");
         if infos.len() > 0 {
-            return infos[0]
+            return infos[0].clone()
         }
         else {
             let new_info = NewCommunityInfo {
