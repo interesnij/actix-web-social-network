@@ -4094,6 +4094,7 @@ impl User {
             self.add_new_subscriber(user.id);
             self.get_or_create_featured_objects(user);
         }
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
