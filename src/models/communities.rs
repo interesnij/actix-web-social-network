@@ -196,7 +196,7 @@ impl Community {
             .expect("E.")
             .into_iter()
             .nth(0)
-            .unwrap()
+            .unwrap();
     }
 
 }
