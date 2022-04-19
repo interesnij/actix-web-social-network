@@ -4334,6 +4334,36 @@ impl User {
                 .expect("E");
         return true;
     }
+    pub fn plus_friend_visited(&self, user_id: i32) -> bool {
+        use crate::schema::friends::dsl::friends;
+
+        let _connection = establish_connection();
+        let _connect = friends
+            .filter(schema::friends::user_id.eq(self.id))
+            .filter(schema::friends::target_user_id.eq(user_id))
+            .load::<Friend>(&_connection)
+            .expect("E");
+        diesel::update(_connect)
+                .set(schema::friends::visited.eq(_connect[0].visited + 1))
+                .get_result::<Friend>(&_connection)
+                .expect("Error.");
+        return true;
+    }
+    pub fn plus_community_visited(&self, community_id: i32) -> bool {
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+
+        let _connection = establish_connection();
+        let _member = communities_memberships
+            .filter(schema::communities_memberships::user_id.eq(self.id))
+            .filter(schema::communities_memberships::community_id.eq(community_id))
+            .load::<CommunityMembership>(&_connection)
+            .expect("E");
+        diesel::update(_connect)
+                .set(schema::communities_memberships::visited.eq(_member[0].visited + 1))
+                .get_result::<CommunityMembership>(&_connection)
+                .expect("Error.");
+        return true;
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
