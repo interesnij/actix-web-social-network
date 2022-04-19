@@ -121,22 +121,6 @@ pub struct NewCommunity {
     pub created:     chrono::NaiveDateTime,
 }
 
-/////// CommunityBannerUser //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
-#[belongs_to(Community)]
-#[belongs_to(User)]
-pub struct CommunityBannerUser {
-    pub id:           i32,
-    pub community_id: i32,
-    pub user_id:      i32,
-}
-#[derive(Deserialize, Insertable)]
-#[table_name="community_banner_users"]
-pub struct NewCommunityBannerUser {
-    pub community_id: i32,
-    pub user_id:      i32,
-}
-
 impl Community {
     pub fn get_str_id(&self) -> String {
         return self.id.to_string();
@@ -622,6 +606,7 @@ impl Community {
             }
         return false;
     }
+
 }
 
 
