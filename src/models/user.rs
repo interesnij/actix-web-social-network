@@ -3945,7 +3945,7 @@ impl User {
 
         if _new.len() > 0 && _new[0].owner == self.id && _list.len() > 0 && _list[0].owner == self.id {
             diesel::update(news_user_communities.filter(schema::news_user_communities::id.eq(new_id)))
-                .set(schema::news_user_communities::list_id.eq(_list.id))
+                .set(schema::news_user_communities::list_id.eq(list_id))
                 .get_result::<NewsUserCommunitie>(&_connection)
                 .expect("Error.");
             return true;
@@ -3965,12 +3965,20 @@ impl User {
         return false;
     }
     pub fn delete_new_subscriber_from_list(&self, new_id: i32) -> bool {
-        use crate::models::NewsUserCommunitie;
+        use crate::models::{NewsUserCommunitie, NewNewsUserCommunitie};
         use crate::schema::news_user_communities::dsl::news_user_communities;
 
         let _connection = establish_connection();
         let _new = news_user_communities.filter(schema::news_user_communities::id.eq(new_id)).load::<NewsUserCommunitie>(&_connection).expect("E");
         if _new.len() > 0 && _new[0].owner == self.id {
+            let _new = NewNewsUserCommunitie {
+                owner: self.id,
+                list_id: None,
+                user_id: _new[0].user_id,
+                community_id: None,
+                mute: _new[0].mute,
+                sleep: _new[0].sleep,
+            };
             diesel::update(&_new[0])
                 .set(schema::news_user_communities::list_id.is_null())
                 .get_result::<NewsUserCommunitie>(&_connection)
