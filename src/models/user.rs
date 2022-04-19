@@ -4039,7 +4039,7 @@ impl User {
             let _new = NewNotifyUserCommunitie {
                 owner: self.id,
                 list_id: None,
-                user_id: Some(_notify[0].user_id),
+                user_id: _notify[0].user_id,
                 community_id: None,
                 mute: _notify[0].mute,
                 sleep: _notify[0].sleep,
