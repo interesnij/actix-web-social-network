@@ -4351,13 +4351,13 @@ impl User {
     }
     pub fn plus_community_visited(&self, community_id: i32) -> bool {
         use crate::schema::communities_memberships::dsl::communities_memberships;
-        use crate::models::CommunityMembership;
+        use crate::models::CommunitiesMembership;
 
         let _connection = establish_connection();
         let _member = communities_memberships
             .filter(schema::communities_memberships::user_id.eq(self.id))
             .filter(schema::communities_memberships::community_id.eq(community_id))
-            .load::<CommunityMembership>(&_connection)
+            .load::<CommunitiesMembership>(&_connection)
             .expect("E");
         diesel::update(&_member[0])
                 .set(schema::communities_memberships::visited.eq(_member[0].visited + 1))
