@@ -727,7 +727,6 @@ impl User {
     }
     pub fn is_self_user_in_block(&self, user_id: i32) -> bool {
         use crate::schema::user_blocks::dsl::user_blocks;
-        use crate::models::UserBlock;
 
         let _connection = establish_connection();
         let all_blocks = user_blocks
@@ -2350,7 +2349,6 @@ impl User {
         );
     }
     pub fn get_users_ids_for_main_news(&self) -> Vec<i32> {
-        use crate::schema::users::dsl::users;
         use crate::schema::news_user_communities::dsl::news_user_communities;
         use crate::models::NewsUserCommunitie;
         use chrono::{NaiveDateTime, NaiveDate, NaiveTime, Duration};
@@ -4216,9 +4214,7 @@ impl User {
             return false;
         }
         use crate::models::NewFollow;
-        use crate::schema::follows::dsl::follows;
         use crate::schema::friends::dsl::friends;
-        //use crate::schema::featured_user_communities::dsl::featured_user_communities;
 
         let _connection = establish_connection();
 

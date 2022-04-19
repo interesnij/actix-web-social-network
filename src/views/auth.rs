@@ -11,6 +11,7 @@ use crate::utils::{
     establish_connection,
     is_signed_in,
     verify,
+    to_home,
 };
 use diesel::prelude::*;
 use crate::schema;
@@ -116,9 +117,7 @@ fn handle_sign_in(data: LoginUser2,
             if is_json {
                 Ok(HttpResponse::Unauthorized().json(err.to_string()))
             } else {
-                Ok(HttpResponse::Ok()
-                    .content_type("text/html; charset=utf-8")
-                    .body("o"))
+                to_home()
             }
         },
     }

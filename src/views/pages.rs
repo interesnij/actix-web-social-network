@@ -7,7 +7,7 @@ use actix_web::{
     web,
 };
 use serde::Deserialize;
-use crate::utils::{is_signed_in, establish_connection, get_folder, get_request_user_data};
+use crate::utils::{is_signed_in, establish_connection, get_folder, get_request_user_data,to_home,};
 //use diesel::prelude::*;
 use actix_session::Session;
 use sailfish::TemplateOnce;
@@ -79,9 +79,7 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+            to_home()
         }
 
     } else {
@@ -97,9 +95,7 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
             let body = MobileAuthTemplate { title: "Трезвый.рус | Вход".to_string() }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+            to_home()
         }
     }
 }
@@ -146,13 +142,9 @@ pub async fn featured_list(session: Session, req: HttpRequest) -> actix_web::Res
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+            to_home()
         }
     } else {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body("o"))
+        to_home()
     }
 }

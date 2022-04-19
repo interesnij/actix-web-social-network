@@ -6,7 +6,7 @@ use argonautica::{Hasher, Verifier};
 use actix_session::Session;
 use diesel::prelude::*;
 use actix_web::{
-  http::header::CONTENT_TYPE,
+  http::header::{CONTENT_TYPE, LOCATION},
   HttpRequest,
 };
 use crate::schema;
@@ -33,6 +33,10 @@ pub fn hash_password(password: &str) -> String {
       .hash()
       .expect("E.")
       //.map_err(|_| AuthError::AuthenticationError(String::from("Не удалось хэшировать пароль")))
+}
+
+pub fn to_home() -> HttpResponse {
+  HttpResponse::Found().header(LOCATION, "/").finish()
 }
 
 pub fn verify(hash: &str, password: &str) -> Result<bool, AuthError> {
