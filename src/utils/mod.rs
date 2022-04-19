@@ -6,9 +6,8 @@ use argonautica::{Hasher, Verifier};
 use actix_session::Session;
 use diesel::prelude::*;
 use actix_web::{
-  http::header::{CONTENT_TYPE},
+  http::header::CONTENT_TYPE,
   HttpRequest,
-  HttpResponse
 };
 use crate::schema;
 use crate::{errors::AuthError, vars, models::SessionUser};

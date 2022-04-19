@@ -42,7 +42,7 @@ pub async fn mobile_signup(session: Session) -> actix_web::Result<HttpResponse> 
     if is_signed_in(&session) {
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
-            .body("o"));
+            .body("ok"))
     }
 
     let body = NobileSignupTemplate { title: "Регистрация!".to_string() }
@@ -109,7 +109,7 @@ fn handle_sign_in(data: LoginUser2,
             } else {
                 Ok(HttpResponse::Ok()
                     .content_type("text/html; charset=utf-8")
-                    .body("o"));
+                    .body(user))
             }
         },
         Err(err) => {
@@ -118,7 +118,7 @@ fn handle_sign_in(data: LoginUser2,
             } else {
                 Ok(HttpResponse::Ok()
                     .content_type("text/html; charset=utf-8")
-                    .body("o"));
+                    .body("o"))
             }
         },
     }
@@ -156,7 +156,7 @@ pub async fn login(mut payload: Multipart, session: Session, req: HttpRequest) -
     if is_signed_in(&session) {
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
-            .body("o"));
+            .body("o"))
     }
     let form = login_form(payload.borrow_mut()).await;
     println!("{:?}", form.phone.clone());
@@ -223,7 +223,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
     if is_signed_in(&session) {
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
-            .body("o"));
+            .body("o"))
     }
 
     let _connection = establish_connection();
