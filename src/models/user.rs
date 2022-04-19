@@ -486,7 +486,7 @@ impl User {
         use crate::models::SupportUser;
 
         let _connection = establish_connection();
-        return _supp_users = support_users
+        return support_users
             .filter(schema::support_users::manager_id.eq(&self.id))
             .load::<SupportUser>(&_connection)
             .expect("E") > 0;
@@ -709,7 +709,7 @@ impl User {
         use crate::schema::user_blocks::dsl::user_blocks;
 
         let _connection = establish_connection();
-        return all_blocks = user_blocks
+        return user_blocks
             .filter(schema::user_blocks::blocked_user_id.eq(user_id))
             .filter(schema::user_blocks::user_block_i.eq(self.id))
             .load::<UserBlock>(&_connection)
@@ -720,7 +720,7 @@ impl User {
         use crate::schema::user_blocks::dsl::user_blocks;
 
         let _connection = establish_connection();
-        return all_blocks = user_blocks
+        return user_blocks
             .filter(schema::user_blocks::user_block_i.eq(user_id))
             .filter(schema::user_blocks::blocked_user_id.eq(self.id))
             .load::<UserBlock>(&_connection)
@@ -731,7 +731,7 @@ impl User {
         use crate::schema::friends::dsl::friends;
 
         let _connection = establish_connection();
-        return all_friends = friends
+        return friends
             .filter(schema::friends::user_id.eq(user_id))
             .filter(schema::friends::target_user_id.eq(self.id))
             .load::<Friend>(&_connection)
@@ -762,7 +762,7 @@ impl User {
         use crate::models::CommunitiesMembership;
 
         let _connection = establish_connection();
-        return _members = communities_memberships
+        return communities_memberships
             .filter(schema::communities_memberships::user_id.eq(self.id))
             .filter(schema::communities_memberships::community_id.eq(community_id))
             .load::<CommunitiesMembership>(&_connection)
@@ -774,7 +774,7 @@ impl User {
         use crate::models::CommunityFollow;
 
         let _connection = establish_connection();
-        return follows = community_follows
+        return community_follows
             .filter(schema::community_follows::user_id.eq(self.id))
             .filter(schema::community_follows::community_id.eq(community_id))
             .load::<CommunityFollow>(&_connection)
@@ -785,7 +785,7 @@ impl User {
         use crate::schema::communitys::dsl::communitys;
 
         let _connection = establish_connection();
-        let community = communitys
+        let communitys
             .filter(schema::communitys::id.eq(community_id))
             .load::<Community>(&_connection)
             .expect("E.")
@@ -897,7 +897,7 @@ impl User {
         use crate::schema::follows::dsl::follows;
 
         let _connection = establish_connection();
-        let all_follows = follows
+        return all_follows = follows
             .filter(schema::follows::followed_user.eq(self.id))
             .filter(schema::follows::user_id.eq(user_id))
             .load::<Follow>(&_connection)
@@ -908,7 +908,7 @@ impl User {
         use crate::schema::follows::dsl::follows;
 
         let _connection = establish_connection();
-        let all_follows = follows
+        return all_follows = follows
             .filter(schema::follows::followed_user.eq(self.id))
             .filter(schema::follows::user_id.eq(user_id))
             .filter(schema::follows::view.eq(true))
@@ -959,7 +959,7 @@ impl User {
         use crate::schema::follows::dsl::follows;
 
         let _connection = establish_connection();
-        return all_follows = follows
+        return follows
             .filter(schema::follows::user_id.eq(self.id))
             .load::<Follow>(&_connection)
             .expect("E.")
@@ -969,7 +969,7 @@ impl User {
         use crate::schema::user_blocks::dsl::user_blocks;
 
         let _connection = establish_connection();
-        return all_user_blocks = user_blocks
+        return user_blocks
             .filter(schema::user_blocks::user_block_i.eq(self.id))
             .load::<UserBlock>(&_connection)
             .expect("E.")
@@ -1012,7 +1012,7 @@ impl User {
         use crate::schema::follows::dsl::follows;
 
         let _connection = establish_connection();
-        return all_follows = follows
+        return follows
             .filter(schema::follows::user_id.eq(self.id))
             .load::<Follow>(&_connection)
             .expect("E.")
@@ -1025,7 +1025,7 @@ impl User {
         use crate::schema::user_blocks::dsl::user_blocks;
 
         let _connection = establish_connection();
-        return all_user_blocks = user_blocks
+        return user_blocks
             .filter(schema::user_blocks::user_block_i.eq(self.id))
             .load::<UserBlock>(&_connection)
             .expect("E.")
@@ -1362,7 +1362,7 @@ impl User {
         let t = NaiveTime::from_hms_milli(12, 34, 56, 789) - Duration::seconds(300);
 
         return users
-            .filter(schema::users::id.eq(any(self.get_friends_ids())))
+            .filter(schema::users::id.eq_any(self.get_friends_ids()))
             .filter(schema::users::last_activity.gt(NaiveDateTime::new(d, t)))
             .load::<User>(&_connection)
             .expect("E.");
