@@ -41,9 +41,7 @@ struct NobileSignupTemplate {
 
 pub async fn mobile_signup(session: Session) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body("ok"))
+        to_home()
     }
 
     let body = NobileSignupTemplate { title: "Регистрация!".to_string() }
@@ -153,9 +151,7 @@ pub async fn login_form(payload: &mut Multipart) -> LoginUser2 {
 
 pub async fn login(mut payload: Multipart, session: Session, req: HttpRequest) -> impl Responder {
     if is_signed_in(&session) {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body("o"))
+        to_home()
     }
     let form = login_form(payload.borrow_mut()).await;
     println!("{:?}", form.phone.clone());
@@ -220,9 +216,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
     };
      // Если пользователь не аноним, то отправляем его на страницу новостей
     if is_signed_in(&session) {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body("o"))
+        to_home()
     }
 
     let _connection = establish_connection();

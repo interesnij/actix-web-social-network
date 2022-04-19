@@ -8,6 +8,7 @@ use diesel::prelude::*;
 use actix_web::{
   http::header::{CONTENT_TYPE, LOCATION},
   HttpRequest,
+  HttpResponse,
 };
 use crate::schema;
 use crate::{errors::AuthError, vars, models::SessionUser};
