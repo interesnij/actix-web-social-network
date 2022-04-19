@@ -70,7 +70,7 @@ CREATE TABLE community_infos (
     id           SERIAL PRIMARY KEY,
     community_id INT NOT NULL,
 
-    posts        INT NOT NULL, 
+    posts        INT NOT NULL,
     members      INT NOT NULL,
     photos       INT NOT NULL,
     goods        INT NOT NULL,
@@ -293,4 +293,19 @@ CREATE TABLE community_doc_list_positions (
     list_id       INT NOT NULL,      -- Список документов
     position      SMALLINT NOT NULL,      -- Порядок отображения
     types         "char" NOT NULL       -- 1 - открыт, 0 - недоступен (например, удален)
+);
+
+-- Черный список -------
+CREATE TABLE community_banner_users (
+    id            SERIAL PRIMARY KEY,
+    community_id  INT NOT NULL,
+    user_id       INT NOT NULL,
+
+    CONSTRAINT fk_community_banner_users_community
+        FOREIGN KEY(community_id)
+            REFERENCES communitys(id),
+
+    CONSTRAINT fk_community_banner_users_user
+        FOREIGN KEY(user_id)
+            REFERENCES users(id)
 );

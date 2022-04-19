@@ -21,12 +21,13 @@ use crate::schema::{
     community_visible_perms,
     community_work_perms,
 };
+use crate::schema;
+use diesel::prelude::*;
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
 use crate::utils::establish_connection;
-use crate::models::User;
-use crate::schema;
-use diesel::prelude::*;
+use crate::models::{User, CommunityBannerUser};
+
 
 /////// CommunityCategories //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
@@ -120,6 +121,22 @@ pub struct NewCommunity {
     pub created:     chrono::NaiveDateTime,
 }
 
+/////// CommunityBannerUser //////
+#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[belongs_to(Community)]
+#[belongs_to(User)]
+pub struct CommunityBannerUser {
+    pub id:           i32,
+    pub community_id: i32,
+    pub user_id:      i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="community_banner_users"]
+pub struct NewCommunityBannerUser {
+    pub community_id: i32,
+    pub user_id:      i32,
+}
+
 impl Community {
     pub fn get_str_id(&self) -> String {
         return self.id.to_string();
@@ -178,6 +195,14 @@ impl Community {
             return "/public".to_string() + &self.get_str_id() + &"/".to_string();
         }
     }
+    pub fn get_link(&self) -> String {
+        if self.have_link.is_some() {
+            return "@".to_string() + &self.have_link.as_deref().unwrap().to_string();
+        }
+        else {
+            return "@public".to_string() + &self.get_str_id();
+        }
+    }
     pub fn get_s_avatar(&self) -> String {
         if self.s_avatar.is_some() {
             return self.s_avatar.as_deref().unwrap().to_string();
@@ -198,7 +223,405 @@ impl Community {
             .nth(0)
             .unwrap();
     }
+    pub fn plus_photos(&self, count: i32) -> bool {
+        let profile = self.get_info_model();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::community_infos::photos.eq(profile.photos + count))
+            .get_result::<CommunityInfo>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn plus_goods(&self, count: i32) -> bool {
+        let profile = self.get_info_model();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::community_infos::goods.eq(profile.goods + count))
+            .get_result::<CommunityInfo>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn plus_posts(&self, count: i32) -> bool {
+        let profile = self.get_info_model();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::community_infos::posts.eq(profile.posts + count))
+            .get_result::<CommunityInfo>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn plus_videos(&self, count: i32) -> bool {
+        let profile = self.get_info_model();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::community_infos::videos.eq(profile.videos + count))
+            .get_result::<CommunityInfo>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn plus_docs(&self, count: i32) -> bool {
+        let profile = self.get_info_model();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::community_infos::docs.eq(profile.docs + count))
+            .get_result::<CommunityInfo>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn plus_tracks(&self, count: i32) -> bool {
+        let profile = self.get_info_model();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::community_infos::tracks.eq(profile.tracks + count))
+            .get_result::<CommunityInfo>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn plus_communities(&self, count: i32) -> bool {
+        let profile = self.get_info_model();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::community_infos::communities.eq(profile.communities + count))
+            .get_result::<CommunityInfo>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn plus_articles(&self, count: i32) -> bool {
+        let profile = self.get_info_model();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::community_infos::articles.eq(profile.articles + count))
+            .get_result::<CommunityInfo>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn plus_members(&self, count: i32) -> bool {
+        let profile = self.get_info_model();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::community_infos::members.eq(profile.members + count))
+            .get_result::<CommunityInfo>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_photos(&self, count: i32) -> bool {
+        let profile = self.get_info_model();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::community_infos::photos.eq(profile.photos - count))
+            .get_result::<CommunityInfo>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_goods(&self, count: i32) -> bool {
+        let profile = self.get_info_model();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::community_infos::goods.eq(profile.goods - count))
+            .get_result::<CommunityInfo>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_posts(&self, count: i32) -> bool {
+        let profile = self.get_info_model();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::community_infos::posts.eq(profile.posts - count))
+            .get_result::<CommunityInfo>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_videos(&self, count: i32) -> bool {
+        let profile = self.get_info_model();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::community_infos::videos.eq(profile.videos - count))
+            .get_result::<CommunityInfo>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_docs(&self, count: i32) -> bool {
+        let profile = self.get_info_model();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::community_infos::docs.eq(profile.docs - count))
+            .get_result::<CommunityInfo>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_tracks(&self, count: i32) -> bool {
+        let profile = self.get_info_model();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::community_infos::tracks.eq(profile.tracks - count))
+            .get_result::<CommunityInfo>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_articles(&self, count: i32) -> bool {
+        let profile = self.get_info_model();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::community_infos::articles.eq(profile.articles - count))
+            .get_result::<CommunityInfo>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_members(&self, count: i32) -> bool {
+        let profile = self.get_info_model();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::community_infos::members.eq(profile.members - count))
+            .get_result::<CommunityInfo>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn is_deleted(&self) -> bool {
+        return self.types > 10 &&  self.types < 20;
+    }
+    pub fn is_suspended(&self) -> bool {
+        return self.types > 40 &&  self.types < 50;
+    }
+    pub fn is_closed(&self) -> bool {
+        return self.types > 30 &&  self.types < 40;
+    }
+    pub fn is_have_warning_banner(&self) -> bool {
+        return self.types > 20 &&  self.types < 30;
+    }
+    pub fn is_standart(&self) -> bool {
+        return self.perm == "a".to_string();
+    }
+    pub fn is_child(&self) -> bool {
+        return self.perm == "b".to_string();
+    }
+    pub fn is_private(&self) -> bool {
+        return self.types == 1;
+    }
+    pub fn is_close(&self) -> bool {
+        return self.types == 2;
+    }
+    pub fn is_public(&self) -> bool {
+        return self.types == 3;
+    }
+    pub fn is_open(&self) -> bool {
+        return self.types < 10;
+    }
 
+    pub fn create_banned_user(&self, user: User) -> bool {
+        use crate::schema::community_banner_users::dsl::community_banner_users;
+        use crate::models::NewCommunityBannerUser;
+
+        if user.is_banned_from_community(self.id) {
+            return false;
+        }
+        let new_banned_user = NewCommunityBannerUser {
+                user_id: user.id,
+                community_id: self.id,
+            };
+        diesel::insert_into(schema::community_banner_users::table)
+            .values(&new_banned_user)
+            .get_result::<CommunityBannerUser>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn delete_banned_user(&self, user: User) -> bool {
+        use crate::schema::community_banner_users::dsl::community_banner_users;
+
+        if !user.is_banned_from_community(self.id) {
+            return false;
+        }
+        diesel::delete(community_banner_users
+                .filter(schema::community_banner_users::community_id.eq(self.id))
+                .filter(schema::community_banner_users::user_id.eq(user.id))
+            )
+            .execute(&_connection)
+            .expect("E");
+        return true;
+    }
+
+
+    pub fn add_new_subscriber(&self, user_id: i32) -> bool {
+        use crate::models::{NewsUserCommunitie, NewNewsUserCommunitie};
+        use crate::schema::news_user_communities::dsl::news_user_communities;
+
+        let _connection = establish_connection();
+        if news_user_communities
+            .filter(schema::news_user_communities::community_id.eq(self.id))
+            .filter(schema::news_user_communities::owner.eq(user_id))
+            .load::<NewsUserCommunitie>(&_connection)
+            .expect("E").len() == 0 {
+                let _new = NewNewsUserCommunitie {
+                    owner: user_id,
+                    list_id: None,
+                    user_id: None,
+                    community_id: Some(community_id),
+                    mute: false,
+                    sleep: None,
+                };
+            diesel::insert_into(schema::news_user_communities::table)
+                .values(&_new)
+                .get_result::<NewsUserCommunitie>(&_connection)
+                .expect("Error.");
+        }
+        return true;
+    }
+    pub fn add_new_subscriber_in_list(&self, new_id: i32, list_id: i32) -> bool {
+        use crate::models::{NewsUserCommunitie, ListUserCommunitiesKey};
+        use crate::schema::news_user_communities::dsl::news_user_communities;
+        use crate::schema::list_user_communities_keys::dsl::list_user_communities_keys;
+
+        let _connection = establish_connection();
+        let _new = news_user_communities
+            .filter(schema::news_user_communities::id.eq(new_id))
+            .load::<NewsUserCommunitie>(&_connection)
+            .expect("E");
+        let _list = list_user_communities_keys
+            .filter(schema::list_user_communities_keys::id.eq(list_id))
+            .load::<ListUserCommunitiesKey>(&_connection)
+            .expect("E");
+
+        if _new.len() > 0 && _new[0].community_id == self.id && _list.len() > 0 {
+            diesel::update(news_user_communities.filter(schema::news_user_communities::id.eq(new_id)))
+                .set(schema::news_user_communities::list_id.eq(list_id))
+                .get_result::<NewsUserCommunitie>(&_connection)
+                .expect("Error.");
+            return true;
+        }
+        return false;
+    }
+    pub fn delete_new_subscriber(&self, user_id: i32) -> bool {
+        use crate::models::NewsUserCommunitie;
+        use crate::schema::news_user_communities::dsl::news_user_communities;
+
+        let _connection = establish_connection();
+        let _new = news_user_communities
+            .filter(schema::news_user_communities::community_id.eq(self.id))
+            .filter(schema::news_user_communities::user_id.eq(user_id))
+            .load::<NewsUserCommunitie>(&_connection)
+            .expect("E");
+        if _new.len() > 0 && _new[0].community_id == self.id {
+            diesel::delete(news_user_communities
+                    .filter(schema::news_user_communities::community_id.eq(self.id))
+                    .filter(schema::news_user_communities::user_id.eq(user_id))
+                ).execute(&_connection)
+                .expect("E");
+            return true;
+        }
+        return false;
+    }
+    pub fn delete_new_subscriber_from_list(&self, new_id: i32) -> bool {
+        use crate::models::{NewsUserCommunitie, NewNewsUserCommunitie};
+        use crate::schema::news_user_communities::dsl::news_user_communities;
+
+        let _connection = establish_connection();
+        let _new = news_user_communities.filter(schema::news_user_communities::id.eq(new_id)).load::<NewsUserCommunitie>(&_connection).expect("E");
+        if _new.len() > 0 && _new[0].community_id == self.id {
+            let _new = NewNewsUserCommunitie {
+                owner: self.id,
+                list_id: None,
+                user_id: None,
+                community_id: _new[0].community_id,
+                mute: _new[0].mute,
+                sleep: _new[0].sleep,
+            };
+            diesel::update(news_user_communities.filter(schema::news_user_communities::id.eq(new_id)))
+                .set(_new)
+                .get_result::<NewsUserCommunitie>(&_connection)
+                .expect("Error.");
+                return true;
+            }
+        return false;
+    }
+
+
+    pub fn add_notification_subscriber(&self, user_id: i32) -> bool {
+        use crate::models::{NotifyUserCommunitie, NewNotifyUserCommunitie};
+        use crate::schema::notify_user_communities::dsl::notify_user_communities;
+
+        let _connection = establish_connection();
+        if notify_user_communities
+            .filter(schema::notify_user_communities::owner.eq(user_id))
+            .filter(schema::notify_user_communities::community_id.eq(self.id))
+            .load::<NotifyUserCommunitie>(&_connection)
+            .expect("E").len() == 0 {
+                let _new = NewNotifyUserCommunitie {
+                    owner: user_id,
+                    list_id: None,
+                    user_id: None,
+                    community_id: Some(self.id),
+                    mute: false,
+                    sleep: None,
+                };
+                diesel::insert_into(schema::notify_user_communities::table)
+                    .values(&_new)
+                    .get_result::<NotifyUserCommunitie>(&_connection)
+                    .expect("Error.");
+        }
+        return true;
+    }
+    pub fn add_notification_subscriber_in_list(&self, notify_id: i32, list_id: i32, user_id: i32) -> bool {
+        use crate::models::{NotifyUserCommunitie, ListUserCommunitiesKey};
+        use crate::schema::notify_user_communities::dsl::notify_user_communities;
+        use crate::schema::list_user_communities_keys::dsl::list_user_communities_keys;
+
+        let _connection = establish_connection();
+        let _notify = notify_user_communities.filter(schema::notify_user_communities::id.eq(notify_id)).load::<NotifyUserCommunitie>(&_connection).expect("E");
+        let _list = list_user_communities_keys.filter(schema::list_user_communities_keys::id.eq(list_id)).load::<ListUserCommunitiesKey>(&_connection).expect("E");
+
+        if _notify.len() > 0 && _notify[0].owner == user_id && _list.len() > 0 && _list[0].owner == user_id {
+            diesel::update(notify_user_communities.filter(schema::notify_user_communities::id.eq(notify_id)))
+                .set(schema::notify_user_communities::list_id.eq(_list[0].id))
+                .get_result::<NotifyUserCommunitie>(&_connection)
+                .expect("Error.");
+            return true;
+        }
+        return false;
+    }
+    pub fn delete_notification_subscriber(&self, user_id: i32) -> bool {
+        use crate::models::NotifyUserCommunitie;
+        use crate::schema::notify_user_communities::dsl::notify_user_communities;
+
+        let _connection = establish_connection();
+        let _notify = notify_user_communities
+            .filter(schema::notify_user_communities::owner.eq(user_id))
+            .filter(schema::notify_user_communities::community_id.eq(self.id))
+            .load::<NotifyUserCommunitie>(&_connection)
+            .expect("E");
+        if _notify.len() > 0 && _notify[0].owner == user_id {
+            diesel::delete(
+                notify_user_communities
+                    .filter(schema::notify_user_communities::owner.eq(user_id))
+                    .filter(schema::notify_user_communities::community_id.eq(self.id))
+                )
+                .execute(&_connection)
+                .expect("E");
+            return true;
+        }
+        return false;
+    }
+    pub fn delete_notification_subscriber_from_list(&self, notify_id: i32, user_id: i32) -> bool {
+        use crate::models::{NotifyUserCommunitie, NewNotifyUserCommunitie};
+        use crate::schema::notify_user_communities::dsl::notify_user_communities;
+
+        let _connection = establish_connection();
+        let _notify = notify_user_communities.filter(schema::notify_user_communities::id.eq(notify_id)).load::<NotifyUserCommunitie>(&_connection).expect("E");
+        if _notify.len() > 0 && _notify[0].owner == user_id {
+            let _new = NewNotifyUserCommunitie {
+                owner: self.id,
+                list_id: None,
+                user_id: None,
+                community_id: _notify[0].community_id,
+                mute: _notify[0].mute,
+                sleep: _notify[0].sleep,
+            };
+            diesel::update(notify_user_communities.filter(schema::notify_user_communities::id.eq(notify_id)))
+                .set(_new)
+                .get_result::<NotifyUserCommunitie>(&_connection)
+                .expect("Error.");
+                return true;
+            }
+        return false;
+    }
 }
 
 
@@ -710,4 +1133,20 @@ pub struct NewCommunityWorkPerm {
     pub can_work_doc:     Option<String>,
     pub can_work_music:   Option<String>,
     pub can_work_survey:  Option<String>,
+}
+
+/////// CommunityBannerUser //////
+#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[belongs_to(Community)]
+#[belongs_to(User)]
+pub struct CommunityBannerUser {
+    pub id:           i32,
+    pub community_id: i32,
+    pub user_id:      i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="community_banner_users"]
+pub struct NewCommunityBannerUser {
+    pub community_id: i32,
+    pub user_id:      i32,
 }

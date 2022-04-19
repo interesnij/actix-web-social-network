@@ -124,6 +124,14 @@ impl User {
             return "/id".to_string() + &self.get_str_id() + &"/".to_string();
         }
     }
+    pub fn get_link(&self) -> String {
+        if self.have_link.is_some() {
+            return "@".to_string() + &self.have_link.as_deref().unwrap().to_string();
+        }
+        else {
+            return "@id".to_string() + &self.get_str_id();
+        }
+    }
     pub fn get_s_avatar(&self) -> String {
             if self.s_avatar.is_some() {
                 return self.s_avatar.as_deref().unwrap().to_string();
@@ -3927,7 +3935,13 @@ impl User {
             .load::<NewsUserCommunitie>(&_connection)
             .expect("E");
         if _new.len() > 0 && _new[0].owner == self.id {
-            diesel::delete(news_user_communities.filter(schema::news_user_communities::user_id.eq(user_id))).execute(&_connection).expect("E");
+            diesel::delete(
+                news_user_communities
+                    .filter(schema::news_user_communities::owner.eq(self.id))
+                    .filter(schema::news_user_communities::user_id.eq(user_id))
+                )
+                .execute(&_connection)
+                .expect("E");
             return true;
         }
         return false;
@@ -4010,7 +4024,13 @@ impl User {
             .load::<NotifyUserCommunitie>(&_connection)
             .expect("E");
         if _notify.len() > 0 && _notify[0].owner == self.id {
-            diesel::delete(notify_user_communities.filter(schema::notify_user_communities::user_id.eq(user_id))).execute(&_connection).expect("E");
+            diesel::delete(
+                notify_user_communities
+                    .filter(schema::notify_user_communities::owner.eq(self.id))
+                    .filter(schema::notify_user_communities::user_id.eq(user_id))
+                )
+                .execute(&_connection)
+                .expect("E");
             return true;
         }
         return false;
@@ -4337,6 +4357,17 @@ impl User {
                 .get_result::<CommunitiesMembership>(&_connection)
                 .expect("Error.");
         return true;
+    }
+    pub fn is_banned_from_community(&self, community_id: i32) -> bool {
+        use crate::schema::community_banner_users::dsl::community_banner_users;
+        use crate::models::CommunityBannerUser;
+
+        return community_banner_users
+            .filter(schema::community_banner_users::community_id.eq(community_id))
+            .filter(schema::community_banner_users::user_id.eq(self.id))
+            .load::<CommunityBannerUser>(&_connection)
+            .expect("E")
+            .len() > 0;
     }
 }
 
