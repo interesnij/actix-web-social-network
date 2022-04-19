@@ -23,7 +23,7 @@ use crate::schema::{
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
-//use crate::utils::establish_connection;
+use crate::utils::establish_connection;
 use crate::models::User;
 
 /////// CommunityCategories //////
@@ -118,6 +118,108 @@ pub struct NewCommunity {
     pub created:     chrono::NaiveDateTime,
 }
 
+impl Community {
+    pub fn get_str_id(&self) -> String {
+        return self.id.to_string();
+    }
+    pub fn get_description(&self) -> String {
+        return "<a href='".to_string() + &self.get_link() + &"' target='_blank'>".to_string() + &self.name + &"</a>".to_string();
+    }
+    pub fn is_community(&self) -> bool {
+        return true;
+    }
+    pub fn get_code(&self) -> String {
+        return "com".to_string() + &self.get_str_id();
+    }
+    pub fn get_longest_penalties(&self) -> String {
+        use crate::schema::moderated_penalties::dsl::moderated_penalties;
+        use crate::models::ModeratedPenaltie;
+
+        let _connection = establish_connection();
+
+        let penaltie = moderated_penalties
+            .filter(schema::moderated_penalties::object_id.eq(self.id))
+            .filter(schema::moderated_penalties::types.eq(2))
+            .load::<ModeratedPenaltie>(&_connection)
+            .expect("E.")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        return penaltie.expiration.unwrap().format("%d/%m/%Y").to_string();
+    }
+    pub fn get_moderated_description(&self) -> String {
+        use crate::schema::moderateds::dsl::moderateds;
+        use crate::models::Moderated;
+
+        let _connection = establish_connection();
+
+        let moder = moderateds
+            .filter(schema::moderateds::object_id.eq(self.id))
+            .filter(schema::moderateds::types.eq(2))
+            .load::<Moderated>(&_connection)
+            .expect("E.")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        if moder.description.is_some() {
+            return moder.description.unwrap().to_string();
+        }
+        else {
+            return "Предупреждение за нарушение правил соцсети трезвый.рус".to_string();
+        }
+    }
+    pub fn get_link(&self) -> String {
+        if self.have_link.is_some() {
+            return self.have_link.as_deref().unwrap().to_string();
+        }
+        else {
+            return "/public".to_string() + &self.get_str_id() + &"/".to_string();
+        }
+    }
+    pub fn get_s_avatar(&self) -> String {
+        if self.s_avatar.is_some() {
+            return self.s_avatar.as_deref().unwrap().to_string();
+        }
+        else {
+            return "/static/images/icons/avatar30.svg".to_string();
+        }
+    }
+    pub fn get_info_model(&self) -> CommunityInfo {
+        use crate::schema::community_infos::dsl::community_infos;
+
+        let _connection = establish_connection();
+        infos = community_infos
+            .filter(schema::community_infos::id.eq(self.id))
+            .load::<CommunityInfo>(&_connection)
+            .expect("E.");
+        if infos.len() > 0 {
+            return infos[0]
+        }
+        else {
+            let new_info = NewCommunityInfo {
+                pub community_id: self.id,
+                pub posts:        0,
+                pub members:      0,
+                pub photos:       0,
+                pub goods:        0,
+                pub tracks:       0,
+                pub videos:       0,
+                pub docs:         0,
+                pub articles:     0,
+                pub survey:       0,
+                pub planners:     0,
+            };
+            let result = diesel::insert_into(schema::community_infos::table)
+                .values(&new_info)
+                .get_result::<CommunityInfo>(&_connection)
+                .expect("Error.");
+            return result;
+        }
+    }
+
+}
+
+
 /////// CommunityMembership //////
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
@@ -162,6 +264,7 @@ pub struct CommunityInfo {
     pub docs:         i32,
     pub articles:     i32,
     pub survey:       i32,
+    pub planners:     i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_infos"]
@@ -176,6 +279,7 @@ pub struct NewCommunityInfo {
     pub docs:         i32,
     pub articles:     i32,
     pub survey:       i32,
+    pub planners:     i32,
 }
 
 /////// CommunityPrivate //////

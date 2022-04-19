@@ -70,7 +70,7 @@ CREATE TABLE community_infos (
     id           SERIAL PRIMARY KEY,
     community_id INT NOT NULL,
 
-    posts        INT NOT NULL,
+    posts        INT NOT NULL, 
     members      INT NOT NULL,
     photos       INT NOT NULL,
     goods        INT NOT NULL,
@@ -79,6 +79,7 @@ CREATE TABLE community_infos (
     docs         INT NOT NULL,
     articles     INT NOT NULL,
     survey       INT NOT NULL,
+    planners     INT NOT NULL,
 
     CONSTRAINT fk_community_info
         FOREIGN KEY(community_id)
