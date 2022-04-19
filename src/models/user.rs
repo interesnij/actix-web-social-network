@@ -227,7 +227,7 @@ impl User {
                 user_id: self.id,
                 position: 10,
                 members: 1,
-                created: chrono::Local::now().naive_utc(),,
+                created: chrono::Local::now().naive_utc(),
                 can_add_members:  "f".to_string(),
                 can_fix_item:     "b".to_string(),
                 can_mention:      "f".to_string(),
