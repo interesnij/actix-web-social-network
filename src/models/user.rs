@@ -558,7 +558,7 @@ impl User {
             stack.push(_item.blocked_user_id);
         };
         return users
-            .filter(schema::users::id.eq_any(_stack))
+            .filter(schema::users::id.eq_any(stack))
             .load::<User>(&_connection)
             .expect("E.");
     }
@@ -887,7 +887,7 @@ impl User {
         use crate::schema::follows::dsl::follows;
 
         let _connection = establish_connection();
-        return all_follows = follows
+        return follows
             .filter(schema::follows::user_id.eq(self.id))
             .filter(schema::follows::followed_user.eq(user_id))
             .load::<Follow>(&_connection)
@@ -897,7 +897,7 @@ impl User {
         use crate::schema::follows::dsl::follows;
 
         let _connection = establish_connection();
-        return all_follows = follows
+        return follows
             .filter(schema::follows::followed_user.eq(self.id))
             .filter(schema::follows::user_id.eq(user_id))
             .load::<Follow>(&_connection)
@@ -1006,7 +1006,7 @@ impl User {
             .filter(schema::follows::view.eq(false))
             .load::<Follow>(&_connection)
             .expect("E.")
-            .len() > 0;
+            .len();
     }
     pub fn count_following(&self) -> usize {
         use crate::schema::follows::dsl::follows;
