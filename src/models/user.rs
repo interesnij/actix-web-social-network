@@ -4361,7 +4361,7 @@ impl User {
             .expect("E");
         diesel::update(&_member[0])
                 .set(schema::communities_memberships::visited.eq(_member[0].visited + 1))
-                .get_result::<CommunityMembership>(&_connection)
+                .get_result::<CommunitiesMembership>(&_connection)
                 .expect("Error.");
         return true;
     }
