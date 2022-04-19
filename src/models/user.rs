@@ -4182,7 +4182,7 @@ impl User {
         diesel::delete(
             follows
                 .filter(schema::follows::user_id.eq(user.id))
-                .filter(schema::follows::followed_user_id.eq(self.id)))
+                .filter(schema::follows::followed_user.eq(self.id)))
                 .execute(&_connection)
                 .expect("E");
         diesel::delete(
