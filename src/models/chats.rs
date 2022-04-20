@@ -101,7 +101,7 @@ impl Chat {
     pub fn get_name(&self, user_id: i32) -> String {
         let chat_types = self.types;
         if self.name.is_some() {
-            return self.name.as_ref().unwrap();
+            return self.name.as_ref().to_string();
         }
         else if self.is_group() {
             return "Групповой чат".to_string();
