@@ -368,6 +368,7 @@ impl Chat {
         let member_form = NewChatUser {
             user_id: user.id,
             chat_id: self.id,
+            types: "a".to_string(),
             is_administrator: true,
             created: member[0].created,
             no_disturb: member[0].no_disturb,
