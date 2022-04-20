@@ -1235,7 +1235,7 @@ impl CommunitiesMembership {
             visited: 0,
         };
         let new_member = diesel::insert_into(schema::communities_memberships::table)
-            .values(&new_member)
+            .values(&new_member_form)
             .get_result::<CommunitiesMembership>(&_connection)
             .expect("E.");
 
