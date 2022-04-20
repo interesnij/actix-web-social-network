@@ -182,35 +182,7 @@ pub struct CountryLoc {
 pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responder {
     use crate::utils::{hash_password, set_current_user};
     use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
-    use crate::models::{
-        UserLocation, NewUserLocation,
-        UserProfile, NewUserProfile,
-        IpUser, NewIpUser,
-        DesignSetting, NewDesignSetting,
-        UserPhotoListPosition, NewUserPhotoListPosition,
-        UserPostListPosition, NewUserPostListPosition,
-        UserMusicListPosition, NewUserMusicListPosition,
-        UserGoodListPosition, NewUserGoodListPosition,
-        UserVideoListPosition, NewUserVideoListPosition,
-        UserSurveyListPosition, NewUserSurveyListPosition,
-        UserDocListPosition, NewUserDocListPosition,
-        UserPrivate, NewUserPrivate,
-
-        UserPhotoNotification, NewUserPhotoNotification,
-        UserGoodNotification, NewUserGoodNotification,
-        UserVideoNotification, NewUserVideoNotification,
-        UserMusicNotification, NewUserMusicNotification,
-        UserPostNotification, NewUserPostNotification,
-        UserSurveyNotification, NewUserSurveyNotification,
-        UserNotification, NewUserNotification,
-
-        PostList, NewPostList,
-        PhotoList, NewPhotoList,
-        DocList, NewDocList,
-        VideoList, NewVideoList,
-        SurveyList, NewSurveyList,
-        MusicList, NewMusicList,
-        GoodList, NewGoodList,
+    s
     };
      // Если пользователь не аноним, то отправляем его на страницу новостей
     if is_signed_in(&session) {

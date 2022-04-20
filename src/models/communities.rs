@@ -27,7 +27,10 @@ use diesel::prelude::*;
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
 use crate::utils::establish_connection;
-use crate::models::{User, CommunityBannerUser};
+use crate::models::{
+    User, CommunityBannerUser,PostList, PhotoList, DocList, VideoList,
+    SurveyList, MusicList, GoodList,
+};
 
 
 /////// CommunityCategories //////
@@ -599,7 +602,491 @@ impl Community {
             }
         return false;
     }
+    pub fn create_community(name: String, category: String, user: User, types: i16) -> Community {
+        let new_community_form = NewCommunity{
+                name:                    name,
+                status:                  "a".to_string(),
+                types:                    types,
+                perm:                     "a".to_string(),
+                level:                    100,
+                community_subcategory_id: category,
+                user_id:                  user.id.
+                created:                  chrono::Local::now().naive_utc(),
+            };
+        let new_community = diesel::insert_into(schema::communitys::table)
+            .values(&new_community_form)
+            .get_result::<Community>(&_connection)
+            .expect("Error.");
 
+        CommunitiesMembership::create_membership(user, new_community, true, false, false, false);
+        user.plus_community_visited(new_community.id);
+        new_community.add_new_subscriber(user.id);
+        new_community.add_notify_subscriber(user.id);
+
+        // записываем профиль нового пользователя
+        let _community_info = NewCommunityInfo {
+            community_id: new_community.id,
+            posts:        0,
+            members:      0,
+            photos:       0,
+            goods:        0,
+            tracks:       0,
+            videos:       0,
+            docs:         0,
+            articles:     0,
+            survey:       0,
+            planners:     0,
+        };
+        diesel::insert_into(schema::community_infos::table)
+            .values(&_community_info)
+            .get_result::<CommunityInfo>(&_connection)
+            .expect("Error saving user_profile.");
+
+        // создаем список записей нового пользователя,
+        // а также запись в позициях списков записей
+        let _new_posts_list = NewPostList {
+            name:            "Список записей".to_string(),
+            community_id:    Some(new_community.id),
+            user_id:         user.id,
+            types:           "a".to_string(),
+            description:     None,
+            created:         NaiveDateTime::new(d, t),
+            count:           0,
+            repost:          0,
+            copy:            0,
+            position:        0,
+            can_see_el:      "a".to_string(),
+            can_see_comment: "a".to_string(),
+            create_el:       "g".to_string(),
+            create_comment:  "a".to_string(),
+            copy_el:         "g".to_string(),
+        };
+        let _posts_list = diesel::insert_into(schema::post_lists::table)
+            .values(&_new_posts_list)
+            .get_result::<PostList>(&_connection)
+            .expect("Error saving post_list.");
+
+        let _new_posts_list_position = NewCommunityPostListPosition {
+            community_id:  new_community.id,
+            list_id:  _posts_list.id,
+            position: 1,
+            types:    "a".to_string(),
+        };
+        let _posts_list_position = diesel::insert_into(schema::community_post_list_positions::table)
+            .values(&_new_posts_list_position)
+            .get_result::<CommunityPostListPosition>(&_connection)
+            .expect("Error saving post_list_position.");
+
+        // создаем фотоальбомы нового пользователя,
+        // а также записи в позициях списков записей
+        let _new_photos_list = NewPhotoList {
+            name:            "Основной альбом".to_string(),
+            community_id:    Some(new_community.id),
+            user_id:         user.id,
+            types:           "a".to_string(),
+            description:     None,
+            cover_photo:     None,
+            created:         NaiveDateTime::new(d, t),
+            count:           0,
+            repost:          0,
+            copy:            0,
+            position:        0,
+            can_see_el:      "a".to_string(),
+            can_see_comment: "a".to_string(),
+            create_el:       "g".to_string(),
+            create_comment:  "a".to_string(),
+            copy_el:         "g".to_string(),
+        };
+        let _photos_list = diesel::insert_into(schema::photo_lists::table)
+            .values(&_new_photos_list)
+            .get_result::<PhotoList>(&_connection)
+            .expect("Error saving photo_list.");
+
+        let _new_photos_list_position = NewCommunityPhotoListPosition {
+            community_id:  new_community.id,
+            list_id:  _photos_list.id,
+            position: 1,
+            types:    "a".to_string(),
+        };
+        let _photos_list_position = diesel::insert_into(schema::community_photo_list_positions::table)
+            .values(&_new_photos_list_position)
+            .get_result::<CommunityPhotoListPosition>(&_connection)
+            .expect("Error saving photo_list_position.");
+
+        let _new_photos_list = NewPhotoList {
+            name:            "Фото со страницы".to_string(),
+            community_id:    Some(new_community.id),
+            user_id:         user.id,
+            types:           "d".to_string(),
+            description:     None,
+            cover_photo:     None,
+            created:         NaiveDateTime::new(d, t),
+            count:           0,
+            repost:          0,
+            copy:            0,
+            position:        0,
+            can_see_el:      "a".to_string(),
+            can_see_comment: "a".to_string(),
+            create_el:       "0".to_string(),
+            create_comment:  "a".to_string(),
+            copy_el:         "g".to_string(),
+            };
+        let _photos_list = diesel::insert_into(schema::photo_lists::table)
+            .values(&_new_photos_list)
+            .get_result::<PhotoList>(&_connection)
+            .expect("Error saving photo_list.");
+
+        let _new_photos_list_position = NewCommunityPhotoListPosition {
+            community_id:  new_community.id,
+            list_id:  _photos_list.id,
+            position: 2,
+            types:    "a".to_string(),
+        };
+        let _photos_list_position = diesel::insert_into(schema::community_photo_list_positions::table)
+            .values(&_new_photos_list_position)
+            .get_result::<CommunityPhotoListPosition>(&_connection)
+            .expect("Error saving photo_list_position.");
+
+        let _new_photos_list = NewPhotoList {
+            name:            "Фото со стены".to_string(),
+            community_id:    Some(new_community.id),
+            user_id:         user.id,
+            types:           "e".to_string(),
+            description:     None,
+            cover_photo:     None,
+            created:         NaiveDateTime::new(d, t),
+            count:           0,
+            repost:          0,
+            copy:            0,
+            position:        0,
+            can_see_el:      "a".to_string(),
+            can_see_comment: "a".to_string(),
+            create_el:       "0".to_string(),
+            create_comment:  "a".to_string(),
+            copy_el:         "g".to_string(),
+        };
+        let _photos_list = diesel::insert_into(schema::photo_lists::table)
+            .values(&_new_photos_list)
+            .get_result::<PhotoList>(&_connection)
+            .expect("Error saving photo_list.");
+
+        let _new_photos_list_position = NewCommunityPhotoListPosition {
+            community_id:  new_community.id,
+            list_id:  _photos_list.id,
+            position: 3,
+            types:    "a".to_string(),
+        };
+        let _photos_list_position = diesel::insert_into(schema::community_photo_list_positions::table)
+            .values(&_new_photos_list_position)
+            .get_result::<CommunityPhotoListPosition>(&_connection)
+            .expect("Error saving photo_list_position.");
+
+        // создаем видеоальбом нового пользователя,
+        // а также запись в позиции списка записей
+        let _new_videos_list = NewVideoList {
+            name:            "Основной альбом".to_string(),
+            community_id:    Some(new_community.id),
+            user_id:         user.id,
+            types:           "a".to_string(),
+            description:     None,
+            created:         NaiveDateTime::new(d, t),
+            count:           0,
+            repost:          0,
+            copy:            0,
+            position:        0,
+            can_see_el:      "a".to_string(),
+            can_see_comment: "a".to_string(),
+            create_el:       "g".to_string(),
+            create_comment:  "a".to_string(),
+            copy_el:         "g".to_string(),
+        };
+        let _videos_list = diesel::insert_into(schema::video_lists::table)
+            .values(&_new_videos_list)
+            .get_result::<VideoList>(&_connection)
+            .expect("Error saving video_list.");
+
+        let _new_videos_list_position = NewCommunityVideoListPosition {
+            community_id:  new_community.id,
+            list_id:  _videos_list.id,
+            position: 1,
+            types:    "a".to_string(),
+        };
+        let _videos_list_position = diesel::insert_into(schema::community_video_list_positions::table)
+            .values(&_new_videos_list_position)
+            .get_result::<CommunityVideoListPosition>(&_connection)
+            .expect("Error saving video_list_position.");
+
+        // создаем список товаров нового пользователя,
+        // а также запись в позиции списка товаров
+        let _new_goods_list = NewGoodList {
+            name:            "Основной альбом".to_string(),
+            community_id:    Some(new_community.id),
+            user_id:         user.id,
+            types:           "a".to_string(),
+            description:     None,
+            created:         NaiveDateTime::new(d, t),
+            count:           0,
+            repost:          0,
+            copy:            0,
+            position:        0,
+            can_see_el:      "a".to_string(),
+            can_see_comment: "a".to_string(),
+            create_el:       "g".to_string(),
+            create_comment:  "a".to_string(),
+            copy_el:         "g".to_string(),
+        };
+        let _goods_list = diesel::insert_into(schema::good_lists::table)
+            .values(&_new_goods_list)
+            .get_result::<GoodList>(&_connection)
+            .expect("Error saving good_list.");
+
+        let _new_goods_list_position = NewCommunityGoodListPosition {
+            community_id:  new_community.id,
+            list_id:  _goods_list.id,
+            position: 1,
+            types:    "a".to_string(),
+        };
+        let _goods_list_position = diesel::insert_into(schema::community_good_list_positions::table)
+            .values(&_new_goods_list_position)
+            .get_result::<CommunityGoodListPosition>(&_connection)
+            .expect("Error saving good_list_position.");
+
+        // создаем плейлист нового пользователя,
+        // а также запись в позиции списков плейлистов
+        let _new_musics_list = NewMusicList {
+            name:            "Основной плейлист".to_string(),
+            community_id:    Some(new_community.id),
+            user_id:         user.id,
+            types:           "a".to_string(),
+            description:     None,
+            image:           None,
+            created:         NaiveDateTime::new(d, t),
+            count:           0,
+            repost:          0,
+            copy:            0,
+            position:        0,
+            can_see_el:      "a".to_string(),
+            create_el:       "g".to_string(),
+            copy_el:         "g".to_string(),
+        };
+        let _musics_list = diesel::insert_into(schema::music_lists::table)
+            .values(&_new_musics_list)
+            .get_result::<MusicList>(&_connection)
+            .expect("Error saving music_list.");
+
+        let _new_musics_list_position = NewCommunityMusicListPosition {
+            community_id:  new_community.id,
+            list_id:  _musics_list.id,
+            position: 1,
+            types:    "a".to_string(),
+        };
+        let _musics_list_position = diesel::insert_into(schema::community_music_list_positions::table)
+            .values(&_new_musics_list_position)
+            .get_result::<CommunityMusicListPosition>(&_connection)
+            .expect("Error saving music_list_position.");
+
+        // создаем список документов нового пользователя,
+        // а также запись в позиции списков документов
+        let _new_docs_list = NewDocList {
+            name:            "Основной список".to_string(),
+            community_id:    Some(new_community.id),
+            user_id:         user.id,
+            types:           "a".to_string(),
+            description:     None,
+            created:         NaiveDateTime::new(d, t),
+            count:           0,
+            repost:          0,
+            copy:            0,
+            position:        0,
+            can_see_el:      "a".to_string(),
+            create_el:       "g".to_string(),
+            copy_el:         "g".to_string(),
+        };
+        let _docs_list = diesel::insert_into(schema::doc_lists::table)
+            .values(&_new_docs_list)
+            .get_result::<DocList>(&_connection)
+            .expect("Error saving doc_list.");
+
+        let _new_docs_list_position = NewCommunityDocListPosition {
+            community_id:  new_community.id,
+            list_id:  _docs_list.id,
+            position: 1,
+            types:    "a".to_string(),
+        };
+        let _docs_list_position = diesel::insert_into(schema::community_doc_list_positions::table)
+            .values(&_new_docs_list_position)
+            .get_result::<CommunityDocListPosition>(&_connection)
+            .expect("Error saving doc_list_position.");
+
+        // создаем список опросов нового пользователя,
+        // а также запись в позиции списков опросов
+        let _new_surveys_list = NewSurveyList {
+            name:            "Основной список".to_string(),
+            community_id:    Some(new_community.id),
+            user_id:         user.id,
+            types:           "a".to_string(),
+            description:     None,
+            created:         NaiveDateTime::new(d, t),
+            count:           0,
+            repost:          0,
+            copy:            0,
+            position:        0,
+            can_see_el:      "a".to_string(),
+            create_el:       "g".to_string(),
+            copy_el:         "g".to_string(),
+        };
+        let _surveys_list = diesel::insert_into(schema::survey_lists::table)
+            .values(&_new_surveys_list)
+            .get_result::<SurveyList>(&_connection)
+            .expect("Error saving survey_list.");
+
+        let _new_surveys_list_position = NewCommunitySurveyListPosition {
+            community_id:  new_community.id,
+            list_id:  _surveys_list.id,
+            position: 1,
+            types:    "a".to_string(),
+        };
+        let _surveys_list_position = diesel::insert_into(schema::community_survey_list_positions::table)
+            .values(&_new_surveys_list_position)
+            .get_result::<CommunitySurveyListPosition>(&_connection)
+            .expect("Error saving survey_list_position.");
+
+        // записываем приватность нового пользователя
+        let _private = NewCommunityPrivate {
+            community_id:            new_community.id,
+            can_see_member:  "a".to_string(),
+            can_see_info:       "a".to_string(),
+            can_send_message:   "a".to_string(),
+            can_see_post:       "a".to_string(),
+            can_see_photo:      "a".to_string(),
+            can_see_good:       "a".to_string(),
+            can_see_video:      "a".to_string(),
+            can_see_music:      "a".to_string(),
+            can_see_planner:    "a".to_string(),
+            can_see_doc:        "a".to_string(),
+            can_see_survey:     "a".to_string(),
+            can_see_settings:   "c".to_string(),
+            can_see_log:        "c".to_string(),
+            can_see_stat:       "c".to_string(),
+        };
+        diesel::insert_into(schema::community_privates::table)
+            .values(&_private)
+            .get_result::<CommunityPrivate>(&_connection)
+            .expect("Error saving community_private.");
+
+        // записываем уведомления профиля нового пользователя
+        let _community_notification = NewCommunityNotification {
+            community_id:              new_community.id,
+            connection_request:   true,
+            connection_confirmed: true,
+            community_invite:     true,
+        };
+        diesel::insert_into(schema::community_notifications::table)
+            .values(&_community_notification)
+            .get_result::<CommunityNotification>(&_connection)
+            .expect("Error saving community_notification.");
+
+        // записываем уведомления записей нового пользователя
+        let _post_notification = NewCommunityPostNotification {
+            community_id:                new_communityo.id,
+            comment:                true,
+            comment_reply:          true,
+            mention:                true,
+            comment_mention:        true,
+            repost:                 true,
+            liked:                  true,
+            disliked:               true,
+            comment_liked:          true,
+            comment_disliked:       true,
+            comment_reply_liked:    true,
+            comment_reply_disliked: true,
+        };
+        diesel::insert_into(schema::community_post_notifications::table)
+            .values(&_post_notification)
+            .get_result::<CommunityPostNotification>(&_connection)
+            .expect("Error saving community_photo_notification.");
+
+        // записываем уведомления фотографий нового пользователя
+        let _photo_notification = NewCommunityPhotoNotification {
+            community_id:                new_community.id,
+            comment:                true,
+            comment_reply:          true,
+            mention:                true,
+            comment_mention:        true,
+            repost:                 true,
+            liked:                  true,
+            disliked:               true,
+            comment_liked:          true,
+            comment_disliked:       true,
+            comment_reply_liked:    true,
+            comment_reply_disliked: true,
+        };
+        diesel::insert_into(schema::community_photo_notifications::table)
+            .values(&_photo_notification)
+            .get_result::<CommunityPhotoNotification>(&_connection)
+            .expect("Error saving community_photo_notification.");
+
+        // записываем уведомления товаров нового пользователя
+        let _good_notification = NewCommunityGoodNotification {
+            community_id:                new_community.id,
+            comment:                true,
+            comment_reply:          true,
+            mention:                true,
+            comment_mention:        true,
+            repost:                 true,
+            liked:                  true,
+            disliked:               true,
+            comment_liked:          true,
+            comment_disliked:       true,
+            comment_reply_liked:    true,
+            comment_reply_disliked: true,
+        };
+        diesel::insert_into(schema::community_good_notifications::table)
+            .values(&_good_notification)
+            .get_result::<CommunityGoodNotification>(&_connection)
+            .expect("Error saving community_good_notification.");
+
+        // записываем уведомления роликов нового пользователя
+        let _video_notification = NewCommunityVideoNotification {
+            community_id:                new_community.id,
+            comment:                true,
+            comment_reply:          true,
+            mention:                true,
+            comment_mention:        true,
+            repost:                 true,
+            liked:                  true,
+            disliked:               true,
+            comment_liked:          true,
+            comment_disliked:       true,
+            comment_reply_liked:    true,
+            comment_reply_disliked: true,
+        };
+        diesel::insert_into(schema::community_video_notifications::table)
+            .values(&_video_notification)
+            .get_result::<CommunityVideoNotification>(&_connection)
+            .expect("Error saving community_video_notification.");
+
+        // записываем уведомления роликов нового пользователя
+        let _music_notification = NewCommunityMusicNotification {
+            community_id:                new_community.id,
+            repost:                 true,
+        };
+        diesel::insert_into(schema::community_music_notifications::table)
+            .values(&_music_notification)
+            .get_result::<CommunityMusicNotification>(&_connection)
+            .expect("Error saving community_music_notification.");
+
+        // записываем уведомления роликов нового пользователя
+        let _survey_notification = NewCommunitySurveyNotification {
+            community_id:  new_community.id,
+            vote:     true,
+            repost:   true,
+        };
+        diesel::insert_into(schema::community_survey_notifications::table)
+            .values(&_survey_notification)
+            .get_result::<CommunitySurveyNotification>(&_connection)
+            .expect("Error saving community_survey_notification.");
+    }
 }
 
 
@@ -630,6 +1117,30 @@ pub struct NewCommunitiesMembership {
     pub is_advertiser:    bool,
     pub created:          chrono::NaiveDateTime,
     pub visited:          i32,
+}
+impl CommunitiesMembership {
+    pub fn create_membership(&self, user: User, community: Community, is_administrator: bool, is_editor: bool, is_advertiser: bool, is_moderator: bool) -> CommunitiesMembership {
+        let new_member = NewCommunitiesMembership {
+            user_id: user.id,
+            community_id: community.id,
+            is_administrator: is_administrator,
+            is_moderator: is_moderator,
+            is_editor: is_editor,
+            is_advertiser: is_advertiser,
+            created: chrono::Local::now().naive_utc(),
+            visited: 0,
+        };
+        diesel::insert_into(schema::communities_memberships::table)
+            .values(&new_member)
+            .get_result::<CommunitiesMembership>(&_connection)
+            .expect("E.");
+
+        community.add_new_subscriber(user.id);
+        community.plus_member(1);
+        user.plus_communities();
+        return new_member;
+    }
+
 }
 
 /////// CommunityInfo //////

@@ -110,7 +110,7 @@ CREATE TABLE community_privates (
 );
 
 -- Уведомления сообщества -------
-CREATE TABLE community_notifications (
+CREATE TABLE community_notifications ( 
     id                   SERIAL PRIMARY KEY,
     community_id         INT NOT NULL,
     connection_request   BOOLEAN NOT NULL DEFAULT true,
