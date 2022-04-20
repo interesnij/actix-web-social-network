@@ -696,6 +696,10 @@ impl Community {
         return false;
     }
     pub fn create_community(name: String, category: i32, user: User, types: i16) -> Community {
+        use crate::models::{
+            NewPostList, NewPhotoList, NewDocList, NewVideoList,
+            NewSurveyList, NewMusicList, NewGoodList,
+        }
         let _connection = establish_connection();
         let new_community_form = NewCommunity{
                 name:                    name,
@@ -744,7 +748,7 @@ impl Community {
             user_id:         user.id,
             types:           "a".to_string(),
             description:     None,
-            created:         NaiveDateTime::new(d, t),
+            created:         chrono::Local::now().naive_utc(),
             count:           0,
             repost:          0,
             copy:            0,
@@ -780,7 +784,7 @@ impl Community {
             types:           "a".to_string(),
             description:     None,
             cover_photo:     None,
-            created:         NaiveDateTime::new(d, t),
+            created:         chrono::Local::now().naive_utc(),
             count:           0,
             repost:          0,
             copy:            0,
@@ -814,7 +818,7 @@ impl Community {
             types:           "d".to_string(),
             description:     None,
             cover_photo:     None,
-            created:         NaiveDateTime::new(d, t),
+            created:         chrono::Local::now().naive_utc(),
             count:           0,
             repost:          0,
             copy:            0,
@@ -848,7 +852,7 @@ impl Community {
             types:           "e".to_string(),
             description:     None,
             cover_photo:     None,
-            created:         NaiveDateTime::new(d, t),
+            created:         chrono::Local::now().naive_utc(),
             count:           0,
             repost:          0,
             copy:            0,
@@ -883,7 +887,7 @@ impl Community {
             user_id:         user.id,
             types:           "a".to_string(),
             description:     None,
-            created:         NaiveDateTime::new(d, t),
+            created:         chrono::Local::now().naive_utc(),
             count:           0,
             repost:          0,
             copy:            0,
@@ -918,7 +922,7 @@ impl Community {
             user_id:         user.id,
             types:           "a".to_string(),
             description:     None,
-            created:         NaiveDateTime::new(d, t),
+            created:         chrono::Local::now().naive_utc(),
             count:           0,
             repost:          0,
             copy:            0,
@@ -954,7 +958,7 @@ impl Community {
             types:           "a".to_string(),
             description:     None,
             image:           None,
-            created:         NaiveDateTime::new(d, t),
+            created:         chrono::Local::now().naive_utc(),
             count:           0,
             repost:          0,
             copy:            0,
@@ -987,7 +991,7 @@ impl Community {
             user_id:         user.id,
             types:           "a".to_string(),
             description:     None,
-            created:         NaiveDateTime::new(d, t),
+            created:         chrono::Local::now().naive_utc(),
             count:           0,
             repost:          0,
             copy:            0,
@@ -1020,7 +1024,7 @@ impl Community {
             user_id:         user.id,
             types:           "a".to_string(),
             description:     None,
-            created:         NaiveDateTime::new(d, t),
+            created:         chrono::Local::now().naive_utc(),
             count:           0,
             repost:          0,
             copy:            0,
@@ -1047,8 +1051,8 @@ impl Community {
 
         // записываем приватность нового пользователя
         let _private = NewCommunityPrivate {
-            community_id:            new_community.id,
-            can_see_member:  "a".to_string(),
+            community_id:       new_community.id,
+            can_see_member:     "a".to_string(),
             can_see_info:       "a".to_string(),
             can_send_message:   "a".to_string(),
             can_see_post:       "a".to_string(),
@@ -1070,7 +1074,7 @@ impl Community {
 
         // записываем уведомления профиля нового пользователя
         let _community_notification = NewCommunityNotification {
-            community_id:              new_community.id,
+            community_id:         new_community.id,
             connection_request:   true,
             connection_confirmed: true,
             community_invite:     true,
@@ -1082,7 +1086,7 @@ impl Community {
 
         // записываем уведомления записей нового пользователя
         let _post_notification = NewCommunityPostNotification {
-            community_id:                new_communityo.id,
+            community_id:           new_community.id,
             comment:                true,
             comment_reply:          true,
             mention:                true,
@@ -1102,7 +1106,7 @@ impl Community {
 
         // записываем уведомления фотографий нового пользователя
         let _photo_notification = NewCommunityPhotoNotification {
-            community_id:                new_community.id,
+            community_id:           new_community.id,
             comment:                true,
             comment_reply:          true,
             mention:                true,
@@ -1122,7 +1126,7 @@ impl Community {
 
         // записываем уведомления товаров нового пользователя
         let _good_notification = NewCommunityGoodNotification {
-            community_id:                new_community.id,
+            community_id:           new_community.id,
             comment:                true,
             comment_reply:          true,
             mention:                true,
@@ -1142,7 +1146,7 @@ impl Community {
 
         // записываем уведомления роликов нового пользователя
         let _video_notification = NewCommunityVideoNotification {
-            community_id:                new_community.id,
+            community_id:           new_community.id,
             comment:                true,
             comment_reply:          true,
             mention:                true,
@@ -1162,8 +1166,8 @@ impl Community {
 
         // записываем уведомления роликов нового пользователя
         let _music_notification = NewCommunityMusicNotification {
-            community_id:                new_community.id,
-            repost:                 true,
+            community_id:  new_community.id,
+            repost:        true,
         };
         diesel::insert_into(schema::community_music_notifications::table)
             .values(&_music_notification)
@@ -1173,8 +1177,8 @@ impl Community {
         // записываем уведомления роликов нового пользователя
         let _survey_notification = NewCommunitySurveyNotification {
             community_id:  new_community.id,
-            vote:     true,
-            repost:   true,
+            vote:          true,
+            repost:        true,
         };
         diesel::insert_into(schema::community_survey_notifications::table)
             .values(&_survey_notification)
