@@ -17,8 +17,6 @@ use crate::models::{
     Community,
     Post,
     Sticker,
-    MessageTransfer,
-    MessageOption,
 };
 
 
@@ -563,6 +561,7 @@ impl Message {
             .filter(schema::message_transfers::message_id.eq(self.id))
             .load::<MessageTransfer>(&_connection)
             .expect("E").len() > 0;
+    }
 }
 
 /////// MessageOptions //////
