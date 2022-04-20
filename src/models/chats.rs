@@ -17,6 +17,8 @@ use crate::models::{
     Community,
     Post,
     Sticker,
+    MessageTransfer,
+    MessageOption,
 };
 
 
@@ -398,6 +400,50 @@ impl Chat {
             .expect("Error.");
         return true;
     }
+    pub fn get_draft_message(&self, user_id: i32) -> Message {
+        use crate::schema::messages::dsl::messages;
+
+        let _connection = establish_connection();
+        return messages
+            .filter(schema::messages::chat_id.eq(self.id))
+            .filter(schema::messages::user_id.eq(user.id))
+            .filter(schema::messages::types.eq(10))
+            .load::<Message>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+    pub fn is_have_draft_message(&self, user_id: i32) -> bool {
+        use crate::schema::messages::dsl::messages;
+
+        let _connection = establish_connection();
+        return messages
+            .filter(schema::messages::chat_id.eq(self.id))
+            .filter(schema::messages::user_id.eq(user.id))
+            .filter(schema::messages::types.eq(10))
+            .load::<Message>(&_connection)
+            .expect("E").len() > 0;
+    }
+    pub fn is_have_draft_message_content(&self, user_id: i32) -> bool {
+        // есть ли черновик сообщения, притом не пустой
+        use crate::schema::messages::dsl::messages;
+
+        let _connection = establish_connection();
+        let t_message = messages
+            .filter(schema::messages::chat_id.eq(self.id))
+            .filter(schema::messages::user_id.eq(user.id))
+            .filter(schema::messages::types.eq(10))
+            .load::<Message>(&_connection)
+            .expect("E");
+        if t_message.len() > 0 {
+            let message = t_message.into_iter()
+                .nth(0)
+                .unwrap();
+            return message.text.is_some() || message.attach.is_some() || message.is_have_transfer();
+        }
+        return false;
+    }
 }
 
 /////// ChatUsers //////
@@ -507,6 +553,17 @@ pub struct NewMessage {
     pub types:         i16,
     pub attach:        Option<String>,
     pub voice:         Option<String>,
+}
+impl Message {
+    pub fn is_have_transfer(&self) -> bool {
+        use crate::schema::message_transfers::dsl::message_transfers;
+
+        let _connection = establish_connection();
+        return message_transfers
+            .filter(schema::message_transfers::message_id.eq(self.id))
+            .filter(schema::message_transfers::types.lt(10))
+            .load::<MessageTransfer>(&_connection)
+            .expect("E").len() > 0;
 }
 
 /////// MessageOptions //////
