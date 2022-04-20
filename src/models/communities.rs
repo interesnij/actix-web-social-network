@@ -4113,7 +4113,7 @@ impl NewCommunityVisiblePerm {
             can_see_video_comment:   None,
             can_see_planner:         None,
             can_see_planner_comment: None,
-            can_see_forum:           Some(can_see_forum),,
+            can_see_forum:           Some(can_see_forum),
             can_see_forum_comment:   None,
         }
     }
