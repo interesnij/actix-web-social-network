@@ -717,7 +717,7 @@ impl Community {
             .get_result::<Community>(&_connection)
             .expect("Error.");
 
-        CommunitiesMembership::create_membership(user.clone(), new_community, true, false, false, false);
+        CommunitiesMembership::create_membership(user, new_community, true, false, false, false);
 
         // записываем профиль нового пользователя
         let _community_info = NewCommunityInfo {
@@ -1182,7 +1182,6 @@ impl Community {
             .get_result::<CommunitySurveyNotification>(&_connection)
             .expect("Error saving community_survey_notification.");
 
-        user.plus_community_visited(new_community.id);
         new_community.add_new_subscriber(user.id);
         new_community.add_notify_subscriber(user.id);
         return new_community;
@@ -1240,6 +1239,7 @@ impl CommunitiesMembership {
         community.add_new_subscriber(user.id);
         community.plus_members(1);
         user.plus_communities(1);
+        user.plus_community_visited(community.id);
         return new_member;
     }
 
