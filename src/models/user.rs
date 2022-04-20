@@ -255,6 +255,7 @@ impl User {
                 types: "a".to_string(),
                 is_administrator: false,
                 created: chrono::Local::now().naive_utc(),
+                no_disturb: None,
             };
             diesel::insert_into(schema::chat_users::table)
                 .values(&new_chat_user)
@@ -305,6 +306,7 @@ impl User {
                 types: "a".to_string(),
                 is_administrator: false,
                 created: chrono::Local::now().naive_utc(),
+                no_disturb: None,
             };
             diesel::insert_into(schema::chat_users::table)
                 .values(&new_chat_user)
