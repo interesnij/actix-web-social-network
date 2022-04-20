@@ -101,7 +101,7 @@ impl Chat {
     pub fn get_name(&self, user_id: i32) -> String {
         let chat_types = self.types;
         if self.name.is_some() {
-            return self.name.to_string();
+            return self.name.unwrap();
         }
         else if self.is_group() {
             return "Групповой чат".to_string();
@@ -110,14 +110,11 @@ impl Chat {
             return "Публичнеый чат".to_string();
         }
         else if self.is_private() {
-            return return self.get_chat_member(user_id).get_full_name();
+            return self.get_chat_member(user_id).get_full_name();
         }
         else {
             return "Без имени".to_string();
         }
-    }
-    pub fn get_description(&self) -> String {
-        return "<a href='/chat/".to_string() + &self.get_str_id() + &"' target='_blank'>".to_string() + &self.get_name() + &"</a>".to_string();
     }
     pub fn is_chat(&self) -> bool {
         return true;
@@ -273,9 +270,9 @@ impl Chat {
         use crate::utils::get_users_from_ids;
         return get_users_from_ids(self.get_administrators_ids());
     }
-    pub fn get_recipients_exclude_creator(&self) -> Vec<User> {
+    pub fn get_recipients_exclude_creator(&self, user_id: i32) -> Vec<User> {
         use crate::utils::get_users_from_ids;
-        return get_users_from_ids(self.get_recipients_ids());
+        return get_users_from_ids(self.get_recipients_ids(user_id));
     }
     pub fn get_members_count(&self) -> i32 {
         return self.members;
