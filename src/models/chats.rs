@@ -316,7 +316,7 @@ impl Chat {
             .load::<ChatUser>(&_connection)
             .expect("E");
         if chat_user.len() > 0 {
-            return chat_user[0]
+            return chat_user.into_iter().nth(0).unwrap();
         }
         else {
             return chat_users
