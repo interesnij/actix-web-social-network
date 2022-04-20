@@ -280,7 +280,7 @@ impl Chat {
     pub fn get_members_count_ru(&self) -> String {
         use crate::utils::get_count_for_ru;
         return get_count_for_ru(
-            self.count_communities(),
+            self.get_members_count(),
             " участник".to_string(),
             " участника".to_string(),
             " участников".to_string(),
@@ -299,7 +299,7 @@ impl Chat {
             .expect("E");
         return users
             .filter(schema::users::id.eq(chat_user[0].id))
-            .filter(schema::chat_users::types.lt(10))
+            .filter(schema::users::types.lt(10))
             .load::<User>(&_connection)
             .expect("E")
             .into_iter()
