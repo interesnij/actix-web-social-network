@@ -588,7 +588,7 @@ impl Community {
 
         let _connection = establish_connection();
         let _new = notify_user_communities.filter(schema::notify_user_communities::id.eq(new_id)).load::<NewsUserCommunitie>(&_connection).expect("E");
-        if _new.len() > 0 && _new[0].community_id == self.id {
+        if _new.len() > 0 && _new[0].community_id.unwrap() == self.id {
             let _new = NewNotifyUserCommunitie {
                 owner: self.id,
                 list_id: None,
@@ -699,7 +699,8 @@ impl Community {
         use crate::models::{
             NewPostList, NewPhotoList, NewDocList, NewVideoList,
             NewSurveyList, NewMusicList, NewGoodList,
-        }
+        };
+
         let _connection = establish_connection();
         let new_community_form = NewCommunity{
                 name:                    name,
@@ -1178,7 +1179,7 @@ impl Community {
         let _survey_notification = NewCommunitySurveyNotification {
             community_id:  new_community.id,
             vote:          true,
-            repost:        true,
+            vote:          true,
         };
         diesel::insert_into(schema::community_survey_notifications::table)
             .values(&_survey_notification)
@@ -1220,7 +1221,7 @@ impl CommunitiesMembership {
     pub fn create_membership(user: User, community: Community, is_administrator: bool, is_editor: bool, is_advertiser: bool, is_moderator: bool) -> CommunitiesMembership {
         let _connection = establish_connection();
 
-        let new_member = NewCommunitiesMembership {
+        let new_member_form = NewCommunitiesMembership {
             user_id: user.id,
             community_id: community.id,
             is_administrator: is_administrator,
@@ -1230,14 +1231,14 @@ impl CommunitiesMembership {
             created: chrono::Local::now().naive_utc(),
             visited: 0,
         };
-        diesel::insert_into(schema::communities_memberships::table)
+        new_member = diesel::insert_into(schema::communities_memberships::table)
             .values(&new_member)
             .get_result::<CommunitiesMembership>(&_connection)
             .expect("E.");
 
         community.add_new_subscriber(user.id);
         community.plus_member(1);
-        user.plus_communities();
+        user.plus_communities(1);
         return new_member;
     }
 
