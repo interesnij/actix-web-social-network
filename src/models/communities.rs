@@ -1185,8 +1185,6 @@ impl Community {
             .get_result::<CommunitySurveyNotification>(&_connection)
             .expect("Error saving community_survey_notification.");
 
-        let xx = new_community.add_new_subscriber(user_id);
-        let yy = new_community.add_notify_subscriber(user_id);
         return new_community;
     }
 }
@@ -1239,6 +1237,7 @@ impl CommunitiesMembership {
             .get_result::<CommunitiesMembership>(&_connection)
             .expect("E.");
 
+        community.add_notify_subscriber(user.id);
         community.add_new_subscriber(user.id);
         community.plus_members(1);
         user.plus_communities(1);
