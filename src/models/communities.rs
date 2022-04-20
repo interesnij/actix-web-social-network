@@ -1947,7 +1947,7 @@ impl Community {
 
         let _connection = establish_connection();
         let items = communities_memberships
-            .filter(schema::communities_memberships::community_id.eq(self.id)
+            .filter(schema::communities_memberships::community_id.eq(self.id))
             .load::<CommunityMembership>(&_connection)
             .expect("E");
 
