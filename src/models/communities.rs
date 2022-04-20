@@ -700,6 +700,7 @@ impl Community {
             NewPostList, NewPhotoList, NewDocList, NewVideoList,
             NewSurveyList, NewMusicList, NewGoodList,
         };
+        let user_id = user.id;
 
         let _connection = establish_connection();
         let new_community_form = NewCommunity{
@@ -709,7 +710,7 @@ impl Community {
                 perm:                     "a".to_string(),
                 level:                    100,
                 community_subcategory_id: category,
-                user_id:                  user.id,
+                user_id:                  user_id,
                 created:                  chrono::Local::now().naive_utc(),
             };
         let new_community = diesel::insert_into(schema::communitys::table)
@@ -743,7 +744,7 @@ impl Community {
         let _new_posts_list = NewPostList {
             name:            "Список записей".to_string(),
             community_id:    Some(new_community.id),
-            user_id:         user.id.clone(),
+            user_id:         user_id,
             types:           "a".to_string(),
             description:     None,
             created:         chrono::Local::now().naive_utc(),
@@ -778,7 +779,7 @@ impl Community {
         let _new_photos_list = NewPhotoList {
             name:            "Основной альбом".to_string(),
             community_id:    Some(new_community.id),
-            user_id:         user.id,
+            user_id:         user_id,
             types:           "a".to_string(),
             description:     None,
             cover_photo:     None,
