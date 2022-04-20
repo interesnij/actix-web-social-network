@@ -1988,13 +1988,13 @@ impl Community {
         return get_users_from_ids(self.get_can_see_info_include_users_ids());
     }
 
-    pub fn get_can_see_can_see_member_exclude_users_ids(&self) -> Vec<i32> {
+    pub fn get_can_see_member_exclude_users_ids(&self) -> Vec<i32> {
         use crate::schema::community_visible_perms::dsl::community_visible_perms;
 
         let _connection = establish_connection();
         let items = community_visible_perms
             .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
-            .filter(schema::community_visible_perms::can_see_can_see_member.eq("b"))
+            .filter(schema::community_visible_perms::can_see_member.eq("b"))
             .load::<CommunityVisiblePerm>(&_connection)
             .expect("E");
 
@@ -2004,13 +2004,13 @@ impl Community {
         };
         return stack;
     }
-    pub fn get_can_see_can_see_member_include_users_ids(&self) -> Vec<i32> {
+    pub fn get_can_see_member_include_users_ids(&self) -> Vec<i32> {
         use crate::schema::community_visible_perms::dsl::community_visible_perms;
 
         let _connection = establish_connection();
         let items = community_visible_perms
             .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
-            .filter(schema::community_visible_perms::can_see_can_see_member.eq("a"))
+            .filter(schema::community_visible_perms::can_see_member.eq("a"))
             .load::<CommunityVisiblePerm>(&_connection)
             .expect("E");
 
@@ -2020,13 +2020,13 @@ impl Community {
         };
         return stack;
     }
-    pub fn get_can_see_can_see_member_exclude_users(&self) -> Vec<User> {
+    pub fn get_can_see_member_exclude_users(&self) -> Vec<User> {
         use crate::utils::get_users_from_ids;
-        return get_users_from_ids(self.get_can_see_can_see_member_exclude_users_ids());
+        return get_users_from_ids(self.get_can_see_member_exclude_users_ids());
     }
-    pub fn get_can_see_can_see_member_include_users(&self) -> Vec<User> {
+    pub fn get_can_see_member_include_users(&self) -> Vec<User> {
         use crate::utils::get_users_from_ids;
-        return get_users_from_ids(self.get_can_see_can_see_member_include_users_ids());
+        return get_users_from_ids(self.get_can_see_member_include_users_ids());
     }
 }
 
