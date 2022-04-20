@@ -11,6 +11,7 @@ use crate::schema::{
     community_video_notifications,
     community_good_notifications,
     community_music_notifications,
+    community_survey_notifications,
     community_photo_list_positions,
     community_post_list_positions,
     community_music_list_positions,
@@ -552,7 +553,7 @@ impl Community {
             .load::<ListUserCommunitiesKey>(&_connection)
             .expect("E");
 
-        if _new.len() > 0 && _new[0].community_id == self.id && _list.len() > 0 {
+        if _new.len() > 0 && _new[0].community_id.unwrap() == self.id && _list.len() > 0 {
             diesel::update(notify_user_communities.filter(schema::notify_user_communities::id.eq(new_id)))
                 .set(schema::notify_user_communities::list_id.eq(list_id))
                 .get_result::<NotifyUserCommunitie>(&_connection)
@@ -571,7 +572,7 @@ impl Community {
             .filter(schema::notify_user_communities::user_id.eq(user_id))
             .load::<NotifyUserCommunitie>(&_connection)
             .expect("E");
-        if _new.len() > 0 && _new[0].community_id == self.id {
+        if _new.len() > 0 && _new[0].community_id.unwrap() == self.id {
             diesel::delete(notify_user_communities
                     .filter(schema::notify_user_communities::community_id.eq(self.id))
                     .filter(schema::notify_user_communities::user_id.eq(user_id))
@@ -694,7 +695,7 @@ impl Community {
             }
         return false;
     }
-    pub fn create_community(name: String, category: String, user: User, types: i16) -> Community {
+    pub fn create_community(name: String, category: i32, user: User, types: i16) -> Community {
         let new_community_form = NewCommunity{
                 name:                    name,
                 status:                  "a".to_string(),
@@ -1211,7 +1212,9 @@ pub struct NewCommunitiesMembership {
     pub visited:          i32,
 }
 impl CommunitiesMembership {
-    pub fn create_membership(&self, user: User, community: Community, is_administrator: bool, is_editor: bool, is_advertiser: bool, is_moderator: bool) -> CommunitiesMembership {
+    pub fn create_membership(user: User, community: Community, is_administrator: bool, is_editor: bool, is_advertiser: bool, is_moderator: bool) -> CommunitiesMembership {
+        let _connection = establish_connection();
+
         let new_member = NewCommunitiesMembership {
             user_id: user.id,
             community_id: community.id,
@@ -1488,6 +1491,21 @@ pub struct CommunityMusicNotification {
 pub struct NewCommunityMusicNotification {
     pub community_id:           i32,
     pub repost:                 bool,
+}
+
+/////// CommunityNotificationsSurvey //////
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(Community)]
+pub struct CommunitySurveyNotification {
+    pub id:           i32,
+    pub community_id: i32,
+    pub vote:         bool,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="community_survey_notifications"]
+pub struct NewCommunitySurveyNotification {
+    pub community_id: i32,
+    pub vote:         bool,
 }
 
 /////// CommunityPhotoListPosition //////
