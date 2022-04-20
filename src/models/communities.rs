@@ -2097,7 +2097,7 @@ impl Community {
             .expect("Error.");
         return true;
     }
-    pub fn delete_advertisor(&self, user: User) -> bool {
+    pub fn delete_advertiser(&self, user: User) -> bool {
         use crate::schema::communities_memberships::dsl::communities_memberships;
         if !user.is_member_of_community(self.id) {
             return false;
@@ -2110,7 +2110,7 @@ impl Community {
             .expect("E");
 
         diesel::update(&member[0])
-            .set(schema::communities_memberships::is_advertisor.eq(false))
+            .set(schema::communities_memberships::is_advertiser.eq(false))
             .get_result::<CommunitiesMembership>(&_connection)
             .expect("Error.");
         return true;
