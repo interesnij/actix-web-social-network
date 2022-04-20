@@ -1936,7 +1936,7 @@ impl Community {
         if !user.is_member_of_community(self.id) {
             return false;
         }
-
+        let _connection = establish_connection();
         let member = communities_memberships
             .filter(schema::communities_memberships::community_id.eq(self.id))
             .filter(schema::communities_memberships::user_id.eq(user.id))
@@ -1944,7 +1944,7 @@ impl Community {
             .expect("E");
         let member_form = NewCommunitiesMembership {
             user_id: user.id,
-            community_id: community.id,
+            community_id: self.id,
             is_administrator: true,
             is_moderator: false,
             is_editor: false,
