@@ -100,7 +100,7 @@ impl Chat {
     }
     pub fn get_name(&self, user_id: i32) -> String {
         let chat_types = self.types;
-        return match chat_types {
+        return match {
             self.name.is_some() => self.name.to_string(),
             self.is_group() => return "Групповой чат".to_string(),
             self.is_public() => return "Публичнеый чат".to_string(),
