@@ -389,8 +389,6 @@ impl Community {
     }
 
     pub fn create_banned_user(&self, user: User) -> bool {
-        use crate::schema::community_banner_users::dsl::community_banner_users;
-
         if user.is_banned_from_community(self.id) {
             return false;
         }
@@ -719,10 +717,10 @@ impl Community {
             .get_result::<Community>(&_connection)
             .expect("Error.");
 
-        CommunitiesMembership::create_membership(user, new_community, true, false, false, false);
-        user.plus_community_visited(new_community.id);
-        new_community.add_new_subscriber(user.id);
-        new_community.add_notify_subscriber(user.id);
+        CommunitiesMembership::create_membership(&user, new_community, true, false, false, false);
+        user.plus_community_visited(&new_community.id);
+        new_community.add_new_subscriber(&user.id);
+        new_community.add_notify_subscriber(&user.id); 
 
         // записываем профиль нового пользователя
         let _community_info = NewCommunityInfo {
