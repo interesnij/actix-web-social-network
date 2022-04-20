@@ -1936,28 +1936,27 @@ impl Community {
         if !user.is_member_of_community(self.id) {
             return false;
         }
-        else if user.is_staff_of_community(self.id) {
-            let member = communities_memberships
-                .filter(schema::communities_memberships::community_id.eq(self.id))
-                .filter(schema::communities_memberships::user_id.eq(user.id))
-                .load::<CommunitiesMembership>(&_connection)
-                .expect("E");
-            let member_form = NewCommunitiesMembership {
-                user_id: user.id,
-                community_id: community.id,
-                is_administrator: true,
-                is_moderator: false,
-                is_editor: false,
-                is_advertiser: false,
-                created: member[0].created,
-                visited: member[0].visited,
-            };
 
-            diesel::update(&member[0])
-                    .set(member_form)
-                    .get_result::<BlogCategories>(&_connection)
-                    .expect("Error.");
-        }
+        let member = communities_memberships
+            .filter(schema::communities_memberships::community_id.eq(self.id))
+            .filter(schema::communities_memberships::user_id.eq(user.id))
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E");
+        let member_form = NewCommunitiesMembership {
+            user_id: user.id,
+            community_id: community.id,
+            is_administrator: true,
+            is_moderator: false,
+            is_editor: false,
+            is_advertiser: false,
+            created: member[0].created,
+            visited: member[0].visited,
+        };
+
+        diesel::update(&member[0])
+            .set(member_form)
+            .get_result::<BlogCategories>(&_connection)
+            .expect("Error.");
     }
 
     pub fn get_members_ids(&self) -> Vec<i32> {
