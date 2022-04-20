@@ -4372,7 +4372,7 @@ impl User {
             .expect("E")
             .len() > 0;
     }
-    pub fn get_member_for_notify_ids(&self) -> i32 {
+    pub fn get_members_for_notify_ids(&self) -> Vec<i32> {
         use crate::schema::notify_user_communities::dsl::notify_user_communities;
         use crate::models::NotifyUserCommunitie;
 

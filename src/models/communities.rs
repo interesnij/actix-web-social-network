@@ -3366,22 +3366,37 @@ impl Community {
     pub fn get_follows_users(&self) -> Vec<User> {
         use crate::schema::community_follows::dsl::community_follows;
         use crate::models::CommunityFollow;
+        use crate::utils::get_users_from_ids;
 
         let _connection = establish_connection();
-        return community_follows
+        let follows = community_follows
             .filter(schema::community_follows::community_id.eq(self.id))
             .load::<CommunityFollow>(&_connection)
             .expect("E.");
+
+        let mut stack = Vec::new();
+        for _item in user_fixed_posts.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
     }
     pub fn get_banned_user(&self) -> Vec<User> {
         use crate::schema::community_banner_users::dsl::community_banner_users;
+        use crate::utils::get_users_from_ids;
 
         let _connection = establish_connection();
 
-        return community_banner_users
+        let banner_users = community_banner_users
             .filter(schema::community_banner_users::community_id.eq(self.id))
             .load::<CommunityBannerUser>(&_connection)
             .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in user_fixed_posts.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
+
     }
     pub fn get_fixed_posts(&self) -> Vec<Post> {
         use crate::schema::posts::dsl::posts;
@@ -3409,7 +3424,7 @@ impl Community {
         return self.count_fix_items() < 10;
     }
 
-    pub fn get_member_for_notify_ids(&self) -> i32 {
+    pub fn get_members_for_notify_ids(&self) -> Vec<i32> {
         use crate::schema::notify_user_communities::dsl::notify_user_communities;
         use crate::models::NotifyUserCommunitie;
 
