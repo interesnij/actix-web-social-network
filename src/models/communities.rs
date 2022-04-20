@@ -3120,6 +3120,7 @@ impl Community {
     }
     pub fn get_community_notifications(&self) -> Vec<Notification> {
         use crate::schema::notifications::dsl::notifications;
+        use crate::models::Notification;
 
         let _connection = establish_connection();
         return notifications
@@ -3131,6 +3132,7 @@ impl Community {
     }
     pub fn count_user_notifications(&self) -> usize {
         use crate::schema::notifications::dsl::notifications;
+        use crate::models::Notification;
 
         let _connection = establish_connection();
         return notifications
@@ -3790,7 +3792,6 @@ pub struct CommunityVisiblePerm {
 #[derive(Deserialize, Insertable)]
 #[table_name="community_visible_perms"]
 pub struct NewCommunityVisiblePerm {
-    pub id:        i32,
     pub user_id:   i32,
 
     pub can_see_info:            Option<String>,
