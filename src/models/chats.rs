@@ -344,6 +344,59 @@ impl Chat {
                 .nth(0)
                 .unwrap();
     }
+    pub fn is_not_empty(&self) -> bool {
+        use crate::schema::messages::dsl::messages;
+
+        let _connection = establish_connection();
+            return messages
+                .filter(schema::messages::chat_id.eq(self.id))
+                .filter(schema::messages::types.lt(10))
+                .load::<Message>(&_connection)
+                .expect("E").len() > 0;
+    }
+    pub fn create_administrator(&self, user: User) -> bool {
+        use crate::schema::chat_users::dsl::chat_users;
+        if !user.is_member_of_chat(self.id) {
+            return false;
+        }
+        let _connection = establish_connection();
+        let member = chat_users
+            .filter(schema::chat_users::chat_id.eq(self.id))
+            .filter(schema::chat_users::user_id.eq(user.id))
+            .load::<ChatUser>(&_connection)
+            .expect("E");
+        let member_form = NewChatUser {
+            user_id: user.id,
+            chat_id: self.id,
+            is_administrator: true,
+            created: member[0].created,
+            no_disturb: member[0].no_disturb,
+        };
+
+        diesel::update(&member[0])
+            .set(member_form)
+            .get_result::<ChatUser>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn delete_administrator(&self, user: User) -> bool {
+        use crate::schema::chat_users::dsl::chat_users;
+        if !user.is_member_of_chat(self.id) {
+            return false;
+        }
+        let _connection = establish_connection();
+        let member = chat_users
+            .filter(schema::chat_users::chat_id.eq(self.id))
+            .filter(schema::chat_users::user_id.eq(user.id))
+            .load::<ChatUser>(&_connection)
+            .expect("E");
+
+        diesel::update(&member[0])
+            .set(schema::chat_users::is_administrator.eq(false))
+            .get_result::<ChatUser>(&_connection)
+            .expect("Error.");
+        return true;
+    }
 }
 
 /////// ChatUsers //////
