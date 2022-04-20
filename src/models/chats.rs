@@ -1,3 +1,5 @@
+use diesel::prelude::*;
+use crate::schema;
 use crate::schema::{
     chats,
     chat_users,
