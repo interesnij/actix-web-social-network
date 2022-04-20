@@ -377,6 +377,7 @@ impl User {
         return posts
             .filter(schema::posts::user_id.eq(self.id))
             .filter(schema::posts::types.eq("b"))
+            .filter(schema::posts::community_id.is_null())
             .order(schema::posts::created.desc())
             .load::<Post>(&_connection)
             .expect("E");
@@ -3157,7 +3158,7 @@ impl User {
 
         let _connection = establish_connection();
         return user_privates
-            .filter(schema::user_privates::id.eq(self.id))
+            .filter(schema::user_privates::user_id.eq(self.id))
             .load::<UserPrivate>(&_connection)
             .expect("E.")
             .into_iter()
@@ -4370,6 +4371,24 @@ impl User {
             .load::<CommunityBannerUser>(&_connection)
             .expect("E")
             .len() > 0;
+    }
+    pub fn get_member_for_notify_ids(&self) -> i32 {
+        use crate::schema::notify_user_communities::dsl::notify_user_communities;
+        use crate::models::NotifyUserCommunitie;
+
+        let _connection = establish_connection();
+        let items = notify_user_communities
+            .filter(schema::notify_user_communities::user_id.eq(self.id))
+            .filter(schema::notify_user_communities::mute.eq(false))
+            .filter(schema::notify_user_communities::sleep.lt(chrono::Local::now().naive_utc()))
+            .load::<NotifyUserCommunitie>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.owner);
+        };
+        return stack;
     }
 }
 

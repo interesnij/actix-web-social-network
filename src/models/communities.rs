@@ -1945,7 +1945,87 @@ impl Community {
             stack.push(_item.user_id);
         };
         return stack;
+    }
+    pub fn get_staff_users_ids(&self) -> Vec<i32> {
+        use crate::schema::communities_memberships::dsl::communities_memberships;
 
+        let _connection = establish_connection();
+        let items = communities_memberships
+            .filter(schema::communities_memberships::community_id.eq(self.id))
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            if _item.is_administrator || _item.is_moderator || _item.is_editor || _item.is_advertiser {
+                stack.push(_item.user_id);;
+            }
+        };
+        return stack;
+    }
+    pub fn get_administrators_ids(&self) -> Vec<i32> {
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+
+        let _connection = establish_connection();
+        let items = communities_memberships
+            .filter(schema::communities_memberships::community_id.eq(self.id))
+            .filter(schema::communities_memberships::is_administrator.eq(true))
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_moderators_ids(&self) -> Vec<i32> {
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+
+        let _connection = establish_connection();
+        let items = communities_memberships
+            .filter(schema::communities_memberships::community_id.eq(self.id))
+            .filter(schema::communities_memberships::is_moderator.eq(true))
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_editors_ids(&self) -> Vec<i32> {
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+
+        let _connection = establish_connection();
+        let items = communities_memberships
+            .filter(schema::communities_memberships::community_id.eq(self.id))
+            .filter(schema::communities_memberships::is_editor.eq(true))
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_advertisers_ids(&self) -> Vec<i32> {
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+
+        let _connection = establish_connection();
+        let items = communities_memberships
+            .filter(schema::communities_memberships::community_id.eq(self.id))
+            .filter(schema::communities_memberships::is_advertiser.eq(true))
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
     }
     pub fn get_can_see_info_exclude_users_ids(&self) -> Vec<i32> {
         use crate::schema::community_visible_perms::dsl::community_visible_perms;
@@ -2028,6 +2108,1326 @@ impl Community {
         use crate::utils::get_users_from_ids;
         return get_users_from_ids(self.get_can_see_member_include_users_ids());
     }
+
+    pub fn get_can_send_message_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_send_message.eq("b"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_send_message_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_send_message.eq("a"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_send_message_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_send_message_exclude_users_ids());
+    }
+    pub fn get_can_send_message_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_send_message_include_users_ids());
+    }
+
+    pub fn get_can_see_doc_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_doc.eq("b"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_doc_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_doc.eq("a"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_doc_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_doc_exclude_users_ids());
+    }
+    pub fn get_can_see_doc_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_doc_include_users_ids());
+    }
+
+    pub fn get_can_see_music_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_music.eq("b"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_music_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_music.eq("a"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_music_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_music_exclude_users_ids());
+    }
+    pub fn get_can_see_music_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_music_include_users_ids());
+    }
+
+    pub fn get_can_see_survey_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_survey.eq("b"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_survey_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_survey.eq("a"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_survey_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_survey_exclude_users_ids());
+    }
+    pub fn get_can_see_survey_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_survey_include_users_ids());
+    }
+
+    pub fn get_can_see_post_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_post.eq("b"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_post_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_post.eq("a"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_post_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_post_exclude_users_ids());
+    }
+    pub fn get_can_see_post_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_post_include_users_ids());
+    }
+
+    pub fn get_can_see_post_comment_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_post_comment.eq("b"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_post_comment_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_post_comment.eq("a"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_post_comment_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_post_comment_exclude_users_ids());
+    }
+    pub fn get_can_see_post_comment_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_post_comment_include_users_ids());
+    }
+
+    pub fn get_can_see_photo_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_photo.eq("b"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_photo_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_photo.eq("a"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_photo_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_photo_exclude_users_ids());
+    }
+    pub fn get_can_see_photo_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_photo_include_users_ids());
+    }
+
+    pub fn get_can_see_photo_comment_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_photo_comment.eq("b"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_photo_comment_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_photo_comment.eq("a"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_photo_comment_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_photo_comment_exclude_users_ids());
+    }
+    pub fn get_can_see_photo_comment_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_photo_comment_include_users_ids());
+    }
+
+    pub fn get_can_see_good_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_good.eq("b"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_good_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_good.eq("a"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_good_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_good_exclude_users_ids());
+    }
+    pub fn get_can_see_good_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_good_include_users_ids());
+    }
+
+    pub fn get_can_see_good_comment_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_good_comment.eq("b"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_good_comment_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_good_comment.eq("a"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_good_comment_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_good_comment_exclude_users_ids());
+    }
+    pub fn get_can_see_good_comment_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_good_comment_include_users_ids());
+    }
+
+    pub fn get_can_see_video_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_video.eq("b"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_video_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_video.eq("a"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_video_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_video_exclude_users_ids());
+    }
+    pub fn get_can_see_video_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_video_include_users_ids());
+    }
+
+    pub fn get_can_see_video_comment_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_video_comment.eq("b"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_video_comment_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_video_comment.eq("a"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_video_comment_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_video_comment_exclude_users_ids());
+    }
+    pub fn get_can_see_video_comment_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_video_comment_include_users_ids());
+    }
+
+    pub fn get_can_see_planner_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_planner.eq("b"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_planner_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_planner.eq("a"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_planner_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_planner_exclude_users_ids());
+    }
+    pub fn get_can_see_planner_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_planner_include_users_ids());
+    }
+
+    pub fn get_can_see_planner_comment_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_planner_comment.eq("b"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_planner_comment_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_planner_comment.eq("a"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_planner_comment_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_planner_comment_exclude_users_ids());
+    }
+    pub fn get_can_see_planner_comment_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_planner_comment_include_users_ids());
+    }
+
+    pub fn get_can_see_forum_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_forum.eq("b"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_forum_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_forum.eq("a"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_forum_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_forum_exclude_users_ids());
+    }
+    pub fn get_can_see_forum_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_forum_include_users_ids());
+    }
+    pub fn get_can_see_forum_comment_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_forum_comment.eq("b"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_forum_comment_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_forum_comment.eq("a"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_forum_comment_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_forum_comment_exclude_users_ids());
+    }
+    pub fn get_can_see_forum_comment_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_forum_comment_include_users_ids());
+    }
+
+    pub fn get_members(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_members_ids());
+    }
+    pub fn get_administrators(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_administrators_ids());
+    }
+    pub fn get_editors(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_editors_ids());
+    }
+    pub fn get_moderators(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_moderators_ids());
+    }
+    pub fn get_advertisers(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_advertisers_ids());
+    }
+    pub fn get_staff_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_staff_users_ids());
+    }
+
+    pub fn get_private_model(&self) -> UserPrivate {
+        use crate::schema::community_privates::dsl::community_privates;
+
+        let _connection = establish_connection();
+        return community_privates
+            .filter(schema::community_privates::community_id.eq(self.id))
+            .load::<CommunityPrivate>(&_connection)
+            .expect("E.")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+
+    pub fn is_user_can_see_info(&self, user_id: i32) -> bool {
+        let private = self.get_private_model();
+        let char = private.can_see_info;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_member(&self, user_id: i32) -> bool {
+        let private = self.get_private_model();
+        let char = private.can_see_member;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_send_message(&self, user_id: i32) -> bool {
+        let private = self.get_private_model();
+        let char = private.can_send_message;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_doc(&self, user_id: i32) -> bool {
+        let private = self.get_private_model();
+        let char = private.can_see_doc;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_music(&self, user_id: i32) -> bool {
+        let private = self.get_private_model();
+        let char = private.can_see_music;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_survey(&self, user_id: i32) -> bool {
+        let private = self.get_private_model();
+        let char = private.can_see_survey;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_post(&self, user_id: i32) -> bool {
+        let private = self.get_private_model();
+        let char = private.can_see_post;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_post_comment(&self, user_id: i32) -> bool {
+        let private = self.get_private_model();
+        let char = private.can_see_post_comment;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_photo(&self, user_id: i32) -> bool {
+        let private = self.get_private_model();
+        let char = private.can_see_photo;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_photo_comment(&self, user_id: i32) -> bool {
+        let private = self.get_private_model();
+        let char = private.can_see_photo_comment;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_good(&self, user_id: i32) -> bool {
+        let private = self.get_private_model();
+        let char = private.can_see_good;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_good_comment(&self, user_id: i32) -> bool {
+        let private = self.get_private_model();
+        let char = private.can_see_good_comment;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_video(&self, user_id: i32) -> bool {
+        let private = self.get_private_model();
+        let char = private.can_see_video;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_video_comment(&self, user_id: i32) -> bool {
+        let private = self.get_private_model();
+        let char = private.can_see_video_comment;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_planner(&self, user_id: i32) -> bool {
+        let private = self.get_private_model();
+        let char = private.can_see_planner;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_planner_comment(&self, user_id: i32) -> bool {
+        let private = self.get_private_model();
+        let char = private.can_see_planner_comment;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_forum(&self, user_id: i32) -> bool {
+        let private = self.get_private_model();
+        let char = private.can_see_forum;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_forum_comment(&self, user_id: i32) -> bool {
+        let private = self.get_private_model();
+        let char = private.can_see_forum_comment;
+        return match char.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_anon_user_can_see_info(&self) -> bool {
+        let private = self.get_private_model();
+        return private.can_see_info == "a".to_string();
+    }
+    pub fn is_anon_user_can_see_member(&self) -> bool {
+        let private = self.get_private_model();
+        return private.can_see_member == "a".to_string();
+    }
+
+    pub fn is_anon_user_can_send_message(&self) -> bool {
+        let private = self.get_private_model();
+        return private.can_send_message == "a".to_string();
+    }
+    pub fn is_anon_user_can_see_doc(&self) -> bool {
+        let private = self.get_private_model();
+        return private.can_see_doc == "a".to_string();
+    }
+    pub fn is_anon_user_can_see_music(&self) -> bool {
+        let private = self.get_private_model();
+        return private.can_see_music == "a".to_string();
+    }
+    pub fn is_anon_user_can_see_survey(&self) -> bool {
+        let private = self.get_private_model();
+        return private.can_see_survey == "a".to_string();
+    }
+    pub fn is_anon_user_can_see_post(&self) -> bool {
+        let private = self.get_private_model();
+        return private.can_see_post == "a".to_string();
+    }
+    pub fn is_anon_user_can_see_photo(&self) -> bool {
+        let private = self.get_private_model();
+        return private.can_see_photo == "a".to_string();
+    }
+    pub fn is_anon_user_can_see_good(&self) -> bool {
+        let private = self.get_private_model();
+        return private.can_see_good == "a".to_string();
+    }
+    pub fn is_anon_user_can_see_video(&self) -> bool {
+        let private = self.get_private_model();
+        return private.can_see_video == "a".to_string();
+    }
+
+    pub fn is_anon_user_can_see_planner(&self) -> bool {
+        let private = self.get_private_model();
+        return private.can_see_planner == "a".to_string();
+    }
+    pub fn is_anon_user_can_see_forum(&self) -> bool {
+        let private = self.get_private_model();
+        return private.can_see_forum == "a".to_string();
+    }
+
+    pub fn get_community_all_can_see(&self, user_id: i32) -> Vec<bool> {
+        if self.id == self.user_id {
+            // 12
+            return vec![true, true, true, true, true, true, true, true, true, true, true, true];
+        }
+        let private = self.get_private_model();
+
+        let mut bool_stack = Vec::new();
+        bool_stack.push(true);
+
+        let can_see_info = private.can_see_info;
+        bool_can_see_info = match char.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_info);
+
+        let can_see_member = private.can_see_member;
+        let bool_can_see_member = match can_see_member.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_member_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_member_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_member);
+
+        let can_send_message = private.can_send_message;
+        let bool_can_send_message = match can_send_message.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_send_message_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_send_message_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_send_message);
+
+        let can_see_doc = private.can_see_doc;
+        let bool_can_see_doc = match can_see_doc.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_doc_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_doc_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_doc);
+
+        let can_see_music = private.can_see_music;
+        let bool_can_see_music = match can_see_music.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_music_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_music_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_music);
+
+        let can_see_survey = private.can_see_survey;
+        let bool_can_see_survey = match can_see_survey.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_survey_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_survey_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_survey);
+
+        let can_see_post = private.can_see_post;
+        let bool_can_see_post = match can_see_post.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_post_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_post_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_post);
+
+        let can_see_photo = private.can_see_photo;
+        let bool_can_see_photo = match can_see_photo.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_photo_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_photo_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_photo);
+
+        let can_see_good = private.can_see_good;
+        let bool_can_see_good = match can_see_good.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_good_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_good_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_good);
+
+        let can_see_video = private.can_see_video;
+        let bool_can_see_video = match can_see_video.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_video_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_video_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_video);
+
+        let can_see_planner = private.can_see_planner;
+        let bool_can_see_planner = match can_see_planner.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_planner_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_planner_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_planner);
+
+        let can_see_forum = private.can_see_forum;
+        let bool_can_see_forum = match can_see_forum.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_forum_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_forum_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_forum);
+
+        return bool_stack;
+    }
+    pub fn get_community_all_can_see(&self, user_id: i32) -> Vec<bool> {
+        if self.id == self.user_id {
+            // 11
+            return vec![true, true, true, true, true, true, true, true, true, true, true];
+        }
+        let private = self.get_private_model();
+
+        let mut bool_stack = Vec::new();
+        bool_stack.push(true);
+
+        let can_see_info = private.can_see_info;
+        bool_can_see_info = match char.as_str() {
+            "a" => true,
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_info);
+
+        let can_see_member = private.can_see_member;
+        let bool_can_see_member = match can_see_member.as_str() {
+            "a" => true,
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_member);
+
+        let can_see_doc = private.can_see_doc;
+        let bool_can_see_doc = match can_see_doc.as_str() {
+            "a" => true,
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_doc);
+
+        let can_see_music = private.can_see_music;
+        let bool_can_see_music = match can_see_music.as_str() {
+            "a" => true,
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_music);
+
+        let can_see_survey = private.can_see_survey;
+        let bool_can_see_survey = match can_see_survey.as_str() {
+            "a" => true,
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_survey);
+
+        let can_see_post = private.can_see_post;
+        let bool_can_see_post = match can_see_post.as_str() {
+            "a" => true,
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_post);
+
+        let can_see_photo = private.can_see_photo;
+        let bool_can_see_photo = match can_see_photo.as_str() {
+            "a" => true,
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_photo);
+
+        let can_see_good = private.can_see_good;
+        let bool_can_see_good = match can_see_good.as_str() {
+            "a" => true,
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_good);
+
+        let can_see_video = private.can_see_video;
+        let bool_can_see_video = match can_see_video.as_str() {
+            "a" => true,
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_video);
+
+        let can_see_planner = private.can_see_planner;
+        let bool_can_see_planner = match can_see_planner.as_str() {
+            "a" => true,
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_planner);
+
+        let can_see_forum = private.can_see_forum;
+        let bool_can_see_forum = match can_see_forum.as_str() {
+            "a" => true,
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_forum);
+
+        return bool_stack;
+    }
+
+    pub fn get_follows_users(&self) -> Vec<User> {
+        use crate::schema::community_follows::dsl::community_follows;
+        use crate::models::CommunityFollow;
+
+        let _connection = establish_connection();
+        return community_follows
+            .filter(schema::community_follows::community_id.eq(self.id))
+            .load::<CommunityFollow>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_banned_user(&self) -> Vec<User> {
+        use crate::schema::community_banner_users::dsl::community_banner_users;
+
+        let _connection = establish_connection();
+
+        return community_banner_users
+            .filter(schema::community_banner_users::community_id.eq(self.id))
+            .load::<CommunityBannerUser>(&_connection)
+            .expect("E");
+    }
+    pub fn get_fixed_posts(&self) -> Vec<Post> {
+        use crate::schema::posts::dsl::posts;
+
+        let _connection = establish_connection();
+        return posts
+            .filter(schema::posts::community_id.eq(self.id))
+            .filter(schema::posts::types.eq("b"))
+            .order(schema::posts::created.desc())
+            .load::<Post>(&_connection)
+            .expect("E");
+    }
+    pub fn get_fixed_posts_ids(&self) -> Vec<i32> {
+        let user_fixed_posts = self.get_fixed_posts();
+        let mut stack = Vec::new();
+        for _item in user_fixed_posts.iter() {
+            stack.push(_item.id);
+        };
+        return stack;
+    }
+    pub fn count_fix_items(&self) -> usize {
+        return self.get_fixed_posts().len();
+    }
+    pub fn is_can_fixed_post(&self) -> bool {
+        return self.count_fix_items() < 10;
+    }
+
+    pub fn get_member_for_notify_ids(&self) -> i32 {
+        use crate::schema::notify_user_communities::dsl::notify_user_communities;
+        use crate::models::NotifyUserCommunitie;
+
+        let _connection = establish_connection();
+        let items = notify_user_communities
+            .filter(schema::notify_user_communities::community_id.eq(self.id))
+            .filter(schema::notify_user_communities::mute.eq(false))
+            .filter(schema::notify_user_communities::sleep.lt(chrono::Local::now().naive_utc()))
+            .load::<NotifyUserCommunitie>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.owner);
+        };
+        return stack;
+    }
+    
 }
 
 
