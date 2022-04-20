@@ -1955,7 +1955,7 @@ impl Community {
 
         diesel::update(&member[0])
             .set(member_form)
-            .get_result::<BlogCategories>(&_connection)
+            .get_result::<CommunitiesMembership>(&_connection)
             .expect("Error.");
         return true;
     }
