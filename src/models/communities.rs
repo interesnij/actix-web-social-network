@@ -718,11 +718,13 @@ impl Community {
             .get_result::<Community>(&_connection)
             .expect("Error.");
 
+        let community_id = new_community.id;
+
         CommunitiesMembership::create_membership(user, new_community, true, false, false, false);
 
         // записываем профиль нового пользователя
         let _community_info = NewCommunityInfo {
-            community_id: new_community.id,
+            community_id: community_id,
             posts:        0,
             members:      0,
             photos:       0,
@@ -743,7 +745,7 @@ impl Community {
         // а также запись в позициях списков записей
         let _new_posts_list = NewPostList {
             name:            "Список записей".to_string(),
-            community_id:    Some(new_community.id),
+            community_id:    Some(community_id),
             user_id:         user_id,
             types:           "a".to_string(),
             description:     None,
@@ -764,7 +766,7 @@ impl Community {
             .expect("Error saving post_list.");
 
         let _new_posts_list_position = NewCommunityPostListPosition {
-            community_id:  new_community.id,
+            community_id:  community_id,
             list_id:  _posts_list.id,
             position: 1,
             types:    "a".to_string(),
@@ -778,7 +780,7 @@ impl Community {
         // а также записи в позициях списков записей
         let _new_photos_list = NewPhotoList {
             name:            "Основной альбом".to_string(),
-            community_id:    Some(new_community.id),
+            community_id:    Some(community_id),
             user_id:         user_id,
             types:           "a".to_string(),
             description:     None,
@@ -800,7 +802,7 @@ impl Community {
             .expect("Error saving photo_list.");
 
         let _new_photos_list_position = NewCommunityPhotoListPosition {
-            community_id:  new_community.id,
+            community_id:  community_id,
             list_id:  _photos_list.id,
             position: 1,
             types:    "a".to_string(),
@@ -812,7 +814,7 @@ impl Community {
 
         let _new_photos_list = NewPhotoList {
             name:            "Фото со страницы".to_string(),
-            community_id:    Some(new_community.id),
+            community_id:    Some(community_id),
             user_id:         user_id,
             types:           "d".to_string(),
             description:     None,
@@ -834,7 +836,7 @@ impl Community {
             .expect("Error saving photo_list.");
 
         let _new_photos_list_position = NewCommunityPhotoListPosition {
-            community_id:  new_community.id,
+            community_id:  community_id,
             list_id:  _photos_list.id,
             position: 2,
             types:    "a".to_string(),
@@ -846,7 +848,7 @@ impl Community {
 
         let _new_photos_list = NewPhotoList {
             name:            "Фото со стены".to_string(),
-            community_id:    Some(new_community.id),
+            community_id:    Some(community_id),
             user_id:         user_id,
             types:           "e".to_string(),
             description:     None,
@@ -868,7 +870,7 @@ impl Community {
             .expect("Error saving photo_list.");
 
         let _new_photos_list_position = NewCommunityPhotoListPosition {
-            community_id:  new_community.id,
+            community_id:  community_id,
             list_id:  _photos_list.id,
             position: 3,
             types:    "a".to_string(),
@@ -882,7 +884,7 @@ impl Community {
         // а также запись в позиции списка записей
         let _new_videos_list = NewVideoList {
             name:            "Основной альбом".to_string(),
-            community_id:    Some(new_community.id),
+            community_id:    Some(community_id),
             user_id:         user_id,
             types:           "a".to_string(),
             description:     None,
@@ -903,7 +905,7 @@ impl Community {
             .expect("Error saving video_list.");
 
         let _new_videos_list_position = NewCommunityVideoListPosition {
-            community_id:  new_community.id,
+            community_id:  community_id,
             list_id:  _videos_list.id,
             position: 1,
             types:    "a".to_string(),
@@ -917,7 +919,7 @@ impl Community {
         // а также запись в позиции списка товаров
         let _new_goods_list = NewGoodList {
             name:            "Основной альбом".to_string(),
-            community_id:    Some(new_community.id),
+            community_id:    Some(community_id),
             user_id:         user_id,
             types:           "a".to_string(),
             description:     None,
@@ -938,7 +940,7 @@ impl Community {
             .expect("Error saving good_list.");
 
         let _new_goods_list_position = NewCommunityGoodListPosition {
-            community_id:  new_community.id,
+            community_id:  community_id,
             list_id:  _goods_list.id,
             position: 1,
             types:    "a".to_string(),
@@ -952,7 +954,7 @@ impl Community {
         // а также запись в позиции списков плейлистов
         let _new_musics_list = NewMusicList {
             name:            "Основной плейлист".to_string(),
-            community_id:    Some(new_community.id),
+            community_id:    Some(community_id),
             user_id:         user_id,
             types:           "a".to_string(),
             description:     None,
@@ -972,7 +974,7 @@ impl Community {
             .expect("Error saving music_list.");
 
         let _new_musics_list_position = NewCommunityMusicListPosition {
-            community_id:  new_community.id,
+            community_id:  community_id,
             list_id:  _musics_list.id,
             position: 1,
             types:    "a".to_string(),
@@ -986,7 +988,7 @@ impl Community {
         // а также запись в позиции списков документов
         let _new_docs_list = NewDocList {
             name:            "Основной список".to_string(),
-            community_id:    Some(new_community.id),
+            community_id:    Some(community_id),
             user_id:         user_id,
             types:           "a".to_string(),
             description:     None,
@@ -1005,7 +1007,7 @@ impl Community {
             .expect("Error saving doc_list.");
 
         let _new_docs_list_position = NewCommunityDocListPosition {
-            community_id:  new_community.id,
+            community_id:  community_id,
             list_id:  _docs_list.id,
             position: 1,
             types:    "a".to_string(),
@@ -1019,7 +1021,7 @@ impl Community {
         // а также запись в позиции списков опросов
         let _new_surveys_list = NewSurveyList {
             name:            "Основной список".to_string(),
-            community_id:    Some(new_community.id),
+            community_id:    Some(community_id),
             user_id:         user_id,
             types:           "a".to_string(),
             description:     None,
@@ -1038,7 +1040,7 @@ impl Community {
             .expect("Error saving survey_list.");
 
         let _new_surveys_list_position = NewCommunitySurveyListPosition {
-            community_id:  new_community.id,
+            community_id:  community_id,
             list_id:  _surveys_list.id,
             position: 1,
             types:    "a".to_string(),
@@ -1050,7 +1052,7 @@ impl Community {
 
         // записываем приватность нового пользователя
         let _private = NewCommunityPrivate {
-            community_id:       new_community.id,
+            community_id:       community_id,
             can_see_member:     "a".to_string(),
             can_see_info:       "a".to_string(),
             can_send_message:   "a".to_string(),
@@ -1073,7 +1075,7 @@ impl Community {
 
         // записываем уведомления профиля нового пользователя
         let _community_notification = NewCommunityNotification {
-            community_id:         new_community.id,
+            community_id:         community_id,
             connection_request:   true,
             connection_confirmed: true,
             community_invite:     true,
@@ -1085,7 +1087,7 @@ impl Community {
 
         // записываем уведомления записей нового пользователя
         let _post_notification = NewCommunityPostNotification {
-            community_id:           new_community.id,
+            community_id:           community_id,
             comment:                true,
             comment_reply:          true,
             mention:                true,
@@ -1105,7 +1107,7 @@ impl Community {
 
         // записываем уведомления фотографий нового пользователя
         let _photo_notification = NewCommunityPhotoNotification {
-            community_id:           new_community.id,
+            community_id:           community_id,
             comment:                true,
             comment_reply:          true,
             mention:                true,
@@ -1125,7 +1127,7 @@ impl Community {
 
         // записываем уведомления товаров нового пользователя
         let _good_notification = NewCommunityGoodNotification {
-            community_id:           new_community.id,
+            community_id:           community_id,
             comment:                true,
             comment_reply:          true,
             mention:                true,
@@ -1145,7 +1147,7 @@ impl Community {
 
         // записываем уведомления роликов нового пользователя
         let _video_notification = NewCommunityVideoNotification {
-            community_id:           new_community.id,
+            community_id:           community_id,
             comment:                true,
             comment_reply:          true,
             mention:                true,
@@ -1165,7 +1167,7 @@ impl Community {
 
         // записываем уведомления роликов нового пользователя
         let _music_notification = NewCommunityMusicNotification {
-            community_id:  new_community.id,
+            community_id:  community_id,
             repost:        true,
         };
         diesel::insert_into(schema::community_music_notifications::table)
@@ -1175,7 +1177,7 @@ impl Community {
 
         // записываем уведомления роликов нового пользователя
         let _survey_notification = NewCommunitySurveyNotification {
-            community_id:  new_community.id,
+            community_id:  community_id,
             vote:          true,
         };
         diesel::insert_into(schema::community_survey_notifications::table)
