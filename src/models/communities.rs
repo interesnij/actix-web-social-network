@@ -696,6 +696,7 @@ impl Community {
         return false;
     }
     pub fn create_community(name: String, category: i32, user: User, types: i16) -> Community {
+        let _connection = establish_connection();
         let new_community_form = NewCommunity{
                 name:                    name,
                 status:                  "a".to_string(),
