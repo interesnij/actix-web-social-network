@@ -426,6 +426,7 @@ pub struct NewChatUser {
     pub types:            String,
     pub is_administrator: bool,
     pub created:          chrono::NaiveDateTime,
+    pub no_disturb:       Option<chrono::NaiveDateTime>,
 }
 
 /////// ChatPerm //////
