@@ -1744,7 +1744,7 @@ pub struct NewCommunityWorkPerm {
 }
 
 /////// CommunityBannerUser //////
-#[derive(Debug, Queryable, Serialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 #[belongs_to(User)]
 pub struct CommunityBannerUser {
