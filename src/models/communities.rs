@@ -1988,7 +1988,46 @@ impl Community {
         return get_users_from_ids(self.get_can_see_info_include_users_ids());
     }
 
+    pub fn get_can_see_can_see_member_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
 
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_can_see_member.eq("b"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_can_see_member_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_can_see_member.eq("a"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_can_see_member_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_can_see_member_exclude_users_ids());
+    }
+    pub fn get_can_see_can_see_member_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_can_see_member_include_users_ids());
+    }
 }
 
 
@@ -2467,6 +2506,8 @@ pub struct CommunityVisiblePerm {
     pub can_see_video_comment:   Option<String>,
     pub can_see_planner:         Option<String>,
     pub can_see_planner_comment: Option<String>,
+    pub can_see_forum:           Option<String>,
+    pub can_see_forum_comment:   Option<String>,
 }
 
 #[derive(Deserialize, Insertable)]
@@ -2493,6 +2534,8 @@ pub struct NewCommunityVisiblePerm {
     pub can_see_video_comment:   Option<String>,
     pub can_see_planner:         Option<String>,
     pub can_see_planner_comment: Option<String>,
+    pub can_see_forum:           Option<String>,
+    pub can_see_forum_comment:   Option<String>,
 }
 
 #[derive(Debug, Queryable, Serialize, Identifiable)]

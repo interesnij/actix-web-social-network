@@ -131,6 +131,8 @@ CREATE TABLE community_visible_perms (
     can_see_video_comment    "char",
     can_see_planner          "char",
     can_see_planner_comment  "char",
+    can_see_forum            "char",
+    can_see_forum_comment    "char",
 
     CONSTRAINT fk_communities_visible_perms
          FOREIGN KEY(user_id)
