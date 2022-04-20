@@ -32,6 +32,7 @@ use crate::utils::establish_connection;
 use crate::models::{
     User, PostList, PhotoList, DocList, VideoList,
     SurveyList, MusicList, GoodList, CommunitiesMembership,
+    Survey, Music, Good, Video, Doc, Photo, Post, 
 };
 
 
