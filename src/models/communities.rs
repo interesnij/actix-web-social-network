@@ -3118,6 +3118,191 @@ impl Community {
         };
         return stack;
     }
+    pub fn get_community_notifications(&self) -> Vec<Notification> {
+        use crate::schema::notifications::dsl::notifications;
+
+        let _connection = establish_connection();
+        return notifications
+            .or_filter(schema::notifications::community_id.eq(self.id))
+            .filter(schema::notifications::user_set_id.is_null())
+            .filter(schema::notifications::object_set_id.is_null())
+            .load::<Notification>(&_connection)
+            .expect("E");
+    }
+    pub fn count_user_notifications(&self) -> usize {
+        use crate::schema::notifications::dsl::notifications;
+
+        let _connection = establish_connection();
+        return notifications
+            .filter(schema::notifications::community_id.eq(self.id))
+            .filter(schema::notifications::status.eq("a"))
+            .load::<Notification>(&_connection)
+            .expect("E").len();
+    }
+
+    pub fn set_friends_visible_perms(&self, action: String, users_ids: Vec<i32>, types: String) -> bool {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+
+        let _connection = establish_connection();
+
+        let _members = communities_memberships
+            .filter(schema::communities_memberships::user_id.eq_any(&users_ids))
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E");
+        let mut members_stack = Vec::new();
+        for _item in _members.iter() {
+            members_stack.push(_item.user_id);
+        };
+        diesel::delete(community_visible_perms.filter(schema::community_visible_perms::user_id.eq_any(members_stack))).execute(&_connection).expect("E");
+
+        if types == "can_see_info".to_string() {
+            for user_id in users_ids.iter() {
+                let _new_perm = NewCommunityVisiblePerm::add_can_see_info(
+                    *user_id,
+                    action.clone(),
+                );
+                diesel::insert_into(schema::community_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<CommunityVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if types == "can_see_member".to_string() {
+            for user_id in users_ids.iter() {
+                let _new_perm = NewCommunityVisiblePerm::add_can_see_member(
+                    *user_id,
+                    action.clone(),
+                );
+                diesel::insert_into(schema::community_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<CommunityVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if types == "can_send_message".to_string() {
+            for user_id in users_ids.iter() {
+                let _new_perm = NewCommunityVisiblePerm::add_can_send_message(
+                    *user_id,
+                    action.clone(),
+                );
+                diesel::insert_into(schema::community_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<CommunityVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if types == "can_see_doc".to_string() {
+            for user_id in users_ids.iter() {
+                let _new_perm = NewCommunityVisiblePerm::add_can_see_doc(
+                    *user_id,
+                    action.clone(),
+                );
+                diesel::insert_into(schema::community_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<CommunityVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if types == "can_see_music".to_string() {
+            for user_id in users_ids.iter() {
+                let _new_perm = NewCommunityVisiblePerm::add_can_see_music (
+                    *user_id,
+                    action.clone(),
+                );
+                diesel::insert_into(schema::community_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<CommunityVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if types == "can_see_survey".to_string() {
+            for user_id in users_ids.iter() {
+                let _new_perm = NewCommunityVisiblePerm::add_can_see_survey (
+                    *user_id,
+                    action.clone(),
+                );
+                diesel::insert_into(schema::community_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<CommunityVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if types == "can_see_post".to_string() {
+            for user_id in users_ids.iter() {
+                let _new_perm = NewCommunityVisiblePerm::add_can_see_post (
+                    *user_id,
+                    action.clone(),
+                );
+                diesel::insert_into(schema::community_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<CommunityVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if types == "can_see_photo".to_string() {
+            for user_id in users_ids.iter() {
+                let _new_perm = NewCommunityVisiblePerm::add_can_see_photo (
+                    *user_id,
+                    action.clone(),
+                );
+                diesel::insert_into(schema::community_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<CommunityVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if types == "can_see_good".to_string() {
+            for user_id in users_ids.iter() {
+                let _new_perm = NewCommunityVisiblePerm::add_can_see_good (
+                    *user_id,
+                    action.clone(),
+                );
+                diesel::insert_into(schema::community_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<CommunityVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if types == "can_see_video".to_string() {
+            for user_id in users_ids.iter() {
+                let _new_perm = NewCommunityVisiblePerm::add_can_see_video (
+                    *user_id,
+                    action.clone(),
+                );
+                diesel::insert_into(schema::community_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<CommunityVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if types == "can_see_planner".to_string() {
+            for user_id in users_ids.iter() {
+                let _new_perm = NewCommunityVisiblePerm::add_can_see_planner (
+                    *user_id,
+                    action.clone(),
+                );
+                diesel::insert_into(schema::community_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<CommunityVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if types == "can_see_forum".to_string() {
+            for user_id in users_ids.iter() {
+                let _new_perm = NewCommunityVisiblePerm::add_can_see_forum (
+                    *user_id,
+                    action.clone(),
+                );
+                diesel::insert_into(schema::community_visible_perms::table)
+                    .values(&_new_perm)
+                    .get_result::<CommunityVisiblePerm>(&_connection)
+                    .expect("Error.");
+            }
+        }
+
+        return true;
+    }
 }
 
 
@@ -3628,6 +3813,309 @@ pub struct NewCommunityVisiblePerm {
     pub can_see_planner_comment: Option<String>,
     pub can_see_forum:           Option<String>,
     pub can_see_forum_comment:   Option<String>,
+}
+
+impl NewCommunityVisiblePerm {
+    pub fn add_can_see_info(user_id: i32, can_see_info: String) -> Self {
+        NewCommunityVisiblePerm {
+            user_id:                 user_id,
+            can_see_info:            Some(can_see_info),
+            can_see_community:       None,
+            can_see_member:          None,
+            can_send_message:        None,
+            can_add_in_chat:         None,
+            can_see_doc:             None,
+            can_see_music:           None,
+            can_see_survey:          None,
+            can_see_post:            None,
+            can_see_post_comment:    None,
+            can_see_photo:           None,
+            can_see_photo_comment:   None,
+            can_see_good:            None,
+            can_see_good_comment:    None,
+            can_see_video:           None,
+            can_see_video_comment:   None,
+            can_see_planner:         None,
+            can_see_planner_comment: None,
+            can_see_forum:           None,
+            can_see_forum_comment:   None,
+        }
+    }
+    pub fn add_can_see_member(user_id: i32, can_see_member: String) -> Self {
+        NewCommunityVisiblePerm {
+            user_id:                 user_id,
+            can_see_info:            None,
+            can_see_community:       None,
+            can_see_member:          Some(can_see_member),
+            can_send_message:        None,
+            can_add_in_chat:         None,
+            can_see_doc:             None,
+            can_see_music:           None,
+            can_see_survey:          None,
+            can_see_post:            None,
+            can_see_post_comment:    None,
+            can_see_photo:           None,
+            can_see_photo_comment:   None,
+            can_see_good:            None,
+            can_see_good_comment:    None,
+            can_see_video:           None,
+            can_see_video_comment:   None,
+            can_see_planner:         None,
+            can_see_planner_comment: None,
+            can_see_forum:           None,
+            can_see_forum_comment:   None,
+        }
+    }
+    pub fn add_can_send_message(user_id: i32, can_send_message: String) -> Self {
+        NewCommunityVisiblePerm {
+            user_id:                 user_id,
+            can_see_info:            None,
+            can_see_community:       None,
+            can_see_member:          None,
+            can_send_message:        Some(can_send_message),
+            can_add_in_chat:         None,
+            can_see_doc:             None,
+            can_see_music:           None,
+            can_see_survey:          None,
+            can_see_post:            None,
+            can_see_post_comment:    None,
+            can_see_photo:           None,
+            can_see_photo_comment:   None,
+            can_see_good:            None,
+            can_see_good_comment:    None,
+            can_see_video:           None,
+            can_see_video_comment:   None,
+            can_see_planner:         None,
+            can_see_planner_comment: None,
+            can_see_forum:           None,
+            can_see_forum_comment:   None,
+        }
+    }
+    pub fn add_can_see_doc(user_id: i32, can_see_doc: String) -> Self {
+        NewCommunityVisiblePerm {
+            user_id:                 user_id,
+            can_see_info:            None,
+            can_see_community:       None,
+            can_see_member:          None,
+            can_send_message:        None,
+            can_add_in_chat:         None,
+            can_see_doc:             Some(can_see_doc),
+            can_see_music:           None,
+            can_see_survey:          None,
+            can_see_post:            None,
+            can_see_post_comment:    None,
+            can_see_photo:           None,
+            can_see_photo_comment:   None,
+            can_see_good:            None,
+            can_see_good_comment:    None,
+            can_see_video:           None,
+            can_see_video_comment:   None,
+            can_see_planner:         None,
+            can_see_planner_comment: None,
+            can_see_forum:           None,
+            can_see_forum_comment:   None,
+        }
+    }
+    pub fn add_can_see_music(user_id: i32, can_see_music: String) -> Self {
+        NewCommunityVisiblePerm {
+            user_id:                 user_id,
+            can_see_info:            None,
+            can_see_community:       None,
+            can_see_member:          None,
+            can_send_message:        None,
+            can_add_in_chat:         None,
+            can_see_doc:             None,
+            can_see_music:           Some(can_see_music),
+            can_see_survey:          None,
+            can_see_post:            None,
+            can_see_post_comment:    None,
+            can_see_photo:           None,
+            can_see_photo_comment:   None,
+            can_see_good:            None,
+            can_see_good_comment:    None,
+            can_see_video:           None,
+            can_see_video_comment:   None,
+            can_see_planner:         None,
+            can_see_planner_comment: None,
+            can_see_forum:           None,
+            can_see_forum_comment:   None,
+        }
+    }
+    pub fn add_can_see_survey(user_id: i32, can_see_survey: String) -> Self {
+        NewCommunityVisiblePerm {
+            user_id:                 user_id,
+            can_see_info:            None,
+            can_see_community:       None,
+            can_see_member:          None,
+            can_send_message:        None,
+            can_add_in_chat:         None,
+            can_see_doc:             None,
+            can_see_music:           None,
+            can_see_survey:          Some(can_see_survey),
+            can_see_post:            None,
+            can_see_post_comment:    None,
+            can_see_photo:           None,
+            can_see_photo_comment:   None,
+            can_see_good:            None,
+            can_see_good_comment:    None,
+            can_see_video:           None,
+            can_see_video_comment:   None,
+            can_see_planner:         None,
+            can_see_planner_comment: None,
+            can_see_forum:           None,
+            can_see_forum_comment:   None,
+        }
+    }
+    pub fn add_can_see_post(user_id: i32, can_see_post: String) -> Self {
+        NewCommunityVisiblePerm {
+            user_id:                 user_id,
+            can_see_info:            None,
+            can_see_community:       None,
+            can_see_member:          None,
+            can_send_message:        None,
+            can_add_in_chat:         None,
+            can_see_doc:             None,
+            can_see_music:           None,
+            can_see_survey:          None,
+            can_see_post:            Some(can_see_post),
+            can_see_post_comment:    None,
+            can_see_photo:           None,
+            can_see_photo_comment:   None,
+            can_see_good:            None,
+            can_see_good_comment:    None,
+            can_see_video:           None,
+            can_see_video_comment:   None,
+            can_see_planner:         None,
+            can_see_planner_comment: None,
+            can_see_forum:           None,
+            can_see_forum_comment:   None,
+        }
+    }
+    pub fn add_can_see_photo(user_id: i32, can_see_photo: String) -> Self {
+        NewCommunityVisiblePerm {
+            user_id:                 user_id,
+            can_see_info:            None,
+            can_see_community:       None,
+            can_see_member:          None,
+            can_send_message:        None,
+            can_add_in_chat:         None,
+            can_see_doc:             None,
+            can_see_music:           None,
+            can_see_survey:          None,
+            can_see_post:            None,
+            can_see_post_comment:    None,
+            can_see_photo:           Some(can_see_photo),
+            can_see_photo_comment:   None,
+            can_see_good:            None,
+            can_see_good_comment:    None,
+            can_see_video:           None,
+            can_see_video_comment:   None,
+            can_see_planner:         None,
+            can_see_planner_comment: None,
+            can_see_forum:           None,
+            can_see_forum_comment:   None,
+        }
+    }
+    pub fn add_can_see_good(user_id: i32, can_see_good: String) -> Self {
+        NewCommunityVisiblePerm {
+            user_id:                 user_id,
+            can_see_info:            None,
+            can_see_community:       None,
+            can_see_member:          None,
+            can_send_message:        None,
+            can_add_in_chat:         None,
+            can_see_doc:             None,
+            can_see_music:           None,
+            can_see_survey:          None,
+            can_see_post:            None,
+            can_see_post_comment:    None,
+            can_see_photo:           None,
+            can_see_photo_comment:   None,
+            can_see_good:            Some(can_see_good),
+            can_see_good_comment:    None,
+            can_see_video:           None,
+            can_see_video_comment:   None,
+            can_see_planner:         None,
+            can_see_planner_comment: None,
+            can_see_forum:           None,
+            can_see_forum_comment:   None,
+        }
+    }
+    pub fn add_can_see_video(user_id: i32, can_see_video: String) -> Self {
+        NewCommunityVisiblePerm {
+            user_id:                 user_id,
+            can_see_info:            None,
+            can_see_community:       None,
+            can_see_member:          None,
+            can_send_message:        None,
+            can_add_in_chat:         None,
+            can_see_doc:             None,
+            can_see_music:           None,
+            can_see_survey:          None,
+            can_see_post:            None,
+            can_see_post_comment:    None,
+            can_see_photo:           None,
+            can_see_photo_comment:   None,
+            can_see_good:            None,
+            can_see_good_comment:    None,
+            can_see_video:           Some(can_see_video),
+            can_see_video_comment:   None,
+            can_see_planner:         None,
+            can_see_planner_comment: None,
+            can_see_forum:           None,
+            can_see_forum_comment:   None,
+        }
+    }
+    pub fn add_can_see_planner(user_id: i32, can_see_planner: String) -> Self {
+        NewCommunityVisiblePerm {
+            user_id:                 user_id,
+            can_see_info:            None,
+            can_see_community:       None,
+            can_see_member:          None,
+            can_send_message:        None,
+            can_add_in_chat:         None,
+            can_see_doc:             None,
+            can_see_music:           None,
+            can_see_survey:          None,
+            can_see_post:            None,
+            can_see_post_comment:    None,
+            can_see_photo:           None,
+            can_see_photo_comment:   None,
+            can_see_good:            None,
+            can_see_good_comment:    None,
+            can_see_video:           None,
+            can_see_video_comment:   None,
+            can_see_planner:         Some(can_see_planner),
+            can_see_planner_comment: None,
+            can_see_forum:           None,
+            can_see_forum_comment:   None,
+        }
+    }
+    pub fn add_can_see_forum(user_id: i32, can_see_forum: String) -> Self {
+        NewCommunityVisiblePerm {
+            user_id:                 user_id,
+            can_see_info:            None,
+            can_see_community:       None,
+            can_see_member:          None,
+            can_send_message:        None,
+            can_add_in_chat:         None,
+            can_see_doc:             None,
+            can_see_music:           None,
+            can_see_survey:          None,
+            can_see_post:            None,
+            can_see_post_comment:    None,
+            can_see_photo:           None,
+            can_see_photo_comment:   None,
+            can_see_good:            None,
+            can_see_good_comment:    None,
+            can_see_video:           None,
+            can_see_video_comment:   None,
+            can_see_planner:         None,
+            can_see_planner_comment: None,
+            can_see_forum:           Some(can_see_forum),,
+            can_see_forum_comment:   None,
+        }
+    }
 }
 
 #[derive(Debug, Queryable, Serialize, Identifiable)]
