@@ -418,7 +418,7 @@ pub struct ChatUser {
     pub created:          chrono::NaiveDateTime,
     pub no_disturb:       Option<chrono::NaiveDateTime>,
 }
-#[derive(Deserialize, Insertable)]
+#[derive(Deserialize, Insertable, AsChangeset)]
 #[table_name="chat_users"]
 pub struct NewChatUser {
     pub user_id:          i32,
