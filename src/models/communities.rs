@@ -3350,7 +3350,7 @@ pub struct CommunitiesMembership {
     pub visited:          i32,
 }
 
-#[derive(Deserialize, Insertable)]
+#[derive(Deserialize, Insertable, AsChangeset)]
 #[table_name="communities_memberships"]
 pub struct NewCommunitiesMembership {
     pub user_id:          i32,
