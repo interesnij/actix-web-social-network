@@ -1959,6 +1959,118 @@ impl Community {
             .expect("Error.");
         return true;
     }
+    pub fn create_editor(&self, user: User) -> bool {
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+        if !user.is_member_of_community(self.id) {
+            return false;
+        }
+        let _connection = establish_connection();
+        let member = communities_memberships
+            .filter(schema::communities_memberships::community_id.eq(self.id))
+            .filter(schema::communities_memberships::user_id.eq(user.id))
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E");
+        let member_form = NewCommunitiesMembership {
+            user_id: user.id,
+            community_id: self.id,
+            is_administrator: false,
+            is_moderator: false,
+            is_editor: true,
+            is_advertiser: false,
+            created: member[0].created,
+            visited: member[0].visited,
+        };
+
+        diesel::update(&member[0])
+            .set(member_form)
+            .get_result::<CommunitiesMembership>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn create_moderator(&self, user: User) -> bool {
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+        if !user.is_member_of_community(self.id) {
+            return false;
+        }
+        let _connection = establish_connection();
+        let member = communities_memberships
+            .filter(schema::communities_memberships::community_id.eq(self.id))
+            .filter(schema::communities_memberships::user_id.eq(user.id))
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E");
+        let member_form = NewCommunitiesMembership {
+            user_id: user.id,
+            community_id: self.id,
+            is_administrator: false,
+            is_moderator: false,
+            is_editor: true,
+            is_advertiser: false,
+            created: member[0].created,
+            visited: member[0].visited,
+        };
+
+        diesel::update(&member[0])
+            .set(member_form)
+            .get_result::<CommunitiesMembership>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn create_advertisor(&self, user: User) -> bool {
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+        if !user.is_member_of_community(self.id) {
+            return false;
+        }
+        let _connection = establish_connection();
+        let member = communities_memberships
+            .filter(schema::communities_memberships::community_id.eq(self.id))
+            .filter(schema::communities_memberships::user_id.eq(user.id))
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E");
+        let member_form = NewCommunitiesMembership {
+            user_id: user.id,
+            community_id: self.id,
+            is_administrator: false,
+            is_moderator: false,
+            is_editor: false,
+            is_advertiser: true,
+            created: member[0].created,
+            visited: member[0].visited,
+        };
+
+        diesel::update(&member[0])
+            .set(member_form)
+            .get_result::<CommunitiesMembership>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn delete_administrator(&self, user: User) -> bool {
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+        if !user.is_member_of_community(self.id) {
+            return false;
+        }
+        let _connection = establish_connection();
+        let member = communities_memberships
+            .filter(schema::communities_memberships::community_id.eq(self.id))
+            .filter(schema::communities_memberships::user_id.eq(user.id))
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E");
+        let member_form = NewCommunitiesMembership {
+            user_id: user.id,
+            community_id: self.id,
+            is_administrator: false,
+            is_moderator: false,
+            is_editor: false,
+            is_advertiser: true,
+            created: member[0].created,
+            visited: member[0].visited,
+        };
+
+        diesel::update(&member[0])
+            .set(schema::communities_memberships::is_administrator.eq(false))
+            .get_result::<CommunitiesMembership>(&_connection)
+            .expect("Error.");
+        return true;
+    }
 
     pub fn get_members_ids(&self) -> Vec<i32> {
         use crate::schema::communities_memberships::dsl::communities_memberships;
