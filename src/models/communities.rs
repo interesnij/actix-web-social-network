@@ -721,7 +721,7 @@ impl Community {
 
         // записываем профиль нового пользователя
         let _community_info = NewCommunityInfo {
-            community_id: new_community.id,
+            community_id: *new_community.id,
             posts:        0,
             members:      0,
             photos:       0,
@@ -743,7 +743,7 @@ impl Community {
         let _new_posts_list = NewPostList {
             name:            "Список записей".to_string(),
             community_id:    Some(new_community.id),
-            user_id:         user.id,
+            user_id:         *user.id,
             types:           "a".to_string(),
             description:     None,
             created:         chrono::Local::now().naive_utc(),
