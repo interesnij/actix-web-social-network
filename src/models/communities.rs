@@ -31,7 +31,7 @@ use serde::{Serialize, Deserialize};
 use crate::utils::establish_connection;
 use crate::models::{
     User, PostList, PhotoList, DocList, VideoList,
-    SurveyList, MusicList, GoodList,
+    SurveyList, MusicList, GoodList, Notification, 
     Survey, Music, Good, Video, Doc, Photo, Post,
 };
 
@@ -3120,7 +3120,6 @@ impl Community {
     }
     pub fn get_community_notifications(&self) -> Vec<Notification> {
         use crate::schema::notifications::dsl::notifications;
-        use crate::models::Notification;
 
         let _connection = establish_connection();
         return notifications
@@ -3132,7 +3131,6 @@ impl Community {
     }
     pub fn count_user_notifications(&self) -> usize {
         use crate::schema::notifications::dsl::notifications;
-        use crate::models::Notification;
 
         let _connection = establish_connection();
         return notifications
