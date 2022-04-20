@@ -1289,7 +1289,7 @@ impl Community {
 
             let new_list = NewGoodList{
                     name:          "Основной список".to_string(),
-                    community_id:   self.id,
+                    community_id:   Some(self.id),
                     user_id:        self.user_id,
                     types:          "a".to_string(),
                     description:     None,
@@ -1343,7 +1343,7 @@ impl Community {
 
             let new_list = NewMusicList{
                     name:          "Основной список".to_string(),
-                    community_id:   self.id,
+                    community_id:   Some(self.id),
                     user_id:        self.user_id,
                     types:          "a".to_string(),
                     description:     None,
@@ -1396,7 +1396,7 @@ impl Community {
 
             let new_list = NewVideoList{
                     name:          "Основной список".to_string(),
-                    community_id:   self.id,
+                    community_id:   Some(self.id),
                     user_id:        self.user_id,
                     types:          "a".to_string(),
                     description:     None,
@@ -1450,7 +1450,7 @@ impl Community {
 
             let new_list = NewPhotoList{
                     name:          "Основной список".to_string(),
-                    community_id:   sself.id,
+                    community_id:   Some(self.id),
                     user_id:        self.user_id,
                     types:          "a".to_string(),
                     description:     None,
@@ -1530,7 +1530,7 @@ impl Community {
 
             let new_list = NewPostList{
                     name:          "Основной список".to_string(),
-                    community_id:   self.id,
+                    community_id:   Some(self.id),
                     user_id:        self.user_id,
                     types:          "a".to_string(),
                     description:     None,
@@ -1584,7 +1584,7 @@ impl Community {
 
             let new_list = NewDocList{
                     name:          "Основной список".to_string(),
-                    community_id:   self.id,
+                    community_id:   Some(self.id),
                     user_id:        self.user_id,
                     types:          "a".to_string(),
                     description:     None,
@@ -1636,7 +1636,7 @@ impl Community {
 
             let new_list = NewSurveyList{
                     name:          "Основной список".to_string(),
-                    community_id:   self.id,
+                    community_id:   Some(self.id),
                     user_id:        self.user_id,
                     types:          "a".to_string(),
                     description:     None,
@@ -1983,7 +1983,7 @@ impl Community {
         let items = community_visible_perms
             .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
             .filter(schema::community_visible_perms::can_see_info.eq("a"))
-            .load::<FriendsVisiblePerm>(&_connection)
+            .load::<CommunityVisiblePerm>(&_connection)
             .expect("E");
 
         let mut stack = Vec::new();
