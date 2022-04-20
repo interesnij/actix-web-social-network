@@ -2314,47 +2314,6 @@ impl Community {
         return get_users_from_ids(self.get_can_see_post_include_users_ids());
     }
 
-    pub fn get_can_see_post_comment_exclude_users_ids(&self) -> Vec<i32> {
-        use crate::schema::community_visible_perms::dsl::community_visible_perms;
-
-        let _connection = establish_connection();
-        let items = community_visible_perms
-            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
-            .filter(schema::community_visible_perms::can_see_post_comment.eq("b"))
-            .load::<CommunityVisiblePerm>(&_connection)
-            .expect("E");
-
-        let mut stack = Vec::new();
-        for _item in items.iter() {
-            stack.push(_item.user_id);
-        };
-        return stack;
-    }
-    pub fn get_can_see_post_comment_include_users_ids(&self) -> Vec<i32> {
-        use crate::schema::community_visible_perms::dsl::community_visible_perms;
-
-        let _connection = establish_connection();
-        let items = community_visible_perms
-            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
-            .filter(schema::community_visible_perms::can_see_post_comment.eq("a"))
-            .load::<CommunityVisiblePerm>(&_connection)
-            .expect("E");
-
-        let mut stack = Vec::new();
-        for _item in items.iter() {
-            stack.push(_item.user_id);
-        };
-        return stack;
-    }
-    pub fn get_can_see_post_comment_exclude_users(&self) -> Vec<User> {
-        use crate::utils::get_users_from_ids;
-        return get_users_from_ids(self.get_can_see_post_comment_exclude_users_ids());
-    }
-    pub fn get_can_see_post_comment_include_users(&self) -> Vec<User> {
-        use crate::utils::get_users_from_ids;
-        return get_users_from_ids(self.get_can_see_post_comment_include_users_ids());
-    }
-
     pub fn get_can_see_photo_exclude_users_ids(&self) -> Vec<i32> {
         use crate::schema::community_visible_perms::dsl::community_visible_perms;
 
@@ -2394,47 +2353,6 @@ impl Community {
     pub fn get_can_see_photo_include_users(&self) -> Vec<User> {
         use crate::utils::get_users_from_ids;
         return get_users_from_ids(self.get_can_see_photo_include_users_ids());
-    }
-
-    pub fn get_can_see_photo_comment_exclude_users_ids(&self) -> Vec<i32> {
-        use crate::schema::community_visible_perms::dsl::community_visible_perms;
-
-        let _connection = establish_connection();
-        let items = community_visible_perms
-            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
-            .filter(schema::community_visible_perms::can_see_photo_comment.eq("b"))
-            .load::<CommunityVisiblePerm>(&_connection)
-            .expect("E");
-
-        let mut stack = Vec::new();
-        for _item in items.iter() {
-            stack.push(_item.user_id);
-        };
-        return stack;
-    }
-    pub fn get_can_see_photo_comment_include_users_ids(&self) -> Vec<i32> {
-        use crate::schema::community_visible_perms::dsl::community_visible_perms;
-
-        let _connection = establish_connection();
-        let items = community_visible_perms
-            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
-            .filter(schema::community_visible_perms::can_see_photo_comment.eq("a"))
-            .load::<CommunityVisiblePerm>(&_connection)
-            .expect("E");
-
-        let mut stack = Vec::new();
-        for _item in items.iter() {
-            stack.push(_item.user_id);
-        };
-        return stack;
-    }
-    pub fn get_can_see_photo_comment_exclude_users(&self) -> Vec<User> {
-        use crate::utils::get_users_from_ids;
-        return get_users_from_ids(self.get_can_see_photo_comment_exclude_users_ids());
-    }
-    pub fn get_can_see_photo_comment_include_users(&self) -> Vec<User> {
-        use crate::utils::get_users_from_ids;
-        return get_users_from_ids(self.get_can_see_photo_comment_include_users_ids());
     }
 
     pub fn get_can_see_good_exclude_users_ids(&self) -> Vec<i32> {
@@ -2478,47 +2396,6 @@ impl Community {
         return get_users_from_ids(self.get_can_see_good_include_users_ids());
     }
 
-    pub fn get_can_see_good_comment_exclude_users_ids(&self) -> Vec<i32> {
-        use crate::schema::community_visible_perms::dsl::community_visible_perms;
-
-        let _connection = establish_connection();
-        let items = community_visible_perms
-            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
-            .filter(schema::community_visible_perms::can_see_good_comment.eq("b"))
-            .load::<CommunityVisiblePerm>(&_connection)
-            .expect("E");
-
-        let mut stack = Vec::new();
-        for _item in items.iter() {
-            stack.push(_item.user_id);
-        };
-        return stack;
-    }
-    pub fn get_can_see_good_comment_include_users_ids(&self) -> Vec<i32> {
-        use crate::schema::community_visible_perms::dsl::community_visible_perms;
-
-        let _connection = establish_connection();
-        let items = community_visible_perms
-            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
-            .filter(schema::community_visible_perms::can_see_good_comment.eq("a"))
-            .load::<CommunityVisiblePerm>(&_connection)
-            .expect("E");
-
-        let mut stack = Vec::new();
-        for _item in items.iter() {
-            stack.push(_item.user_id);
-        };
-        return stack;
-    }
-    pub fn get_can_see_good_comment_exclude_users(&self) -> Vec<User> {
-        use crate::utils::get_users_from_ids;
-        return get_users_from_ids(self.get_can_see_good_comment_exclude_users_ids());
-    }
-    pub fn get_can_see_good_comment_include_users(&self) -> Vec<User> {
-        use crate::utils::get_users_from_ids;
-        return get_users_from_ids(self.get_can_see_good_comment_include_users_ids());
-    }
-
     pub fn get_can_see_video_exclude_users_ids(&self) -> Vec<i32> {
         use crate::schema::community_visible_perms::dsl::community_visible_perms;
 
@@ -2558,47 +2435,6 @@ impl Community {
     pub fn get_can_see_video_include_users(&self) -> Vec<User> {
         use crate::utils::get_users_from_ids;
         return get_users_from_ids(self.get_can_see_video_include_users_ids());
-    }
-
-    pub fn get_can_see_video_comment_exclude_users_ids(&self) -> Vec<i32> {
-        use crate::schema::community_visible_perms::dsl::community_visible_perms;
-
-        let _connection = establish_connection();
-        let items = community_visible_perms
-            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
-            .filter(schema::community_visible_perms::can_see_video_comment.eq("b"))
-            .load::<CommunityVisiblePerm>(&_connection)
-            .expect("E");
-
-        let mut stack = Vec::new();
-        for _item in items.iter() {
-            stack.push(_item.user_id);
-        };
-        return stack;
-    }
-    pub fn get_can_see_video_comment_include_users_ids(&self) -> Vec<i32> {
-        use crate::schema::community_visible_perms::dsl::community_visible_perms;
-
-        let _connection = establish_connection();
-        let items = community_visible_perms
-            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
-            .filter(schema::community_visible_perms::can_see_video_comment.eq("a"))
-            .load::<CommunityVisiblePerm>(&_connection)
-            .expect("E");
-
-        let mut stack = Vec::new();
-        for _item in items.iter() {
-            stack.push(_item.user_id);
-        };
-        return stack;
-    }
-    pub fn get_can_see_video_comment_exclude_users(&self) -> Vec<User> {
-        use crate::utils::get_users_from_ids;
-        return get_users_from_ids(self.get_can_see_video_comment_exclude_users_ids());
-    }
-    pub fn get_can_see_video_comment_include_users(&self) -> Vec<User> {
-        use crate::utils::get_users_from_ids;
-        return get_users_from_ids(self.get_can_see_video_comment_include_users_ids());
     }
 
     pub fn get_can_see_planner_exclude_users_ids(&self) -> Vec<i32> {
@@ -2642,47 +2478,6 @@ impl Community {
         return get_users_from_ids(self.get_can_see_planner_include_users_ids());
     }
 
-    pub fn get_can_see_planner_comment_exclude_users_ids(&self) -> Vec<i32> {
-        use crate::schema::community_visible_perms::dsl::community_visible_perms;
-
-        let _connection = establish_connection();
-        let items = community_visible_perms
-            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
-            .filter(schema::community_visible_perms::can_see_planner_comment.eq("b"))
-            .load::<CommunityVisiblePerm>(&_connection)
-            .expect("E");
-
-        let mut stack = Vec::new();
-        for _item in items.iter() {
-            stack.push(_item.user_id);
-        };
-        return stack;
-    }
-    pub fn get_can_see_planner_comment_include_users_ids(&self) -> Vec<i32> {
-        use crate::schema::community_visible_perms::dsl::community_visible_perms;
-
-        let _connection = establish_connection();
-        let items = community_visible_perms
-            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
-            .filter(schema::community_visible_perms::can_see_planner_comment.eq("a"))
-            .load::<CommunityVisiblePerm>(&_connection)
-            .expect("E");
-
-        let mut stack = Vec::new();
-        for _item in items.iter() {
-            stack.push(_item.user_id);
-        };
-        return stack;
-    }
-    pub fn get_can_see_planner_comment_exclude_users(&self) -> Vec<User> {
-        use crate::utils::get_users_from_ids;
-        return get_users_from_ids(self.get_can_see_planner_comment_exclude_users_ids());
-    }
-    pub fn get_can_see_planner_comment_include_users(&self) -> Vec<User> {
-        use crate::utils::get_users_from_ids;
-        return get_users_from_ids(self.get_can_see_planner_comment_include_users_ids());
-    }
-
     pub fn get_can_see_forum_exclude_users_ids(&self) -> Vec<i32> {
         use crate::schema::community_visible_perms::dsl::community_visible_perms;
 
@@ -2722,46 +2517,6 @@ impl Community {
     pub fn get_can_see_forum_include_users(&self) -> Vec<User> {
         use crate::utils::get_users_from_ids;
         return get_users_from_ids(self.get_can_see_forum_include_users_ids());
-    }
-    pub fn get_can_see_forum_comment_exclude_users_ids(&self) -> Vec<i32> {
-        use crate::schema::community_visible_perms::dsl::community_visible_perms;
-
-        let _connection = establish_connection();
-        let items = community_visible_perms
-            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
-            .filter(schema::community_visible_perms::can_see_forum_comment.eq("b"))
-            .load::<CommunityVisiblePerm>(&_connection)
-            .expect("E");
-
-        let mut stack = Vec::new();
-        for _item in items.iter() {
-            stack.push(_item.user_id);
-        };
-        return stack;
-    }
-    pub fn get_can_see_forum_comment_include_users_ids(&self) -> Vec<i32> {
-        use crate::schema::community_visible_perms::dsl::community_visible_perms;
-
-        let _connection = establish_connection();
-        let items = community_visible_perms
-            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
-            .filter(schema::community_visible_perms::can_see_forum_comment.eq("a"))
-            .load::<CommunityVisiblePerm>(&_connection)
-            .expect("E");
-
-        let mut stack = Vec::new();
-        for _item in items.iter() {
-            stack.push(_item.user_id);
-        };
-        return stack;
-    }
-    pub fn get_can_see_forum_comment_exclude_users(&self) -> Vec<User> {
-        use crate::utils::get_users_from_ids;
-        return get_users_from_ids(self.get_can_see_forum_comment_exclude_users_ids());
-    }
-    pub fn get_can_see_forum_comment_include_users(&self) -> Vec<User> {
-        use crate::utils::get_users_from_ids;
-        return get_users_from_ids(self.get_can_see_forum_comment_include_users_ids());
     }
 
     pub fn get_members(&self) -> Vec<User> {
@@ -2900,20 +2655,6 @@ impl Community {
             _ => false,
         };
     }
-    pub fn is_user_can_see_post_comment(&self, user_id: i32) -> bool {
-        let private = self.get_private_model();
-        let char = private.can_see_post_comment;
-        return match char.as_str() {
-            "a" => true,
-            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
-            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
-            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
-            "e" => self.user_id == user_id,
-            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
-            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
-            _ => false,
-        };
-    }
     pub fn is_user_can_see_photo(&self, user_id: i32) -> bool {
         let private = self.get_private_model();
         let char = private.can_see_photo;
@@ -2928,20 +2669,7 @@ impl Community {
             _ => false,
         };
     }
-    pub fn is_user_can_see_photo_comment(&self, user_id: i32) -> bool {
-        let private = self.get_private_model();
-        let char = private.can_see_photo_comment;
-        return match char.as_str() {
-            "a" => true,
-            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
-            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
-            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
-            "e" => self.user_id == user_id,
-            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
-            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
-            _ => false,
-        };
-    }
+
     pub fn is_user_can_see_good(&self, user_id: i32) -> bool {
         let private = self.get_private_model();
         let char = private.can_see_good;
@@ -2956,37 +2684,10 @@ impl Community {
             _ => false,
         };
     }
-    pub fn is_user_can_see_good_comment(&self, user_id: i32) -> bool {
-        let private = self.get_private_model();
-        let char = private.can_see_good_comment;
-        return match char.as_str() {
-            "a" => true,
-            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
-            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
-            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
-            "e" => self.user_id == user_id,
-            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
-            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
-            _ => false,
-        };
-    }
+
     pub fn is_user_can_see_video(&self, user_id: i32) -> bool {
         let private = self.get_private_model();
         let char = private.can_see_video;
-        return match char.as_str() {
-            "a" => true,
-            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
-            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
-            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
-            "e" => self.user_id == user_id,
-            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
-            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
-            _ => false,
-        };
-    }
-    pub fn is_user_can_see_video_comment(&self, user_id: i32) -> bool {
-        let private = self.get_private_model();
-        let char = private.can_see_video_comment;
         return match char.as_str() {
             "a" => true,
             "b" => self.get_members_ids().iter().any(|&i| i==user_id),
@@ -3012,20 +2713,7 @@ impl Community {
             _ => false,
         };
     }
-    pub fn is_user_can_see_planner_comment(&self, user_id: i32) -> bool {
-        let private = self.get_private_model();
-        let char = private.can_see_planner_comment;
-        return match char.as_str() {
-            "a" => true,
-            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
-            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
-            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
-            "e" => self.user_id == user_id,
-            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
-            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
-            _ => false,
-        };
-    }
+
     pub fn is_user_can_see_forum(&self, user_id: i32) -> bool {
         let private = self.get_private_model();
         let char = private.can_see_forum;
@@ -3040,20 +2728,7 @@ impl Community {
             _ => false,
         };
     }
-    pub fn is_user_can_see_forum_comment(&self, user_id: i32) -> bool {
-        let private = self.get_private_model();
-        let char = private.can_see_forum_comment;
-        return match char.as_str() {
-            "a" => true,
-            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
-            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
-            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
-            "e" => self.user_id == user_id,
-            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
-            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
-            _ => false,
-        };
-    }
+
     pub fn is_anon_user_can_see_info(&self) -> bool {
         let private = self.get_private_model();
         return private.can_see_info == "a".to_string();
