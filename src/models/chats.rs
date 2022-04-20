@@ -406,7 +406,7 @@ impl Chat {
         let _connection = establish_connection();
         return messages
             .filter(schema::messages::chat_id.eq(self.id))
-            .filter(schema::messages::user_id.eq(user.id))
+            .filter(schema::messages::user_id.eq(user_id))
             .filter(schema::messages::types.eq(10))
             .load::<Message>(&_connection)
             .expect("E")
@@ -420,7 +420,7 @@ impl Chat {
         let _connection = establish_connection();
         return messages
             .filter(schema::messages::chat_id.eq(self.id))
-            .filter(schema::messages::user_id.eq(user.id))
+            .filter(schema::messages::user_id.eq(user_id))
             .filter(schema::messages::types.eq(10))
             .load::<Message>(&_connection)
             .expect("E").len() > 0;
@@ -432,7 +432,7 @@ impl Chat {
         let _connection = establish_connection();
         let t_message = messages
             .filter(schema::messages::chat_id.eq(self.id))
-            .filter(schema::messages::user_id.eq(user.id))
+            .filter(schema::messages::user_id.eq(user_id))
             .filter(schema::messages::types.eq(10))
             .load::<Message>(&_connection)
             .expect("E");
@@ -440,7 +440,7 @@ impl Chat {
             let message = t_message.into_iter()
                 .nth(0)
                 .unwrap();
-            return message.text.is_some() || message.attach.is_some() || message.is_have_transfer();
+            return message.content.is_some() || message.attach.is_some() || message.is_have_transfer();
         }
         return false;
     }
@@ -561,7 +561,6 @@ impl Message {
         let _connection = establish_connection();
         return message_transfers
             .filter(schema::message_transfers::message_id.eq(self.id))
-            .filter(schema::message_transfers::types.lt(10))
             .load::<MessageTransfer>(&_connection)
             .expect("E").len() > 0;
 }
