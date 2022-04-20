@@ -1,3 +1,4 @@
+use crate::schema;
 use crate::schema::{
     community_categorys,
     community_subcategorys,
@@ -23,7 +24,7 @@ use crate::schema::{
     community_work_perms,
     community_banner_users,
 };
-use crate::schema;
+
 use diesel::prelude::*;
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
@@ -393,6 +394,7 @@ impl Community {
         if user.is_banned_from_community(self.id) {
             return false;
         }
+        let _connection = establish_connection();
         let new_banned_user = NewCommunityBannerUser {
                 user_id: user.id,
                 community_id: self.id,
@@ -460,7 +462,7 @@ impl Community {
             .load::<ListUserCommunitiesKey>(&_connection)
             .expect("E");
 
-        if _new.len() > 0 && _new[0].community_id == self.id && _list.len() > 0 {
+        if _new.len() > 0 && _new[0].community_id.unwrap() == self.id && _list.len() > 0 {
             diesel::update(news_user_communities.filter(schema::news_user_communities::id.eq(new_id)))
                 .set(schema::news_user_communities::list_id.eq(list_id))
                 .get_result::<NewsUserCommunitie>(&_connection)
@@ -479,7 +481,7 @@ impl Community {
             .filter(schema::news_user_communities::user_id.eq(user_id))
             .load::<NewsUserCommunitie>(&_connection)
             .expect("E");
-        if _new.len() > 0 && _new[0].community_id == self.id {
+        if _new.len() > 0 && _new[0].community_id.unwrap() == self.id {
             diesel::delete(news_user_communities
                     .filter(schema::news_user_communities::community_id.eq(self.id))
                     .filter(schema::news_user_communities::user_id.eq(user_id))
@@ -495,7 +497,7 @@ impl Community {
 
         let _connection = establish_connection();
         let _new = news_user_communities.filter(schema::news_user_communities::id.eq(new_id)).load::<NewsUserCommunitie>(&_connection).expect("E");
-        if _new.len() > 0 && _new[0].community_id == self.id {
+        if _new.len() > 0 && _new[0].community_id.unwrap() == self.id {
             let _new = NewNewsUserCommunitie {
                 owner: self.id,
                 list_id: None,
@@ -587,7 +589,7 @@ impl Community {
         use crate::schema::notify_user_communities::dsl::notify_user_communities;
 
         let _connection = establish_connection();
-        let _new = notify_user_communities.filter(schema::notify_user_communities::id.eq(new_id)).load::<NewsUserCommunitie>(&_connection).expect("E");
+        let _new = notify_user_communities.filter(schema::notify_user_communities::id.eq(new_id)).load::<NotifyUserCommunitie>(&_connection).expect("E");
         if _new.len() > 0 && _new[0].community_id.unwrap() == self.id {
             let _new = NewNotifyUserCommunitie {
                 owner: self.id,
@@ -1179,12 +1181,13 @@ impl Community {
         let _survey_notification = NewCommunitySurveyNotification {
             community_id:  new_community.id,
             vote:          true,
-            vote:          true,
         };
         diesel::insert_into(schema::community_survey_notifications::table)
             .values(&_survey_notification)
             .get_result::<CommunitySurveyNotification>(&_connection)
             .expect("Error saving community_survey_notification.");
+
+        return new_community;
     }
 }
 
@@ -1231,13 +1234,13 @@ impl CommunitiesMembership {
             created: chrono::Local::now().naive_utc(),
             visited: 0,
         };
-        new_member = diesel::insert_into(schema::communities_memberships::table)
+        let new_member = diesel::insert_into(schema::communities_memberships::table)
             .values(&new_member)
             .get_result::<CommunitiesMembership>(&_connection)
             .expect("E.");
 
         community.add_new_subscriber(user.id);
-        community.plus_member(1);
+        community.plus_members(1);
         user.plus_communities(1);
         return new_member;
     }
