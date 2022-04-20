@@ -3236,6 +3236,7 @@ pub struct CommunityPrivate {
     pub can_see_settings: String,
     pub can_see_log:      String,
     pub can_see_stat:     String,
+    pub can_see_forum:    String,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_privates"]
@@ -3255,6 +3256,7 @@ pub struct NewCommunityPrivate {
     pub can_see_settings: String,
     pub can_see_log:      String,
     pub can_see_stat:     String,
+    pub can_see_forum:    String,
 }
 
 /////// CommunityNotifications //////

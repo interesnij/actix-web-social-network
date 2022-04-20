@@ -104,13 +104,14 @@ CREATE TABLE community_privates (
     can_see_settings  "char" NOT NULL, -- Кто видит настройки
     can_see_log       "char" NOT NULL, -- Кто видит логи
     can_see_stat      "char" NOT NULL, -- Кто видит статистику
+    can_see_forum     "char" NOT NULL, -- Кто видит опросы
     CONSTRAINT fk_community_private
          FOREIGN KEY(community_id)
              REFERENCES communitys(id)
 );
 
 -- Уведомления сообщества -------
-CREATE TABLE community_notifications ( 
+CREATE TABLE community_notifications (
     id                   SERIAL PRIMARY KEY,
     community_id         INT NOT NULL,
     connection_request   BOOLEAN NOT NULL DEFAULT true,
