@@ -1286,8 +1286,6 @@ impl Community {
             .unwrap();
         }
         else {
-            use crate::models::{NewGoodList, CommunityGoodListPosition, NewCommunityGoodListPosition};
-
             let new_list = NewGoodList{
                     name:          "Основной список".to_string(),
                     community_id:   Some(self.id),
@@ -1340,8 +1338,6 @@ impl Community {
             .unwrap();
         }
         else {
-            use crate::models::{NewMusicList, CommunityMusicListPosition, NewCommunityMusicListPosition};
-
             let new_list = NewMusicList{
                     name:          "Основной список".to_string(),
                     community_id:   Some(self.id),
@@ -1393,8 +1389,6 @@ impl Community {
             .unwrap();
         }
         else {
-            use crate::models::{NewVideoList, CommunityVideoListPosition, NewCommunityVideoListPosition};
-
             let new_list = NewVideoList{
                     name:          "Основной список".to_string(),
                     community_id:   Some(self.id),
@@ -1447,8 +1441,6 @@ impl Community {
             .unwrap();
         }
         else {
-            use crate::models::{NewPhotoList, CommunityPhotoListPosition, NewCommunityPhotoListPosition};
-
             let new_list = NewPhotoList{
                     name:          "Основной список".to_string(),
                     community_id:   Some(self.id),
@@ -1527,8 +1519,6 @@ impl Community {
             .unwrap();
         }
         else {
-            use crate::models::{NewPostList, CommunityPostListPosition, NewCommunityPostListPosition};
-
             let new_list = NewPostList{
                     name:          "Основной список".to_string(),
                     community_id:   Some(self.id),
@@ -1581,8 +1571,6 @@ impl Community {
             .unwrap();
         }
         else {
-            use crate::models::{NewDocList, CommunityDocListPosition, NewCommunityDocListPosition};
-
             let new_list = NewDocList{
                     name:          "Основной список".to_string(),
                     community_id:   Some(self.id),
@@ -1633,8 +1621,6 @@ impl Community {
             .unwrap();
         }
         else {
-            use crate::models::{NewSurveyList, CommunitySurveyListPosition, NewCommunitySurveyListPosition};
-
             let new_list = NewSurveyList{
                     name:          "Основной список".to_string(),
                     community_id:   Some(self.id),
@@ -1954,7 +1940,6 @@ impl Community {
     }
     pub fn get_can_see_info_exclude_users_ids(&self) -> Vec<i32> {
         use crate::schema::community_visible_perms::dsl::community_visible_perms;
-        use crate::models::CommunityVisiblePerm;
 
         let _connection = establish_connection();
         let items = community_visible_perms
@@ -1971,7 +1956,6 @@ impl Community {
     }
     pub fn get_can_see_info_include_users_ids(&self) -> Vec<i32> {
         use crate::schema::community_visible_perms::dsl::community_visible_perms;
-        use crate::models::CommunityVisiblePerm;
 
         let _connection = establish_connection();
         let items = community_visible_perms
