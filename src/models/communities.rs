@@ -2949,7 +2949,7 @@ impl Community {
 
         return bool_stack;
     }
-    pub fn get_anon_community_all_can_see(&self, user_id: i32) -> Vec<bool> {
+    pub fn get_anon_community_all_can_see(&self) -> Vec<bool> {
         if self.id == self.user_id {
             // 11
             return vec![true, true, true, true, true, true, true, true, true, true, true];
