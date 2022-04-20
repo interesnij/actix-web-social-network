@@ -28,7 +28,7 @@ use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
 use crate::utils::establish_connection;
 use crate::models::{
-    User, CommunityBannerUser,PostList, PhotoList, DocList, VideoList,
+    User, PostList, PhotoList, DocList, VideoList,
     SurveyList, MusicList, GoodList,
 };
 
@@ -602,7 +602,7 @@ impl Community {
             }
         return false;
     }
-    pub fn create_community(name: String, category: String, user: User, types: i16) -> Community {
+    pub fn create_community(name: String, category: String, user: User, types: i16) -> Community {        
         let new_community_form = NewCommunity{
                 name:                    name,
                 status:                  "a".to_string(),
