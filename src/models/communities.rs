@@ -2789,7 +2789,7 @@ impl Community {
         return get_users_from_ids(self.get_staff_users_ids());
     }
 
-    pub fn get_private_model(&self) -> UserPrivate {
+    pub fn get_private_model(&self) -> CommunityPrivate {
         use crate::schema::community_privates::dsl::community_privates;
 
         let _connection = establish_connection();
@@ -3116,7 +3116,7 @@ impl Community {
         bool_stack.push(true);
 
         let can_see_info = private.can_see_info;
-        bool_can_see_info = match can_see_info.as_str() {
+        let bool_can_see_info = match can_see_info.as_str() {
             "a" => true,
             "b" => self.get_members_ids().iter().any(|&i| i==user_id),
             "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
@@ -3284,7 +3284,7 @@ impl Community {
         bool_stack.push(true);
 
         let can_see_info = private.can_see_info;
-        bool_can_see_info = match can_see_info.as_str() {
+        let bool_can_see_info = match can_see_info.as_str() {
             "a" => true,
             _ => false,
         };
@@ -3375,7 +3375,7 @@ impl Community {
             .expect("E.");
 
         let mut stack = Vec::new();
-        for _item in user_fixed_posts.iter() {
+        for _item in follows.iter() {
             stack.push(_item.user_id);
         };
         return get_users_from_ids(stack);
@@ -3392,7 +3392,7 @@ impl Community {
             .expect("E");
 
         let mut stack = Vec::new();
-        for _item in user_fixed_posts.iter() {
+        for _item in banner_users.iter() {
             stack.push(_item.user_id);
         };
         return get_users_from_ids(stack);
