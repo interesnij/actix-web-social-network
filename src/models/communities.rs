@@ -1957,6 +1957,7 @@ impl Community {
             .set(member_form)
             .get_result::<BlogCategories>(&_connection)
             .expect("Error.");
+        return true;
     }
 
     pub fn get_members_ids(&self) -> Vec<i32> {
