@@ -305,7 +305,7 @@ impl Chat {
             .nth(0)
             .unwrap();
     }
-    pub fn get_chat_user(&self, user_id: i32) -> User {
+    pub fn get_chat_user(&self, user_id: i32) -> ChatUser {
         use crate::schema::chat_users::dsl::chat_users;
 
         let _connection = establish_connection();
@@ -330,7 +330,7 @@ impl Chat {
                 .unwrap();
         }
     }
-    pub fn get_chat_request_user(&self, user_id: i32) -> User {
+    pub fn get_chat_request_user(&self, user_id: i32) -> ChatUser {
         use crate::schema::chat_users::dsl::chat_users;
 
         let _connection = establish_connection();
