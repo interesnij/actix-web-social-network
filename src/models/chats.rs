@@ -99,7 +99,6 @@ impl Chat {
         return self.id.to_string();
     }
     pub fn get_name(&self, user_id: i32) -> String {
-        let chat_types = self.types;
         if self.name.is_some() {
             return self.name.as_ref().unwrap().to_string();
         }
@@ -293,7 +292,7 @@ impl Chat {
         let _connection = establish_connection();
         let chat_user = chat_users
             .filter(schema::chat_users::chat_id.eq(self.id))
-            .filter(schema::chat_users::user_id.eq(user_id))
+            .filter(schema::chat_users::user_id.ne(user_id))
             .filter(schema::chat_users::types.eq("a"))
             .load::<ChatUser>(&_connection)
             .expect("E");
@@ -305,6 +304,45 @@ impl Chat {
             .into_iter()
             .nth(0)
             .unwrap();
+    }
+    pub fn get_chat_user(&self, user_id: i32) -> User {
+        use crate::schema::chat_users::dsl::chat_users;
+
+        let _connection = establish_connection();
+        let chat_user = chat_users
+            .filter(schema::chat_users::chat_id.eq(self.id))
+            .filter(schema::chat_users::user_id.ne(user_id))
+            .filter(schema::chat_users::types.eq("a"))
+            .load::<ChatUser>(&_connection)
+            .expect("E");
+        if chat_user.len() > 0 {
+            return chat_user[0]
+        }
+        else {
+            return chat_users
+                .filter(schema::chat_users::chat_id.eq(self.id))
+                .filter(schema::chat_users::user_id.eq(user_id))
+                .filter(schema::chat_users::types.eq("a"))
+                .load::<ChatUser>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+        }
+    }
+    pub fn get_chat_request_user(&self, user_id: i32) -> User {
+        use crate::schema::chat_users::dsl::chat_users;
+
+        let _connection = establish_connection();
+            return chat_users
+                .filter(schema::chat_users::chat_id.eq(self.id))
+                .filter(schema::chat_users::user_id.eq(user_id))
+                .filter(schema::chat_users::types.eq("a"))
+                .load::<ChatUser>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
     }
 }
 
