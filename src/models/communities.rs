@@ -1958,7 +1958,7 @@ impl Community {
         let mut stack = Vec::new();
         for _item in items.iter() {
             if _item.is_administrator || _item.is_moderator || _item.is_editor || _item.is_advertiser {
-                stack.push(_item.user_id);;
+                stack.push(_item.user_id);
             }
         };
         return stack;
@@ -3116,7 +3116,7 @@ impl Community {
         bool_stack.push(true);
 
         let can_see_info = private.can_see_info;
-        bool_can_see_info = match char.as_str() {
+        bool_can_see_info = match can_see_info.as_str() {
             "a" => true,
             "b" => self.get_members_ids().iter().any(|&i| i==user_id),
             "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
@@ -3273,7 +3273,7 @@ impl Community {
 
         return bool_stack;
     }
-    pub fn get_community_all_can_see(&self, user_id: i32) -> Vec<bool> {
+    pub fn get_anon_community_all_can_see(&self, user_id: i32) -> Vec<bool> {
         if self.id == self.user_id {
             // 11
             return vec![true, true, true, true, true, true, true, true, true, true, true];
@@ -3284,7 +3284,7 @@ impl Community {
         bool_stack.push(true);
 
         let can_see_info = private.can_see_info;
-        bool_can_see_info = match char.as_str() {
+        bool_can_see_info = match can_see_info.as_str() {
             "a" => true,
             _ => false,
         };
@@ -3427,7 +3427,6 @@ impl Community {
         };
         return stack;
     }
-    
 }
 
 
