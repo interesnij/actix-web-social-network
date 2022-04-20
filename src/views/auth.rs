@@ -182,8 +182,6 @@ pub struct CountryLoc {
 pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responder {
     use crate::utils::{hash_password, set_current_user};
     use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
-    s
-    };
      // Если пользователь не аноним, то отправляем его на страницу новостей
     if is_signed_in(&session) {
         to_home();

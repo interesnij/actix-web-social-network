@@ -610,7 +610,7 @@ impl Community {
                 perm:                     "a".to_string(),
                 level:                    100,
                 community_subcategory_id: category,
-                user_id:                  user.id.
+                user_id:                  user.id,
                 created:                  chrono::Local::now().naive_utc(),
             };
         let new_community = diesel::insert_into(schema::communitys::table)
