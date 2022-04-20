@@ -1286,6 +1286,7 @@ impl Community {
             .unwrap();
         }
         else {
+            use crate::models::NewGoodList;
             let new_list = NewGoodList{
                     name:          "Основной список".to_string(),
                     community_id:   Some(self.id),
@@ -1338,6 +1339,7 @@ impl Community {
             .unwrap();
         }
         else {
+            use crate::models::NewMusicList;
             let new_list = NewMusicList{
                     name:          "Основной список".to_string(),
                     community_id:   Some(self.id),
@@ -1389,6 +1391,7 @@ impl Community {
             .unwrap();
         }
         else {
+            use crate::models::NewVideoList;
             let new_list = NewVideoList{
                     name:          "Основной список".to_string(),
                     community_id:   Some(self.id),
@@ -1441,6 +1444,8 @@ impl Community {
             .unwrap();
         }
         else {
+            use crate::models::NewPhotoList;
+
             let new_list = NewPhotoList{
                     name:          "Основной список".to_string(),
                     community_id:   Some(self.id),
@@ -1519,6 +1524,7 @@ impl Community {
             .unwrap();
         }
         else {
+            use crate::models::NewPostList;
             let new_list = NewPostList{
                     name:          "Основной список".to_string(),
                     community_id:   Some(self.id),
@@ -1571,6 +1577,7 @@ impl Community {
             .unwrap();
         }
         else {
+            use crate::models::NewDocList;
             let new_list = NewDocList{
                     name:          "Основной список".to_string(),
                     community_id:   Some(self.id),
@@ -1621,6 +1628,8 @@ impl Community {
             .unwrap();
         }
         else {
+            use crate::models::NewSurveyList;
+
             let new_list = NewSurveyList{
                     name:          "Основной список".to_string(),
                     community_id:   Some(self.id),
@@ -1978,6 +1987,8 @@ impl Community {
         use crate::utils::get_users_from_ids;
         return get_users_from_ids(self.get_can_see_info_include_users_ids());
     }
+
+
 }
 
 
