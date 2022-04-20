@@ -31,8 +31,8 @@ use serde::{Serialize, Deserialize};
 use crate::utils::establish_connection;
 use crate::models::{
     User, PostList, PhotoList, DocList, VideoList,
-    SurveyList, MusicList, GoodList, CommunitiesMembership,
-    Survey, Music, Good, Video, Doc, Photo, Post, 
+    SurveyList, MusicList, GoodList,
+    Survey, Music, Good, Video, Doc, Photo, Post,
 };
 
 
@@ -1670,7 +1670,6 @@ impl Community {
     }
     pub fn get_selected_post_list_pk(&self) -> i32 {
         use crate::schema::community_post_list_positions::dsl::community_post_list_positions;
-        use crate::models::CommunityPostListPosition;
 
         let _connection = establish_connection();
         let _post_list_positions  = community_post_list_positions
@@ -1692,7 +1691,6 @@ impl Community {
     }
     pub fn get_selected_photo_list_pk(&self) -> i32 {
         use crate::schema::community_photo_list_positions::dsl::community_photo_list_positions;
-        use crate::models::CommunityPhotoListPosition;
 
         let _connection = establish_connection();
         let _photo_list_positions  = community_photo_list_positions
@@ -1714,7 +1712,6 @@ impl Community {
     }
     pub fn get_selected_doc_list_pk(&self) -> i32 {
         use crate::schema::community_doc_list_positions::dsl::community_doc_list_positions;
-        use crate::models::CommunityDocListPosition;
 
         let _connection = establish_connection();
         let _doc_list_positions  = community_doc_list_positions
@@ -1736,7 +1733,6 @@ impl Community {
     }
     pub fn get_selected_good_list_pk(&self) -> i32 {
         use crate::schema::community_good_list_positions::dsl::community_good_list_positions;
-        use crate::models::CommunityGoodListPosition;
 
         let _connection = establish_connection();
         let _good_list_positions  = community_good_list_positions
@@ -1758,7 +1754,6 @@ impl Community {
     }
     pub fn get_selected_music_list_pk(&self) -> i32 {
         use crate::schema::community_music_list_positions::dsl::community_music_list_positions;
-        use crate::models::CommunityMusicListPosition;
 
         let _connection = establish_connection();
         let _music_list_positions  = community_music_list_positions
@@ -1780,7 +1775,6 @@ impl Community {
     }
     pub fn get_selected_video_list_pk(&self) -> i32 {
         use crate::schema::community_video_list_positions::dsl::community_video_list_positions;
-        use crate::models::CommunityVideoListPosition;
 
         let _connection = establish_connection();
         let _video_list_positions  = community_video_list_positions
@@ -1802,7 +1796,6 @@ impl Community {
     }
     pub fn get_selected_survey_list_pk(&self) -> i32 {
         use crate::schema::community_survey_list_positions::dsl::community_survey_list_positions;
-        use crate::models::CommunitySurveyListPosition;
 
         let _connection = establish_connection();
         let _survey_list_positions  = community_survey_list_positions
@@ -1949,7 +1942,7 @@ impl Community {
         let _connection = establish_connection();
         let items = communities_memberships
             .filter(schema::communities_memberships::community_id.eq(self.id))
-            .load::<CommunityMembership>(&_connection)
+            .load::<CommunitiesMembership>(&_connection)
             .expect("E");
 
         let mut stack = Vec::new();
@@ -1965,7 +1958,7 @@ impl Community {
 
         let _connection = establish_connection();
         let items = community_visible_perms
-            .filter(schema::community_visible_perms::community_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
             .filter(schema::community_visible_perms::can_see_info.eq("b"))
             .load::<CommunityVisiblePerm>(&_connection)
             .expect("E");
