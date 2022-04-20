@@ -722,7 +722,7 @@ impl Community {
 
         // записываем профиль нового пользователя
         let _community_info = NewCommunityInfo {
-            community_id: new_community.id.clone(),
+            community_id: new_community.id,
             posts:        0,
             members:      0,
             photos:       0,
@@ -813,7 +813,7 @@ impl Community {
         let _new_photos_list = NewPhotoList {
             name:            "Фото со страницы".to_string(),
             community_id:    Some(new_community.id),
-            user_id:         user.id,
+            user_id:         user_id,
             types:           "d".to_string(),
             description:     None,
             cover_photo:     None,
@@ -847,7 +847,7 @@ impl Community {
         let _new_photos_list = NewPhotoList {
             name:            "Фото со стены".to_string(),
             community_id:    Some(new_community.id),
-            user_id:         user.id,
+            user_id:         user_id,
             types:           "e".to_string(),
             description:     None,
             cover_photo:     None,
@@ -883,7 +883,7 @@ impl Community {
         let _new_videos_list = NewVideoList {
             name:            "Основной альбом".to_string(),
             community_id:    Some(new_community.id),
-            user_id:         user.id,
+            user_id:         user_id,
             types:           "a".to_string(),
             description:     None,
             created:         chrono::Local::now().naive_utc(),
@@ -918,7 +918,7 @@ impl Community {
         let _new_goods_list = NewGoodList {
             name:            "Основной альбом".to_string(),
             community_id:    Some(new_community.id),
-            user_id:         user.id,
+            user_id:         user_id,
             types:           "a".to_string(),
             description:     None,
             created:         chrono::Local::now().naive_utc(),
@@ -953,7 +953,7 @@ impl Community {
         let _new_musics_list = NewMusicList {
             name:            "Основной плейлист".to_string(),
             community_id:    Some(new_community.id),
-            user_id:         user.id,
+            user_id:         user_id,
             types:           "a".to_string(),
             description:     None,
             image:           None,
@@ -987,7 +987,7 @@ impl Community {
         let _new_docs_list = NewDocList {
             name:            "Основной список".to_string(),
             community_id:    Some(new_community.id),
-            user_id:         user.id,
+            user_id:         user_id,
             types:           "a".to_string(),
             description:     None,
             created:         chrono::Local::now().naive_utc(),
@@ -1020,7 +1020,7 @@ impl Community {
         let _new_surveys_list = NewSurveyList {
             name:            "Основной список".to_string(),
             community_id:    Some(new_community.id),
-            user_id:         user.id,
+            user_id:         user_id,
             types:           "a".to_string(),
             description:     None,
             created:         chrono::Local::now().naive_utc(),
