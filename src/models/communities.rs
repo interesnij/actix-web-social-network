@@ -695,7 +695,7 @@ impl Community {
             }
         return false;
     }
-    pub fn create_community(name: String, category: i32, user: User, types: i16) -> Community {
+    pub fn create_community(name: String, category: i32, user: User, types: i16) -> i32 {
         use crate::models::{
             NewPostList, NewPhotoList, NewDocList, NewVideoList,
             NewSurveyList, NewMusicList, NewGoodList,
@@ -1185,7 +1185,7 @@ impl Community {
             .get_result::<CommunitySurveyNotification>(&_connection)
             .expect("Error saving community_survey_notification.");
 
-        return new_community;
+        return community_id;
     }
 }
 
