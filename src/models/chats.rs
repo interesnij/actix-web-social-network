@@ -100,13 +100,21 @@ impl Chat {
     }
     pub fn get_name(&self, user_id: i32) -> String {
         let chat_types = self.types;
-        return match {
-            self.name.is_some() => self.name.to_string(),
-            self.is_group() => return "Групповой чат".to_string(),
-            self.is_public() => return "Публичнеый чат".to_string(),
-            self.is_private() => return self.get_chat_member(user_id).get_full_name(),
-            _ => "Без имени".to_string(),
-        };
+        if self.name.is_some() {
+            return self.name.to_string();
+        }
+        else if self.is_group() {
+            return "Групповой чат".to_string();
+        }
+        else if self.is_public() {
+            return "Публичнеый чат".to_string();
+        }
+        else if self.is_private() {
+            return return self.get_chat_member(user_id).get_full_name();
+        }
+        else {
+            return "Без имени".to_string();
+        }
     }
     pub fn get_description(&self) -> String {
         return "<a href='/chat/".to_string() + &self.get_str_id() + &"' target='_blank'>".to_string() + &self.get_name() + &"</a>".to_string();
