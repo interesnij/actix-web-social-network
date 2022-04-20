@@ -9,7 +9,7 @@ use crate::schema::{
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
-//use crate::utils::establish_connection;
+use crate::utils::establish_connection;
 use crate::models::{
     User,
     Community,
@@ -91,6 +91,204 @@ pub struct NewChat {
     pub can_add_design:     String,
     pub can_see_settings:   String,
     pub can_see_log:        String,
+}
+impl Chat {
+    pub fn get_str_id(&self) -> String {
+        return self.id.to_string();
+    }
+    pub fn get_description(&self) -> String {
+        return "<a href='/chat/".to_string() + &self.get_str_id() + &"' target='_blank'>".to_string() + &self.get_name() + &"</a>".to_string();
+    }
+    pub fn is_chat(&self) -> bool {
+        return true;
+    }
+    pub fn get_code(&self) -> String {
+        return "cha".to_string() + &self.get_str_id();
+    }
+    pub fn delete_support_chat(&self) -> bool {
+        let _connection = establish_connection();
+        let chat_types = self.types;
+        let delete_case = match chat_types {
+            11 => 41,
+            12 => 42,
+            13 => 43,
+            14 => 44,
+            15 => 45,
+            _ => self.types,
+        };
+        diesel::update(self)
+            .set(schema::chats::types.eq(delete_case))
+            .get_result::<Chat>(&_connection)
+            .expect("E");
+       return true;
+    }
+    pub fn restore_support_chat(&self) -> bool {
+        let _connection = establish_connection();
+        let chat_types = self.types;
+        let restore_case = match chat_types {
+            41 => 11,
+            42 => 12,
+            43 => 13,
+            44 => 14,
+            45 => 15,
+            _ => self.types,
+        };
+        diesel::update(self)
+            .set(schema::chats::types.eq(restore_case))
+            .get_result::<Chat>(&_connection)
+            .expect("E");
+       return true;
+    }
+    pub fn is_private(&self) -> bool {
+        return self.types == 2;
+    }
+    pub fn is_group(&self) -> bool {
+        return self.types == 4;
+    }
+    pub fn is_public(&self) -> bool {
+        return self.types == 1;
+    }
+    pub fn is_manager(&self) -> bool {
+        return self.types == 3;
+    }
+    pub fn is_open(&self) -> bool {
+        return self.types < 10;
+    }
+    pub fn is_support(&self) -> bool {
+        return self.types > 10 && self.types < 10;
+    }
+    pub fn is_support_1(&self) -> bool {
+        return self.types == 11;
+    }
+    pub fn is_support_2(&self) -> bool {
+        return self.types == 12;
+    }
+    pub fn is_support_3(&self) -> bool {
+        return self.types == 13;
+    }
+    pub fn is_support_4(&self) -> bool {
+        return self.types == 14;
+    }
+    pub fn is_support_5(&self) -> bool {
+        return self.types == 15;
+    }
+    pub fn get_members_ids(&self) -> Vec<i32> {
+        use crate::schema::chat_users::dsl::chat_users;
+
+        let _connection = establish_connection();
+        let items = chat_users
+            .filter(schema::chat_users::chat_id.eq(self.id))
+            .filter(schema::chat_users::types.eq("a"))
+            .load::<ChatUser>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_administrators_ids(&self) -> Vec<i32> {
+        use crate::schema::chat_users::dsl::chat_users;
+
+        let _connection = establish_connection();
+        let items = chat_users
+            .filter(schema::chat_users::chat_id.eq(self.id))
+            .filter(schema::chat_users::is_administrator.eq(true))
+            .filter(schema::chat_users::types.eq("a"))
+            .load::<ChatUser>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_recipients_ids(&self, user_id: i32) -> Vec<i32> {
+        use crate::schema::chat_users::dsl::chat_users;
+
+        let _connection = establish_connection();
+        let items = chat_users
+            .filter(schema::chat_users::chat_id.eq(self.id))
+            .filter(schema::chat_users::user_id.ne(user_id))
+            .filter(schema::chat_users::types.eq("a"))
+            .load::<ChatUser>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_recipients(&self) -> Vec<ChatUser> {
+        // все объекты участников чата
+        use crate::schema::chat_users::dsl::chat_users;
+
+        let _connection = establish_connection();
+        return chat_users
+            .filter(schema::chat_users::chat_id.eq(self.id))
+            .filter(schema::chat_users::types.eq("a"))
+            .load::<ChatUser>(&_connection)
+            .expect("E");
+    }
+    pub fn get_recipients_2(&self, user_id: i32) -> Vec<ChatUser> {
+        // все объекты участников чата, кроме создателя
+        use crate::schema::chat_users::dsl::chat_users;
+
+        let _connection = establish_connection();
+        return chat_users
+            .filter(schema::chat_users::chat_id.eq(self.id))
+            .filter(schema::chat_users::user_id.ne(user_id))
+            .filter(schema::chat_users::types.eq("a"))
+            .load::<ChatUser>(&_connection)
+            .expect("E");
+    }
+    pub fn get_members(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_members_ids());
+    }
+    pub fn get_administrators(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_administrators_ids());
+    }
+    pub fn get_recipients_exclude_creator(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_recipients_ids());
+    }
+    pub fn get_members_count(&self) -> i32 {
+        return self.members;
+    }
+    pub fn get_members_count_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+        return get_count_for_ru(
+            self.count_communities(),
+            " участник".to_string(),
+            " участника".to_string(),
+            " участников".to_string(),
+        );
+    }
+    pub fn get_chat_member(&self, user_id: i32) -> User {
+        use crate::schema::chat_users::dsl::chat_users;
+        use crate::schema::users::dsl::users;
+
+        let _connection = establish_connection();
+        let chat_user = chat_users
+            .filter(schema::chat_users::chat_id.eq(self.id))
+            .filter(schema::chat_users::user_id.eq(user_id))
+            .filter(schema::chat_users::types.eq("a"))
+            .load::<ChatUser>(&_connection)
+            .expect("E");
+        return users
+            .filter(schema::users::id.eq(chat_user[0].id))
+            .filter(schema::chat_users::types.lt(10))
+            .load::<User>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
 }
 
 /////// ChatUsers //////
