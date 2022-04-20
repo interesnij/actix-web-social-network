@@ -115,7 +115,7 @@ CREATE TABLE community_visible_perms (
 
     can_see_info             "char",
     can_see_community        "char",
-    can_see_friend           "char",
+    can_see_member           "char",
     can_send_message         "char",
     can_add_in_chat          "char",
     can_see_doc              "char",

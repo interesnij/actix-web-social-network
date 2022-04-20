@@ -31,7 +31,7 @@ use serde::{Serialize, Deserialize};
 use crate::utils::establish_connection;
 use crate::models::{
     User, PostList, PhotoList, DocList, VideoList,
-    SurveyList, MusicList, GoodList,
+    SurveyList, MusicList, GoodList, CommunitiesMembership,
 };
 
 
@@ -1187,6 +1187,819 @@ impl Community {
 
         return community_id;
     }
+    pub fn get_draft_posts(&self) -> Vec<Post> {
+        use crate::schema::posts::dsl::posts;
+
+        let _connection = establish_connection();
+        return posts
+            .filter(schema::posts::community_id.eq(self.id))
+            .filter(schema::posts::types.eq("f"))
+            .order(schema::posts::created.desc())
+            .load::<Post>(&_connection)
+            .expect("E.");
+    }
+    pub fn count_draft_posts(&self) -> usize {
+        use crate::schema::posts::dsl::posts;
+
+        let _connection = establish_connection();
+        return posts
+            .filter(schema::posts::community_id.eq(self.id))
+            .filter(schema::posts::types.eq("f"))
+            .order(schema::posts::created.desc())
+            .load::<Post>(&_connection)
+            .expect("E.").len();
+    }
+    pub fn get_draft_posts_for_user(&self, user_id: i32) -> Vec<Post> {
+        use crate::schema::posts::dsl::posts;
+
+        let _connection = establish_connection();
+        return posts
+            .filter(schema::posts::community_id.eq(self.id))
+            .filter(schema::posts::user_id.eq(user_id))
+            .filter(schema::posts::types.eq("f"))
+            .order(schema::posts::created.desc())
+            .load::<Post>(&_connection)
+            .expect("E.");
+    }
+    pub fn count_draft_posts_for_user(&self, user_id: i32) -> usize {
+        use crate::schema::posts::dsl::posts;
+
+        let _connection = establish_connection();
+        return posts
+            .filter(schema::posts::community_id.eq(self.id))
+            .filter(schema::posts::user_id.eq(user_id))
+            .filter(schema::posts::types.eq("f"))
+            .order(schema::posts::created.desc())
+            .load::<Post>(&_connection)
+            .expect("E.").len();
+    }
+    pub fn count_goods(&self) -> i32 {
+        return self.get_info_model().goods;
+    }
+    pub fn count_tracks(&self) -> i32 {
+        return self.get_info_model().tracks;
+    }
+    pub fn count_photos(&self) -> i32 {
+        return self.get_info_model().photos;
+    }
+    pub fn count_docs(&self) -> i32 {
+        return self.get_info_model().docs;
+    }
+    pub fn count_posts(&self) -> i32 {
+        return self.get_info_model().posts;
+    }
+    pub fn count_articles(&self) -> i32 {
+        return self.get_info_model().articles;
+    }
+    pub fn count_members_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru(
+            self.count_members(),
+            " сообщество".to_string(),
+            " сообщества".to_string(),
+            " сообществ".to_string(),
+        );
+    }
+    pub fn count_videos(&self) -> i32 {
+        return self.get_info_model().videos;
+    }
+    pub fn count_members(&self) -> i32 {
+        return self.get_info_model().members;
+    }
+
+    pub fn get_good_list(&self) -> GoodList {
+        use crate::schema::good_lists::dsl::good_lists;
+
+        let _connection = establish_connection();
+        let _good_lists  = good_lists
+            .filter(schema::good_lists::community_id.eq(self.id))
+            .filter(schema::good_lists::types.eq("a"))
+            .limit(1)
+            .load::<GoodList>(&_connection)
+            .expect("E.");
+        if _good_lists.len() > 0 {
+            return _good_lists
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        }
+        else {
+            use crate::models::{NewGoodList, CommunityGoodListPosition, NewCommunityGoodListPosition};
+
+            let new_list = NewGoodList{
+                    name:          "Основной список".to_string(),
+                    community_id:   self.id,
+                    user_id:        self.user_id,
+                    types:          "a".to_string(),
+                    description:     None,
+                    created:         chrono::Local::now().naive_utc(),
+                    count:           0,
+                    repost:          0,
+                    copy:            0,
+                    position:        0,
+                    can_see_el:      "a".to_string(),
+                    can_see_comment: "a".to_string(),
+                    create_el:       "g".to_string(),
+                    create_comment:  "a".to_string(),
+                    copy_el:         "g".to_string(),
+                };
+            let _goods_list = diesel::insert_into(schema::good_lists::table)
+                .values(&new_list)
+                .get_result::<GoodList>(&_connection)
+                .expect("Error saving good_list.");
+
+            let _new_goods_list_position = NewCommunityGoodListPosition {
+                community_id:  self.id,
+                list_id:  _goods_list.id,
+                position: 1,
+                types:    "a".to_string(),
+            };
+            let _goods_list_position = diesel::insert_into(schema::community_good_list_positions::table)
+                .values(&_new_goods_list_position)
+                .get_result::<CommunityGoodListPosition>(&_connection)
+                .expect("Error saving good_list_position.");
+            return _goods_list;
+        }
+    }
+    pub fn get_music_list(&self) -> MusicList {
+        use crate::schema::music_lists::dsl::music_lists;
+
+        let _connection = establish_connection();
+        let _music_lists  = music_lists
+            .filter(schema::music_lists::community_id.eq(self.id))
+            .filter(schema::music_lists::types.eq("a"))
+            .limit(1)
+            .load::<MusicList>(&_connection)
+            .expect("E.");
+        if _music_lists.len() > 0 {
+            return _music_lists
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        }
+        else {
+            use crate::models::{NewMusicList, CommunityMusicListPosition, NewCommunityMusicListPosition};
+
+            let new_list = NewMusicList{
+                    name:          "Основной список".to_string(),
+                    community_id:   self.id,
+                    user_id:        self.user_id,
+                    types:          "a".to_string(),
+                    description:     None,
+                    image:           None,
+                    created:         chrono::Local::now().naive_utc(),
+                    count:           0,
+                    repost:          0,
+                    copy:            0,
+                    position:        0,
+                    can_see_el:      "a".to_string(),
+                    create_el:       "g".to_string(),
+                    copy_el:         "g".to_string(),
+                };
+            let _musics_list = diesel::insert_into(schema::music_lists::table)
+                .values(&new_list)
+                .get_result::<MusicList>(&_connection)
+                .expect("Error saving music_list.");
+
+            let _new_musics_list_position = NewCommunityMusicListPosition {
+                community_id:  self.id,
+                list_id:  _musics_list.id,
+                position: 1,
+                types:    "a".to_string(),
+            };
+            let _musics_list_position = diesel::insert_into(schema::community_music_list_positions::table)
+                .values(&_new_musics_list_position)
+                .get_result::<CommunityMusicListPosition>(&_connection)
+                .expect("Error saving music_list_position.");
+            return _musics_list;
+        }
+    }
+    pub fn get_video_list(&self) -> VideoList {
+        use crate::schema::video_lists::dsl::video_lists;
+
+        let _connection = establish_connection();
+        let _video_lists  = video_lists
+            .filter(schema::video_lists::community_id.eq(self.id))
+            .filter(schema::video_lists::types.eq("a"))
+            .limit(1)
+            .load::<VideoList>(&_connection)
+            .expect("E.");
+        if _video_lists.len() > 0 {
+            return _video_lists
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        }
+        else {
+            use crate::models::{NewVideoList, CommunityVideoListPosition, NewCommunityVideoListPosition};
+
+            let new_list = NewVideoList{
+                    name:          "Основной список".to_string(),
+                    community_id:   self.id,
+                    user_id:        self.user_id,
+                    types:          "a".to_string(),
+                    description:     None,
+                    created:         chrono::Local::now().naive_utc(),
+                    count:           0,
+                    repost:          0,
+                    copy:            0,
+                    position:        0,
+                    can_see_el:      "a".to_string(),
+                    can_see_comment: "a".to_string(),
+                    create_el:       "g".to_string(),
+                    create_comment:  "a".to_string(),
+                    copy_el:         "g".to_string(),
+                };
+            let _videos_list = diesel::insert_into(schema::video_lists::table)
+                .values(&new_list)
+                .get_result::<VideoList>(&_connection)
+                .expect("Error saving video_list.");
+
+            let _new_videos_list_position = NewCommunityVideoListPosition {
+                community_id:  self.id,
+                list_id:  _videos_list.id,
+                position: 1,
+                types:    "a".to_string(),
+            };
+            let _videos_list_position = diesel::insert_into(schema::community_video_list_positions::table)
+                .values(&_new_videos_list_position)
+                .get_result::<CommunityVideoListPosition>(&_connection)
+                .expect("Error saving video_list_position.");
+            return _videos_list;
+        }
+    }
+    pub fn get_photo_list(&self) -> PhotoList {
+        use crate::schema::photo_lists::dsl::photo_lists;
+
+        let _connection = establish_connection();
+        let _photo_lists  = photo_lists
+            .filter(schema::photo_lists::community_id.eq(self.id))
+            .filter(schema::photo_lists::types.eq("a"))
+            .limit(1)
+            .load::<PhotoList>(&_connection)
+            .expect("E.");
+        if _photo_lists.len() > 0 {
+            return _photo_lists
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        }
+        else {
+            use crate::models::{NewPhotoList, CommunityPhotoListPosition, NewCommunityPhotoListPosition};
+
+            let new_list = NewPhotoList{
+                    name:          "Основной список".to_string(),
+                    community_id:   sself.id,
+                    user_id:        self.user_id,
+                    types:          "a".to_string(),
+                    description:     None,
+                    cover_photo:     None,
+                    created:         chrono::Local::now().naive_utc(),
+                    count:           0,
+                    repost:          0,
+                    copy:            0,
+                    position:        0,
+                    can_see_el:      "a".to_string(),
+                    can_see_comment: "a".to_string(),
+                    create_el:       "g".to_string(),
+                    create_comment:  "a".to_string(),
+                    copy_el:         "g".to_string(),
+                };
+            let _photos_list = diesel::insert_into(schema::photo_lists::table)
+                .values(&new_list)
+                .get_result::<PhotoList>(&_connection)
+                .expect("Error saving photo_list.");
+
+            let _new_photos_list_position = NewCommunityPhotoListPosition {
+                community_id:  self.id,
+                list_id:  _photos_list.id,
+                position: 1,
+                types:    "a".to_string(),
+            };
+            let _photos_list_position = diesel::insert_into(schema::community_photo_list_positions::table)
+                .values(&_new_photos_list_position)
+                .get_result::<CommunityPhotoListPosition>(&_connection)
+                .expect("Error saving photo_list_position.");
+            return _photos_list;
+        }
+    }
+    pub fn get_avatar_pk(&self) -> i32 {
+        use crate::schema::photo_lists::dsl::photo_lists;
+
+        let _connection = establish_connection();
+        let _photo_lists  = photo_lists
+            .filter(schema::photo_lists::community_id.eq(self.id))
+            .filter(schema::photo_lists::types.eq("d"))
+            .limit(1)
+            .load::<PhotoList>(&_connection)
+            .expect("E.");
+        if _photo_lists.len() > 0 {
+            use crate::schema::photos::dsl::photos;
+            let list = _photo_lists.into_iter().nth(0).unwrap();
+            let _photos  = photos
+                .filter(schema::photos::photo_list_id.eq(list.id))
+                .filter(schema::photos::types.eq("a"))
+                .limit(1)
+                .load::<Photo>(&_connection)
+                .expect("E.");
+            if _photos.len() > 0 {
+                return _photos.into_iter().nth(0).unwrap().id;
+            }
+        }
+        return 0;
+    }
+    pub fn get_post_list(&self) -> PostList {
+        use crate::schema::post_lists::dsl::post_lists;
+
+        let _connection = establish_connection();
+        let _post_lists  = post_lists
+            .filter(schema::post_lists::community_id.eq(self.id))
+            .filter(schema::post_lists::types.eq("a"))
+            .limit(1)
+            .load::<PostList>(&_connection)
+            .expect("E.");
+        if _post_lists.len() > 0 {
+            return _post_lists
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        }
+        else {
+            use crate::models::{NewPostList, CommunityPostListPosition, NewCommunityPostListPosition};
+
+            let new_list = NewPostList{
+                    name:          "Основной список".to_string(),
+                    community_id:   self.id,
+                    user_id:        self.user_id,
+                    types:          "a".to_string(),
+                    description:     None,
+                    created:         chrono::Local::now().naive_utc(),
+                    count:           0,
+                    repost:          0,
+                    copy:            0,
+                    position:        0,
+                    can_see_el:      "a".to_string(),
+                    can_see_comment: "a".to_string(),
+                    create_el:       "g".to_string(),
+                    create_comment:  "a".to_string(),
+                    copy_el:         "g".to_string(),
+                };
+            let _posts_list = diesel::insert_into(schema::post_lists::table)
+                .values(&new_list)
+                .get_result::<PostList>(&_connection)
+                .expect("Error saving post_list.");
+
+            let _new_posts_list_position = NewCommunityPostListPosition {
+                community_id:  self.id,
+                list_id:  _posts_list.id,
+                position: 1,
+                types:    "a".to_string(),
+            };
+            let _posts_list_position = diesel::insert_into(schema::community_post_list_positions::table)
+                .values(&_new_posts_list_position)
+                .get_result::<CommunityPostListPosition>(&_connection)
+                .expect("Error saving post_list_position.");
+            return _posts_list;
+        }
+    }
+    pub fn get_doc_list(&self) -> DocList {
+        use crate::schema::doc_lists::dsl::doc_lists;
+
+        let _connection = establish_connection();
+        let _doc_lists  = doc_lists
+            .filter(schema::doc_lists::community_id.eq(self.id))
+            .filter(schema::doc_lists::types.eq("a"))
+            .limit(1)
+            .load::<DocList>(&_connection)
+            .expect("E.");
+        if _doc_lists.len() > 0 {
+            return _doc_lists
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        }
+        else {
+            use crate::models::{NewDocList, CommunityDocListPosition, NewCommunityDocListPosition};
+
+            let new_list = NewDocList{
+                    name:          "Основной список".to_string(),
+                    community_id:   self.id,
+                    user_id:        self.user_id,
+                    types:          "a".to_string(),
+                    description:     None,
+                    created:         chrono::Local::now().naive_utc(),
+                    count:           0,
+                    repost:          0,
+                    copy:            0,
+                    position:        0,
+                    can_see_el:      "a".to_string(),
+                    create_el:       "g".to_string(),
+                    copy_el:         "g".to_string(),
+                };
+            let _docs_list = diesel::insert_into(schema::doc_lists::table)
+                .values(&new_list)
+                .get_result::<DocList>(&_connection)
+                .expect("Error saving doc_list.");
+
+            let _new_docs_list_position = NewCommunityDocListPosition {
+                community_id:  self.id,
+                list_id:  _docs_list.id,
+                position: 1,
+                types:    "a".to_string(),
+            };
+            let _docs_list_position = diesel::insert_into(schema::community_doc_list_positions::table)
+                .values(&_new_docs_list_position)
+                .get_result::<CommunityDocListPosition>(&_connection)
+                .expect("Error saving doc_list_position.");
+            return _docs_list;
+        }
+    }
+    pub fn get_survey_list(&self) -> SurveyList {
+        use crate::schema::survey_lists::dsl::survey_lists;
+
+        let _connection = establish_connection();
+        let _survey_lists  = survey_lists
+            .filter(schema::survey_lists::community_id.eq(self.id))
+            .filter(schema::survey_lists::types.eq("a"))
+            .limit(1)
+            .load::<SurveyList>(&_connection)
+            .expect("E.");
+        if _survey_lists.len() > 0 {
+            return _survey_lists
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        }
+        else {
+            use crate::models::{NewSurveyList, CommunitySurveyListPosition, NewCommunitySurveyListPosition};
+
+            let new_list = NewSurveyList{
+                    name:          "Основной список".to_string(),
+                    community_id:   self.id,
+                    user_id:        self.user_id,
+                    types:          "a".to_string(),
+                    description:     None,
+                    created:         chrono::Local::now().naive_utc(),
+                    count:           0,
+                    repost:          0,
+                    copy:            0,
+                    position:        0,
+                    can_see_el:      "a".to_string(),
+                    create_el:       "g".to_string(),
+                    copy_el:         "g".to_string(),
+                };
+            let _surveys_list = diesel::insert_into(schema::survey_lists::table)
+                .values(&new_list)
+                .get_result::<SurveyList>(&_connection)
+                .expect("Error saving survey_list.");
+
+            let _new_surveys_list_position = NewCommunitySurveyListPosition {
+                community_id:  self.id,
+                list_id:  _surveys_list.id,
+                position: 1,
+                types:    "a".to_string(),
+            };
+            let _surveys_list_position = diesel::insert_into(schema::community_survey_list_positions::table)
+                .values(&_new_surveys_list_position)
+                .get_result::<CommunitySurveyListPosition>(&_connection)
+                .expect("Error saving survey_list_position.");
+            return _surveys_list;
+        }
+    }
+    pub fn get_selected_post_list_pk(&self) -> i32 {
+        use crate::schema::community_post_list_positions::dsl::community_post_list_positions;
+        use crate::models::CommunityPostListPosition;
+
+        let _connection = establish_connection();
+        let _post_list_positions  = community_post_list_positions
+            .filter(schema::community_post_list_positions::community_id.eq(self.id))
+            .filter(schema::community_post_list_positions::types.eq("a"))
+            .limit(1)
+            .load::<CommunityPostListPosition>(&_connection)
+            .expect("E.");
+        if _post_list_positions.len() > 0 {
+            return _post_list_positions
+            .into_iter()
+            .nth(0)
+            .unwrap()
+            .list_id;
+        }
+        else {
+            return self.get_post_list().id;
+        }
+    }
+    pub fn get_selected_photo_list_pk(&self) -> i32 {
+        use crate::schema::community_photo_list_positions::dsl::community_photo_list_positions;
+        use crate::models::CommunityPhotoListPosition;
+
+        let _connection = establish_connection();
+        let _photo_list_positions  = community_photo_list_positions
+            .filter(schema::community_photo_list_positions::community_id.eq(self.id))
+            .filter(schema::community_photo_list_positions::types.eq("a"))
+            .limit(1)
+            .load::<CommunityPhotoListPosition>(&_connection)
+            .expect("E.");
+        if _photo_list_positions.len() > 0 {
+            return _photo_list_positions
+            .into_iter()
+            .nth(0)
+            .unwrap()
+            .list_id;
+        }
+        else {
+            return self.get_photo_list().id;
+        }
+    }
+    pub fn get_selected_doc_list_pk(&self) -> i32 {
+        use crate::schema::community_doc_list_positions::dsl::community_doc_list_positions;
+        use crate::models::CommunityDocListPosition;
+
+        let _connection = establish_connection();
+        let _doc_list_positions  = community_doc_list_positions
+            .filter(schema::community_doc_list_positions::community_id.eq(self.id))
+            .filter(schema::community_doc_list_positions::types.eq("a"))
+            .limit(1)
+            .load::<CommunityDocListPosition>(&_connection)
+            .expect("E.");
+        if _doc_list_positions.len() > 0 {
+            return _doc_list_positions
+            .into_iter()
+            .nth(0)
+            .unwrap()
+            .list_id;
+        }
+        else {
+            return self.get_doc_list().id;
+        }
+    }
+    pub fn get_selected_good_list_pk(&self) -> i32 {
+        use crate::schema::community_good_list_positions::dsl::community_good_list_positions;
+        use crate::models::CommunityGoodListPosition;
+
+        let _connection = establish_connection();
+        let _good_list_positions  = community_good_list_positions
+            .filter(schema::community_good_list_positions::community_id.eq(self.id))
+            .filter(schema::community_good_list_positions::types.eq("a"))
+            .limit(1)
+            .load::<CommunityGoodListPosition>(&_connection)
+            .expect("E.");
+        if _good_list_positions.len() > 0 {
+            return _good_list_positions
+            .into_iter()
+            .nth(0)
+            .unwrap()
+            .list_id;
+        }
+        else {
+            return self.get_good_list().id;
+        }
+    }
+    pub fn get_selected_music_list_pk(&self) -> i32 {
+        use crate::schema::community_music_list_positions::dsl::community_music_list_positions;
+        use crate::models::CommunityMusicListPosition;
+
+        let _connection = establish_connection();
+        let _music_list_positions  = community_music_list_positions
+            .filter(schema::community_music_list_positions::community_id.eq(self.id))
+            .filter(schema::community_music_list_positions::types.eq("a"))
+            .limit(1)
+            .load::<CommunityMusicListPosition>(&_connection)
+            .expect("E.");
+        if _music_list_positions.len() > 0 {
+            return _music_list_positions
+            .into_iter()
+            .nth(0)
+            .unwrap()
+            .list_id;
+        }
+        else {
+            return self.get_music_list().id;
+        }
+    }
+    pub fn get_selected_video_list_pk(&self) -> i32 {
+        use crate::schema::community_video_list_positions::dsl::community_video_list_positions;
+        use crate::models::CommunityVideoListPosition;
+
+        let _connection = establish_connection();
+        let _video_list_positions  = community_video_list_positions
+            .filter(schema::community_video_list_positions::community_id.eq(self.id))
+            .filter(schema::community_video_list_positions::types.eq("a"))
+            .limit(1)
+            .load::<CommunityVideoListPosition>(&_connection)
+            .expect("E.");
+        if _video_list_positions.len() > 0 {
+            return _video_list_positions
+            .into_iter()
+            .nth(0)
+            .unwrap()
+            .list_id;
+        }
+        else {
+            return self.get_video_list().id;
+        }
+    }
+    pub fn get_selected_survey_list_pk(&self) -> i32 {
+        use crate::schema::community_survey_list_positions::dsl::community_survey_list_positions;
+        use crate::models::CommunitySurveyListPosition;
+
+        let _connection = establish_connection();
+        let _survey_list_positions  = community_survey_list_positions
+            .filter(schema::community_survey_list_positions::community_id.eq(self.id))
+            .filter(schema::community_survey_list_positions::types.eq("a"))
+            .limit(1)
+            .load::<CommunitySurveyListPosition>(&_connection)
+            .expect("E.");
+        if _survey_list_positions.len() > 0 {
+            return _survey_list_positions
+            .into_iter()
+            .nth(0)
+            .unwrap()
+            .list_id;
+        }
+        else {
+            return self.get_survey_list().id;
+        }
+    }
+    pub fn get_post_lists(&self) -> Vec<PostList> {
+        use crate::schema::post_lists::dsl::post_lists;
+
+        let _connection = establish_connection();
+        return post_lists
+            .filter(schema::post_lists::community_id.eq(self.id))
+            .filter(schema::post_lists::types.eq_any(vec!["a", "b"]))
+            .load::<PostList>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_survey_lists(&self) -> Vec<SurveyList> {
+        use crate::schema::survey_lists::dsl::survey_lists;
+
+        let _connection = establish_connection();
+        return survey_lists
+            .filter(schema::survey_lists::community_id.eq(self.id))
+            .filter(schema::survey_lists::types.eq_any(vec!["a", "b"]))
+            .load::<SurveyList>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_photo_lists(&self) -> Vec<PhotoList> {
+        use crate::schema::photo_lists::dsl::photo_lists;
+
+        let _connection = establish_connection();
+        return photo_lists
+            .filter(schema::photo_lists::community_id.eq(self.id))
+            .filter(schema::photo_lists::types.eq_any(vec!["a", "b", "d", "e"]))
+            .load::<PhotoList>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_video_lists(&self) -> Vec<VideoList> {
+        use crate::schema::video_lists::dsl::video_lists;
+
+        let _connection = establish_connection();
+        return video_lists
+            .filter(schema::video_lists::community_id.eq(self.id))
+            .filter(schema::video_lists::types.eq_any(vec!["a", "b"]))
+            .load::<VideoList>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_music_lists(&self) -> Vec<MusicList> {
+        use crate::schema::music_lists::dsl::music_lists;
+
+        let _connection = establish_connection();
+        return music_lists
+            .filter(schema::music_lists::community_id.eq(self.id))
+            .filter(schema::music_lists::types.eq_any(vec!["a", "b"]))
+            .load::<MusicList>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_good_lists(&self) -> Vec<GoodList> {
+        use crate::schema::good_lists::dsl::good_lists;
+
+        let _connection = establish_connection();
+        return good_lists
+            .filter(schema::good_lists::community_id.eq(self.id))
+            .filter(schema::good_lists::types.eq_any(vec!["a", "b"]))
+            .load::<GoodList>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_6_photos(&self) -> Vec<Photo> {
+        use crate::schema::photos::dsl::photos;
+
+        let _connection = establish_connection();
+        return photos
+            .filter(schema::photos::community_id.eq(self.id))
+            .filter(schema::photos::types.eq("a"))
+            .order(schema::photos::created.desc())
+            .limit(6)
+            .load::<Photo>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_6_docs(&self) -> Vec<Doc> {
+        use crate::schema::docs::dsl::docs;
+
+        let _connection = establish_connection();
+        return docs
+            .filter(schema::docs::community_id.eq(self.id))
+            .filter(schema::docs::types.eq("a"))
+            .order(schema::docs::created.desc())
+            .limit(6)
+            .load::<Doc>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_6_tracks(&self) -> Vec<Music> {
+        use crate::schema::musics::dsl::musics;
+
+        let _connection = establish_connection();
+        return musics
+            .filter(schema::musics::community_id.eq(self.id))
+            .filter(schema::musics::types.eq("a"))
+            .order(schema::musics::created.desc())
+            .limit(6)
+            .load::<Music>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_2_videos(&self) -> Vec<Video> {
+        use crate::schema::videos::dsl::videos;
+
+        let _connection = establish_connection();
+        return videos
+            .filter(schema::videos::community_id.eq(self.id))
+            .filter(schema::videos::types.eq("a"))
+            .order(schema::videos::created.desc())
+            .limit(2)
+            .load::<Video>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_3_goods(&self) -> Vec<Good> {
+        use crate::schema::goods::dsl::goods;
+
+        let _connection = establish_connection();
+        return goods
+            .filter(schema::goods::community_id.eq(self.id))
+            .filter(schema::goods::types.eq("a"))
+            .order(schema::goods::created.desc())
+            .limit(2)
+            .load::<Good>(&_connection)
+            .expect("E.");
+    }
+
+    pub fn get_members_ids(&self) -> Vec<i32> {
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+
+        let _connection = establish_connection();
+        let items = communities_memberships
+            .filter(schema::communities_memberships::community_id.eq(self.id)
+            .load::<CommunityMembership>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+
+    }
+    pub fn get_can_see_info_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+        use crate::models::CommunityVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::community_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_info.eq("b"))
+            .load::<CommunityVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_info_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::community_visible_perms::dsl::community_visible_perms;
+        use crate::models::CommunityVisiblePerm;
+
+        let _connection = establish_connection();
+        let items = community_visible_perms
+            .filter(schema::community_visible_perms::user_id.eq_any(self.get_members_ids()))
+            .filter(schema::community_visible_perms::can_see_info.eq("a"))
+            .load::<FriendsVisiblePerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_info_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_info_exclude_users_ids());
+    }
+    pub fn get_can_see_info_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_info_include_users_ids());
+    }
 }
 
 
@@ -1244,7 +2057,6 @@ impl CommunitiesMembership {
         user.plus_community_visited(community.id);
         return new_member;
     }
-
 }
 
 /////// CommunityInfo //////
@@ -1650,7 +2462,7 @@ pub struct CommunityVisiblePerm {
     pub user_id:                 i32,
     pub can_see_info:            Option<String>,
     pub can_see_community:       Option<String>,
-    pub can_see_friend:          Option<String>,
+    pub can_see_member:         Option<String>,
     pub can_send_message:        Option<String>,
     pub can_add_in_chat:         Option<String>,
     pub can_see_doc:             Option<String>,
@@ -1676,7 +2488,7 @@ pub struct NewCommunityVisiblePerm {
 
     pub can_see_info:            Option<String>,
     pub can_see_community:       Option<String>,
-    pub can_see_friend:          Option<String>,
+    pub can_see_member:          Option<String>,
     pub can_send_message:        Option<String>,
     pub can_add_in_chat:         Option<String>,
     pub can_see_doc:             Option<String>,
