@@ -648,7 +648,7 @@ impl Chat {
             .expect("E");
     }
 
-    pub fn get_can_see_member_exclude_users_ids(&self) -> Vec<i32> {
+    pub fn get_can_add_in_chat_exclude_users_ids(&self) -> Vec<i32> {
         use crate::schema::chat_ie_settings::dsl::chat_ie_settings;
 
         let _connection = establish_connection();
