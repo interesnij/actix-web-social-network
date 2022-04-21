@@ -51,6 +51,26 @@ pub struct NewCommunityFollow {
     pub visited:     i32,
 }
 
+/////// CommunityInvite //////
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(User)]
+#[belongs_to(Community)]
+#[belongs_to(User, foreign_key="invite_creator")]
+pub struct CommunityInvite {
+    pub id:             i32,
+    pub user_id:        i32,
+    pub community_id:   i32,
+    pub invite_creator: i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="community_invites"]
+pub struct NewCommunityInvite {
+    pub user_id:           i32,
+    pub community_id:      i32,
+    pub invite_creator_id: i32,
+    pub invite_creator:    i32,
+}
+
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 pub struct FollowsVisiblePerm {
     pub id:                      i32,
