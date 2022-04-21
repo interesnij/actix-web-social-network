@@ -467,7 +467,7 @@ impl Chat {
         use crate::utils::get_count_for_ru;
 
         return get_count_for_ru(
-            self.get_fix_message_count(),
+            self.get_fix_message_count().try_into().unwrap(),
             " сообщение".to_string(),
             " сообщения".to_string(),
             " сообщений".to_string(),
@@ -535,7 +535,7 @@ impl ChatUser {
             .load::<ChatUser>(&_connection)
             .expect("E");
         if member_exists.len() > 0 {
-            let curr_member = member_exists..into_iter().nth(0).unwrap();
+            let curr_member = member_exists.into_iter().nth(0).unwrap();
             diesel::update(&curr_member)
                 .set(schema::chat_users::types.eq("a"))
                 .get_result::<ChatUser>(&_connection)
@@ -546,6 +546,7 @@ impl ChatUser {
             let new_member_form = NewChatUser {
                 user_id: user.id,
                 chat_id: chat.id,
+                types: "a".to_string(),
                 is_administrator: is_administrator,
                 created: chrono::Local::now().naive_utc(),
                 no_disturb: None,
