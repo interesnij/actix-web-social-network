@@ -688,6 +688,493 @@ impl Chat {
         use crate::utils::get_users_from_ids;
         return get_users_from_ids(self.get_can_add_in_chat_include_users_ids());
     }
+
+    pub fn get_can_add_fix_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::chat_ie_settings::dsl::chat_ie_settings;
+
+        let _connection = establish_connection();
+        let items = chat_ie_settings
+            .filter(schema::chat_ie_settings::chat_user_id.eq_any(self.get_members_ids()))
+            .filter(schema::chat_ie_settings::can_add_fix.eq("b"))
+            .load::<ChatIeSetting>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.chat_user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_add_fix_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::chat_ie_settings::dsl::chat_ie_settings;
+
+        let _connection = establish_connection();
+        let items = chat_ie_settings
+            .filter(schema::chat_ie_settings::chat_user_id.eq_any(self.get_members_ids()))
+            .filter(schema::chat_ie_settings::can_add_fix.eq("a"))
+            .load::<ChatIeSetting>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.chat_user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_add_fix_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_add_fix_exclude_users_ids());
+    }
+    pub fn get_can_add_fix_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_add_fix_include_users_ids());
+    }
+
+    pub fn get_can_send_mention_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::chat_ie_settings::dsl::chat_ie_settings;
+
+        let _connection = establish_connection();
+        let items = chat_ie_settings
+            .filter(schema::chat_ie_settings::chat_user_id.eq_any(self.get_members_ids()))
+            .filter(schema::chat_ie_settings::can_send_mention.eq("b"))
+            .load::<ChatIeSetting>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.chat_user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_send_mention_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::chat_ie_settings::dsl::chat_ie_settings;
+
+        let _connection = establish_connection();
+        let items = chat_ie_settings
+            .filter(schema::chat_ie_settings::chat_user_id.eq_any(self.get_members_ids()))
+            .filter(schema::chat_ie_settings::can_send_mention.eq("a"))
+            .load::<ChatIeSetting>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.chat_user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_send_mention_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_send_mention_exclude_users_ids());
+    }
+    pub fn get_can_send_mention_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_send_mention_include_users_ids());
+    }
+
+    pub fn get_can_add_admin_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::chat_ie_settings::dsl::chat_ie_settings;
+
+        let _connection = establish_connection();
+        let items = chat_ie_settings
+            .filter(schema::chat_ie_settings::chat_user_id.eq_any(self.get_members_ids()))
+            .filter(schema::chat_ie_settings::can_add_admin.eq("b"))
+            .load::<ChatIeSetting>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.chat_user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_add_admin_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::chat_ie_settings::dsl::chat_ie_settings;
+
+        let _connection = establish_connection();
+        let items = chat_ie_settings
+            .filter(schema::chat_ie_settings::chat_user_id.eq_any(self.get_members_ids()))
+            .filter(schema::chat_ie_settings::can_add_admin.eq("a"))
+            .load::<ChatIeSetting>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.chat_user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_add_admin_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_add_admin_exclude_users_ids());
+    }
+    pub fn get_can_add_admin_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_add_admin_include_users_ids());
+    }
+
+    pub fn get_can_add_design_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::chat_ie_settings::dsl::chat_ie_settings;
+
+        let _connection = establish_connection();
+        let items = chat_ie_settings
+            .filter(schema::chat_ie_settings::chat_user_id.eq_any(self.get_members_ids()))
+            .filter(schema::chat_ie_settings::can_add_design.eq("b"))
+            .load::<ChatIeSetting>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.chat_user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_add_design_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::chat_ie_settings::dsl::chat_ie_settings;
+
+        let _connection = establish_connection();
+        let items = chat_ie_settings
+            .filter(schema::chat_ie_settings::chat_user_id.eq_any(self.get_members_ids()))
+            .filter(schema::chat_ie_settings::can_add_design.eq("a"))
+            .load::<ChatIeSetting>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.chat_user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_add_design_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_add_design_exclude_users_ids());
+    }
+    pub fn get_can_add_design_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_add_design_include_users_ids());
+    }
+
+    pub fn get_can_see_settings_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::chat_ie_settings::dsl::chat_ie_settings;
+
+        let _connection = establish_connection();
+        let items = chat_ie_settings
+            .filter(schema::chat_ie_settings::chat_user_id.eq_any(self.get_members_ids()))
+            .filter(schema::chat_ie_settings::can_see_settings.eq("b"))
+            .load::<ChatIeSetting>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.chat_user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_settings_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::chat_ie_settings::dsl::chat_ie_settings;
+
+        let _connection = establish_connection();
+        let items = chat_ie_settings
+            .filter(schema::chat_ie_settings::chat_user_id.eq_any(self.get_members_ids()))
+            .filter(schema::chat_ie_settings::can_see_settings.eq("a"))
+            .load::<ChatIeSetting>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.chat_user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_settings_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_settings_exclude_users_ids());
+    }
+    pub fn get_can_see_settings_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_settings_include_users_ids());
+    }
+
+    pub fn get_can_see_log_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::chat_ie_settings::dsl::chat_ie_settings;
+
+        let _connection = establish_connection();
+        let items = chat_ie_settings
+            .filter(schema::chat_ie_settings::chat_user_id.eq_any(self.get_members_ids()))
+            .filter(schema::chat_ie_settings::can_see_log.eq("b"))
+            .load::<ChatIeSetting>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.chat_user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_log_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::chat_ie_settings::dsl::chat_ie_settings;
+
+        let _connection = establish_connection();
+        let items = chat_ie_settings
+            .filter(schema::chat_ie_settings::chat_user_id.eq_any(self.get_members_ids()))
+            .filter(schema::chat_ie_settings::can_see_log.eq("a"))
+            .load::<ChatIeSetting>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.chat_user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_log_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_log_exclude_users_ids());
+    }
+    pub fn get_can_see_log_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_log_include_users_ids());
+    }
+
+    pub fn get_private_model(&self) -> ChatIeSetting {
+        use crate::schema::chat_ie_settings::dsl::chat_ie_settings;
+
+        let _connection = establish_connection();
+        return chat_ie_settings
+            .filter(schema::chat_ie_settings::chat_id.eq(self.id))
+            .load::<ChatIeSetting>(&_connection)
+            .expect("E.")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+    pub fn is_user_can_add_in_chat(&self, user_id: i32) -> bool {
+        let private = self.get_private_model();
+        let char = private.can_add_in_chat;
+        return match char.as_str() {
+            "a" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "b" => self.user_id == user_id,
+            "c" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "d" => !self.get_can_add_in_chat_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_add_in_chat_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_add_fix(&self, user_id: i32) -> bool {
+        let private = self.get_private_model();
+        let char = private.can_add_fix;
+        return match char.as_str() {
+            "a" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "b" => self.user_id == user_id,
+            "c" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "d" => !self.get_can_add_fix_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_add_fix_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_send_mention(&self, user_id: i32) -> bool {
+        let private = self.get_private_model();
+        let char = private.can_send_mention;
+        return match char.as_str() {
+            "a" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "b" => self.user_id == user_id,
+            "c" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "d" => !self.get_can_send_mention_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_send_mention_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_add_admin(&self, user_id: i32) -> bool {
+        let private = self.get_private_model();
+        let char = private.can_add_admin;
+        return match char.as_str() {
+            "a" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "b" => self.user_id == user_id,
+            "c" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "d" => !self.get_can_add_admin_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_add_admin_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_add_design(&self, user_id: i32) -> bool {
+        let private = self.get_private_model();
+        let char = private.can_add_design;
+        return match char.as_str() {
+            "a" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "b" => self.user_id == user_id,
+            "c" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "d" => !self.get_can_add_design_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_add_design_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_settings(&self, user_id: i32) -> bool {
+        let private = self.get_private_model();
+        let char = private.can_see_settings;
+        return match char.as_str() {
+            "a" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "b" => self.user_id == user_id,
+            "c" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "d" => !self.get_can_see_settings_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_settings_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn is_user_can_see_log(&self, user_id: i32) -> bool {
+        let private = self.get_private_model();
+        let char = private.can_see_log;
+        return match char.as_str() {
+            "a" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "b" => self.user_id == user_id,
+            "c" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "d" => !self.get_can_see_log_exclude_users_ids().iter().any(|&i| i==user_id),
+            "f" => self.get_can_see_log_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+    }
+    pub fn set_friends_visible_perms(&self, action: String, users_ids: Vec<i32>, types: String) -> bool {
+        use crate::schema::chat_ie_settings::dsl::chat_ie_settings;
+        use crate::schema::chat_users::dsl::chat_users;
+
+        let _connection = establish_connection();
+
+        let _members = chat_users
+            .filter(schema::chat_users::user_id.eq_any(&users_ids))
+            .load::<ChatUser>(&_connection)
+            .expect("E");
+        let mut members_stack = Vec::new();
+        for _item in _members.iter() {
+            members_stack.push(_item.user_id);
+        };
+        diesel::delete(chat_ie_settings.filter(schema::chat_ie_settings::chat_user_id.eq_any(members_stack))).execute(&_connection).expect("E");
+
+        if types == "can_add_in_chat".to_string() {
+            for user_id in users_ids.iter() {
+                let _new_perm = NewChatIeSetting {
+                    chat_user_id:    *user_id,
+                    can_add_in_chat:  action.clone(),
+                    can_add_fix:      None,
+                    can_send_mention: None,
+                    can_add_admin:    None,
+                    can_add_design:   None,
+                    can_see_settings: None,
+                    can_see_log:      None,
+                };
+                diesel::insert_into(schema::chat_ie_settings::table)
+                    .values(&_new_perm)
+                    .get_result::<ChatIeSetting>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if types == "can_add_fix".to_string() {
+            for user_id in users_ids.iter() {
+                let _new_perm = NewChatIeSetting {
+                    chat_user_id:    *user_id,
+                    can_add_in_chat:  None,
+                    can_add_fix:      action.clone(),
+                    can_send_mention: None,
+                    can_add_admin:    None,
+                    can_add_design:   None,
+                    can_see_settings: None,
+                    can_see_log:      None,
+                };
+                diesel::insert_into(schema::chat_ie_settings::table)
+                    .values(&_new_perm)
+                    .get_result::<ChatIeSetting>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if types == "can_send_mention".to_string() {
+            for user_id in users_ids.iter() {
+                let _new_perm = NewChatIeSetting {
+                    chat_user_id:    *user_id,
+                    can_add_in_chat:  None,
+                    can_add_fix:      None,
+                    can_send_mention: action.clone(),
+                    can_add_admin:    None,
+                    can_add_design:   None,
+                    can_see_settings: None,
+                    can_see_log:      None,
+                };
+                diesel::insert_into(schema::chat_ie_settings::table)
+                    .values(&_new_perm)
+                    .get_result::<ChatIeSetting>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if types == "can_add_admin".to_string() {
+            for user_id in users_ids.iter() {
+                let _new_perm = NewChatIeSetting {
+                    chat_user_id:    *user_id,
+                    can_add_in_chat:  None,
+                    can_add_fix:      None,
+                    can_send_mention: None,
+                    can_add_admin:    action.clone(),
+                    can_add_design:   None,
+                    can_see_settings: None,
+                    can_see_log:      None,
+                };
+                diesel::insert_into(schema::chat_ie_settings::table)
+                    .values(&_new_perm)
+                    .get_result::<ChatIeSetting>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if types == "can_add_design".to_string() {
+            for user_id in users_ids.iter() {
+                let _new_perm = NewChatIeSetting {
+                    chat_user_id:    *user_id,
+                    can_add_in_chat:  None,
+                    can_add_fix:      None,
+                    can_send_mention: None,
+                    can_add_admin:    None,
+                    can_add_design:   action.clone(),
+                    can_see_settings: None,
+                    can_see_log:      None,
+                };
+                diesel::insert_into(schema::chat_ie_settings::table)
+                    .values(&_new_perm)
+                    .get_result::<ChatIeSetting>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if types == "can_see_settings".to_string() {
+            for user_id in users_ids.iter() {
+                let _new_perm = NewChatIeSetting {
+                    chat_user_id:    *user_id,
+                    can_add_in_chat:  None,
+                    can_add_fix:      None,
+                    can_send_mention: None,
+                    can_add_admin:    None,
+                    can_add_design:   None,
+                    can_see_settings: action.clone(),
+                    can_see_log:      None,
+                };
+                diesel::insert_into(schema::chat_ie_settings::table)
+                    .values(&_new_perm)
+                    .get_result::<ChatIeSetting>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else if types == "can_see_log".to_string() {
+            for user_id in users_ids.iter() {
+                let _new_perm = NewChatIeSetting {
+                    chat_user_id:    *user_id,
+                    can_add_in_chat:  None,
+                    can_add_fix:      None,
+                    can_send_mention: None,
+                    can_add_admin:    None,
+                    can_add_design:   None,
+                    can_see_settings: None,
+                    can_see_log:      action.clone(),
+                };
+                diesel::insert_into(schema::chat_ie_settings::table)
+                    .values(&_new_perm)
+                    .get_result::<ChatIeSetting>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        return true;
+    }
 }
 
 /////// ChatUsers //////
