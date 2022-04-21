@@ -1293,7 +1293,6 @@ impl Message {
             .expect("E");
     }
     pub fn get_draft_transfers_block(&self) -> String {
-        use crate::schema::message_transfers::dsl::message_transfers;
         use crate::utils::get_count_for_ru;
 
         let _connection = establish_connection();
@@ -1317,6 +1316,34 @@ impl Message {
             inputs += &("<input type='hidden' name='transfer' value='".to_owned() + &i.id.to_string() + &"' class='transfer'>");
         }
         return "<div><p>".to_owned() + &text_2 + &"</p><div style='position:relative;padding-bottom:7px'><div><span class='pointer underline'>" + &text + &"</span><span class='remove_parent_block pointer message_form_parent_block'>x</span></div></div>" + &inputs + &"</div>";
+    }
+    pub fn is_edited(&self) -> bool {
+        return self.types == 2 && self.types == 8;
+    }
+    pub fn is_manager(&self) -> bool {
+        return self.types == 6;
+    }
+    pub fn is_fixed(&self) -> bool {
+        return self.types == 7 && self.types == 8;
+    }
+    pub fn is_favourite(&self, user_id:i32) -> bool {
+        use crate::schema::message_options::dsl::message_options;
+
+        let _connection = establish_connection();
+        return message_options
+            .filter(schema::message_options::message_id.eq(self.id))
+            .filter(schema::message_options::user_id.eq(user_id))
+            .filter(schema::message_options::is_favourite.eq(true))
+            .load::<MessageOption>(&_connection)
+            .expect("E")
+            .len() > 0;
+    }
+    pub fn get_count_attach(&self) -> usize {
+        if self.attach.is_some() {
+            let self_attach = self.attach.split(",");
+            return self_attach.len();
+        }
+        return 0;
     }
 }
 
