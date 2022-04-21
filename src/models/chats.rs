@@ -1345,6 +1345,48 @@ impl Message {
         }
         return 0;
     }
+    pub fn get_parent_message(&self) -> String {
+        use crate::schema::messages::dsl::messages;
+        use crate::schema::users::dsl::users;
+
+        if !self.parent_id.is_some() {
+            return "<div class='media p-1 pag'>Нет ответа!</div>".to_string();
+        }
+        let parent = messages
+            .filter(schema::messages::message_id.eq(self.parent_id))
+            .load::<Message>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        let mut preview = "".to_string();
+        if parent.voice.is_some() {
+            preview = "Голосовое сообщение".to_string();
+        }
+        else if parent.sticker_id.is_some() {
+            preview = "Наклейка".to_string();
+        }
+        else if parent.attach.is_some() {
+            preview = "Вложения".to_string();
+        }
+        else {
+            preview = parent.content[..80].to_string();
+        }
+        let creator = users
+            .filter(schema::users::id.eq(parent.user_id))
+            .load::<User>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+
+        return "<div class='media p-1' data-pk=".to_owned() +
+            &parent.id.to_string() +
+            &"style='border-left: 1px solid rgba(0, 0, 0, 0.7)'><span style='padding-top: 6px;'><a href='" +
+            &creator.get_link() +
+            &"' class='ajax'>" +
+            &"' class='ajax'>"ж
+    }
 }
 
 /////// MessageOptions //////

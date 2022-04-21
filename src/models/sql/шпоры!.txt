@@ -1,7 +1,8 @@
 use crate::utils::get_users_from_ids;
 return get_users_from_ids(vec!);
-
-============
+==============
+let self_attach = self.attach.as_deref().unwrap().split(",").collect::<Vec<_>>();
+===============
 let mut stack = Vec::new();
 for _item in _friends.iter() {
     stack.push(_item.target_user_id);
