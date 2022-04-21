@@ -35,7 +35,7 @@ CREATE TABLE chat_users (
     types             "char" NOT NULL,                 -- тип
     is_administrator  BOOLEAN NOT NULL DEFAULT false,-- админ ли?
     created           TIMESTAMP NOT NULL,            -- создано
-    no_disturb        TIMESTAMP,                     -- не беспокоить до...
+    no_disturb        TIMESTAMP,                      -- не беспокоить до...
 
     CONSTRAINT fk_chat_users_user                    -- связь с пользователем
         FOREIGN KEY(user_id)
@@ -48,7 +48,7 @@ CREATE TABLE chat_users (
 
 CREATE TABLE chat_ie_settings (
     id                SERIAL PRIMARY KEY,     -- id объекта
-    chat_user_id     INT NOT NULL,           -- id пользователя
+    chat_user_id      INT NOT NULL,           -- id пользователя
 
     can_add_in_chat   "char",                  -- кто добавляет участников
     can_add_fix       "char",                 -- кто закрепляет сообщения

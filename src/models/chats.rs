@@ -647,6 +647,47 @@ impl Chat {
             .load::<Message>(&_connection)
             .expect("E");
     }
+
+    pub fn get_can_see_member_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::chat_ie_settings::dsl::chat_ie_settings;
+
+        let _connection = establish_connection();
+        let items = chat_ie_settings
+            .filter(schema::chat_ie_settings::chat_user_id.eq_any(self.get_members_ids()))
+            .filter(schema::chat_ie_settings::can_see_member.eq("b"))
+            .load::<ChatIeSetting>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_add_in_chat_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::chat_ie_settings::dsl::chat_ie_settings;
+
+        let _connection = establish_connection();
+        let items = chat_ie_settings
+            .filter(schema::chat_ie_settings::chat_user_id.eq_any(self.get_members_ids()))
+            .filter(schema::chat_ie_settings::can_see_member.eq("a"))
+            .load::<ChatIeSetting>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_add_in_chat_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_add_in_chat_exclude_users_ids());
+    }
+    pub fn get_can_add_in_chat_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_add_in_chat_include_users_ids());
+    }
 }
 
 /////// ChatUsers //////
