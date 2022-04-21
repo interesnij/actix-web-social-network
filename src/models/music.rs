@@ -80,7 +80,7 @@ pub struct MusicAlbum {
     pub id:          i32,
     pub name:        String,
     pub artist_id:   i32,
-    pub user_id:  i32,
+    pub user_id:     i32,
     pub description: Option<String>,
     pub image:       Option<String>,
     pub created:     chrono::NaiveDateTime,
@@ -99,7 +99,7 @@ pub struct MusicAlbum {
 pub struct NewMusicAlbum {
     pub name:        String,
     pub artist_id:   i32,
-    pub user_id:  i32,
+    pub user_id:     i32,
     pub description: Option<String>,
     pub image:       Option<String>,
     pub created:     chrono::NaiveDateTime,
@@ -117,33 +117,30 @@ pub struct NewMusicAlbum {
 /////// MusicAlbum //////
 
 ////////// Тип списка
-    // 'a' основной список
-    // 'b' пользовательский список
-    // 'c' список предложки
-    // 'd' Фото со страницы
-    // 'e' Фото со стены
-    // 'f', 'g' ....
+    // 1 основной список
+    // 2 пользовательский список
+    // 3 список предложки
+    // 4 Фото со страницы
+    // 5 Фото со стены
 
-    // 'h' удаленный основной список
-    // 'i' удаленный пользовательский список
-    // 'j' удаленный список предложки
-    // 'k' удаленный Фото со страницы
-    // 'l' удаленный Фото со стены
-    // удаленный 'm', 'n' ....
+    // 11 удаленный основной список
+    // 12 удаленный пользовательский список
+    // 13 удаленный список предложки
+    // 14 удаленный Фото со страницы
+    // 15 удаленный Фото со стены
 
-    // 'o' закрытый основной список
-    // 'p' закрытый пользовательский список
-    // 'q' закрытый список предложки
-    // 'r' закрытый Фото со страницы
-    // 's' закрытый Фото со стены
-    // закрытый 't', 'u' ....
+    // 21 закрытый основной список
+    // 22 закрытый пользовательский список
+    // 23 закрытый список предложки
+    // 24 закрытый Фото со страницы
+    // 25 закрытый Фото со стены
 
-    // 'v' замороженный основной список
-    // 'w' замороженный пользовательский список
-    // 'x' замороженный список предложки
-    // 'y' замороженный Фото со страницы
-    // 'z' замороженный Фото со стены
-    // замороженный '1', '2' ....
+    // 31 замороженный основной список
+    // 32 замороженный пользовательский список
+    // 33 замороженный список предложки
+    // 34 замороженный Фото со страницы
+    // 35 замороженный Фото со стены
+
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 #[belongs_to(User)]
@@ -152,7 +149,7 @@ pub struct MusicList {
     pub name:         String,
     pub community_id: Option<i32>,
     pub user_id:      i32,
-    pub types:        String,
+    pub types:        i16,
     pub description:  Option<String>,
     pub image:        Option<String>,
     pub created:      chrono::NaiveDateTime,
@@ -172,7 +169,7 @@ pub struct NewMusicList {
     pub name:         String,
     pub community_id: Option<i32>,
     pub user_id:      i32,
-    pub types:        String,
+    pub types:        i16,
     pub description:  Option<String>,
     pub image:        Option<String>,
     pub created:      chrono::NaiveDateTime,

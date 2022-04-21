@@ -24,7 +24,7 @@ CREATE TABLE good_lists (
     name            VARCHAR(100) NOT NULL,
     community_id    INT,
     user_id         INT NOT NULL,
-    types           "char" NOT NULL,
+    types           SMALLINT NOT NULL,
     description     VARCHAR(500),
     created         TIMESTAMP NOT NULL,
     count           INT NOT NULL,

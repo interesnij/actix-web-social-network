@@ -697,10 +697,6 @@ impl Community {
         return false;
     }
     pub fn create_community(name: String, category: i32, user: User, types: i16) -> i32 {
-        use crate::models::{
-            NewPostList, NewPhotoList, NewDocList, NewVideoList,
-            NewSurveyList, NewMusicList, NewGoodList,
-        };
         let user_id = user.id;
 
         let _connection = establish_connection();
@@ -741,315 +737,6 @@ impl Community {
             .values(&_community_info)
             .get_result::<CommunityInfo>(&_connection)
             .expect("Error saving user_profile.");
-
-        // создаем список записей нового пользователя,
-        // а также запись в позициях списков записей
-        let _new_posts_list = NewPostList {
-            name:            "Список записей".to_string(),
-            community_id:    Some(community_id),
-            user_id:         user_id,
-            types:           "a".to_string(),
-            description:     None,
-            created:         chrono::Local::now().naive_utc(),
-            count:           0,
-            repost:          0,
-            copy:            0,
-            position:        0,
-            can_see_el:      "a".to_string(),
-            can_see_comment: "a".to_string(),
-            create_el:       "g".to_string(),
-            create_comment:  "a".to_string(),
-            copy_el:         "g".to_string(),
-        };
-        let _posts_list = diesel::insert_into(schema::post_lists::table)
-            .values(&_new_posts_list)
-            .get_result::<PostList>(&_connection)
-            .expect("Error saving post_list.");
-
-        let _new_posts_list_position = NewCommunityPostListPosition {
-            community_id:  community_id,
-            list_id:  _posts_list.id,
-            position: 1,
-            types:    "a".to_string(),
-        };
-        let _posts_list_position = diesel::insert_into(schema::community_post_list_positions::table)
-            .values(&_new_posts_list_position)
-            .get_result::<CommunityPostListPosition>(&_connection)
-            .expect("Error saving post_list_position.");
-
-        // создаем фотоальбомы нового пользователя,
-        // а также записи в позициях списков записей
-        let _new_photos_list = NewPhotoList {
-            name:            "Основной альбом".to_string(),
-            community_id:    Some(community_id),
-            user_id:         user_id,
-            types:           "a".to_string(),
-            description:     None,
-            cover_photo:     None,
-            created:         chrono::Local::now().naive_utc(),
-            count:           0,
-            repost:          0,
-            copy:            0,
-            position:        0,
-            can_see_el:      "a".to_string(),
-            can_see_comment: "a".to_string(),
-            create_el:       "g".to_string(),
-            create_comment:  "a".to_string(),
-            copy_el:         "g".to_string(),
-        };
-        let _photos_list = diesel::insert_into(schema::photo_lists::table)
-            .values(&_new_photos_list)
-            .get_result::<PhotoList>(&_connection)
-            .expect("Error saving photo_list.");
-
-        let _new_photos_list_position = NewCommunityPhotoListPosition {
-            community_id:  community_id,
-            list_id:  _photos_list.id,
-            position: 1,
-            types:    "a".to_string(),
-        };
-        let _photos_list_position = diesel::insert_into(schema::community_photo_list_positions::table)
-            .values(&_new_photos_list_position)
-            .get_result::<CommunityPhotoListPosition>(&_connection)
-            .expect("Error saving photo_list_position.");
-
-        let _new_photos_list = NewPhotoList {
-            name:            "Фото со страницы".to_string(),
-            community_id:    Some(community_id),
-            user_id:         user_id,
-            types:           "d".to_string(),
-            description:     None,
-            cover_photo:     None,
-            created:         chrono::Local::now().naive_utc(),
-            count:           0,
-            repost:          0,
-            copy:            0,
-            position:        0,
-            can_see_el:      "a".to_string(),
-            can_see_comment: "a".to_string(),
-            create_el:       "0".to_string(),
-            create_comment:  "a".to_string(),
-            copy_el:         "g".to_string(),
-            };
-        let _photos_list = diesel::insert_into(schema::photo_lists::table)
-            .values(&_new_photos_list)
-            .get_result::<PhotoList>(&_connection)
-            .expect("Error saving photo_list.");
-
-        let _new_photos_list_position = NewCommunityPhotoListPosition {
-            community_id:  community_id,
-            list_id:  _photos_list.id,
-            position: 2,
-            types:    "a".to_string(),
-        };
-        let _photos_list_position = diesel::insert_into(schema::community_photo_list_positions::table)
-            .values(&_new_photos_list_position)
-            .get_result::<CommunityPhotoListPosition>(&_connection)
-            .expect("Error saving photo_list_position.");
-
-        let _new_photos_list = NewPhotoList {
-            name:            "Фото со стены".to_string(),
-            community_id:    Some(community_id),
-            user_id:         user_id,
-            types:           "e".to_string(),
-            description:     None,
-            cover_photo:     None,
-            created:         chrono::Local::now().naive_utc(),
-            count:           0,
-            repost:          0,
-            copy:            0,
-            position:        0,
-            can_see_el:      "a".to_string(),
-            can_see_comment: "a".to_string(),
-            create_el:       "0".to_string(),
-            create_comment:  "a".to_string(),
-            copy_el:         "g".to_string(),
-        };
-        let _photos_list = diesel::insert_into(schema::photo_lists::table)
-            .values(&_new_photos_list)
-            .get_result::<PhotoList>(&_connection)
-            .expect("Error saving photo_list.");
-
-        let _new_photos_list_position = NewCommunityPhotoListPosition {
-            community_id:  community_id,
-            list_id:  _photos_list.id,
-            position: 3,
-            types:    "a".to_string(),
-        };
-        let _photos_list_position = diesel::insert_into(schema::community_photo_list_positions::table)
-            .values(&_new_photos_list_position)
-            .get_result::<CommunityPhotoListPosition>(&_connection)
-            .expect("Error saving photo_list_position.");
-
-        // создаем видеоальбом нового пользователя,
-        // а также запись в позиции списка записей
-        let _new_videos_list = NewVideoList {
-            name:            "Основной альбом".to_string(),
-            community_id:    Some(community_id),
-            user_id:         user_id,
-            types:           "a".to_string(),
-            description:     None,
-            created:         chrono::Local::now().naive_utc(),
-            count:           0,
-            repost:          0,
-            copy:            0,
-            position:        0,
-            can_see_el:      "a".to_string(),
-            can_see_comment: "a".to_string(),
-            create_el:       "g".to_string(),
-            create_comment:  "a".to_string(),
-            copy_el:         "g".to_string(),
-        };
-        let _videos_list = diesel::insert_into(schema::video_lists::table)
-            .values(&_new_videos_list)
-            .get_result::<VideoList>(&_connection)
-            .expect("Error saving video_list.");
-
-        let _new_videos_list_position = NewCommunityVideoListPosition {
-            community_id:  community_id,
-            list_id:  _videos_list.id,
-            position: 1,
-            types:    "a".to_string(),
-        };
-        let _videos_list_position = diesel::insert_into(schema::community_video_list_positions::table)
-            .values(&_new_videos_list_position)
-            .get_result::<CommunityVideoListPosition>(&_connection)
-            .expect("Error saving video_list_position.");
-
-        // создаем список товаров нового пользователя,
-        // а также запись в позиции списка товаров
-        let _new_goods_list = NewGoodList {
-            name:            "Основной альбом".to_string(),
-            community_id:    Some(community_id),
-            user_id:         user_id,
-            types:           "a".to_string(),
-            description:     None,
-            created:         chrono::Local::now().naive_utc(),
-            count:           0,
-            repost:          0,
-            copy:            0,
-            position:        0,
-            can_see_el:      "a".to_string(),
-            can_see_comment: "a".to_string(),
-            create_el:       "g".to_string(),
-            create_comment:  "a".to_string(),
-            copy_el:         "g".to_string(),
-        };
-        let _goods_list = diesel::insert_into(schema::good_lists::table)
-            .values(&_new_goods_list)
-            .get_result::<GoodList>(&_connection)
-            .expect("Error saving good_list.");
-
-        let _new_goods_list_position = NewCommunityGoodListPosition {
-            community_id:  community_id,
-            list_id:  _goods_list.id,
-            position: 1,
-            types:    "a".to_string(),
-        };
-        let _goods_list_position = diesel::insert_into(schema::community_good_list_positions::table)
-            .values(&_new_goods_list_position)
-            .get_result::<CommunityGoodListPosition>(&_connection)
-            .expect("Error saving good_list_position.");
-
-        // создаем плейлист нового пользователя,
-        // а также запись в позиции списков плейлистов
-        let _new_musics_list = NewMusicList {
-            name:            "Основной плейлист".to_string(),
-            community_id:    Some(community_id),
-            user_id:         user_id,
-            types:           "a".to_string(),
-            description:     None,
-            image:           None,
-            created:         chrono::Local::now().naive_utc(),
-            count:           0,
-            repost:          0,
-            copy:            0,
-            position:        0,
-            can_see_el:      "a".to_string(),
-            create_el:       "g".to_string(),
-            copy_el:         "g".to_string(),
-        };
-        let _musics_list = diesel::insert_into(schema::music_lists::table)
-            .values(&_new_musics_list)
-            .get_result::<MusicList>(&_connection)
-            .expect("Error saving music_list.");
-
-        let _new_musics_list_position = NewCommunityMusicListPosition {
-            community_id:  community_id,
-            list_id:  _musics_list.id,
-            position: 1,
-            types:    "a".to_string(),
-        };
-        let _musics_list_position = diesel::insert_into(schema::community_music_list_positions::table)
-            .values(&_new_musics_list_position)
-            .get_result::<CommunityMusicListPosition>(&_connection)
-            .expect("Error saving music_list_position.");
-
-        // создаем список документов нового пользователя,
-        // а также запись в позиции списков документов
-        let _new_docs_list = NewDocList {
-            name:            "Основной список".to_string(),
-            community_id:    Some(community_id),
-            user_id:         user_id,
-            types:           "a".to_string(),
-            description:     None,
-            created:         chrono::Local::now().naive_utc(),
-            count:           0,
-            repost:          0,
-            copy:            0,
-            position:        0,
-            can_see_el:      "a".to_string(),
-            create_el:       "g".to_string(),
-            copy_el:         "g".to_string(),
-        };
-        let _docs_list = diesel::insert_into(schema::doc_lists::table)
-            .values(&_new_docs_list)
-            .get_result::<DocList>(&_connection)
-            .expect("Error saving doc_list.");
-
-        let _new_docs_list_position = NewCommunityDocListPosition {
-            community_id:  community_id,
-            list_id:  _docs_list.id,
-            position: 1,
-            types:    "a".to_string(),
-        };
-        let _docs_list_position = diesel::insert_into(schema::community_doc_list_positions::table)
-            .values(&_new_docs_list_position)
-            .get_result::<CommunityDocListPosition>(&_connection)
-            .expect("Error saving doc_list_position.");
-
-        // создаем список опросов нового пользователя,
-        // а также запись в позиции списков опросов
-        let _new_surveys_list = NewSurveyList {
-            name:            "Основной список".to_string(),
-            community_id:    Some(community_id),
-            user_id:         user_id,
-            types:           "a".to_string(),
-            description:     None,
-            created:         chrono::Local::now().naive_utc(),
-            count:           0,
-            repost:          0,
-            copy:            0,
-            position:        0,
-            can_see_el:      "a".to_string(),
-            create_el:       "g".to_string(),
-            copy_el:         "g".to_string(),
-        };
-        let _surveys_list = diesel::insert_into(schema::survey_lists::table)
-            .values(&_new_surveys_list)
-            .get_result::<SurveyList>(&_connection)
-            .expect("Error saving survey_list.");
-
-        let _new_surveys_list_position = NewCommunitySurveyListPosition {
-            community_id:  community_id,
-            list_id:  _surveys_list.id,
-            position: 1,
-            types:    "a".to_string(),
-        };
-        let _surveys_list_position = diesel::insert_into(schema::community_survey_list_positions::table)
-            .values(&_new_surveys_list_position)
-            .get_result::<CommunitySurveyListPosition>(&_connection)
-            .expect("Error saving survey_list_position.");
 
         // записываем приватность нового пользователя
         let _private = NewCommunityPrivate {
@@ -1292,7 +979,7 @@ impl Community {
                     name:          "Основной список".to_string(),
                     community_id:   Some(self.id),
                     user_id:        self.user_id,
-                    types:          "a".to_string(),
+                    types:          1,
                     description:     None,
                     created:         chrono::Local::now().naive_utc(),
                     count:           0,
@@ -1345,7 +1032,7 @@ impl Community {
                     name:          "Основной список".to_string(),
                     community_id:   Some(self.id),
                     user_id:        self.user_id,
-                    types:          "a".to_string(),
+                    types:          1,
                     description:     None,
                     image:           None,
                     created:         chrono::Local::now().naive_utc(),
@@ -1397,7 +1084,7 @@ impl Community {
                     name:          "Основной список".to_string(),
                     community_id:   Some(self.id),
                     user_id:        self.user_id,
-                    types:          "a".to_string(),
+                    types:          1,
                     description:     None,
                     created:         chrono::Local::now().naive_utc(),
                     count:           0,
@@ -1451,7 +1138,7 @@ impl Community {
                     name:          "Основной список".to_string(),
                     community_id:   Some(self.id),
                     user_id:        self.user_id,
-                    types:          "a".to_string(),
+                    types:          1,
                     description:     None,
                     cover_photo:     None,
                     created:         chrono::Local::now().naive_utc(),
@@ -1530,7 +1217,7 @@ impl Community {
                     name:          "Основной список".to_string(),
                     community_id:   Some(self.id),
                     user_id:        self.user_id,
-                    types:          "a".to_string(),
+                    types:          1,
                     description:     None,
                     created:         chrono::Local::now().naive_utc(),
                     count:           0,
@@ -1583,7 +1270,7 @@ impl Community {
                     name:          "Основной список".to_string(),
                     community_id:   Some(self.id),
                     user_id:        self.user_id,
-                    types:          "a".to_string(),
+                    types:          1,
                     description:     None,
                     created:         chrono::Local::now().naive_utc(),
                     count:           0,
@@ -1635,7 +1322,7 @@ impl Community {
                     name:          "Основной список".to_string(),
                     community_id:   Some(self.id),
                     user_id:        self.user_id,
-                    types:          "a".to_string(),
+                    types:          1,
                     description:     None,
                     created:         chrono::Local::now().naive_utc(),
                     count:           0,
@@ -1817,7 +1504,7 @@ impl Community {
         let _connection = establish_connection();
         return post_lists
             .filter(schema::post_lists::community_id.eq(self.id))
-            .filter(schema::post_lists::types.eq_any(vec!["a", "b"]))
+            .filter(schema::post_lists::types.lt(10))
             .load::<PostList>(&_connection)
             .expect("E.");
     }
@@ -1827,7 +1514,7 @@ impl Community {
         let _connection = establish_connection();
         return survey_lists
             .filter(schema::survey_lists::community_id.eq(self.id))
-            .filter(schema::survey_lists::types.eq_any(vec!["a", "b"]))
+            .filter(schema::survey_lists::types.lt(10))
             .load::<SurveyList>(&_connection)
             .expect("E.");
     }
@@ -1837,7 +1524,7 @@ impl Community {
         let _connection = establish_connection();
         return photo_lists
             .filter(schema::photo_lists::community_id.eq(self.id))
-            .filter(schema::photo_lists::types.eq_any(vec!["a", "b", "d", "e"]))
+            .filter(schema::photo_lists::types.lt(10))
             .load::<PhotoList>(&_connection)
             .expect("E.");
     }
@@ -1847,7 +1534,7 @@ impl Community {
         let _connection = establish_connection();
         return video_lists
             .filter(schema::video_lists::community_id.eq(self.id))
-            .filter(schema::video_lists::types.eq_any(vec!["a", "b"]))
+            .filter(schema::video_lists::types.lt(10))
             .load::<VideoList>(&_connection)
             .expect("E.");
     }
@@ -1857,7 +1544,7 @@ impl Community {
         let _connection = establish_connection();
         return music_lists
             .filter(schema::music_lists::community_id.eq(self.id))
-            .filter(schema::music_lists::types.eq_any(vec!["a", "b"]))
+            .filter(schema::music_lists::types.lt(10))
             .load::<MusicList>(&_connection)
             .expect("E.");
     }
@@ -1867,7 +1554,7 @@ impl Community {
         let _connection = establish_connection();
         return good_lists
             .filter(schema::good_lists::community_id.eq(self.id))
-            .filter(schema::good_lists::types.eq_any(vec!["a", "b"]))
+            .filter(schema::good_lists::types.lt(10))
             .load::<GoodList>(&_connection)
             .expect("E.");
     }

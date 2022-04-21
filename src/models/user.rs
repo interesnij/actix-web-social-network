@@ -1444,7 +1444,7 @@ impl User {
                     name:          "Основной список".to_string(),
                     community_id:   None,
                     user_id:        self.id,
-                    types:          "a".to_string(),
+                    types:          1,
                     description:     None,
                     created:         chrono::Local::now().naive_utc(),
                     count:           0,
@@ -1499,7 +1499,7 @@ impl User {
                     name:          "Основной список".to_string(),
                     community_id:   None,
                     user_id:        self.id,
-                    types:          "a".to_string(),
+                    types:          1,
                     description:     None,
                     image:           None,
                     created:         chrono::Local::now().naive_utc(),
@@ -1553,7 +1553,7 @@ impl User {
                     name:          "Основной список".to_string(),
                     community_id:   None,
                     user_id:        self.id,
-                    types:          "a".to_string(),
+                    types:          1,
                     description:     None,
                     created:         chrono::Local::now().naive_utc(),
                     count:           0,
@@ -1608,7 +1608,7 @@ impl User {
                     name:          "Основной список".to_string(),
                     community_id:   None,
                     user_id:        self.id,
-                    types:          "a".to_string(),
+                    types:          1,
                     description:     None,
                     cover_photo:     None,
                     created:         chrono::Local::now().naive_utc(),
@@ -1690,7 +1690,7 @@ impl User {
                     name:          "Основной список".to_string(),
                     community_id:   None,
                     user_id:        self.id,
-                    types:          "a".to_string(),
+                    types:          1,
                     description:     None,
                     created:         chrono::Local::now().naive_utc(),
                     count:           0,
@@ -1745,7 +1745,7 @@ impl User {
                     name:          "Основной список".to_string(),
                     community_id:   None,
                     user_id:        self.id,
-                    types:          "a".to_string(),
+                    types:          1,
                     description:     None,
                     created:         chrono::Local::now().naive_utc(),
                     count:           0,
@@ -1798,7 +1798,7 @@ impl User {
                     name:          "Основной список".to_string(),
                     community_id:   None,
                     user_id:        self.id,
-                    types:          "a".to_string(),
+                    types:          1,
                     description:     None,
                     created:         chrono::Local::now().naive_utc(),
                     count:           0,
@@ -2008,7 +2008,7 @@ impl User {
         let _connection = establish_connection();
         return survey_lists
             .filter(schema::survey_lists::user_id.eq(self.id))
-            .filter(schema::survey_lists::types.eq_any(vec!["a", "b"]))
+            .filter(schema::survey_lists::types.lt(10))
             .filter(schema::survey_lists::community_id.is_null())
             .load::<SurveyList>(&_connection)
             .expect("E.");
@@ -2019,7 +2019,7 @@ impl User {
         let _connection = establish_connection();
         return survey_lists
             .filter(schema::survey_lists::community_id.eq_any(self.get_staffed_communities_ids()))
-            .filter(schema::survey_lists::types.eq_any(vec!["a", "b"]))
+            .filter(schema::survey_lists::types.lt(10))
             .load::<SurveyList>(&_connection)
             .expect("E.");
     }
@@ -2040,7 +2040,7 @@ impl User {
         let _connection = establish_connection();
         return photo_lists
             .filter(schema::photo_lists::community_id.eq_any(self.get_staffed_communities_ids()))
-            .filter(schema::photo_lists::types.eq_any(vec!["a", "b", "d", "e"]))
+            .filter(schema::photo_lists::types.lt(10))
             .load::<PhotoList>(&_connection)
             .expect("E.");
     }
@@ -2050,7 +2050,7 @@ impl User {
         let _connection = establish_connection();
         return video_lists
             .filter(schema::video_lists::user_id.eq(self.id))
-            .filter(schema::video_lists::types.eq_any(vec!["a", "b"]))
+            .filter(schema::video_lists::types.lt(10))
             .filter(schema::video_lists::community_id.is_null())
             .load::<VideoList>(&_connection)
             .expect("E.");
@@ -2061,7 +2061,7 @@ impl User {
         let _connection = establish_connection();
         return video_lists
             .filter(schema::video_lists::community_id.eq_any(self.get_staffed_communities_ids()))
-            .filter(schema::video_lists::types.eq_any(vec!["a", "b"]))
+            .filter(schema::video_lists::types.lt(10))
             .load::<VideoList>(&_connection)
             .expect("E.");
     }
@@ -2082,7 +2082,7 @@ impl User {
         let _connection = establish_connection();
         return music_lists
             .filter(schema::music_lists::community_id.eq_any(self.get_staffed_communities_ids()))
-            .filter(schema::music_lists::types.eq_any(vec!["a", "b"]))
+            .filter(schema::music_lists::types.lt(10))
             .load::<MusicList>(&_connection)
             .expect("E.");
     }
@@ -2092,7 +2092,7 @@ impl User {
         let _connection = establish_connection();
         return good_lists
             .filter(schema::good_lists::user_id.eq(self.id))
-            .filter(schema::good_lists::types.eq_any(vec!["a", "b"]))
+            .filter(schema::good_lists::types.lt(10))
             .filter(schema::good_lists::community_id.is_null())
             .load::<GoodList>(&_connection)
             .expect("E.");
@@ -2103,7 +2103,7 @@ impl User {
         let _connection = establish_connection();
         return good_lists
             .filter(schema::good_lists::community_id.eq_any(self.get_staffed_communities_ids()))
-            .filter(schema::good_lists::types.eq_any(vec!["a", "b"]))
+            .filter(schema::good_lists::types.lt(10))
             .load::<GoodList>(&_connection)
             .expect("E.");
     }
