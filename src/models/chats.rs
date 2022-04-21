@@ -1298,7 +1298,7 @@ impl Message {
 
         let _connection = establish_connection();
         let transfers = self.get_transfers();
-        let count = &transfers.len();
+        let count = transfers.len();
         let text = get_count_for_ru(
             count,
             " сообщение".to_string(),
@@ -1314,7 +1314,7 @@ impl Message {
         }
         let mut inputs = "".to_string();
         for i in transfers.iter() {
-            inputs += "<input type='hidden' name='transfer' value='".to_owned() + &i.id.to_string() + &"' class='transfer'>";
+            inputs += &("<input type='hidden' name='transfer' value='".to_owned() + &i.id.to_string() + &"' class='transfer'>");
         }
         return "<div><p>".to_owned() + &text_2 + &"</p><div style='position:relative;padding-bottom:7px'><div><span class='pointer underline'>" + &text + &"</span><span class='remove_parent_block pointer message_form_parent_block'>x</span></div></div>" + &inputs + &"</div>";
     }
