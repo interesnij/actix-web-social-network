@@ -1051,7 +1051,7 @@ impl Chat {
             for user_id in users_ids.iter() {
                 let _new_perm = NewChatIeSetting {
                     chat_user_id:    *user_id,
-                    can_add_in_chat:  action.clone(),
+                    can_add_in_chat:  Some(action.clone()),
                     can_add_fix:      None,
                     can_send_mention: None,
                     can_add_admin:    None,
@@ -1070,7 +1070,7 @@ impl Chat {
                 let _new_perm = NewChatIeSetting {
                     chat_user_id:    *user_id,
                     can_add_in_chat:  None,
-                    can_add_fix:      action.clone(),
+                    can_add_fix:      Some(action.clone()),
                     can_send_mention: None,
                     can_add_admin:    None,
                     can_add_design:   None,
@@ -1089,7 +1089,7 @@ impl Chat {
                     chat_user_id:    *user_id,
                     can_add_in_chat:  None,
                     can_add_fix:      None,
-                    can_send_mention: action.clone(),
+                    can_send_mention: Some(action.clone()),
                     can_add_admin:    None,
                     can_add_design:   None,
                     can_see_settings: None,
@@ -1108,7 +1108,7 @@ impl Chat {
                     can_add_in_chat:  None,
                     can_add_fix:      None,
                     can_send_mention: None,
-                    can_add_admin:    action.clone(),
+                    can_add_admin:    Some(action.clone()),
                     can_add_design:   None,
                     can_see_settings: None,
                     can_see_log:      None,
@@ -1127,7 +1127,7 @@ impl Chat {
                     can_add_fix:      None,
                     can_send_mention: None,
                     can_add_admin:    None,
-                    can_add_design:   action.clone(),
+                    can_add_design:   Some(action.clone()),
                     can_see_settings: None,
                     can_see_log:      None,
                 };
@@ -1146,7 +1146,7 @@ impl Chat {
                     can_send_mention: None,
                     can_add_admin:    None,
                     can_add_design:   None,
-                    can_see_settings: action.clone(),
+                    can_see_settings: Some(action.clone()),
                     can_see_log:      None,
                 };
                 diesel::insert_into(schema::chat_ie_settings::table)
@@ -1165,7 +1165,7 @@ impl Chat {
                     can_add_admin:    None,
                     can_add_design:   None,
                     can_see_settings: None,
-                    can_see_log:      action.clone(),
+                    can_see_log:      Some(action.clone()),
                 };
                 diesel::insert_into(schema::chat_ie_settings::table)
                     .values(&_new_perm)
