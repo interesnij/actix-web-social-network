@@ -171,13 +171,13 @@ impl PostList {
         return self.user_id == user.id;
     }
     pub fn is_community_list(&self, community: Community) -> bool {
-        return self.community_id == community.id;
+        return self.community_id.as_deref().unwrap() == community.id;
     }
     pub fn get_users_ids(&self) -> Vec<i32> {
         use crate::schema::user_post_list_collections::dsl::user_post_list_collections;
 
         let _connection = establish_connection();
-        let ids = moderateds
+        let ids = user_post_list_collections
             .filter(schema::user_post_list_collections::post_list_id.eq(self.id))
             .load::<UserPostListCollection>(&_connection)
             .expect("E.");
@@ -186,12 +186,13 @@ impl PostList {
         for _item in ids.iter() {
             stack.push(ids.user_id);
         };
+        return stack;
     }
     pub fn get_communities_ids(&self) -> Vec<i32> {
         use crate::schema::community_post_list_collections::dsl::community_post_list_collections;
 
         let _connection = establish_connection();
-        let ids = moderateds
+        let ids = community_post_list_collections
             .filter(schema::community_post_list_collections::post_list_id.eq(self.id))
             .load::<CommunityPostListCollection>(&_connection)
             .expect("E.");
@@ -200,6 +201,7 @@ impl PostList {
         for _item in ids.iter() {
             stack.push(ids.community_id);
         };
+        return stack;
     }
     pub fn is_user_collection_list(&self, user_id: i32) -> bool {
         return self.get_users_ids().iter().any(|&i| i==user_id);
@@ -257,7 +259,7 @@ impl PostList {
 
         let mut stack = Vec::new();
         for _item in items.iter() {
-            stack.push(_item.chat_user_id);
+            stack.push(_item.user_id);
         };
         return stack;
     }
@@ -273,7 +275,7 @@ impl PostList {
 
         let mut stack = Vec::new();
         for _item in items.iter() {
-            stack.push(_item.chat_user_id);
+            stack.push(_item.user_id);
         };
         return stack;
     }
