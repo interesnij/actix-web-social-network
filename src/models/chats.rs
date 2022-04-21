@@ -1372,7 +1372,7 @@ impl Message {
             preview = "Вложения".to_string();
         }
         else {
-            preview = parent.content[..80].to_string();
+            preview = parent.content.as_deref().unwrap()[..80].to_string(); 
         }
         let creator = users
             .filter(schema::users::id.eq(parent.user_id))

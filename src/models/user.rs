@@ -4396,7 +4396,7 @@ impl User {
         use crate::schema::community_follows::dsl::community_follows;
         use crate::models::{CommunityFollow, NewCommunityFollow};
 
-        if self.is_banned_from_community(community.id) || self.is_member_from_community(community.id) || self.is_follow_from_community(community.id) {
+        if self.is_banned_from_community(community.id) || self.is_member_of_community(community.id) || self.is_follow_from_community(community.id) {
             return false;
         }
         community.add_notify_subscriber(self.id);
@@ -4421,7 +4421,7 @@ impl User {
         use crate::schema::community_follows::dsl::community_follows;
         use crate::models::CommunityFollow;
 
-        if self.is_member_from_community(community.id) || !self.is_follow_from_community(community.id) {
+        if self.is_member_of_community(community.id) || !self.is_follow_from_community(community.id) {
             return false;
         }
         community.delete_notify_subscriber(self.id);
