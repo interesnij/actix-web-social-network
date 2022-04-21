@@ -442,6 +442,51 @@ impl Chat {
         }
         return false;
     }
+    pub fn get_fixed_messages(&self, user_id: i32) -> Message {
+        use crate::schema::messages::dsl::messages;
+
+        let _connection = establish_connection();
+        return messages
+            .filter(schema::messages::chat_id.eq(self.id))
+            .filter(schema::messages::types.eq_any(vec![7,8]))
+            .load::<Message>(&_connection)
+            .expect("E");
+    }
+    pub fn get_fix_message_count(&self, user_id: i32) -> usize {
+        use crate::schema::messages::dsl::messages;
+
+        let _connection = establish_connection();
+        return messages
+            .filter(schema::messages::chat_id.eq(self.id))
+            .filter(schema::messages::types.eq_any(vec![7,8]))
+            .load::<Message>(&_connection)
+            .expect("E")
+            .len();
+    }
+    pub fn get_fix_message_count_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru(
+            self.get_fix_message_count(),
+            " сообщение".to_string(),
+            " сообщения".to_string(),
+            " сообщений".to_string(),
+        );
+    }
+    pub fn get_first_fix_message(&self, user_id: i32) -> Message {
+        use crate::schema::messages::dsl::messages;
+
+        let _connection = establish_connection();
+        return messages
+            .filter(schema::messages::chat_id.eq(self.id))
+            .filter(schema::messages::types.eq_any(vec![7,8]))
+            .load::<Message>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+
 }
 
 /////// ChatUsers //////
@@ -472,6 +517,46 @@ pub struct NewChatUser {
     pub is_administrator: bool,
     pub created:          chrono::NaiveDateTime,
     pub no_disturb:       Option<chrono::NaiveDateTime>,
+}
+impl ChatUser {
+    pub fn create_membership(user: User, chat: Chat, is_administrator: bool) -> ChatUser {
+        use crate::schema::chat_users::dsl::chat_users;
+
+        let _connection = establish_connection();
+        diesel::update(&chat)
+            .set(schema::chats::members.eq(chat.members + 1))
+            .get_result::<Chat>(&_connection)
+            .expect("Error.");
+
+        let member_exists = chat_users
+            .filter(schema::chat_users::chat_id.eq(chat.id))
+            .filter(schema::chat_users::user_id.eq(user.id))
+            .filter(schema::chat_users::types.eq("b"))
+            .load::<ChatUser>(&_connection)
+            .expect("E");
+        if member_exists.len() > 0 {
+            let curr_member = member_exists..into_iter().nth(0).unwrap();
+            diesel::update(&curr_member)
+                .set(schema::chat_users::types.eq("a"))
+                .get_result::<ChatUser>(&_connection)
+                .expect("Error.");
+            return curr_member;
+        }
+        else {
+            let new_member_form = NewChatUser {
+                user_id: user.id,
+                chat_id: chat.id,
+                is_administrator: is_administrator,
+                created: chrono::Local::now().naive_utc(),
+                no_disturb: None,
+            };
+            let new_member = diesel::insert_into(schema::chat_users::table)
+                .values(&new_member_form)
+                .get_result::<ChatUser>(&_connection)
+                .expect("E.");
+            return new_member;
+        }
+    }
 }
 
 /////// ChatPerm //////
