@@ -722,7 +722,7 @@ pub struct NewChatIeSetting {
     // 32 Закрыто редактированное закрепленное
 
 
-#[derive(Debug, Serialize, Identifiable, Associations)]
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(Chat)]
 #[belongs_to(Post)]
