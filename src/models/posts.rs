@@ -11,7 +11,7 @@ use crate::schema::{
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
-//use crate::utils::establish_connection;
+use crate::utils::establish_connection;
 use crate::models::{
     User,
     Community,
@@ -114,6 +114,177 @@ pub struct NewPostList {
     pub create_el:       String,
     pub create_comment:  String,
     pub copy_el:         String,
+}
+impl PostList {
+    pub fn get_str_id(&self) -> String {
+        return self.id.to_string();
+    }
+    pub fn is_post_list(&self) -> bool {
+        return true;
+    }
+    pub fn get_code(&self) -> String {
+        return "lpo".to_string() + &self.get_str_id();
+    }
+    pub fn get_longest_penalties(&self) -> String {
+        use crate::schema::moderated_penalties::dsl::moderated_penalties;
+        use crate::models::ModeratedPenaltie;
+
+        let _connection = establish_connection();
+
+        let penaltie = moderated_penalties
+            .filter(schema::moderated_penalties::object_id.eq(self.id))
+            .filter(schema::moderated_penalties::types.eq(20))
+            .load::<ModeratedPenaltie>(&_connection)
+            .expect("E.")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        return penaltie.expiration.unwrap().format("%d/%m/%Y").to_string();
+    }
+    pub fn get_moderated_description(&self) -> String {
+        use crate::schema::moderateds::dsl::moderateds;
+        use crate::models::Moderated;
+
+        let _connection = establish_connection();
+
+        let moder = moderateds
+            .filter(schema::moderateds::object_id.eq(self.id))
+            .filter(schema::moderateds::types.eq(20))
+            .load::<Moderated>(&_connection)
+            .expect("E.")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        if moder.description.is_some() {
+            return moder.description.unwrap().to_string();
+        }
+        else {
+            return "Предупреждение за нарушение правил соцсети трезвый.рус".to_string();
+        }
+    }
+    pub fn get_description(&self) -> String {
+        return "<a data-postlist='".to_string() + &self.get_str_id() + &"' class='ajax'>".to_string() + &self.name + &"</a>".to_string();
+    }
+    pub fn is_user_list(&self, user: User) -> bool {
+        return self.user_id == user.id;
+    }
+    pub fn is_community_list(&self, community: Community) -> bool {
+        return self.community_id == community.id;
+    }
+    pub fn get_users_ids(&self) -> Vec<i32> {
+        use crate::schema::user_post_list_collections::dsl::user_post_list_collections;
+        use crate::models::UserPostListCollection;
+
+        let _connection = establish_connection();
+        let ids = moderateds
+            .filter(schema::user_post_list_collections::post_list_id.eq(self.id))
+            .load::<UserPostListCollection>(&_connection)
+            .expect("E.");
+
+        let mut stack = Vec::new();
+        for _item in ids.iter() {
+            stack.push(ids.user_id);
+        };
+    }
+    pub fn get_communities_ids(&self) -> Vec<i32> {
+        use crate::schema::community_post_list_collections::dsl::community_post_list_collections;
+        use crate::models::CommunityPostListCollection;
+
+        let _connection = establish_connection();
+        let ids = moderateds
+            .filter(schema::community_post_list_collections::post_list_id.eq(self.id))
+            .load::<CommunityPostListCollection>(&_connection)
+            .expect("E.");
+
+        let mut stack = Vec::new();
+        for _item in ids.iter() {
+            stack.push(ids.community_id);
+        };
+    }
+    pub fn is_user_collection_list(&self, user_id: i32) -> bool {
+        return self.get_users_ids().iter().any(|&i| i==user_id);
+    }
+    pub fn is_community_collection_list(&self, community_id: i32) -> bool {
+        return self.get_communities_ids().iter().any(|&i| i==user_id);
+    }
+    pub fn count_reposts(&self) -> String {
+        if self.repost > 0 {
+            return self.repost.to_string()
+        }
+        else {
+            return "".to_string()
+        }
+    }
+    pub fn get_items(&self) -> Vec<Post> {
+        use crate::schema::posts::dsl::posts;
+
+        let _connection = establish_connection();
+        return posts
+            .filter(schema::posts::post_list_id.eq(self.id))
+            .filter(schema::posts::types.eq("a"))
+            .order(schema::posts::created.desc())
+            .load::<Post>(&_connection)
+            .expect("E.");
+    }
+    pub fn count_items(&self) -> String {
+        if self.count > 0 {
+            return self.count.to_string()
+        }
+        else {
+            return "".to_string()
+        }
+    }
+    pub fn count_items_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            self.count,
+            " запись".to_string(),
+            " записи".to_string(),
+            " записей".to_string(),
+        );
+    }
+
+    pub fn get_can_see_el_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::post_list_perms::dsl::post_list_perms;
+
+        let _connection = establish_connection();
+        let items = post_list_perms
+            .filter(schema::post_list_perms::post_list_id.eq(self.id))
+            .filter(schema::post_list_perms::can_see_el.eq("b"))
+            .load::<PostListPerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.chat_user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_el_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::post_list_perms::dsl::post_list_perms;
+
+        let _connection = establish_connection();
+        let items = post_list_perms
+            .filter(schema::post_list_perms::post_list_id.eq(self.id))
+            .filter(schema::post_list_perms::can_see_el.eq("a"))
+            .load::<PostListPerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.chat_user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_el_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_el_exclude_users_ids());
+    }
+    pub fn get_can_see_el_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_el_include_users_ids());
+    }
 }
 
 /////// Post //////
