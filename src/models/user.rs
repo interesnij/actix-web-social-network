@@ -4393,7 +4393,6 @@ impl User {
         return stack;
     }
     pub fn follow_community(&self, community:Community) -> bool {
-        use crate::schema::community_follows::dsl::community_follows;
         use crate::models::{CommunityFollow, NewCommunityFollow};
 
         if self.is_banned_from_community(community.id) || self.is_member_of_community(community.id) || self.is_follow_from_community(community.id) {
@@ -4419,7 +4418,6 @@ impl User {
     }
     pub fn unfollow_community(&self, community:Community) -> bool {
         use crate::schema::community_follows::dsl::community_follows;
-        use crate::models::CommunityFollow;
 
         if self.is_member_of_community(community.id) || !self.is_follow_from_community(community.id) {
             return false;

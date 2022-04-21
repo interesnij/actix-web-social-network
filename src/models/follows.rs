@@ -56,7 +56,7 @@ pub struct NewCommunityFollow {
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(Community)]
-#[belongs_to(User, foreign_key="invite_creator")]
+//#[belongs_to(User, foreign_key="invite_creator")]
 pub struct CommunityInvite {
     pub id:             i32,
     pub user_id:        i32,
