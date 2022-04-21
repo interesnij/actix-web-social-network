@@ -626,7 +626,7 @@ impl Chat {
                 .filter(schema::message_options::user_id.eq(user_id))
                 .filter(schema::message_options::message_id.eq(_item))
                 .filter(schema::message_options::is_deleted.eq(true))
-                .load::<Message>(&_connection)
+                .load::<MessageOption>(&_connection)
                 .expect("E")
                 .len() == 0 {
                     stack.push(_item);
