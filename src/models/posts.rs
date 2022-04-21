@@ -171,7 +171,7 @@ impl PostList {
         return self.user_id == user.id;
     }
     pub fn is_community_list(&self, community: Community) -> bool {
-        return self.community_id.as_deref().unwrap() == community.id;
+        return self.community_id.unwrap() == community.id;
     }
     pub fn get_users_ids(&self) -> Vec<i32> {
         use crate::schema::user_post_list_collections::dsl::user_post_list_collections;
@@ -184,7 +184,7 @@ impl PostList {
 
         let mut stack = Vec::new();
         for _item in ids.iter() {
-            stack.push(ids.user_id);
+            stack.push(_item.user_id);
         };
         return stack;
     }
@@ -199,7 +199,7 @@ impl PostList {
 
         let mut stack = Vec::new();
         for _item in ids.iter() {
-            stack.push(ids.community_id);
+            stack.push(_item.community_id);
         };
         return stack;
     }
