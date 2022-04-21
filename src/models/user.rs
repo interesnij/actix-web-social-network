@@ -4437,11 +4437,13 @@ impl User {
     }
     pub fn join_community(&self, community:Community) -> bool {
         use crate::schema::communities_memberships::dsl::communities_memberships;
-        use crate::models::{CommunityMembership, NewCommunitiesMembership};
+        use crate::models::{CommunitiesMembership, NewCommunitiesMembership};
 
         if self.is_member_of_community(community.id) || self.is_banned_from_community(community.id) {
             return false;
         }
+        let _connection = establish_connection();
+
         if community.is_private() {
             use crate::schema::community_invites::dsl::community_invites;
             use crate::models::CommunityInvite;
@@ -4483,7 +4485,6 @@ impl User {
 
         community.add_new_subscriber(self.id);
 
-        let _connection = establish_connection();
         let new_member = NewCommunitiesMembership{
             user_id: self.id,
             community_id: community.id,
@@ -4506,6 +4507,7 @@ impl User {
         if !self.is_member_of_community(community.id) {
             return false;
         }
+        let _connection = establish_connection();
         community.delete_new_subscriber(self.id);
         diesel::delete(
             communities_memberships
