@@ -1,0 +1,4 @@
+-- Your SQL goes here
+
+ALTER TABLE community_privates ADD COLUMN new_field
+BOOLEAN NOT NULL DEFAULT TRUE;
