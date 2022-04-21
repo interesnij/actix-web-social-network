@@ -654,7 +654,7 @@ impl Chat {
         let _connection = establish_connection();
         let items = chat_ie_settings
             .filter(schema::chat_ie_settings::chat_user_id.eq_any(self.get_members_ids()))
-            .filter(schema::chat_ie_settings::can_see_member.eq("b"))
+            .filter(schema::chat_ie_settings::can_add_in_chat.eq("b"))
             .load::<ChatIeSetting>(&_connection)
             .expect("E");
 
@@ -670,7 +670,7 @@ impl Chat {
         let _connection = establish_connection();
         let items = chat_ie_settings
             .filter(schema::chat_ie_settings::chat_user_id.eq_any(self.get_members_ids()))
-            .filter(schema::chat_ie_settings::can_see_member.eq("a"))
+            .filter(schema::chat_ie_settings::can_add_in_chat.eq("a"))
             .load::<ChatIeSetting>(&_connection)
             .expect("E");
 
