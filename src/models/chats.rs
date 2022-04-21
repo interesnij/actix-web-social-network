@@ -733,6 +733,7 @@ pub struct ChatIeSetting {
     pub chat_user_id:     i32,
     pub can_add_in_chat:  Option<String>,
     pub can_add_fix:      Option<String>,
+    pub can_send_mention: Option<String>,
     pub can_add_admin:    Option<String>,
     pub can_add_design:   Option<String>,
     pub can_see_settings: Option<String>,
@@ -741,9 +742,10 @@ pub struct ChatIeSetting {
 #[derive(Deserialize, Insertable)]
 #[table_name="chat_ie_settings"]
 pub struct NewChatIeSetting {
-    pub chat_user_id:    i32,
+    pub chat_user_id:     i32,
     pub can_add_in_chat:  Option<String>,
     pub can_add_fix:      Option<String>,
+    pub can_send_mention: Option<String>,
     pub can_add_admin:    Option<String>,
     pub can_add_design:   Option<String>,
     pub can_see_settings: Option<String>,
