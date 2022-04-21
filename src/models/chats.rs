@@ -621,7 +621,7 @@ impl Chat {
             }
 
         let mut stack = Vec::new();
-        for _item in self.get_messages_ids().iter() {
+        for _item in self.get_messages_ids(user_id).iter() {
             if message_options
                 .filter(schema::message_options::user_id.eq(user_id))
                 .filter(schema::message_options::message_id.eq(_item))
