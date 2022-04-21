@@ -442,7 +442,7 @@ impl Chat {
         }
         return false;
     }
-    pub fn get_fixed_messages(&self) -> Message {
+    pub fn get_fixed_messages(&self) -> Vec<Message> {
         use crate::schema::messages::dsl::messages;
 
         let _connection = establish_connection();
