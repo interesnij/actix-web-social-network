@@ -579,7 +579,7 @@ impl Chat {
         }
         return false;
     }
-    pub fn get_messages_ids(&self, user_id: i32) -> Vec<i32> {
+    pub fn get_messages_ids(&self) -> Vec<i32> {
         use crate::schema::messages::dsl::messages;
 
         let _connection = establish_connection();
@@ -620,16 +620,23 @@ impl Chat {
                 return self.get_messages();
             }
 
+        let get_messages = messages
+            .filter(schema::messages::chat_id.eq(self.id))
+            .filter(schema::messages::types.lt(10))
+            .order(schema::messages::created.desc())
+            .load::<Message>(&_connection)
+            .expect("E");
+
         let mut stack = Vec::new();
-        for _item in self.get_messages_ids(user_id).iter() {
+        for _item in get_messages.iter() {
             if message_options
                 .filter(schema::message_options::user_id.eq(user_id))
-                .filter(schema::message_options::message_id.eq(_item))
+                .filter(schema::message_options::message_id.eq(_item.id))
                 .filter(schema::message_options::is_deleted.eq(true))
                 .load::<MessageOption>(&_connection)
                 .expect("E")
                 .len() == 0 {
-                    stack.push(_item);
+                    stack.push(_item.id);
                 }
 
         };
