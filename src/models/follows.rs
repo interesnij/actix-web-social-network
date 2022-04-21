@@ -3,6 +3,7 @@ use crate::schema::{
     community_follows,
     follows_visible_perms,
     follows_work_perms,
+    community_invites,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
