@@ -68,7 +68,6 @@ pub struct CommunityInvite {
 pub struct NewCommunityInvite {
     pub user_id:           i32,
     pub community_id:      i32,
-    pub invite_creator_id: i32,
     pub invite_creator:    i32,
 }
 
