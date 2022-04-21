@@ -2198,10 +2198,5 @@ allow_tables_to_appear_in_same_query!(
     user_profile_notifications,
     user_profiles,
     user_survey_list_collections,
-    user_survey_list_positions,
-    user_survey_notifications,
-    user_video_list_collections,
-    user_video_list_positions,
-    user_video_notifications,
     users,
 );
