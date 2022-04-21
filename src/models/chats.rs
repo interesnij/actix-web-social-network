@@ -1300,13 +1300,13 @@ impl Message {
         let transfers = self.get_transfers();
         let count = transfers.len();
         let text = get_count_for_ru(
-            count,
+            count.try_into().unwrap(),
             " сообщение".to_string(),
             " сообщения".to_string(),
             " сообщений".to_string(),
         );
         let mut text_2 = "".to_string();
-        if count > &1 {
+        if count > 1 {
             text_2 = "Пересланные сообщения".to_string();
         }
         else {
