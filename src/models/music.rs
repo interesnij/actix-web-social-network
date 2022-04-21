@@ -1,3 +1,5 @@
+use diesel::prelude::*;
+use crate::schema;
 use crate::schema::{
     sound_genres,
     artists,
@@ -10,7 +12,7 @@ use crate::schema::{
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
-//use crate::utils::establish_connection;
+use crate::utils::establish_connection;
 use crate::models::{User, Community};
 
 

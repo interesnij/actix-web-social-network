@@ -1,3 +1,4 @@
+use crate::schema;
 use crate::schema::{
     post_categories,
     post_lists,
@@ -12,6 +13,7 @@ use crate::schema::{
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
 use crate::utils::establish_connection;
+use diesel::prelude::*;
 use crate::models::{
     User,
     Community,
@@ -173,7 +175,6 @@ impl PostList {
     }
     pub fn get_users_ids(&self) -> Vec<i32> {
         use crate::schema::user_post_list_collections::dsl::user_post_list_collections;
-        use crate::models::UserPostListCollection;
 
         let _connection = establish_connection();
         let ids = moderateds
@@ -188,7 +189,6 @@ impl PostList {
     }
     pub fn get_communities_ids(&self) -> Vec<i32> {
         use crate::schema::community_post_list_collections::dsl::community_post_list_collections;
-        use crate::models::CommunityPostListCollection;
 
         let _connection = establish_connection();
         let ids = moderateds
