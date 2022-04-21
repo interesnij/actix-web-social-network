@@ -935,21 +935,8 @@ impl Chat {
         return get_users_from_ids(self.get_can_see_log_include_users_ids());
     }
 
-    pub fn get_private_model(&self) -> ChatIeSetting {
-        use crate::schema::chat_ie_settings::dsl::chat_ie_settings;
-
-        let _connection = establish_connection();
-        return chat_ie_settings
-            .filter(schema::chat_ie_settings::chat_id.eq(self.id))
-            .load::<ChatIeSetting>(&_connection)
-            .expect("E.")
-            .into_iter()
-            .nth(0)
-            .unwrap();
-    }
     pub fn is_user_can_add_in_chat(&self, user_id: i32) -> bool {
-        let private = self.get_private_model();
-        let char = private.can_add_in_chat;
+        let char = self.can_add_in_chat;
         return match char.as_str() {
             "a" => self.get_members_ids().iter().any(|&i| i==user_id),
             "b" => self.user_id == user_id,
@@ -960,8 +947,7 @@ impl Chat {
         };
     }
     pub fn is_user_can_add_fix(&self, user_id: i32) -> bool {
-        let private = self.get_private_model();
-        let char = private.can_add_fix;
+        let char = self.can_add_fix;
         return match char.as_str() {
             "a" => self.get_members_ids().iter().any(|&i| i==user_id),
             "b" => self.user_id == user_id,
@@ -972,8 +958,7 @@ impl Chat {
         };
     }
     pub fn is_user_can_send_mention(&self, user_id: i32) -> bool {
-        let private = self.get_private_model();
-        let char = private.can_send_mention;
+        let char = self.can_send_mention;
         return match char.as_str() {
             "a" => self.get_members_ids().iter().any(|&i| i==user_id),
             "b" => self.user_id == user_id,
@@ -984,8 +969,7 @@ impl Chat {
         };
     }
     pub fn is_user_can_add_admin(&self, user_id: i32) -> bool {
-        let private = self.get_private_model();
-        let char = private.can_add_admin;
+        let char = self.can_add_admin;
         return match char.as_str() {
             "a" => self.get_members_ids().iter().any(|&i| i==user_id),
             "b" => self.user_id == user_id,
@@ -996,8 +980,7 @@ impl Chat {
         };
     }
     pub fn is_user_can_add_design(&self, user_id: i32) -> bool {
-        let private = self.get_private_model();
-        let char = private.can_add_design;
+        let char = self.can_add_design;
         return match char.as_str() {
             "a" => self.get_members_ids().iter().any(|&i| i==user_id),
             "b" => self.user_id == user_id,
@@ -1008,8 +991,7 @@ impl Chat {
         };
     }
     pub fn is_user_can_see_settings(&self, user_id: i32) -> bool {
-        let private = self.get_private_model();
-        let char = private.can_see_settings;
+        let char = self.can_see_settings;
         return match char.as_str() {
             "a" => self.get_members_ids().iter().any(|&i| i==user_id),
             "b" => self.user_id == user_id,
@@ -1020,8 +1002,7 @@ impl Chat {
         };
     }
     pub fn is_user_can_see_log(&self, user_id: i32) -> bool {
-        let private = self.get_private_model();
-        let char = private.can_see_log;
+        let char = self.can_see_log;
         return match char.as_str() {
             "a" => self.get_members_ids().iter().any(|&i| i==user_id),
             "b" => self.user_id == user_id,
