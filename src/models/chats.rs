@@ -660,7 +660,7 @@ impl Chat {
 
         let mut stack = Vec::new();
         for _item in items.iter() {
-            stack.push(_item.user_id);
+            stack.push(_item.chat_user_id);
         };
         return stack;
     }
@@ -676,7 +676,7 @@ impl Chat {
 
         let mut stack = Vec::new();
         for _item in items.iter() {
-            stack.push(_item.user_id);
+            stack.push(_item.chat_user_id);
         };
         return stack;
     }
