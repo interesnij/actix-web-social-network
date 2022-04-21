@@ -963,7 +963,7 @@ impl Community {
         let _connection = establish_connection();
         let _good_lists  = good_lists
             .filter(schema::good_lists::community_id.eq(self.id))
-            .filter(schema::good_lists::types.eq("a"))
+            .filter(schema::good_lists::types.eq(1))
             .limit(1)
             .load::<GoodList>(&_connection)
             .expect("E.");
@@ -1016,7 +1016,7 @@ impl Community {
         let _connection = establish_connection();
         let _music_lists  = music_lists
             .filter(schema::music_lists::community_id.eq(self.id))
-            .filter(schema::music_lists::types.eq("a"))
+            .filter(schema::music_lists::types.eq(1))
             .limit(1)
             .load::<MusicList>(&_connection)
             .expect("E.");
@@ -1068,7 +1068,7 @@ impl Community {
         let _connection = establish_connection();
         let _video_lists  = video_lists
             .filter(schema::video_lists::community_id.eq(self.id))
-            .filter(schema::video_lists::types.eq("a"))
+            .filter(schema::video_lists::types.eq(1))
             .limit(1)
             .load::<VideoList>(&_connection)
             .expect("E.");
@@ -1121,7 +1121,7 @@ impl Community {
         let _connection = establish_connection();
         let _photo_lists  = photo_lists
             .filter(schema::photo_lists::community_id.eq(self.id))
-            .filter(schema::photo_lists::types.eq("a"))
+            .filter(schema::photo_lists::types.eq(1))
             .limit(1)
             .load::<PhotoList>(&_connection)
             .expect("E.");
@@ -1176,7 +1176,7 @@ impl Community {
         let _connection = establish_connection();
         let _photo_lists  = photo_lists
             .filter(schema::photo_lists::community_id.eq(self.id))
-            .filter(schema::photo_lists::types.eq("d"))
+            .filter(schema::photo_lists::types.eq(4))
             .limit(1)
             .load::<PhotoList>(&_connection)
             .expect("E.");
@@ -1201,7 +1201,7 @@ impl Community {
         let _connection = establish_connection();
         let _post_lists  = post_lists
             .filter(schema::post_lists::community_id.eq(self.id))
-            .filter(schema::post_lists::types.eq("a"))
+            .filter(schema::post_lists::types.eq(1))
             .limit(1)
             .load::<PostList>(&_connection)
             .expect("E.");
@@ -1254,7 +1254,7 @@ impl Community {
         let _connection = establish_connection();
         let _doc_lists  = doc_lists
             .filter(schema::doc_lists::community_id.eq(self.id))
-            .filter(schema::doc_lists::types.eq("a"))
+            .filter(schema::doc_lists::types.eq(1))
             .limit(1)
             .load::<DocList>(&_connection)
             .expect("E.");
@@ -1305,7 +1305,7 @@ impl Community {
         let _connection = establish_connection();
         let _survey_lists  = survey_lists
             .filter(schema::survey_lists::community_id.eq(self.id))
-            .filter(schema::survey_lists::types.eq("a"))
+            .filter(schema::survey_lists::types.eq(1))
             .limit(1)
             .load::<SurveyList>(&_connection)
             .expect("E.");

@@ -1426,7 +1426,7 @@ impl User {
         let _connection = establish_connection();
         let _good_lists  = good_lists
             .filter(schema::good_lists::user_id.eq(self.id))
-            .filter(schema::good_lists::types.eq("a"))
+            .filter(schema::good_lists::types.eq(1))
             .filter(schema::good_lists::community_id.is_null())
             .limit(1)
             .load::<GoodList>(&_connection)
@@ -1481,7 +1481,7 @@ impl User {
         let _connection = establish_connection();
         let _music_lists  = music_lists
             .filter(schema::music_lists::user_id.eq(self.id))
-            .filter(schema::music_lists::types.eq("a"))
+            .filter(schema::music_lists::types.eq(1))
             .filter(schema::music_lists::community_id.is_null())
             .limit(1)
             .load::<MusicList>(&_connection)
@@ -1535,7 +1535,7 @@ impl User {
         let _connection = establish_connection();
         let _video_lists  = video_lists
             .filter(schema::video_lists::user_id.eq(self.id))
-            .filter(schema::video_lists::types.eq("a"))
+            .filter(schema::video_lists::types.eq(1))
             .filter(schema::video_lists::community_id.is_null())
             .limit(1)
             .load::<VideoList>(&_connection)
@@ -1590,7 +1590,7 @@ impl User {
         let _connection = establish_connection();
         let _photo_lists  = photo_lists
             .filter(schema::photo_lists::user_id.eq(self.id))
-            .filter(schema::photo_lists::types.eq("a"))
+            .filter(schema::photo_lists::types.eq(1))
             .filter(schema::photo_lists::community_id.is_null())
             .limit(1)
             .load::<PhotoList>(&_connection)
@@ -1646,7 +1646,7 @@ impl User {
         let _connection = establish_connection();
         let _photo_lists  = photo_lists
             .filter(schema::photo_lists::user_id.eq(self.id))
-            .filter(schema::photo_lists::types.eq("d"))
+            .filter(schema::photo_lists::types.eq(4))
             .filter(schema::photo_lists::community_id.is_null())
             .limit(1)
             .load::<PhotoList>(&_connection)
@@ -1672,7 +1672,7 @@ impl User {
         let _connection = establish_connection();
         let _post_lists  = post_lists
             .filter(schema::post_lists::user_id.eq(self.id))
-            .filter(schema::post_lists::types.eq("a"))
+            .filter(schema::post_lists::types.eq(1))
             .filter(schema::post_lists::community_id.is_null())
             .limit(1)
             .load::<PostList>(&_connection)
@@ -1727,7 +1727,7 @@ impl User {
         let _connection = establish_connection();
         let _doc_lists  = doc_lists
             .filter(schema::doc_lists::user_id.eq(self.id))
-            .filter(schema::doc_lists::types.eq("a"))
+            .filter(schema::doc_lists::types.eq(1))
             .filter(schema::doc_lists::community_id.is_null())
             .limit(1)
             .load::<DocList>(&_connection)
@@ -1780,7 +1780,7 @@ impl User {
         let _connection = establish_connection();
         let _survey_lists  = survey_lists
             .filter(schema::survey_lists::user_id.eq(self.id))
-            .filter(schema::survey_lists::types.eq("a"))
+            .filter(schema::survey_lists::types.eq(1))
             .filter(schema::survey_lists::community_id.is_null())
             .limit(1)
             .load::<SurveyList>(&_connection)
