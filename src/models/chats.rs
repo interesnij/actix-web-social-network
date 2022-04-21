@@ -1283,6 +1283,41 @@ impl Message {
             .load::<MessageTransfer>(&_connection)
             .expect("E").len() > 0;
     }
+    pub fn get_transfers(&self) -> Vec<MessageTransfer> {
+        use crate::schema::message_transfers::dsl::message_transfers;
+
+        let _connection = establish_connection();
+        return message_transfers
+            .filter(schema::message_transfers::message_id.eq(self.id))
+            .load::<MessageTransfer>(&_connection)
+            .expect("E");
+    }
+    pub fn get_draft_transfers_block(&self) -> String {
+        use crate::schema::message_transfers::dsl::message_transfers;
+        use crate::utils::get_count_for_ru;
+
+        let _connection = establish_connection();
+        let transfers = self.get_transfers();
+        let count = &transfers.len();
+        let text = get_count_for_ru(
+            &count,
+            " сообщение".to_string(),
+            " сообщения".to_string(),
+            " сообщений".to_string(),
+        );
+        let mut text_2 = "".to_string();
+        if count > 1 {
+            text_2 = "Пересланные сообщения".to_string();
+        }
+        else {
+            text_2 = "Пересланное сообщение".to_string();
+        }
+        let mut inputs = "".to_string();
+        for i in transfers.iter() {
+            inputs += "<input type='hidden' name='transfer' value='" + &i.id.to_string() + &"' class='transfer'>";
+        }
+        return "<div><p>" + &text_2 + &"</p><div style='position:relative;padding-bottom:7px'><div><span class='pointer underline'>" + &text + &"</span><span class='remove_parent_block pointer message_form_parent_block'>x</span></div></div>" + &inputs + &"</div>";
+    }
 }
 
 /////// MessageOptions //////
