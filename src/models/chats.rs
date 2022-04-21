@@ -621,10 +621,10 @@ impl Chat {
             }
 
         let mut stack = Vec::new();
-        for _item in self.get_messages().iter() {
+        for _item in self.get_messages_ids().iter() {
             if message_options
                 .filter(schema::message_options::user_id.eq(user_id))
-                .filter(schema::message_options::message_id.eq(_item.id))
+                .filter(schema::message_options::message_id.eq(_item))
                 .filter(schema::message_options::is_deleted.eq(true))
                 .load::<Message>(&_connection)
                 .expect("E")
@@ -633,10 +633,12 @@ impl Chat {
                 }
 
         };
-        if stack.len() > 0 {
-            return stack;
-        }
-        return self.get_messages();
+        return messages
+            .filter(schema::messages::id.eq_any(stack))
+            .filter(schema::messages::types.lt(10))
+            .order(schema::messages::created.desc())
+            .load::<Message>(&_connection)
+            .expect("E");
     }
 }
 
@@ -720,7 +722,7 @@ pub struct NewChatIeSetting {
     // 32 Закрыто редактированное закрепленное
 
 
-#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
+#[derive(Debug, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(Chat)]
 #[belongs_to(Post)]
@@ -771,7 +773,7 @@ impl Message {
 pub struct MessageOption {
     pub id:            i32,
     pub message_id:    i32,
-    pub user_id:    i32,
+    pub user_id:       i32,
     pub is_deleted:    bool,
     pub is_favourite:  bool,
 }
@@ -779,7 +781,7 @@ pub struct MessageOption {
 #[table_name="message_options"]
 pub struct NewMessageOption {
     pub message_id:    i32,
-    pub user_id:    i32,
+    pub user_id:       i32,
     pub is_deleted:    bool,
     pub is_favourite:  bool,
 }
