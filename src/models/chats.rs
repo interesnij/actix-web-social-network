@@ -633,7 +633,10 @@ impl Chat {
                 }
 
         };
-        return stack;
+        if stack.len() > 0 {
+            return stack;
+        }
+        return self.get_messages();
     }
 }
 
@@ -718,8 +721,8 @@ pub struct NewChatIeSetting {
 
 
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
-#[belongs_to(Chat)]
 #[belongs_to(User)]
+#[belongs_to(Chat)]
 #[belongs_to(Post)]
 #[belongs_to(Sticker)]
 pub struct Message {
@@ -743,7 +746,7 @@ pub struct NewMessage {
     pub chat_id:       i32,
     pub parent_id:     Option<i32>,
     pub sticker_id:    Option<i32>,
-    pub post_id:     Option<i32>,
+    pub post_id:       Option<i32>,
     pub created:       chrono::NaiveDateTime,
     pub content:       Option<String>,
     pub types:         i16,
