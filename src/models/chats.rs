@@ -593,6 +593,7 @@ impl Chat {
         for _item in chat_messages.iter() {
             stack.push(_item.id);
         };
+        return stack;
     }
     pub fn get_messages(&self, user_id: i32) -> Vec<Message> {
         use crate::schema::messages::dsl::messages;
