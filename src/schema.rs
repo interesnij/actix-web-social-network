@@ -1993,4 +1993,4 @@ allow_tables_to_appear_in_same_query!(
     community_post_list_collections,
     community_post_list_positions,
     community_post_notifications,
-)
+);
