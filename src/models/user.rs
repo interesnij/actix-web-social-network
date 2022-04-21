@@ -4435,6 +4435,71 @@ impl User {
           .expect("E");
         return true;
     }
+    pub fn join_community(&self, community:Community) -> bool {
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+        use crate::models::{CommunityMembership, NewCommunitiesMembership};
+
+        if self.is_member_of_community(community.id) || self.is_banned_from_community(community.id) {
+            return false;
+        }
+        if community.is_private() {
+            use crate::schema::community_invites::dsl::community_invites;
+            use crate::models::CommunityInvite;
+
+            let invites = community_invites
+                .filter(schema::community_invites::user_id.eq(self.id))
+                .filter(schema::community_invites::community_id.eq(community.id))
+                .load::<CommunityInvite>(&_connection)
+                .expect("E");
+            if invites.len() == 0 {
+                return false;
+            }
+            diesel::delete(
+                community_invites
+                    .filter(schema::community_invites::user_id.eq(self.id))
+                    .filter(schema::community_invites::community_id.eq(community.id))
+              .execute(&_connection)
+              .expect("E");
+        }
+        else if community.is_close() {
+            use crate::schema::community_follows::dsl::community_follows;
+            use crate::models::CommunityFollow;
+
+            let follows = community_follows
+                .filter(schema::community_follows::user_id.eq(self.id))
+                .filter(schema::community_follows::community_id.eq(community.id))
+                .load::<CommunityFollow>(&_connection)
+                .expect("E");
+            if follows.len() == 0 {
+                return false;
+            }
+            diesel::delete(
+                community_follows
+                    .filter(schema::community_follows::user_id.eq(self.id))
+                    .filter(schema::community_follows::community_id.eq(community.id))
+              .execute(&_connection)
+              .expect("E");
+        }
+
+        community.add_new_subscriber(self.id);
+
+        let _connection = establish_connection();
+        let new_member = NewCommunitiesMembership{
+            user_id: self.id,
+            community_id: community.id,
+            is_administrator: false,
+            is_moderator: false,
+            is_editor: false,
+            is_advertiser: false,
+            created: chrono::Local::now().naive_utc(),
+            visited: 1,
+        };
+        diesel::insert_into(schema::communities_memberships::table)
+            .values(&new_member)
+            .get_result::<CommunitiesMembership>(&_connection)
+            .expect("Error.");
+        return true;
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]

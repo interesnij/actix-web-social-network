@@ -15,10 +15,10 @@ diesel::delete(blog_images.filter(schema::blog_images::blog.eq(_blog_id)))
   .expect("E");
 ============
 let new_tag = NewTagItems{
-        tag_id: *tag_id.1,
-        service_id: 0,
-        tag_created: chrono::Local::now().naive_utc(),
-    };
+    tag_id: *tag_id.1,
+    service_id: 0,
+    tag_created: chrono::Local::now().naive_utc(),
+};
 diesel::insert_into(schema::tags_items::table)
     .values(&new_tag)
     .get_result::<TagItems>(&_connection)
