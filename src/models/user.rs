@@ -4392,6 +4392,50 @@ impl User {
         };
         return stack;
     }
+    pub fn follow_community(&self, community:Community) -> bool {
+        use crate::schema::community_follows::dsl::community_follows;
+        use crate::models::CommunityFollow;
+
+        if self.is_banned_from_community(community.id) || self.is_member_from_community(community.id) || self.is_follow_from_community(community.id) {
+            return false;
+        }
+        community.add_notify_subscriber(self.pk);
+        if community.is_public() {
+            community.add_new_subscriber(self.pk);
+        }
+
+        let _connection = establish_connection();
+        let new_follow = NewCommunityFollow {
+                user_id: self.id,
+                community_id: community.id,
+                view: false,
+                visited: 0,
+            };
+        diesel::insert_into(schema::community_follows::table)
+            .values(&new_follow)
+            .get_result::<CommunityFollow>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn unfollow_community(&self, community:Community) -> bool {
+        use crate::schema::community_follows::dsl::community_follows;
+        use crate::models::CommunityFollow;
+
+        if self.is_member_from_community(community.id) || !self.is_follow_from_community(community.id) {
+            return false;
+        }
+        community.delete_notify_subscriber(self.pk);
+        community.delete_new_subscriber(self.pk);
+
+        let _connection = establish_connection();
+        diesel::delete(
+            community_follows.filter(schema::community_follows::community_id.eq(community.id))
+            community_follows.filter(schema::community_follows::user_id.eq(self.id))
+        )
+          .execute(&_connection)
+          .expect("E");
+        return true;
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]

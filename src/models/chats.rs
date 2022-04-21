@@ -1349,11 +1349,13 @@ impl Message {
         use crate::schema::messages::dsl::messages;
         use crate::schema::users::dsl::users;
 
+        let _connection = establish_connection();
+
         if !self.parent_id.is_some() {
             return "<div class='media p-1 pag'>Нет ответа!</div>".to_string();
         }
         let parent = messages
-            .filter(schema::messages::message_id.eq(self.parent_id))
+            .filter(schema::messages::id.eq(self.parent_id))
             .load::<Message>(&_connection)
             .expect("E")
             .into_iter()
