@@ -936,7 +936,7 @@ impl Chat {
     }
 
     pub fn is_user_can_add_in_chat(&self, user_id: i32) -> bool {
-        let char = self.can_add_members;
+        let char = &self.can_add_members;
         return match char.as_str() {
             "a" => self.get_members_ids().iter().any(|&i| i==user_id),
             "b" => self.user_id == user_id,
@@ -947,7 +947,7 @@ impl Chat {
         };
     }
     pub fn is_user_can_add_fix(&self, user_id: i32) -> bool {
-        let char = self.can_fix_item;
+        let char = &self.can_fix_item;
         return match char.as_str() {
             "a" => self.get_members_ids().iter().any(|&i| i==user_id),
             "b" => self.user_id == user_id,
@@ -958,7 +958,7 @@ impl Chat {
         };
     }
     pub fn is_user_can_send_mention(&self, user_id: i32) -> bool {
-        let char = self.can_mention;
+        let char = &self.can_mention;
         return match char.as_str() {
             "a" => self.get_members_ids().iter().any(|&i| i==user_id),
             "b" => self.user_id == user_id,
@@ -969,7 +969,7 @@ impl Chat {
         };
     }
     pub fn is_user_can_add_admin(&self, user_id: i32) -> bool {
-        let char = self.can_add_admin;
+        let char = &self.can_add_admin;
         return match char.as_str() {
             "a" => self.get_members_ids().iter().any(|&i| i==user_id),
             "b" => self.user_id == user_id,
@@ -980,7 +980,7 @@ impl Chat {
         };
     }
     pub fn is_user_can_add_design(&self, user_id: i32) -> bool {
-        let char = self.can_add_design;
+        let char = &self.can_add_design;
         return match char.as_str() {
             "a" => self.get_members_ids().iter().any(|&i| i==user_id),
             "b" => self.user_id == user_id,
@@ -991,7 +991,7 @@ impl Chat {
         };
     }
     pub fn is_user_can_see_settings(&self, user_id: i32) -> bool {
-        let char = self.can_see_settings;
+        let char = &self.can_see_settings;
         return match char.as_str() {
             "a" => self.get_members_ids().iter().any(|&i| i==user_id),
             "b" => self.user_id == user_id,
@@ -1002,7 +1002,7 @@ impl Chat {
         };
     }
     pub fn is_user_can_see_log(&self, user_id: i32) -> bool {
-        let char = self.can_see_log;
+        let char = &self.can_see_log;
         return match char.as_str() {
             "a" => self.get_members_ids().iter().any(|&i| i==user_id),
             "b" => self.user_id == user_id,
