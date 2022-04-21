@@ -1340,7 +1340,7 @@ impl Message {
     }
     pub fn get_count_attach(&self) -> usize {
         if self.attach.is_some() {
-            let self_attach = self.attach.as_deref().unwrap().split(",").collect();
+            let self_attach = self.attach.as_deref().unwrap().split(",").collect::<Vec<_>>();
             return self_attach.len();
         }
         return 0;
