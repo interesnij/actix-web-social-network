@@ -1355,7 +1355,7 @@ impl Message {
             return "<div class='media p-1 pag'>Нет ответа!</div>".to_string();
         }
         let parent = messages
-            .filter(schema::messages::id.eq(self.parent_id.as_deref().unwrap()))
+            .filter(schema::messages::id.eq(self.parent_id.unwrap()))
             .load::<Message>(&_connection)
             .expect("E")
             .into_iter()
