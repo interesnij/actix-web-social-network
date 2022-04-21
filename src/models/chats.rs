@@ -491,7 +491,7 @@ impl Chat {
         use crate::schema::chat_users::dsl::chat_users;
 
         let _connection = establish_connection();
-        diesel::update(&self)
+        diesel::update(self)
             .set(schema::chats::members.eq(self.members + 1))
             .get_result::<Chat>(&_connection)
             .expect("Error.");
@@ -612,7 +612,7 @@ pub struct NewChatUser {
 }
 impl ChatUser {
     pub fn beep(&self) -> bool {
-        self.no_disturb.as_ref().unwrap() > chrono::Local::now().naive_utc()
+        return self.no_disturb.as_ref().unwrap() > &chrono::Local::now().naive_utc();
     }
 }
 
