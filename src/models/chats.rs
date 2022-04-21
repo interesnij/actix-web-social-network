@@ -1300,13 +1300,13 @@ impl Message {
         let transfers = self.get_transfers();
         let count = &transfers.len();
         let text = get_count_for_ru(
-            &count,
+            count,
             " сообщение".to_string(),
             " сообщения".to_string(),
             " сообщений".to_string(),
         );
         let mut text_2 = "".to_string();
-        if count > 1 {
+        if count > &1 {
             text_2 = "Пересланные сообщения".to_string();
         }
         else {
@@ -1314,9 +1314,9 @@ impl Message {
         }
         let mut inputs = "".to_string();
         for i in transfers.iter() {
-            inputs += "<input type='hidden' name='transfer' value='" + &i.id.to_string() + &"' class='transfer'>";
+            inputs += "<input type='hidden' name='transfer' value='".to_owned() + &i.id.to_string() + &"' class='transfer'>";
         }
-        return "<div><p>" + &text_2 + &"</p><div style='position:relative;padding-bottom:7px'><div><span class='pointer underline'>" + &text + &"</span><span class='remove_parent_block pointer message_form_parent_block'>x</span></div></div>" + &inputs + &"</div>";
+        return "<div><p>".to_owned() + &text_2 + &"</p><div style='position:relative;padding-bottom:7px'><div><span class='pointer underline'>" + &text + &"</span><span class='remove_parent_block pointer message_form_parent_block'>x</span></div></div>" + &inputs + &"</div>";
     }
 }
 
