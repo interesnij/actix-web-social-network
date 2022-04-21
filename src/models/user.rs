@@ -1987,7 +1987,7 @@ impl User {
         let _connection = establish_connection();
         return post_lists
             .filter(schema::post_lists::user_id.eq(self.id))
-            .filter(schema::post_lists::types.eq_any(vec!["a", "b"]))
+            .filter(schema::post_lists::types.eq_any(10))
             .filter(schema::post_lists::community_id.is_null())
             .load::<PostList>(&_connection)
             .expect("E.");
@@ -1998,7 +1998,7 @@ impl User {
         let _connection = establish_connection();
         return post_lists
             .filter(schema::post_lists::community_id.eq_any(self.get_staffed_communities_ids()))
-            .filter(schema::post_lists::types.eq_any(vec!["a", "b"]))
+            .filter(schema::post_lists::types.eq(10))
             .load::<PostList>(&_connection)
             .expect("E.");
     }
@@ -2029,7 +2029,7 @@ impl User {
         let _connection = establish_connection();
         return photo_lists
             .filter(schema::photo_lists::user_id.eq(self.id))
-            .filter(schema::photo_lists::types.eq_any(vec!["a", "b", "d", "e"]))
+            .filter(schema::photo_lists::types.eqy(10))
             .filter(schema::photo_lists::community_id.is_null())
             .load::<PhotoList>(&_connection)
             .expect("E.");
@@ -2071,7 +2071,7 @@ impl User {
         let _connection = establish_connection();
         return music_lists
             .filter(schema::music_lists::user_id.eq(self.id))
-            .filter(schema::music_lists::types.eq_any(vec!["a", "b"]))
+            .filter(schema::music_lists::types.eq(10))
             .filter(schema::music_lists::community_id.is_null())
             .load::<MusicList>(&_connection)
             .expect("E.");
