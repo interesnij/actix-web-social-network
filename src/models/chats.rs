@@ -1355,7 +1355,7 @@ impl Message {
             return "<div class='media p-1 pag'>Нет ответа!</div>".to_string();
         }
         let parent = messages
-            .filter(schema::messages::id.eq(self.parent_id))
+            .filter(schema::messages::id.eq(self.parent_id.as_deref().unwrap()))
             .load::<Message>(&_connection)
             .expect("E")
             .into_iter()
@@ -1372,7 +1372,7 @@ impl Message {
             preview = "Вложения".to_string();
         }
         else {
-            preview = parent.content.as_deref().unwrap()[..80].to_string(); 
+            preview = parent.content.as_deref().unwrap()[..80].to_string();
         }
         let creator = users
             .filter(schema::users::id.eq(parent.user_id))
