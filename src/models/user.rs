@@ -4457,7 +4457,7 @@ impl User {
             diesel::delete(
                 community_invites
                     .filter(schema::community_invites::user_id.eq(self.id))
-                    .filter(schema::community_invites::community_id.eq(community.id))
+                    .filter(schema::community_invites::community_id.eq(community.id)))
               .execute(&_connection)
               .expect("E");
         }
@@ -4476,7 +4476,7 @@ impl User {
             diesel::delete(
                 community_follows
                     .filter(schema::community_follows::user_id.eq(self.id))
-                    .filter(schema::community_follows::community_id.eq(community.id))
+                    .filter(schema::community_follows::community_id.eq(community.id)))
               .execute(&_connection)
               .expect("E");
         }
@@ -4498,6 +4498,21 @@ impl User {
             .values(&new_member)
             .get_result::<CommunitiesMembership>(&_connection)
             .expect("Error.");
+        return true;
+    }
+    pub fn leave_community(&self, community:Community) -> bool {
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+
+        if !self.is_member_of_community(community.id) {
+            return false;
+        }
+        community.delete_new_subscriber(self.id);
+        diesel::delete(
+            communities_memberships
+                .filter(schema::communities_memberships::user_id.eq(self.id))
+                .filter(schema::communities_memberships::community_id.eq(community.id)))
+          .execute(&_connection)
+          .expect("E");
         return true;
     }
 }
