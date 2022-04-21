@@ -633,7 +633,7 @@ impl Chat {
                 }
 
         };
-        return message_stack;
+        return stack;
     }
 }
 
