@@ -936,7 +936,7 @@ impl Chat {
     }
 
     pub fn is_user_can_add_in_chat(&self, user_id: i32) -> bool {
-        let char = self.can_add_in_chat;
+        let char = self.can_add_members;
         return match char.as_str() {
             "a" => self.get_members_ids().iter().any(|&i| i==user_id),
             "b" => self.user_id == user_id,
@@ -947,7 +947,7 @@ impl Chat {
         };
     }
     pub fn is_user_can_add_fix(&self, user_id: i32) -> bool {
-        let char = self.can_add_fix;
+        let char = self.can_fix_item;
         return match char.as_str() {
             "a" => self.get_members_ids().iter().any(|&i| i==user_id),
             "b" => self.user_id == user_id,
@@ -958,7 +958,7 @@ impl Chat {
         };
     }
     pub fn is_user_can_send_mention(&self, user_id: i32) -> bool {
-        let char = self.can_send_mention;
+        let char = self.can_mention;
         return match char.as_str() {
             "a" => self.get_members_ids().iter().any(|&i| i==user_id),
             "b" => self.user_id == user_id,
