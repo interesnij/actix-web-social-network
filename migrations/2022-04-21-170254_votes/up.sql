@@ -142,20 +142,3 @@ CREATE TABLE support_user_votes (
       FOREIGN KEY(manager_id)
           REFERENCES users(id)
 );
-
-------------------------------
-
-CREATE TABLE support_user_votes (
-  id          SERIAL PRIMARY KEY,
-  vote        SMALLINT NOT NULL,
-  user_id     INT NOT NULL,
-  manager_id  INT NOT NULL,
-
-  CONSTRAINT fk_video_comment_votes_user
-      FOREIGN KEY(user_id)
-          REFERENCES users(id),
-
-  CONSTRAINT fk_video_comment_votes_manager
-      FOREIGN KEY(manager_id)
-          REFERENCES users(id)
-);
