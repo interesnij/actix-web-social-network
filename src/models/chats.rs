@@ -352,7 +352,8 @@ impl Chat {
                 .filter(schema::messages::chat_id.eq(self.id))
                 .filter(schema::messages::types.lt(10))
                 .load::<Message>(&_connection)
-                .expect("E").len() > 0;
+                .expect("E")
+                .len() > 0;
     }
     pub fn create_administrator(&self, user: User) -> bool {
         use crate::schema::chat_users::dsl::chat_users;
@@ -577,17 +578,6 @@ impl Chat {
             return true;
         }
         return false;
-    }
-    pub fn is_not_empty(&self) -> bool {
-        use crate::schema::messages::dsl::messages;
-
-        let _connection = establish_connection();
-        return messages
-            .filter(schema::messages::chat_id.eq(self.id))
-            .filter(schema::messages::types.lt(10))
-            .load::<Message>(&_connection)
-            .expect("E")
-            .len() > 0;
     }
     pub fn get_messages_ids(&self, user_id: i32) -> Vec<i32> {
         use crate::schema::messages::dsl::messages;
