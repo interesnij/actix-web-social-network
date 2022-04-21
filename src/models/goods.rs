@@ -85,7 +85,7 @@ pub struct NewGoodList {
     pub name:            String,
     pub community_id:    Option<i32>,
     pub user_id:         i32,
-    pub i16:             String,
+    pub types:           i16,
     pub description:     Option<String>,
     pub created:         chrono::NaiveDateTime,
     pub count:           i32,
