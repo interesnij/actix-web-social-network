@@ -442,7 +442,7 @@ impl Chat {
         }
         return false;
     }
-    pub fn get_fixed_messages(&self, user_id: i32) -> Message {
+    pub fn get_fixed_messages(&self) -> Message {
         use crate::schema::messages::dsl::messages;
 
         let _connection = establish_connection();
@@ -452,7 +452,7 @@ impl Chat {
             .load::<Message>(&_connection)
             .expect("E");
     }
-    pub fn get_fix_message_count(&self, user_id: i32) -> usize {
+    pub fn get_fix_message_count(&self) -> usize {
         use crate::schema::messages::dsl::messages;
 
         let _connection = establish_connection();
