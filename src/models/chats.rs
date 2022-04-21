@@ -578,7 +578,42 @@ impl Chat {
         }
         return false;
     }
+    pub fn is_not_empty(&self) -> bool {
+        use crate::schema::messages::dsl::messages;
 
+        let _connection = establish_connection();
+        return messages
+            .filter(schema::messages::chat_id.eq(self.id))
+            .filter(schema::messages::types.lt(10))
+            .load::<Message>(&_connection)
+            .expect("E")
+            .len() > 0;
+    }
+    pub fn get_messages_ids(&self, user_id: i32) -> Vec<i32> {
+        use crate::schema::messages::dsl::messages;
+
+        let _connection = establish_connection();
+        let chat_messages = messages
+            .filter(schema::messages::chat_id.eq(self.id))
+            .filter(schema::messages::types.lt(10))
+            .load::<Message>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in chat_messages.iter() {
+            stack.push(_item.id);
+        };
+    }
+    pub fn get_messages(&self, user_id: i32) -> Vec<Message> {
+        use crate::schema::messages::dsl::messages;
+
+        let _connection = establish_connection();
+        return messages
+            .filter(schema::messages::chat_id.eq(self.id))
+            .filter(schema::messages::types.lt(10))
+            .load::<Message>(&_connection)
+            .expect("E");
+    }
 }
 
 /////// ChatUsers //////
