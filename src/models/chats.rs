@@ -1387,7 +1387,7 @@ impl Message {
             &"style='border-left: 1px solid rgba(0, 0, 0, 0.7)'><span style='padding-top: 6px;'><a href='" +
             &creator.get_link() +
             &"' class='ajax'>" +
-            &"' class='ajax'>"ж
+            &"' class='ajax'>";
     }
 }
 
