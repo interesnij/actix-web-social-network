@@ -207,7 +207,7 @@ impl PostList {
         return self.get_users_ids().iter().any(|&i| i==user_id);
     }
     pub fn is_community_collection_list(&self, community_id: i32) -> bool {
-        return self.get_communities_ids().iter().any(|&i| i==user_id);
+        return self.get_communities_ids().iter().any(|&i| i==community_id);
     }
     pub fn count_reposts(&self) -> String {
         if self.repost > 0 {
