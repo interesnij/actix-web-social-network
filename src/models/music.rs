@@ -195,6 +195,7 @@ pub struct NewMusicList {
 pub struct EditMusicList {
     pub name:            String,
     pub description:     Option<String>,
+    pub image:           Option<String>,
     pub can_see_el:      String,
     pub create_el:       String,
     pub copy_el:         String,
