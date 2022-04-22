@@ -480,7 +480,7 @@ impl PostList {
 
     pub fn is_user_can_see_el(&self, user_id: i32) -> bool {
         let char = &self.can_see_el;
-        if self.user_id == user_id || char == "a".to_string() {
+        if self.user_id == user_id || char == &"a".to_string() {
             return true;
         }
 
