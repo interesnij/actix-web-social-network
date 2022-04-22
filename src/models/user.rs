@@ -1989,11 +1989,12 @@ impl User {
             .filter(schema::post_lists::user_id.eq(self.id))
             .filter(schema::post_lists::types.lt(10))
             .filter(schema::post_lists::community_id.is_null())
+            .order(schema::post_lists::created.desc())
             .load::<PostList>(&_connection)
             .expect("E.");
     }
     pub fn get_post_lists_new_position(&self) -> i16 {
-        return self.get_post_lists().iter().count() + 1;
+        return (self.get_post_lists().iter().count() + 1).try_into().unwrap();
     }
     pub fn get_post_lists_from_staffed_comunities(&self) -> Vec<PostList> {
         use crate::schema::post_lists::dsl::post_lists;
@@ -2002,6 +2003,8 @@ impl User {
         return post_lists
             .filter(schema::post_lists::community_id.eq_any(self.get_staffed_communities_ids()))
             .filter(schema::post_lists::types.lt(10))
+            .order(schema::post_lists::created.desc())
+            .order(schema::post_lists::created.desc())
             .load::<PostList>(&_connection)
             .expect("E.");
     }
@@ -2013,11 +2016,12 @@ impl User {
             .filter(schema::survey_lists::user_id.eq(self.id))
             .filter(schema::survey_lists::types.lt(10))
             .filter(schema::survey_lists::community_id.is_null())
+            .order(schema::survey_lists::created.desc())
             .load::<SurveyList>(&_connection)
             .expect("E.");
     }
     pub fn get_survey_lists_new_position(&self) -> i16 {
-        return self.get_survey_lists().iter().count() + 1;
+        return (self.get_survey_lists().iter().count() + 1).try_into().unwrap();
     }
     pub fn get_survey_lists_from_staffed_comunities(&self) -> Vec<SurveyList> {
         use crate::schema::survey_lists::dsl::survey_lists;
@@ -2026,6 +2030,7 @@ impl User {
         return survey_lists
             .filter(schema::survey_lists::community_id.eq_any(self.get_staffed_communities_ids()))
             .filter(schema::survey_lists::types.lt(10))
+            .order(schema::survey_lists::created.desc())
             .load::<SurveyList>(&_connection)
             .expect("E.");
     }
@@ -2037,11 +2042,12 @@ impl User {
             .filter(schema::photo_lists::user_id.eq(self.id))
             .filter(schema::photo_lists::types.lt(10))
             .filter(schema::photo_lists::community_id.is_null())
+            .order(schema::photo_lists::created.desc())
             .load::<PhotoList>(&_connection)
             .expect("E.");
     }
     pub fn get_photo_lists_new_position(&self) -> i16 {
-        return self.get_photo_lists().iter().count() + 1;
+        return (self.get_photo_lists().iter().count() + 1).try_into().unwrap();
     }
     pub fn get_photo_lists_from_staffed_comunities(&self) -> Vec<PhotoList> {
         use crate::schema::photo_lists::dsl::photo_lists;
@@ -2050,6 +2056,7 @@ impl User {
         return photo_lists
             .filter(schema::photo_lists::community_id.eq_any(self.get_staffed_communities_ids()))
             .filter(schema::photo_lists::types.lt(10))
+            .order(schema::photo_lists::created.desc())
             .load::<PhotoList>(&_connection)
             .expect("E.");
     }
@@ -2061,11 +2068,12 @@ impl User {
             .filter(schema::video_lists::user_id.eq(self.id))
             .filter(schema::video_lists::types.lt(10))
             .filter(schema::video_lists::community_id.is_null())
+            .order(schema::video_lists::created.desc())
             .load::<VideoList>(&_connection)
             .expect("E.");
     }
     pub fn get_video_lists_new_position(&self) -> i16 {
-        return self.get_video_lists().iter().count() + 1;
+        return (self.get_video_lists().iter().count() + 1).try_into().unwrap();
     }
     pub fn get_video_lists_from_staffed_comunities(&self) -> Vec<VideoList> {
         use crate::schema::video_lists::dsl::video_lists;
@@ -2089,7 +2097,7 @@ impl User {
             .expect("E.");
     }
     pub fn get_music_lists_new_position(&self) -> i16 {
-        return self.get_music_lists().iter().count() + 1;
+        return (self.get_music_lists().iter().count() + 1).try_into().unwrap();
     }
     pub fn get_music_lists_from_staffed_comunities(&self) -> Vec<MusicList> {
         use crate::schema::music_lists::dsl::music_lists;

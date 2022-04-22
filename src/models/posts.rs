@@ -1172,6 +1172,49 @@ impl PostList {
         }
         return self;
     }
+    pub fn get_order(&self) -> i32 {
+        use crate::schema::user_post_list_positions::dsl::user_post_list_positions;
+        use crate::models::UserPostListPosition;
+
+        let _connection = establish_connection();
+        let list_positions = user_post_list_positions
+            .filter(schema::user_post_list_positions::list_id.eq(self.id))
+            .filter(schema::user_post_list_positions::types.eq("a"))
+            .load::<UserPostListPosition>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+    pub fn add_in_community_collections(&self, community: Community) -> bool {
+        use crate::schema::community_post_list_collections::dsl::community_post_list_collections;
+        use crate::schema::community_post_list_positions::dsl::community_post_list_positions;
+
+        if self.community_id.is_some() && self.community_id.unwrap() == community.id {
+            return false;
+        }
+        let _connection = establish_connection();
+        let new_item = NewCommunityPostListCollection {
+            community_id: community.id,
+            post_list_id: self.id,
+        };
+        diesel::insert_into(schema::community_post_list_collections::table)
+            .values(&new_item)
+            .get_result::<CommunityPostListCollection>(&_connection)
+            .expect("Error.");
+
+        let new_pos = NewCommunityPostListPosition {
+            community_id: community.id,
+            list_id:      self.id,
+            position:     self.get_post_lists_new_position(),
+            types:        "a".to_string(),
+        };
+        diesel::insert_into(schema::community_post_list_positions::table)
+            .values(&new_pos)
+            .get_result::<NewCommunityPostListPosition>(&_connection)
+            .expect("Error.");
+        return true;
+    }
 }
 
 /////// Post //////

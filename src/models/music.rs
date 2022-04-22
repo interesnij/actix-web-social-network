@@ -185,6 +185,15 @@ pub struct NewMusicList {
     pub create_el:    String,
     pub copy_el:      String,
 }
+#[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
+#[table_name="post_lists"]
+pub struct EditMusicList {
+    pub name:            String,
+    pub description:     Option<String>,
+    pub can_see_el:      String,
+    pub create_el:       String,
+    pub copy_el:         String,
+}
 
 /////// Music //////
 

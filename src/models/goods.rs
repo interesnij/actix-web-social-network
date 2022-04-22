@@ -100,6 +100,17 @@ pub struct NewGoodList {
     pub create_comment:  String,
     pub copy_el:         String,
 }
+#[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
+#[table_name="good_lists"]
+pub struct EditGoodList {
+    pub name:            String,
+    pub description:     Option<String>,
+    pub can_see_el:      String,
+    pub can_see_comment: String,
+    pub create_el:       String,
+    pub create_comment:  String,
+    pub copy_el:         String,
+}
 
 /////// Good //////
 

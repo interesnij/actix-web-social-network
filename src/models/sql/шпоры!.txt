@@ -14,7 +14,7 @@ diesel::delete(blog_images.filter(schema::blog_images::blog.eq(_blog_id)))
   .execute(&_connection)
   .expect("E");
 ============
-let new_tag = NewTagItems{
+let new_tag = NewTagItems {
     tag_id: *tag_id.1,
     service_id: 0,
     tag_created: chrono::Local::now().naive_utc(),

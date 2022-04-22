@@ -92,6 +92,15 @@ pub struct NewDocList {
     pub create_el:       String,
     pub copy_el:         String,
 }
+#[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
+#[table_name="doc_lists"]
+pub struct EditDocList {
+    pub name:            String,
+    pub description:     Option<String>,
+    pub can_see_el:      String,
+    pub create_el:       String,
+    pub copy_el:         String,
+}
 
 /////// Doc //////
 
