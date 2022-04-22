@@ -1193,7 +1193,7 @@ impl PostList {
         use crate::schema::community_post_list_positions::dsl::community_post_list_positions;
         use crate::models::NewCommunityPostListPosition;
 
-        if self.community_id.is_some() && self.community_id.unwrap() == community.id {
+        if self.get_communities_ids.iter().any(|&i| i==community.id) && self.community_id.is_some() && self.community_id.unwrap() == community.id {
             return false;
         }
         let _connection = establish_connection();
@@ -1213,8 +1213,38 @@ impl PostList {
             types:        "a".to_string(),
         };
         diesel::insert_into(schema::community_post_list_positions::table)
-            .values(&new_pos) 
+            .values(&new_pos)
             .get_result::<CommunityPostListPosition>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn add_in_user_collections(&self, user: User) -> bool {
+        use crate::schema::user_post_list_collections::dsl::user_post_list_collections;
+        use crate::schema::user_post_list_positions::dsl::user_post_list_positions;
+        use crate::models::NewUserPostListPosition;
+
+        if self.get_users_ids.iter().any(|&i| i==user.id) && self.user_id.is_some() && self.user_id.unwrap() == user.id {
+            return false;
+        }
+        let _connection = establish_connection();
+        let new_item = NewUserPostListCollection {
+            user_id: user.id,
+            post_list_id: self.id,
+        };
+        diesel::insert_into(schema::user_post_list_collections::table)
+            .values(&new_item)
+            .get_result::<UserPostListCollection>(&_connection)
+            .expect("Error.");
+
+        let new_pos = NewUserPostListPosition {
+            user_id:  user.id,
+            list_id:  self.id,
+            position: user.get_post_lists_new_position(),
+            types:    "a".to_string(),
+        };
+        diesel::insert_into(schema::user_post_list_positions::table)
+            .values(&new_pos)
+            .get_result::<UserPostListPosition>(&_connection)
             .expect("Error.");
         return true;
     }
