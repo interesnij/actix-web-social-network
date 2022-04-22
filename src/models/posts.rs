@@ -1209,7 +1209,7 @@ impl PostList {
         let new_pos = NewCommunityPostListPosition {
             community_id: community.id,
             list_id:      self.id,
-            position:     &self.get_post_lists_new_position(),
+            position:     community.get_post_lists_new_position(),
             types:        "a".to_string(),
         };
         diesel::insert_into(schema::community_post_list_positions::table)
