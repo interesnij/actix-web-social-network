@@ -1374,7 +1374,7 @@ impl PostList {
             return post_lists
                 .filter(schema::post_lists::id.eq_any(stack))
                 .filter(schema::post_lists::types.lt(10))
-                .load::<UserPost>(&_connection)
+                .load::<PostList>(&_connection)
                 .expect("E.");
         }
 
@@ -1397,7 +1397,7 @@ impl PostList {
         return post_lists
             .filter(schema::post_lists::id.eq_any(stack))
             .filter(schema::post_lists::types.lt(10))
-            .load::<UserPost>(&_connection)
+            .load::<PostList>(&_connection)
             .expect("E.");
     }
 }
