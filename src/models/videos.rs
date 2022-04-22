@@ -666,7 +666,6 @@ impl VideoList {
                 user_id: creator.id,
                 types: 2,
                 description: description,
-                cover_video: None,
                 created: chrono::Local::now().naive_utc(),
                 count: 0,
                 repost: 0,
