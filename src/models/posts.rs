@@ -451,6 +451,62 @@ impl PostList {
         use crate::utils::get_users_from_ids;
         return get_users_from_ids(self.get_copy_el_include_users_ids());
     }
+    pub fn get_community(&self) -> Community {
+        use crate::schema::communitys::dsl::communitys;
+
+        let _connection = establish_connection();
+        return communitys
+            .filter(schema::communitys::id.eq(self.community_id))
+            .filter(schema::communitys::types.lt(10))
+            .load::<Community>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+    pub fn get_creator(&self) -> User {
+        use crate::schema::users::dsl::users;
+
+        let _connection = establish_connection();
+        return users
+            .filter(schema::users::id.eq(self.user_id))
+            .filter(schema::users::types.lt(10))
+            .load::<User>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+
+    pub fn is_user_can_see_el(&self, user_id: i32) -> bool {
+        let char = &self.can_see_el;
+        if self.user_id == user_id || char == "a".to_string() {
+            return true;
+        }
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            return match char.as_str() {
+                "f" => community.get_members_ids().iter().any(|&i| i==user_id),
+                "h" => community.get_administrators_ids().iter().any(|&i| i==user_id),
+                "g" => community.user_id == user_id,
+                "i" => !community.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
+                "j" => community.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
+                _ => false,
+            };
+        }
+        else {
+            let creator = self.get_creator();
+            return match char.as_str() {
+                "b" => creator.get_friends_ids().iter().any(|&i| i==user_id),
+                "c" => creator.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+                "g" => creator.id == user_id,
+                "d" => !creator.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
+                "e" => creator.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
+                _ => false,
+            };
+        }
+    }
 }
 
 /////// Post //////
