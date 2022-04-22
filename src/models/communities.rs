@@ -1508,7 +1508,7 @@ impl Community {
             .load::<PostList>(&_connection)
             .expect("E.");
     }
-    pub fn get_post_lists_new_position(&self) -> i32 {
+    pub fn get_post_lists_new_position(&self) -> i16 {
         let mut count = 1;
         for i in self.get_post_lists().iter() {
             count += 1;
