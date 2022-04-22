@@ -579,9 +579,7 @@ impl DocList {
                         user_id:      user_id,
                         doc_list_id:  new_id,
                         can_see_item: Some("b".to_string()),
-                        can_see_comment: None,
                         create_item: None,
-                        create_comment: None,
                         can_copy: None,
                     };
                     diesel::insert_into(schema::doc_list_perms::table)
@@ -598,9 +596,7 @@ impl DocList {
                         user_id:      user_id,
                         doc_list_id: new_id,
                         can_see_item: Some("a".to_string()),
-                        can_see_comment: None,
                         create_item: None,
-                        create_comment: None,
                         can_copy: None,
                     };
                     diesel::insert_into(schema::doc_list_perms::table)
@@ -618,9 +614,7 @@ impl DocList {
                         user_id:      user_id,
                         doc_list_id: new_id,
                         can_see_item: None,
-                        can_see_comment: None,
                         create_item: Some("b".to_string()),
-                        create_comment: None,
                         can_copy: None,
                     };
                     diesel::insert_into(schema::doc_list_perms::table)
@@ -637,9 +631,7 @@ impl DocList {
                         user_id:      user_id,
                         doc_list_id: new_id,
                         can_see_item: None,
-                        can_see_comment: None,
                         create_item: Some("a".to_string()),
-                        create_comment: None,
                         can_copy: None,
                     };
                     diesel::insert_into(schema::doc_list_perms::table)
@@ -657,9 +649,7 @@ impl DocList {
                         user_id:      user_id,
                         doc_list_id: new_id,
                         can_see_item: None,
-                        can_see_comment: None,
                         create_item: None,
-                        create_comment: None,
                         can_copy: Some("b".to_string()),
                     };
                     diesel::insert_into(schema::doc_list_perms::table)
@@ -676,9 +666,7 @@ impl DocList {
                         user_id:      user_id,
                         doc_list_id: new_id,
                         can_see_item: None,
-                        can_see_comment: None,
                         create_item: None,
-                        create_comment: None,
                         can_copy: Some("a".to_string()),
                     };
                     diesel::insert_into(schema::doc_list_perms::table)
@@ -743,9 +731,7 @@ impl DocList {
                         user_id:      user_id,
                         doc_list_id: self.id,
                         can_see_item: Some("a".to_string()),
-                        can_see_comment: None,
                         create_item: None,
-                        create_comment: None,
                         can_copy: None,
                     };
                     diesel::insert_into(schema::doc_list_perms::table)
@@ -763,9 +749,7 @@ impl DocList {
                         user_id:      user_id,
                         doc_list_id: self.id,
                         can_see_item: None,
-                        can_see_comment: None,
                         create_item: Some("b".to_string()),
-                        create_comment: None,
                         can_copy: None,
                     };
                     diesel::insert_into(schema::doc_list_perms::table)
@@ -782,9 +766,7 @@ impl DocList {
                         user_id:      user_id,
                         doc_list_id: self.id,
                         can_see_item: None,
-                        can_see_comment: None,
                         create_item: Some("a".to_string()),
-                        create_comment: None,
                         can_copy: None,
                     };
                     diesel::insert_into(schema::doc_list_perms::table)
@@ -802,9 +784,7 @@ impl DocList {
                         user_id:      user_id,
                         doc_list_id: self.id,
                         can_see_item: None,
-                        can_see_comment: None,
                         create_item: None,
-                        create_comment: None,
                         can_copy: Some("b".to_string()),
                     };
                     diesel::insert_into(schema::doc_list_perms::table)
@@ -821,9 +801,7 @@ impl DocList {
                         user_id:      user_id,
                         doc_list_id: self.id,
                         can_see_item: None,
-                        can_see_comment: None,
                         create_item: None,
-                        create_comment: None,
                         can_copy: Some("a".to_string()),
                     };
                     diesel::insert_into(schema::doc_list_perms::table)

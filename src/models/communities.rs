@@ -1582,6 +1582,20 @@ impl Community {
     pub fn get_good_lists_new_position(&self) -> i16 {
         return (self.get_good_lists().iter().count() + 1).try_into().unwrap();
     }
+    pub fn get_doc_lists(&self) -> Vec<DocList> {
+        use crate::schema::doc_lists::dsl::doc_lists;
+
+        let _connection = establish_connection();
+        return doc_lists
+            .filter(schema::doc_lists::community_id.eq(self.id))
+            .filter(schema::doc_lists::types.lt(10))
+            .order(schema::doc_lists::created.desc())
+            .load::<DocList>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_doc_lists_new_position(&self) -> i16 {
+        return (self.get_doc_lists().iter().count() + 1).try_into().unwrap();
+    }
     pub fn get_6_photos(&self) -> Vec<Photo> {
         use crate::schema::photos::dsl::photos;
 
