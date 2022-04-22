@@ -1580,7 +1580,7 @@ impl Community {
             .expect("E.");
     }
     pub fn get_good_lists_new_position(&self) -> i16 {
-        (self.get_good_lists().iter().count() + 1).try_into().unwrap();
+        return (self.get_good_lists().iter().count() + 1).try_into().unwrap();
     }
     pub fn get_6_photos(&self) -> Vec<Photo> {
         use crate::schema::photos::dsl::photos;

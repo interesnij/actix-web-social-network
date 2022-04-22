@@ -18,6 +18,8 @@ use crate::models::{
     User,
     Community,
     Sticker,
+    UserPostListPosition,
+    CommunityPostListPosition,
 };
 
 
@@ -1172,12 +1174,12 @@ impl PostList {
         }
         return self;
     }
-    pub fn get_order(&self) -> i32 {
+    pub fn get_order(&self) -> UserPostListPosition {
         use crate::schema::user_post_list_positions::dsl::user_post_list_positions;
         use crate::models::UserPostListPosition;
 
         let _connection = establish_connection();
-        let list_positions = user_post_list_positions
+        return user_post_list_positions
             .filter(schema::user_post_list_positions::list_id.eq(self.id))
             .filter(schema::user_post_list_positions::types.eq("a"))
             .load::<UserPostListPosition>(&_connection)
