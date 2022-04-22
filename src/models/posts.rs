@@ -1355,6 +1355,42 @@ impl PostList {
         };
         return stack;
     }
+    pub fn get_user_lists(user_pk: i32) -> Vec<PostList> {
+        use crate::schema::user_post_list_collections::dsl::user_post_list_collections;
+        use crate::schema::user_post_list_positions::dsl::user_post_list_positions;
+        use crate::schema::post_lists::dsl::post_lists;
+
+        let position_lists = user_post_list_positions
+            .filter(schema::user_post_list_positions::user_id.eq(user_pk))
+            .filter(schema::user_post_list_positions::types.eq("a"))
+            .load::<UserPostListPosition>(&_connection)
+            .expect("E.");
+        if position_lists.len() > 0 {
+            return position_lists;
+        }
+
+        let mut stack = Vec::new();
+        let user_lists = post_lists
+            .filter(schema::post_lists::user_id.eq(user_pk))
+            .filter(schema::post_lists::types.lt(10))
+            .load::<UserPostListPosition>(&_connection)
+            .expect("E.");
+        for _item in user_lists.iter() {
+            stack.push(_item.id);
+        };
+        let user_collections = user_post_list_collections
+            .filter(schema::user_post_list_collections::user_id.eq(user_pk))
+            .load::<UserPostListCollection>(&_connection)
+            .expect("E.");
+        for _item in user_collections.iter() {
+            stack.push(_item.post_list_id);
+        };
+        return post_lists
+            .filter(schema::post_lists::id.eq_any(stack))
+            .filter(schema::post_lists::types.lt(10))
+            .load::<UserPost>(&_connection)
+            .expect("E.");
+    }
 }
 
 /////// Post //////
