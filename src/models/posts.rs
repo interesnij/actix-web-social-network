@@ -657,10 +657,10 @@ impl PostList {
         let _connection = establish_connection();
         let new_post_list = NewPostList{
             name: name,
-            community_id: Some(community.id),
+            community_id: community.unwrap().id,
             user_id: creator.id,
             types: 2,
-            description: Some(description),
+            description: description,
             created: chrono::Local::now().naive_utc(),
             count: 0,
             repost: 0,
@@ -672,13 +672,13 @@ impl PostList {
             create_comment: create_comment,
             copy_el: copy_el,
         };
-        let new_list =diesel::insert_into(schema::post_lists::table)
+        let new_list = diesel::insert_into(schema::post_lists::table)
             .values(&new_post_list)
             .get_result::<PostList>(&_connection)
             .expect("Error.");
         if community.is_some() {
             let _new_posts_list_position = NewCommunityPostListPosition {
-                community_id:  Some(community.id),
+                community_id:  community.unwrap().id,
                 list_id:      new_list.id,
                 position:     community.get_post_lists().len().try_into().unwrap() + 1,
                 types:        "a".to_string(),
