@@ -1193,7 +1193,7 @@ impl PostList {
         use crate::schema::community_post_list_positions::dsl::community_post_list_positions;
         use crate::models::NewCommunityPostListPosition;
 
-        if self.get_communities_ids().iter().any(|&i| i==community.id) && self.community_id.is_some() && self.community_id.unwrap() == community.id {
+        if !self.get_communities_ids().iter().any(|&i| i==community.id) && self.community_id.is_some() && self.community_id.unwrap() == community.id {
             return false;
         }
         let _connection = establish_connection();
@@ -1218,12 +1218,35 @@ impl PostList {
             .expect("Error.");
         return true;
     }
+    pub fn remove_in_community_collections(&self, community: Community) -> bool {
+        use crate::schema::community_post_list_collections::dsl::community_post_list_collections;
+        use crate::schema::community_post_list_positions::dsl::community_post_list_positions;
+
+        if self.get_communities_ids().iter().any(|&i| i==community.id) {
+            return false;
+        }
+        let _connection = establish_connection();
+        diesel::delete(community_post_list_collections
+            .filter(schema::community_post_list_collections::community_id.eq(community.id))
+            .filter(schema::community_post_list_collections::post_list_id.eq(self.id))
+            )
+          .execute(&_connection)
+          .expect("E");
+        diesel::delete(community_post_list_positions
+            .filter(schema::community_post_list_positions::community_id.eq(community.id))
+            .filter(schema::community_post_list_positions::list_id.eq(self.id))
+         )
+         .execute(&_connection)
+         .expect("E");
+        return true;
+    }
+
     pub fn add_in_user_collections(&self, user: User) -> bool {
         use crate::schema::user_post_list_collections::dsl::user_post_list_collections;
         use crate::schema::user_post_list_positions::dsl::user_post_list_positions;
         use crate::models::NewUserPostListPosition;
 
-        if self.get_users_ids().iter().any(|&i| i==user.id) && self.user_id == user.id {
+        if !self.get_users_ids().iter().any(|&i| i==user.id) && self.user_id == user.id {
             return false;
         }
         let _connection = establish_connection();
