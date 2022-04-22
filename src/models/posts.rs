@@ -538,7 +538,7 @@ impl PostList {
         }
     }
     pub fn is_user_can_create_el(&self, user_id: i32) -> bool {
-        let char = &self.can_create_el;
+        let char = &self.create_el;
         if self.user_id == user_id || char == &"a".to_string() {
             return true;
         }
@@ -567,7 +567,7 @@ impl PostList {
         }
     }
     pub fn is_user_can_create_comment(&self, user_id: i32) -> bool {
-        let char = &self.can_create_comment;
+        let char = &self.create_comment;
         if self.user_id == user_id || char == &"a".to_string() {
             return true;
         }
@@ -596,7 +596,7 @@ impl PostList {
         }
     }
     pub fn is_user_can_copy_el(&self, user_id: i32) -> bool {
-        let char = &self.can_copy_el;
+        let char = &self.copy_el;
         if self.user_id == user_id || char == &"a".to_string() {
             return true;
         }
@@ -631,13 +631,13 @@ impl PostList {
         return self.can_see_comment == &"a".to_string()
     }
     pub fn is_anon_user_can_create_item(&self) -> bool {
-        return self.can_create_item == &"a".to_string()
+        return self.create_item == &"a".to_string()
     }
     pub fn is_anon_user_can_create_comment(&self) -> bool {
-        return self.can_create_comment == &"a".to_string()
+        return self.create_comment == &"a".to_string()
     }
     pub fn is_anon_user_can_copy_el(&self) -> bool {
-        return self.can_copy_el == &"a".to_string()
+        return self.copy_el == &"a".to_string()
     }
 }
 
