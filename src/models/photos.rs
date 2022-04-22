@@ -309,7 +309,7 @@ impl PhotoList {
         let _connection = establish_connection();
         let items = photo_list_perms
             .filter(schema::photo_list_perms::photo_list_id.eq(self.id))
-            .filter(schema::photolist_perms::can_see_comment.eq("a"))
+            .filter(schema::photo_list_perms::can_see_comment.eq("a"))
             .load::<PhotoListPerm>(&_connection)
             .expect("E");
 
@@ -667,6 +667,7 @@ impl PhotoList {
                 user_id: creator.id,
                 types: 2,
                 description: description,
+                cover_photo: None,
                 created: chrono::Local::now().naive_utc(),
                 count: 0,
                 repost: 0,
@@ -702,6 +703,7 @@ impl PhotoList {
                 user_id: creator.id,
                 types: 2,
                 description: description,
+                cover_photo: None,
                 created: chrono::Local::now().naive_utc(),
                 count: 0,
                 repost: 0,
@@ -727,7 +729,7 @@ impl PhotoList {
             };
             let _photos_list_position = diesel::insert_into(schema::user_photo_list_positions::table)
                 .values(&_new_photos_list_position)
-                .get_result::<UserPostListPosition>(&_connection)
+                .get_result::<UserPhotoListPosition>(&_connection)
                 .expect("Error saving photo_list_position.");
         }
 
@@ -1363,7 +1365,7 @@ impl PhotoList {
             stack.push(_item.id);
         };
         let user_collections = user_photo_list_collections
-            .filter(schema::user_photolist_collections::user_id.eq(user_pk))
+            .filter(schema::user_photo_list_collections::user_id.eq(user_pk))
             .load::<UserPhotoListCollection>(&_connection)
             .expect("E.");
         for _item in user_collections.iter() {
