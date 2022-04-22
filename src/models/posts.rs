@@ -287,6 +287,170 @@ impl PostList {
         use crate::utils::get_users_from_ids;
         return get_users_from_ids(self.get_can_see_el_include_users_ids());
     }
+
+    pub fn get_can_see_comment_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::post_list_perms::dsl::post_list_perms;
+
+        let _connection = establish_connection();
+        let items = post_list_perms
+            .filter(schema::post_list_perms::post_list_id.eq(self.id))
+            .filter(schema::post_list_perms::can_see_comment.eq("b"))
+            .load::<PostListPerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_comment_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::post_list_perms::dsl::post_list_perms;
+
+        let _connection = establish_connection();
+        let items = post_list_perms
+            .filter(schema::post_list_perms::post_list_id.eq(self.id))
+            .filter(schema::post_list_perms::can_see_comment.eq("a"))
+            .load::<PostListPerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_can_see_comment_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_comment_exclude_users_ids());
+    }
+    pub fn get_can_see_comment_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_can_see_comment_include_users_ids());
+    }
+
+    pub fn get_create_el_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::post_list_perms::dsl::post_list_perms;
+
+        let _connection = establish_connection();
+        let items = post_list_perms
+            .filter(schema::post_list_perms::post_list_id.eq(self.id))
+            .filter(schema::post_list_perms::create_item.eq("b"))
+            .load::<PostListPerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_create_el_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::post_list_perms::dsl::post_list_perms;
+
+        let _connection = establish_connection();
+        let items = post_list_perms
+            .filter(schema::post_list_perms::post_list_id.eq(self.id))
+            .filter(schema::post_list_perms::create_item.eq("a"))
+            .load::<PostListPerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_create_el_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_create_el_exclude_users_ids());
+    }
+    pub fn get_create_el_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_create_el_include_users_ids());
+    }
+
+    pub fn get_create_comment_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::post_list_perms::dsl::post_list_perms;
+
+        let _connection = establish_connection();
+        let items = post_list_perms
+            .filter(schema::post_list_perms::post_list_id.eq(self.id))
+            .filter(schema::post_list_perms::create_comment.eq("b"))
+            .load::<PostListPerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_create_comment_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::post_list_perms::dsl::post_list_perms;
+
+        let _connection = establish_connection();
+        let items = post_list_perms
+            .filter(schema::post_list_perms::post_list_id.eq(self.id))
+            .filter(schema::post_list_perms::create_comment.eq("a"))
+            .load::<PostListPerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_create_comment_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_create_comment_exclude_users_ids());
+    }
+    pub fn get_create_comment_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_create_comment_include_users_ids());
+    }
+
+    pub fn get_copy_el_exclude_users_ids(&self) -> Vec<i32> {
+        use crate::schema::post_list_perms::dsl::post_list_perms;
+
+        let _connection = establish_connection();
+        let items = post_list_perms
+            .filter(schema::post_list_perms::post_list_id.eq(self.id))
+            .filter(schema::post_list_perms::copy_el.eq("b"))
+            .load::<PostListPerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_copy_el_include_users_ids(&self) -> Vec<i32> {
+        use crate::schema::post_list_perms::dsl::post_list_perms;
+
+        let _connection = establish_connection();
+        let items = post_list_perms
+            .filter(schema::post_list_perms::post_list_id.eq(self.id))
+            .filter(schema::post_list_perms::copy_el.eq("a"))
+            .load::<PostListPerm>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn get_copy_el_exclude_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_copy_el_exclude_users_ids());
+    }
+    pub fn get_copy_el_include_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_copy_el_include_users_ids());
+    }
 }
 
 /////// Post //////
