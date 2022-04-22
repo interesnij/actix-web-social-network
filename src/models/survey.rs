@@ -15,6 +15,8 @@ use crate::utils::establish_connection;
 use crate::models::{
     User,
     Community,
+    UserSurveyListPosition,
+    CommunitySurveyListPosition,
 };
 
 
