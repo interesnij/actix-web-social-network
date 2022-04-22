@@ -2133,7 +2133,7 @@ impl User {
             .load::<GoodList>(&_connection)
             .expect("E.");
     }
-    pub fn get_good_lists_new_position(&self) -> i16 {
+    pub fn get_doc_lists_new_position(&self) -> i16 {
         return (self.get_good_lists().iter().count() + 1).try_into().unwrap();
     }
     pub fn get_doc_lists_from_staffed_comunities(&self) -> Vec<DocList> {

@@ -1342,6 +1342,7 @@ impl GoodList {
         use crate::schema::user_good_list_collections::dsl::user_good_list_collections;
         use crate::schema::user_good_list_positions::dsl::user_good_list_positions;
         use crate::schema::good_lists::dsl::good_lists;
+        use crate::models::UserGoodListPosition;
 
         let _connection = establish_connection();
         let position_lists = user_good_list_positions
@@ -1387,6 +1388,7 @@ impl GoodList {
         use crate::schema::community_good_list_collections::dsl::community_good_list_collections;
         use crate::schema::community_good_list_positions::dsl::community_good_list_positions;
         use crate::schema::good_lists::dsl::good_lists;
+        use crate::models::CommunityGoodListPosition;
 
         let _connection = establish_connection();
         let position_lists = community_good_list_positions
