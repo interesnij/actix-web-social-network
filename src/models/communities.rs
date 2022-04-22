@@ -1514,6 +1514,7 @@ impl Community {
             count += 1;
         }
         return count;
+    }
     pub fn get_survey_lists(&self) -> Vec<SurveyList> {
         use crate::schema::survey_lists::dsl::survey_lists;
 
