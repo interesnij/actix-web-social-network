@@ -678,7 +678,7 @@ impl PostList {
             .expect("Error.");
         if community.is_some() {
             let _new_posts_list_position = NewCommunityPostListPosition {
-                community_id:  community.unwrap().id,
+                community_id:  Some(community.unwrap().id),
                 list_id:      new_list.id,
                 position:     community.get_post_lists().len().try_into().unwrap() + 1,
                 types:        "a".to_string(),
