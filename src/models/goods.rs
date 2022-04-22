@@ -1220,7 +1220,7 @@ impl GoodList {
     }
 
     pub fn add_in_user_collections(&self, user: User) -> bool {
-        use crate::models::{UserGoodListPosition, NewUserGoodListPosition};
+        use crate::models::NewUserGoodListPosition;
 
         if !self.get_users_ids().iter().any(|&i| i==user.id) && self.user_id == user.id {
             return false;
@@ -1321,7 +1321,7 @@ impl GoodList {
         let _connection = establish_connection();
         let fix_list = goods
             .filter(schema::goods::good_list_id.eq(self.id))
-            .filter(schema::pgoods::types.lt("b"))
+            .filter(schema::goods::types.lt("b"))
             .load::<Good>(&_connection)
             .expect("E.");
 

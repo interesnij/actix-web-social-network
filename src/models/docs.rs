@@ -13,8 +13,8 @@ use crate::utils::establish_connection;
 use crate::models::{
     User,
     Community,
-    UserGoodListPosition,
-    CommunityGoodListPosition,
+    UserDocListPosition,
+    CommunityDocListPosition,
 };
 
 /////// DocList //////
@@ -564,7 +564,7 @@ impl DocList {
                 types:    "a".to_string(),
             };
             let _list_position = diesel::insert_into(schema::user_doc_list_positions::table)
-                .values(&_new_docs_list_position)
+                .values(&_new_list_position)
                 .get_result::<UserDocListPosition>(&_connection)
                 .expect("Error saving doc_list_position.");
         }
@@ -680,7 +680,6 @@ impl DocList {
         can_see_el_users: Option<Vec<i32>>, create_el_users: Option<Vec<i32>>,
         copy_el_users: Option<Vec<i32>>) -> &DocList {
 
-        use crate::schema::doc_lists::dsl::doc_lists;
         use crate::schema::doc_list_perms::dsl::doc_list_perms;
 
         let _connection = establish_connection();
@@ -853,6 +852,9 @@ impl DocList {
         return true;
     }
     pub fn remove_in_community_collections(&self, community: Community) -> bool {
+        use crate::models::communities::community_doc_list_positions::dsl::community_doc_list_positions;
+        use crate::models::docs::community_doc_list_collections::dsl::community_doc_list_collections;
+
         if self.get_communities_ids().iter().any(|&i| i==community.id) {
             return false;
         }
@@ -1025,8 +1027,8 @@ impl DocList {
             stack.push(_item.doc_list_id);
         };
         return doc_lists
-            .filter(schema::pdoc_lists::id.eq_any(stack))
-            .filter(schema::pdoc_lists::types.lt(10))
+            .filter(schema::doc_lists::id.eq_any(stack))
+            .filter(schema::doc_lists::types.lt(10))
             .load::<DocList>(&_connection)
             .expect("E.");
     }

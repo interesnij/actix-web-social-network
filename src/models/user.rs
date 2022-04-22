@@ -4475,7 +4475,6 @@ impl User {
         return true;
     }
     pub fn join_community(&self, community:Community) -> bool {
-        use crate::schema::communities_memberships::dsl::communities_memberships;
         use crate::models::{CommunitiesMembership, NewCommunitiesMembership};
 
         if self.is_member_of_community(community.id) || self.is_banned_from_community(community.id) {

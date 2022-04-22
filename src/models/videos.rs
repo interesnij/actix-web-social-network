@@ -16,8 +16,8 @@ use crate::utils::establish_connection;
 use crate::models::{
     User,
     Community,
-    UserGoodListPosition,
-    CommunityGoodListPosition,
+    UserVideoListPosition,
+    CommunityVideoListPosition,
     Sticker,
 };
 
