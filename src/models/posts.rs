@@ -456,7 +456,7 @@ impl PostList {
 
         let _connection = establish_connection();
         return communitys
-            .filter(schema::communitys::id.eq(self.community_id.as_deref().unwrap()))
+            .filter(schema::communitys::id.eq(self.community_id.unwrap()))
             .filter(schema::communitys::types.lt(10))
             .load::<Community>(&_connection)
             .expect("E")
