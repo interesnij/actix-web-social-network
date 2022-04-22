@@ -282,7 +282,7 @@ impl SurveyList {
 
         let _connection = establish_connection();
         let items = survey_list_perms
-            .filter(schema::dsurvey_list_perms::survey_list_id.eq(self.id))
+            .filter(schema::survey_list_perms::survey_list_id.eq(self.id))
             .filter(schema::survey_list_perms::create_item.eq("b"))
             .load::<SurveyListPerm>(&_connection)
             .expect("E");
@@ -683,7 +683,7 @@ impl SurveyList {
         can_see_el_users: Option<Vec<i32>>, create_el_users: Option<Vec<i32>>,
         copy_el_users: Option<Vec<i32>>) -> &SurveyList {
 
-        use crate::schema::dsurvey_list_perms::dsl::survey_list_perms;
+        use crate::schema::survey_list_perms::dsl::survey_list_perms;
 
         let _connection = establish_connection();
 
@@ -913,12 +913,12 @@ impl SurveyList {
         }
         let _connection = establish_connection();
         diesel::delete(user_survey_list_collections
-            .filter(schema::user_dsurvey_list_collections::user_id.eq(user.id))
+            .filter(schema::user_survey_list_collections::user_id.eq(user.id))
             .filter(schema::user_survey_list_collections::survey_list_id.eq(self.id))
             )
           .execute(&_connection)
           .expect("E");
-        diesel::delete(user_dsurvey_list_positions
+        diesel::delete(user_survey_list_positions
             .filter(schema::user_survey_list_positions::user_id.eq(user.id))
             .filter(schema::user_survey_list_positions::list_id.eq(self.id))
          )
