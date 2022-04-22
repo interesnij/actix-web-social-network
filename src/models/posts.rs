@@ -1400,6 +1400,157 @@ impl PostList {
             .load::<PostList>(&_connection)
             .expect("E.");
     }
+    pub fn get_community_lists(community_pk: i32) -> Vec<PostList> {
+        use crate::schema::community_post_list_collections::dsl::community_post_list_collections;
+        use crate::schema::community_post_list_positions::dsl::community_post_list_positions;
+        use crate::schema::post_lists::dsl::post_lists;
+
+        let _connection = establish_connection();
+        let position_lists = community_post_list_positions
+            .filter(schema::community_post_list_positions::community_id.eq(community_pk))
+            .filter(schema::community_post_list_positions::types.eq("a"))
+            .load::<CommunityPostListPosition>(&_connection)
+            .expect("E.");
+        if position_lists.len() > 0 {
+            let mut stack = Vec::new();
+            for _item in position_lists.iter() {
+                stack.push(_item.list_id);
+            };
+            return post_lists
+                .filter(schema::post_lists::id.eq_any(stack))
+                .filter(schema::post_lists::types.lt(10))
+                .load::<PostList>(&_connection)
+                .expect("E.");
+        }
+
+        let mut stack = Vec::new();
+        let community_lists = post_lists
+            .filter(schema::post_lists::community_id.eq(community_pk))
+            .filter(schema::post_lists::types.lt(10))
+            .load::<PostList>(&_connection)
+            .expect("E.");
+        for _item in community_lists.iter() {
+            stack.push(_item.id);
+        };
+        let community_collections = community_post_list_collections
+            .filter(schema::community_post_list_collections::community_id.eq(community_pk))
+            .load::<CommunityPostListCollection>(&_connection)
+            .expect("E.");
+        for _item in community_collections.iter() {
+            stack.push(_item.post_list_id);
+        };
+        return post_lists
+            .filter(schema::post_lists::id.eq_any(stack))
+            .filter(schema::post_lists::types.lt(10))
+            .load::<PostList>(&_connection)
+            .expect("E.");
+
+    }
+    pub fn close_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = self.types;
+        let close_case = match user_types {
+            1 => 21,
+            2 => 22,
+            3 => 23,
+            4 => 24,
+            5 => 25,
+            _ => self.types,
+        };
+        diesel::update(self)
+            .set(schema::post_lists::types.eq(close_case))
+            .get_result::<PostList>(&_connection)
+            .expect("E");
+       return true;
+    }
+    pub fn unclose_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = self.types;
+        let close_case = match user_types {
+            21 => 1,
+            22 => 2,
+            23 => 3,
+            24 => 4,
+            25 => 5,
+            _ => self.types,
+        };
+        diesel::update(self)
+            .set(schema::post_lists::types.eq(close_case))
+            .get_result::<PostList>(&_connection)
+            .expect("E");
+       return true;
+    }
+
+    pub fn delete_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = self.types;
+        let close_case = match user_types {
+            1 => 11,
+            2 => 12,
+            3 => 13,
+            4 => 14,
+            5 => 15,
+            _ => self.types,
+        };
+        diesel::update(self)
+            .set(schema::post_lists::types.eq(close_case))
+            .get_result::<PostList>(&_connection)
+            .expect("E");
+       return true;
+    }
+    pub fn restore_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = self.types;
+        let close_case = match user_types {
+            11 => 1,
+            12 => 2,
+            13 => 3,
+            14 => 4,
+            15 => 5,
+            _ => self.types,
+        };
+        diesel::update(self)
+            .set(schema::post_lists::types.eq(close_case))
+            .get_result::<PostList>(&_connection)
+            .expect("E");
+       return true;
+    }
+
+    pub fn suspend_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = self.types;
+        let close_case = match user_types {
+            1 => 31,
+            2 => 32,
+            3 => 33,
+            4 => 34,
+            5 => 35,
+            _ => self.types,
+        };
+        diesel::update(self)
+            .set(schema::post_lists::types.eq(close_case))
+            .get_result::<PostList>(&_connection)
+            .expect("E");
+       return true;
+    }
+    pub fn unsuspend_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = self.types;
+        let close_case = match user_types {
+            31 => 1,
+            32 => 2,
+            33 => 3,
+            34 => 4,
+            35 => 5,
+            _ => self.types,
+        };
+        diesel::update(self)
+            .set(schema::post_lists::types.eq(close_case))
+            .get_result::<PostList>(&_connection)
+            .expect("E");
+       return true;
+    }
+    
 }
 
 /////// Post //////
