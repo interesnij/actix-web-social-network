@@ -678,11 +678,11 @@ impl PostList {
                 repost: 0,
                 copy: 0,
                 position: 0,
-                can_see_el: &can_see_el,
-                can_see_comment: &can_see_comment,
-                create_el: &create_el,
-                create_comment: &create_comment,
-                copy_el: &copy_el,
+                can_see_el: can_see_el.clone(),
+                can_see_comment: can_see_comment.clone(),
+                create_el: create_el.clone(),
+                create_comment: create_comment.clone(),
+                copy_el: copy_el.clone(),
             };
             let new_list = diesel::insert_into(schema::post_lists::table)
                 .values(&new_post_list)
