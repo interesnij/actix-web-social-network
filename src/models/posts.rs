@@ -639,6 +639,108 @@ impl PostList {
     pub fn is_anon_user_can_copy_el(&self) -> bool {
         return self.copy_el == "a".to_string()
     }
+    pub fn create_list(creator: User, name: String, description: Option<String>,
+        community: Option<Community>, can_see_el: String, can_see_comment: String,
+        create_el: String, create_comment: String, copy_el: String,
+        can_see_el_users: Vec<i32>, can_see_comment_users: Vec<i32>,create_el_users: Vec<i32>,
+        create_comment_users: Vec<i32>,copy_el_users: Vec<i32>) -> PostList {
+
+        use crate::schema::post_lists::dsl::post_lists;
+        use crate::schema::user_post_list_positions::dsl::user_post_list_positions;
+        use crate::schema::community_post_list_positions::dsl::community_post_list_positions;
+        use crate::schema::post_list_perms::dsl::post_list_perms;
+        use crate::models::{
+            CommunityPostListPosition,NewCommunityPostListPosition,
+            UserPostListPosition,NewUserPostListPosition,
+        };
+
+        let _connection = establish_connection();
+        let new_post_list = NewPostList{
+            name: name,
+            community_id: Some(community.id),
+            user_id: creator.id,
+            types: 2,
+            description: Some(description),
+            created: chrono::Local::now().naive_utc(),
+            count: 0,
+            repost: 0,
+            copy: 0,
+            position: 0,
+            can_see_el: can_see_el,
+            can_see_comment: can_see_comment,
+            create_el: create_el,
+            create_comment: create_comment,
+            copy_el: copy_el,
+        };
+        diesel::insert_into(schema::post_lists::table)
+            .values(&new_post_list)
+            .get_result::<PostList>(&_connection)
+            .expect("Error.");
+        if comunity.is_some() {
+            let _new_posts_list_position = NewCommunityPostListPosition {
+                comunity_id:  comunity.id,
+                list_id:      new_post_list.id,
+                position:     comunity.get_post_lists().len() + 1,
+                types:        "a".to_string(),
+            };
+            let _posts_list_position = diesel::insert_into(schema::community_post_list_positions::table)
+                .values(&_new_posts_list_position)
+                .get_result::<CommunityPostListPosition>(&_connection)
+                .expect("Error saving post_list_position.");
+        }
+        else {
+            let _new_posts_list_position = NewUserPostListPosition {
+                user_id:  creator.id,
+                list_id:  new_post_list.id,
+                position: creator.get_post_lists().len() + 1,
+                types:    "a".to_string(),
+            };
+            let _posts_list_position = diesel::insert_into(schema::user_post_list_positions::table)
+                .values(&_new_posts_list_position)
+                .get_result::<UserPostListPosition>(&_connection)
+                .expect("Error saving post_list_position.");
+        }
+
+        if can_see_el == "d".to_string() && can_see_el == "i".to_string() {
+            if can_see_el_users.is_some() {
+                for user_id in can_see_el_users {
+                    let _new_exclude = NewPostListPerm {
+                        user_id:      user_id,
+                        post_list_id: new_post_list.id,
+                        can_see_item: "b".to_string(),
+                        can_see_comment: None,
+                        create_item: None,
+                        create_comment: None,
+                        can_copy: None,
+                    };
+                    diesel::insert_into(schema::post_list_perms::table)
+                        .values(&_new_exclude)
+                        .get_result::<PostListPerm>(&_connection)
+                        .expect("Error saving post_list_position.");
+                }
+            }
+        }
+        else if can_see_el == "e".to_string() && can_see_el == "j".to_string() {
+            if can_see_el_users.is_some() {
+                for user_id in can_see_el_users {
+                    let _new_exclude = NewPostListPerm {
+                        user_id:      user_id,
+                        post_list_id: new_post_list.id,
+                        can_see_item: "a".to_string(),
+                        can_see_comment: None,
+                        create_item: None,
+                        create_comment: None,
+                        can_copy: None,
+                    };
+                    diesel::insert_into(schema::post_list_perms::table)
+                        .values(&_new_exclude)
+                        .get_result::<PostListPerm>(&_connection)
+                        .expect("Error saving post_list_position.");
+                }
+            }
+        }
+        return new_post_list;
+    }
 }
 
 /////// Post //////
