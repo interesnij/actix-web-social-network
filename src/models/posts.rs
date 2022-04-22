@@ -1213,8 +1213,8 @@ impl PostList {
             types:        "a".to_string(),
         };
         diesel::insert_into(schema::community_post_list_positions::table)
-            .values(&new_pos)
-            .get_result::<NewCommunityPostListPosition>(&_connection)
+            .values(&new_pos) 
+            .get_result::<CommunityPostListPosition>(&_connection)
             .expect("Error.");
         return true;
     }
