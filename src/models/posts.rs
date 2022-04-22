@@ -1366,7 +1366,15 @@ impl PostList {
             .load::<UserPostListPosition>(&_connection)
             .expect("E.");
         if position_lists.len() > 0 {
-            return position_lists;
+            let mut stack = Vec::new();
+            for _item in position_lists.iter() {
+                stack.push(_item.list_id);
+            };
+            return post_lists
+                .filter(schema::post_lists::id.eq_any(stack))
+                .filter(schema::post_lists::types.lt(10))
+                .load::<UserPost>(&_connection)
+                .expect("E.");
         }
 
         let mut stack = Vec::new();
