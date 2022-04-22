@@ -1360,6 +1360,7 @@ impl PostList {
         use crate::schema::user_post_list_positions::dsl::user_post_list_positions;
         use crate::schema::post_lists::dsl::post_lists;
 
+        let _connection = establish_connection();
         let position_lists = user_post_list_positions
             .filter(schema::user_post_list_positions::user_id.eq(user_pk))
             .filter(schema::user_post_list_positions::types.eq("a"))
@@ -1381,7 +1382,7 @@ impl PostList {
         let user_lists = post_lists
             .filter(schema::post_lists::user_id.eq(user_pk))
             .filter(schema::post_lists::types.lt(10))
-            .load::<UserPostListPosition>(&_connection)
+            .load::<PostList>(&_connection)
             .expect("E.");
         for _item in user_lists.iter() {
             stack.push(_item.id);
