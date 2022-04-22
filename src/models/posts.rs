@@ -948,7 +948,7 @@ impl PostList {
         can_see_el: String, can_see_comment: String,
         create_el: String, create_comment: String, copy_el: String,
         can_see_el_users: Option<Vec<i32>>, can_see_comment_users: Option<Vec<i32>>,create_el_users: Option<Vec<i32>>,
-        create_comment_users: Option<Vec<i32>>,copy_el_users: Option<Vec<i32>>) -> PostList {
+        create_comment_users: Option<Vec<i32>>,copy_el_users: Option<Vec<i32>>) -> &PostList {
 
         use crate::schema::post_lists::dsl::post_lists;
         use crate::schema::post_list_perms::dsl::post_list_perms;
