@@ -1361,18 +1361,18 @@ impl Message {
             .into_iter()
             .nth(0)
             .unwrap();
-        let mut preview = "".to_string();
+        let mut _preview = "".to_string();
         if parent.voice.is_some() {
-            preview = "Голосовое сообщение".to_string();
+            _preview = "Голосовое сообщение".to_string();
         }
         else if parent.sticker_id.is_some() {
-            preview = "Наклейка".to_string();
+            _preview = "Наклейка".to_string();
         }
         else if parent.attach.is_some() {
-            preview = "Вложения".to_string();
+            _preview = "Вложения".to_string();
         }
         else {
-            preview = parent.content.as_deref().unwrap()[..80].to_string();
+            _preview = parent.content.as_deref().unwrap()[..80].to_string();
         }
         let creator = users
             .filter(schema::users::id.eq(parent.user_id))

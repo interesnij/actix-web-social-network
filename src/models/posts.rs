@@ -507,6 +507,138 @@ impl PostList {
             };
         }
     }
+
+    pub fn is_user_can_see_comment(&self, user_id: i32) -> bool {
+        let char = &self.can_see_comment;
+        if self.user_id == user_id || char == &"a".to_string() {
+            return true;
+        }
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            return match char.as_str() {
+                "f" => community.get_members_ids().iter().any(|&i| i==user_id),
+                "h" => community.get_administrators_ids().iter().any(|&i| i==user_id),
+                "g" => community.user_id == user_id,
+                "i" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
+                "j" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
+                _ => false,
+            };
+        }
+        else {
+            let creator = self.get_creator();
+            return match char.as_str() {
+                "b" => creator.get_friends_ids().iter().any(|&i| i==user_id),
+                "c" => creator.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+                "g" => creator.id == user_id,
+                "d" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
+                "e" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
+                _ => false,
+            };
+        }
+    }
+    pub fn is_user_can_create_el(&self, user_id: i32) -> bool {
+        let char = &self.can_create_el;
+        if self.user_id == user_id || char == &"a".to_string() {
+            return true;
+        }
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            return match char.as_str() {
+                "f" => community.get_members_ids().iter().any(|&i| i==user_id),
+                "h" => community.get_administrators_ids().iter().any(|&i| i==user_id),
+                "g" => community.user_id == user_id,
+                "i" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
+                "j" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
+                _ => false,
+            };
+        }
+        else {
+            let creator = self.get_creator();
+            return match char.as_str() {
+                "b" => creator.get_friends_ids().iter().any(|&i| i==user_id),
+                "c" => creator.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+                "g" => creator.id == user_id,
+                "d" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
+                "e" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
+                _ => false,
+            };
+        }
+    }
+    pub fn is_user_can_create_comment(&self, user_id: i32) -> bool {
+        let char = &self.can_create_comment;
+        if self.user_id == user_id || char == &"a".to_string() {
+            return true;
+        }
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            return match char.as_str() {
+                "f" => community.get_members_ids().iter().any(|&i| i==user_id),
+                "h" => community.get_administrators_ids().iter().any(|&i| i==user_id),
+                "g" => community.user_id == user_id,
+                "i" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
+                "j" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
+                _ => false,
+            };
+        }
+        else {
+            let creator = self.get_creator();
+            return match char.as_str() {
+                "b" => creator.get_friends_ids().iter().any(|&i| i==user_id),
+                "c" => creator.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+                "g" => creator.id == user_id,
+                "d" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
+                "e" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
+                _ => false,
+            };
+        }
+    }
+    pub fn is_user_can_copy_el(&self, user_id: i32) -> bool {
+        let char = &self.can_copy_el;
+        if self.user_id == user_id || char == &"a".to_string() {
+            return true;
+        }
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            return match char.as_str() {
+                "f" => community.get_members_ids().iter().any(|&i| i==user_id),
+                "h" => community.get_administrators_ids().iter().any(|&i| i==user_id),
+                "g" => community.user_id == user_id,
+                "i" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
+                "j" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
+                _ => false,
+            };
+        }
+        else {
+            let creator = self.get_creator();
+            return match char.as_str() {
+                "b" => creator.get_friends_ids().iter().any(|&i| i==user_id),
+                "c" => creator.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
+                "g" => creator.id == user_id,
+                "d" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
+                "e" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
+                _ => false,
+            };
+        }
+    }
+    pub fn is_anon_user_can_see_el(&self) -> bool {
+        return self.can_see_el == &"a".to_string()
+    }
+    pub fn is_anon_user_can_see_comment(&self) -> bool {
+        return self.can_see_comment == &"a".to_string()
+    }
+    pub fn is_anon_user_can_create_item(&self) -> bool {
+        return self.can_create_item == &"a".to_string()
+    }
+    pub fn is_anon_user_can_create_comment(&self) -> bool {
+        return self.can_create_comment == &"a".to_string()
+    }
+    pub fn is_anon_user_can_copy_el(&self) -> bool {
+        return self.can_copy_el == &"a".to_string()
+    }
 }
 
 /////// Post //////
