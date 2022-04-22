@@ -978,7 +978,7 @@ impl SurveyList {
         let _connection = establish_connection();
         let fix_list = surveys
             .filter(schema::surveys::survey_list_id.eq(self.id))
-            .filter(schema::survey::types.lt("b"))
+            .filter(schema::surveys::types.lt("b"))
             .load::<Survey>(&_connection)
             .expect("E.");
 
