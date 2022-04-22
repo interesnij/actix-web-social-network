@@ -845,7 +845,7 @@ impl MusicList {
                 for user_id in create_el_users.unwrap() {
                     let _new_exclude = NewMusicListPerm {
                         user_id:      user_id,
-                        dmusic_list_id: self.id,
+                        music_list_id: self.id,
                         can_see_item: None,
                         create_item: Some("b".to_string()),
                         can_copy: None,
