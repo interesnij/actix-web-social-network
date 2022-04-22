@@ -657,7 +657,7 @@ impl PostList {
         let _connection = establish_connection();
         let new_post_list = NewPostList{
             name: name,
-            community_id: community.unwrap().id,
+            community_id: Some(community.unwrap().id),
             user_id: creator.id,
             types: 2,
             description: description,
