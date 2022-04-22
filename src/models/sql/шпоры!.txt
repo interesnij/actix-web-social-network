@@ -1,3 +1,5 @@
+item[..1].parse().unwrap()
+=================
 use crate::utils::get_users_from_ids;
 return get_users_from_ids(vec!);
 ==============

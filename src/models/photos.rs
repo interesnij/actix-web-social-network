@@ -116,11 +116,11 @@ pub struct EditPhotoList {
     pub copy_el:         String,
 }
 
-impl PhotoList {
+impl VideoList {
     pub fn get_str_id(&self) -> String {
         return self.id.to_string();
     }
-    pub fn is_photo_list(&self) -> bool {
+    pub fn is_video_list(&self) -> bool {
         return true;
     }
     pub fn get_code(&self) -> String {
@@ -134,7 +134,7 @@ impl PhotoList {
 
         let penaltie = moderated_penalties
             .filter(schema::moderated_penalties::object_id.eq(self.id))
-            .filter(schema::moderated_penalties::types.eq(24))
+            .filter(schema::moderated_penalties::types.eq(25))
             .load::<ModeratedPenaltie>(&_connection)
             .expect("E.")
             .into_iter()
@@ -150,7 +150,7 @@ impl PhotoList {
 
         let moder = moderateds
             .filter(schema::moderateds::object_id.eq(self.id))
-            .filter(schema::moderateds::types.eq(24))
+            .filter(schema::moderateds::types.eq(25))
             .load::<Moderated>(&_connection)
             .expect("E.")
             .into_iter()
@@ -164,7 +164,7 @@ impl PhotoList {
         }
     }
     pub fn get_description(&self) -> String {
-        return "<a data-photolist='".to_string() + &self.get_str_id() + &"' class='ajax'>".to_string() + &self.name + &"</a>".to_string();
+        return "<a data-videolist='".to_string() + &self.get_str_id() + &"' class='ajax'>".to_string() + &self.name + &"</a>".to_string();
     }
     pub fn is_user_list(&self, user: User) -> bool {
         return self.user_id == user.id;
@@ -173,12 +173,12 @@ impl PhotoList {
         return self.community_id.unwrap() == community.id;
     }
     pub fn get_users_ids(&self) -> Vec<i32> {
-        use crate::schema::user_photo_list_collections::dsl::user_photo_list_collections;
+        use crate::schema::user_video_list_collections::dsl::user_video_list_collections;
 
         let _connection = establish_connection();
-        let ids = user_photo_list_collections
-            .filter(schema::user_photo_list_collections::photo_list_id.eq(self.id))
-            .load::<UserPhotoListCollection>(&_connection)
+        let ids = user_video_list_collections
+            .filter(schema::user_video_list_collections::video_list_id.eq(self.id))
+            .load::<UserVideoListCollection>(&_connection)
             .expect("E.");
 
         let mut stack = Vec::new();
@@ -188,12 +188,12 @@ impl PhotoList {
         return stack;
     }
     pub fn get_communities_ids(&self) -> Vec<i32> {
-        use crate::schema::community_photo_list_collections::dsl::community_photo_list_collections;
+        use crate::schema::community_video_list_collections::dsl::community_video_list_collections;
 
         let _connection = establish_connection();
-        let ids = community_photo_list_collections
-            .filter(schema::community_photo_list_collections::photo_list_id.eq(self.id))
-            .load::<CommunityPhotoListCollection>(&_connection)
+        let ids = community_video_list_collections
+            .filter(schema::community_video_list_collections::video_list_id.eq(self.id))
+            .load::<CommunityVideoListCollection>(&_connection)
             .expect("E.");
 
         let mut stack = Vec::new();
@@ -216,15 +216,15 @@ impl PhotoList {
             return "".to_string()
         }
     }
-    pub fn get_items(&self) -> Vec<Photo> {
-        use crate::schema::photos::dsl::photos;
+    pub fn get_items(&self) -> Vec<Video> {
+        use crate::schema::videos::dsl::videos;
 
         let _connection = establish_connection();
-        return photos
-            .filter(schema::photos::photo_list_id.eq(self.id))
-            .filter(schema::photos::types.eq("a"))
-            .order(schema::photos::created.desc())
-            .load::<Photo>(&_connection)
+        return videos
+            .filter(schema::videos::video_list_id.eq(self.id))
+            .filter(schema::videos::types.eq("a"))
+            .order(schema::videos::created.desc())
+            .load::<Video>(&_connection)
             .expect("E.");
     }
     pub fn count_items(&self) -> String {
@@ -247,13 +247,13 @@ impl PhotoList {
     }
 
     pub fn get_can_see_el_exclude_users_ids(&self) -> Vec<i32> {
-        use crate::schema::photo_list_perms::dsl::photo_list_perms;
+        use crate::schema::video_list_perms::dsl::video_list_perms;
 
         let _connection = establish_connection();
-        let items = photo_list_perms
-            .filter(schema::photo_list_perms::photo_list_id.eq(self.id))
-            .filter(schema::photo_list_perms::can_see_item.eq("b"))
-            .load::<PhotoListPerm>(&_connection)
+        let items = video_list_perms
+            .filter(schema::video_list_perms::video_list_id.eq(self.id))
+            .filter(schema::video_list_perms::can_see_item.eq("b"))
+            .load::<VideoListPerm>(&_connection)
             .expect("E");
 
         let mut stack = Vec::new();
@@ -263,13 +263,13 @@ impl PhotoList {
         return stack;
     }
     pub fn get_can_see_el_include_users_ids(&self) -> Vec<i32> {
-        use crate::schema::photo_list_perms::dsl::photo_list_perms;
+        use crate::schema::video_list_perms::dsl::video_list_perms;
 
         let _connection = establish_connection();
-        let items = photo_list_perms
-            .filter(schema::photo_list_perms::photo_list_id.eq(self.id))
-            .filter(schema::photo_list_perms::can_see_item.eq("a"))
-            .load::<PhotoListPerm>(&_connection)
+        let items = video_list_perms
+            .filter(schema::video_list_perms::video_list_id.eq(self.id))
+            .filter(schema::video_list_perms::can_see_item.eq("a"))
+            .load::<VideoListPerm>(&_connection)
             .expect("E");
 
         let mut stack = Vec::new();
@@ -288,13 +288,13 @@ impl PhotoList {
     }
 
     pub fn get_can_see_comment_exclude_users_ids(&self) -> Vec<i32> {
-        use crate::schema::photo_list_perms::dsl::photo_list_perms;
+        use crate::schema::video_list_perms::dsl::video_list_perms;
 
         let _connection = establish_connection();
-        let items = photo_list_perms
-            .filter(schema::photo_list_perms::photo_list_id.eq(self.id))
-            .filter(schema::photo_list_perms::can_see_comment.eq("b"))
-            .load::<PhotoListPerm>(&_connection)
+        let items = video_list_perms
+            .filter(schema::video_list_perms::video_list_id.eq(self.id))
+            .filter(schema::video_list_perms::can_see_comment.eq("b"))
+            .load::<VideoListPerm>(&_connection)
             .expect("E");
 
         let mut stack = Vec::new();
@@ -304,13 +304,13 @@ impl PhotoList {
         return stack;
     }
     pub fn get_can_see_comment_include_users_ids(&self) -> Vec<i32> {
-        use crate::schema::photo_list_perms::dsl::photo_list_perms;
+        use crate::schema::video_list_perms::dsl::video_list_perms;
 
         let _connection = establish_connection();
-        let items = photo_list_perms
-            .filter(schema::photo_list_perms::photo_list_id.eq(self.id))
-            .filter(schema::photo_list_perms::can_see_comment.eq("a"))
-            .load::<PhotoListPerm>(&_connection)
+        let items = video_list_perms
+            .filter(schema::video_list_perms::video_list_id.eq(self.id))
+            .filter(schema::video_list_perms::can_see_comment.eq("a"))
+            .load::<VideoListPerm>(&_connection)
             .expect("E");
 
         let mut stack = Vec::new();
@@ -329,13 +329,13 @@ impl PhotoList {
     }
 
     pub fn get_create_el_exclude_users_ids(&self) -> Vec<i32> {
-        use crate::schema::photo_list_perms::dsl::photo_list_perms;
+        use crate::schema::video_list_perms::dsl::video_list_perms;
 
         let _connection = establish_connection();
-        let items = photo_list_perms
-            .filter(schema::photo_list_perms::photo_list_id.eq(self.id))
-            .filter(schema::photo_list_perms::create_item.eq("b"))
-            .load::<PhotoListPerm>(&_connection)
+        let items = video_list_perms
+            .filter(schema::video_list_perms::video_list_id.eq(self.id))
+            .filter(schema::video_list_perms::create_item.eq("b"))
+            .load::<VideoListPerm>(&_connection)
             .expect("E");
 
         let mut stack = Vec::new();
@@ -345,13 +345,13 @@ impl PhotoList {
         return stack;
     }
     pub fn get_create_el_include_users_ids(&self) -> Vec<i32> {
-        use crate::schema::photo_list_perms::dsl::photo_list_perms;
+        use crate::schema::video_list_perms::dsl::video_list_perms;
 
         let _connection = establish_connection();
-        let items = photo_list_perms
-            .filter(schema::photo_list_perms::photo_list_id.eq(self.id))
-            .filter(schema::photo_list_perms::create_item.eq("a"))
-            .load::<PhotoListPerm>(&_connection)
+        let items = video_list_perms
+            .filter(schema::video_list_perms::video_list_id.eq(self.id))
+            .filter(schema::video_list_perms::create_item.eq("a"))
+            .load::<VideoListPerm>(&_connection)
             .expect("E");
 
         let mut stack = Vec::new();
@@ -370,13 +370,13 @@ impl PhotoList {
     }
 
     pub fn get_create_comment_exclude_users_ids(&self) -> Vec<i32> {
-        use crate::schema::photo_list_perms::dsl::photo_list_perms;
+        use crate::schema::video_list_perms::dsl::video_list_perms;
 
         let _connection = establish_connection();
-        let items = photo_list_perms
-            .filter(schema::photo_list_perms::photo_list_id.eq(self.id))
-            .filter(schema::photo_list_perms::create_comment.eq("b"))
-            .load::<PhotoListPerm>(&_connection)
+        let items = video_list_perms
+            .filter(schema::video_list_perms::video_list_id.eq(self.id))
+            .filter(schema::video_list_perms::create_comment.eq("b"))
+            .load::<VideoListPerm>(&_connection)
             .expect("E");
 
         let mut stack = Vec::new();
@@ -386,13 +386,13 @@ impl PhotoList {
         return stack;
     }
     pub fn get_create_comment_include_users_ids(&self) -> Vec<i32> {
-        use crate::schema::photo_list_perms::dsl::photo_list_perms;
+        use crate::schema::video_list_perms::dsl::video_list_perms;
 
         let _connection = establish_connection();
-        let items = photo_list_perms
-            .filter(schema::photo_list_perms::photo_list_id.eq(self.id))
-            .filter(schema::photo_list_perms::create_comment.eq("a"))
-            .load::<PhotoListPerm>(&_connection)
+        let items = video_list_perms
+            .filter(schema::video_list_perms::video_list_id.eq(self.id))
+            .filter(schema::video_list_perms::create_comment.eq("a"))
+            .load::<VideoListPerm>(&_connection)
             .expect("E");
 
         let mut stack = Vec::new();
@@ -411,13 +411,13 @@ impl PhotoList {
     }
 
     pub fn get_copy_el_exclude_users_ids(&self) -> Vec<i32> {
-        use crate::schema::photo_list_perms::dsl::photo_list_perms;
+        use crate::schema::video_list_perms::dsl::video_list_perms;
 
         let _connection = establish_connection();
-        let items = photo_list_perms
-            .filter(schema::photo_list_perms::photo_list_id.eq(self.id))
-            .filter(schema::photo_list_perms::can_copy.eq("b"))
-            .load::<PhotoListPerm>(&_connection)
+        let items = video_list_perms
+            .filter(schema::video_list_perms::video_list_id.eq(self.id))
+            .filter(schema::video_list_perms::can_copy.eq("b"))
+            .load::<VideoListPerm>(&_connection)
             .expect("E");
 
         let mut stack = Vec::new();
@@ -427,13 +427,13 @@ impl PhotoList {
         return stack;
     }
     pub fn get_copy_el_include_users_ids(&self) -> Vec<i32> {
-        use crate::schema::photo_list_perms::dsl::photo_list_perms;
+        use crate::schema::video_list_perms::dsl::video_list_perms;
 
         let _connection = establish_connection();
-        let items = photo_list_perms
-            .filter(schema::photo_list_perms::photo_list_id.eq(self.id))
-            .filter(schema::photo_list_perms::can_copy.eq("a"))
-            .load::<PhotoListPerm>(&_connection)
+        let items = video_list_perms
+            .filter(schema::video_list_perms::video_list_id.eq(self.id))
+            .filter(schema::video_list_perms::can_copy.eq("a"))
+            .load::<VideoListPerm>(&_connection)
             .expect("E");
 
         let mut stack = Vec::new();
@@ -644,8 +644,8 @@ impl PhotoList {
         can_see_el_users: Option<Vec<i32>>, can_see_comment_users: Option<Vec<i32>>,create_el_users: Option<Vec<i32>>,
         create_comment_users: Option<Vec<i32>>,copy_el_users: Option<Vec<i32>>) -> i32 {
         use crate::models::{
-            NewCommunityPhotoListPosition,
-            NewUserPhotoListPosition,
+            NewCommunityVideoListPosition,
+            NewUserVideoListPosition,
         };
 
         let _connection = establish_connection();
@@ -661,13 +661,12 @@ impl PhotoList {
                 .nth(0)
                 .unwrap();
 
-            let new_photo_list = NewPhotoList{
+            let new_video_list = NewVideoList{
                 name: name,
                 community_id: Some(community.id),
                 user_id: creator.id,
                 types: 2,
                 description: description,
-                cover_photo: None,
                 created: chrono::Local::now().naive_utc(),
                 count: 0,
                 repost: 0,
@@ -679,31 +678,30 @@ impl PhotoList {
                 create_comment: create_comment.clone(),
                 copy_el: copy_el.clone(),
             };
-            let new_list = diesel::insert_into(schema::photo_lists::table)
-                .values(&new_photo_list)
-                .get_result::<PhotoList>(&_connection)
+            let new_list = diesel::insert_into(schema::video_lists::table)
+                .values(&new_video_list)
+                .get_result::<VideoList>(&_connection)
                 .expect("Error.");
             new_id = new_list.id;
 
-            let _new_photos_list_position = NewCommunityPhotoListPosition {
+            let _new_videos_list_position = NewCommunityVideoListPosition {
                 community_id: community.id,
                 list_id:      new_id,
-                position:     community.get_photo_lists_new_position(),
+                position:     community.get_video_lists_new_position(),
                 types:        "a".to_string(),
             };
-            let _photos_list_position = diesel::insert_into(schema::community_photo_list_positions::table)
-                .values(&_new_photos_list_position)
-                .get_result::<CommunityPhotoListPosition>(&_connection)
-                .expect("Error saving photo_list_position.");
+            let _videos_list_position = diesel::insert_into(schema::community_video_list_positions::table)
+                .values(&_new_videos_list_position)
+                .get_result::<CommunityVideoListPosition>(&_connection)
+                .expect("Error saving video_list_position.");
         }
         else {
-            let new_photo_list = NewPhotoList{
+            let new_video_list = NewVideoList{
                 name: name,
                 community_id: None,
                 user_id: creator.id,
                 types: 2,
                 description: description,
-                cover_photo: None,
                 created: chrono::Local::now().naive_utc(),
                 count: 0,
                 repost: 0,
@@ -715,59 +713,59 @@ impl PhotoList {
                 create_comment: create_comment.clone(),
                 copy_el: copy_el.clone(),
             };
-            let new_list = diesel::insert_into(schema::photo_lists::table)
-                .values(&new_photo_list)
-                .get_result::<PhotoList>(&_connection)
+            let new_list = diesel::insert_into(schema::video_lists::table)
+                .values(&new_video_list)
+                .get_result::<VideoList>(&_connection)
                 .expect("Error.");
             new_id = new_list.id;
 
-            let _new_photos_list_position = NewUserPhotoListPosition {
+            let _new_videos_list_position = NewUserVideoListPosition {
                 user_id:  creator.id,
                 list_id:  new_id,
-                position: creator.get_photo_lists_new_position(),
+                position: creator.get_video_lists_new_position(),
                 types:    "a".to_string(),
             };
-            let _photos_list_position = diesel::insert_into(schema::user_photo_list_positions::table)
-                .values(&_new_photos_list_position)
-                .get_result::<UserPhotoListPosition>(&_connection)
-                .expect("Error saving photo_list_position.");
+            let _videos_list_position = diesel::insert_into(schema::user_video_list_positions::table)
+                .values(&_new_videos_list_position)
+                .get_result::<UserVideoListPosition>(&_connection)
+                .expect("Error saving video_list_position.");
         }
 
         if can_see_el == "d".to_string() && can_see_el == "i".to_string() {
             if can_see_el_users.is_some() {
                 for user_id in can_see_el_users.unwrap() {
-                    let _new_exclude = NewPhotoListPerm {
+                    let _new_exclude = NewVideoListPerm {
                         user_id:      user_id,
-                        photo_list_id: new_id,
+                        video_list_id: new_id,
                         can_see_item: Some("b".to_string()),
                         can_see_comment: None,
                         create_item: None,
                         create_comment: None,
                         can_copy: None,
                     };
-                    diesel::insert_into(schema::photo_list_perms::table)
+                    diesel::insert_into(schema::video_list_perms::table)
                         .values(&_new_exclude)
-                        .get_result::<PhotoListPerm>(&_connection)
-                        .expect("Error saving photo_list_position.");
+                        .get_result::<VideoListPerm>(&_connection)
+                        .expect("Error saving video_list_position.");
                 }
             }
         }
         else if can_see_el == "e".to_string() && can_see_el == "j".to_string() {
             if can_see_el_users.is_some() {
                 for user_id in can_see_el_users.unwrap() {
-                    let _new_include = NewPhotoListPerm {
+                    let _new_include = NewVideoListPerm {
                         user_id:      user_id,
-                        photo_list_id: new_id,
+                        video_list_id: new_id,
                         can_see_item: Some("a".to_string()),
                         can_see_comment: None,
                         create_item: None,
                         create_comment: None,
                         can_copy: None,
                     };
-                    diesel::insert_into(schema::photo_list_perms::table)
+                    diesel::insert_into(schema::video_list_perms::table)
                         .values(&_new_include)
-                        .get_result::<PohotoListPerm>(&_connection)
-                        .expect("Error saving photo_list_position.");
+                        .get_result::<VideoListPerm>(&_connection)
+                        .expect("Error saving video_list_position.");
                 }
             }
         }
