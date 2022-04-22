@@ -631,7 +631,7 @@ impl PostList {
         return self.can_see_comment == "a".to_string()
     }
     pub fn is_anon_user_can_create_item(&self) -> bool {
-        return self.create_item == "a".to_string()
+        return self.create_el == "a".to_string()
     }
     pub fn is_anon_user_can_create_comment(&self) -> bool {
         return self.create_comment == "a".to_string()
