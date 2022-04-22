@@ -1308,7 +1308,7 @@ impl PostList {
         if lists.len() > 0 {
             let list = lists.into_iter().nth(0).unwrap();
             for item in user_or_communities.iter() {
-                if item.chars().nth(0).unwrap() == "c".to_string() {
+                if item.chars().nth(0).unwrap() == 'c' {
                     let c_id: i32 = item.chars()[..1].unwrap().parse().unwrap();
                     let communities = communitys
                         .filter(schema::communitys::id.eq(c_id))
@@ -1320,7 +1320,7 @@ impl PostList {
                         list.add_in_community_collections(com);
                     }
                 }
-                else if item.chars().nth(0).unwrap() == "u".to_string() {
+                else if item.chars().nth(0).unwrap() == 'u' {
                     let u_id: i32 = item.chars()[..1].unwrap().parse().unwrap();
                     let _users = users
                         .filter(schema::users::id.eq(u_id))
