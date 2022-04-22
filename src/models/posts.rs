@@ -1339,6 +1339,22 @@ impl PostList {
             return false;
         }
     }
+    pub fn get_posts_ids(&self) -> Vec<i32> {
+        use crate::schema::posts::dsl::posts;
+
+        let _connection = establish_connection();
+        let fix_list = posts
+            .filter(schema::posts::post_list_id.eq(self.id))
+            .filter(schema::posts::types.lt("b"))
+            .load::<Post>(&_connection)
+            .expect("E.");
+
+        let mut stack = Vec::new();
+        for _item in fix_list.iter() {
+            stack.push(_item.id);
+        };
+        return stack;
+    }
 }
 
 /////// Post //////
