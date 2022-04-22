@@ -678,9 +678,9 @@ impl PostList {
             .expect("Error.");
         if community.is_some() {
             let _new_posts_list_position = NewCommunityPostListPosition {
-                community_id:  community.id,
+                community_id:  Some(community.id),
                 list_id:      new_list.id,
-                position:     community.get_post_lists().len() + 1,
+                position:     community.get_post_lists().len().try_into().unwrap() + 1,
                 types:        "a".to_string(),
             };
             let _posts_list_position = diesel::insert_into(schema::community_post_list_positions::table)
@@ -692,7 +692,7 @@ impl PostList {
             let _new_posts_list_position = NewUserPostListPosition {
                 user_id:  creator.id,
                 list_id:  new_list.id,
-                position: creator.get_post_lists().len() + 1,
+                position: creator.get_post_lists().len().try_into().unwrap() + 1,
                 types:    "a".to_string(),
             };
             let _posts_list_position = diesel::insert_into(schema::user_post_list_positions::table)
@@ -703,7 +703,7 @@ impl PostList {
 
         if can_see_el == "d".to_string() && can_see_el == "i".to_string() {
             if can_see_el_users.is_some() {
-                for user_id in can_see_el_users {
+                for user_id in can_see_el_users.unwrap() {
                     let _new_exclude = NewPostListPerm {
                         user_id:      user_id,
                         post_list_id: new_list.id,
@@ -722,7 +722,7 @@ impl PostList {
         }
         else if can_see_el == "e".to_string() && can_see_el == "j".to_string() {
             if can_see_el_users.is_some() {
-                for user_id in can_see_el_users {
+                for user_id in can_see_el_users.unwrap() {
                     let _new_exclude = NewPostListPerm {
                         user_id:      user_id,
                         post_list_id: new_list.id,

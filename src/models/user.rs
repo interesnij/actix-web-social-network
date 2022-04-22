@@ -1992,10 +1992,6 @@ impl User {
             .load::<PostList>(&_connection)
             .expect("E.");
     }
-    pub fn count_post_lists(&self) -> i16 {
-        let count: i16 = self.get_post_lists().len();
-        return count;
-    }
     pub fn get_post_lists_from_staffed_comunities(&self) -> Vec<PostList> {
         use crate::schema::post_lists::dsl::post_lists;
 
