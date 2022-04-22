@@ -486,8 +486,8 @@ impl DocList {
         copy_el_users: Option<Vec<i32>>) -> i32 {
 
         use crate::models::{
-            CommunityDocListPosition,NewCommunityDocListPosition,
-            UserDocListPosition,NewUserDocListPosition,
+            NewCommunityDocListPosition,
+            NewUserDocListPosition,
         };
 
         let _connection = establish_connection();
@@ -811,7 +811,6 @@ impl DocList {
     }
     pub fn get_order(&self) -> UserDocListPosition {
         use crate::schema::user_doc_list_positions::dsl::user_doc_list_positions;
-        use crate::models::UserDocListPosition;
 
         let _connection = establish_connection();
         return user_doc_list_positions
@@ -852,8 +851,8 @@ impl DocList {
         return true;
     }
     pub fn remove_in_community_collections(&self, community: Community) -> bool {
-        use crate::models::communities::community_doc_list_positions::dsl::community_doc_list_positions;
-        use crate::models::docs::community_doc_list_collections::dsl::community_doc_list_collections;
+        use crate::schema::community_doc_list_positions::dsl::community_doc_list_positions;
+        use crate::schema::community_doc_list_collections::dsl::community_doc_list_collections;
 
         if self.get_communities_ids().iter().any(|&i| i==community.id) {
             return false;
@@ -1036,7 +1035,6 @@ impl DocList {
         use crate::schema::community_doc_list_collections::dsl::community_doc_list_collections;
         use crate::schema::community_doc_list_positions::dsl::community_doc_list_positions;
         use crate::schema::doc_lists::dsl::doc_lists;
-        use crate::models::CommunityDocListPosition;
 
         let _connection = establish_connection();
         let position_lists = community_doc_list_positions

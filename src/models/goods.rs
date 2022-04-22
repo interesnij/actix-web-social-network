@@ -1156,7 +1156,6 @@ impl GoodList {
     }
     pub fn get_order(&self) -> UserGoodListPosition {
         use crate::schema::user_good_list_positions::dsl::user_good_list_positions;
-        use crate::models::UserGoodListPosition;
 
         let _connection = establish_connection();
         return user_good_list_positions
