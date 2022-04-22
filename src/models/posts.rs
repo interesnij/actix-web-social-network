@@ -672,14 +672,14 @@ impl PostList {
             create_comment: create_comment,
             copy_el: copy_el,
         };
-        diesel::insert_into(schema::post_lists::table)
+        let new_list =diesel::insert_into(schema::post_lists::table)
             .values(&new_post_list)
             .get_result::<PostList>(&_connection)
             .expect("Error.");
         if community.is_some() {
             let _new_posts_list_position = NewCommunityPostListPosition {
                 community_id:  community.id,
-                list_id:      new_post_list.id,
+                list_id:      new_list.id,
                 position:     community.get_post_lists().len() + 1,
                 types:        "a".to_string(),
             };
@@ -691,7 +691,7 @@ impl PostList {
         else {
             let _new_posts_list_position = NewUserPostListPosition {
                 user_id:  creator.id,
-                list_id:  new_post_list.id,
+                list_id:  new_list.id,
                 position: creator.get_post_lists().len() + 1,
                 types:    "a".to_string(),
             };
@@ -706,7 +706,7 @@ impl PostList {
                 for user_id in can_see_el_users {
                     let _new_exclude = NewPostListPerm {
                         user_id:      user_id,
-                        post_list_id: new_post_list.id,
+                        post_list_id: new_list.id,
                         can_see_item: Some("b".to_string()),
                         can_see_comment: None,
                         create_item: None,
@@ -725,7 +725,7 @@ impl PostList {
                 for user_id in can_see_el_users {
                     let _new_exclude = NewPostListPerm {
                         user_id:      user_id,
-                        post_list_id: new_post_list.id,
+                        post_list_id: new_list.id,
                         can_see_item: Some("a".to_string()),
                         can_see_comment: None,
                         create_item: None,
@@ -739,7 +739,7 @@ impl PostList {
                 }
             }
         }
-        return new_post_list;
+        return new_list;
     }
 }
 
