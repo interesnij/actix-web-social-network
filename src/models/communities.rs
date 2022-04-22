@@ -1509,11 +1509,7 @@ impl Community {
             .expect("E.");
     }
     pub fn get_post_lists_new_position(&self) -> i16 {
-        let mut count = 1;
-        for i in self.get_post_lists().iter() {
-            count += 1;
-        }
-        return count;
+        return self.get_post_lists().count() + 1;
     }
     pub fn get_survey_lists(&self) -> Vec<SurveyList> {
         use crate::schema::survey_lists::dsl::survey_lists;
@@ -1526,11 +1522,7 @@ impl Community {
             .expect("E.");
     }
     pub fn get_survey_lists_new_position(&self) -> i16 {
-        let mut count = 1;
-        for i in self.get_survey_lists().iter() {
-            count += 1;
-        }
-        return count;
+        return self.get_survey_lists().count() + 1;
     }
     pub fn get_photo_lists(&self) -> Vec<PhotoList> {
         use crate::schema::photo_lists::dsl::photo_lists;
@@ -1543,11 +1535,7 @@ impl Community {
             .expect("E.");
     }
     pub fn get_photo_lists_new_position(&self) -> i16 {
-        let mut count = 1;
-        for i in self.get_photo_lists().iter() {
-            count += 1;
-        }
-        return count;
+        return self.get_photo_lists().count() + 1;
     }
     pub fn get_video_lists(&self) -> Vec<VideoList> {
         use crate::schema::video_lists::dsl::video_lists;
@@ -1560,11 +1548,7 @@ impl Community {
             .expect("E.");
     }
     pub fn get_video_lists_new_position(&self) -> i16 {
-        let mut count = 1;
-        for i in self.get_video_lists().iter() {
-            count += 1;
-        }
-        return count;
+        return self.get_video_lists().count() + 1;
     }
     pub fn get_music_lists(&self) -> Vec<MusicList> {
         use crate::schema::music_lists::dsl::music_lists;
@@ -1577,11 +1561,7 @@ impl Community {
             .expect("E.");
     }
     pub fn get_music_lists_new_position(&self) -> i16 {
-        let mut count = 1;
-        for i in self.get_music_lists().iter() {
-            count += 1;
-        }
-        return count;
+        return self.get_music_lists().count() + 1;
     }
     pub fn get_good_lists(&self) -> Vec<GoodList> {
         use crate::schema::good_lists::dsl::good_lists;
@@ -1594,11 +1574,7 @@ impl Community {
             .expect("E.");
     }
     pub fn get_good_lists_new_position(&self) -> i16 {
-        let mut count = 1;
-        for i in self.get_good_lists().iter() {
-            count += 1;
-        }
-        return count;
+        return self.get_good_lists().count() + 1;
     }
     pub fn get_6_photos(&self) -> Vec<Photo> {
         use crate::schema::photos::dsl::photos;
