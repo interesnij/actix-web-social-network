@@ -822,29 +822,29 @@ impl PhotoList {
                         create_comment: None,
                         can_copy: None,
                     };
-                    diesel::insert_into(schema::photo_list_perms::table)
+                    diesel::insert_into(schema::video_list_perms::table)
                         .values(&_new_exclude)
-                        .get_result::<PhotoListPerm>(&_connection)
-                        .expect("Error saving photo_list_position.");
+                        .get_result::<VideoListPerm>(&_connection)
+                        .expect("Error saving video_list_position.");
                 }
             }
         }
         else if create_el == "e".to_string() && create_el == "j".to_string() {
             if create_el_users.is_some() {
                 for user_id in create_el_users.unwrap() {
-                    let _new_include = NewPhotoListPerm {
+                    let _new_include = NewVideoListPerm {
                         user_id:      user_id,
-                        photo_list_id: new_id,
+                        video_list_id: new_id,
                         can_see_item: None,
                         can_see_comment: None,
                         create_item: Some("a".to_string()),
                         create_comment: None,
                         can_copy: None,
                     };
-                    diesel::insert_into(schema::photo_list_perms::table)
+                    diesel::insert_into(schema::video_list_perms::table)
                         .values(&_new_include)
-                        .get_result::<PhotoListPerm>(&_connection)
-                        .expect("Error saving photo_list_position.");
+                        .get_result::<VideoListPerm>(&_connection)
+                        .expect("Error saving video_list_position.");
                 }
             }
         }
@@ -852,38 +852,38 @@ impl PhotoList {
         if create_comment == "d".to_string() && create_comment == "i".to_string() {
             if create_comment_users.is_some() {
                 for user_id in create_comment_users.unwrap() {
-                    let _new_exclude = NewPhotoListPerm {
+                    let _new_exclude = NewVideoListPerm {
                         user_id:      user_id,
-                        photo_list_id: new_id,
+                        video_list_id: new_id,
                         can_see_item: None,
                         can_see_comment: None,
                         create_item: None,
                         create_comment: Some("b".to_string()),
                         can_copy: None,
                     };
-                    diesel::insert_into(schema::photo_list_perms::table)
+                    diesel::insert_into(schema::video_list_perms::table)
                         .values(&_new_exclude)
-                        .get_result::<PhotoListPerm>(&_connection)
-                        .expect("Error saving photo_list_position.");
+                        .get_result::<VideoListPerm>(&_connection)
+                        .expect("Error saving video_list_position.");
                 }
             }
         }
         else if create_comment == "e".to_string() && create_comment == "j".to_string() {
             if create_comment_users.is_some() {
                 for user_id in create_comment_users.unwrap() {
-                    let _new_include = NewPhotoListPerm {
+                    let _new_include = NewVideoListPerm {
                         user_id:      user_id,
-                        photo_list_id: new_id,
+                        video_list_id: new_id,
                         can_see_item: None,
                         can_see_comment: None,
                         create_item: None,
                         create_comment: Some("a".to_string()),
                         can_copy: None,
                     };
-                    diesel::insert_into(schema::photo_list_perms::table)
+                    diesel::insert_into(schema::video_list_perms::table)
                         .values(&_new_include)
-                        .get_result::<PhotoListPerm>(&_connection)
-                        .expect("Error saving photo_list_position.");
+                        .get_result::<VideoListPerm>(&_connection)
+                        .expect("Error saving video_list_position.");
                 }
             }
         }
@@ -891,38 +891,38 @@ impl PhotoList {
         if copy_el == "d".to_string() && copy_el == "i".to_string() {
             if copy_el_users.is_some() {
                 for user_id in copy_el_users.unwrap() {
-                    let _new_exclude = NewPhotoListPerm {
+                    let _new_exclude = NewVideoListPerm {
                         user_id:      user_id,
-                        photo_list_id: new_id,
+                        video_list_id: new_id,
                         can_see_item: None,
                         can_see_comment: None,
                         create_item: None,
                         create_comment: None,
                         can_copy: Some("b".to_string()),
                     };
-                    diesel::insert_into(schema::photo_list_perms::table)
+                    diesel::insert_into(schema::video_list_perms::table)
                         .values(&_new_exclude)
-                        .get_result::<PhotoListPerm>(&_connection)
-                        .expect("Error saving photo_list_position.");
+                        .get_result::<VideoListPerm>(&_connection)
+                        .expect("Error saving video_list_position.");
                 }
             }
         }
         else if copy_el == "e".to_string() && copy_el == "j".to_string() {
             if copy_el_users.is_some() {
                 for user_id in copy_el_users.unwrap() {
-                    let _new_include = NewPhotoListPerm {
+                    let _new_include = NewVideoListPerm {
                         user_id:      user_id,
-                        photo_list_id: new_id,
+                        video_list_id: new_id,
                         can_see_item: None,
                         can_see_comment: None,
                         create_item: None,
                         create_comment: None,
                         can_copy: Some("a".to_string()),
                     };
-                    diesel::insert_into(schema::photo_list_perms::table)
+                    diesel::insert_into(schema::video_list_perms::table)
                         .values(&_new_include)
-                        .get_result::<PhotoListPerm>(&_connection)
-                        .expect("Error saving photo_list_position.");
+                        .get_result::<VideoListPerm>(&_connection)
+                        .expect("Error saving video_list_position.");
                 }
             }
         }
@@ -932,13 +932,13 @@ impl PhotoList {
         can_see_el: String, can_see_comment: String,
         create_el: String, create_comment: String, copy_el: String,
         can_see_el_users: Option<Vec<i32>>, can_see_comment_users: Option<Vec<i32>>,create_el_users: Option<Vec<i32>>,
-        create_comment_users: Option<Vec<i32>>,copy_el_users: Option<Vec<i32>>) -> &PhotoList {
+        create_comment_users: Option<Vec<i32>>,copy_el_users: Option<Vec<i32>>) -> &VideoList {
 
-        use crate::schema::photo_list_perms::dsl::photo_list_perms;
+        use crate::schema::video_list_perms::dsl::video_list_perms;
 
         let _connection = establish_connection();
 
-            let edit_photo_list = EditPhotoList{
+            let edit_video_list = EditVideoList{
                 name: name,
                 description: description,
                 can_see_el: can_see_el.clone(),
@@ -1197,7 +1197,7 @@ impl PhotoList {
         return true;
     }
     pub fn remove_in_community_collections(&self, community: Community) -> bool {
-        use crate::schema::community_pvideo_list_collections::dsl::community_video_list_collections;
+        use crate::schema::community_video_list_collections::dsl::community_video_list_collections;
         use crate::schema::community_video_list_positions::dsl::community_video_list_positions;
 
         if self.get_communities_ids().iter().any(|&i| i==community.id) {
