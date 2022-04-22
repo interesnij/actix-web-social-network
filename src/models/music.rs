@@ -186,7 +186,7 @@ pub struct NewMusicList {
     pub copy_el:      String,
 }
 #[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
-#[table_name="post_lists"]
+#[table_name="music_lists"]
 pub struct EditMusicList {
     pub name:            String,
     pub description:     Option<String>,
