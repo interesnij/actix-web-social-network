@@ -668,7 +668,7 @@ impl PostList {
 
                 let new_post_list = NewPostList{
                     name: name,
-                    community_id: community.id,
+                    community_id: Some(community.id),
                     user_id: creator.id,
                     types: 2,
                     description: description,
