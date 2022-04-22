@@ -417,7 +417,7 @@ impl PostList {
         let _connection = establish_connection();
         let items = post_list_perms
             .filter(schema::post_list_perms::post_list_id.eq(self.id))
-            .filter(schema::post_list_perms::copy_el.eq("b"))
+            .filter(schema::post_list_perms::can_copy.eq("b"))
             .load::<PostListPerm>(&_connection)
             .expect("E");
 
@@ -433,7 +433,7 @@ impl PostList {
         let _connection = establish_connection();
         let items = post_list_perms
             .filter(schema::post_list_perms::post_list_id.eq(self.id))
-            .filter(schema::post_list_perms::copy_el.eq("a"))
+            .filter(schema::post_list_perms::can_copy.eq("a"))
             .load::<PostListPerm>(&_connection)
             .expect("E");
 
