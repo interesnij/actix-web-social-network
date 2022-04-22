@@ -13,8 +13,9 @@ use crate::utils::establish_connection;
 use crate::models::{
     User,
     Community,
+    UserGoodListPosition,
+    CommunityGoodListPosition,
 };
-
 
 /////// DocList //////
 
@@ -858,8 +859,6 @@ impl DocList {
         return true;
     }
     pub fn remove_in_community_collections(&self, community: Community) -> bool {
-        use crate::schema::community_doc_list_collections::dsl::community_doc_list_collections;
-        use crate::schema::community_doc_list_positions::dsl::community_doc_list_positions;
 
         if self.get_communities_ids().iter().any(|&i| i==community.id) {
             return false;
@@ -881,8 +880,6 @@ impl DocList {
     }
 
     pub fn add_in_user_collections(&self, user: User) -> bool {
-        use crate::schema::user_doc_list_collections::dsl::user_doc_list_collections;
-        use crate::schema::user_doc_list_positions::dsl::user_doc_list_positions;
         use crate::models::NewUserDocListPosition;
 
         if !self.get_users_ids().iter().any(|&i| i==user.id) && self.user_id == user.id {
@@ -998,7 +995,7 @@ impl DocList {
         use crate::schema::user_doc_list_collections::dsl::user_doc_list_collections;
         use crate::schema::user_doc_list_positions::dsl::user_doc_list_positions;
         use crate::schema::doc_lists::dsl::doc_lists;
-        use crate::models::{UserDocListPosition, NewUserDocListPosition};
+        use crate::models::UserDocListPosition;
 
         let _connection = establish_connection();
         let position_lists = user_doc_list_positions
@@ -1044,7 +1041,7 @@ impl DocList {
         use crate::schema::community_doc_list_collections::dsl::community_doc_list_collections;
         use crate::schema::community_doc_list_positions::dsl::community_doc_list_positions;
         use crate::schema::doc_lists::dsl::doc_lists;
-        use crate::models::{CommunityDocListPosition,NewCommunityDocListPosition};
+        use crate::models::CommunityDocListPosition;
 
         let _connection = establish_connection();
         let position_lists = community_doc_list_positions

@@ -16,6 +16,8 @@ use crate::utils::establish_connection;
 use crate::models::{
     User,
     Community,
+    UserGoodListPosition,
+    CommunityGoodListPosition,
     Sticker,
 };
 
@@ -641,10 +643,7 @@ impl GoodList {
         can_see_el_users: Option<Vec<i32>>, can_see_comment_users: Option<Vec<i32>>,create_el_users: Option<Vec<i32>>,
         create_comment_users: Option<Vec<i32>>,copy_el_users: Option<Vec<i32>>) -> i32 {
 
-        use crate::schema::good_lists::dsl::good_lists;
-        use crate::schema::user_good_list_positions::dsl::user_good_list_positions;
         use crate::schema::community_good_list_positions::dsl::community_good_list_positions;
-        use crate::schema::good_list_perms::dsl::good_list_perms;
         use crate::models::{
             CommunityGoodListPosition,NewCommunityGoodListPosition,
             UserGoodListPosition,NewUserGoodListPosition,
@@ -935,7 +934,6 @@ impl GoodList {
         can_see_el_users: Option<Vec<i32>>, can_see_comment_users: Option<Vec<i32>>,create_el_users: Option<Vec<i32>>,
         create_comment_users: Option<Vec<i32>>,copy_el_users: Option<Vec<i32>>) -> &GoodList {
 
-        use crate::schema::good_lists::dsl::good_lists;
         use crate::schema::good_list_perms::dsl::good_list_perms;
 
         let _connection = establish_connection();
@@ -1172,8 +1170,6 @@ impl GoodList {
             .unwrap();
     }
     pub fn add_in_community_collections(&self, community: Community) -> bool {
-        use crate::schema::community_good_list_collections::dsl::community_good_list_collections;
-        use crate::schema::community_good_list_positions::dsl::community_good_list_positions;
         use crate::models::{CommunityGoodListPosition,NewCommunityGoodListPosition};
 
         if !self.get_communities_ids().iter().any(|&i| i==community.id) && self.community_id.is_some() && self.community_id.unwrap() == community.id {
@@ -1225,8 +1221,6 @@ impl GoodList {
     }
 
     pub fn add_in_user_collections(&self, user: User) -> bool {
-        use crate::schema::user_good_list_collections::dsl::user_good_list_collections;
-        use crate::schema::user_good_list_positions::dsl::user_good_list_positions;
         use crate::models::{UserGoodListPosition, NewUserGoodListPosition};
 
         if !self.get_users_ids().iter().any(|&i| i==user.id) && self.user_id == user.id {
