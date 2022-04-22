@@ -1191,6 +1191,7 @@ impl PostList {
     pub fn add_in_community_collections(&self, community: Community) -> bool {
         use crate::schema::community_post_list_collections::dsl::community_post_list_collections;
         use crate::schema::community_post_list_positions::dsl::community_post_list_positions;
+        use crate::models::NewCommunityPostListPosition;
 
         if self.community_id.is_some() && self.community_id.unwrap() == community.id {
             return false;
