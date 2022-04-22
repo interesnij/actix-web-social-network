@@ -485,10 +485,6 @@ impl DocList {
         can_see_el_users: Option<Vec<i32>>, create_el_users: Option<Vec<i32>>,
         copy_el_users: Option<Vec<i32>>) -> i32 {
 
-        use crate::schema::doc_lists::dsl::doc_lists;
-        use crate::schema::user_doc_list_positions::dsl::user_doc_list_positions;
-        use crate::schema::community_doc_list_positions::dsl::community_doc_list_positions;
-        use crate::schema::doc_list_perms::dsl::doc_list_perms;
         use crate::models::{
             CommunityDocListPosition,NewCommunityDocListPosition,
             UserDocListPosition,NewUserDocListPosition,
@@ -829,8 +825,6 @@ impl DocList {
             .unwrap();
     }
     pub fn add_in_community_collections(&self, community: Community) -> bool {
-        use crate::schema::community_doc_list_collections::dsl::community_doc_list_collections;
-        use crate::schema::community_doc_list_positions::dsl::community_doc_list_positions;
         use crate::models::NewCommunityDocListPosition;
 
         if !self.get_communities_ids().iter().any(|&i| i==community.id) && self.community_id.is_some() && self.community_id.unwrap() == community.id {
@@ -859,7 +853,6 @@ impl DocList {
         return true;
     }
     pub fn remove_in_community_collections(&self, community: Community) -> bool {
-
         if self.get_communities_ids().iter().any(|&i| i==community.id) {
             return false;
         }

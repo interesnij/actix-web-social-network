@@ -657,14 +657,9 @@ impl PostList {
         create_el: String, create_comment: String, copy_el: String,
         can_see_el_users: Option<Vec<i32>>, can_see_comment_users: Option<Vec<i32>>,create_el_users: Option<Vec<i32>>,
         create_comment_users: Option<Vec<i32>>,copy_el_users: Option<Vec<i32>>) -> i32 {
-
-        use crate::schema::post_lists::dsl::post_lists;
-        use crate::schema::user_post_list_positions::dsl::user_post_list_positions;
-        use crate::schema::community_post_list_positions::dsl::community_post_list_positions;
-        use crate::schema::post_list_perms::dsl::post_list_perms;
         use crate::models::{
-            CommunityPostListPosition,NewCommunityPostListPosition,
-            UserPostListPosition,NewUserPostListPosition,
+            NewCommunityPostListPosition,
+            NewUserPostListPosition,
         };
 
         let _connection = establish_connection();
@@ -952,7 +947,6 @@ impl PostList {
         can_see_el_users: Option<Vec<i32>>, can_see_comment_users: Option<Vec<i32>>,create_el_users: Option<Vec<i32>>,
         create_comment_users: Option<Vec<i32>>,copy_el_users: Option<Vec<i32>>) -> &PostList {
 
-        use crate::schema::post_lists::dsl::post_lists;
         use crate::schema::post_list_perms::dsl::post_list_perms;
 
         let _connection = establish_connection();
@@ -1176,7 +1170,6 @@ impl PostList {
     }
     pub fn get_order(&self) -> UserPostListPosition {
         use crate::schema::user_post_list_positions::dsl::user_post_list_positions;
-        use crate::models::UserPostListPosition;
 
         let _connection = establish_connection();
         return user_post_list_positions
@@ -1189,8 +1182,6 @@ impl PostList {
             .unwrap();
     }
     pub fn add_in_community_collections(&self, community: Community) -> bool {
-        use crate::schema::community_post_list_collections::dsl::community_post_list_collections;
-        use crate::schema::community_post_list_positions::dsl::community_post_list_positions;
         use crate::models::NewCommunityPostListPosition;
 
         if !self.get_communities_ids().iter().any(|&i| i==community.id) && self.community_id.is_some() && self.community_id.unwrap() == community.id {
@@ -1242,8 +1233,6 @@ impl PostList {
     }
 
     pub fn add_in_user_collections(&self, user: User) -> bool {
-        use crate::schema::user_post_list_collections::dsl::user_post_list_collections;
-        use crate::schema::user_post_list_positions::dsl::user_post_list_positions;
         use crate::models::NewUserPostListPosition;
 
         if !self.get_users_ids().iter().any(|&i| i==user.id) && self.user_id == user.id {
@@ -1550,7 +1539,7 @@ impl PostList {
             .expect("E");
        return true;
     }
-    
+
 }
 
 /////// Post //////
