@@ -1271,6 +1271,74 @@ impl PostList {
             .expect("Error.");
         return true;
     }
+    pub fn remove_in_user_collections(&self, user: User) -> bool {
+        use crate::schema::user_post_list_collections::dsl::user_post_list_collections;
+        use crate::schema::user_post_list_positions::dsl::user_post_list_positions;
+
+        if self.get_user_ids().iter().any(|&i| i==user.id) {
+            return false;
+        }
+        let _connection = establish_connection();
+        diesel::delete(user_post_list_collections
+            .filter(schema::user_post_list_collections::user_id.eq(user.id))
+            .filter(schema::user_post_list_collections::post_list_id.eq(self.id))
+            )
+          .execute(&_connection)
+          .expect("E");
+        diesel::delete(user_post_list_positions
+            .filter(schema::user_post_list_positions::user_id.eq(user.id))
+            .filter(schema::user_post_list_positions::list_id.eq(self.id))
+         )
+         .execute(&_connection)
+         .expect("E");
+        return true;
+    }
+
+    pub fn copy_item(pk: i32, user_or_communities: Vec<String>) -> bool {
+        use crate::schema::post_lists::dsl::post_lists;
+        use crate::schema::users::dsl::users;
+        use crate::schema::communitys::dsl::communitys;
+
+        let _connection = establish_connection();
+        let lists = post_lists
+            .filter(schema::post_lists::id.eq(pk))
+            .filter(schema::post_lists::types.lt(10))
+            .load::<PostList>(&_connection)
+            .expect("E.");
+        if lists.len() > 0 {
+            let list = lists.into_iter().nth(0).unwrap();
+            for item in user_or_communities.iter() {
+                if item[0] == "c".to_string() {
+                    let c_id: i32 = item[..1].parse().unwrap();
+                    let communities = communitys
+                        .filter(schema::communitys::id.eq(c_id))
+                        .filter(schema::communitys::types.lt(10))
+                        .load::<Community>(&_connection)
+                        .expect("E.");
+                    if communities.len() > 0 {
+                        com = communities.into_iter().nth(0).unwrap();
+                        list.add_in_community_collections(com);
+                    }
+                }
+                else if item[0] == "u".to_string() {
+                    let u_id: i32 = item[..1].parse().unwrap();
+                    let _users = users
+                        .filter(schema::users::id.eq(c_id))
+                        .filter(schema::users::types.lt(10))
+                        .load::<User>(&_connection)
+                        .expect("E.");
+                    if _users.len() > 0 {
+                        us = _users.into_iter().nth(0).unwrap();
+                        list.add_in_user_collections(us);
+                    }
+                }
+            }
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }
 
 /////// Post //////
