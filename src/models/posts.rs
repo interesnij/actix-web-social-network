@@ -1275,7 +1275,7 @@ impl PostList {
         use crate::schema::user_post_list_collections::dsl::user_post_list_collections;
         use crate::schema::user_post_list_positions::dsl::user_post_list_positions;
 
-        if self.get_user_ids().iter().any(|&i| i==user.id) {
+        if self.get_users_ids().iter().any(|&i| i==user.id) {
             return false;
         }
         let _connection = establish_connection();
@@ -1309,7 +1309,7 @@ impl PostList {
             let list = lists.into_iter().nth(0).unwrap();
             for item in user_or_communities.iter() {
                 if item.chars().nth(0).unwrap() == 'c' {
-                    let c_id: i32 = item.chars()[..1].unwrap().parse().unwrap();
+                    let c_id: i32 = item[..1].unwrap().parse().unwrap();
                     let communities = communitys
                         .filter(schema::communitys::id.eq(c_id))
                         .filter(schema::communitys::types.lt(10))
@@ -1321,7 +1321,7 @@ impl PostList {
                     }
                 }
                 else if item.chars().nth(0).unwrap() == 'u' {
-                    let u_id: i32 = item.chars()[..1].unwrap().parse().unwrap();
+                    let u_id: i32 = item[..1].unwrap().parse().unwrap();
                     let _users = users
                         .filter(schema::users::id.eq(u_id))
                         .filter(schema::users::types.lt(10))
