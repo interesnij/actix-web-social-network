@@ -601,7 +601,7 @@ impl SurveyList {
                     };
                     diesel::insert_into(schema::survey_list_perms::table)
                         .values(&_new_include)
-                        .get_result::<SurveycListPerm>(&_connection)
+                        .get_result::<SurveyListPerm>(&_connection)
                         .expect("Error saving survey_list_position.");
                 }
             }
