@@ -1992,6 +1992,13 @@ impl User {
             .load::<PostList>(&_connection)
             .expect("E.");
     }
+    pub fn get_post_lists_new_position(&self) -> i32 {
+        let mut count = 1;
+        for i in self.get_post_lists().iter() {
+            count += 1;
+        }
+        return count;
+    }
     pub fn get_post_lists_from_staffed_comunities(&self) -> Vec<PostList> {
         use crate::schema::post_lists::dsl::post_lists;
 
