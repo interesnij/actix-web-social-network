@@ -1525,6 +1525,13 @@ impl Community {
             .load::<SurveyList>(&_connection)
             .expect("E.");
     }
+    pub fn get_survey_lists_new_position(&self) -> i16 {
+        let mut count = 1;
+        for i in self.get_survey_lists().iter() {
+            count += 1;
+        }
+        return count;
+    }
     pub fn get_photo_lists(&self) -> Vec<PhotoList> {
         use crate::schema::photo_lists::dsl::photo_lists;
 
@@ -1534,6 +1541,13 @@ impl Community {
             .filter(schema::photo_lists::types.lt(10))
             .load::<PhotoList>(&_connection)
             .expect("E.");
+    }
+    pub fn get_photo_lists_new_position(&self) -> i16 {
+        let mut count = 1;
+        for i in self.get_photo_lists().iter() {
+            count += 1;
+        }
+        return count;
     }
     pub fn get_video_lists(&self) -> Vec<VideoList> {
         use crate::schema::video_lists::dsl::video_lists;
@@ -1545,6 +1559,13 @@ impl Community {
             .load::<VideoList>(&_connection)
             .expect("E.");
     }
+    pub fn get_video_lists_new_position(&self) -> i16 {
+        let mut count = 1;
+        for i in self.get_video_lists().iter() {
+            count += 1;
+        }
+        return count;
+    }
     pub fn get_music_lists(&self) -> Vec<MusicList> {
         use crate::schema::music_lists::dsl::music_lists;
 
@@ -1555,6 +1576,13 @@ impl Community {
             .load::<MusicList>(&_connection)
             .expect("E.");
     }
+    pub fn get_music_lists_new_position(&self) -> i16 {
+        let mut count = 1;
+        for i in self.get_music_lists().iter() {
+            count += 1;
+        }
+        return count;
+    }
     pub fn get_good_lists(&self) -> Vec<GoodList> {
         use crate::schema::good_lists::dsl::good_lists;
 
@@ -1564,6 +1592,13 @@ impl Community {
             .filter(schema::good_lists::types.lt(10))
             .load::<GoodList>(&_connection)
             .expect("E.");
+    }
+    pub fn get_good_lists_new_position(&self) -> i16 {
+        let mut count = 1;
+        for i in self.get_good_lists().iter() {
+            count += 1;
+        }
+        return count;
     }
     pub fn get_6_photos(&self) -> Vec<Photo> {
         use crate::schema::photos::dsl::photos;

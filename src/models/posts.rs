@@ -117,6 +117,17 @@ pub struct NewPostList {
     pub create_comment:  String,
     pub copy_el:         String,
 }
+#[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
+#[table_name="post_lists"]
+pub struct EditPostList {
+    pub name:            String,
+    pub description:     Option<String>,
+    pub can_see_el:      String,
+    pub can_see_comment: String,
+    pub create_el:       String,
+    pub create_comment:  String,
+    pub copy_el:         String,
+}
 impl PostList {
     pub fn get_str_id(&self) -> String {
         return self.id.to_string();
@@ -932,6 +943,234 @@ impl PostList {
             }
         }
         return new_id;
+    }
+    pub fn edit_list(&self, name: String, description: Option<String>,
+        can_see_el: String, can_see_comment: String,
+        create_el: String, create_comment: String, copy_el: String,
+        can_see_el_users: Option<Vec<i32>>, can_see_comment_users: Option<Vec<i32>>,create_el_users: Option<Vec<i32>>,
+        create_comment_users: Option<Vec<i32>>,copy_el_users: Option<Vec<i32>>) -> PostList {
+
+        use crate::schema::post_lists::dsl::post_lists;
+        use crate::schema::post_list_perms::dsl::post_list_perms;
+
+        let _connection = establish_connection();
+
+            let edit_post_list = EditPostList{
+                name: name,
+                description: description,
+                can_see_el: can_see_el.clone(),
+                can_see_comment: can_see_comment.clone(),
+                create_el: create_el.clone(),
+                create_comment: create_comment.clone(),
+                copy_el: copy_el.clone(),
+            };
+            diesel::update(self)
+                .set(edit_post_list)
+                .get_result::<PostList>(&_connection)
+                .expect("Error.");
+
+        if can_see_el == "d".to_string() && can_see_el == "i".to_string() {
+            if can_see_el_users.is_some() {
+                diesel::delete (
+                  post_list_perms
+                    .filter(schema::post_list_perms::post_list_id.eq(self.id))
+                    .filter(schema::post_list_perms::can_see_item.is_not_null())
+                )
+                  .execute(&_connection)
+                  .expect("E");
+                for user_id in can_see_el_users.unwrap() {
+                    let _new_exclude = NewPostListPerm {
+                        user_id:      user_id,
+                        post_list_id: new_id,
+                        can_see_item: Some("b".to_string()),
+                        can_see_comment: None,
+                        create_item: None,
+                        create_comment: None,
+                        can_copy: None,
+                    };
+                    diesel::insert_into(schema::post_list_perms::table)
+                        .values(&_new_exclude)
+                        .get_result::<PostListPerm>(&_connection)
+                        .expect("Error saving post_list_position.");
+                }
+            }
+        }
+        else if can_see_el == "e".to_string() && can_see_el == "j".to_string() {
+            if can_see_el_users.is_some() {
+                for user_id in can_see_el_users.unwrap() {
+                    let _new_include = NewPostListPerm {
+                        user_id:      user_id,
+                        post_list_id: new_id,
+                        can_see_item: Some("a".to_string()),
+                        can_see_comment: None,
+                        create_item: None,
+                        create_comment: None,
+                        can_copy: None,
+                    };
+                    diesel::insert_into(schema::post_list_perms::table)
+                        .values(&_new_include)
+                        .get_result::<PostListPerm>(&_connection)
+                        .expect("Error saving post_list_position.");
+                }
+            }
+        }
+
+        if can_see_comment == "d".to_string() && can_see_comment == "i".to_string() {
+            if can_see_comment_users.is_some() {
+                for user_id in can_see_comment_users.unwrap() {
+                    let _new_exclude = NewPostListPerm {
+                        user_id:      user_id,
+                        post_list_id: new_id,
+                        can_see_item: None,
+                        can_see_comment: Some("b".to_string()),
+                        create_item: None,
+                        create_comment: None,
+                        can_copy: None,
+                    };
+                    diesel::insert_into(schema::post_list_perms::table)
+                        .values(&_new_exclude)
+                        .get_result::<PostListPerm>(&_connection)
+                        .expect("Error saving post_list_position.");
+                }
+            }
+        }
+        else if can_see_comment == "e".to_string() && can_see_comment == "j".to_string() {
+            if can_see_comment_users.is_some() {
+                for user_id in can_see_comment_users.unwrap() {
+                    let _new_include = NewPostListPerm {
+                        user_id:      user_id,
+                        post_list_id: new_id,
+                        can_see_item: None,
+                        can_see_comment: Some("a".to_string()),
+                        create_item: None,
+                        create_comment: None,
+                        can_copy: None,
+                    };
+                    diesel::insert_into(schema::post_list_perms::table)
+                        .values(&_new_include)
+                        .get_result::<PostListPerm>(&_connection)
+                        .expect("Error saving post_list_position.");
+                }
+            }
+        }
+
+        if create_el == "d".to_string() && create_el == "i".to_string() {
+            if create_el_users.is_some() {
+                for user_id in create_el_users.unwrap() {
+                    let _new_exclude = NewPostListPerm {
+                        user_id:      user_id,
+                        post_list_id: new_id,
+                        can_see_item: None,
+                        can_see_comment: None,
+                        create_item: Some("b".to_string()),
+                        create_comment: None,
+                        can_copy: None,
+                    };
+                    diesel::insert_into(schema::post_list_perms::table)
+                        .values(&_new_exclude)
+                        .get_result::<PostListPerm>(&_connection)
+                        .expect("Error saving post_list_position.");
+                }
+            }
+        }
+        else if create_el == "e".to_string() && create_el == "j".to_string() {
+            if create_el_users.is_some() {
+                for user_id in create_el_users.unwrap() {
+                    let _new_include = NewPostListPerm {
+                        user_id:      user_id,
+                        post_list_id: new_id,
+                        can_see_item: None,
+                        can_see_comment: None,
+                        create_item: Some("a".to_string()),
+                        create_comment: None,
+                        can_copy: None,
+                    };
+                    diesel::insert_into(schema::post_list_perms::table)
+                        .values(&_new_include)
+                        .get_result::<PostListPerm>(&_connection)
+                        .expect("Error saving post_list_position.");
+                }
+            }
+        }
+
+        if create_comment == "d".to_string() && create_comment == "i".to_string() {
+            if create_comment_users.is_some() {
+                for user_id in create_comment_users.unwrap() {
+                    let _new_exclude = NewPostListPerm {
+                        user_id:      user_id,
+                        post_list_id: new_id,
+                        can_see_item: None,
+                        can_see_comment: None,
+                        create_item: None,
+                        create_comment: Some("b".to_string()),
+                        can_copy: None,
+                    };
+                    diesel::insert_into(schema::post_list_perms::table)
+                        .values(&_new_exclude)
+                        .get_result::<PostListPerm>(&_connection)
+                        .expect("Error saving post_list_position.");
+                }
+            }
+        }
+        else if create_comment == "e".to_string() && create_comment == "j".to_string() {
+            if create_comment_users.is_some() {
+                for user_id in create_comment_users.unwrap() {
+                    let _new_include = NewPostListPerm {
+                        user_id:      user_id,
+                        post_list_id: new_id,
+                        can_see_item: None,
+                        can_see_comment: None,
+                        create_item: None,
+                        create_comment: Some("a".to_string()),
+                        can_copy: None,
+                    };
+                    diesel::insert_into(schema::post_list_perms::table)
+                        .values(&_new_include)
+                        .get_result::<PostListPerm>(&_connection)
+                        .expect("Error saving post_list_position.");
+                }
+            }
+        }
+
+        if copy_el == "d".to_string() && copy_el == "i".to_string() {
+            if copy_el_users.is_some() {
+                for user_id in copy_el_users.unwrap() {
+                    let _new_exclude = NewPostListPerm {
+                        user_id:      user_id,
+                        post_list_id: new_id,
+                        can_see_item: None,
+                        can_see_comment: None,
+                        create_item: None,
+                        create_comment: None,
+                        can_copy: Some("b".to_string()),
+                    };
+                    diesel::insert_into(schema::post_list_perms::table)
+                        .values(&_new_exclude)
+                        .get_result::<PostListPerm>(&_connection)
+                        .expect("Error saving post_list_position.");
+                }
+            }
+        }
+        else if copy_el == "e".to_string() && copy_el == "j".to_string() {
+            if copy_el_users.is_some() {
+                for user_id in copy_el_users.unwrap() {
+                    let _new_include = NewPostListPerm {
+                        user_id:      user_id,
+                        post_list_id: new_id,
+                        can_see_item: None,
+                        can_see_comment: None,
+                        create_item: None,
+                        create_comment: None,
+                        can_copy: Some("a".to_string()),
+                    };
+                    diesel::insert_into(schema::post_list_perms::table)
+                        .values(&_new_include)
+                        .get_result::<PostListPerm>(&_connection)
+                        .expect("Error saving post_list_position.");
+                }
+            }
+        }
+        return self;
     }
 }
 
