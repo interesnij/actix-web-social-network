@@ -1223,7 +1223,7 @@ impl PostList {
         use crate::schema::user_post_list_positions::dsl::user_post_list_positions;
         use crate::models::NewUserPostListPosition;
 
-        if self.get_users_ids().iter().any(|&i| i==user.id) && self.user_id.is_some() && self.user_id.unwrap() == user.id {
+        if self.get_users_ids().iter().any(|&i| i==user.id) && self.user_id.is_some() && self.user_id == user.id {
             return false;
         }
         let _connection = establish_connection();
