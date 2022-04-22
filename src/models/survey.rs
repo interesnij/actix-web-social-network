@@ -213,7 +213,7 @@ impl SurveyList {
         return surveys
             .filter(schema::surveys::survey_list_id.eq(self.id))
             .filter(schema::surveys::types.eq("a"))
-            .order(schema::survey::created.desc())
+            .order(schema::surveys::created.desc())
             .load::<Survey>(&_connection)
             .expect("E.");
     }
