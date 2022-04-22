@@ -998,6 +998,7 @@ impl DocList {
         use crate::schema::user_doc_list_collections::dsl::user_doc_list_collections;
         use crate::schema::user_doc_list_positions::dsl::user_doc_list_positions;
         use crate::schema::doc_lists::dsl::doc_lists;
+        use crate::models::{UserDocListPosition, NewUserDocListPosition};
 
         let _connection = establish_connection();
         let position_lists = user_doc_list_positions
@@ -1043,6 +1044,7 @@ impl DocList {
         use crate::schema::community_doc_list_collections::dsl::community_doc_list_collections;
         use crate::schema::community_doc_list_positions::dsl::community_doc_list_positions;
         use crate::schema::doc_lists::dsl::doc_lists;
+        use crate::models::{CommunityDocListPosition,NewCommunityDocListPosition};
 
         let _connection = establish_connection();
         let position_lists = community_doc_list_positions

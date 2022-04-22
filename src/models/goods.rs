@@ -1174,7 +1174,7 @@ impl GoodList {
     pub fn add_in_community_collections(&self, community: Community) -> bool {
         use crate::schema::community_good_list_collections::dsl::community_good_list_collections;
         use crate::schema::community_good_list_positions::dsl::community_good_list_positions;
-        use crate::models::NewCommunityGoodListPosition;
+        use crate::models::{CommunityGoodListPosition,NewCommunityGoodListPosition};
 
         if !self.get_communities_ids().iter().any(|&i| i==community.id) && self.community_id.is_some() && self.community_id.unwrap() == community.id {
             return false;
@@ -1227,7 +1227,7 @@ impl GoodList {
     pub fn add_in_user_collections(&self, user: User) -> bool {
         use crate::schema::user_good_list_collections::dsl::user_good_list_collections;
         use crate::schema::user_good_list_positions::dsl::user_good_list_positions;
-        use crate::models::NewUserGoodListPosition;
+        use crate::models::{UserGoodListPosition, NewUserGoodListPosition};
 
         if !self.get_users_ids().iter().any(|&i| i==user.id) && self.user_id == user.id {
             return false;
@@ -1235,7 +1235,7 @@ impl GoodList {
         let _connection = establish_connection();
         let new_item = NewUserGoodListCollection {
             user_id: user.id,
-            post_list_id: self.id,
+            good_list_id: self.id,
         };
         diesel::insert_into(schema::user_good_list_collections::table)
             .values(&new_item)
