@@ -253,7 +253,7 @@ impl SurveyList {
         return stack;
     }
     pub fn get_can_see_el_include_users_ids(&self) -> Vec<i32> {
-        use crate::schema::surveylist_perms::dsl::survey_list_perms;
+        use crate::schema::survey_list_perms::dsl::survey_list_perms;
 
         let _connection = establish_connection();
         let items = survey_list_perms
