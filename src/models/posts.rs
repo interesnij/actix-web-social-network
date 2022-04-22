@@ -1316,7 +1316,7 @@ impl PostList {
                         .load::<Community>(&_connection)
                         .expect("E.");
                     if communities.len() > 0 {
-                        com = communities.into_iter().nth(0).unwrap();
+                        let com = communities.into_iter().nth(0).unwrap();
                         list.add_in_community_collections(com);
                     }
                 }
@@ -1328,7 +1328,7 @@ impl PostList {
                         .load::<User>(&_connection)
                         .expect("E.");
                     if _users.len() > 0 {
-                        us = _users.into_iter().nth(0).unwrap();
+                        let us = _users.into_iter().nth(0).unwrap();
                         list.add_in_user_collections(us);
                     }
                 }
