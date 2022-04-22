@@ -981,7 +981,7 @@ impl PostList {
                 for user_id in can_see_el_users.unwrap() {
                     let _new_exclude = NewPostListPerm {
                         user_id:      user_id,
-                        post_list_id: new_id,
+                        post_list_id: self.id,
                         can_see_item: Some("b".to_string()),
                         can_see_comment: None,
                         create_item: None,
@@ -1000,7 +1000,7 @@ impl PostList {
                 for user_id in can_see_el_users.unwrap() {
                     let _new_include = NewPostListPerm {
                         user_id:      user_id,
-                        post_list_id: new_id,
+                        post_list_id: self.id,
                         can_see_item: Some("a".to_string()),
                         can_see_comment: None,
                         create_item: None,
@@ -1020,7 +1020,7 @@ impl PostList {
                 for user_id in can_see_comment_users.unwrap() {
                     let _new_exclude = NewPostListPerm {
                         user_id:      user_id,
-                        post_list_id: new_id,
+                        post_list_id: self.id,
                         can_see_item: None,
                         can_see_comment: Some("b".to_string()),
                         create_item: None,
@@ -1039,7 +1039,7 @@ impl PostList {
                 for user_id in can_see_comment_users.unwrap() {
                     let _new_include = NewPostListPerm {
                         user_id:      user_id,
-                        post_list_id: new_id,
+                        post_list_id: self.id,
                         can_see_item: None,
                         can_see_comment: Some("a".to_string()),
                         create_item: None,
@@ -1059,7 +1059,7 @@ impl PostList {
                 for user_id in create_el_users.unwrap() {
                     let _new_exclude = NewPostListPerm {
                         user_id:      user_id,
-                        post_list_id: new_id,
+                        post_list_id: self.id,
                         can_see_item: None,
                         can_see_comment: None,
                         create_item: Some("b".to_string()),
@@ -1078,7 +1078,7 @@ impl PostList {
                 for user_id in create_el_users.unwrap() {
                     let _new_include = NewPostListPerm {
                         user_id:      user_id,
-                        post_list_id: new_id,
+                        post_list_id: self.id,
                         can_see_item: None,
                         can_see_comment: None,
                         create_item: Some("a".to_string()),
@@ -1098,7 +1098,7 @@ impl PostList {
                 for user_id in create_comment_users.unwrap() {
                     let _new_exclude = NewPostListPerm {
                         user_id:      user_id,
-                        post_list_id: new_id,
+                        post_list_id: self.id,
                         can_see_item: None,
                         can_see_comment: None,
                         create_item: None,
@@ -1117,7 +1117,7 @@ impl PostList {
                 for user_id in create_comment_users.unwrap() {
                     let _new_include = NewPostListPerm {
                         user_id:      user_id,
-                        post_list_id: new_id,
+                        post_list_id: self.id,
                         can_see_item: None,
                         can_see_comment: None,
                         create_item: None,
@@ -1137,7 +1137,7 @@ impl PostList {
                 for user_id in copy_el_users.unwrap() {
                     let _new_exclude = NewPostListPerm {
                         user_id:      user_id,
-                        post_list_id: new_id,
+                        post_list_id: self.id,
                         can_see_item: None,
                         can_see_comment: None,
                         create_item: None,
@@ -1156,7 +1156,7 @@ impl PostList {
                 for user_id in copy_el_users.unwrap() {
                     let _new_include = NewPostListPerm {
                         user_id:      user_id,
-                        post_list_id: new_id,
+                        post_list_id: self.id,
                         can_see_item: None,
                         can_see_comment: None,
                         create_item: None,
