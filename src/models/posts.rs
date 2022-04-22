@@ -643,7 +643,7 @@ impl PostList {
         community_id: Option<i32>, can_see_el: String, can_see_comment: String,
         create_el: String, create_comment: String, copy_el: String,
         can_see_el_users: Option<Vec<i32>>, can_see_comment_users: Option<Vec<i32>>,create_el_users: Option<Vec<i32>>,
-        create_comment_users: Option<Vec<i32>>,copy_el_users: Option<Vec<i32>>) -> PostList {
+        create_comment_users: Option<Vec<i32>>,copy_el_users: Option<Vec<i32>>) -> i32 {
 
         use crate::schema::post_lists::dsl::post_lists;
         use crate::schema::user_post_list_positions::dsl::user_post_list_positions;
@@ -655,6 +655,7 @@ impl PostList {
         };
 
         let _connection = establish_connection();
+        let mut new_id = 1;
         if community_id.is_some() {
             use crate::schema::communitys::dsl::communitys;
 
@@ -666,30 +667,32 @@ impl PostList {
                 .nth(0)
                 .unwrap();
 
-                let new_post_list = NewPostList{
-                    name: name,
-                    community_id: Some(community.id),
-                    user_id: creator.id,
-                    types: 2,
-                    description: description,
-                    created: chrono::Local::now().naive_utc(),
-                    count: 0,
-                    repost: 0,
-                    copy: 0,
-                    position: 0,
-                    can_see_el: can_see_el,
-                    can_see_comment: can_see_comment,
-                    create_el: create_el,
-                    create_comment: create_comment,
-                    copy_el: copy_el,
-                };
-                let new_list = diesel::insert_into(schema::post_lists::table)
-                    .values(&new_post_list)
-                    .get_result::<PostList>(&_connection)
-                    .expect("Error.");
+            let new_post_list = NewPostList{
+                name: name,
+                community_id: Some(community.id),
+                user_id: creator.id,
+                types: 2,
+                description: description,
+                created: chrono::Local::now().naive_utc(),
+                count: 0,
+                repost: 0,
+                copy: 0,
+                position: 0,
+                can_see_el: can_see_el,
+                can_see_comment: can_see_comment,
+                create_el: create_el,
+                create_comment: create_comment,
+                copy_el: copy_el,
+            };
+            let new_list = diesel::insert_into(schema::post_lists::table)
+                .values(&new_post_list)
+                .get_result::<PostList>(&_connection)
+                .expect("Error.");
+            new_id = new_list.id;
+
             let _new_posts_list_position = NewCommunityPostListPosition {
                 community_id: community.id,
-                list_id:      new_list.id,
+                list_id:      new_id,
                 position:     community.get_post_lists().len().try_into().unwrap() + 1,
                 types:        "a".to_string(),
             };
@@ -720,9 +723,11 @@ impl PostList {
                 .values(&new_post_list)
                 .get_result::<PostList>(&_connection)
                 .expect("Error.");
+            new_id = new_list.id;
+
             let _new_posts_list_position = NewUserPostListPosition {
                 user_id:  creator.id,
-                list_id:  new_list.id,
+                list_id:  new_id,
                 position: creator.get_post_lists().len().try_into().unwrap() + 1,
                 types:    "a".to_string(),
             };
@@ -737,7 +742,7 @@ impl PostList {
                 for user_id in can_see_el_users.unwrap() {
                     let _new_exclude = NewPostListPerm {
                         user_id:      user_id,
-                        post_list_id: new_list.id,
+                        post_list_id: new_id,
                         can_see_item: Some("b".to_string()),
                         can_see_comment: None,
                         create_item: None,
@@ -756,7 +761,7 @@ impl PostList {
                 for user_id in can_see_el_users.unwrap() {
                     let _new_exclude = NewPostListPerm {
                         user_id:      user_id,
-                        post_list_id: new_list.id,
+                        post_list_id: new_id,
                         can_see_item: Some("a".to_string()),
                         can_see_comment: None,
                         create_item: None,
@@ -770,7 +775,7 @@ impl PostList {
                 }
             }
         }
-        return new_list;
+        return new_id;
     }
 }
 
