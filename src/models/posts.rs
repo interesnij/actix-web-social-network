@@ -642,8 +642,8 @@ impl PostList {
     pub fn create_list(creator: User, name: String, description: Option<String>,
         community: Option<Community>, can_see_el: String, can_see_comment: String,
         create_el: String, create_comment: String, copy_el: String,
-        can_see_el_users: Vec<i32>, can_see_comment_users: Vec<i32>,create_el_users: Vec<i32>,
-        create_comment_users: Vec<i32>,copy_el_users: Vec<i32>) -> PostList {
+        can_see_el_users: Option<Vec<i32>>, can_see_comment_users: Option<Vec<i32>>,create_el_users: Option<Vec<i32>>,
+        create_comment_users: Option<Vec<i32>>,copy_el_users: Option<Vec<i32>>) -> PostList {
 
         use crate::schema::post_lists::dsl::post_lists;
         use crate::schema::user_post_list_positions::dsl::user_post_list_positions;
@@ -676,11 +676,11 @@ impl PostList {
             .values(&new_post_list)
             .get_result::<PostList>(&_connection)
             .expect("Error.");
-        if comunity.is_some() {
+        if community.is_some() {
             let _new_posts_list_position = NewCommunityPostListPosition {
-                comunity_id:  comunity.id,
+                community_id:  community.id,
                 list_id:      new_post_list.id,
-                position:     comunity.get_post_lists().len() + 1,
+                position:     community.get_post_lists().len() + 1,
                 types:        "a".to_string(),
             };
             let _posts_list_position = diesel::insert_into(schema::community_post_list_positions::table)
@@ -707,7 +707,7 @@ impl PostList {
                     let _new_exclude = NewPostListPerm {
                         user_id:      user_id,
                         post_list_id: new_post_list.id,
-                        can_see_item: "b".to_string(),
+                        can_see_item: Some("b".to_string()),
                         can_see_comment: None,
                         create_item: None,
                         create_comment: None,
@@ -726,7 +726,7 @@ impl PostList {
                     let _new_exclude = NewPostListPerm {
                         user_id:      user_id,
                         post_list_id: new_post_list.id,
-                        can_see_item: "a".to_string(),
+                        can_see_item: Some("a".to_string()),
                         can_see_comment: None,
                         create_item: None,
                         create_comment: None,
