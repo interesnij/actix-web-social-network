@@ -123,7 +123,7 @@ impl VideoList {
         return true;
     }
     pub fn get_code(&self) -> String {
-        return "lpo".to_string() + &self.get_str_id();
+        return "lvi".to_string() + &self.get_str_id();
     }
     pub fn get_longest_penalties(&self) -> String {
         use crate::schema::moderated_penalties::dsl::moderated_penalties;
@@ -1592,6 +1592,90 @@ pub struct NewVideo {
     pub position:        i16,
 }
 
+impl Video {
+    pub fn get_str_id(&self) -> String {
+        return self.id.to_string();
+    }
+    pub fn is_video(&self) -> bool {
+        return true;
+    }
+    pub fn get_code(&self) -> String {
+        return "vid".to_string() + &self.get_str_id();
+    }
+    pub fn get_longest_penalties(&self) -> String {
+        use crate::schema::moderated_penalties::dsl::moderated_penalties;
+        use crate::models::ModeratedPenaltie;
+
+        let _connection = establish_connection();
+
+        let penaltie = moderated_penalties
+            .filter(schema::moderated_penalties::object_id.eq(self.id))
+            .filter(schema::moderated_penalties::types.eq(56))
+            .load::<ModeratedPenaltie>(&_connection)
+            .expect("E.")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        return penaltie.expiration.unwrap().format("%d/%m/%Y").to_string();
+    }
+    pub fn get_moderated_description(&self) -> String {
+        use crate::schema::moderateds::dsl::moderateds;
+        use crate::models::Moderated;
+
+        let _connection = establish_connection();
+
+        let moder = moderateds
+            .filter(schema::moderateds::object_id.eq(self.id))
+            .filter(schema::moderateds::types.eq(56))
+            .load::<Moderated>(&_connection)
+            .expect("E.")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        if moder.description.is_some() {
+            return moder.description.unwrap().to_string();
+        }
+        else {
+            return "Предупреждение за нарушение правил соцсети трезвый.рус".to_string();
+        }
+    }
+    pub fn get_community(&self) -> Community {
+        use crate::schema::communitys::dsl::communitys;
+
+        let _connection = establish_connection();
+        return communitys
+            .filter(schema::communitys::id.eq(self.community_id.unwrap()))
+            .filter(schema::communitys::types.lt(10))
+            .load::<Community>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+    pub fn get_creator(&self) -> User {
+        use crate::schema::users::dsl::users;
+
+        let _connection = establish_connection();
+        return users
+            .filter(schema::users::id.eq(self.user_id))
+            .filter(schema::users::types.lt(10))
+            .load::<User>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+    pub fn get_description(&self) -> String {
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            return "видеозапись сообщества <a href='".to_owned() + &community.get_link() + &"' target='_blank'>" + &community.name + &"</a>"
+        }
+        else {
+            let creator = self.get_creator();
+            return "<a href='".to_owned() + &creator.get_link() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": видеозапись"
+        }
+    }
+}
 /////// VideoComment //////
 
     // 'a' Опубликованный
@@ -1623,7 +1707,7 @@ pub struct VideoComment {
 #[table_name="video_comments"]
 pub struct NewVideoComment {
     pub video_id:    i32,
-    pub user_id: i32,
+    pub user_id:    i32,
     pub sticker_id: Option<i32>,
     pub parent_id:  Option<i32>,
     pub content:    Option<String>,
@@ -1633,6 +1717,130 @@ pub struct NewVideoComment {
     pub liked:      i32,
     pub disliked:   i32,
     pub repost:     i32,
+}
+
+impl VideoComment {
+    pub fn get_str_id(&self) -> String {
+        return self.id.to_string();
+    }
+    pub fn is_video_comment(&self) -> bool {
+        return true;
+    }
+    pub fn get_code(&self) -> String {
+        return "cvi".to_string() + &self.get_str_id();
+    }
+    pub fn get_longest_penalties(&self) -> String {
+        use crate::schema::moderated_penalties::dsl::moderated_penalties;
+        use crate::models::ModeratedPenaltie;
+
+        let _connection = establish_connection();
+
+        let penaltie = moderated_penalties
+            .filter(schema::moderated_penalties::object_id.eq(self.id))
+            .filter(schema::moderated_penalties::types.eq(83))
+            .load::<ModeratedPenaltie>(&_connection)
+            .expect("E.")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        return penaltie.expiration.unwrap().format("%d/%m/%Y").to_string();
+    }
+    pub fn get_moderated_description(&self) -> String {
+        use crate::schema::moderateds::dsl::moderateds;
+        use crate::models::Moderated;
+
+        let _connection = establish_connection();
+
+        let moder = moderateds
+            .filter(schema::moderateds::object_id.eq(self.id))
+            .filter(schema::moderateds::types.eq(83))
+            .load::<Moderated>(&_connection)
+            .expect("E.")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        if moder.description.is_some() {
+            return moder.description.unwrap().to_string();
+        }
+        else {
+            return "Предупреждение за нарушение правил соцсети трезвый.рус".to_string();
+        }
+    }
+    pub fn get_community(&self) -> Community {
+        use crate::schema::communitys::dsl::communitys;
+
+        let _connection = establish_connection();
+        return communitys
+            .filter(schema::communitys::id.eq(self.get_item().community_id.unwrap()))
+            .filter(schema::communitys::types.lt(10))
+            .load::<Community>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+    pub fn get_creator(&self) -> User {
+        use crate::schema::users::dsl::users;
+
+        let _connection = establish_connection();
+        return users
+            .filter(schema::users::id.eq(self.get_item().user_id))
+            .filter(schema::users::types.lt(10))
+            .load::<User>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+    pub fn get_commenter(&self) -> User {
+        use crate::schema::users::dsl::users;
+
+        let _connection = establish_connection();
+        return users
+            .filter(schema::users::id.eq(self.user_id))
+            .filter(schema::users::types.lt(10))
+            .load::<User>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+    pub fn get_item(&self) -> Video {
+        use crate::schema::videos::dsl::videos;
+
+        let _connection = establish_connection();
+        return users
+            .filter(schema::videos::id.eq(self.video_id))
+            .filter(schema::videos::types.eq("a"))
+            .load::<Video>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+    pub fn get_parent(&self) -> VideoComment {
+        use crate::schema::video_comments::dsl::video_comments;
+
+        let _connection = establish_connection();
+        return video_comments
+            .filter(schema::video_comments::id.eq(self.parent_id.unwrap()))
+            .filter(schema::video_comments::types.eq_any(vec!["a", "b"]))
+            .load::<VideoComment>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+    pub fn get_description(&self) -> String {
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            return "запись сообщества <a href='".to_owned() + &community.get_link() + &"' target='_blank'>" + &community.name + &"</a>"
+        }
+        else {
+            let creator = self.get_creator();
+            return "<a href='".to_owned() + &creator.get_link() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": запись"
+        }
+    }
 }
 
 /////// UserVideoListCollection //////

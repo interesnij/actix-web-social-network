@@ -210,7 +210,7 @@ impl MusicList {
         return true;
     }
     pub fn get_code(&self) -> String {
-        return "ldo".to_string() + &self.get_str_id();
+        return "lmu".to_string() + &self.get_str_id();
     }
     pub fn get_longest_penalties(&self) -> String {
         use crate::schema::moderated_penalties::dsl::moderated_penalties;
@@ -1340,6 +1340,90 @@ pub struct NewMusic {
     pub position:        i16,
 }
 
+impl Music {
+    pub fn get_str_id(&self) -> String {
+        return self.id.to_string();
+    }
+    pub fn is_music(&self) -> bool {
+        return true;
+    }
+    pub fn get_code(&self) -> String {
+        return "mus".to_string() + &self.get_str_id();
+    }
+    pub fn get_longest_penalties(&self) -> String {
+        use crate::schema::moderated_penalties::dsl::moderated_penalties;
+        use crate::models::ModeratedPenaltie;
+
+        let _connection = establish_connection();
+
+        let penaltie = moderated_penalties
+            .filter(schema::moderated_penalties::object_id.eq(self.id))
+            .filter(schema::moderated_penalties::types.eq(52))
+            .load::<ModeratedPenaltie>(&_connection)
+            .expect("E.")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        return penaltie.expiration.unwrap().format("%d/%m/%Y").to_string();
+    }
+    pub fn get_moderated_description(&self) -> String {
+        use crate::schema::moderateds::dsl::moderateds;
+        use crate::models::Moderated;
+
+        let _connection = establish_connection();
+
+        let moder = moderateds
+            .filter(schema::moderateds::object_id.eq(self.id))
+            .filter(schema::moderateds::types.eq(52))
+            .load::<Moderated>(&_connection)
+            .expect("E.")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        if moder.description.is_some() {
+            return moder.description.unwrap().to_string();
+        }
+        else {
+            return "Предупреждение за нарушение правил соцсети трезвый.рус".to_string();
+        }
+    }
+    pub fn get_community(&self) -> Community {
+        use crate::schema::communitys::dsl::communitys;
+
+        let _connection = establish_connection();
+        return communitys
+            .filter(schema::communitys::id.eq(self.community_id.unwrap()))
+            .filter(schema::communitys::types.lt(10))
+            .load::<Community>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+    pub fn get_creator(&self) -> User {
+        use crate::schema::users::dsl::users;
+
+        let _connection = establish_connection();
+        return users
+            .filter(schema::users::id.eq(self.user_id))
+            .filter(schema::users::types.lt(10))
+            .load::<User>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+    pub fn get_description(&self) -> String {
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            return "аудиозапись сообщества <a href='".to_owned() + &community.get_link() + &"' target='_blank'>" + &community.name + &"</a>"
+        }
+        else {
+            let creator = self.get_creator();
+            return "<a href='".to_owned() + &creator.get_link() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": аудиозапись"
+        }
+    }
+}
 
 /////// UserMusicListCollection //////
 #[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
