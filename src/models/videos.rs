@@ -1807,9 +1807,9 @@ impl VideoComment {
     }
     pub fn get_item(&self) -> Video {
         use crate::schema::videos::dsl::videos;
-
+        
         let _connection = establish_connection();
-        return users
+        return videos
             .filter(schema::videos::id.eq(self.video_id))
             .filter(schema::videos::types.eq("a"))
             .load::<Video>(&_connection)
