@@ -1698,7 +1698,7 @@ impl Post {
     pub fn create_post(creator: User, content: Option<String>, category_id: Option<i32>,
         list: PostList, attach: Option<String>, parent_id: i32,
         comments_enabled: bool, is_signature: bool, votes_on: bool,
-        community_id: Option<i32>, type: Option<String>) -> &Post {
+        community_id: Option<i32>, types: Option<String>) -> &Post {
 
         use crate::schema::posts::dsl::posts;
         use crate::schema::post_lists::dsl::post_lists;
@@ -1711,13 +1711,13 @@ impl Post {
           .get_result::<PostList>(&_connection)
           .expect("Error.");
 
-        let mut types = "".to_string();
+        let mut _types = "".to_string();
 
-        if type.is_some() {
-            types = type.unwrap();
+        if types.is_some() {
+            _types = types.unwrap();
         }
         else {
-            types = "a".to_string();
+            _types = "a".to_string();
         }
 
         if community_id.is_some() {
@@ -1738,7 +1738,7 @@ impl Post {
               post_categorie_id: category_id,
               user_id: creator.id,
               post_list_id: list.id,
-              types: types,
+              types: _types,
               attach: attach,
               comment_enabled: comment_enabled,
               votes_on: votes_on,
@@ -1773,7 +1773,7 @@ impl Post {
               post_categorie_id: category_id,
               user_id: creator.id,
               post_list_id: list.id,
-              types: types,
+              types: _types,
               attach: attach,
               comment_enabled: comment_enabled,
               votes_on: votes_on,
