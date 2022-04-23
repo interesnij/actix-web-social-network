@@ -1555,6 +1555,7 @@ impl PostList {
     // 'h' Закрыто модератором
     // 'i' Удаленый предложенный в сообщество
     // 'y' Удаленый предложенный у пользователя
+    // 'c' Удаленый
 
 
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
@@ -1691,6 +1692,19 @@ impl Post {
             .filter(schema::users::id.eq(self.user_id))
             .filter(schema::users::types.lt(10))
             .load::<User>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+    pub fn get_list(&self) -> PostList {
+        use crate::schema::post_lists::dsl::post_lists;
+
+        let _connection = establish_connection();
+        return post_lists
+            .filter(schema::post_lists::id.eq(self.post_list_id))
+            .filter(schema::post_lists::types.lt(10))
+            .load::<PostList>(&_connection)
             .expect("E")
             .into_iter()
             .nth(0)
@@ -1926,7 +1940,6 @@ impl Post {
         return true;
     }
     pub fn get_format_text(&self) -> String {
-        use crate::utils::hide_text;
         if self.content.is_some() {
             let unwrap = self.content.as_ref().unwrap();
             if unwrap.len() <= 101 {
@@ -1938,11 +1951,93 @@ impl Post {
             }
             //return Some(hide_text(self.content.unwrap()));
         } else { return "".to_string(); }
-
     }
+    pub fn is_open(&self) -> bool {
+        return self.types == "a" && self.types == "b";
+    }
+    pub fn is_deleted(&self) -> bool {
+        return self.types == "c";
+    }
+    pub fn is_closed(&self) -> bool {
+        return self.types == "h";
+    }
+    pub fn is_fixed(&self) -> bool {
+        return self.types == "b";
+    }
+    pub fn is_repost(&self) -> bool {
+        return self.types == "r";
+    }
+    pub fn send_like(&self, user: User) -> String {
+        use actix_web::web::Json;
 
+        let list = self.get_list();
+        if self.votes_on == false && !list.is_user_can_see_el(user.pk) {
+            return "Ошиюка доступа".to_string();
+        }
+        use crate::schema::post_votes::dsl::post_votes;
+        let _connection = establish_connection();
+
+        let votes = post_votes
+            .filter(schema::post_votes::user_id.eq(user.id))
+            .filter(schema::post_votes::post_id.eq(self.id))
+            .load::<PostVote>(&_connection)
+            .expect("E.");
+        if votes.len() > 0 {
+            let vote = votes.into_iter().nth(0).unwrap();
+            if vote.vote != 1 {
+                diesel::update(&vote)
+                    .set(schema::post_votes::vote.eq(1))
+                    .get_result::<PostVote>(&_connection)
+                    .expect("Error.");
+
+                diesel::update(&self)
+                    .set(schema::posts::liked.eq(self.liked + 1), schema::posts::liked.eq(self.disliked - 1))
+                    .get_result::<Post>(&_connection)
+                    .expect("Error.");
+            }
+            else {
+                diesel::delete(post_votes
+                    .filter(schema::post_votes::user_id.eq(user.id))
+                    .filter(schema::post_votes::post_id.eq(self.id))
+                    )
+                    .execute(&_connection)
+                    .expect("E");
+
+                diesel::update(&self)
+                    .set(schema::posts::liked.eq(self.liked - 1))
+                    .get_result::<Post>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else {
+            let new_vote = NewPostVote {
+                vote: 1,
+                user_id: user.id,
+                post_id: self.id,
+            };
+            diesel::insert_into(schema::post_votes::table)
+                .values(&new_vote)
+                .get_result::<PostVote>(&_connection)
+                .expect("Error.");
+
+            diesel::update(&self)
+                .set(schema::posts::liked.eq(self.liked + 1))
+                .get_result::<Post>(&_connection)
+                .expect("Error.");
+        }
+        let reactions: PostReactions {
+            like_count:    self.liked,
+            dislike_count: self.disliked,
+        };
+        return Json(reactions);
+    }
 }
 
+#[derive(Serialize)]
+pub struct PostReactions {
+    pub like_count:    i32,
+    pub dislike_count: i32,
+}
 /////// PostComment //////
 
 // 'a' Опубликованный
