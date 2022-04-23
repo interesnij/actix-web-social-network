@@ -1691,29 +1691,30 @@ impl Photo {
 #[belongs_to(Sticker)]
 pub struct PhotoComment {
     pub id:         i32,
-    pub photo_id:    i32,
-    pub user_id: i32,
+    pub photo_id:   i32,
+    pub user_id:    i32,
     pub sticker_id: Option<i32>,
     pub parent_id:  Option<i32>,
     pub content:    Option<String>,
     pub attach:     Option<String>,
-    pub types:      String,
     pub created:    chrono::NaiveDateTime,
+    pub types:      String,
     pub liked:      i32,
     pub disliked:   i32,
     pub repost:     i32,
 }
+
 #[derive(Deserialize, Insertable)]
 #[table_name="photo_comments"]
 pub struct NewPhotoComment {
-    pub photo_id:    i32,
-    pub user_id: i32,
+    pub photo_id:   i32,
+    pub user_id:    i32,
     pub sticker_id: Option<i32>,
     pub parent_id:  Option<i32>,
     pub content:    Option<String>,
     pub attach:     Option<String>,
-    pub types:      String,
     pub created:    chrono::NaiveDateTime,
+    pub types:      String,
     pub liked:      i32,
     pub disliked:   i32,
     pub repost:     i32,

@@ -1691,13 +1691,13 @@ impl Video {
 #[belongs_to(Sticker)]
 pub struct VideoComment {
     pub id:         i32,
-    pub video_id:    i32,
-    pub user_id: i32,
+    pub video_id:   i32,
+    pub user_id:    i32,
     pub sticker_id: Option<i32>,
     pub parent_id:  Option<i32>,
     pub content:    Option<String>,
-    pub attach:     Option<String>,
     pub types:      String,
+    pub attach:     Option<String>,
     pub created:    chrono::NaiveDateTime,
     pub liked:      i32,
     pub disliked:   i32,
@@ -1706,13 +1706,13 @@ pub struct VideoComment {
 #[derive(Deserialize, Insertable)]
 #[table_name="video_comments"]
 pub struct NewVideoComment {
-    pub video_id:    i32,
+    pub video_id:   i32,
     pub user_id:    i32,
     pub sticker_id: Option<i32>,
     pub parent_id:  Option<i32>,
     pub content:    Option<String>,
-    pub attach:     Option<String>,
     pub types:      String,
+    pub attach:     Option<String>,
     pub created:    chrono::NaiveDateTime,
     pub liked:      i32,
     pub disliked:   i32,
