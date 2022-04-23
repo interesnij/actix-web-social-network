@@ -1756,7 +1756,7 @@ impl Post {
               copy: 0,
               position: list.count,
               is_signature: is_signature,
-              parent_id: Some(parent_id),
+              parent_id: parent_id,
             };
             let new_post = diesel::insert_into(schema::posts::table)
                 .values(&new_post_form)
@@ -1793,7 +1793,7 @@ impl Post {
               copy: 0,
               position: list.count,
               is_signature: false,
-              parent_id: Some(parent_id),
+              parent_id: parent_id,
             };
             let new_post = diesel::insert_into(schema::posts::table)
                 .values(&new_post_form)
