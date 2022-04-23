@@ -1703,6 +1703,7 @@ impl Post {
         use crate::schema::posts::dsl::posts;
         use crate::schema::post_lists::dsl::post_lists;
 
+        let _connection = establish_connection();
         if attach.is_some() {
             attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "");
         }
@@ -1723,7 +1724,6 @@ impl Post {
         if community_id.is_some() {
             use crate::schema::community_infos::dsl::community_infos;
             use crate::models::CommunityInfo;
-
 
             let community = list.get_community();
             let profile = community.get_info_model();
@@ -1831,6 +1831,7 @@ impl Post {
                 type: None,
             )
         }
+        return true;
     }
 }
 
