@@ -1237,9 +1237,13 @@ pub struct NewDoc {
 #[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
 #[table_name="docs"]
 pub struct EditDoc {
-    pub title:           String,
-    pub types_2:         String,
-    pub position:        i16,
+    pub title:   String,
+    pub types_2: String,
+}
+#[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
+#[table_name="docs"]
+pub struct EditDocPosition {
+    pub position: i16,
 }
 
 impl Doc {

@@ -1346,7 +1346,11 @@ pub struct EditMusic {
     pub genre_id:       Option<i32>,
     pub album_id:       Option<i32>,
     pub image:          Option<String>,
-    pub position:        i16,
+}
+#[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
+#[table_name="musics"]
+pub struct EditMusicPosition {
+    pub position: i16,
 }
 
 impl Music {

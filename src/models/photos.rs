@@ -1596,6 +1596,10 @@ pub struct EditPhoto {
     pub description:     Option<String>,
     pub comment_enabled: bool,
     pub votes_on:        bool,
+}
+#[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
+#[table_name="photos"]
+pub struct EditPhotoPosition {
     pub position:        i16,
 }
 

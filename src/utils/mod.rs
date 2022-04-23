@@ -118,3 +118,15 @@ pub fn get_users_from_ids(ids:Vec<i32>) -> Vec<User> {
         .load::<User>(&_connection)
         .expect("E");
 }
+
+pub fn hide_text(text:Option <String>) -> Option <String> {
+    if text.is_some() {
+        let words = text.split(" ").collect::<Vec<_>>();
+        if words.len() <= 30 {
+            return text;
+        }
+        else {
+            return text[..100].to_owned() + &"<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + &text[101:] + &"</span>";
+        }
+    } else { return None; }
+}

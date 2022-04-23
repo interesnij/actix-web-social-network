@@ -1254,6 +1254,11 @@ pub struct EditSurvey {
     pub is_no_edited:    bool,
     pub time_end:        Option<chrono::NaiveDateTime>,
 }
+#[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
+#[table_name="surveys"]
+pub struct EditSurveyPosition {
+    pub position:  i16,
+}
 
 impl Survey {
     pub fn get_str_id(&self) -> String {

@@ -648,7 +648,7 @@ impl VideoList {
         };
 
         let _connection = establish_connection();
-        let mut new_id;
+        let new_id;
         if community_id.is_some() {
             use crate::schema::communitys::dsl::communitys;
 
@@ -1601,6 +1601,10 @@ pub struct EditVideo {
     pub description:     Option<String>,
     pub comment_enabled: bool,
     pub votes_on:        bool,
+}
+#[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
+#[table_name="videos"]
+pub struct EditVideoPosition {
     pub position:        i16,
 }
 

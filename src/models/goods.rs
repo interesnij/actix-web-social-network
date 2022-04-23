@@ -1601,7 +1601,11 @@ pub struct EditGood {
     pub image:           Option<String>,
     pub comment_enabled: bool,
     pub votes_on:        bool,
-    pub position:        i16,
+}
+#[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
+#[table_name="goods"]
+pub struct EditGoodPosition {
+    pub position: i16,
 }
 
 impl Good {
