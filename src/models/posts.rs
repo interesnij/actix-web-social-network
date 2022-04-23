@@ -1928,7 +1928,7 @@ impl Post {
     pub fn get_format_text(&self) -> Option<String> {
         use crate::utils::hide_text;
         if self.content.is_some() {
-            return hide_text(self.content.unwrap());
+            return Some(hide_text(self.content.unwrap()));
         } else { return None; }
     }
 
