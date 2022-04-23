@@ -1934,7 +1934,7 @@ impl Post {
             }
             else {
                 let new_str = unwrap[..100].to_owned() + &"<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + &unwrap[101..] + &"</span>";
-                return new_str.as_ref();
+                return *new_str.as_ref();
             }
             //return Some(hide_text(self.content.unwrap()));
         } else { return None; }
