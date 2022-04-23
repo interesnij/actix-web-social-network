@@ -2118,7 +2118,7 @@ impl Post {
     }
     pub fn delete_item(&self) -> bool {
         let _connection = establish_connection();
-        let user_types = self.types;
+        let user_types = &self.types;
         let close_case = match user_types.as_str() {
             "a" => "c",
             "b" => "m",
