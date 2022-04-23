@@ -1828,15 +1828,15 @@ impl Post {
 
             Post::create_post (
                 list.get_creator(),
-                item.content,
-                item.post_categorie_id,
+                item.content.clone(),
+                item.post_categorie_id.clone(),
                 list,
-                item.attach,
-                item.parent_id,
-                item.comment_enabled,
-                item.is_signature,
-                item.votes_on,
-                item.community_id,
+                item.attach.clone(),
+                item.parent_id.clone(),
+                item.comment_enabled.clone(),
+                item.is_signature.clone(),
+                item.votes_on.clone(),
+                item.community_id.clone(),
                 None,
             );
         }
