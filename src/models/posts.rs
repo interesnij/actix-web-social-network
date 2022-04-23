@@ -1865,7 +1865,7 @@ impl Post {
         let _connection = establish_connection();
         let mut new_attach = "".to_string();
         if attach.is_some() {
-            new_attach = attach.unwrap().replace("'", "").replace("[", "").replace("]", "").replace(" ", "");
+            new_attach = attach.as_ref().unwrap().replace("'", "").replace("[", "").replace("]", "").replace(" ", "");
         }
 
         let edit_post = EditPost {

@@ -648,7 +648,7 @@ impl VideoList {
         };
 
         let _connection = establish_connection();
-        let mut new_id = 1;
+        let mut new_id;
         if community_id.is_some() {
             use crate::schema::communitys::dsl::communitys;
 
