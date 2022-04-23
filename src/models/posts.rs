@@ -1877,6 +1877,7 @@ impl Post {
             .get_result::<Post>(&_connection)
             .expect("Error.");
         return self;
+    }
 }
 
 /////// PostComment //////
