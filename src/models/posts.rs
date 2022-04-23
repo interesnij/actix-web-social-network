@@ -1853,6 +1853,30 @@ impl Post {
         }
         return true;
     }
+
+    pub fn edit_post(&self, content: Option<String>, post_categorie_id: Option<i32>,
+        attach: Option<String>, comment_enabled: bool, votes_on: bool,
+        is_signature: bool) -> &Post {
+
+        let _connection = establish_connection();
+        let mut new_attach = "".to_string();
+        if attach.is_some() {
+            new_attach = attach.unwrap().replace("'", "").replace("[", "").replace("]", "").replace(" ", "");
+        }
+
+        let edit_post = EditPost {
+            content: content,
+            post_categorie_id: post_categorie_id,
+            attach: attach,
+            comment_enabled: comment_enabled,
+            votes_on: votes_on,
+            is_signature: is_signature,
+        };
+        diesel::update(self)
+            .set(edit_post)
+            .get_result::<Post>(&_connection)
+            .expect("Error.");
+        return self;
 }
 
 /////// PostComment //////
