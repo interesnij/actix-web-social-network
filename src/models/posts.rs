@@ -2237,8 +2237,8 @@ impl Post {
     pub fn get_attach(&self, user_id: i32) -> String {
         if self.attach.is_some() {
             let _connection = establish_connection();
-            
-            let v: Vec<&str> = self.attach.unwrap().split(",").collect();
+
+            let v: Vec<&str> = self.attach.as_ref().unwrap().split(",").collect();
             for item in v.iter() {
                 let pk: i32 = item[3..].parse().unwrap();
                 if item.chars().nth(0).unwrap() == 'l' {
