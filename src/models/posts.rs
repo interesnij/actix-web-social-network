@@ -1582,6 +1582,7 @@ pub struct Post {
     pub copy:              i32,
     pub position:          i32,
     pub is_signature:      bool,
+    pub parent_id:         Option<i32>,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="posts"]
@@ -1604,6 +1605,7 @@ pub struct NewPost {
     pub copy:            i32,
     pub position:        i32,
     pub is_signature:    bool,
+    pub parent_id:       Option<i32>,
 }
 
 impl Post {
@@ -1753,6 +1755,7 @@ impl Post {
               copy: 0,
               position: list.count,
               is_signature: is_signature,
+              parent_id: parent_id,
             };
             let new_post = diesel::insert_into(schema::posts::table)
                 .values(&new_post_form)
@@ -1789,6 +1792,7 @@ impl Post {
               copy: 0,
               position: list.count,
               is_signature: false,
+              parent_id: parent_id,
             };
             let new_post = diesel::insert_into(schema::posts::table)
                 .values(&new_post_form)
@@ -1828,7 +1832,7 @@ impl Post {
                 list,
                 item.attach,
                 item.parent_id,
-                item.comments_enabled,
+                item.comment_enabled,
                 item.is_signature,
                 item.votes_on,
                 item.community_id,
