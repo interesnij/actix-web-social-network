@@ -1687,6 +1687,151 @@ impl Post {
             return "<a href='".to_owned() + &creator.get_link() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": запись"
         }
     }
+    pub fn is_user_can_edit_delete_item(&self, user: User) -> bool {
+        if self.community_id.is_some() {
+            return user.is_staff_of_community(self.community_id.unwrap());
+        }
+        else {
+            return self.user_id == user.id;
+        }
+    }
+    pub fn create_post(creator: User, content: Option<String>, category_id: Option<i32>,
+        list: PostList, attach: Option<String>, parent_id: i32,
+        comments_enabled: bool, is_signature: bool, votes_on: bool,
+        community_id: Option<i32>, type: Option<String>) -> &Post {
+
+        use crate::schema::posts::dsl::posts;
+        use crate::schema::post_lists::dsl::post_lists;
+
+        if attach.is_some() {
+            attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "");
+        }
+        diesel::update(list)
+          .set(schema::post_lists::count.eq(list.count + 1))
+          .get_result::<PostList>(&_connection)
+          .expect("Error.");
+
+        let mut types = "".to_string();
+
+        if type.is_some() {
+            types = type.unwrap();
+        }
+        else {
+            types = "a".to_string();
+        }
+
+        if community_id.is_some() {
+            use crate::schema::community_infos::dsl::community_infos;
+            use crate::models::ComunityInfo;
+
+
+            let community = list.get_community();
+            let profile = community.get_info_model();
+            diesel::update(profile)
+              .set(schema::community_infos::posts.eq(profile.posts + 1))
+              .get_result::<ComunityInfo>(&_connection)
+              .expect("Error.");
+
+            let new_post_form = NewPost {
+              content: content,
+              community_id: community_id,
+              post_categorie_id: category_id,
+              user_id: creator.id,
+              post_list_id: list.id,
+              types: types,
+              attach: attach,
+              comment_enabled: comment_enabled,
+              votes_on: votes_on,
+              created: chrono::Local::now().naive_utc(),
+              comment: 0,
+              view: 0,
+              liked: 0,
+              disliked: 0,
+              repost: 0,
+              copy: 0,
+              position: list.count,
+            };
+            let new_post = diesel::insert_into(schema::posts::table)
+                .values(&new_post_form)
+                .get_result::<Post>(&_connection)
+                .expect("Error.");
+            return new_post;
+        }
+        else {
+            use crate::schema::user_profiles::dsl::user_profiles;
+            use crate::models::UserProfile;
+
+            let profile = creator.get_profile();
+            diesel::update(profile)
+              .set(schema::user_profiles::posts.eq(profile.posts + 1))
+              .get_result::<ComunityInfo>(&_connection)
+              .expect("Error.");
+
+            let new_post_form = NewPost {
+              content: content,
+              community_id: None,
+              post_categorie_id: category_id,
+              user_id: creator.id,
+              post_list_id: list.id,
+              types: types,
+              attach: attach,
+              comment_enabled: comment_enabled,
+              votes_on: votes_on,
+              created: chrono::Local::now().naive_utc(),
+              comment: 0,
+              view: 0,
+              liked: 0,
+              disliked: 0,
+              repost: 0,
+              copy: 0,
+              position: list.count,
+            };
+            let new_post = diesel::insert_into(schema::posts::table)
+                .values(&new_post_form)
+                .get_result::<Post>(&_connection)
+                .expect("Error.");
+            return new_post;
+        }
+    }
+    pub fn copy_item(pk: i32, lists: Vec<PostList>) -> bool {
+        use crate::schema::posts::dsl::posts;
+        use crate::schema::post_lists::dsl::post_lists;
+
+        let _connection = establish_connection();
+        let item = posts
+            .filter(schema::posts::id.eq(pk))
+            .filter(schema::posts::types.eq("a"))
+            .load::<Post>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        let count = 0;
+        for list_id in lists.iter() {
+            let list = post_lists
+                .filter(schema::post_lists::id.eq(list_id))
+                .filter(schema::post_lists::types.lt(10))
+                .load::<PostList>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+
+            create_post(
+                creator: list.get_creator(),
+                content: item.content,
+                category_id: item.category_id,
+                list: list,
+                attach: item.attach,
+                parent_id: item.parent_id,
+                comments_enabled: item.comments_enabled,
+                is_signature: item.is_signature,
+                votes_on: item.votes_on,
+                community_id: item.community_id,
+                type: None,
+            )
+        }
+    }
 }
 
 /////// PostComment //////
