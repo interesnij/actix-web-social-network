@@ -1925,19 +1925,19 @@ impl Post {
             .expect("Error.");
         return true;
     }
-    pub fn get_format_text(&self) -> Option<&String> {
+    pub fn get_format_text(&self) -> String {
         use crate::utils::hide_text;
         if self.content.is_some() {
-            let unwrap = self.content.as_ref().unwrap();
+            let unwrap = self.content.unwrap();
             if unwrap.len() <= 101 {
-                return self.content.as_ref();
+                return self.content.unwrap();
             }
             else {
                 let new_str = unwrap[..100].to_owned() + &"<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + &unwrap[101..] + &"</span>";
-                return *new_str.as_ref();
+                return new_str;
             }
             //return Some(hide_text(self.content.unwrap()));
-        } else { return None; }
+        } else { return "".to_string(); }
 
     }
 
