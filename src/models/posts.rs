@@ -1975,10 +1975,13 @@ impl Post {
     pub fn is_repost(&self) -> bool {
         return self.types == "r";
     }
-    pub fn send_like(&self, user: User) -> Json<T> {
+    pub fn send_like(&self, user: User) -> Json<PostReactions> {
         let list = self.get_list();
         if self.votes_on == false && !list.is_user_can_see_el(user.pk) {
-            return Json {};
+            return PostReactions {
+                like_count:    self.liked,
+                dislike_count: self.disliked,
+            };
         }
         use crate::schema::post_votes::dsl::post_votes;
 
