@@ -1975,6 +1975,8 @@ impl Post {
             return "Ошиюка доступа".to_string();
         }
         use crate::schema::post_votes::dsl::post_votes;
+        use crate::utils::ReactionsUpdate;
+
         let _connection = establish_connection();
 
         let votes = post_votes
@@ -1990,8 +1992,12 @@ impl Post {
                     .get_result::<PostVote>(&_connection)
                     .expect("Error.");
 
+                let reactions = ReactionsUpdate {
+                    liked:    self.liked + 1,
+                    disliked: self.disliked - 1,
+                };
                 diesel::update(self)
-                    .set(schema::posts::liked.eq(self.liked + 1), schema::posts::disliked.eq(self.disliked - 1))
+                    .set(reactions)
                     .get_result::<Post>(&_connection)
                     .expect("Error.");
             }
@@ -2025,7 +2031,7 @@ impl Post {
                 .get_result::<Post>(&_connection)
                 .expect("Error.");
         }
-        let reactions: PostReactions {
+        let reactions = PostReactions {
             like_count:    self.liked,
             dislike_count: self.disliked,
         };

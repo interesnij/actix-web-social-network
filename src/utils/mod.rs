@@ -2,6 +2,8 @@ mod templates;
 pub use self::{
     templates::*
 };
+
+use serde::Serialize;
 use argonautica::{Hasher, Verifier};
 use actix_session::Session;
 use diesel::prelude::*;
@@ -25,7 +27,11 @@ pub fn establish_connection() -> PgConnection {
         .expect(&format!("Error connecting to {}", database_url))
 }
 
-// Auth
+#[derive(Serialize)]
+pub struct ReactionsUpdate {
+    pub liked:    i32,
+    pub disliked: i32,
+}
 
 pub fn hash_password(password: &str) -> String {
   Hasher::default()
