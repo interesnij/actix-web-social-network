@@ -1,0 +1,4 @@
+-- Your SQL goes here
+
+ALTER TABLE posts ADD COLUMN is_signature
+BOOLEAN NOT NULL DEFAULT FALSE;
