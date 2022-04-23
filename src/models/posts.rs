@@ -1802,7 +1802,7 @@ impl Post {
             return new_post;
         }
     }
-    pub fn copy_item(pk: i32, lists: Vec<PostList>) -> bool {
+    pub fn copy_item(pk: i32, lists: Vec<i32>) -> bool {
         use crate::schema::posts::dsl::posts;
         use crate::schema::post_lists::dsl::post_lists;
 
