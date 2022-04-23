@@ -122,12 +122,13 @@ pub fn get_users_from_ids(ids:Vec<i32>) -> Vec<User> {
 pub fn hide_text(text:Option <String>) -> Option <String> {
     if text.is_some() {
         let text_unwrap = text.unwrap();
-        let words = text_unwrap.unwrap().split(" ").collect::<Vec<_>>();
+        let words = text_unwrap.split(" ").collect::<Vec<_>>();
         if words.len() <= 30 {
             return text;
         }
         else {
-            return text_unwrap[..100].to_owned() + &"<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + &text_unwrap[101..] + &"</span>";
+            let new_text = text_unwrap[..100].to_owned() + &"<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + &text_unwrap[101..] + &"</span>";
+            return Some(new_text);
         }
     } else { return None; }
 }
