@@ -119,9 +119,9 @@ pub fn get_users_from_ids(ids:Vec<i32>) -> Vec<User> {
         .expect("E");
 }
 
-pub fn hide_text(text:Option <String>) -> Option <String> {
+pub fn hide_text(text: Option<String>) -> Option<String> {
     if text.is_some() {
-        let text_unwrap = text.unwrap();
+        let text_unwrap = text.as_ref().unwrap();
         let words = text_unwrap.split(" ").collect::<Vec<_>>();
         if words.len() <= 30 {
             return text;
