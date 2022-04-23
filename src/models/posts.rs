@@ -2119,12 +2119,12 @@ impl Post {
     pub fn delete_item(&self) -> bool {
         let _connection = establish_connection();
         let user_types = self.types;
-        let close_case = match user_types {
-            "a" => &"c".to_str(),
-            "b" => &"m".to_str(),
-            "f" => &"i".to_str(),
-            "g" => &"y".to_str(),
-            _ => &"c".to_str(),
+        let close_case = match user_types.as_str() {
+            "a" => "c",
+            "b" => "m",
+            "f" => "i",
+            "g" => "y",
+            _ => "c",
         };
         diesel::update(self)
             .set(schema::posts::types.eq(close_case))
