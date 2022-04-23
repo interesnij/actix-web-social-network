@@ -1615,8 +1615,12 @@ pub struct EditPost {
     pub attach:          Option<String>,
     pub comment_enabled: bool,
     pub votes_on:        bool,
-    pub position:        i32,
     pub is_signature:    bool,
+}
+#[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
+#[table_name="posts"]
+pub struct EditPostPosition {
+    pub position:        i32,
 }
 
 impl Post {
