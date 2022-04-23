@@ -1984,6 +1984,7 @@ impl Post {
             });
         }
         use crate::schema::post_votes::dsl::post_votes;
+        use crate::utils::JsonReactions;
 
         let _connection = establish_connection();
 
@@ -2039,7 +2040,79 @@ impl Post {
                 .get_result::<Post>(&_connection)
                 .expect("Error.");
         }
-        let reactions = PostReactions {
+        let reactions = JsonReactions {
+            like_count:    self.liked,
+            dislike_count: self.disliked,
+        };
+        return Json(reactions);
+    }
+
+    pub fn send_dislike(&self, user: User) -> Json<PostReactions> {
+        let list = self.get_list();
+        if self.votes_on == false && !list.is_user_can_see_el(user.id) {
+            return Json(PostReactions {
+                like_count:    self.liked,
+                dislike_count: self.disliked,
+            });
+        }
+        use crate::schema::post_votes::dsl::post_votes;
+        use crate::utils::JsonReactions;
+
+        let _connection = establish_connection();
+
+        let votes = post_votes
+            .filter(schema::post_votes::user_id.eq(user.id))
+            .filter(schema::post_votes::post_id.eq(self.id))
+            .load::<PostVote>(&_connection)
+            .expect("E.");
+        if votes.len() > 0 {
+            let vote = votes.into_iter().nth(0).unwrap();
+            if vote.vote != -1 {
+                diesel::update(&vote)
+                    .set(schema::post_votes::vote.eq(-1))
+                    .get_result::<PostVote>(&_connection)
+                    .expect("Error.");
+
+                let reactions = PostReactionsUpdate {
+                    liked:    self.liked - 1,
+                    disliked: self.disliked + 1,
+                };
+                diesel::update(self)
+                    .set(reactions)
+                    .get_result::<Post>(&_connection)
+                    .expect("Error.");
+            }
+            else {
+                diesel::delete(post_votes
+                    .filter(schema::post_votes::user_id.eq(user.id))
+                    .filter(schema::post_votes::post_id.eq(self.id))
+                    )
+                    .execute(&_connection)
+                    .expect("E");
+
+                diesel::update(self)
+                    .set(schema::posts::liked.eq(self.disliked - 1))
+                    .get_result::<Post>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else {
+            let new_vote = NewPostVote {
+                vote: 1,
+                user_id: user.id,
+                post_id: self.id,
+            };
+            diesel::insert_into(schema::post_votes::table)
+                .values(&new_vote)
+                .get_result::<PostVote>(&_connection)
+                .expect("Error.");
+
+            diesel::update(self)
+                .set(schema::posts::liked.eq(self.disliked + 1))
+                .get_result::<Post>(&_connection)
+                .expect("Error.");
+        }
+        let reactions = JsonReactions {
             like_count:    self.liked,
             dislike_count: self.disliked,
         };
@@ -2047,11 +2120,6 @@ impl Post {
     }
 }
 
-#[derive(Serialize)]
-pub struct PostReactions {
-    pub like_count:    i32,
-    pub dislike_count: i32,
-}
 /////// PostComment //////
 
 // 'a' Опубликованный

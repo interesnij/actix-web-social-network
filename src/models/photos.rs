@@ -1603,6 +1603,13 @@ pub struct EditPhotoPosition {
     pub position:        i16,
 }
 
+#[derive(Serialize, AsChangeset)]
+#[table_name="photos"]
+pub struct PhotoReactionsUpdate {
+    pub liked:    i32,
+    pub disliked: i32,
+}
+
 impl Photo {
     pub fn get_str_id(&self) -> String {
         return self.id.to_string();
@@ -1737,6 +1744,13 @@ pub struct NewPhotoComment {
 pub struct EditPhotoComment {
     pub content:    Option<String>,
     pub attach:     Option<String>,
+}
+
+#[derive(Serialize, AsChangeset)]
+#[table_name="photo_comments"]
+pub struct PhotoCommentReactionsUpdate {
+    pub liked:    i32,
+    pub disliked: i32,
 }
 
 /////// UserPhotoListCollection //////

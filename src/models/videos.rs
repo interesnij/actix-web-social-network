@@ -1608,6 +1608,13 @@ pub struct EditVideoPosition {
     pub position:        i16,
 }
 
+#[derive(Serialize, AsChangeset)]
+#[table_name="videos"]
+pub struct VideoReactionsUpdate {
+    pub liked:    i32,
+    pub disliked: i32,
+}
+
 impl Video {
     pub fn get_str_id(&self) -> String {
         return self.id.to_string();
@@ -1740,6 +1747,13 @@ pub struct NewVideoComment {
 pub struct EditVideoComment {
     pub content:    Option<String>,
     pub attach:     Option<String>,
+}
+
+#[derive(Serialize, AsChangeset)]
+#[table_name="video_comments"]
+pub struct VideoCommentReactionsUpdate {
+    pub liked:    i32,
+    pub disliked: i32,
 }
 
 impl VideoComment {

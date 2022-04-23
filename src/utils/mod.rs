@@ -16,6 +16,13 @@ use crate::schema;
 use crate::{errors::AuthError, vars, models::SessionUser};
 use crate::models::User;
 
+
+#[derive(Serialize)]
+pub struct JsonReactions {
+    pub like_count:    i32,
+    pub dislike_count: i32,
+}
+
 pub fn establish_connection() -> PgConnection {
     use dotenv::dotenv;
 

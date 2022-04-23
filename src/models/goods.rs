@@ -1609,6 +1609,13 @@ pub struct EditGoodPosition {
     pub position: i16,
 }
 
+#[derive(Serialize, AsChangeset)]
+#[table_name="goods"]
+pub struct GoodReactionsUpdate {
+    pub liked:    i32,
+    pub disliked: i32,
+}
+
 impl Good {
     pub fn get_str_id(&self) -> String {
         return self.id.to_string();
@@ -1742,6 +1749,13 @@ pub struct NewGoodComment {
 pub struct EditGoodComment {
     pub content:    Option<String>,
     pub attach:     Option<String>,
+}
+
+#[derive(Serialize, AsChangeset)]
+#[table_name="good_comments"]
+pub struct GoodCommentReactionsUpdate {
+    pub liked:    i32,
+    pub disliked: i32,
 }
 
 /////// UserGoodListCollection //////
