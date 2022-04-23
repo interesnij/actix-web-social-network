@@ -1807,7 +1807,7 @@ impl VideoComment {
     }
     pub fn get_item(&self) -> Video {
         use crate::schema::videos::dsl::videos;
-        
+
         let _connection = establish_connection();
         return videos
             .filter(schema::videos::id.eq(self.video_id))
@@ -1832,7 +1832,7 @@ impl VideoComment {
             .unwrap();
     }
     pub fn get_description(&self) -> String {
-        if self.community_id.is_some() {
+        if self.get_item().community_id.is_some() {
             let community = self.get_community();
             return "запись сообщества <a href='".to_owned() + &community.get_link() + &"' target='_blank'>" + &community.name + &"</a>"
         }
