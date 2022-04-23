@@ -1339,6 +1339,15 @@ pub struct NewMusic {
     pub copy:            i32,
     pub position:        i16,
 }
+#[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
+#[table_name="musics"]
+pub struct EditMusic {
+    pub title:           String,
+    pub genre_id:       Option<i32>,
+    pub album_id:       Option<i32>,
+    pub image:          Option<String>,
+    pub position:        i16,
+}
 
 impl Music {
     pub fn get_str_id(&self) -> String {

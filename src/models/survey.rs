@@ -1244,6 +1244,16 @@ pub struct NewSurvey {
     pub position:        i16,
     pub vote:            i32,
 }
+#[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
+#[table_name="surveys"]
+pub struct EditSurvey {
+    pub title:           String,
+    pub image:           Option<String>,
+    pub is_anonymous:    bool,
+    pub is_multiple:     bool,
+    pub is_no_edited:    bool,
+    pub time_end:        Option<chrono::NaiveDateTime>,
+}
 
 impl Survey {
     pub fn get_str_id(&self) -> String {

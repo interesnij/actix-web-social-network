@@ -1590,6 +1590,14 @@ pub struct NewPhoto {
     pub copy:            i32,
     pub position:        i16,
 }
+#[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
+#[table_name="photos"]
+pub struct EditPhoto {
+    pub description:     Option<String>,
+    pub comment_enabled: bool,
+    pub votes_on:        bool,
+    pub position:        i16,
+}
 
 impl Photo {
     pub fn get_str_id(&self) -> String {
@@ -1718,6 +1726,13 @@ pub struct NewPhotoComment {
     pub liked:      i32,
     pub disliked:   i32,
     pub repost:     i32,
+}
+
+#[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
+#[table_name="photo_comments"]
+pub struct EditPhotoComment {
+    pub content:    Option<String>,
+    pub attach:     Option<String>,
 }
 
 /////// UserPhotoListCollection //////

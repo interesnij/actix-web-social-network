@@ -1607,6 +1607,17 @@ pub struct NewPost {
     pub is_signature:    bool,
     pub parent_id:       Option<i32>,
 }
+#[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
+#[table_name="posts"]
+pub struct EditPost {
+    pub content:         Option<String>,
+    pub post_categorie_id:     Option<i32>,
+    pub attach:          Option<String>,
+    pub comment_enabled: bool,
+    pub votes_on:        bool,
+    pub position:        i32,
+    pub is_signature:    bool,
+}
 
 impl Post {
     pub fn get_str_id(&self) -> String {
@@ -1885,6 +1896,13 @@ pub struct NewPostComment {
     pub liked:      i32,
     pub disliked:   i32,
     pub repost:     i32,
+}
+
+#[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
+#[table_name="post_comments"]
+pub struct EditPostComment {
+    pub content:    Option<String>,
+    pub attach:     Option<String>,
 }
 
 /////// UserPostListCollection //////

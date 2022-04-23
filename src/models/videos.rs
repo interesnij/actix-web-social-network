@@ -1592,6 +1592,18 @@ pub struct NewVideo {
     pub position:        i16,
 }
 
+#[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
+#[table_name="videos"]
+pub struct EditVideo {
+    pub title:           String,
+    pub preview:         Option<String>,
+    pub image:           Option<String>,
+    pub description:     Option<String>,
+    pub comment_enabled: bool,
+    pub votes_on:        bool,
+    pub position:        i16,
+}
+
 impl Video {
     pub fn get_str_id(&self) -> String {
         return self.id.to_string();
@@ -1717,6 +1729,13 @@ pub struct NewVideoComment {
     pub liked:      i32,
     pub disliked:   i32,
     pub repost:     i32,
+}
+
+#[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
+#[table_name="video_comments"]
+pub struct EditVideoComment {
+    pub content:    Option<String>,
+    pub attach:     Option<String>,
 }
 
 impl VideoComment {

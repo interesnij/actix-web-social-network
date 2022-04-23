@@ -1592,6 +1592,17 @@ pub struct NewGood {
     pub copy:            i32,
     pub position:        i16,
 }
+#[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
+#[table_name="goods"]
+pub struct EditGood {
+    pub title:           String,
+    pub price:           Option<i32>,
+    pub description:     Option<String>,
+    pub image:           Option<String>,
+    pub comment_enabled: bool,
+    pub votes_on:        bool,
+    pub position:        i16,
+}
 
 impl Good {
     pub fn get_str_id(&self) -> String {
@@ -1719,6 +1730,13 @@ pub struct NewGoodComment {
     pub liked:      i32,
     pub disliked:   i32,
     pub repost:     i32,
+}
+
+#[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
+#[table_name="good_comments"]
+pub struct EditGoodComment {
+    pub content:    Option<String>,
+    pub attach:     Option<String>,
 }
 
 /////// UserGoodListCollection //////

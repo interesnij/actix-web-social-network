@@ -1234,6 +1234,13 @@ pub struct NewDoc {
     pub copy:            i32,
     pub position:        i16,
 }
+#[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
+#[table_name="docs"]
+pub struct EditDoc {
+    pub title:           String,
+    pub types_2:         String,
+    pub position:        i16,
+}
 
 impl Doc {
     pub fn get_str_id(&self) -> String {
