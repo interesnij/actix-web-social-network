@@ -1911,7 +1911,7 @@ impl Post {
         }
         diesel::update(&item)
           .set(schema::posts::copy.eq(item.copy + count))
-          .get_result::<BlogCategories>(&_connection)
+          .get_result::<Post>(&_connection)
           .expect("Error.");
         return true;
     }
