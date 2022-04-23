@@ -1975,8 +1975,7 @@ impl Post {
     pub fn is_repost(&self) -> bool {
         return self.types == "r";
     }
-    pub fn send_like(&self, user: User) -> Json {
-
+    pub fn send_like(&self, user: User) -> Json<T> {
         let list = self.get_list();
         if self.votes_on == false && !list.is_user_can_see_el(user.pk) {
             return Json {};
