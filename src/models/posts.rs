@@ -2241,6 +2241,8 @@ impl Post {
 
     pub fn get_attach(&self, user_id: i32) -> String {
         if self.attach.is_some() {
+            use crate::schema::users::dsl::users;
+
             let _connection = establish_connection();
 
             let v: Vec<&str> = self.attach.as_ref().unwrap().split(",").collect();
