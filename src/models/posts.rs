@@ -1700,7 +1700,7 @@ impl Post {
         }
     }
     pub fn create_post(creator: User, content: Option<String>, category_id: Option<i32>,
-        list: PostList, attach: Option<String>, parent_id: i32,
+        list: PostList, attach: Option<String>, parent_id: Option<i32>,
         comment_enabled: bool, is_signature: bool, votes_on: bool,
         community_id: Option<i32>, types: Option<String>) -> Post {
 
@@ -1832,7 +1832,7 @@ impl Post {
                 item.post_categorie_id,
                 list,
                 item.attach,
-                Some(item.parent_id),
+                item.parent_id,
                 item.comment_enabled,
                 item.is_signature,
                 item.votes_on,
