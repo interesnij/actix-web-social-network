@@ -126,7 +126,7 @@ pub fn hide_text(text:Option <String>) -> Option <String> {
             return text;
         }
         else {
-            return text[..100].to_owned() + &"<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + &text[101:] + &"</span>";
+            return text[..100].to_owned() + &"<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + &text[101..] + &"</span>";
         }
     } else { return None; }
 }

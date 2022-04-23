@@ -1719,9 +1719,6 @@ impl Post {
         comment_enabled: bool, is_signature: bool, votes_on: bool,
         community_id: Option<i32>, types: Option<String>) -> Post {
 
-        use crate::schema::posts::dsl::posts;
-        use crate::schema::post_lists::dsl::post_lists;
-
         let _connection = establish_connection();
         let mut new_attach = "".to_string();
         if attach.is_some() {
@@ -1742,7 +1739,6 @@ impl Post {
         }
 
         if community_id.is_some() {
-            use crate::schema::community_infos::dsl::community_infos;
             use crate::models::CommunityInfo;
 
             let community = list.get_community();
@@ -1780,7 +1776,6 @@ impl Post {
             return new_post;
         }
         else {
-            use crate::schema::user_profiles::dsl::user_profiles;
             use crate::models::UserProfile;
 
             let profile = creator.get_profile();
