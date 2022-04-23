@@ -1977,7 +1977,7 @@ impl Post {
     }
     pub fn send_like(&self, user: User) -> Json<PostReactions> {
         let list = self.get_list();
-        if self.votes_on == false && !list.is_user_can_see_el(user.pk) {
+        if self.votes_on == false && !list.is_user_can_see_el(user.id) {
             return Json(PostReactions {
                 like_count:    self.liked,
                 dislike_count: self.disliked,
