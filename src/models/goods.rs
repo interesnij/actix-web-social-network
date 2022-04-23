@@ -1541,6 +1541,7 @@ impl GoodList {
 // 'i' Удаленый предложенный в сообщество
 // 'y' Удаленый предложенный у пользователя
 // 'm' Удаленый закрепленный
+// 'n' Закрытый закрепленный
 // 'r' Репост
 
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]

@@ -1834,6 +1834,42 @@ impl Post {
             return new_post;
         }
     }
+    pub fn create_parent_post(user_id: i32, category_id: Option<i32>,
+        attach: Option<String>) -> Post {
+
+        let _connection = establish_connection();
+        let mut new_attach = "".to_string();
+        if attach.is_some() {
+            new_attach = attach.unwrap().replace("'", "").replace("[", "").replace("]", "").replace(" ", "");
+        }
+
+        let new_post_form = NewPost {
+            content: None,
+            community_id: community_id,
+            post_categorie_id: None,
+            user_id: user_id,
+            post_list_id: 0,
+            types: "r".to_string(),
+            attach: Some(new_attach),
+            comment_enabled: false,
+            votes_on: false,
+            created: chrono::Local::now().naive_utc(),
+            comment: 0,
+            view: 0,
+            liked: 0,
+            disliked: 0,
+            repost: 0,
+            copy: 0,
+            position: 0,
+            is_signature: false,
+            parent_id: None,
+        };
+        let new_post = diesel::insert_into(schema::posts::table)
+            .values(&new_post_form)
+            .get_result::<Post>(&_connection)
+            .expect("Error.");
+        return new_post;
+    }
     pub fn copy_item(pk: i32, lists: Vec<i32>) -> bool {
         use crate::schema::posts::dsl::posts;
         use crate::schema::post_lists::dsl::post_lists;
@@ -1947,19 +1983,7 @@ impl Post {
             .expect("Error.");
         return true;
     }
-    pub fn get_format_text(&self) -> String {
-        if self.content.is_some() {
-            let unwrap = self.content.as_ref().unwrap();
-            if unwrap.len() <= 101 {
-                return self.content.as_ref().unwrap().to_string();
-            }
-            else {
-                let new_str = unwrap[..100].to_owned() + &"<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + &unwrap[101..] + &"</span>";
-                return new_str;
-            }
-            //return Some(hide_text(self.content.unwrap()));
-        } else { return "".to_string(); }
-    }
+
     pub fn is_open(&self) -> bool {
         return self.types == "a" && self.types == "b";
     }
@@ -2137,6 +2161,107 @@ impl Post {
             .expect("E");
        return true;
     }
+    pub fn restore_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "c" => "a",
+            "m" => "b",
+            "i" => "f",
+            "y" => "g",
+            _ => "a",
+        };
+        diesel::update(self)
+            .set(schema::posts::types.eq(close_case))
+            .get_result::<Post>(&_connection)
+            .expect("E");
+        let list = self.get_list();
+        diesel::update(&list)
+            .set(schema::post_lists::count.eq(list.count + 1))
+            .get_result::<PostList>(&_connection)
+            .expect("E");
+       return true;
+    }
+
+    pub fn close_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "a" => "h",
+            "b" => "n",
+            _ => "h",
+        };
+        diesel::update(self)
+            .set(schema::posts::types.eq(close_case))
+            .get_result::<Post>(&_connection)
+            .expect("E");
+        let list = self.get_list();
+        diesel::update(&list)
+            .set(schema::post_lists::count.eq(list.count - 1))
+            .get_result::<PostList>(&_connection)
+            .expect("E");
+       return true;
+    }
+    pub fn unclose_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "h" => "a",
+            "n" => "b",
+            _ => "a",
+        };
+        diesel::update(self)
+            .set(schema::posts::types.eq(close_case))
+            .get_result::<Post>(&_connection)
+            .expect("E");
+        let list = self.get_list();
+        diesel::update(&list)
+            .set(schema::post_lists::count.eq(list.count + 1))
+            .get_result::<PostList>(&_connection)
+            .expect("E");
+       return true;
+    }
+    pub fn get_format_text(&self) -> String {
+        if self.content.is_some() {
+            let unwrap = self.content.as_ref().unwrap();
+            if unwrap.len() <= 101 {
+                return self.content.as_ref().unwrap().to_string();
+            }
+            else {
+                let new_str = unwrap[..100].to_owned() + &"<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + &unwrap[101..] + &"</span>";
+                return new_str;
+            }
+        } else { return "".to_string(); }
+    }
+
+    pub fn get_attach(&self, user_id: i32) -> String {
+        if self.attach.is_some() {
+            let v: Vec<&str> = self.attach.unwrap().split(",").collect();
+            for item in v.iter() {
+                if item.chars().nth(0).unwrap() == 'l' {
+                    if item[..3] == "lmu".to_string() {
+                        use crate::schema::music_lists::dsl::music_lists;
+                        use crate::models::MusicList;
+
+                        let list = music_lists
+                            .filter(schema::music_lists::id.eq(item[3..]))
+                            .filter(schema::music_lists::types.lt(10))
+                            .load::<MusicList>(&_connection)
+                            .expect("E.")
+                            .into_iter()
+                            .nth(0)
+                            .unwrap();
+
+                    }
+                }
+            }
+            return "".to_string();
+        }
+        else {
+            return "".to_string();
+        }
+    }
+
 }
 
 /////// PostComment //////
