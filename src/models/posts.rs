@@ -1775,9 +1775,9 @@ impl Post {
               .expect("Error.");
 
             let new_post_form = NewPost {
-                content: Some(content),
-                community_id: None,
-                post_categorie_id: Some(category_id),
+              content: content,
+              community_id: None,
+              post_categorie_id: category_id,
               user_id: creator.id,
               post_list_id: list.id,
               types: _types,
@@ -1828,15 +1828,15 @@ impl Post {
 
             Post::create_post (
                 list.get_creator(),
-                item.content,
-                item.post_categorie_id,
+                Some(item.content),
+                Some(item.post_categorie_id),
                 list,
-                item.attach,
-                item.parent_id,
+                Some(item.attach),
+                Some(item.parent_id),
                 item.comment_enabled,
                 item.is_signature,
                 item.votes_on,
-                item.community_id,
+                Some(item.community_id),
                 None,
             )
         }
