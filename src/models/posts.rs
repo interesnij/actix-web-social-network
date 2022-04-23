@@ -1807,6 +1807,7 @@ impl Post {
     pub fn copy_item(pk: i32, lists: Vec<PostList>) -> bool {
         use crate::schema::posts::dsl::posts;
         use crate::schema::post_lists::dsl::post_lists;
+        use crate::models::Post::create_post;
 
         let _connection = establish_connection();
         let item = posts
