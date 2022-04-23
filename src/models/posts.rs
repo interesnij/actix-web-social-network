@@ -1708,11 +1708,9 @@ impl Post {
         use crate::schema::post_lists::dsl::post_lists;
 
         let _connection = establish_connection();
+        let mut new_attach = "".to_string();
         if attach.is_some() {
-            attach.replace("'", "");
-            attach.replace("[", "");
-            attach.replace("]", "");
-            attach.replace(" ", "");
+            new_attach = attach.unwrap().replace("'", "").replace("[", "").replace("]", "").replace(" ", "");
         }
         diesel::update(&list)
           .set(schema::post_lists::count.eq(list.count + 1))
@@ -1740,13 +1738,13 @@ impl Post {
               .expect("Error.");
 
             let new_post_form = NewPost {
-              content: content,
-              community_id: community_id,
-              post_categorie_id: category_id,
+              content: Some(content),
+              community_id: Some(community_id),
+              post_categorie_id: Some(category_id),
               user_id: creator.id,
               post_list_id: list.id,
               types: _types,
-              attach: attach,
+              attach: Some(new_attach),
               comment_enabled: comment_enabled,
               votes_on: votes_on,
               created: chrono::Local::now().naive_utc(),
@@ -1777,13 +1775,13 @@ impl Post {
               .expect("Error.");
 
             let new_post_form = NewPost {
-              content: content,
-              community_id: None,
-              post_categorie_id: category_id,
+                content: Some(content),
+                community_id: None,
+                post_categorie_id: Some(category_id),
               user_id: creator.id,
               post_list_id: list.id,
               types: _types,
-              attach: attach,
+              attach: Some(new_attach),
               comment_enabled: comment_enabled,
               votes_on: votes_on,
               created: chrono::Local::now().naive_utc(),
@@ -1807,7 +1805,6 @@ impl Post {
     pub fn copy_item(pk: i32, lists: Vec<PostList>) -> bool {
         use crate::schema::posts::dsl::posts;
         use crate::schema::post_lists::dsl::post_lists;
-        use crate::models::Post::create_post;
 
         let _connection = establish_connection();
         let item = posts
@@ -1829,7 +1826,7 @@ impl Post {
                 .nth(0)
                 .unwrap();
 
-            create_post(
+            Post::create_post (
                 list.get_creator(),
                 item.content,
                 item.post_categorie_id,
