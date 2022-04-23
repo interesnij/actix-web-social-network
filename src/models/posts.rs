@@ -1925,7 +1925,7 @@ impl Post {
             .expect("Error.");
         return true;
     }
-    pub fn get_format_text(&self) -> Option<String> {
+    pub fn get_format_text(&self) -> Option<&String> {
         use crate::utils::hide_text;
         if self.content.is_some() {
             let unwrap = self.content.as_ref().unwrap();
