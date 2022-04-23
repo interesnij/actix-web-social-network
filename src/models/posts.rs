@@ -1933,7 +1933,7 @@ impl Post {
                 return self.content.as_ref();
             }
             else {
-                return &Some(unwrap[..100].to_owned() + &"<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + &unwrap[101..] + &"</span>");
+                return &Some(unwrap[..100].to_owned() + &"<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + &unwrap[101..] + &"</span>").as_ref();
             }
             //return Some(hide_text(self.content.unwrap()));
         } else { return None; }
