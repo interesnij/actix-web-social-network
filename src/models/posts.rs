@@ -1885,6 +1885,7 @@ impl Post {
             .unwrap();
         let count = 0;
         for list_id in lists.iter() {
+            count += 1;
             let list = post_lists
                 .filter(schema::post_lists::id.eq(list_id))
                 .filter(schema::post_lists::types.lt(10))
@@ -1908,6 +1909,10 @@ impl Post {
                 None,
             );
         }
+        diesel::update(&item)
+          .set(schema::posts::copy.eq(item.copy + count))
+          .get_result::<BlogCategories>(&_connection)
+          .expect("Error.");
         return true;
     }
 
