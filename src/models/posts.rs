@@ -1834,7 +1834,7 @@ impl Post {
             return new_post;
         }
     }
-    pub fn create_parent_post(user_id: i32, category_id: Option<i32>,
+    pub fn create_parent_post(user_id: i32, community_id: Option<i32>,
         attach: Option<String>) -> Post {
 
         let _connection = establish_connection();
@@ -2238,13 +2238,14 @@ impl Post {
         if self.attach.is_some() {
             let v: Vec<&str> = self.attach.unwrap().split(",").collect();
             for item in v.iter() {
+                let pk: i32 = item[3..].parse().unwrap();
                 if item.chars().nth(0).unwrap() == 'l' {
                     if item[..3] == "lmu".to_string() {
                         use crate::schema::music_lists::dsl::music_lists;
                         use crate::models::MusicList;
 
                         let list = music_lists
-                            .filter(schema::music_lists::id.eq(item[3..]))
+                            .filter(schema::music_lists::id.eq(pk))
                             .filter(schema::music_lists::types.lt(10))
                             .load::<MusicList>(&_connection)
                             .expect("E.")
