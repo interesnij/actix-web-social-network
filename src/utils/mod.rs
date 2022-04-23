@@ -27,7 +27,7 @@ pub fn establish_connection() -> PgConnection {
         .expect(&format!("Error connecting to {}", database_url))
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, AsChangeset)]
 pub struct ReactionsUpdate {
     pub liked:    i32,
     pub disliked: i32,

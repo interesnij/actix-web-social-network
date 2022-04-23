@@ -21,6 +21,7 @@ use crate::models::{
     UserPostListPosition,
     CommunityPostListPosition,
 };
+use actix_web::web::Json;
 
 
 /////// CommunityCategories //////
@@ -1967,12 +1968,11 @@ impl Post {
     pub fn is_repost(&self) -> bool {
         return self.types == "r";
     }
-    pub fn send_like(&self, user: User) -> String {
-        use actix_web::web::Json;
+    pub fn send_like(&self, user: User) -> Json {
 
         let list = self.get_list();
         if self.votes_on == false && !list.is_user_can_see_el(user.pk) {
-            return "Ошиюка доступа".to_string();
+            return Json {};
         }
         use crate::schema::post_votes::dsl::post_votes;
         use crate::utils::ReactionsUpdate;
