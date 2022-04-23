@@ -1625,6 +1625,13 @@ pub struct EditPostPosition {
     pub position:        i32,
 }
 
+#[derive(Serialize, AsChangeset)]
+#[table_name="posts"]
+pub struct PostReactionsUpdate {
+    pub liked:    i32,
+    pub disliked: i32,
+}
+
 impl Post {
     pub fn get_str_id(&self) -> String {
         return self.id.to_string();
@@ -1975,7 +1982,6 @@ impl Post {
             return Json {};
         }
         use crate::schema::post_votes::dsl::post_votes;
-        use crate::utils::ReactionsUpdate;
 
         let _connection = establish_connection();
 
@@ -1992,7 +1998,7 @@ impl Post {
                     .get_result::<PostVote>(&_connection)
                     .expect("Error.");
 
-                let reactions = ReactionsUpdate {
+                let reactions = PostReactionsUpdate {
                     liked:    self.liked + 1,
                     disliked: self.disliked - 1,
                 };
@@ -2053,6 +2059,8 @@ pub struct PostReactions {
 // 'e' Закрытый модератором
 // 'f' Закрытый Удаленый
 
+
+
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Post)]
 #[belongs_to(User)]
@@ -2092,6 +2100,13 @@ pub struct NewPostComment {
 pub struct EditPostComment {
     pub content:    Option<String>,
     pub attach:     Option<String>,
+}
+
+#[derive(Serialize, AsChangeset)]
+#[table_name="post_comments"]
+pub struct PostCommentReactionsUpdate {
+    pub liked:    i32,
+    pub disliked: i32,
 }
 
 /////// UserPostListCollection //////
