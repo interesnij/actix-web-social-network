@@ -2291,12 +2291,12 @@ impl Post {
                             image = "<img src='".to_owned() + &list.image.unwrap() + &"' style='width:120px;height:120px;' alt='image'>".to_string();
                         }
                         else {
-                            image = "<svg fill='currentColor' class='svg_default border' style='width:120px;height:120px;' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none'/><path d='M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z'/></svg>";
+                            image = "<svg fill='currentColor' class='svg_default border' style='width:120px;height:120px;' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none'/><path d='M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z'/></svg>".to_string();
                         }
                         block = block + &"<div style='flex-basis: 100%;' class='card'>
                         <div class='card-body' owner-pk='".to_string() +
                         &list.get_str_id() +
-                        "' &playlist-pk='".to_string() +
+                        &"' &playlist-pk='".to_string() +
                         &list.user_id.to_string() +
                         &"' style='padding: 8px;padding-bottom: 0;'><div style='display:flex'>
                         <figure><a class='load_music_list btn_default pointer'>".to_string() +
@@ -2304,8 +2304,8 @@ impl Post {
                         <h6 class='my-0 mt-1 load_music_list pointer'>".to_string() +
                         &list.name + &"</h6><p>Плейлист <a style='vertical-align: baseline;'
                         class='ajax underline' href='".to_string() +
-                        &link + &"'>" + &name + "</a><br>Треков: ".to_string() +
-                        &list.count.to_string() + "</p></div><span class='playlist_share'></span></div></div></div>".to_string()
+                        &link + &"'>" + &name + &"</a><br>Треков: ".to_string() +
+                        &list.count.to_string() + &"</p></div><span class='playlist_share'></span></div></div></div>".to_string()
                     }
                 }
             }
