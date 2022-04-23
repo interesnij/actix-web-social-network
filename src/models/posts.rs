@@ -2277,13 +2277,13 @@ impl Post {
 
                         if list.community_id.is_some() {
                             let community = list.get_community();
-                            name = community.name;
-                            link = community.get_link();
+                            name = community.name.clone();
+                            link = community.get_link().clone();
                         }
                         else {
                             let creator = list.get_creator();
-                            name = creator.get_full_name();
-                            link = creator.get_link();
+                            name = creator.get_full_name().clone();
+                            link = creator.get_link().clone();
                         }
 
                         let mut image = "".to_string();
