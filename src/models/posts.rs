@@ -1698,7 +1698,7 @@ impl Post {
     pub fn create_post(creator: User, content: Option<String>, category_id: Option<i32>,
         list: PostList, attach: Option<String>, parent_id: i32,
         comments_enabled: bool, is_signature: bool, votes_on: bool,
-        community_id: Option<i32>, types: Option<String>) -> &Post {
+        community_id: Option<i32>, types: Option<String>) -> Post {
 
         use crate::schema::posts::dsl::posts;
         use crate::schema::post_lists::dsl::post_lists;
@@ -1722,14 +1722,14 @@ impl Post {
 
         if community_id.is_some() {
             use crate::schema::community_infos::dsl::community_infos;
-            use crate::models::ComunityInfo;
+            use crate::models::CommunityInfo;
 
 
             let community = list.get_community();
             let profile = community.get_info_model();
             diesel::update(profile)
               .set(schema::community_infos::posts.eq(profile.posts + 1))
-              .get_result::<ComunityInfo>(&_connection)
+              .get_result::<CommunityInfo>(&_connection)
               .expect("Error.");
 
             let new_post_form = NewPost {
@@ -1764,7 +1764,7 @@ impl Post {
             let profile = creator.get_profile();
             diesel::update(profile)
               .set(schema::user_profiles::posts.eq(profile.posts + 1))
-              .get_result::<ComunityInfo>(&_connection)
+              .get_result::<CommunityInfo>(&_connection)
               .expect("Error.");
 
             let new_post_form = NewPost {
