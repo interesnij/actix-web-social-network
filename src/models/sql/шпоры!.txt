@@ -28,7 +28,7 @@ diesel::insert_into(schema::tags_items::table)
 ===============
 let _blog_id : i32 = *_id;
 let _blog = blogs.filter(schema::blogs::id.eq(_blog_id)).load::<Blog>(&_connection).expect("E");
-diesel::update(_category)
+diesel::update(&_category)
   .set(schema::blog_categories::blog_count.eq(_category.blog_count - 1))
   .get_result::<BlogCategories>(&_connection)
   .expect("Error.");

@@ -1709,9 +1709,12 @@ impl Post {
 
         let _connection = establish_connection();
         if attach.is_some() {
-            attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "");
+            attach.replace("'", "");
+            attach.replace("[", "");
+            attach.replace("]", "");
+            attach.replace(" ", "");
         }
-        diesel::update(list)
+        diesel::update(&list)
           .set(schema::post_lists::count.eq(list.count + 1))
           .get_result::<PostList>(&_connection)
           .expect("Error.");
@@ -1731,7 +1734,7 @@ impl Post {
 
             let community = list.get_community();
             let profile = community.get_info_model();
-            diesel::update(profile)
+            diesel::update(&profile)
               .set(schema::community_infos::posts.eq(profile.posts + 1))
               .get_result::<CommunityInfo>(&_connection)
               .expect("Error.");
@@ -1755,7 +1758,7 @@ impl Post {
               copy: 0,
               position: list.count,
               is_signature: is_signature,
-              parent_id: parent_id,
+              parent_id: Some(parent_id),
             };
             let new_post = diesel::insert_into(schema::posts::table)
                 .values(&new_post_form)
@@ -1768,7 +1771,7 @@ impl Post {
             use crate::models::UserProfile;
 
             let profile = creator.get_profile();
-            diesel::update(profile)
+            diesel::update(&profile)
               .set(schema::user_profiles::posts.eq(profile.posts + 1))
               .get_result::<UserProfile>(&_connection)
               .expect("Error.");
@@ -1792,7 +1795,7 @@ impl Post {
               copy: 0,
               position: list.count,
               is_signature: false,
-              parent_id: parent_id,
+              parent_id: Some(parent_id),
             };
             let new_post = diesel::insert_into(schema::posts::table)
                 .values(&new_post_form)
@@ -1828,7 +1831,7 @@ impl Post {
             create_post(
                 list.get_creator(),
                 item.content,
-                item.category_id,
+                item.post_categorie_id,
                 list,
                 item.attach,
                 item.parent_id,
