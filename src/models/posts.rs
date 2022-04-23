@@ -12,7 +12,7 @@ use crate::schema::{
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
-use crate::utils::establish_connection;
+use crate::utils::{establish_connection, JsonReactions};
 use diesel::prelude::*;
 use crate::models::{
     User,
@@ -1975,16 +1975,15 @@ impl Post {
     pub fn is_repost(&self) -> bool {
         return self.types == "r";
     }
-    pub fn send_like(&self, user: User) -> Json<PostReactions> {
+    pub fn send_like(&self, user: User) -> Json<JsonReactions> {
         let list = self.get_list();
         if self.votes_on == false && !list.is_user_can_see_el(user.id) {
-            return Json(PostReactions {
+            return Json(JsonReactions {
                 like_count:    self.liked,
                 dislike_count: self.disliked,
             });
         }
         use crate::schema::post_votes::dsl::post_votes;
-        use crate::utils::JsonReactions;
 
         let _connection = establish_connection();
 
@@ -2047,16 +2046,15 @@ impl Post {
         return Json(reactions);
     }
 
-    pub fn send_dislike(&self, user: User) -> Json<PostReactions> {
+    pub fn send_dislike(&self, user: User) -> Json<JsonReactions> {
         let list = self.get_list();
         if self.votes_on == false && !list.is_user_can_see_el(user.id) {
-            return Json(PostReactions {
+            return Json(JsonReactions {
                 like_count:    self.liked,
                 dislike_count: self.disliked,
             });
         }
         use crate::schema::post_votes::dsl::post_votes;
-        use crate::utils::JsonReactions;
 
         let _connection = establish_connection();
 
