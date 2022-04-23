@@ -2261,17 +2261,6 @@ impl Post {
             for item in v.iter() {
                 let pk: i32 = item[3..].parse().unwrap();
 
-                if item.community_id.is_some() {
-                    let community = item.get_community();
-                    name = community.name;
-                    link = community.get_link();
-                }
-                else {
-                    let creator = item.get_creator();
-                    name = creator.get_full_name();
-                    link = creator.get_link();
-                }
-
                 if item.chars().nth(0).unwrap() == 'l' {
                     if item[..3] == "lmu".to_string() {
                         use crate::schema::music_lists::dsl::music_lists;
@@ -2285,6 +2274,17 @@ impl Post {
                             .into_iter()
                             .nth(0)
                             .unwrap();
+
+                        if list.community_id.is_some() {
+                            let community = list.get_community();
+                            name = community.name;
+                            link = community.get_link();
+                        }
+                        else {
+                            let creator = list.get_creator();
+                            name = creator.get_full_name();
+                            link = creator.get_link();
+                        }
 
                         let mut image = "".to_string();
                         if list.image.is_some() {
