@@ -121,7 +121,7 @@ pub fn get_users_from_ids(ids:Vec<i32>) -> Vec<User> {
 
 pub fn hide_text(text:Option <String>) -> Option <String> {
     if text.is_some() {
-        let words = text.split(" ").collect::<Vec<_>>();
+        let words = text.unwrap().split(" ").collect::<Vec<_>>();
         if words.len() <= 30 {
             return text;
         }

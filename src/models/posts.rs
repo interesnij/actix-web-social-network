@@ -1884,7 +1884,7 @@ impl Post {
     }
     pub fn plus_likes(&self, count: i32) -> bool {
         let _connection = establish_connection();
-        diesel::update(&self)
+        diesel::update(self)
             .set(schema::posts::liked.eq(self.liked + count))
             .get_result::<Post>(&_connection)
             .expect("Error.");
@@ -1892,7 +1892,7 @@ impl Post {
     }
     pub fn plus_dislikes(&self, count: i32) -> bool {
         let _connection = establish_connection();
-        diesel::update(&self)
+        diesel::update(self)
             .set(schema::posts::disliked.eq(self.disliked + count))
             .get_result::<Post>(&_connection)
             .expect("Error.");
@@ -1900,7 +1900,7 @@ impl Post {
     }
     pub fn plus_comments(&self, count: i32) -> bool {
         let _connection = establish_connection();
-        diesel::update(&self)
+        diesel::update(self)
             .set(schema::posts::comment.eq(self.comment + count))
             .get_result::<Post>(&_connection)
             .expect("Error.");
@@ -1908,7 +1908,7 @@ impl Post {
     }
     pub fn minus_likes(&self, count: i32) -> bool {
         let _connection = establish_connection();
-        diesel::update(&self)
+        diesel::update(self)
             .set(schema::posts::liked.eq(self.liked - count))
             .get_result::<Post>(&_connection)
             .expect("Error.");
@@ -1916,7 +1916,7 @@ impl Post {
     }
     pub fn minus_dislikes(&self, count: i32) -> bool {
         let _connection = establish_connection();
-        diesel::update(&self)
+        diesel::update(self)
             .set(schema::posts::disliked.eq(self.disliked - count))
             .get_result::<Post>(&_connection)
             .expect("Error.");
@@ -1924,7 +1924,7 @@ impl Post {
     }
     pub fn minus_comments(&self, count: i32) -> bool {
         let _connection = establish_connection();
-        diesel::update(&self)
+        diesel::update(self)
             .set(schema::posts::comment.eq(self.comment - count))
             .get_result::<Post>(&_connection)
             .expect("Error.");
