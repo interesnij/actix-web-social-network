@@ -1832,7 +1832,7 @@ impl Post {
                 item.post_categorie_id,
                 list,
                 item.attach,
-                item.parent_id,
+                Some(item.parent_id),
                 item.comment_enabled,
                 item.is_signature,
                 item.votes_on,
