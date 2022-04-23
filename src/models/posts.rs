@@ -1925,9 +1925,9 @@ impl Post {
             .expect("Error.");
         return true;
     }
-    pub fn get_format_text(&self) -> &Option<String> {
+    pub fn get_format_text(&self) -> Option<String> {
         use crate::utils::hide_text;
-        return &hide_text(self.content.as_ref());
+        return hide_text(self.content.as_ref());
     }
 
 }
