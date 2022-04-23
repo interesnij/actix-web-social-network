@@ -2116,6 +2116,27 @@ impl Post {
         };
         return Json(reactions);
     }
+    pub fn delete_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = self.types;
+        let close_case = match user_types {
+            "a" => "c".to_string(),
+            "b" => "m".to_string(),
+            "f" => "i".to_string(),
+            "g" => "y".to_string(),
+            _ => "c".to_string(),
+        };
+        diesel::update(self)
+            .set(schema::posts::types.eq(close_case))
+            .get_result::<Post>(&_connection)
+            .expect("E");
+        let list = self.get_list();
+        diesel::update(list)
+            .set(schema::post_lists::count.eq(list.count - 1))
+            .get_result::<PostList>(&_connection)
+            .expect("E");
+       return true;
+    }
 }
 
 /////// PostComment //////
