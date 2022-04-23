@@ -1928,11 +1928,12 @@ impl Post {
     pub fn get_format_text(&self) -> Option<String> {
         use crate::utils::hide_text;
         if self.content.is_some() {
-            if self.content.len() <= 101 {
-                return Some(self.content);
+            let unwrap = self.content.unwrap();
+            if unwrap.len() <= 101 {
+                return self.content;
             }
             else {
-                return self.content[..100].to_owned() + &"<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + &self.content[101..] + &"</span>";
+                return Some(unwrap[..100].to_owned() + &"<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + &unwrap[101..] + &"</span>");
             }
             //return Some(hide_text(self.content.unwrap()));
         } else { return None; }
