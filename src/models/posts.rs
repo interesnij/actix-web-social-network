@@ -1883,7 +1883,7 @@ impl Post {
             .into_iter()
             .nth(0)
             .unwrap();
-        let count = 0;
+        let mut count = 0;
         for list_id in lists.iter() {
             count += 1;
             let list = post_lists
