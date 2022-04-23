@@ -53,6 +53,7 @@ CREATE TABLE posts (
     repost          INT NOT NULL,
     copy            INT NOT NULL,
     position        INT NOT NULL,
+    is_signature    BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT fk_posts_creator
         FOREIGN KEY(user_id)

@@ -1581,6 +1581,7 @@ pub struct Post {
     pub repost:            i32,
     pub copy:              i32,
     pub position:          i32,
+    pub is_signature:      bool,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="posts"]
@@ -1602,6 +1603,7 @@ pub struct NewPost {
     pub repost:          i32,
     pub copy:            i32,
     pub position:        i32,
+    pub is_signature:    bool,
 }
 
 impl Post {
@@ -1697,7 +1699,7 @@ impl Post {
     }
     pub fn create_post(creator: User, content: Option<String>, category_id: Option<i32>,
         list: PostList, attach: Option<String>, parent_id: i32,
-        comments_enabled: bool, is_signature: bool, votes_on: bool,
+        comment_enabled: bool, is_signature: bool, votes_on: bool,
         community_id: Option<i32>, types: Option<String>) -> Post {
 
         use crate::schema::posts::dsl::posts;
@@ -1750,6 +1752,7 @@ impl Post {
               repost: 0,
               copy: 0,
               position: list.count,
+              is_signature: is_signature,
             };
             let new_post = diesel::insert_into(schema::posts::table)
                 .values(&new_post_form)
@@ -1764,7 +1767,7 @@ impl Post {
             let profile = creator.get_profile();
             diesel::update(profile)
               .set(schema::user_profiles::posts.eq(profile.posts + 1))
-              .get_result::<CommunityInfo>(&_connection)
+              .get_result::<UserProfile>(&_connection)
               .expect("Error.");
 
             let new_post_form = NewPost {
@@ -1785,6 +1788,7 @@ impl Post {
               repost: 0,
               copy: 0,
               position: list.count,
+              is_signature: false,
             };
             let new_post = diesel::insert_into(schema::posts::table)
                 .values(&new_post_form)
@@ -1818,17 +1822,17 @@ impl Post {
                 .unwrap();
 
             create_post(
-                creator: list.get_creator(),
-                content: item.content,
-                category_id: item.category_id,
-                list: list,
-                attach: item.attach,
-                parent_id: item.parent_id,
-                comments_enabled: item.comments_enabled,
-                is_signature: item.is_signature,
-                votes_on: item.votes_on,
-                community_id: item.community_id,
-                type: None,
+                list.get_creator(),
+                item.content,
+                item.category_id,
+                list,
+                item.attach,
+                item.parent_id,
+                item.comments_enabled,
+                item.is_signature,
+                item.votes_on,
+                item.community_id,
+                None,
             )
         }
         return true;
