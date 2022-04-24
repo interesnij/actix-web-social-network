@@ -214,7 +214,7 @@ pub fn add_photo_list(pk: i32) -> String {
     &"' &photolist-pk='".to_string() + &list.id.to_string() +
     &"' style='width: 100%;flex-basis: 100%;'>
     <figure class='background-img'><img src='".to_string() +
-    &list.cover_photo + &"' </figure><div class='container'>
+    &list.cover_photo.unwrap() + &"' </figure><div class='container'>
     <i class='figure avatar120 mr-0 rounded-circle bg-none'></i><br>
     <h4 class='load_photo_list pointer'><a>".to_string() + &list.name +
     &"</a></h4><p class='lead'><a class='ajax underline' href='".to_string() +
