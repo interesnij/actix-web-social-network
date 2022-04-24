@@ -9,6 +9,8 @@ pub fn add_music_list(pk: i32) -> String {
     use crate::schema::music_lists::dsl::music_lists;
     use crate::models::MusicList;
 
+    let _connection = establish_connection();
+
     let list = music_lists
         .filter(schema::music_lists::id.eq(pk))
         .filter(schema::music_lists::types.lt(10))
@@ -76,7 +78,7 @@ pub fn post_elements(attach: String, user_id: i32) -> String {
 
         if first_char == 'l' {
             if code == "lmu".to_string() {
-                block = block + add_music_list(pk);
+                block = block + &add_music_list(pk);
             }
         }
     }
