@@ -75,7 +75,7 @@ pub fn post_elements(attach: String, user_id: i32) -> String {
     for item in v.iter() {
         let pk: i32 = item[3..].parse().unwrap();
         let first_char = item.chars().nth(0).unwrap();
-        let code = item[..3];
+        let code = &item[..3];
 
         if first_char == 'l' {
             if code == "lmu".to_string() {
