@@ -1929,7 +1929,7 @@ impl Post {
         let edit_post = EditPost {
             content: content,
             post_categorie_id: post_categorie_id,
-            attach: attach,
+            attach: new_attach,
             comment_enabled: comment_enabled,
             votes_on: votes_on,
             is_signature: is_signature,
