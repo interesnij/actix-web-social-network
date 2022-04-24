@@ -1289,7 +1289,7 @@ impl Survey {
         }
     }
     pub fn is_time_end(&self) -> bool {
-        return self.time_end.is_some() && elf.time_end.as_ref() > chrono::Local::now().naive_utc();
+        return self.time_end.is_some() && self.time_end.as_ref() > chrono::Local::now().naive_utc();
     }
     pub fn get_answers(&self) -> Vec<SurveyAnswer> {
         use crate::schema::survey_answers::dsl::survey_answers;
