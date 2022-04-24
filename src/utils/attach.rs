@@ -359,7 +359,7 @@ pub fn add_music(pk: i32, is_staff: bool, user_id: i32) -> String {
     &"'><span class='dropdown' style='position: inherit;'><a class='btn_default drop pointer'>
     <svg class='svg_info' fill='currentColor' viewBox='0 0 24 24'><path d='M0 0h24v24H0z'
     fill='none' /><path d='M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z' />
-    </svg></a><div class='dropdown-menu dropdown-menu-right' style='top: 25px;'>".to_string() +
+    </svg></a><div class='dropdown-menu dropdown-menu-right' style='top: 25px;' data-type='mus" + &music.id.to_string() + &"'>".to_string() +
     &drops + &"</div></span</span></div></div></div>".to_string();
 }
 pub fn add_doc(pk: i32, is_staff: bool, user_id: i32) -> String {
@@ -395,7 +395,7 @@ pub fn add_doc(pk: i32, is_staff: bool, user_id: i32) -> String {
     &"'><span class='dropdown' style='position: inherit;'><a class='btn_default drop pointer'>
     <svg class='svg_info' fill='currentColor' viewBox='0 0 24 24'><path d='M0 0h24v24H0z'
     fill='none' /><path d='M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z' />
-    </svg></a><div class='dropdown-menu dropdown-menu-right' style='top: 25px;'>".to_string() +
+    </svg></a><div class='dropdown-menu dropdown-menu-right' style='top: 25px;' data-type='doc" + &doc.id.to_string() + &"'>".to_string() +
     &drops + &"</div></span</span></div></div></div>".to_string();
 }
 
@@ -472,6 +472,7 @@ pub fn post_elements(attach: String, user_id: i32) -> String {
             "goo" => add_good(pk),
             "mus" => add_music(pk, user.is_moderator(), user_id),
             "doc" => add_doc(pk, user.is_moderator(), user_id),
+            "sur" => add_survey(pk, user.is_moderator(), user_id),
             "use" => add_user(pk),
             "com" => add_community(pk),
 
