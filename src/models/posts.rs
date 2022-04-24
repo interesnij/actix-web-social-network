@@ -2242,7 +2242,7 @@ impl Post {
     pub fn get_attach(&self, user_id: i32) -> String {
         if self.attach.is_some() {
             use crate::utils::post_elements;
-            return post_elements(self.attach.as_ref().unwrap(), user_id);
+            return post_elements(self.attach.as_ref().to_string(), user_id);
         }
         else {
             return "".to_string();
