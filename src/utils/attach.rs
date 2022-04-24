@@ -277,6 +277,22 @@ pub fn add_good_list(pk: i32) -> String {
      <h6 class='card-subtitle header-color-secondary text-center'>".to_string() +
       &list.count_items_ru() + &"</h6></div>".to_string();
 }
+pub fn add_photo(pk: i32, case: String) -> String {
+    use crate::schema::photos::dsl::photos;
+    use crate::models::Photo;
+    let _connection = establish_connection();
+
+    let photo = photos
+        .filter(schema::photos::id.eq(pk))
+        .filter(schema::photos::types.lt("a"))
+        .load::<Photo>(&_connection)
+        .expect("E.")
+        .into_iter()
+        .nth(0)
+        .unwrap();
+
+    return "<div class='photo'><div class='progressive replace ".to_string() + &case + &" pointer' data-href='".to_string() + &photo.file + &"' photo-pk='".to_string() + &photo.file + &"'><img class='preview image_fit' width='20' height='15' loading='lazy' src='".to_string() + &photo.preview + &"' alt='img'></div></div>".to_string();
+}
 
 pub fn post_elements(attach: String, user_id: i32) -> String {
     use crate::schema::users::dsl::users;
@@ -297,21 +313,20 @@ pub fn post_elements(attach: String, user_id: i32) -> String {
 
     for item in v.iter() {
         let pk: i32 = item[3..].parse().unwrap();
-        let first_char = item.chars().nth(0).unwrap();
+        let code = &item[..3];
 
-        if first_char == 'l' {
-            let code = &item[..3];
-            let html = match code {
-                "lmu" => add_music_list(pk),
-                "ldo" => add_doc_list(pk),
-                "ldo" => add_post_list(pk),
-                "lvi" => add_video_list(pk),
-                "lph" => add_video_list(pk),
-                "lgo" => add_good_list(pk),
-                _ => "".to_string(),
-            };
-            block = block + &html;
-        }
+        let html = match code {
+            "pho" => add_photo(pk, "post_photo".to_string()),
+
+            "lmu" => add_music_list(pk),
+            "ldo" => add_doc_list(pk),
+            "ldo" => add_post_list(pk),
+            "lvi" => add_video_list(pk),
+            "lph" => add_photo_list(pk),
+            "lgo" => add_good_list(pk),
+            _ => "".to_string(),
+        };
+        block = block + &html;
     }
     return "<div class='attach_container'>".to_owned() + &block + &"</div>".to_string();
 }
