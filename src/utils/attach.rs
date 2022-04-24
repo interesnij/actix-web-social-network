@@ -309,6 +309,22 @@ pub fn add_video(pk: i32, case: String) -> String {
 
     return "<div class='video'><img class='image_fit' src='" + video.image + "' alt='img'><div class='video_icon_play_v2 " + case + "' video-pk='" + pk + "' video-counter=''></div></div>".to_string();
 }
+pub fn add_good(pk: i32) -> String {
+    use crate::schema::goods::dsl::goods;
+    use crate::models::Good;
+    let _connection = establish_connection();
+
+    let good = goods
+        .filter(schema::goods::id.eq(pk))
+        .filter(schema::goods::types.lt("a"))
+        .load::<Good>(&_connection)
+        .expect("E.")
+        .into_iter()
+        .nth(0)
+        .unwrap();
+
+    return "<div class='card has-background-img good_detail mb-3 pointer' good-pk='".to_string() + &good.pk.to_string() + &"' style='flex-basis: 100%;'><figure class='background-img shadow-dark'>".to_string() + &good.get_image() + &"</figure><div class='card-header'><div class='media'><div class='media-body'><h4 class='text-white mb-0'>".to_string() + &good.title + &"</h4></div></div></div><div class='card-body spantshirt'></div><div class='card-footer'><p class='small mb-1 text-success'>".to_string() + &good.get_price() + &"</p></div></div>".to_string();
+}
 
 pub fn post_elements(attach: String, user_id: i32) -> String {
     use crate::schema::users::dsl::users;
@@ -334,6 +350,7 @@ pub fn post_elements(attach: String, user_id: i32) -> String {
         let html = match code {
             "pho" => add_photo(pk, "post_photo".to_string()),
             "vid" => add_video(pk, "post_video".to_string()),
+            "goo" => add_good(pk),
 
             "lmu" => add_music_list(pk),
             "ldo" => add_doc_list(pk),

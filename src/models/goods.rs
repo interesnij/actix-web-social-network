@@ -1628,6 +1628,22 @@ impl Good {
     pub fn get_code(&self) -> String {
         return "goo".to_string() + &self.get_str_id();
     }
+    pub fn get_image(&self) -> String {
+        if self.image.is_some() {
+            return "<img class='image_fit opacity-100' src='".to_string() +  &self.image.as_deref().unwrap().to_string() + &"' alt='img' />".to_string();
+        }
+        else {
+            return "<svg class='image_fit svg_default opacity-100' fill='currentColor' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none' /><path d='M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z' /></svg>".to_string();
+        }
+    }
+    pub fn get_price(&self) -> String {
+        if self.price.is_some() {
+            return self.price.as_deref().unwrap().to_string() + &" ₽".to_string();
+        }
+        else {
+            return "Цена не указана".to_string();
+        }
+    }
     pub fn get_longest_penalties(&self) -> String {
         use crate::schema::moderated_penalties::dsl::moderated_penalties;
         use crate::models::ModeratedPenaltie;
