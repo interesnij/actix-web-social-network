@@ -326,7 +326,7 @@ pub fn add_good(pk: i32) -> String {
 
     return "<div class='card has-background-img good_detail mb-3 pointer' good-pk='".to_string() + &good.id.to_string() + &"' style='flex-basis: 100%;'><figure class='background-img shadow-dark'>".to_string() + &good.get_image() + &"</figure><div class='card-header'><div class='media'><div class='media-body'><h4 class='text-white mb-0'>".to_string() + &good.title + &"</h4></div></div></div><div class='card-body spantshirt'></div><div class='card-footer'><p class='small mb-1 text-success'>".to_string() + &good.get_price() + &"</p></div></div>".to_string();
 }
-pub fn add_music(pk: i32, user: User) -> String {
+pub fn add_music(pk: i32, is_staff: bool) -> String {
     use crate::schema::musics::dsl::musics;
     use crate::models::Music;
     let _connection = establish_connection();
@@ -344,7 +344,7 @@ pub fn add_music(pk: i32, user: User) -> String {
     if music.is_user_can_edit_delete_item(user) {
         drops = drops + &"<span class='dropdown-item track_edit'>Изменить</span><span class='dropdown-item track_remove'>Удалить</span>".to_string();
     }
-    else if &user.is_moderator() {
+    else if is_staff == true {
         drops = drops + &"<span class='dropdown-item create_close'>Закрыть</span>".to_string();
     }
     else {
@@ -388,7 +388,7 @@ pub fn post_elements(attach: String, user_id: i32) -> String {
             "pho" => add_photo(pk, "post_photo".to_string()),
             "vid" => add_video(pk, "post_video".to_string()),
             "goo" => add_good(pk),
-            "mus" => add_music(pk, user),
+            "mus" => add_music(pk, user.is_moderator()),
 
             "lmu" => add_music_list(pk),
             "ldo" => add_doc_list(pk),
