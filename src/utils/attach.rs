@@ -223,6 +223,49 @@ pub fn add_photo_list(pk: i32) -> String {
     &list.count_items_ru() + &"</a><div class='row'></div></div></div>".to_string();
 }
 
+pub fn add_good_list(pk: i32) -> String {
+    use crate::schema::good_lists::dsl::good_lists;
+    use crate::models::GoodList;
+    let _connection = establish_connection();
+
+    let mut name = "".to_string();
+    let mut link = "".to_string();
+    let mut image = "".to_string();
+
+    let list = good_lists
+        .filter(schema::good_lists::id.eq(pk))
+        .filter(schema::good_lists::types.lt(10))
+        .load::<GoodList>(&_connection)
+        .expect("E.")
+        .into_iter()
+        .nth(0)
+        .unwrap();
+
+    if list.community_id.is_some() {
+        let community = list.get_community();
+        name = community.name.clone();
+        link = community.get_link().clone();
+        image = community.get_bb_avatar()
+    }
+    else {
+        let creator = list.get_creator();
+        name = creator.get_full_name().clone();
+        link = creator.get_link().clone();
+        image = creator.get_bb_avatar()
+    }
+
+    return "<div goodlist-pk='".to_string() + &list.pk.to_string() +
+    &"' style='padding: 7px;width: 100%;flex-basis: 100%'><div class='media mb-2'>
+    <div class='media-body'><h6 class='content-color-primary mb-0 load_good_list pointer'>
+    <a>".to_string() + &list.name.to_string() + "</a></h6></div><span class='small'></span></div>
+    <div class='centered no-gutters'><figure class='mx-auto mb-3' style='width:120px'>
+    <img class='load_good_list pointer image_fit_small' src='".to_string()
+     + &image + &"' style='border-radius:50%' /></figure></div>
+     <h5 class='mb-2 header-color-primary text-center'><a href='" + &link +
+     &"' class='ajax underline'>".to_string() + &name + &"</a></h5>
+     <h6 class='card-subtitle header-color-secondary text-center'>".to_string() +
+      &list.count_items_ru() + &"</h6></div>".to_string();
+}
 
 pub fn post_elements(attach: String, user_id: i32) -> String {
     use crate::schema::users::dsl::users;
@@ -253,6 +296,7 @@ pub fn post_elements(attach: String, user_id: i32) -> String {
                 "ldo" => add_post_list(pk),
                 "lvi" => add_video_list(pk),
                 "lph" => add_video_list(pk),
+                "lgo" => add_good_list(pk),
                 _ => "".to_string(),
             };
             block = block + &html;
