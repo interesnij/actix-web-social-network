@@ -1292,7 +1292,7 @@ impl Survey {
         return self.time_end.is_some() && elf.time_end.as_ref() > chrono::Local::now().naive_utc();
     }
     pub fn get_answers(&self) -> Vec<SurveyAnswer> {
-        use crate::models::survey::survey_answers::dsl::survey_answers;
+        use crate::schema::survey_answers::dsl::survey_answers;
 
         return survey_answers
             .filter(schema::survey_answers::survey_id.eq(self.id))
@@ -1310,6 +1310,7 @@ impl Survey {
         );
     }
     pub fn get_6_users(&self) -> String {
+        use crate::schema::survey_votes::dsl::survey_votes;
         use crate::utils::get_users_from_ids;
 
         let surveys = survey_votes
@@ -1504,7 +1505,7 @@ impl SurveyAnswer {
 
         let _connection = establish_connection();
         return surveys
-            .filter(schema::surveys::id.eq(self.survey_id)) 
+            .filter(schema::surveys::id.eq(self.survey_id))
             .load::<Survey>(&_connection)
             .expect("E.")
             .into_iter()
