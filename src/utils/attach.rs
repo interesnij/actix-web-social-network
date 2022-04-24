@@ -514,21 +514,21 @@ pub fn add_survey(pk: i32, is_staff: bool, user_id: i32) -> String {
         &answer.get_procent().to_string() + &"%</span></span></div>".to_string();
     }
 
-    return "<div data-pk='".to_string() + survey.id.to_string() +
+    return "<div data-pk='".to_string() + &survey.id.to_string() +
     "' class='card p-1 border text-center position-relative box-shadow' style='flex-basis: 100%;'>
-    <figure class='background-img'><img src='".to_string() + survey.get_image() +
-    "alt='img' ></figure><div class='dropdown'><a class='btn_default drop pointer' style='position:absolute;right:5px;top:5px;'>
+    <figure class='background-img'><img src='".to_string() + &survey.get_image() +
+    &"alt='img' ></figure><div class='dropdown'><a class='btn_default drop pointer' style='position:absolute;right:5px;top:5px;'>
     <svg class='svg_info' fill='currentColor' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none' /><path d='M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z' /></svg>
-    </a><div class='dropdown-menu dropdown-menu-right' data-type='sur".to_string() + survey.pk.to_string() + "' style='top:30px;right:-10px;'>
-    <span class='dropdown-item copy_link'>Копировать ссылку</span>" + drops +
-    "</div></div><form><div class='container answers_container ".to_string() + multiple_class +
-    "'> <br><h4 class='m-0'>".to_string() + survey.title + "</h4>
-    <p class='position-relative'><a href=".to_string() + link + "' class='underline ajax'>".to_string() +
-    name + "</a></p>".to_string() + survey.get_time_description() + "<br>" +
-    answers + info + "</div><div class='card-footer position-relative'>
+    </a><div class='dropdown-menu dropdown-menu-right' data-type='sur".to_string() + survey.pk.to_string() + &"' style='top:30px;right:-10px;'>
+    <span class='dropdown-item copy_link'>Копировать ссылку</span>".to_string() + &drops +
+    &"</div></div><form><div class='container answers_container ".to_string() + &multiple_class +
+    &"'> <br><h4 class='m-0'>".to_string() + &survey.title +
+    &"</h4><p class='position-relative'><a href=".to_string() + &link + &"' class='underline ajax'>".to_string() +
+    &name + &"</a></p>".to_string() + &survey.get_time_description() + &"<br>".to_string() +
+    &answers + &info + &"</div><div class='card-footer position-relative'>
     <button type='button' class='btn hidden btn-sm float-left border votes_remove'>Отмена</button>
     <button id='add_vote_survey_btn' type='button' class='btn hidden btn-sm btn-success float-right'>
-    Проголосовать</button></div>".to_string() + "</form></div>".to_string();
+    Проголосовать</button></div>".to_string() + &"</form></div>".to_string();
 }
 
 pub fn post_elements(attach: String, user_id: i32) -> String {
