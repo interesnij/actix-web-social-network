@@ -344,7 +344,7 @@ pub fn add_music(pk: i32, user: User) -> String {
     if music.is_user_can_edit_delete_item(user) {
         drops = drops + &"<span class='dropdown-item track_edit'>Изменить</span><span class='dropdown-item track_remove'>Удалить</span>".to_string();
     }
-    else if user.is_moderator() {
+    else if &user.is_moderator() {
         drops = drops + &"<span class='dropdown-item create_close'>Закрыть</span>".to_string();
     }
     else {
