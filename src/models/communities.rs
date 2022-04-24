@@ -226,14 +226,6 @@ impl Community {
             return "@public".to_string() + &self.get_str_id();
         }
     }
-    pub fn get_s_avatar(&self) -> String {
-        if self.s_avatar.is_some() {
-            return self.s_avatar.as_deref().unwrap().to_string();
-        }
-        else {
-            return "/static/images/icons/avatar30.svg".to_string();
-        }
-    }
     pub fn get_info_model(&self) -> CommunityInfo {
         use crate::schema::community_infos::dsl::community_infos;
 
