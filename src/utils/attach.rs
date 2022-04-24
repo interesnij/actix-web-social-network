@@ -4,21 +4,19 @@ use crate::schema;
 use diesel::prelude::*;
 use crate::models::User;
 
-
-const CONN = establish_connection();
+const CONN: diesel::PgConnection = establish_connection();
 
 pub fn add_music_list(pk: i32) -> String {
     use crate::schema::music_lists::dsl::music_lists;
     use crate::models::MusicList;
 
-    let _connection = establish_connection();
     let mut name = "".to_string();
     let mut link = "".to_string();
 
     let list = music_lists
         .filter(schema::music_lists::id.eq(pk))
         .filter(schema::music_lists::types.lt(10))
-        .load::<MusicList>(&_connection)
+        .load::<MusicList>(&CONN)
         .expect("E.")
         .into_iter()
         .nth(0)
@@ -68,7 +66,7 @@ pub fn post_elements(attach: String, user_id: i32) -> String {
     let user: User = users
         .filter(schema::users::id.eq(user_id))
         .filter(schema::users::types.lt(10))
-        .load::<User>(&_connection)
+        .load::<User>(&CONN)
         .expect("E.")
         .into_iter()
         .nth(0)
