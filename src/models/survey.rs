@@ -1517,6 +1517,16 @@ impl SurveyAnswer {
     pub fn get_procent(&self) -> i32 {
         return self.vote / self.get_survey().vote * 100;
     }
+    pub fn is_user_voted(&self, user_id: i32) -> bool {
+        use crate::models::survey::survey_votes::dsl::survey_votes;
+        let _connection = establish_connection();
+        return survey_votes
+            .filter(schema::survey_votes::user_id.eq(user_id))
+            .filter(schema::survey_votes::survey_answer_id.eq(self.id))
+            .load::<SurveyVote>(&_connection)
+            .expect("E.")
+            .len() > 0;
+    }
 }
 
 #[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
