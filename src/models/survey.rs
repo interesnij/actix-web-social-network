@@ -1289,9 +1289,8 @@ impl Survey {
     pub fn is_time_end(&self) -> bool {
         return self.time_end.is_some() && elf.time_end.as_ref() > chrono::Local::now().naive_utc();
     }
-    pub fn get_answers(&self, user_id: i32) -> Vec<SurveyAnswer> {
+    pub fn get_answers(&self) -> Vec<SurveyAnswer> {
         return survey_answers
-            .filter(schema::survey_answers::user_id.eq(user_id))
             .filter(schema::survey_answers::survey_id.eq(self.id))
             .load::<SurveyVote>(&_connection)
             .expect("E.");
@@ -1396,6 +1395,14 @@ impl Survey {
             .nth(0)
             .unwrap();
     }
+    pub fn get_image(&self) -> String {
+        if self.image.is_some() {
+            return self.image.as_deref().unwrap().to_string();
+        }
+        else {
+            return "/static/images/no_img/list.jpg".to_string();
+        }
+    }
     pub fn get_description(&self) -> String {
         if self.community_id.is_some() {
             let community = self.get_community();
@@ -1487,7 +1494,7 @@ pub struct NewSurveyAnswer {
 impl SurveyAnswer {
     pub fn get_survey(&self) -> Survey {
         let _connection = establish_connection();
-        let survey = surveys
+        return surveys
             .filter(schema::surveys::answer_id.eq(self.id))
             .load::<Survey>(&_connection)
             .expect("E.")
@@ -1520,6 +1527,7 @@ pub struct NewSurveyVote  {
 
 impl SurveyVote {
     pub fn is_user_voted(&self, user_id: i32) -> bool {
+        use crate::models::survey::survey_votes::dsl::survey_votes;
         let _connection = establish_connection();
         return survey_votes
             .filter(schema::survey_votes::user_id.eq(user_id))
