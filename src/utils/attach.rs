@@ -3,6 +3,7 @@ use crate::schema;
 use diesel::prelude::*;
 use crate::utils::User;
 
+
 pub fn add_post_list(pk: i32) -> String {
     use crate::schema::post_lists::dsl::post_lists;
     use crate::models::PostList;
@@ -325,6 +326,42 @@ pub fn add_good(pk: i32) -> String {
 
     return "<div class='card has-background-img good_detail mb-3 pointer' good-pk='".to_string() + &good.id.to_string() + &"' style='flex-basis: 100%;'><figure class='background-img shadow-dark'>".to_string() + &good.get_image() + &"</figure><div class='card-header'><div class='media'><div class='media-body'><h4 class='text-white mb-0'>".to_string() + &good.title + &"</h4></div></div></div><div class='card-body spantshirt'></div><div class='card-footer'><p class='small mb-1 text-success'>".to_string() + &good.get_price() + &"</p></div></div>".to_string();
 }
+pub fn add_music(pk: i32, user: User) -> String {
+    use crate::schema::musics::dsl::musics;
+    use crate::models::Music;
+    let _connection = establish_connection();
+
+    let music = musics
+        .filter(schema::musics::id.eq(pk))
+        .filter(schema::musics::types.lt("a"))
+        .load::<Music>(&_connection)
+        .expect("E.")
+        .into_iter()
+        .nth(0)
+        .unwrap();
+
+    let mut drops = "<span class='dropdown-item create_repost'>Добавить</span><span class='dropdown-item copy_link'>Копировать ссылку</span>".to_string();
+    if music.is_user_can_edit_delete_item(user) {
+        drops = drops + "<span class='dropdown-item track_edit'>Изменить</span><span class='dropdown-item track_remove'>Удалить</span>".to_string();
+    }
+    else if user.is_moderator() {
+        drops = drops + "<span class='dropdown-item create_close'>Закрыть</span>".to_string();
+    }
+    else {
+        drops = drops + "<span class='dropdown-item create_claim'>Пожаловаться</span>".to_string();
+    }
+
+    return "<div class='music' data-path='".to_string() + &music.file +
+    "' style='flex-basis: auto;width:100%;position: relative;'><div class='media'
+    music-counter=''>".to_string() + &"'>".to_string() +
+    &music.get_s_image() + &"<div class='media-body' style='display: flex;'><h6 class='music_list_post music_title'><a>".to_string() +
+    &music.title + &"</a></h6><span class='span_btn' data-pk='".to_string() + &music.id.to_string() +
+    &"'><span class='dropdown' style='position: inherit;'><a class='btn_default drop pointer'>
+    <svg class='svg_info' fill='currentColor' viewBox='0 0 24 24'><path d='M0 0h24v24H0z'
+    fill='none' /><path d='M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z' />
+    </svg></a><div class='dropdown-menu dropdown-menu-right' style='top: 25px;'>".to_string() +
+    &drops + &"</div></span</span></div></div></div>".to_string();
+}
 
 pub fn post_elements(attach: String, user_id: i32) -> String {
     use crate::schema::users::dsl::users;
@@ -351,6 +388,7 @@ pub fn post_elements(attach: String, user_id: i32) -> String {
             "pho" => add_photo(pk, "post_photo".to_string()),
             "vid" => add_video(pk, "post_video".to_string()),
             "goo" => add_good(pk),
+            "mus" => add_good(pk, user),
 
             "lmu" => add_music_list(pk),
             "ldo" => add_doc_list(pk),

@@ -1357,11 +1357,35 @@ impl Music {
     pub fn get_str_id(&self) -> String {
         return self.id.to_string();
     }
+    pub fn get_image(&self) -> String {
+        if self.image.is_some() {
+            return "<img class='image_fit' src='".to_string() +  &self.image.as_deref().unwrap().to_string() + &"' alt='img' />".to_string();
+        }
+        else {
+            return "<svg class='image_fit svg_default' fill='currentColor' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none' /><path d='M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z' /></svg>".to_string();
+        }
+    }
+    pub fn get_s_avatar(&self) -> String {
+        if self.image.is_some() {
+            return "<img style='width:30px' alt='image' src='".to_string() + &self.b_avatar.as_deref().unwrap().to_string() + &" />".to_string();
+        }
+        else {
+            return "<svg fill='currentColor' class='svg_default' width='30' height='30' viewBox='0 0 24 24'><path fill='none' d='M0 0h24v24H0z'></path><path d='M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z'></path></svg>".to_string();
+        }
+    }
     pub fn is_music(&self) -> bool {
         return true;
     }
     pub fn get_code(&self) -> String {
         return "mus".to_string() + &self.get_str_id();
+    }
+    pub fn is_user_can_edit_delete_item(&self, user: User) -> bool {
+        if self.community_id.is_some() {
+            return user.is_staff_of_community(self.community_id.unwrap());
+        }
+        else {
+            return self.user_id == user.id;
+        }
     }
     pub fn get_longest_penalties(&self) -> String {
         use crate::schema::moderated_penalties::dsl::moderated_penalties;

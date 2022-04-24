@@ -1256,6 +1256,14 @@ impl Doc {
     pub fn get_code(&self) -> String {
         return "doc".to_string() + &self.get_str_id();
     }
+    pub fn is_user_can_edit_delete_item(&self, user: User) -> bool {
+        if self.community_id.is_some() {
+            return user.is_staff_of_community(self.community_id.unwrap());
+        }
+        else {
+            return self.user_id == user.id;
+        }
+    }
     pub fn get_longest_penalties(&self) -> String {
         use crate::schema::moderated_penalties::dsl::moderated_penalties;
         use crate::models::ModeratedPenaltie;
