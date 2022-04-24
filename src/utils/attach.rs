@@ -307,7 +307,7 @@ pub fn add_video(pk: i32, case: String) -> String {
         .nth(0)
         .unwrap();
 
-    return "<div class='video'><img class='image_fit' src='" + video.image + "' alt='img'><div class='video_icon_play_v2 " + case + "' video-pk='" + pk + "' video-counter=''></div></div>".to_string();
+    return "<div class='video'><img class='image_fit' src='" + &video.image + &"' alt='img'><div class='video_icon_play_v2 " + &case + &"' video-pk='" + &pk.to_string() + &"' video-counter=''></div></div>".to_string();
 }
 pub fn add_good(pk: i32) -> String {
     use crate::schema::goods::dsl::goods;
@@ -323,7 +323,7 @@ pub fn add_good(pk: i32) -> String {
         .nth(0)
         .unwrap();
 
-    return "<div class='card has-background-img good_detail mb-3 pointer' good-pk='".to_string() + &good.pk.to_string() + &"' style='flex-basis: 100%;'><figure class='background-img shadow-dark'>".to_string() + &good.get_image() + &"</figure><div class='card-header'><div class='media'><div class='media-body'><h4 class='text-white mb-0'>".to_string() + &good.title + &"</h4></div></div></div><div class='card-body spantshirt'></div><div class='card-footer'><p class='small mb-1 text-success'>".to_string() + &good.get_price() + &"</p></div></div>".to_string();
+    return "<div class='card has-background-img good_detail mb-3 pointer' good-pk='".to_string() + &good.id.to_string() + &"' style='flex-basis: 100%;'><figure class='background-img shadow-dark'>".to_string() + &good.get_image() + &"</figure><div class='card-header'><div class='media'><div class='media-body'><h4 class='text-white mb-0'>".to_string() + &good.title + &"</h4></div></div></div><div class='card-body spantshirt'></div><div class='card-footer'><p class='small mb-1 text-success'>".to_string() + &good.get_price() + &"</p></div></div>".to_string();
 }
 
 pub fn post_elements(attach: String, user_id: i32) -> String {
