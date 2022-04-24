@@ -2249,7 +2249,7 @@ impl Post {
             let mut block = "".to_string();
             let mut name = "".to_string();
             let mut link = "".to_string();
-            let mut user: User = users
+            let user: User = users
                 .filter(schema::users::id.eq(user_id))
                 .filter(schema::users::types.lt(10))
                 .load::<User>(&_connection)
