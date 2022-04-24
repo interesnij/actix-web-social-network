@@ -1638,7 +1638,7 @@ impl Good {
     }
     pub fn get_price(&self) -> String {
         if self.price.is_some() {
-            return self.price.as_deref().unwrap().to_string() + &" ₽".to_string();
+            return self.price.unwrap().to_string() + &" ₽".to_string();
         }
         else {
             return "Цена не указана".to_string();

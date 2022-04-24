@@ -307,7 +307,7 @@ pub fn add_video(pk: i32, case: String) -> String {
         .nth(0)
         .unwrap();
 
-    return "<div class='video'><img class='image_fit' src='" + &video.get_image() + &"' alt='img'><div class='video_icon_play_v2 " + &case + &"' video-pk='" + &pk.to_string() + &"' video-counter=''></div></div>".to_string();
+    return "<div class='video'><img class='image_fit' src='".to_owned() + &video.get_image() + &"' alt='img'><div class='video_icon_play_v2 " + &case + &"' video-pk='" + &pk.to_string() + &"' video-counter=''></div></div>".to_string();
 }
 pub fn add_good(pk: i32) -> String {
     use crate::schema::goods::dsl::goods;
