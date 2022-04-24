@@ -1,6 +1,8 @@
 mod templates;
+mod attach;
 pub use self::{
-    templates::*
+    templates::*,
+    attach::*,
 };
 
 use serde::Serialize;
