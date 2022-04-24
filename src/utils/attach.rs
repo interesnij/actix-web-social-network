@@ -293,6 +293,22 @@ pub fn add_photo(pk: i32, case: String) -> String {
 
     return "<div class='photo'><div class='progressive replace ".to_string() + &case + &" pointer' data-href='".to_string() + &photo.file + &"' photo-pk='".to_string() + &photo.file + &"'><img class='preview image_fit' width='20' height='15' loading='lazy' src='".to_string() + &photo.preview + &"' alt='img'></div></div>".to_string();
 }
+pub fn add_video(pk: i32, case: String) -> String {
+    use crate::schema::videos::dsl::videos;
+    use crate::models::Video;
+    let _connection = establish_connection();
+
+    let video = videos
+        .filter(schema::videos::id.eq(pk))
+        .filter(schema::videos::types.lt("a"))
+        .load::<Video>(&_connection)
+        .expect("E.")
+        .into_iter()
+        .nth(0)
+        .unwrap();
+
+    return "<div class='video'><img class='image_fit' src='" + video.image + "' alt='img'><div class='video_icon_play_v2 " + case + "' video-pk='" + pk + "' video-counter=''></div></div>".to_string();
+}
 
 pub fn post_elements(attach: String, user_id: i32) -> String {
     use crate::schema::users::dsl::users;
@@ -317,6 +333,7 @@ pub fn post_elements(attach: String, user_id: i32) -> String {
 
         let html = match code {
             "pho" => add_photo(pk, "post_photo".to_string()),
+            "vid" => add_video(pk, "post_video".to_string()),
 
             "lmu" => add_music_list(pk),
             "ldo" => add_doc_list(pk),
