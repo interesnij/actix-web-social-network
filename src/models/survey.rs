@@ -1321,7 +1321,11 @@ impl Survey {
         for _item in surveys.iter() {
             stack.push(_item.user_id);
         };
-        return get_users_from_ids(stack);
+        let users = get_users_from_ids(stack);
+        let mut list = "<hr class='m-1'>".to_string();
+        for voter in users.iter() {
+            list += "<a class='pr-1' href='".to_string() + &voter.get_link() + &"' target='_blank' tooltip='".to_string() + &voter.get_full_name() + &"' flow='up'>".to_string() + &voter.get_s_avatar() + &'</a>.to_string();
+        }
     }
 
     pub fn get_code(&self) -> String {

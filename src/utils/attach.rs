@@ -486,7 +486,7 @@ pub fn add_survey(pk: i32, is_staff: bool, user_id: i32) -> String {
             info = "Это анонимный опрос.".to_string();
         }
         else {
-            info = "<a class='i_link survey_info pointer position-relative'>".to_string() + &survey.get_users_ru().into_iter().collect().to_string() + &"</a>".to_string() + &survey.get_6_users().to_string();
+            info = "<a class='i_link survey_info pointer position-relative'>".to_string() + &survey.get_users_ru() + &"</a>".to_string() + &survey.get_6_users().to_string();
         }
     }
     else {
