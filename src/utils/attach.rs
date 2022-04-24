@@ -1,8 +1,6 @@
-use actix_web::HttpRequest;
 use crate::utils::establish_connection;
 use crate::schema;
 use diesel::prelude::*;
-use crate::models::User;
 
 
 pub fn add_post_list(pk: i32) -> String {
@@ -142,6 +140,89 @@ pub fn add_doc_list(pk: i32) -> String {
     &link + &"'>" + &name + &"</a><br>Треков: ".to_string() +
     &list.count.to_string() + &"</p></div><span class='playlist_share'></span></div></div></div>".to_string();
 }
+pub fn add_video_list(pk: i32) -> String {
+    use crate::schema::video_lists::dsl::video_lists;
+    use crate::models::VideoList;
+    let _connection = establish_connection();
+
+    let mut name = "".to_string();
+    let mut link = "".to_string();
+
+    let list = video_lists
+        .filter(schema::video_lists::id.eq(pk))
+        .filter(schema::video_lists::types.lt(10))
+        .load::<VideoList>(&_connection)
+        .expect("E.")
+        .into_iter()
+        .nth(0)
+        .unwrap();
+
+    if list.community_id.is_some() {
+        let community = list.get_community();
+        name = community.name.clone();
+        link = community.get_link().clone();
+    }
+    else {
+        let creator = list.get_creator();
+        name = creator.get_full_name().clone();
+        link = creator.get_link().clone();
+    }
+
+    return "<div style='flex-basis: 100%;' class='card'>
+    <div class='card-body' owner-pk='".to_string() +
+    &list.get_str_id() +
+    &"' &playlist-pk='".to_string() +
+    &list.id.to_string() +
+    &"' style='padding: 8px;padding-bottom: 0;'><div style='display:flex'>
+    <figure><a class='load_video_list btn_default pointer'><svg fill='currentColor' class='svg_default border' style='width:60px;height:88px;' viewBox='0 0 24 24'><path d='M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z'></path></svg></a></figure><div class='media-body' style='margin-left: 10px;'>
+    <h6 class='my-0 mt-1 load_video_list pointer'>".to_string() +
+    &list.name + &"</h6><p>Список видеозаписей: <a style='vertical-align: baseline;'
+    class='ajax underline' href='".to_string() +
+    &link + &"'>" + &name + &"</a><br>Видеозаписей: ".to_string() +
+    &list.count.to_string() + &"</p></div><span class='playlist_share'></span></div></div></div>".to_string();
+}
+pub fn add_photo_list(pk: i32) -> String {
+    use crate::schema::photo_lists::dsl::photo_lists;
+    use crate::models::PhotoList;
+    let _connection = establish_connection();
+
+    let mut name = "".to_string();
+    let mut link = "".to_string();
+
+    let list = photo_lists
+        .filter(schema::photo_lists::id.eq(pk))
+        .filter(schema::photo_lists::types.lt(10))
+        .load::<PhotoList>(&_connection)
+        .expect("E.")
+        .into_iter()
+        .nth(0)
+        .unwrap();
+
+    if list.community_id.is_some() {
+        let community = list.get_community();
+        name = community.name.clone();
+        link = community.get_link().clone();
+    }
+    else {
+        let creator = list.get_creator();
+        name = creator.get_full_name().clone();
+        link = creator.get_link().clone();
+    }
+
+    return "<div class='custom_color mb-1 text-center has-background-img
+    position-relative box-shadow' owner-pk='".to_string() + &list.user_id.to_string() +
+    &"' &photolist-pk='".to_string() + &list.id.to_string() +
+    "' style='width: 100%;flex-basis: 100%;'>
+    <figure class='background-img'><img src='".to_string() +
+    &list.get_cover_photo() + &"' </figure><div class='container'>
+    <i class='figure avatar120 mr-0 rounded-circle bg-none'></i><br>
+    <h4 class='load_photo_list pointer'><a>".to_string() + &list.name +
+    &"</a></h4><p class='lead'><a class='ajax underline' href='".to_string() +
+    creator.get_link() + "'>".to_string() + &name + "</a></p>
+    <hr class='my-3'><a class='load_photo_list pointer'>".to_string() +
+    &list.count_items_ru() + &"</a><div class='row'></div></div></div>".to_string();
+}
+
 
 pub fn post_elements(attach: String, user_id: i32) -> String {
     use crate::schema::users::dsl::users;
@@ -170,6 +251,8 @@ pub fn post_elements(attach: String, user_id: i32) -> String {
                 "lmu" => add_music_list(pk),
                 "ldo" => add_doc_list(pk),
                 "ldo" => add_post_list(pk),
+                "lvi" => add_video_list(pk),
+                "lph" => add_video_list(pk),
                 _ => "".to_string(),
             };
             block = block + &html;
