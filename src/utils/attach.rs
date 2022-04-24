@@ -501,7 +501,7 @@ pub fn add_survey(pk: i32, is_staff: bool, user_id: i32) -> String {
         drops = drops + &"<span class='dropdown-item create_claim'>Пожаловаться</span>".to_string();
     }
     for answer in survey.get_answers().iter() {
-        if answer.as_deref().is_user_voted(user_id) {
+        if answer.is_user_voted(user_id) {
             vote_svg = "<svg fill='currentColor' style='width:15px;height:15px;' class='svg_default' viewBox='0 0 24 24'><path fill='none' d='M0 0h24v24H0z'></path><path d='M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z'></path></svg>".to_string()
         }
         answers = answers + &"<div data-pk='" + &answer.id.to_string() +
