@@ -486,7 +486,7 @@ pub fn add_survey(pk: i32, is_staff: bool, user_id: i32) -> String {
             info = "Это анонимный опрос.".to_string();
         }
         else {
-            info = "<a class='i_link survey_info pointer position-relative'>".to_string() + &survey.get_users_ru().to_string() + &"</a>".to_string() + &survey.get_6_users().to_string();
+            info = "<a class='i_link survey_info pointer position-relative'>".to_string() + &survey.get_users_ru().into_iter().collect().to_string() + &"</a>".to_string() + &survey.get_6_users().to_string();
         }
     }
     else {
@@ -501,7 +501,7 @@ pub fn add_survey(pk: i32, is_staff: bool, user_id: i32) -> String {
         drops = drops + &"<span class='dropdown-item create_claim'>Пожаловаться</span>".to_string();
     }
     for answer in survey.get_answers().iter() {
-        if answer.is_user_voted(user_pk) {
+        if answer.is_user_voted(users_id) {
             vote_svg = "<svg fill='currentColor' style='width:15px;height:15px;' class='svg_default' viewBox='0 0 24 24'><path fill='none' d='M0 0h24v24H0z'></path><path d='M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z'></path></svg>".to_string()
         }
         answers = answers + &"<div data-pk='" + &answer.id.to_string() +
@@ -519,7 +519,7 @@ pub fn add_survey(pk: i32, is_staff: bool, user_id: i32) -> String {
     <figure class='background-img'><img src='".to_string() + &survey.get_image() +
     &"alt='img' ></figure><div class='dropdown'><a class='btn_default drop pointer' style='position:absolute;right:5px;top:5px;'>
     <svg class='svg_info' fill='currentColor' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none' /><path d='M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z' /></svg>
-    </a><div class='dropdown-menu dropdown-menu-right' data-type='sur".to_string() + survey.pk.to_string() + &"' style='top:30px;right:-10px;'>
+    </a><div class='dropdown-menu dropdown-menu-right' data-type='sur".to_string() + &pk.to_string() + &"' style='top:30px;right:-10px;'>
     <span class='dropdown-item copy_link'>Копировать ссылку</span>".to_string() + &drops +
     &"</div></div><form><div class='container answers_container ".to_string() + &multiple_class +
     &"'> <br><h4 class='m-0'>".to_string() + &survey.title +
