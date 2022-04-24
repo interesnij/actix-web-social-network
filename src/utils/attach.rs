@@ -10,6 +10,8 @@ pub fn add_music_list(pk: i32) -> String {
     use crate::models::MusicList;
 
     let _connection = establish_connection();
+    let mut name = "".to_string();
+    let mut link = "".to_string();
 
     let list = music_lists
         .filter(schema::music_lists::id.eq(pk))
@@ -60,8 +62,7 @@ pub fn post_elements(attach: String, user_id: i32) -> String {
 
     let v: Vec<&str> = attach.split(",").collect();
     let mut block = "".to_string();
-    let mut name = "".to_string();
-    let mut link = "".to_string();
+
     let user: User = users
         .filter(schema::users::id.eq(user_id))
         .filter(schema::users::types.lt(10))
