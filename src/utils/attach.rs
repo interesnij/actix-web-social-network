@@ -471,7 +471,7 @@ pub fn post_elements(attach: String, user_id: i32) -> String {
             "vid" => add_video(pk, "post_video".to_string()),
             "goo" => add_good(pk),
             "mus" => add_music(pk, user.is_moderator(), user_id),
-            "doc" => add_doc(pk, user.is_moderator()), user_id,
+            "doc" => add_doc(pk, user.is_moderator(), user_id),
             "use" => add_user(pk),
             "com" => add_community(pk),
 
