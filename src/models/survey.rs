@@ -1267,6 +1267,61 @@ impl Survey {
     pub fn is_survey(&self) -> bool {
         return true;
     }
+    pub fn is_have_votes(&self) -> bool {
+        return self.vote > 0;
+    }
+    pub fn is_user_voted(&self, user_id: i32) -> bool {
+        return !self.is_time_end() && survey_votes
+            .filter(schema::survey_votes::user_id.eq(user_id))
+            .filter(schema::survey_votes::survey_id.eq(self.id))
+            .load::<SurveyVote>(&_connection)
+            .expect("E.")
+            .len() > 0;
+    }
+    pub fn get_time_description(&self) -> String {
+        if self.time_end.is_some() {
+            return "<p class='small'>Время опроса вышло.</p>".to_string()
+        }
+        else {
+            return "<p class='small'>Бессрочный опрос.</p>".to_string()
+        }
+    }
+    pub fn is_time_end(&self) -> bool {
+        return self.time_end.is_some() && elf.time_end.as_ref() > chrono::Local::now().naive_utc();
+    }
+    pub fn get_answers(&self, user_id: i32) -> Vec<SurveyAnswer> {
+        return survey_answers
+            .filter(schema::survey_answers::user_id.eq(user_id))
+            .filter(schema::survey_answers::survey_id.eq(self.id))
+            .load::<SurveyVote>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_users_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            self.vote,
+            " участник".to_string(),
+            " участника".to_string(),
+            " участников".to_string(),
+        );
+    }
+    pub fn get_6_users(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+
+        let surveys = survey_votes
+            .filter(schema::survey_votes::user_id.eq(user_id))
+            .filter(schema::survey_votes::survey_id.eq(self.id))
+            .load::<SurveyVote>(&_connection)
+            .expect("E.");
+
+        let mut stack = Vec::new();
+        for _item in surveys.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
+    }
+
     pub fn get_code(&self) -> String {
         return "sur".to_string() + &self.get_str_id();
     }
@@ -1429,6 +1484,21 @@ pub struct NewSurveyAnswer {
     pub vote:        i32,
     pub position:       i32,
 }
+impl SurveyAnswer {
+    pub fn get_survey(&self) -> Survey {
+    let survey = surveys
+        .filter(schema::surveys::answer_id.eq(self.id))
+        .load::<Survey>(&_connection)
+        .expect("E.")
+        .into_iter()
+        .nth(0)
+        .unwrap();
+    }
+
+    pub fn get_procent(&self) -> i32 {
+        return self.vote / self.get_survey().vote * 100;
+    }
+}
 
 #[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
@@ -1437,10 +1507,23 @@ pub struct SurveyVote {
     pub id:               i32,
     pub user_id:          i32,
     pub survey_answer_id: i32,
+    pub survey_id:        i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="survey_votes"]
 pub struct NewSurveyVote  {
     pub user_id:          i32,
     pub survey_answer_id: i32,
+    pub survey_id:        i32,
+}
+
+impl SurveyVote {
+    pub fn is_user_voted(&self, user_id: i32) -> bool {
+        return survey_votes
+            .filter(schema::survey_votes::user_id.eq(user_id))
+            .filter(schema::survey_votes::survey_answer_id.eq(self.id))
+            .load::<SurveyVote>(&_connection)
+            .expect("E.")
+            .len() > 0;
+    }
 }

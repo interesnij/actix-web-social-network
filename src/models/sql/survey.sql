@@ -122,6 +122,7 @@ CREATE TABLE survey_votes (
     id               SERIAL PRIMARY KEY,
     user_id          INT NOT NULL,
     survey_answer_id INT NOT NULL,
+    survey_id        INT NOT NULL,
 
    CONSTRAINT fk_survey_votes_user
         FOREIGN KEY(user_id)

@@ -445,6 +445,92 @@ pub fn add_community(pk: i32) -> String {
     &community.get_info_model().members.to_string() + &"</p></div></div></div></div>".to_string();
 }
 
+pub fn add_survey(pk: i32, is_staff: bool, user_id: i32) -> String {
+    use crate::schema::surveys::dsl::surveys;
+    use crate::models::Survey;
+    let _connection = establish_connection();
+
+    let survey = surveys
+        .filter(schema::surveys::id.eq(pk))
+        .filter(schema::surveys::types.eq("a"))
+        .load::<Survey>(&_connection)
+        .expect("E.")
+        .into_iter()
+        .nth(0)
+        .unwrap();
+
+    let mut name = "".to_string();
+    let mut link = "".to_string();
+    let mut multiple_class = "".to_string();
+    let mut answers = "".to_string();
+    let mut vote_svg = "".to_string();
+    let mut info = "".to_string();
+    let mut drops = "<span class='dropdown-item create_repost'>Добавить</span>".to_string()
+
+    if survey.community_id.is_some() {
+        let community = survey.get_community();
+        name = community.name.clone();
+        link = community.get_link().clone();
+    }
+    else {
+        let creator = survey.get_creator();
+        name = creator.get_full_name().clone();
+        link = creator.get_link().clone();
+    }
+
+    if survey.is_multiple == false {
+        multiple_class = "no_multiple".to_string();
+    }
+    if survey.is_have_votes() {
+        if survey.is_anonymous == true {
+            info = "Это анонимный опрос.".to_string();
+        }
+        else {
+            info = "<a class='i_link survey_info pointer position-relative'>".to_string() + &survey.get_users_ru().to_string() + &"</a>".to_string() + &survey.get_6_users();
+        }
+    }
+    else {
+        info = "Пока никто не голосовал.".to_string();
+    }
+
+    let mut drops = "<span class='dropdown-item create_repost'>Добавить</span><span class='dropdown-item copy_link'>Копировать ссылку</span>".to_string();
+    if is_staff == true && user_id != pk {
+        drops = drops + &"<span class='dropdown-item create_close'>Закрыть</span>".to_string();
+    }
+    else {
+        drops = drops + &"<span class='dropdown-item create_claim'>Пожаловаться</span>".to_string();
+    }
+    for answer in survey.get_answers().iter() {
+        if answer.is_user_voted(user.pk) {
+            vote_svg = "<svg fill='currentColor' style='width:15px;height:15px;' class='svg_default' viewBox='0 0 24 24'><path fill='none' d='M0 0h24v24H0z'></path><path d='M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z'></path></svg>".to_string()
+        }
+        answers = answers + &"<div data-pk='" + &answer.id.to_string() +
+        &"' class='lite_color answer_style pointer survey_vote'>
+        <div class='progress2' style='width:'" + &answer.get_procent().to_string() +
+        &"%;'></div><span class='progress_span_r'>" + &answer.text +
+        &" <span class='count text-muted small'>" + &answer.vote.to_string() +
+        &"</span></span><span class='progress_span_l' style='margin-left: auto;'>
+        <span class='vote_svg'>".to_string() + &vote_svg + &"</span><span class='procent'>".to_string() +
+        &answer.get_procent().to_string() + &"%</span></span></div>".to_string();
+    }
+
+    return "<div data-pk='".to_string() + survey.id.to_string() +
+    "' class='card p-1 border text-center position-relative box-shadow' style='flex-basis: 100%;'>
+    <figure class='background-img'><img src='".to_string() + survey.get_image() +
+    "alt='img' ></figure><div class='dropdown'><a class='btn_default drop pointer' style='position:absolute;right:5px;top:5px;'>
+    <svg class='svg_info' fill='currentColor' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none' /><path d='M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z' /></svg>
+    </a><div class='dropdown-menu dropdown-menu-right' data-type='sur".to_string() + survey.pk.to_string() + "' style='top:30px;right:-10px;'>
+    <span class='dropdown-item copy_link'>Копировать ссылку</span>" + drops +
+    "</div></div><form><div class='container answers_container ".to_string() + multiple_class +
+    "'> <br><h4 class='m-0'>".to_string() + survey.title + "</h4>
+    <p class='position-relative'><a href=".to_string() + link + "' class='underline ajax'>".to_string() +
+    name + "</a></p>".to_string() + survey.get_time_description() + "<br>" +
+    answers + info + "</div><div class='card-footer position-relative'>
+    <button type='button' class='btn hidden btn-sm float-left border votes_remove'>Отмена</button>
+    <button id='add_vote_survey_btn' type='button' class='btn hidden btn-sm btn-success float-right'>
+    Проголосовать</button></div>".to_string() + "</form></div>".to_string();
+}
+
 pub fn post_elements(attach: String, user_id: i32) -> String {
     use crate::schema::users::dsl::users;
 
