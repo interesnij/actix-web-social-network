@@ -257,7 +257,7 @@ pub fn add_good_list(pk: i32) -> String {
     return "<div goodlist-pk='".to_string() + &list.pk.to_string() +
     &"' style='padding: 7px;width: 100%;flex-basis: 100%'><div class='media mb-2'>
     <div class='media-body'><h6 class='content-color-primary mb-0 load_good_list pointer'>
-    <a>".to_string() + &list.name.to_string() + "</a></h6></div><span class='small'></span></div>
+    <a>".to_string() + &list.name.to_string() + &"</a></h6></div><span class='small'></span></div>
     <div class='centered no-gutters'><figure class='mx-auto mb-3' style='width:120px'>
     <img class='load_good_list pointer image_fit_small' src='".to_string()
      + &image + &"' style='border-radius:50%' /></figure></div>
