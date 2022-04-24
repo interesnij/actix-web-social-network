@@ -214,11 +214,11 @@ pub fn add_photo_list(pk: i32) -> String {
     &"' &photolist-pk='".to_string() + &list.id.to_string() +
     &"' style='width: 100%;flex-basis: 100%;'>
     <figure class='background-img'><img src='".to_string() +
-    &list.get_cover_photo() + &"' </figure><div class='container'>
+    &list.cover_photo + &"' </figure><div class='container'>
     <i class='figure avatar120 mr-0 rounded-circle bg-none'></i><br>
     <h4 class='load_photo_list pointer'><a>".to_string() + &list.name +
     &"</a></h4><p class='lead'><a class='ajax underline' href='".to_string() +
-    &link + "'>".to_string() + &name + &"</a></p>
+    &link + &"'>".to_string() + &name + &"</a></p>
     <hr class='my-3'><a class='load_photo_list pointer'>".to_string() +
     &list.count_items_ru() + &"</a><div class='row'></div></div></div>".to_string();
 }
