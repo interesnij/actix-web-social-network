@@ -1296,7 +1296,7 @@ impl Survey {
 
         return survey_answers
             .filter(schema::survey_answers::survey_id.eq(self.id))
-            .load::<SurveyVote>(&_connection)
+            .load::<SurveyAnswer>(&_connection)
             .expect("E.");
     }
     pub fn get_users_ru(&self) -> String {
@@ -1309,7 +1309,7 @@ impl Survey {
             " участников".to_string(),
         );
     }
-    pub fn get_6_users(&self) -> Vec<User> {
+    pub fn get_6_users(&self) -> String {
         use crate::utils::get_users_from_ids;
 
         let surveys = survey_votes
@@ -1324,7 +1324,7 @@ impl Survey {
         let users = get_users_from_ids(stack);
         let mut list = "<hr class='m-1'>".to_string();
         for voter in users.iter() {
-            list += "<a class='pr-1' href='".to_string() + &voter.get_link() + &"' target='_blank' tooltip='".to_string() + &voter.get_full_name() + &"' flow='up'>".to_string() + &voter.get_s_avatar() + &"</a>".to_string();
+            list += &"<a class='pr-1' href='".to_string() + &voter.get_link() + &"' target='_blank' tooltip='".to_string() + &voter.get_full_name() + &"' flow='up'>".to_string() + &voter.get_s_avatar() + &"</a>".to_string();
         }
     }
 
@@ -1504,7 +1504,7 @@ impl SurveyAnswer {
 
         let _connection = establish_connection();
         return surveys
-            .filter(schema::surveys::answer_id.eq(self.id))
+            .filter(schema::surveys::id.eq(self.survey_id)) 
             .load::<Survey>(&_connection)
             .expect("E.")
             .into_iter()
