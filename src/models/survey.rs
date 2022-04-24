@@ -1289,7 +1289,7 @@ impl Survey {
         }
     }
     pub fn is_time_end(&self) -> bool {
-        return self.time_end.is_some() && self.time_end.as_ref() > chrono::Local::now().naive_utc();
+        return self.time_end.is_some() && self.time_end.unwrap() > chrono::Local::now().naive_utc();
     }
     pub fn get_answers(&self) -> Vec<SurveyAnswer> {
         use crate::schema::survey_answers::dsl::survey_answers;
@@ -1325,7 +1325,7 @@ impl Survey {
         let users = get_users_from_ids(stack);
         let mut list = "<hr class='m-1'>".to_string();
         for voter in users.iter() {
-            list += "<a class='pr-1' href='".to_string() + &voter.get_link() + &"' target='_blank' tooltip='".to_string() + &voter.get_full_name() + &"' flow='up'>".to_string() + &voter.get_s_avatar() + &"</a>".to_string();
+            list = list + &"<a class='pr-1' href='".to_string() + &voter.get_link() + &"' target='_blank' tooltip='".to_string() + &voter.get_full_name() + &"' flow='up'>".to_string() + &voter.get_s_avatar() + &"</a>".to_string();
         }
         return list;
     }
