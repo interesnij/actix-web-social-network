@@ -285,7 +285,7 @@ pub fn add_photo(pk: i32, case: String) -> String {
 
     let photo = photos
         .filter(schema::photos::id.eq(pk))
-        .filter(schema::photos::types.lt("a"))
+        .filter(schema::photos::types.eq("a"))
         .load::<Photo>(&_connection)
         .expect("E.")
         .into_iter()
@@ -301,7 +301,7 @@ pub fn add_video(pk: i32, case: String) -> String {
 
     let video = videos
         .filter(schema::videos::id.eq(pk))
-        .filter(schema::videos::types.lt("a"))
+        .filter(schema::videos::types.eq("a"))
         .load::<Video>(&_connection)
         .expect("E.")
         .into_iter()
@@ -317,7 +317,7 @@ pub fn add_good(pk: i32) -> String {
 
     let good = goods
         .filter(schema::goods::id.eq(pk))
-        .filter(schema::goods::types.lt("a"))
+        .filter(schema::goods::types.eq("a"))
         .load::<Good>(&_connection)
         .expect("E.")
         .into_iter()
@@ -333,7 +333,7 @@ pub fn add_music(pk: i32, is_staff: bool) -> String {
 
     let music = musics
         .filter(schema::musics::id.eq(pk))
-        .filter(schema::musics::types.lt("a"))
+        .filter(schema::musics::types.eq("a"))
         .load::<Music>(&_connection)
         .expect("E.")
         .into_iter()
@@ -369,7 +369,7 @@ pub fn add_doc(pk: i32, is_staff: bool) -> String {
 
     let doc = docs
         .filter(schema::docs::id.eq(pk))
-        .filter(schema::docs::types.lt("a"))
+        .filter(schema::docs::types.eq("a"))
         .load::<Doc>(&_connection)
         .expect("E.")
         .into_iter()
@@ -399,6 +399,52 @@ pub fn add_doc(pk: i32, is_staff: bool) -> String {
     &drops + &"</div></span</span></div></div></div>".to_string();
 }
 
+pub fn add_user(pk: i32) -> String {
+    use crate::schema::users::dsl::users;
+    let _connection = establish_connection();
+
+    let user = users
+        .filter(schema::users::id.eq(pk))
+        .filter(schema::users::types.lt(10))
+        .load::<User>(&_connection)
+        .expect("E.")
+        .into_iter()
+        .nth(0)
+        .unwrap();
+
+    return "<div style='flex-basis: 100%;' class='card'><div class='card-body'
+    style='padding: 5px'><div style='display:flex'><figure><a class='ajax'
+    href='".to_string() + &user.get_link() + &"' >".to_string() +
+    &user.get_bb_avatar() + &"</a></figure><div class='media-body' style='margin-left: 10px;'>
+    <a href='".to_string() + &user.get_link() +
+    &"' class='my-0 mt-1 ajax'>".to_string() + &user.get_full_name() +
+    &"</a><p>".to_string() + &user.get_online_status() + &"<br>Друзей: ".to_string() +
+    &user.get_profile().friends.to_string() + &"</p></div></div></div></div>".to_string();
+}
+pub fn add_community(pk: i32) -> String {
+    use crate::schema::communitys::dsl::communitys;
+    use crate::models::Community;
+    let _connection = establish_connection();
+
+    let community = communitys
+        .filter(schema::communitys::id.eq(pk))
+        .filter(schema::communitys::types.lt(10))
+        .load::<Community>(&_connection)
+        .expect("E.")
+        .into_iter()
+        .nth(0)
+        .unwrap();
+
+    return "<div style='flex-basis: 100%;' class='card'><div class='card-body'
+    style='padding: 5px'><div style='display:flex'><figure><a class='ajax'
+    href='".to_string() + &community.get_link() + &"' >".to_string() +
+    &community.get_bb_avatar() + &"</a></figure><div class='media-body' style='margin-left: 10px;'>
+    <a href='".to_string() + &community.get_link() +
+    &"' class='my-0 mt-1 ajax'>".to_string() + &community.name +
+    &"</a><p>".to_string() + &community.get_online_status() + &"<br>Подписчиков: ".to_string() +
+    &community.get_info_model().members.to_string() + &"</p></div></div></div></div>".to_string();
+}
+
 pub fn post_elements(attach: String, user_id: i32) -> String {
     use crate::schema::users::dsl::users;
 
@@ -426,10 +472,12 @@ pub fn post_elements(attach: String, user_id: i32) -> String {
             "goo" => add_good(pk),
             "mus" => add_music(pk, user.is_moderator()),
             "doc" => add_doc(pk, user.is_moderator()),
+            "use" => add_user(pk),
+            "com" => add_community(pk),
 
             "lmu" => add_music_list(pk),
             "ldo" => add_doc_list(pk),
-            "ldo" => add_post_list(pk),
+            "lpo" => add_post_list(pk),
             "lvi" => add_video_list(pk),
             "lph" => add_photo_list(pk),
             "lgo" => add_good_list(pk),
