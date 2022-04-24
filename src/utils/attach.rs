@@ -33,7 +33,7 @@ pub fn add_post_list(pk: i32) -> String {
         let creator = list.get_creator();
         name = creator.get_full_name().clone();
         link = creator.get_link().clone();
-        image = creator.get_bb_avatar()
+        image = creator.get_bb_avatar();
         owner = creator.id.to_string();
     }
 
