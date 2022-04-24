@@ -362,6 +362,42 @@ pub fn add_music(pk: i32, is_staff: bool) -> String {
     </svg></a><div class='dropdown-menu dropdown-menu-right' style='top: 25px;'>".to_string() +
     &drops + &"</div></span</span></div></div></div>".to_string();
 }
+pub fn add_doc(pk: i32, is_staff: bool) -> String {
+    use crate::schema::docs::dsl::docs;
+    use crate::models::Doc;
+    let _connection = establish_connection();
+
+    let doc = docs
+        .filter(schema::docs::id.eq(pk))
+        .filter(schema::docs::types.lt("a"))
+        .load::<Doc>(&_connection)
+        .expect("E.")
+        .into_iter()
+        .nth(0)
+        .unwrap();
+
+    let mut drops = "<span class='dropdown-item create_repost'>Добавить</span><span class='dropdown-item copy_link'>Копировать ссылку</span>".to_string();
+    //if music.is_user_can_edit_delete_item(user) {
+    //    drops = drops + &"<span class='dropdown-item track_edit'>Изменить</span><span class='dropdown-item track_remove'>Удалить</span>".to_string();
+    //}
+    if is_staff == true {
+        drops = drops + &"<span class='dropdown-item create_close'>Закрыть</span>".to_string();
+    }
+    else {
+        drops = drops + &"<span class='dropdown-item create_claim'>Пожаловаться</span>".to_string();
+    }
+
+    return "<div class='doc' data-path='".to_string() + &doc.file +
+    &"' style='flex-basis: auto;width:100%;position: relative;'><div class='media'>
+    <svg fill='currentColor' class='svg_default' style='width:45px;margin: 0;' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none'/><path d='M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z'/></svg>
+    <div class='media-body' style='display: flex;'><h6 class='doc_title'><a>".to_string() +
+    &doc.title + &"</a></h6><span class='span_btn' data-pk='".to_string() + &doc.id.to_string() +
+    &"'><span class='dropdown' style='position: inherit;'><a class='btn_default drop pointer'>
+    <svg class='svg_info' fill='currentColor' viewBox='0 0 24 24'><path d='M0 0h24v24H0z'
+    fill='none' /><path d='M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z' />
+    </svg></a><div class='dropdown-menu dropdown-menu-right' style='top: 25px;'>".to_string() +
+    &drops + &"</div></span</span></div></div></div>".to_string();
+}
 
 pub fn post_elements(attach: String, user_id: i32) -> String {
     use crate::schema::users::dsl::users;
