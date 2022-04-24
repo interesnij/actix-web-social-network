@@ -441,7 +441,7 @@ pub fn add_community(pk: i32) -> String {
     &community.get_bb_avatar() + &"</a></figure><div class='media-body' style='margin-left: 10px;'>
     <a href='".to_string() + &community.get_link() +
     &"' class='my-0 mt-1 ajax'>".to_string() + &community.name +
-    &"</a><p>".to_string() + &community.description.unwrap() + &"<br>Подписчиков: ".to_string() +
+    &"</a><p>".to_string() + &community.description.as_ref().unwrap() + &"<br>Подписчиков: ".to_string() +
     &community.get_info_model().members.to_string() + &"</p></div></div></div></div>".to_string();
 }
 
