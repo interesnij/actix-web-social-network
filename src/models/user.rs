@@ -165,14 +165,6 @@ impl User {
             return "@id".to_string() + &self.get_str_id();
         }
     }
-    pub fn get_s_avatar(&self) -> String {
-            if self.s_avatar.is_some() {
-                return self.s_avatar.as_deref().unwrap().to_string();
-            }
-            else {
-                return "/static/images/icons/avatar30.svg".to_string();
-            }
-    }
     pub fn get_description(&self) -> String {
         return "<a href='".to_string() + &self.get_link() + &"' target='_blank'>".to_string() + &self.get_full_name() + &"</a>".to_string();
     }
