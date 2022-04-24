@@ -465,7 +465,7 @@ pub fn add_survey(pk: i32, is_staff: bool, user_id: i32) -> String {
     let mut answers = "".to_string();
     let mut vote_svg = "".to_string();
     let mut info = "".to_string();
-    let mut drops = "<span class='dropdown-item create_repost'>Добавить</span>".to_string()
+    let mut drops = "<span class='dropdown-item create_repost'>Добавить</span>".to_string();
 
     if survey.community_id.is_some() {
         let community = survey.get_community();

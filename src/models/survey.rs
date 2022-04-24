@@ -1486,14 +1486,15 @@ pub struct NewSurveyAnswer {
 }
 impl SurveyAnswer {
     pub fn get_survey(&self) -> Survey {
-    let survey = surveys
-        .filter(schema::surveys::answer_id.eq(self.id))
-        .load::<Survey>(&_connection)
-        .expect("E.")
-        .into_iter()
-        .nth(0)
-        .unwrap();
-    }
+        let _connection = establish_connection();
+        let survey = surveys
+            .filter(schema::surveys::answer_id.eq(self.id))
+            .load::<Survey>(&_connection)
+            .expect("E.")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        }
 
     pub fn get_procent(&self) -> i32 {
         return self.vote / self.get_survey().vote * 100;
@@ -1519,6 +1520,7 @@ pub struct NewSurveyVote  {
 
 impl SurveyVote {
     pub fn is_user_voted(&self, user_id: i32) -> bool {
+        let _connection = establish_connection();
         return survey_votes
             .filter(schema::survey_votes::user_id.eq(user_id))
             .filter(schema::survey_votes::survey_answer_id.eq(self.id))
