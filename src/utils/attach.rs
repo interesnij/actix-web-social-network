@@ -352,7 +352,7 @@ pub fn add_music(pk: i32, user: User) -> String {
     }
 
     return "<div class='music' data-path='".to_string() + &music.file +
-    %"' style='flex-basis: auto;width:100%;position: relative;'><div class='media'
+    &"' style='flex-basis: auto;width:100%;position: relative;'><div class='media'
     music-counter=''>".to_string() + &"'>".to_string() +
     &music.get_s_image() + &"<div class='media-body' style='display: flex;'><h6 class='music_list_post music_title'><a>".to_string() +
     &music.title + &"</a></h6><span class='span_btn' data-pk='".to_string() + &music.id.to_string() +
