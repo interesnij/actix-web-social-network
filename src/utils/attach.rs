@@ -123,7 +123,7 @@ pub fn post_elements(attach: String, user_id: i32) -> String {
 
         if first_char == 'l' {
             let code = &item[..3];
-            let html match code.as_str() {
+            let html = match code.as_str() {
                 "lmu" => add_music_list(pk),
                 "ldo" => add_doc_list(pk),
                 _ => "".to_string(),
