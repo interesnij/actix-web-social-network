@@ -1,7 +1,7 @@
 use crate::utils::establish_connection;
 use crate::schema;
 use diesel::prelude::*;
-
+use crate::utils::User;
 
 pub fn add_post_list(pk: i32) -> String {
     use crate::schema::post_lists::dsl::post_lists;
