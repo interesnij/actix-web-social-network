@@ -342,13 +342,13 @@ pub fn add_music(pk: i32, user: User) -> String {
 
     let mut drops = "<span class='dropdown-item create_repost'>Добавить</span><span class='dropdown-item copy_link'>Копировать ссылку</span>".to_string();
     if music.is_user_can_edit_delete_item(user) {
-        drops = drops + "<span class='dropdown-item track_edit'>Изменить</span><span class='dropdown-item track_remove'>Удалить</span>".to_string();
+        drops = drops + &"<span class='dropdown-item track_edit'>Изменить</span><span class='dropdown-item track_remove'>Удалить</span>".to_string();
     }
     else if user.is_moderator() {
-        drops = drops + "<span class='dropdown-item create_close'>Закрыть</span>".to_string();
+        drops = drops + &"<span class='dropdown-item create_close'>Закрыть</span>".to_string();
     }
     else {
-        drops = drops + "<span class='dropdown-item create_claim'>Пожаловаться</span>".to_string();
+        drops = drops + &"<span class='dropdown-item create_claim'>Пожаловаться</span>".to_string();
     }
 
     return "<div class='music' data-path='".to_string() + &music.file +
@@ -388,7 +388,7 @@ pub fn post_elements(attach: String, user_id: i32) -> String {
             "pho" => add_photo(pk, "post_photo".to_string()),
             "vid" => add_video(pk, "post_video".to_string()),
             "goo" => add_good(pk),
-            "mus" => add_good(pk, user),
+            "mus" => add_music(pk, user),
 
             "lmu" => add_music_list(pk),
             "ldo" => add_doc_list(pk),

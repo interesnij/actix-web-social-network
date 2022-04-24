@@ -1365,7 +1365,7 @@ impl Music {
             return "<svg class='image_fit svg_default' fill='currentColor' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none' /><path d='M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z' /></svg>".to_string();
         }
     }
-    pub fn get_s_avatar(&self) -> String {
+    pub fn get_s_image(&self) -> String {
         if self.image.is_some() {
             return "<img style='width:30px' alt='image' src='".to_string() + &self.b_avatar.as_deref().unwrap().to_string() + &" />".to_string();
         }
