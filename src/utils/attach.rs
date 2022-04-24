@@ -5,6 +5,8 @@ use diesel::prelude::*;
 use crate::models::User;
 
 
+const CONN = establish_connection();
+
 pub fn add_music_list(pk: i32) -> String {
     use crate::schema::music_lists::dsl::music_lists;
     use crate::models::MusicList;
