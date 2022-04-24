@@ -11,6 +11,7 @@ pub fn add_post_list(pk: i32) -> String {
     let mut name = "".to_string();
     let mut link = "".to_string();
     let mut image = "".to_string();
+    let mut owner = "".to_string();
 
     let list = post_lists
         .filter(schema::post_lists::id.eq(pk))
@@ -25,18 +26,19 @@ pub fn add_post_list(pk: i32) -> String {
         let community = list.get_community();
         name = community.name.clone();
         link = community.get_link().clone();
-        image = community.get_bb_avatar()
+        image = community.get_bb_avatar();
+        owner = community.id.to_string();
     }
     else {
         let creator = list.get_creator();
         name = creator.get_full_name().clone();
         link = creator.get_link().clone();
         image = creator.get_bb_avatar()
+        owner = creator.id.to_string();
     }
 
     return "<div style='flex-basis: 100%;' class='card'>
-    <div class='card-body' owner-pk='".to_string() +
-    &list.get_str_id() +
+    <div class='card-body' owner-pk='".to_string() + &owner +
     &"' &playlist-pk='".to_string() +
     &list.id.to_string() +
     &"' style='padding: 8px;padding-bottom: 0;'><div style='display:flex'>
@@ -56,6 +58,7 @@ pub fn add_music_list(pk: i32) -> String {
 
     let mut name = "".to_string();
     let mut link = "".to_string();
+    let mut owner = "".to_string();
 
     let list = music_lists
         .filter(schema::music_lists::id.eq(pk))
@@ -70,11 +73,13 @@ pub fn add_music_list(pk: i32) -> String {
         let community = list.get_community();
         name = community.name.clone();
         link = community.get_link().clone();
+        owner = community.id.to_string();
     }
     else {
         let creator = list.get_creator();
         name = creator.get_full_name().clone();
         link = creator.get_link().clone();
+        owner = creator.id.to_string();
     }
 
     let mut image = "".to_string();
@@ -85,8 +90,7 @@ pub fn add_music_list(pk: i32) -> String {
         image = "<svg fill='currentColor' class='svg_default border' style='width:120px;height:120px;' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none'/><path d='M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z'/></svg>".to_string();
     }
     return "<div style='flex-basis: 100%;' class='card'>
-    <div class='card-body' owner-pk='".to_string() +
-    &list.get_str_id() +
+    <div class='card-body' owner-pk='".to_string() + &owner +
     &"' &playlist-pk='".to_string() +
     &list.id.to_string() +
     &"' style='padding: 8px;padding-bottom: 0;'><div style='display:flex'>
@@ -106,6 +110,7 @@ pub fn add_doc_list(pk: i32) -> String {
 
     let mut name = "".to_string();
     let mut link = "".to_string();
+    let mut owner = "".to_string();
 
     let list = doc_lists
         .filter(schema::doc_lists::id.eq(pk))
@@ -120,16 +125,17 @@ pub fn add_doc_list(pk: i32) -> String {
         let community = list.get_community();
         name = community.name.clone();
         link = community.get_link().clone();
+        owner = community.id.to_string();
     }
     else {
         let creator = list.get_creator();
         name = creator.get_full_name().clone();
         link = creator.get_link().clone();
+        owner = creator.id.to_string();
     }
 
     return "<div style='flex-basis: 100%;' class='card'>
-    <div class='card-body' owner-pk='".to_string() +
-    &list.get_str_id() +
+    <div class='card-body' owner-pk='".to_string() + &owner +
     &"' &playlist-pk='".to_string() +
     &list.id.to_string() +
     &"' style='padding: 8px;padding-bottom: 0;'><div style='display:flex'>
@@ -147,6 +153,7 @@ pub fn add_video_list(pk: i32) -> String {
 
     let mut name = "".to_string();
     let mut link = "".to_string();
+    let mut owner = "".to_string();
 
     let list = video_lists
         .filter(schema::video_lists::id.eq(pk))
@@ -161,16 +168,17 @@ pub fn add_video_list(pk: i32) -> String {
         let community = list.get_community();
         name = community.name.clone();
         link = community.get_link().clone();
+        owner = community.id.to_string();
     }
     else {
         let creator = list.get_creator();
         name = creator.get_full_name().clone();
         link = creator.get_link().clone();
+        owner = creator.id.to_string();
     }
 
     return "<div style='flex-basis: 100%;' class='card'>
-    <div class='card-body' owner-pk='".to_string() +
-    &list.get_str_id() +
+    <div class='card-body' owner-pk='".to_string() + &owner +
     &"' &playlist-pk='".to_string() +
     &list.id.to_string() +
     &"' style='padding: 8px;padding-bottom: 0;'><div style='display:flex'>
@@ -188,6 +196,7 @@ pub fn add_photo_list(pk: i32) -> String {
 
     let mut name = "".to_string();
     let mut link = "".to_string();
+    let mut owner = "".to_string();
 
     let list = photo_lists
         .filter(schema::photo_lists::id.eq(pk))
@@ -202,15 +211,17 @@ pub fn add_photo_list(pk: i32) -> String {
         let community = list.get_community();
         name = community.name.clone();
         link = community.get_link().clone();
+        owner = community.id.to_string();
     }
     else {
         let creator = list.get_creator();
         name = creator.get_full_name().clone();
         link = creator.get_link().clone();
+        owner = creator.id.to_string();
     }
 
     return "<div class='custom_color mb-1 text-center has-background-img
-    position-relative box-shadow' owner-pk='".to_string() + &list.user_id.to_string() +
+    position-relative box-shadow' owner-pk='".to_string() + &owner +
     &"' &photolist-pk='".to_string() + &list.id.to_string() +
     &"' style='width: 100%;flex-basis: 100%;'>
     <figure class='background-img'><img src='".to_string() +
@@ -254,7 +265,7 @@ pub fn add_good_list(pk: i32) -> String {
         image = creator.get_bb_avatar()
     }
 
-    return "<div goodlist-pk='".to_string() + &list.pk.to_string() +
+    return "<div goodlist-pk='".to_string() + &list.id.to_string() +
     &"' style='padding: 7px;width: 100%;flex-basis: 100%'><div class='media mb-2'>
     <div class='media-body'><h6 class='content-color-primary mb-0 load_good_list pointer'>
     <a>".to_string() + &list.name.to_string() + &"</a></h6></div><span class='small'></span></div>
