@@ -1772,6 +1772,24 @@ pub struct VideoCommentReactionsUpdate {
 }
 
 impl VideoComment {
+    pub fn get_attach(&self, user_id: i32) -> String {
+        if self.attach.is_some() {
+            use crate::utils::comment_elements;
+            return comment_elements(self.attach.as_ref().unwrap().to_string(), user_id);
+        }
+        else {
+            return "".to_string();
+        }
+    }
+    pub fn get_anon_attach(&self) -> String {
+        if self.attach.is_some() {
+            use crate::utils::anon_comment_elements;
+            return anon_comment_elements(self.attach.as_ref().unwrap().to_string());
+        }
+        else {
+            return "".to_string();
+        }
+    }
     pub fn get_str_id(&self) -> String {
         return self.id.to_string();
     }

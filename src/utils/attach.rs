@@ -727,3 +727,160 @@ pub fn anon_post_elements(attach: String) -> String {
     }
     return "<div class='attach_container'>".to_owned() + &block + &"</div>".to_string();
 }
+
+pub fn comment_elements(attach: String, user_id: i32) -> String {
+    use crate::schema::users::dsl::users;
+
+    let _connection = establish_connection();
+
+    let v: Vec<&str> = attach.split(",").collect();
+    let mut block = "".to_string();
+
+    let user: User = users
+        .filter(schema::users::id.eq(user_id))
+        .filter(schema::users::types.lt(10))
+        .load::<User>(&_connection)
+        .expect("E.")
+        .into_iter()
+        .nth(0)
+        .unwrap();
+
+    for item in v.iter() {
+        let pk: i32 = item[3..].parse().unwrap();
+        let code = &item[..3];
+
+        let html = match code {
+            "pho" => add_photo(pk, "comment_photo".to_string()),
+            "vid" => add_video(pk, "comment_video".to_string()),
+            "goo" => add_good(pk),
+            "mus" => add_music(pk, user.is_moderator(), user_id),
+            "doc" => add_doc(pk, user.is_moderator(), user_id),
+            "sur" => add_survey(pk, user.is_moderator(), user_id),
+            "use" => add_user(pk),
+            "com" => add_community(pk),
+
+            "lmu" => add_music_list(pk),
+            "ldo" => add_doc_list(pk),
+            "lpo" => add_post_list(pk),
+            "lvi" => add_video_list(pk),
+            "lph" => add_photo_list(pk),
+            "lgo" => add_good_list(pk),
+            _ => "".to_string(),
+        };
+        block = block + &html;
+    }
+    return "<div class='attach_container'>".to_owned() + &block + &"</div>".to_string();
+}
+
+pub fn anon_comment_elements(attach: String) -> String {
+    use crate::schema::users::dsl::users;
+
+    let _connection = establish_connection();
+    let v: Vec<&str> = attach.split(",").collect();
+    let mut block = "".to_string();
+
+    for item in v.iter() {
+        let pk: i32 = item[3..].parse().unwrap();
+        let code = &item[..3];
+
+        let html = match code {
+            "pho" => add_photo(pk, "comment_photo".to_string()),
+            "vid" => add_video(pk, "comment_video".to_string()),
+            "goo" => add_good(pk),
+            "mus" => add_anon_music(pk),
+            "doc" => add_anon_doc(pk),
+            "sur" => add_anon_survey(pk),
+            "use" => add_user(pk),
+            "com" => add_community(pk),
+
+            "lmu" => add_music_list(pk),
+            "ldo" => add_doc_list(pk),
+            "lpo" => add_post_list(pk),
+            "lvi" => add_video_list(pk),
+            "lph" => add_photo_list(pk),
+            "lgo" => add_good_list(pk),
+            _ => "".to_string(),
+        };
+        block = block + &html;
+    }
+    return "<div class='attach_container'>".to_owned() + &block + &"</div>".to_string();
+}
+
+
+pub fn message_elements(attach: String, user_id: i32) -> String {
+    use crate::schema::users::dsl::users;
+
+    let _connection = establish_connection();
+
+    let v: Vec<&str> = attach.split(",").collect();
+    let mut block = "".to_string();
+
+    let user: User = users
+        .filter(schema::users::id.eq(user_id))
+        .filter(schema::users::types.lt(10))
+        .load::<User>(&_connection)
+        .expect("E.")
+        .into_iter()
+        .nth(0)
+        .unwrap();
+
+    for item in v.iter() {
+        let pk: i32 = item[3..].parse().unwrap();
+        let code = &item[..3];
+
+        let html = match code {
+            "pho" => add_photo(pk, "message_photo".to_string()),
+            "vid" => add_video(pk, "message_video".to_string()),
+            "goo" => add_good(pk),
+            "mus" => add_music(pk, user.is_moderator(), user_id),
+            "doc" => add_doc(pk, user.is_moderator(), user_id),
+            "sur" => add_survey(pk, user.is_moderator(), user_id),
+            "use" => add_user(pk),
+            "com" => add_community(pk),
+
+            "lmu" => add_music_list(pk),
+            "ldo" => add_doc_list(pk),
+            "lpo" => add_post_list(pk),
+            "lvi" => add_video_list(pk),
+            "lph" => add_photo_list(pk),
+            "lgo" => add_good_list(pk),
+            _ => "".to_string(),
+        };
+        block = block + &html;
+    }
+    return "<div class='attach_container'>".to_owned() + &block + &"</div>".to_string();
+}
+
+pub fn anon_message_elements(attach: String) -> String {
+    use crate::schema::users::dsl::users;
+
+    let _connection = establish_connection();
+    let v: Vec<&str> = attach.split(",").collect();
+    let mut block = "".to_string();
+
+    for item in v.iter() {
+        let pk: i32 = item[3..].parse().unwrap();
+        let code = &item[..3];
+
+        let html = match code {
+            "pho" => add_photo(pk, "message_photo".to_string()),
+            "vid" => add_video(pk, "message_video".to_string()),
+            "goo" => add_good(pk),
+            "mus" => add_anon_music(pk),
+            "doc" => add_anon_doc(pk),
+            "sur" => add_anon_survey(pk),
+            "use" => add_user(pk),
+            "com" => add_community(pk),
+
+            "lmu" => add_music_list(pk),
+            "ldo" => add_doc_list(pk),
+            "lpo" => add_post_list(pk),
+            "lvi" => add_video_list(pk),
+            "lph" => add_photo_list(pk),
+            "lgo" => add_good_list(pk),
+            _ => "".to_string(),
+        };
+        block = block + &html;
+    }
+    return "<div class='attach_container'>".to_owned() + &block + &"</div>".to_string();
+}

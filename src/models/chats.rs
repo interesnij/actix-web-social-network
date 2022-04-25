@@ -1274,6 +1274,24 @@ pub struct NewMessage {
     pub voice:         Option<String>,
 }
 impl Message {
+    pub fn get_attach(&self, user_id: i32) -> String {
+        if self.attach.is_some() {
+            use crate::utils::message_elements;
+            return message_elements(self.attach.as_ref().unwrap().to_string(), user_id);
+        }
+        else {
+            return "".to_string();
+        }
+    }
+    pub fn get_anon_attach(&self) -> String {
+        if self.attach.is_some() {
+            use crate::utils::anon_message_elements;
+            return anon_message_elements(self.attach.as_ref().unwrap().to_string());
+        }
+        else {
+            return "".to_string();
+        }
+    }
     pub fn is_have_transfer(&self) -> bool {
         use crate::schema::message_transfers::dsl::message_transfers;
 
