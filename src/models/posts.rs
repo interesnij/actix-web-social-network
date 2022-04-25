@@ -2335,7 +2335,8 @@ impl PostComment {
         use std::time::Duration;
         use humantime::format_duration;
 
-        let _duration = self.created - chrono::Local::now().naive_utc();
+
+        let _duration = self.created - Utc::now();
         return format_duration(_duration).to_string();
     }
 }
