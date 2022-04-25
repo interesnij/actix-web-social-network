@@ -1774,6 +1774,507 @@ impl PhotoComment {
             return "".to_string();
         }
     }
+    pub fn get_edit_attach(&self) -> String {
+        if self.attach.is_some() {
+            use crate::utils::edit_comment_elements;
+            return edit_comment_elements(self.attach.as_ref().unwrap().to_string());
+        }
+        else {
+            return "".to_string();
+        }
+    }
+    pub fn get_str_id(&self) -> String {
+        return self.id.to_string();
+    }
+    pub fn is_photo_comment(&self) -> bool {
+        return true;
+    }
+    pub fn get_code(&self) -> String {
+        return "cph".to_string() + &self.get_str_id();
+    }
+    pub fn get_longest_penalties(&self) -> String {
+        use crate::schema::moderated_penalties::dsl::moderated_penalties;
+        use crate::models::ModeratedPenaltie;
+
+        let _connection = establish_connection();
+
+        let penaltie = moderated_penalties
+            .filter(schema::moderated_penalties::object_id.eq(self.id))
+            .filter(schema::moderated_penalties::types.eq(82))
+            .load::<ModeratedPenaltie>(&_connection)
+            .expect("E.")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        return penaltie.expiration.unwrap().format("%d/%m/%Y").to_string();
+    }
+    pub fn get_moderated_description(&self) -> String {
+        use crate::schema::moderateds::dsl::moderateds;
+        use crate::models::Moderated;
+
+        let _connection = establish_connection();
+
+        let moder = moderateds
+            .filter(schema::moderateds::object_id.eq(self.id))
+            .filter(schema::moderateds::types.eq(82))
+            .load::<Moderated>(&_connection)
+            .expect("E.")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        if moder.description.is_some() {
+            return moder.description.unwrap().to_string();
+        }
+        else {
+            return "Предупреждение за нарушение правил соцсети трезвый.рус".to_string();
+        }
+    }
+    pub fn get_community(&self) -> Community {
+        use crate::schema::communitys::dsl::communitys;
+
+        let _connection = establish_connection();
+        return communitys
+            .filter(schema::communitys::id.eq(self.get_item().community_id.unwrap()))
+            .filter(schema::communitys::types.lt(10))
+            .load::<Community>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+    pub fn get_creator(&self) -> User {
+        use crate::schema::users::dsl::users;
+
+        let _connection = establish_connection();
+        return users
+            .filter(schema::users::id.eq(self.get_item().user_id))
+            .filter(schema::users::types.lt(10))
+            .load::<User>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+    pub fn get_commenter(&self) -> User {
+        use crate::schema::users::dsl::users;
+
+        let _connection = establish_connection();
+        return users
+            .filter(schema::users::id.eq(self.user_id))
+            .filter(schema::users::types.lt(10))
+            .load::<User>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+    pub fn get_item(&self) -> Photo {
+        use crate::schema::photos::dsl::photos;
+
+        let _connection = establish_connection();
+        return photos
+            .filter(schema::photos::id.eq(self.photo_id))
+            .filter(schema::photos::types.eq("a"))
+            .load::<Photo>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+    pub fn get_parent(&self) -> PhotoComment {
+        use crate::schema::photo_comments::dsl::photo_comments;
+
+        let _connection = establish_connection();
+        return photo_comments
+            .filter(schema::photo_comments::id.eq(self.parent_id.unwrap()))
+            .filter(schema::photo_comments::types.eq_any(vec!["a", "b"]))
+            .load::<PhotoComment>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+    pub fn get_description(&self) -> String {
+        if self.get_item().community_id.is_some() {
+            let community = self.get_community();
+            return "запись сообщества <a href='".to_owned() + &community.get_link() + &"' target='_blank'>" + &community.name + &"</a>"
+        }
+        else {
+            let creator = self.get_creator();
+            return "<a href='".to_owned() + &creator.get_link() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": запись"
+        }
+    }
+
+    pub fn send_like(&self, user: User) -> Json<JsonReactions> {
+        if self.get_item().votes_on == false {
+            return Json(JsonReactions {
+                like_count:    self.liked,
+                dislike_count: self.disliked,
+            });
+        }
+        use crate::schema::photo_comment_votes::dsl::photo_comment_votes;
+
+        let _connection = establish_connection();
+
+        let votes = photo_comment_votes
+            .filter(schema::photo_comment_votes::user_id.eq(user.id))
+            .filter(schema::photo_comment_votes::photo_comment_id.eq(self.id))
+            .load::<PhotoCommentVote>(&_connection)
+            .expect("E.");
+        if votes.len() > 0 {
+            let vote = votes.into_iter().nth(0).unwrap();
+            if vote.vote != 1 {
+                diesel::update(&vote)
+                    .set(schema::photo_comment_votes::vote.eq(1))
+                    .get_result::<PhotoCommentVote>(&_connection)
+                    .expect("Error.");
+
+                let reactions = PhotoCommentReactionsUpdate {
+                    liked:    self.liked + 1,
+                    disliked: self.disliked - 1,
+                };
+                diesel::update(self)
+                    .set(reactions)
+                    .get_result::<PhotoComment>(&_connection)
+                    .expect("Error.");
+            }
+            else {
+                diesel::delete(photo_comment_votes
+                    .filter(schema::photo_comment_votes::user_id.eq(user.id))
+                    .filter(schema::photo_comment_votes::photo_comment_id.eq(self.id))
+                    )
+                    .execute(&_connection)
+                    .expect("E");
+
+                diesel::update(self)
+                    .set(schema::photo_comments::liked.eq(self.liked - 1))
+                    .get_result::<PhotoComment>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else {
+            let new_vote = NewPhotoCommentVote {
+                vote:            1,
+                user_id:         user.id,
+                photo_comment_id: self.id,
+            };
+            diesel::insert_into(schema::photo_comment_votes::table)
+                .values(&new_vote)
+                .get_result::<PhotoCommentVote>(&_connection)
+                .expect("Error.");
+
+            diesel::update(self)
+                .set(schema::photo_comments::liked.eq(self.liked + 1))
+                .get_result::<PhotoComment>(&_connection)
+                .expect("Error.");
+        }
+        let reactions = JsonReactions {
+            like_count:    self.liked,
+            dislike_count: self.disliked,
+        };
+        return Json(reactions);
+    }
+
+    pub fn send_dislike(&self, user: User) -> Json<JsonReactions> {
+        if self.get_item().votes_on == false {
+            return Json(JsonReactions {
+                like_count:    self.liked,
+                dislike_count: self.disliked,
+            });
+        }
+        use crate::schema::photo_comment_votes::dsl::photo_comment_votes;
+
+        let _connection = establish_connection();
+
+        let votes = photo_comment_votes
+            .filter(schema::photo_comment_votes::user_id.eq(user.id))
+            .filter(schema::photo_comment_votes::photo_comment_id.eq(self.id))
+            .load::<PhotoCommentVote>(&_connection)
+            .expect("E.");
+        if votes.len() > 0 {
+            let vote = votes.into_iter().nth(0).unwrap();
+            if vote.vote != -1 {
+                diesel::update(&vote)
+                    .set(schema::photo_comment_votes::vote.eq(-1))
+                    .get_result::<PhotoCommentVote>(&_connection)
+                    .expect("Error.");
+
+                let reactions = PhotoCommentReactionsUpdate {
+                    liked:    self.liked - 1,
+                    disliked: self.disliked + 1,
+                };
+                diesel::update(self)
+                    .set(reactions)
+                    .get_result::<PhotoComment>(&_connection)
+                    .expect("Error.");
+            }
+            else {
+                diesel::delete(photo_comment_votes
+                    .filter(schema::photo_comment_votes::user_id.eq(user.id))
+                    .filter(schema::photo_comment_votes::photo_comment_id.eq(self.id))
+                    )
+                    .execute(&_connection)
+                    .expect("E");
+
+                diesel::update(self)
+                    .set(schema::photo_comments::disliked.eq(self.disliked - 1))
+                    .get_result::<PhotoComment>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else {
+            let new_vote = NewPhotoCommentVote {
+                vote: 1,
+                user_id: user.id,
+                photo_comment_id: self.id,
+            };
+            diesel::insert_into(schema::photo_comment_votes::table)
+                .values(&new_vote)
+                .get_result::<PhotoCommentVote>(&_connection)
+                .expect("Error.");
+
+            diesel::update(self)
+                .set(schema::photo_comments::disliked.eq(self.disliked + 1))
+                .get_result::<PhotoComment>(&_connection)
+                .expect("Error.");
+        }
+        let reactions = JsonReactions {
+            like_count:    self.liked,
+            dislike_count: self.disliked,
+        };
+        return Json(reactions);
+    }
+    pub fn likes_count(&self) -> String {
+        if self.liked == 0 {
+            return "".to_string();
+        }
+        else {
+            return self.liked.to_string();
+        }
+    }
+    pub fn dislikes_count(&self) -> String {
+        if self.disliked == 0 {
+            return "".to_string();
+        }
+        else {
+            return self.disliked.to_string();
+        }
+    }
+    pub fn get_attach_photos(&self) -> Vec<Photo> {
+        use crate::schema::photos::dsl::photos;
+
+        let _connection = establish_connection();
+        let attach = self.attach.as_ref().unwrap().to_string();
+        let v: Vec<&str> = attach.split(",").collect();
+        let mut stack = Vec::new();
+        for item in v.iter() {
+            let pk: i32 = item[3..].parse().unwrap();
+            let code = &item[..3];
+            if code == "pho".to_string() {
+                stack.push(pk);
+            }
+        }
+
+        return photos
+            .filter(schema::photos::id.eq_any(stack))
+            .load::<Photo>(&_connection)
+            .expect("E");
+    }
+    pub fn get_attach_videos(&self) -> Vec<Video> {
+        use crate::schema::videos::dsl::videos;
+
+        let _connection = establish_connection();
+        let attach = self.attach.as_ref().unwrap().to_string();
+        let v: Vec<&str> = attach.split(",").collect();
+        let mut stack = Vec::new();
+        for item in v.iter() {
+            let pk: i32 = item[3..].parse().unwrap();
+            let code = &item[..3];
+            if code == "vid".to_string() {
+                stack.push(pk);
+            }
+        }
+
+        return videos
+            .filter(schema::videos::id.eq_any(stack))
+            .load::<Video>(&_connection)
+            .expect("E");
+    }
+
+    pub fn likes_count_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            self.liked,
+            " человек".to_string(),
+            " человека".to_string(),
+            " человек".to_string(),
+        );
+    }
+    pub fn dislikes_count_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            self.disliked,
+            " человек".to_string(),
+            " человека".to_string(),
+            " человек".to_string(),
+        );
+    }
+    pub fn is_have_likes(&self) -> bool {
+        return self.liked > 0;
+    }
+    pub fn is_have_dislikes(&self) -> bool {
+        return self.disliked > 0;
+    }
+
+    pub fn likes(&self) -> Vec<PhotoCommentVote> {
+        use crate::schema::photo_comment_votes::dsl::photo_comment_votes;
+
+        let _connection = establish_connection();
+        return photo_comment_votes
+            .filter(schema::photo_comment_votes::photo_comment_id.eq(self.id))
+            .filter(schema::photo_comment_votes::vote.eq(1))
+            .load::<PhotoCommentVote>(&_connection)
+            .expect("E");
+    }
+    pub fn dislikes(&self) -> Vec<PhotoCommentVote> {
+        use crate::schema::photo_comment_votes::dsl::photo_comment_votes;
+
+        let _connection = establish_connection();
+        return photo_comment_votes
+            .filter(schema::photo_comment_votes::photo_comment_id.eq(self.id))
+            .filter(schema::photo_comment_votes::vote.eq(-1))
+            .load::<PhotoCommentVote>(&_connection)
+            .expect("E");
+    }
+    pub fn window_likes(&self) -> Vec<PhotoCommentVote> {
+        use crate::schema::photo_comment_votes::dsl::photo_comment_votes;
+
+        let _connection = establish_connection();
+        return photo_comment_votes
+            .filter(schema::photo_comment_votes::photo_comment_id.eq(self.id))
+            .filter(schema::photo_comment_votes::vote.eq(1))
+            .limit(6)
+            .load::<PhotoCommentVote>(&_connection)
+            .expect("E");
+    }
+    pub fn window_dislikes(&self) -> Vec<PhotoCommentVote> {
+        use crate::schema::photo_comment_votes::dsl::photo_comment_votes;
+
+        let _connection = establish_connection();
+        return photo_comment_votes
+            .filter(schema::photo_comment_votes::photo_comment_id.eq(self.id))
+            .filter(schema::photo_comment_votes::vote.eq(-1))
+            .limit(6)
+            .load::<PhotoCommentVote>(&_connection)
+            .expect("E");
+    }
+    pub fn get_replies(&self) -> Vec<PhotoComment> {
+        use crate::schema::photo_comments::dsl::photo_comments;
+
+        let _connection = establish_connection();
+        return photo_comments
+            .filter(schema::photo_comments::photo_id.eq(self.id))
+            .filter(schema::photo_comments::types.eq_any(vec!["a", "b"]))
+            .load::<PhotoComment>(&_connection)
+            .expect("E");
+    }
+    pub fn count_replies(&self) -> usize {
+        return self.get_replies().len();
+    }
+    pub fn get_replies_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        let count_usize: usize = self.count_replies() as usize;
+        return get_count_for_ru (
+            count_usize.try_into().unwrap(),
+            " ответ".to_string(),
+            " ответа".to_string(),
+            " ответов".to_string(),
+        );
+    }
+    pub fn close_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "a" => "e".to_string(),
+            "b" => "f".to_string(),
+            _ => "e".to_string(),
+        };
+        diesel::update(self)
+            .set(schema::photo_comments::types.eq(close_case))
+            .get_result::<PhotoComment>(&_connection)
+            .expect("E");
+       return true;
+    }
+    pub fn unclose_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "e" => "a".to_string(),
+            "f" => "b".to_string(),
+            _ => "a".to_string(),
+        };
+        diesel::update(self)
+            .set(schema::photo_comments::types.eq(close_case))
+            .get_result::<PhotoComment>(&_connection)
+            .expect("E");
+       return true;
+    }
+
+    pub fn delete_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "a" => "c".to_string(),
+            "b" => "d".to_string(),
+            _ => "c".to_string(),
+        };
+        diesel::update(self)
+            .set(schema::photo_comments::types.eq(close_case))
+            .get_result::<PhotoComment>(&_connection)
+            .expect("E");
+       return true;
+    }
+    pub fn restore_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "c" => "a".to_string(),
+            "d" => "b".to_string(),
+            _ => "a".to_string(),
+        };
+        diesel::update(self)
+            .set(schema::photo_comments::types.eq(close_case))
+            .get_result::<PhotoComment>(&_connection)
+            .expect("E");
+       return true;
+    }
+    pub fn get_count_attach(&self) -> String {
+        if self.attach.is_some() {
+            let length = self.attach.as_deref().unwrap().split(",").collect::<Vec<_>>().len();
+            if length == 1 {
+                return "files_one".to_string();
+            }
+            else if length == 2 {
+                return "files_two".to_string();
+            }
+        }
+        return "files_null".to_string();
+    }
+    pub fn get_format_text(&self) -> String {
+        if self.content.is_some() {
+            let unwrap = self.content.as_ref().unwrap();
+            if unwrap.len() <= 101 {
+                return self.content.as_ref().unwrap().to_string();
+            }
+            else {
+                let new_str = unwrap[..100].to_owned() + &"<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + &unwrap[101..] + &"</span>";
+                return new_str;
+            }
+        } else { return "".to_string(); }
+    }
 }
 
 #[derive(Serialize, AsChangeset)]
