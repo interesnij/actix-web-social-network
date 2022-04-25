@@ -2248,6 +2248,15 @@ impl Post {
             return "".to_string();
         }
     }
+    pub fn get_anon_attach(&self) -> String {
+        if self.attach.is_some() {
+            use crate::utils::anon_post_elements;
+            return anon_post_elements(self.attach.as_ref().unwrap().to_string());
+        }
+        else {
+            return "".to_string();
+        }
+    }
 
 }
 

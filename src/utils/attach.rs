@@ -362,6 +362,61 @@ pub fn add_music(pk: i32, is_staff: bool, user_id: i32) -> String {
     </svg></a><div class='dropdown-menu dropdown-menu-right' style='top: 25px;' data-type='mus" + &music.id.to_string() + &"'>".to_string() +
     &drops + &"</div></span</span></div></div></div>".to_string();
 }
+pub fn add_anon_music(pk: i32) -> String {
+    use crate::schema::musics::dsl::musics;
+    use crate::models::Music;
+    let _connection = establish_connection();
+
+    let music = musics
+        .filter(schema::musics::id.eq(pk))
+        .filter(schema::musics::types.eq("a"))
+        .load::<Music>(&_connection)
+        .expect("E.")
+        .into_iter()
+        .nth(0)
+        .unwrap();
+
+    let mut drops = "<span class='dropdown-item copy_link'>Копировать ссылку</span>".to_string();
+
+    return "<div class='music' data-path='".to_string() + &music.file +
+    &"' style='flex-basis: auto;width:100%;position: relative;'><div class='media'
+    music-counter=''>".to_string() + &"'>".to_string() +
+    &music.get_s_image() + &"<div class='media-body' style='display: flex;'><h6 class='music_list_post music_title'><a>".to_string() +
+    &music.title + &"</a></h6><span class='span_btn' data-pk='".to_string() + &music.id.to_string() +
+    &"'><span class='dropdown' style='position: inherit;'><a class='btn_default drop pointer'>
+    <svg class='svg_info' fill='currentColor' viewBox='0 0 24 24'><path d='M0 0h24v24H0z'
+    fill='none' /><path d='M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z' />
+    </svg></a><div class='dropdown-menu dropdown-menu-right' style='top: 25px;' data-type='mus" + &music.id.to_string() + &"'>".to_string() +
+    &drops + &"</div></span</span></div></div></div>".to_string();
+}
+
+pub fn add_anon_doc(pk: i32) -> String {
+    use crate::schema::docs::dsl::docs;
+    use crate::models::Doc;
+    let _connection = establish_connection();
+
+    let doc = docs
+        .filter(schema::docs::id.eq(pk))
+        .filter(schema::docs::types.eq("a"))
+        .load::<Doc>(&_connection)
+        .expect("E.")
+        .into_iter()
+        .nth(0)
+        .unwrap();
+
+    let mut drops = "<span class='dropdown-item copy_link'>Копировать ссылку</span>".to_string();
+
+    return "<div class='doc' data-path='".to_string() + &doc.file +
+    &"' style='flex-basis: auto;width:100%;position: relative;'><div class='media'>
+    <svg fill='currentColor' class='svg_default' style='width:45px;margin: 0;' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none'/><path d='M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z'/></svg>
+    <div class='media-body' style='display: flex;'><h6 class='doc_title'><a>".to_string() +
+    &doc.title + &"</a></h6><span class='span_btn' data-pk='".to_string() + &doc.id.to_string() +
+    &"'><span class='dropdown' style='position: inherit;'><a class='btn_default drop pointer'>
+    <svg class='svg_info' fill='currentColor' viewBox='0 0 24 24'><path d='M0 0h24v24H0z'
+    fill='none' /><path d='M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z' />
+    </svg></a><div class='dropdown-menu dropdown-menu-right' style='top: 25px;' data-type='doc" + &doc.id.to_string() + &"'>".to_string() +
+    &drops + &"</div></span</span></div></div></div>".to_string();
+}
 pub fn add_doc(pk: i32, is_staff: bool, user_id: i32) -> String {
     use crate::schema::docs::dsl::docs;
     use crate::models::Doc;
@@ -445,6 +500,71 @@ pub fn add_community(pk: i32) -> String {
     &community.get_info_model().members.to_string() + &"</p></div></div></div></div>".to_string();
 }
 
+pub fn add_anon_survey(pk: i32) -> String {
+    use crate::schema::surveys::dsl::surveys;
+    use crate::models::Survey;
+    let _connection = establish_connection();
+
+    let survey = surveys
+        .filter(schema::surveys::id.eq(pk))
+        .filter(schema::surveys::types.eq("a"))
+        .load::<Survey>(&_connection)
+        .expect("E.")
+        .into_iter()
+        .nth(0)
+        .unwrap();
+
+    let mut name = "".to_string();
+    let mut link = "".to_string();
+    let mut answers = "".to_string();
+    let mut info = "".to_string();
+    let mut drops = "<span class='dropdown-item copy_link'>Копировать ссылку</span>".to_string();
+
+    if survey.community_id.is_some() {
+        let community = survey.get_community();
+        name = community.name.clone();
+        link = community.get_link().clone();
+    }
+    else {
+        let creator = survey.get_creator();
+        name = creator.get_full_name().clone();
+        link = creator.get_link().clone();
+    }
+
+    if survey.is_have_votes() {
+        if survey.is_anonymous == true {
+            info = "Это анонимный опрос.".to_string();
+        }
+        else {
+            info = "<a class='i_link survey_info pointer position-relative'>".to_string() + &survey.get_users_ru() + &"</a>".to_string() + &survey.get_6_users().to_string();
+        }
+    }
+    else {
+        info = "Пока никто не голосовал.".to_string();
+    }
+
+    for answer in survey.get_answers().iter() {
+        answers = answers + &"<div data-pk='" + &answer.id.to_string() +
+        &"' class='lite_color answer_style pointer survey_vote'>
+        <div class='progress2' style='width:'" + &answer.get_procent().to_string() +
+        &"%;'></div><span class='progress_span_r'>" + &answer.content +
+        &" <span class='count text-muted small'>" + &answer.vote.to_string() +
+        &"</span></span><span class='progress_span_l' style='margin-left: auto;'>
+        <span class='vote_svg'></span><span class='procent'>".to_string() +
+        &answer.get_procent().to_string() + &"%</span></span></div>".to_string();
+    }
+
+    return "<div data-pk='".to_string() + &survey.id.to_string() +
+    &"' class='card p-1 border text-center position-relative box-shadow' style='flex-basis: 100%;'>
+    <figure class='background-img'><img src='".to_string() + &survey.get_image() +
+    &"alt='img' ></figure><div class='dropdown'><a class='btn_default drop pointer' style='position:absolute;right:5px;top:5px;'>
+    <svg class='svg_info' fill='currentColor' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none' /><path d='M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z' /></svg>
+    </a><div class='dropdown-menu dropdown-menu-right' data-type='sur".to_string() + &pk.to_string() + &"' style='top:30px;right:-10px;'>".to_string() + &drops +
+    &"</div></div><form><div class='container answers_container'> <br><h4 class='m-0'>".to_string() + &survey.title +
+    &"</h4><p class='position-relative'><a href=".to_string() + &link + &"' class='underline ajax'>".to_string() +
+    &name + &"</a></p>".to_string() + &survey.get_time_description() + &"<br>".to_string() +
+    &answers + &info + &"</div>".to_string() + &"</form></div>".to_string();
+}
 pub fn add_survey(pk: i32, is_staff: bool, user_id: i32) -> String {
     use crate::schema::surveys::dsl::surveys;
     use crate::models::Survey;
@@ -559,6 +679,40 @@ pub fn post_elements(attach: String, user_id: i32) -> String {
             "mus" => add_music(pk, user.is_moderator(), user_id),
             "doc" => add_doc(pk, user.is_moderator(), user_id),
             "sur" => add_survey(pk, user.is_moderator(), user_id),
+            "use" => add_user(pk),
+            "com" => add_community(pk),
+
+            "lmu" => add_music_list(pk),
+            "ldo" => add_doc_list(pk),
+            "lpo" => add_post_list(pk),
+            "lvi" => add_video_list(pk),
+            "lph" => add_photo_list(pk),
+            "lgo" => add_good_list(pk),
+            _ => "".to_string(),
+        };
+        block = block + &html;
+    }
+    return "<div class='attach_container'>".to_owned() + &block + &"</div>".to_string();
+}
+
+pub fn anon_post_elements(attach: String) -> String {
+    use crate::schema::users::dsl::users;
+
+    let _connection = establish_connection();
+    let v: Vec<&str> = attach.split(",").collect();
+    let mut block = "".to_string();
+
+    for item in v.iter() {
+        let pk: i32 = item[3..].parse().unwrap();
+        let code = &item[..3];
+
+        let html = match code {
+            "pho" => add_photo(pk, "post_photo".to_string()),
+            "vid" => add_video(pk, "post_video".to_string()),
+            "goo" => add_good(pk),
+            "mus" => add_anon_music(pk),
+            "doc" => add_anon_doc(pk),
+            "sur" => add_anon_survey(pk),
             "use" => add_user(pk),
             "com" => add_community(pk),
 
