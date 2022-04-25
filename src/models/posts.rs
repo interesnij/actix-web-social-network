@@ -2505,7 +2505,7 @@ impl Post {
         for i in query.iter() {
             let item: JsonPosition = serde_json::from_str(&i).unwrap();
             let item = posts
-                .filter(schema::posts::id.eq(item.key))
+                .filter(schema::posts::id.eq(i.key))
                 .filter(schema::posts::types.eq("a"))
                 .limit(1)
                 .load::<Post>(&_connection)
@@ -2515,7 +2515,7 @@ impl Post {
                 .unwrap();
 
             diesel::update(&item)
-                .set(schema::posts::position.eq(item.value))
+                .set(schema::posts::position.eq(i.value))
                 .get_result::<Post>(&_connection)
                 .expect("Error.");
         }
