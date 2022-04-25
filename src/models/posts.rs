@@ -2436,12 +2436,12 @@ impl Post {
             .expect("E");
         return true;
     }
-    pub fn get_count_attach(&self) -> usize {
+    pub fn get_count_attach(&self) -> String {
         if self.attach.is_some() {
             let self_attach = self.attach.as_deref().unwrap().split(",").collect::<Vec<_>>();
-            return self_attach.len();
+            return "files_".to_string() + &self_attach.len().to_string();
         }
-        return 0;
+        return "files_0".to_string();
     }
 
     pub fn likes(&self) -> Vec<PostVote> {
@@ -2635,6 +2635,15 @@ impl PostComment {
         if self.attach.is_some() {
             use crate::utils::anon_comment_elements;
             return anon_comment_elements(self.attach.as_ref().unwrap().to_string());
+        }
+        else {
+            return "".to_string();
+        }
+    }
+    pub fn get_edit_attach(&self) -> String {
+        if self.attach.is_some() {
+            use crate::utils::edit_comment_elements;
+            return edit_comment_elements(self.attach.as_ref().unwrap().to_string());
         }
         else {
             return "".to_string();

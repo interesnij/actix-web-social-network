@@ -1711,7 +1711,7 @@ impl Photo {
     // 'c' Удаленый
     // 'd' Изменённый Удаленый
     // 'e' Закрытый модератором
-    // 'f' Закрытый Удаленый
+    // 'f' Закрытый Изменённый
 
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Photo)]
