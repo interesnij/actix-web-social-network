@@ -2300,11 +2300,21 @@ impl Post {
     }
     pub fn message_reposts(&self) -> Vec<Post> {
         use crate::schema::messages::dsl::messages;
+        use crate::schema::posts::dsl::posts;
         use crate::models::Message;
 
         let _connection = establish_connection();
-        return messages
+        let messages_list = messages
             .filter(schema::messages::post_id.eq(self.id))
+            .load::<Message>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in messages_list.iter() {
+            stack.push(_item.post_id);
+        };
+        return posts
+            .filter(schema::posts::id.eq_any(stack))
             .load::<Message>(&_connection)
             .expect("E");
     }
