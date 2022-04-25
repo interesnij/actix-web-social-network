@@ -2531,7 +2531,41 @@ impl Post {
         return true;
     }
 
+    pub fn create_comment(&self, user: User, attach: Option<String>,
+        parent_id: Option<i32>, content: Option<String>, sticker_id: Option<i32>) -> PostComment {
 
+        use crate::schema::post_comments::dsl::post_comments;
+        use crate::schema::posts::dsl::posts;
+
+        let mut new_attach = "".to_string();
+        if attach.is_some() {
+            new_attach = attach.unwrap().replace("'", "").replace("[", "").replace("]", "").replace(" ", "");
+        }
+        diesel::update(&self)
+          .set(schema::posts::comment.eq(self.comment + 1))
+          .get_result::<Post>(&_connection)
+          .expect("Error.");
+
+        let new_comment_form = NewPostComment {
+            post_id:    self.id,
+            user_id:    user.id,
+            sticker_id: sticker_id,
+            parent_id:  parent_id,
+            content:    content,
+            attach:     new_attach,
+            types:      "a".to_string(),
+            created:    chrono::Local::now().naive_utc(),
+            liked:      0,
+            disliked:   0,
+            repost:     0,
+        }
+        let new_comment = diesel::insert_into(schema::post_comments::table)
+            .values(&new_comment_form)
+            .get_result::<PostComment>(&_connection)
+            .expect("Error.");
+
+        return new_comment;
+    }
 }
 
 /////// PostComment //////
