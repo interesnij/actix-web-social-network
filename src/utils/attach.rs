@@ -485,9 +485,7 @@ pub fn add_edited_good_list(pk: i32) -> String {
     use crate::models::GoodList;
     let _connection = establish_connection();
 
-    let mut name = "".to_string();
-    let mut link = "".to_string();
-    let mut image = "".to_string();
+    let mut owner = "".to_string();
 
     let list = good_lists
         .filter(schema::good_lists::id.eq(pk))
