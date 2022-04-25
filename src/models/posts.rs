@@ -2399,7 +2399,7 @@ impl Post {
         use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
-        return post_votes
+        return posts
             .filter(schema::posts::parent_id.eq(self.id))
             .filter(schema::posts::types.eq_any(vec!["a", "b"]))
             .load::<Post>(&_connection)
