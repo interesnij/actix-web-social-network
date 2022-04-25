@@ -2541,7 +2541,7 @@ impl Post {
         if attach.is_some() {
             new_attach = attach.unwrap().replace("'", "").replace("[", "").replace("]", "").replace(" ", "");
         }
-        diesel::update(&self)
+        diesel::update(self)
           .set(schema::posts::comment.eq(self.comment + 1))
           .get_result::<Post>(&_connection)
           .expect("Error.");
@@ -2558,7 +2558,7 @@ impl Post {
             liked:      0,
             disliked:   0,
             repost:     0,
-        }
+        };
         let new_comment = diesel::insert_into(schema::post_comments::table)
             .values(&new_comment_form)
             .get_result::<PostComment>(&_connection)
