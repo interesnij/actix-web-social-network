@@ -2537,6 +2537,7 @@ impl Post {
         use crate::schema::post_comments::dsl::post_comments;
         use crate::schema::posts::dsl::posts;
 
+        let _connection = establish_connection();
         let mut new_attach = "".to_string();
         if attach.is_some() {
             new_attach = attach.unwrap().replace("'", "").replace("[", "").replace("]", "").replace(" ", "");
@@ -2552,7 +2553,7 @@ impl Post {
             sticker_id: sticker_id,
             parent_id:  parent_id,
             content:    content,
-            attach:     new_attach,
+            attach:     Some(new_attach),
             types:      "a".to_string(),
             created:    chrono::Local::now().naive_utc(),
             liked:      0,
