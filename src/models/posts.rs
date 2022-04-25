@@ -2332,7 +2332,7 @@ impl PostComment {
         }
     }
     pub fn get_created(&self) -> String {
-        use std::time::Duration;
+        use chrono::Duration;
         use humantime::format_duration;
 
         let _duration = self.created - chrono::Local::now().naive_utc();
