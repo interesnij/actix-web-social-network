@@ -1892,7 +1892,7 @@ impl GoodComment {
             .nth(0)
             .unwrap();
     }
-    pub fn get_item(&self) -> Goood {
+    pub fn get_item(&self) -> Good {
         use crate::schema::goods::dsl::goods;
         let _connection = establish_connection();
         return goods
@@ -2118,8 +2118,8 @@ impl GoodComment {
             }
         }
 
-        return goods
-            .filter(schema::goods::id.eq_any(stack))
+        return videos
+            .filter(schema::videos::id.eq_any(stack))
             .load::<Good>(&_connection)
             .expect("E");
     }
