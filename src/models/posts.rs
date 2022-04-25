@@ -2332,11 +2332,11 @@ impl PostComment {
         }
     }
     pub fn get_created(&self) -> String {
-        use std::time::Duration;
+        use std::time::{Instant, Duration};
         use humantime::format_duration;
 
 
-        let _duration = self.created - Utc::now();
+        let _duration = self.created - Instant::now();
         return format_duration(_duration).to_string();
     }
 }
