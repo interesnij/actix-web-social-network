@@ -1,7 +1,6 @@
 use crate::utils::establish_connection;
 use crate::schema;
 use diesel::prelude::*;
-use crate::utils::User;
 use crate::models::{
     User, Community,
     PostList, Post, PostComment,
@@ -14,8 +13,9 @@ use crate::models::{
 
 
 pub fn get_user(pk: i32) -> User {
+    use crate::schema::users::dsl::users;
     let _connection = establish_connection();
-    return schema::users
+    return users
         .filter(schema::users::id.eq(pk))
         .filter(schema::users::types.lt(10))
         .load::<User>(&_connection)
