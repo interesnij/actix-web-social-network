@@ -1,8 +1,11 @@
 mod templates;
 mod attach;
+mod progs;
+
 pub use self::{
     templates::*,
     attach::*,
+    progs::*,
 };
 
 use serde::{Serialize, Deserialize};

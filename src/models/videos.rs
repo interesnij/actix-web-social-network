@@ -2280,6 +2280,18 @@ impl VideoComment {
         }
         return "files_null".to_string();
     }
+    pub fn get_format_text(&self) -> String {
+        if self.content.is_some() {
+            let unwrap = self.content.as_ref().unwrap();
+            if unwrap.len() <= 101 {
+                return self.content.as_ref().unwrap().to_string();
+            }
+            else {
+                let new_str = unwrap[..100].to_owned() + &"<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + &unwrap[101..] + &"</span>";
+                return new_str;
+            }
+        } else { return "".to_string(); }
+    }
 }
 
 /////// UserVideoListCollection //////
