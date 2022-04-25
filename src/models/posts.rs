@@ -2315,7 +2315,7 @@ impl Post {
         };
         return posts
             .filter(schema::posts::id.eq_any(stack))
-            .load::<Message>(&_connection)
+            .load::<Post>(&_connection)
             .expect("E");
     }
     pub fn message_reposts_count(&self) -> String {
