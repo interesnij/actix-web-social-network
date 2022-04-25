@@ -14,6 +14,7 @@ use crate::models::{
 
 
 pub fn get_user(pk: i32) -> User {
+    let _connection = establish_connection();
     return schema::users
         .filter(schema::users::id.eq(pk))
         .filter(schema::users::types.lt(10))
