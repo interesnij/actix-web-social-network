@@ -2213,7 +2213,7 @@ impl VideoComment {
     }
     pub fn close_item(&self) -> bool {
         let _connection = establish_connection();
-        let user_types = self.types;
+        let user_types = &self.types;
         let close_case = match user_types.as_str() {
             "a" => "e".to_string(),
             "b" => "f".to_string(),
@@ -2227,7 +2227,7 @@ impl VideoComment {
     }
     pub fn unclose_item(&self) -> bool {
         let _connection = establish_connection();
-        let user_types = self.types;
+        let user_types = &self.types;
         let close_case = match user_types.as_str() {
             "e" => "a".to_string(),
             "f" => "b".to_string(),
@@ -2242,7 +2242,7 @@ impl VideoComment {
 
     pub fn delete_item(&self) -> bool {
         let _connection = establish_connection();
-        let user_types = self.types;
+        let user_types = &self.types;
         let close_case = match user_types.as_str() {
             "a" => "c".to_string(),
             "b" => "d".to_string(),
@@ -2256,7 +2256,7 @@ impl VideoComment {
     }
     pub fn restore_item(&self) -> bool {
         let _connection = establish_connection();
-        let user_types = self.types;
+        let user_types = &self.types;
         let close_case = match user_types.as_str() {
             "c" => "a".to_string(),
             "d" => "b".to_string(),
