@@ -480,6 +480,46 @@ pub fn add_good_list(pk: i32) -> String {
      <h6 class='card-subtitle header-color-secondary text-center'>".to_string() +
       &list.count_items_ru() + &"</h6></div>".to_string();
 }
+pub fn add_edited_good_list(pk: i32) -> String {
+    use crate::schema::good_lists::dsl::good_lists;
+    use crate::models::GoodList;
+    let _connection = establish_connection();
+
+    let mut name = "".to_string();
+    let mut link = "".to_string();
+    let mut image = "".to_string();
+
+    let list = good_lists
+        .filter(schema::good_lists::id.eq(pk))
+        .filter(schema::good_lists::types.lt(10))
+        .load::<GoodList>(&_connection)
+        .expect("E.")
+        .into_iter()
+        .nth(0)
+        .unwrap();
+
+    if list.community_id.is_some() {
+        let community = list.get_community();
+        owner = &community.id.to_string();
+    }
+    else {
+        let creator = list.get_creator();
+        owner = &creator.id.to_string();
+    }
+
+    return "<div class='folder' owner-pk='".to_string() + &owner.to_string() +
+    &"' goodlist-pk='".to_string() + &list.id.to_string() +
+    &"' style='text-align: center;padding: 3px;'><span><input type='hidden' name='attach_items'
+    value='lgo".to_string() + &list.id.to_string() +
+    &"'></span><div class='card-img-top file-logo-wrapper' style='padding: 2rem;'>
+    <a class='nowrap'><div class='d-flex align-items-center justify-content-center
+    w-100 load_goodlist pointer'><svg fill='currentColor' class='svg_default' viewBox='0 0 24 24'><g><rect fill='none' /><path d='M18,6h-2c0-2.21-1.79-4-4-4S8,3.79,8,6H6C4.9,6,4,6.9,4,8v12c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V8C20,6.9,19.1,6,18,6z M12,4c1.1,0,2,0.9,2,2h-4C10,4.9,10.9,4,12,4z M18,20H6V8h2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V8h4v2c0,0.55,0.45,1,1,1s1-0.45,1-1V8 h2V20z'/></g></svg>
+    </div></a></div><div class='card-body pt-0'><div class='content-wrapper'
+    style='display: flex;'><p class='card-text file-name mb-0 load_goodlist pointer'>
+    <a class='nowrap'>".to_string() + &list.name + &" (".to_string() +
+    &list.count_items().to_string() + &")</a></p></div><small class='file-accessed pointer
+    good_attach_list_remove underline'>Открепить</small></div></div>".to_string();
+}
 
 pub fn add_photo(pk: i32, case: String) -> String {
     use crate::schema::photos::dsl::photos;
@@ -783,7 +823,7 @@ pub fn add_user(pk: i32) -> String {
     &"</a><p>".to_string() + &user.get_online_status() + &"<br>Друзей: ".to_string() +
     &user.get_profile().friends.to_string() + &"</p></div></div></div></div>".to_string();
 }
-pub fn add_edit_user(pk: i32) -> String {
+pub fn add_edited_user(pk: i32) -> String {
     use crate::schema::users::dsl::users;
     let _connection = establish_connection();
 
@@ -836,7 +876,7 @@ pub fn add_community(pk: i32) -> String {
     &"</a><p>".to_string() + &community.description.as_ref().unwrap() + &"<br>Подписчиков: ".to_string() +
     &community.get_info_model().members.to_string() + &"</p></div></div></div></div>".to_string();
 }
-pub fn add_edit_community(pk: i32) -> String {
+pub fn add_edited_community(pk: i32) -> String {
     use crate::schema::communitys::dsl::communitys;
     use crate::models::Community;
     let _connection = establish_connection();
@@ -1016,7 +1056,7 @@ pub fn add_survey(pk: i32, is_staff: bool, user_id: i32) -> String {
     <button id='add_vote_survey_btn' type='button' class='btn hidden btn-sm btn-success float-right'>
     Проголосовать</button></div>".to_string() + &"</form></div>".to_string();
 }
-pub fn add_edit_survey(pk: i32) -> String {
+pub fn add_edited_survey(pk: i32) -> String {
     use crate::schema::surveys::dsl::surveys;
     use crate::models::Survey;
     let _connection = establish_connection();
