@@ -2144,13 +2144,6 @@ impl VideoComment {
     pub fn is_have_dislikes(&self) -> bool {
         return self.disliked > 0;
     }
-    pub fn get_count_attach(&self) -> usize {
-        if self.attach.is_some() {
-            let self_attach = self.attach.as_deref().unwrap().split(",").collect::<Vec<_>>();
-            return self_attach.len();
-        }
-        return 0;
-    }
 
     pub fn likes(&self) -> Vec<VideoCommentVote> {
         use crate::schema::video_comment_votes::dsl::video_comment_votes;
