@@ -1923,66 +1923,66 @@ impl VideoComment {
     }
 
     pub fn send_like(&self, user: User) -> Json<JsonReactions> {
-        if self.votes_on == false {
+        if self.get_item().votes_on == false {
             return Json(JsonReactions {
                 like_count:    self.liked,
                 dislike_count: self.disliked,
             });
         }
-        use crate::schema::post_comment_votes::dsl::post_comment_votes;
+        use crate::schema::video_comment_votes::dsl::video_comment_votes;
 
         let _connection = establish_connection();
 
-        let votes = post_comment_votes
-            .filter(schema::post_comment_votes::user_id.eq(user.id))
-            .filter(schema::post_comment_votes::post_comment_id.eq(self.id))
-            .load::<PostCommentVote>(&_connection)
+        let votes = video_comment_votes
+            .filter(schema::video_comment_votes::user_id.eq(user.id))
+            .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
+            .load::<VideoCommentVote>(&_connection)
             .expect("E.");
         if votes.len() > 0 {
             let vote = votes.into_iter().nth(0).unwrap();
             if vote.vote != 1 {
                 diesel::update(&vote)
-                    .set(schema::post_comment_votes::vote.eq(1))
-                    .get_result::<PostCommentVote>(&_connection)
+                    .set(schema::video_comment_votes::vote.eq(1))
+                    .get_result::<VideoCommentVote>(&_connection)
                     .expect("Error.");
 
-                let reactions = PostReactionsUpdate {
+                let reactions = VideoReactionsUpdate {
                     liked:    self.liked + 1,
                     disliked: self.disliked - 1,
                 };
                 diesel::update(self)
                     .set(reactions)
-                    .get_result::<PostComment>(&_connection)
+                    .get_result::<VideoComment>(&_connection)
                     .expect("Error.");
             }
             else {
-                diesel::delete(post_comment_votes
-                    .filter(schema::post_comment_votes::user_id.eq(user.id))
-                    .filter(schema::post_comment_votes::post_comment_id.eq(self.id))
+                diesel::delete(video_comment_votes
+                    .filter(schema::video_comment_votes::user_id.eq(user.id))
+                    .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
                     )
                     .execute(&_connection)
                     .expect("E");
 
                 diesel::update(self)
-                    .set(schema::post_comments::liked.eq(self.liked - 1))
-                    .get_result::<PostComment>(&_connection)
+                    .set(schema::video_comments::liked.eq(self.liked - 1))
+                    .get_result::<VideoComment>(&_connection)
                     .expect("Error.");
             }
         }
         else {
-            let new_vote = NewPostCommentVote {
-                vote: 1,
+            let new_vote = NewVideoCommentVote {
+                vote:            1,
                 user_id:         user.id,
-                post_comment_id: self.id,
+                video_comment_id: self.id,
             };
-            diesel::insert_into(schema::post_comment_votes::table)
+            diesel::insert_into(schema::video_comment_votes::table)
                 .values(&new_vote)
-                .get_result::<PostCommentVote>(&_connection)
+                .get_result::<VideoCommentVote>(&_connection)
                 .expect("Error.");
 
             diesel::update(self)
-                .set(schema::post_comments::liked.eq(self.liked + 1))
-                .get_result::<PostComment>(&_connection)
+                .set(schema::video_comments::liked.eq(self.liked + 1))
+                .get_result::<VideoComment>(&_connection)
                 .expect("Error.");
         }
         let reactions = JsonReactions {
@@ -1993,66 +1993,66 @@ impl VideoComment {
     }
 
     pub fn send_dislike(&self, user: User) -> Json<JsonReactions> {
-        if self.votes_on == false {
+        if self.get_item().votes_on == false {
             return Json(JsonReactions {
                 like_count:    self.liked,
                 dislike_count: self.disliked,
             });
         }
-        use crate::schema::post_comment_votes::dsl::post_comment_votes;
+        use crate::schema::video_comment_votes::dsl::video_comment_votes;
 
         let _connection = establish_connection();
 
-        let votes = post_comment_votes
-            .filter(schema::post_comment_votes::user_id.eq(user.id))
-            .filter(schema::post_comment_votes::post_comment_id.eq(self.id))
-            .load::<PostCommentVote>(&_connection)
+        let votes = video_comment_votes
+            .filter(schema::video_comment_votes::user_id.eq(user.id))
+            .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
+            .load::<VideoCommentVote>(&_connection)
             .expect("E.");
         if votes.len() > 0 {
             let vote = votes.into_iter().nth(0).unwrap();
             if vote.vote != -1 {
                 diesel::update(&vote)
-                    .set(schema::post_comment_votes::vote.eq(-1))
-                    .get_result::<PostCommentVote>(&_connection)
+                    .set(schema::video_comment_votes::vote.eq(-1))
+                    .get_result::<VideoCommentVote>(&_connection)
                     .expect("Error.");
 
-                let reactions = PostReactionsUpdate {
+                let reactions = VideoReactionsUpdate {
                     liked:    self.liked - 1,
                     disliked: self.disliked + 1,
                 };
                 diesel::update(self)
                     .set(reactions)
-                    .get_result::<PostComment>(&_connection)
+                    .get_result::<VideoComment>(&_connection)
                     .expect("Error.");
             }
             else {
-                diesel::delete(post_comment_votes
-                    .filter(schema::post_comment_votes::user_id.eq(user.id))
-                    .filter(schema::post_comment_votes::post_comment_id.eq(self.id))
+                diesel::delete(video_comment_votes
+                    .filter(schema::video_comment_votes::user_id.eq(user.id))
+                    .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
                     )
                     .execute(&_connection)
                     .expect("E");
 
                 diesel::update(self)
-                    .set(schema::post_comments::liked.eq(self.disliked - 1))
-                    .get_result::<PostComment>(&_connection)
+                    .set(schema::video_comments::disliked.eq(self.disliked - 1))
+                    .get_result::<VideoComment>(&_connection)
                     .expect("Error.");
             }
         }
         else {
-            let new_vote = NewPostCommentVote {
+            let new_vote = NewVideoCommentVote {
                 vote: 1,
                 user_id: user.id,
-                post_comment_id: self.id,
+                video_comment_id: self.id,
             };
-            diesel::insert_into(schema::post_comment_votes::table)
+            diesel::insert_into(schema::video_comment_votes::table)
                 .values(&new_vote)
-                .get_result::<PostCommentVote>(&_connection)
+                .get_result::<VideoCommentVote>(&_connection)
                 .expect("Error.");
 
             diesel::update(self)
-                .set(schema::post_comments::liked.eq(self.disliked + 1))
-                .get_result::<PostComment>(&_connection)
+                .set(schema::video_comments::disliked.eq(self.disliked + 1))
+                .get_result::<VideoComment>(&_connection)
                 .expect("Error.");
         }
         let reactions = JsonReactions {
