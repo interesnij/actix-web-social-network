@@ -2217,7 +2217,7 @@ impl VideoComment {
         let close_case = match user_types.as_str() {
             "a" => "e".to_string(),
             "b" => "f".to_string(),
-            _ => self.types,
+            _ => "e".to_string(),
         };
         diesel::update(self)
             .set(schema::video_comments::types.eq(close_case))
@@ -2231,7 +2231,7 @@ impl VideoComment {
         let close_case = match user_types.as_str() {
             "e" => "a".to_string(),
             "f" => "b".to_string(),
-            _ => self.types,
+            _ => "a".to_string(),
         };
         diesel::update(self)
             .set(schema::video_comments::types.eq(close_case))
@@ -2246,7 +2246,7 @@ impl VideoComment {
         let close_case = match user_types.as_str() {
             "a" => "c".to_string(),
             "b" => "d".to_string(),
-            _ => self.types,
+            _ => "c".to_string(),
         };
         diesel::update(self)
             .set(schema::video_comments::types.eq(close_case))
@@ -2258,9 +2258,9 @@ impl VideoComment {
         let _connection = establish_connection();
         let user_types = self.types;
         let close_case = match user_types.as_str() {
-            "e" => "c".to_string(),
-            "f" => "d".to_string(),
-            _ => self.types,
+            "c" => "a".to_string(),
+            "d" => "b".to_string(),
+            _ => "a".to_string(),
         };
         diesel::update(self)
             .set(schema::video_comments::types.eq(close_case))
