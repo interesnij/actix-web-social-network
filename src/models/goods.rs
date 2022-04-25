@@ -12,7 +12,7 @@ use crate::schema::{
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
-use crate::utils::{establish_connection, JsonReactions};
+use crate::utils::{establish_connection, JsonReactions, JsonPosition};
 use crate::models::{
     User,
     Community,
@@ -22,7 +22,7 @@ use crate::models::{
     Photo,
     Video,
 };
-
+use actix_web::web::Json;
 
 /////// GoodList //////
 

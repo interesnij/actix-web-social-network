@@ -12,7 +12,7 @@ use crate::schema::{
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
-use crate::utils::{establish_connection, JsonReactions};
+use crate::utils::{establish_connection, JsonReactions, JsonPosition};
 use diesel::prelude::*;
 use crate::models::{
     User,
@@ -2427,6 +2427,13 @@ impl Post {
             .expect("E");
         return true;
     }
+    pub fn get_count_attach(&self) -> usize {
+        if self.attach.is_some() {
+            let self_attach = self.attach.as_deref().unwrap().split(",").collect::<Vec<_>>();
+            return self_attach.len();
+        }
+        return 0;
+    }
 
     pub fn likes(&self) -> Vec<PostVote> {
         use crate::schema::post_votes::dsl::post_votes;
@@ -2491,7 +2498,27 @@ impl Post {
             .load::<PostVote>(&_connection)
             .expect("E");
     }
+    pub fn get_count_attach(query: Json(Vec<JsonPosition>)) -> bool {
+        use crate::schema::posts::dsl::posts;
+        for i in query.iter() {
+            let item: JsonPosition = serde_json::from_str(&i).unwrap();
+            let item = posts
+                .filter(schema::posts::id.eq(item.key))
+                .filter(schema::posts::types.eq("a"))
+                .limit(1)
+                .load::<PostVote>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
 
+            diesel::update(&item)
+                .set(schema::posts::position.eq(item.value))
+                .get_result::<Post>(&_connection)
+                .expect("Error.");
+        }
+        return true;
+    }
 }
 
 /////// PostComment //////

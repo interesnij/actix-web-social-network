@@ -12,14 +12,14 @@ use crate::schema::{
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
-use crate::utils::establish_connection;
+use crate::utils::{establish_connection, JsonReactions, JsonPosition};
 use crate::models::{
     User,
     Community,
     UserMusicListPosition,
     CommunityMusicListPosition,
 };
-
+use actix_web::web::Json;
 
 /////// SoundGenres //////
 

@@ -5,7 +5,7 @@ pub use self::{
     attach::*,
 };
 
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use argonautica::{Hasher, Verifier};
 use actix_session::Session;
 use diesel::prelude::*;
@@ -20,6 +20,11 @@ use crate::models::User;
 
 
 #[derive(Serialize)]
+pub struct JsonPosition {
+    pub key:   i32,
+    pub value: i32,
+}
+#[derive(Deserialize)]
 pub struct JsonReactions {
     pub like_count:    i32,
     pub dislike_count: i32,
