@@ -2498,7 +2498,7 @@ impl Post {
             .load::<PostVote>(&_connection)
             .expect("E");
     }
-    pub fn get_count_attach(query: Json(Vec<JsonPosition>)) -> bool {
+    pub fn change_position(query: Json(Vec<JsonPosition>)) -> bool {
         use crate::schema::posts::dsl::posts;
         for i in query.iter() {
             let item: JsonPosition = serde_json::from_str(&i).unwrap();
