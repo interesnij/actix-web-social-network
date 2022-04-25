@@ -2331,14 +2331,6 @@ impl PostComment {
             return "".to_string();
         }
     }
-    pub fn get_created(&self) -> String {
-        use std::time::{Instant, Duration};
-        use humantime::format_duration;
-
-
-        let _duration = self.created - chrono::Local::now().naive_utc();
-        return format_duration(format!(_duration)).to_string();
-    }
 }
 
 #[derive(Serialize, AsChangeset)]
