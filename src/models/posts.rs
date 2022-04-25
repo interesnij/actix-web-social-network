@@ -2508,7 +2508,7 @@ impl Post {
                 .filter(schema::posts::id.eq(item.key))
                 .filter(schema::posts::types.eq("a"))
                 .limit(1)
-                .load::<PostVote>(&_connection)
+                .load::<Post>(&_connection)
                 .expect("E")
                 .into_iter()
                 .nth(0)
