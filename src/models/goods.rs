@@ -19,6 +19,8 @@ use crate::models::{
     UserGoodListPosition,
     CommunityGoodListPosition,
     Sticker,
+    Photo,
+    Video,
 };
 
 

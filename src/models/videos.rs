@@ -19,6 +19,8 @@ use crate::models::{
     UserVideoListPosition,
     CommunityVideoListPosition,
     Sticker,
+    Photo,
+    Video,
 };
 
 

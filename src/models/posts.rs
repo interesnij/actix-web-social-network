@@ -20,6 +20,8 @@ use crate::models::{
     Sticker,
     UserPostListPosition,
     CommunityPostListPosition,
+    Photo,
+    Video,
 };
 use actix_web::web::Json;
 
@@ -2327,6 +2329,46 @@ impl Post {
         else {
             return ", из них в сообщениях - ".to_string() + &count.to_string();
         }
+    }
+    pub fn get_attach_photos(&self) -> Vec<Photo> {
+        use crate::schema::photos::dsl::photos;
+
+        let _connection = establish_connection();
+        let attach = self.attach.as_ref().unwrap().to_string();
+        let v: Vec<&str> = attach.split(",").collect();
+        let mut stack = Vec::new();
+        for item in v.iter() {
+            let pk: i32 = item[3..].parse().unwrap();
+            let code = &item[..3];
+            if code == "pho".to_string() {
+                stack.push(pk);
+            }
+        }
+
+        return photos
+            .filter(schema::photos::id.eq_any(stack))
+            .load::<Photo>(&_connection)
+            .expect("E");
+    }
+    pub fn get_attach_videos(&self) -> Vec<Video> {
+        use crate::schema::videos::dsl::videos;
+
+        let _connection = establish_connection();
+        let attach = self.attach.as_ref().unwrap().to_string();
+        let v: Vec<&str> = attach.split(",").collect();
+        let mut stack = Vec::new();
+        for item in v.iter() {
+            let pk: i32 = item[3..].parse().unwrap();
+            let code = &item[..3];
+            if code == "vid".to_string() {
+                stack.push(pk);
+            }
+        }
+
+        return videos
+            .filter(schema::videos::id.eq_any(stack))
+            .load::<Video>(&_connection)
+            .expect("E");
     }
 
     pub fn likes_count_ru(&self) -> String {
