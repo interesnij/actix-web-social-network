@@ -272,7 +272,7 @@ pub fn get_chat(pk: i32) -> Chat {
         .nth(0)
         .unwrap();
 }
-pub fn get_message(pk: i32) -> Survey {
+pub fn get_message(pk: i32) -> Message {
     use crate::schema::messages::dsl::messages;
     let _connection = establish_connection();
     return messages
