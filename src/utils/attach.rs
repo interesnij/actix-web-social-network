@@ -579,8 +579,8 @@ pub fn add_survey(pk: i32, is_staff: bool, user_id: i32) -> String {
         .nth(0)
         .unwrap();
 
-    //let mut name = "".to_string();
-    //let mut link = "".to_string();
+    let mut name = "".to_string();
+    let mut link = "".to_string();
     let mut multiple_class = "".to_string();
     let mut answers = "".to_string();
     let mut vote_svg = "".to_string();
