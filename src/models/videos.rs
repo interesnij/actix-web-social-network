@@ -1946,7 +1946,7 @@ impl VideoComment {
                     .get_result::<VideoCommentVote>(&_connection)
                     .expect("Error.");
 
-                let reactions = VideoReactionsUpdate {
+                let reactions = VideoCommentReactionsUpdate {
                     liked:    self.liked + 1,
                     disliked: self.disliked - 1,
                 };
@@ -2016,7 +2016,7 @@ impl VideoComment {
                     .get_result::<VideoCommentVote>(&_connection)
                     .expect("Error.");
 
-                let reactions = VideoReactionsUpdate {
+                let reactions = VideoCommentReactionsUpdate {
                     liked:    self.liked - 1,
                     disliked: self.disliked + 1,
                 };
@@ -2205,7 +2205,7 @@ impl VideoComment {
 
         let count_usize: usize = self.count_replies() as usize;
         return get_count_for_ru (
-            count_usize,
+            count_usize.try_into().unwrap(),
             " ответ".to_string(),
             " ответа".to_string(),
             " ответов".to_string(),
@@ -2268,7 +2268,7 @@ impl VideoComment {
             .expect("E");
        return true;
     }
-    pub fn get_count_attach(&self) -> usize {
+    pub fn get_count_attach(&self) -> String {
         if self.attach.is_some() {
             let length = self.attach.as_deref().unwrap().split(",").collect::<Vec<_>>().len();
             if length == 1 {
