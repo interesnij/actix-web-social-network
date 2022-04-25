@@ -2120,7 +2120,7 @@ impl GoodComment {
 
         return videos
             .filter(schema::videos::id.eq_any(stack))
-            .load::<Good>(&_connection)
+            .load::<Video>(&_connection)
             .expect("E");
     }
 
