@@ -376,7 +376,7 @@ pub fn add_anon_music(pk: i32) -> String {
         .nth(0)
         .unwrap();
 
-    let mut drops = "<span class='dropdown-item copy_link'>Копировать ссылку</span>".to_string();
+    let drops = "<span class='dropdown-item copy_link'>Копировать ссылку</span>".to_string();
 
     return "<div class='music' data-path='".to_string() + &music.file +
     &"' style='flex-basis: auto;width:100%;position: relative;'><div class='media'
@@ -404,7 +404,7 @@ pub fn add_anon_doc(pk: i32) -> String {
         .nth(0)
         .unwrap();
 
-    let mut drops = "<span class='dropdown-item copy_link'>Копировать ссылку</span>".to_string();
+    let drops = "<span class='dropdown-item copy_link'>Копировать ссылку</span>".to_string();
 
     return "<div class='doc' data-path='".to_string() + &doc.file +
     &"' style='flex-basis: auto;width:100%;position: relative;'><div class='media'>
@@ -518,7 +518,7 @@ pub fn add_anon_survey(pk: i32) -> String {
     let mut link = "".to_string();
     let mut answers = "".to_string();
     let mut info = "".to_string();
-    let mut drops = "<span class='dropdown-item copy_link'>Копировать ссылку</span>".to_string();
+    let drops = "<span class='dropdown-item copy_link'>Копировать ссылку</span>".to_string();
 
     if survey.community_id.is_some() {
         let community = survey.get_community();
@@ -579,13 +579,12 @@ pub fn add_survey(pk: i32, is_staff: bool, user_id: i32) -> String {
         .nth(0)
         .unwrap();
 
-    let mut name = "".to_string();
-    let mut link = "".to_string();
+    //let mut name = "".to_string();
+    //let mut link = "".to_string();
     let mut multiple_class = "".to_string();
     let mut answers = "".to_string();
     let mut vote_svg = "".to_string();
     let mut info = "".to_string();
-    let mut drops = "<span class='dropdown-item create_repost'>Добавить</span>".to_string();
 
     if survey.community_id.is_some() {
         let community = survey.get_community();
