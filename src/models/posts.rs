@@ -2500,6 +2500,8 @@ impl Post {
     }
     pub fn change_position(query: Json(Vec<JsonPosition>)) -> bool {
         use crate::schema::posts::dsl::posts;
+
+        let _connection = establish_connection();
         for i in query.iter() {
             let item: JsonPosition = serde_json::from_str(&i).unwrap();
             let item = posts
