@@ -24,7 +24,7 @@ pub fn get_user(pk: i32) -> User {
         .nth(0)
         .unwrap();
 }
-pub fn get_community(pk: i32) -> User {
+pub fn get_community(pk: i32) -> Community {
     use crate::schema::communitys::dsl::communitys;
     let _connection = establish_connection();
     return communitys
