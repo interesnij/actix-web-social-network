@@ -2356,7 +2356,7 @@ impl Post {
     }
 
     pub fn fixed_post(&self, user: User) -> bool {
-        if user.is_can_fixed_post(): {
+        if user.is_can_fixed_post() {
             let _connection = establish_connection();
             diesel::update(self)
                 .set(schema::posts::types.eq("b"))
