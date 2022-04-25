@@ -2258,6 +2258,187 @@ impl Post {
         }
     }
 
+    pub fn count_comments(&self) -> String {
+        if self.comment == 0 {
+            return "".to_string();
+        }
+        else {
+            return self.comment.to_string();
+        }
+    }
+    pub fn likes_count(&self) -> String {
+        if self.liked == 0 {
+            return "".to_string();
+        }
+        else {
+            return self.liked.to_string();
+        }
+    }
+    pub fn dislikes_count(&self) -> String {
+        if self.disliked == 0 {
+            return "".to_string();
+        }
+        else {
+            return self.disliked.to_string();
+        }
+    }
+    pub fn count_reposts(&self) -> String {
+        if self.repost == 0 {
+            return "".to_string();
+        }
+        else {
+            return self.repost.to_string();
+        }
+    }
+    pub fn count_copy(&self) -> String {
+        if self.copy == 0 {
+            return "".to_string();
+        }
+        else {
+            return ", копировали - ".to_string() + &self.copy.to_string();
+        }
+    }
+    pub fn message_reposts(&self) -> Vec<Post> {
+        use crate::schema::messages::dsl::messages;
+        use crate::models::Message;
+
+        let _connection = establish_connection();
+        return messages
+            .filter(schema::messages::post_id.eq(self.id))
+            .load::<Message>(&_connection)
+            .expect("E");
+    }
+    pub fn message_reposts_count(&self) -> String {
+        let count = self.repost - self.message_reposts().len();
+        if count == 0 {
+            return "".to_string();
+        }
+        else {
+            return ", из них в сообщениях - ".to_string() + &count.to_string();
+        }
+    }
+
+    pub fn likes_count_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            self.liked,
+            " человек".to_string(),
+            " человека".to_string(),
+            " человек".to_string(),
+        );
+    }
+    pub fn dislikes_count_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            self.disliked,
+            " человек".to_string(),
+            " человека".to_string(),
+            " человек".to_string(),
+        );
+    }
+    pub fn reposts_count_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            self.repost,
+            " человек".to_string(),
+            " человека".to_string(),
+            " человек".to_string(),
+        );
+    }
+    pub fn is_have_likes(&self) -> bool {
+        return self.liked > 0;
+    }
+    pub fn is_have_dislikes(&self) -> bool {
+        return self.disliked > 0;
+    }
+
+    pub fn fixed_post(&self, user: User) -> bool {
+        if user.is_can_fixed_post(): {
+            let _connection = establish_connection();
+            diesel::update(self)
+                .set(schema::posts::types.eq("b"))
+                .get_result::<Post>(&_connection)
+                .expect("E");
+            return true;
+        }
+        return false;
+    }
+    pub fn unfixed_post(&self) -> bool {
+        let _connection = establish_connection();
+        diesel::update(self)
+            .set(schema::posts::types.eq("a"))
+            .get_result::<Post>(&_connection)
+            .expect("E");
+        return true;
+    }
+
+    pub fn likes(&self) -> Vec<PostVote> {
+        use crate::schema::post_votes::dsl::post_votes;
+
+        let _connection = establish_connection();
+        return post_votes
+            .filter(schema::post_votes::post_id.eq(self.id))
+            .filter(schema::post_votes::vote.eq(1))
+            .load::<PostVote>(&_connection)
+            .expect("E");
+    }
+    pub fn dislikes(&self) -> Vec<PostVote> {
+        use crate::schema::post_votes::dsl::post_votes;
+
+        let _connection = establish_connection();
+        return post_votes
+            .filter(schema::post_votes::post_id.eq(self.id))
+            .filter(schema::post_votes::vote.eq(-1))
+            .load::<PostVote>(&_connection)
+            .expect("E");
+    }
+    pub fn reposts(&self) -> Vec<Post> {
+        use crate::schema::posts::dsl::posts;
+
+        let _connection = establish_connection();
+        return post_votes
+            .filter(schema::posts::parent_id.eq(self.id))
+            .filter(schema::posts::types.eq_any(vec!["a", "b"]))
+            .load::<Post>(&_connection)
+            .expect("E");
+    }
+    pub fn window_reposts(&self) -> Vec<Post> {
+        use crate::schema::posts::dsl::posts;
+
+        let _connection = establish_connection();
+        return post_votes
+            .filter(schema::posts::parent_id.eq(self.id))
+            .filter(schema::posts::types.eq_any(vec!["a", "b"]))
+            .limit(6)
+            .load::<Post>(&_connection)
+            .expect("E");
+    }
+    pub fn window_likes(&self) -> Vec<PostVote> {
+        use crate::schema::post_votes::dsl::post_votes;
+
+        let _connection = establish_connection();
+        return post_votes
+            .filter(schema::post_votes::post_id.eq(self.id))
+            .filter(schema::post_votes::vote.eq(1))
+            .limit(6)
+            .load::<PostVote>(&_connection)
+            .expect("E");
+    }
+    pub fn window_dislikes(&self) -> Vec<PostVote> {
+        use crate::schema::post_votes::dsl::post_votes;
+
+        let _connection = establish_connection();
+        return post_votes
+            .filter(schema::post_votes::post_id.eq(self.id))
+            .filter(schema::post_votes::vote.eq(-1))
+            .limit(6)
+            .load::<PostVote>(&_connection)
+            .expect("E");
+    }
+
 }
 
 /////// PostComment //////
@@ -2331,6 +2512,7 @@ impl PostComment {
             return "".to_string();
         }
     }
+
 }
 
 #[derive(Serialize, AsChangeset)]
