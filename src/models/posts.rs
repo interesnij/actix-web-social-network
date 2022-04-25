@@ -2311,7 +2311,7 @@ impl Post {
 
         let mut stack = Vec::new();
         for _item in messages_list.iter() {
-            stack.push(_item.post_id);
+            stack.push(_item.post_id.unwrap());
         };
         return posts
             .filter(schema::posts::id.eq_any(stack))
@@ -2319,7 +2319,8 @@ impl Post {
             .expect("E");
     }
     pub fn message_reposts_count(&self) -> String {
-        let count = self.repost - self.message_reposts().len();
+        let repost_usize: usize = self.repost as usize;
+        let count = repost_usize - self.message_reposts().len();
         if count == 0 {
             return "".to_string();
         }
@@ -2419,7 +2420,7 @@ impl Post {
         use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
-        return post_votes
+        return posts
             .filter(schema::posts::parent_id.eq(self.id))
             .filter(schema::posts::types.eq_any(vec!["a", "b"]))
             .limit(6)
