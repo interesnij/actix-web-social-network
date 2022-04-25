@@ -2337,7 +2337,7 @@ impl PostComment {
 
 
         let _duration = self.created - chrono::Local::now().naive_utc();
-        return format_duration(_duration).to_string();
+        return format_duration(format!(_duration)).to_string();
     }
 }
 
