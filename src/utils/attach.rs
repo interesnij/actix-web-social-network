@@ -1165,6 +1165,39 @@ pub fn anon_post_elements(attach: String) -> String {
     }
     return "<div class='attach_container'>".to_owned() + &block + &"</div>".to_string();
 }
+pub fn edit_post_elements(attach: String) -> String {
+    use crate::schema::users::dsl::users;
+
+    let _connection = establish_connection();
+    let v: Vec<&str> = attach.split(",").collect();
+    let mut block = "".to_string();
+
+    for item in v.iter() {
+        let pk: i32 = item[3..].parse().unwrap();
+        let code = &item[..3];
+
+        let html = match code {
+            "pho" => add_edited_photo(pk, "post_photo".to_string()),
+            "vid" => add_edited_video(pk, "post_video".to_string()),
+            "goo" => add_edited_good(pk),
+            "mus" => add_edited_anon_music(pk),
+            "doc" => add_edited_anon_doc(pk),
+            "sur" => add_edited_anon_survey(pk),
+            "use" => add_edited_user(pk),
+            "com" => add_edited_community(pk),
+
+            "lmu" => add_edited_music_list(pk),
+            "ldo" => add_edited_doc_list(pk),
+            "lpo" => add_edited_post_list(pk),
+            "lvi" => add_edited_video_list(pk),
+            "lph" => add_edited_photo_list(pk),
+            "lgo" => add_edited_good_list(pk),
+            _ => "".to_string(),
+        };
+        block = block + &html;
+    }
+    return "<div class='attach_container'>".to_owned() + &block + &"</div>".to_string();
+}
 
 pub fn comment_elements(attach: String, user_id: i32) -> String {
     use crate::schema::users::dsl::users;
@@ -1243,7 +1276,39 @@ pub fn anon_comment_elements(attach: String) -> String {
     }
     return "<div class='attach_container'>".to_owned() + &block + &"</div>".to_string();
 }
+pub fn edit_comment_elements(attach: String) -> String {
+    use crate::schema::users::dsl::users;
 
+    let _connection = establish_connection();
+    let v: Vec<&str> = attach.split(",").collect();
+    let mut block = "".to_string();
+
+    for item in v.iter() {
+        let pk: i32 = item[3..].parse().unwrap();
+        let code = &item[..3];
+
+        let html = match code {
+            "pho" => add_edited_photo(pk, "comment_photo".to_string()),
+            "vid" => add_edited_video(pk, "comment_video".to_string()),
+            "goo" => add_edited_good(pk),
+            "mus" => add_edited_anon_music(pk),
+            "doc" => add_edited_anon_doc(pk),
+            "sur" => add_edited_anon_survey(pk),
+            "use" => add_edited_user(pk),
+            "com" => add_edited_community(pk),
+
+            "lmu" => add_edited_music_list(pk),
+            "ldo" => add_edited_doc_list(pk),
+            "lpo" => add_edited_post_list(pk),
+            "lvi" => add_edited_video_list(pk),
+            "lph" => add_edited_photo_list(pk),
+            "lgo" => add_edited_good_list(pk),
+            _ => "".to_string(),
+        };
+        block = block + &html;
+    }
+    return "<div class='attach_container'>".to_owned() + &block + &"</div>".to_string();
+}
 
 pub fn message_elements(attach: String, user_id: i32) -> String {
     use crate::schema::users::dsl::users;
@@ -1316,6 +1381,39 @@ pub fn anon_message_elements(attach: String) -> String {
             "lvi" => add_video_list(pk),
             "lph" => add_photo_list(pk),
             "lgo" => add_good_list(pk),
+            _ => "".to_string(),
+        };
+        block = block + &html;
+    }
+    return "<div class='attach_container'>".to_owned() + &block + &"</div>".to_string();
+}
+pub fn edit_message_elements(attach: String) -> String {
+    use crate::schema::users::dsl::users;
+
+    let _connection = establish_connection();
+    let v: Vec<&str> = attach.split(",").collect();
+    let mut block = "".to_string();
+
+    for item in v.iter() {
+        let pk: i32 = item[3..].parse().unwrap();
+        let code = &item[..3];
+
+        let html = match code {
+            "pho" => add_edited_photo(pk, "message_photo".to_string()),
+            "vid" => add_edited_video(pk, "message_video".to_string()),
+            "goo" => add_edited_good(pk),
+            "mus" => add_edited_anon_music(pk),
+            "doc" => add_edited_anon_doc(pk),
+            "sur" => add_edited_anon_survey(pk),
+            "use" => add_edited_user(pk),
+            "com" => add_edited_community(pk),
+
+            "lmu" => add_edited_music_list(pk),
+            "ldo" => add_edited_doc_list(pk),
+            "lpo" => add_edited_post_list(pk),
+            "lvi" => add_edited_video_list(pk),
+            "lph" => add_edited_photo_list(pk),
+            "lgo" => add_edited_good_list(pk),
             _ => "".to_string(),
         };
         block = block + &html;

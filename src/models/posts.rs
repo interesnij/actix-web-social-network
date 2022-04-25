@@ -2259,6 +2259,15 @@ impl Post {
             return "".to_string();
         }
     }
+    pub fn get_edit_attach(&self) -> String {
+        if self.attach.is_some() {
+            use crate::utils::edit_post_elements;
+            return edit_post_elements(self.attach.as_ref().unwrap().to_string());
+        }
+        else {
+            return "".to_string();
+        }
+    }
 
     pub fn count_comments(&self) -> String {
         if self.comment == 0 {
@@ -2521,6 +2530,8 @@ impl Post {
         }
         return true;
     }
+
+
 }
 
 /////// PostComment //////
