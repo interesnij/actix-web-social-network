@@ -500,11 +500,11 @@ pub fn add_edited_good_list(pk: i32) -> String {
 
     if list.community_id.is_some() {
         let community = list.get_community();
-        owner = &community.id.to_string();
+        let owner = &community.id.to_string();
     }
     else {
         let creator = list.get_creator();
-        owner = &creator.id.to_string();
+        let owner = &creator.id.to_string();
     }
 
     return "<div class='folder' owner-pk='".to_string() + &owner.to_string() +
