@@ -19,7 +19,7 @@ use crate::{errors::AuthError, vars, models::SessionUser};
 use crate::models::User;
 
 
-#[derive(Serialize)]
+#[derive(Deserialize)]
 pub struct JsonPosition {
     pub key:   i32,
     pub value: i32,
