@@ -2336,7 +2336,7 @@ impl PostComment {
         use humantime::format_duration;
 
 
-        let _duration = self.created - Instant::now();
+        let _duration = self.created - chrono::Local::now().naive_utc();
         return format_duration(_duration).to_string();
     }
 }
