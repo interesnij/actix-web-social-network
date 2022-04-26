@@ -38,14 +38,14 @@ pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
             #[template(path = "desctop/users/account/user.stpl")]
             struct UserPage {
                 title:        String,
+                private_bools: Vec<bool>,
                 request_user: User,
                 user:         User,
-                private_bools: Vec<bool>,
             }
             let body = UserPage {
                 title:        _user.get_full_name().clone(),
-                request_user: _request_user,
                 private_bools: _user.get_profile_all_can_see(*_request_user_id).clone(),
+                request_user: _request_user,
                 user:         _user,
             }
             .render_once()
@@ -57,14 +57,14 @@ pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
             #[template(path = "mobile/users/account/user.stpl")]
             struct UserPage {
                 title:        String,
+                private_bools: Vec<bool>,
                 request_user: User,
                 user:         User,
-                private_bools: Vec<bool>,
             }
             let body = UserPage {
                 title:        _user.get_full_name().clone(),
-                request_user: _request_user,
                 private_bools: _user.get_profile_all_can_see(*_request_user_id).clone(),
+                request_user: _request_user,
                 user:         _user,
             }
             .render_once()
