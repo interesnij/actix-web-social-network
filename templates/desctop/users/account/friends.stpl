@@ -1,4 +1,4 @@
-<% if user.is_have_friends() %>
+<% if user.is_have_friends() { %>
 <div class="card mb-3">
     <div class="p-1">
       <a href="/friends/<%= user.id %>/" class="ajax">
@@ -11,7 +11,7 @@
       </a>
     </div>
 
-    <% for user in user.get_6_friends %>
+    <% for user in user.get_6_friends { %>
     <div class="card border-top">
         <div class="p-1">
             <div class="media">
@@ -33,7 +33,7 @@
             </div>
         </div>
     </div>
-    <% endfor %>
+    <% } %>
 </div>
 
-{% endif %}
+<% } %>
