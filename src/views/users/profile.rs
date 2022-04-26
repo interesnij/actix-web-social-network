@@ -69,7 +69,7 @@ pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
                 request_user: User,
                 user:         User,
                 user_profile: UserProfile,
-                is_my_user:   is_my_user, 
+                is_my_user:   bool,
             }
             let body = UserPage {
                 title:        _user.get_full_name().clone(),
