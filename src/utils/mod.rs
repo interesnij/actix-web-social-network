@@ -22,6 +22,10 @@ use crate::{errors::AuthError, vars, models::SessionUser};
 use crate::models::User;
 
 
+#[derive(Debug, Deserialize)]
+pub struct SParams {
+    pub q: String,
+}
 #[derive(Deserialize)]
 pub struct JsonPosition {
     pub key:   i32,

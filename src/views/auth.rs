@@ -67,7 +67,6 @@ pub struct NewUserForm {
     pub phone:       String,
 }
 
-
 fn find_user(data: LoginUser2) -> Result<SessionUser, AuthError> {
     use crate::schema::users::dsl::users;
 
