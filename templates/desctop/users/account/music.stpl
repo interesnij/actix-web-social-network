@@ -11,10 +11,10 @@
       </a>
     </div>
 
-    <% for (i, object) in user.get_6_tracks().iter().enumirate() { %>
+    <% for object in user.get_6_tracks().iter() { %>
     <div class="card border-top">
         <div class="p-1">
-            <div class="media" music-counter="<%= i %>">
+            <div class="media" music-counter="">
               <figure>
                 <a class="pointer music_list_item">
                   <%- object.get_image() %>
