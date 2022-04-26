@@ -37,7 +37,7 @@
             </span>
            <% } else { %>
               let block = user.get_buttons_profile(request_user.id);
-              <% include!(block); %>
+              <% include!("<%= block %>"); %>
            <% } %>
         </div>
     </div>
