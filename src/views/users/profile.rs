@@ -31,6 +31,7 @@ pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
 
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
+        let _request_user_id = &_request_user.id;
 
         if _type == "desctop/".to_string() {
             #[derive(TemplateOnce)]
@@ -42,10 +43,10 @@ pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
                 private_bools: Vec<bool>,
             }
             let body = UserPage {
-                title:        _user.get_full_name(),
+                title:        _user.get_full_name().clone(),
                 request_user: _request_user,
-                user:         _user,
-                private_bools: _user.get_profile_all_can_see(_request_user.id).clone(),
+                user:         _user.clone(),
+                private_bools: _user.get_profile_all_can_see(_request_user_id),
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -61,10 +62,10 @@ pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
                 private_bools: Vec<bool>,
             }
             let body = UserPage {
-                title:        _user.get_full_name(),
+                title:        _user.get_full_name().clone(),
                 request_user: _request_user,
-                user:         _user,
-                private_bools: _user.get_profile_all_can_see(_request_user.id).clone(),
+                user:         _user.clone(),
+                private_bools: _user.get_profile_all_can_see(_request_user_id),
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
