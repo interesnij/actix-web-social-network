@@ -570,6 +570,24 @@ impl User {
         let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
         return self.last_activity.checked_add_signed(Duration::seconds(301)) > NaiveDateTime::new(d, t).checked_add_signed(Duration::seconds(1));
     }
+    pub fn get_online_display(&self) -> String {
+        let device = match self.is_desctop() {
+            true => "&nbsp;<svg style='width: 17px;' class='svg_default' fill='currentColor' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none'/><path d='M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z'/></svg>",
+            false => "&nbsp;<svg style='width: 17px;' class='svg_default' fill='currentColor' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none'/><path d='M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z'/></svg>",
+            _ => "",
+        };
+        let gender = match self.is_man() {
+            true => "<i>Был ",
+            false => "<i>Была ",
+            _ => "",
+        };
+        if self.is_online() == true {
+            return "<i>Онлайн</i>".to_string() + &device;
+        }
+        else {
+            return gender + &self.last_activity.unwrap().format("%d/%m/%Y").to_string() + &device;
+        }
+    }
     pub fn is_desctop(&self) -> bool {
         return self.device == "a";
     }
@@ -1069,6 +1087,16 @@ impl User {
     pub fn count_followers(&self) -> i32 {
         return self.get_profile().follows;
     }
+    pub fn count_followers_ru(&self) -> i32 {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            self.count_followers(),
+            " подписчик".to_string(),
+            " подписчика".to_string(),
+            " подписчиков".to_string(),
+        );
+    }
     pub fn count_blacklist(&self) -> usize {
         use crate::schema::user_blocks::dsl::user_blocks;
 
@@ -1079,12 +1107,35 @@ impl User {
             .expect("E.")
             .len();
     }
+
     pub fn count_goods(&self) -> i32 {
         return self.get_profile().goods;
     }
+    pub fn count_goods_ru(&self) -> i32 {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            self.count_goods(),
+            " товар".to_string(),
+            " товара".to_string(),
+            " товаров".to_string(),
+        );
+    }
+
     pub fn count_tracks(&self) -> i32 {
         return self.get_profile().tracks;
     }
+    pub fn count_tracks_ru(&self) -> i32 {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            self.count_tracks(),
+            " трек".to_string(),
+            " трека".to_string(),
+            " треков".to_string(),
+        );
+    }
+
     pub fn count_photos(&self) -> i32 {
         return self.get_profile().photos;
     }
@@ -1097,9 +1148,21 @@ impl User {
     pub fn count_articles(&self) -> i32 {
         return self.get_profile().articles;
     }
+
     pub fn count_communities(&self) -> i32 {
         return self.get_profile().communities;
     }
+    pub fn count_communities_ru(&self) -> i32 {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            self.count_communities(),
+            " сообщество".to_string(),
+            " сообщества".to_string(),
+            " сообществ".to_string(),
+        );
+    }
+
     pub fn count_communities_ru(&self) -> String {
         use crate::utils::get_count_for_ru;
 
@@ -1110,9 +1173,21 @@ impl User {
             " сообществ".to_string(),
         );
     }
+
     pub fn count_videos(&self) -> i32 {
         return self.get_profile().videos;
     }
+    pub fn count_videos_ru(&self) -> i32 {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            self.count_videos(),
+            " ролик".to_string(),
+            " ролика".to_string(),
+            " роликов".to_string(),
+        );
+    }
+
     pub fn count_friends(&self) -> i32 {
         return self.get_profile().friends;
     }

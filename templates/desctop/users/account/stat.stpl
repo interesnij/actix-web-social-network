@@ -1,0 +1,97 @@
+<div class="row mb-3">
+   <% user.count_followers > 0 { %>
+   <div class="col text-center">
+     <div class="media">
+       <div class="media-body">
+         <h4 class="content-color-primary mb-0">
+           <a href="/follows/<%= user.id %>/" class="ajax">
+            <%= user.count_followers() %>
+           </a>
+         </h4>
+         <p class="content-color-secondary mb-0">
+           <a href="/follows/<%= user.id %>/" class="ajax">
+            <%= user.count_followers_ru() %>
+           </a>
+         </p>
+       </div>
+     </div>
+   </div>
+   <% } %>
+
+   <% if user.count_communities() > 0 && private_bools[1] == true %>
+   <div class="col text-center">
+     <div class="media">
+       <div class="media-body">
+         <h4 class="content-color-primary mb-0">
+           <a href="/<%= user.id %>/communities/" class="ajax">
+             <%= user.count_communities() %>
+           </a>
+          </h4>
+         <p class="content-color-secondary mb-0">
+           <a href="/<%= user.id %>/communities/" class="ajax">
+           <%= user.count_communities_ru() %>
+           </a>
+         </p>
+       </div>
+     </div>
+   </div>
+  <% } %>
+
+  <% if user.count_goods() > 0 && private_bools[8] == true %>
+   <div class="col text-center">
+     <div class="media">
+       <div class="media-body">
+         <h4 class="content-color-primary mb-0">
+           <a href="/<%= user.id %>/goods/" class="ajax">
+              <%= user.count_goods() %>
+            </a>
+         </h4>
+         <p class="content-color-secondary mb-0">
+           <a href="/<%= user.id %>/goods/" class="ajax">
+             <%= user.count_goods_ru() %>
+           </a>
+         </p>
+       </div>
+     </div>
+   </div>
+   <% } %>
+
+   <% if user.count_tracks() > 0 && private_bools[10] == true %>
+    <div class="col text-center">
+      <div class="media">
+        <div class="media-body">
+          <h4 class="content-color-primary mb-0">
+            <a href="/<%= user.id %>/music/" class="ajax">
+              <%= user.count_tracks() %>
+            </a>
+          </h4>
+          <p class="content-color-secondary mb-0">
+            <a href="/<%= user.id %>/music/" class="ajax">
+              <%= user.count_tracks_ru() %>
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+    <% } %>
+
+    <% if user.count_videos() > 0 && private_bools[9] == true %>
+     <div class="col text-center">
+       <div class="media">
+         <div class="media-body">
+           <h4 class="content-color-primary mb-0">
+             <a href="/<%= user.id %>/video/" class="ajax">
+               <%= user.count_videos() %>
+             </a>
+           </h4>
+           <p class="content-color-secondary mb-0">
+             <a href="/<%= user.id %>/video/" class="ajax">
+               <%= user.count_videos_ru() %>
+            </a>
+           </p>
+         </div>
+       </div>
+     </div>
+     <% } %>
+
+ </div>

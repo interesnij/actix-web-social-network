@@ -1,0 +1,37 @@
+<% if user.is_have_good() { %>
+<div class="card mb-3">
+    <div class="p-1">
+      <a href="/<%= user.id %>/goods/" class="ajax">
+        <div class="media">
+            <div class="media-body">
+                <h6 class="content-color-primary mb-0">Товары </h6>
+            </div>
+          <%= user.count_goods() %>
+        </div>
+      </a>
+    </div>
+
+    <% for object in user.get_3_goods().iter() { %>
+      <div class="col-md-4 mb-3">
+            <div class="border good_detail pointer pag" good-pk="<%= user.id %>">
+                <div class="row align-items-center no-gutters">
+                    <div class="col">
+                            <div class="text-center">
+                                <%- object.get_image() %>
+                            </div>
+                    </div>
+                </div>
+                <p class="mb-1 header-color-primary text-center" style="overflow: hidden; white-space: nowrap;"><%= object.title %></p>
+                <div class="row bg-light-secondary text-center" style="margin-left: 0;margin-right: 0;">
+                      <div class="col py-3">
+                          <p class="content-color-primary mb-0">
+                            <%= object.get_price() %>
+                          </p>
+                      </div>
+                  </div>
+            </div>
+          </div>
+    <% } %>
+</div>
+
+<% } %>

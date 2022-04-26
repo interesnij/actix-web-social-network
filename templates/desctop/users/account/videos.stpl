@@ -1,0 +1,23 @@
+<% if user.is_have_video() { %>
+<div class="card mb-3">
+    <div class="p-1">
+      <a href="/<%= user.id %>/video/" class="ajax">
+        <div class="media">
+            <div class="media-body">
+                <h6 class="content-color-primary mb-0">Видео </h6>
+            </div>
+          <%= user.count_video() %>
+        </div>
+      </a>
+    </div>
+
+    <% for object in user.get_2_videos().iter() { %>
+      <div class="media-body position-relative">
+        <img class="image_fit_200" src="<%= object.image %>" alt="">
+        <div class="video_icon_play_v2 video_list_detail" video-counter="" video-pk="<%= object.id %>"></div>
+        <a><%= object.title %></a>
+      </div>
+    <% } %>
+</div>
+
+<% } %>
