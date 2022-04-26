@@ -2348,6 +2348,25 @@ impl User {
             .load::<User>(&_connection)
             .expect("E.");
     }
+    pub fn get_6_common_friends_of_user(&self, user: User) -> Vec<User> {
+        use crate::schema::users::dsl::users;
+
+        let _connection = establish_connection();
+        let self_friends = self.get_friends_ids();
+        let user_friends = user.get_friends_ids();
+        let mut stack = Vec::new();
+        for (i, int) in self_friends.iter().enumerate() {
+            if i < 7 && user_friends.iter().any(|i| i==int) {
+                stack.push(int);
+            }
+        }
+        return users
+            .filter(schema::users::id.eq_any(stack))
+            .filter(schema::users::types.lt(11))
+            .limit(6)
+            .load::<User>(&_connection)
+            .expect("E.");
+    }
     pub fn get_common_friends_of_community(&self, community_id: i32) -> Vec<User> {
         use crate::schema::users::dsl::users;
         use crate::schema::communities_memberships::dsl::communities_memberships;
