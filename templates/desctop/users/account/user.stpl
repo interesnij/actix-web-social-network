@@ -36,7 +36,8 @@
               <a class="ajax" href="/users/settings/general/">Редактировать</a>
             </span>
            <% } else { %>
-              <% include!(<% user.get_buttons_profile(request_user.id) %>); %>
+              let block = user.get_buttons_profile(request_user.id);
+              <% include!(block); %>
            <% } %>
         </div>
     </div>
