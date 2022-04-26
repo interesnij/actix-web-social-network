@@ -11,7 +11,7 @@
       </a>
     </div>
 
-    <% for user in user.get_6_friends { %>
+    <% for user in user.get_6_friends().iter() { %>
     <div class="card border-top">
         <div class="p-1">
             <div class="media">
