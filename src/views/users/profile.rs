@@ -20,16 +20,18 @@ pub fn user_routes(config: &mut web::ServiceConfig) {
 pub async fn user_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let _connection = establish_connection();
     let _type = get_folder(req);
+
+    #[derive(TemplateOnce)]
+    #[template(path = "users/account/user.stpl")]
+    struct UserPage {
+        title:        String,
+        request_user: User,
+    }
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
         let _template = _type + &"users/account/user.stpl".to_string();
 
-        #[derive(TemplateOnce)]
-        #[template(path = "users/account/user.stpl")]
-        struct UserPage {
-            title:        String,
-            request_user: User,
-        }
+
         let body = UserPage {
             title:        "Новости".to_string(),
             request_user: _request_user,
