@@ -2,6 +2,7 @@ use actix_web::{
     HttpRequest,
     HttpResponse,
     web,
+    error::InternalError,
 };
 use serde::Deserialize;
 use crate::utils::{is_signed_in, establish_connection, get_folder, get_request_user_data};
@@ -85,7 +86,5 @@ pub async fn user_page(session: Session, req: HttpRequest) -> actix_web::Result<
                 .content_type("text/html; charset=utf-8")
                 .body(body))
         }
-    } else {
-        Ok(to_home())
     }
 }
