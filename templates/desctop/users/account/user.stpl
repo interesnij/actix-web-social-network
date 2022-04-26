@@ -2,8 +2,8 @@
 
 <div class="main-container" data-type="page_feed">
 
-<%= user.get_profile_all_can_see() %>
-<% for i in user.get_profile_all_can_see().iter() { %>
+<%= user.get_profile_all_can_see(request_user.id) %>
+<% for i in user.get_profile_all_can_see(request_user.id).iter() { %>
    <%= i %>
  <% } %>
 </div>
