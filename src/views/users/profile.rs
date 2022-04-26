@@ -21,16 +21,15 @@ pub async fn user_page(session: Session, req: HttpRequest) -> actix_web::Result<
     let _connection = establish_connection();
     let _type = get_folder(req);
 
-    #[derive(TemplateOnce)]
-    #[template(path = "users/account/user.stpl")]
-    struct UserPage {
-        title:        String,
-        request_user: User,
-    }
     if is_signed_in(&session) {
+        #[derive(TemplateOnce)]
+        #[template(path = "users/account/user.stpl")]
+        struct UserPage {
+            title:        String,
+            request_user: User,
+        }
         let _request_user = get_request_user_data(session);
         let _template = _type + &"users/account/user.stpl".to_string();
-
 
         let body = UserPage {
             title:        "Новости".to_string(),
