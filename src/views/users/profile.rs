@@ -42,14 +42,14 @@ pub async fn user_page(session: Session, req: HttpRequest) -> actix_web::Result<
 
     } else {
         let _template = _type + &"users/account/anon_user.stpl".to_string();
-        #[derive(TemplateOnce)]
-        #[template(path = _template)]
-        struct AnonUserPage {
-            title:  String,
-        }
-        let body = AnonUserPage { title: "Трезвый.рус | Вход".to_string() }
-        .render_once()
-        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        //#[derive(TemplateOnce)]
+        //#[template(path = _template)]
+        //struct AnonUserPage {
+        //    title:  String,
+        //}
+        //let body = AnonUserPage { title: "Трезвый.рус | Вход".to_string() }
+        //.render_once()
+        //.map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
             .body(body))
