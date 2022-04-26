@@ -31,6 +31,13 @@ pub async fn user_page(session: Session, req: HttpRequest) -> actix_web::Result<
                 title:        String,
                 request_user: User,
             }
+            let body = UserPage {
+                title:        "Новости".to_string(),
+                request_user: _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
         else {
             #[derive(TemplateOnce)]
@@ -39,29 +46,37 @@ pub async fn user_page(session: Session, req: HttpRequest) -> actix_web::Result<
                 title:        String,
                 request_user: User,
             }
+            let body = UserPage {
+                title:        "Новости".to_string(),
+                request_user: _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
-        let body = UserPage {
-            title:        "Новости".to_string(),
-            request_user: _request_user,
-        }
-        .render_once()
-        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(body))
 
     } else {
-        let _template = _type + &"users/account/anon_user.stpl".to_string();
-        #[derive(TemplateOnce)]
-        #[template(path = _template)]
-        struct AnonUserPage {
-            title:  String,
+        if _type == "desctop/".to_string() {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/users/account/anon_user.stpl")]
+            struct UserPage {
+                title: String,
+            }
+            let body = UserPage {title:"Новости".to_string(),}
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
-        let body = AnonUserPage { title: "Трезвый.рус | Вход".to_string() }
-        .render_once()
-        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(body))
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/users/account/anon_user.stpl")]
+            struct UserPage {
+                title: String,
+            }
+            let body = UserPage {title:"Новости".to_string(),}
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
     }
 }
