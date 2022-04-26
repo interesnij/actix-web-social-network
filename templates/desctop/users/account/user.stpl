@@ -11,7 +11,7 @@
           <div class="row align-items-center no-gutters">
             <a class="col">
               <figure class="mx-auto mb-3 avatar_figure">
-                <%- user.get_b_avatar %>
+                <%- user.get_b_avatar() %>
               </figure>
             </a>
           </div>
