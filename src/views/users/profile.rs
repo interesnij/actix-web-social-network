@@ -11,7 +11,6 @@ use crate::utils::{
     establish_connection,
     get_folder,
     get_request_user_data,
-    get_folder,
     get_user,
 };
 //use diesel::prelude::*;
