@@ -3,7 +3,7 @@
   let staff = request_user.is_manager();
   let request_user_id = request_user.id;
 %>
-  <% if user.is_user_in_block(request_user_id) { %>
+  <% if user.is_user_in_block(<%= request_user_id %>) { %>
     <button type="button" class="btn btn-sm border" style="width: -webkit-fill-available">
       Заблокирован
     </button>
@@ -11,7 +11,7 @@
       <a class="dropdown-item user_unblock pointer">Разблокировать</a>
       <a class="dropdown-item create_claim pointer">Пожаловаться</a>
     </div>
-  <% else if user.is_self_user_in_block(request_user_id) %>
+  <% } else if user.is_self_user_in_block(<%= request_user_id %>) { %>
   <button type="button" class="btn btn-sm border" style="width: -webkit-fill-available">
     Вы заблокированы
   </button>
