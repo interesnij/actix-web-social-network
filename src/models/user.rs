@@ -1410,6 +1410,27 @@ impl User {
             .load::<Community>(&_connection)
             .expect("E.");
     }
+    pub fn get_6_communities(&self) -> Vec<Community> {
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+        use crate::schema::communitys::dsl::communitys;
+        use crate::models::CommunitiesMembership;
+
+        let _connection = establish_connection();
+        let _user_communities = communities_memberships
+            .filter(schema::communities_memberships::user_id.eq(self.id))
+            .order(schema::communities_memberships::visited.desc())
+            .limit(6)
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E.");
+        let mut stack = Vec::new();
+        for _item in _user_communities.iter() {
+            stack.push(_item.community_id);
+        };
+        return communitys
+            .filter(schema::communitys::id.eq_any(stack))
+            .load::<Community>(&_connection)
+            .expect("E.");
+    }
     pub fn get_online_friends(&self) -> Vec<User> {
         use crate::schema::users::dsl::users;
         use chrono::{NaiveDateTime, NaiveDate, NaiveTime, Duration};
