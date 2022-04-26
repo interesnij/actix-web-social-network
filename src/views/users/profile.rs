@@ -34,11 +34,6 @@ struct MobileUserPage {
 struct AnonDesctopUserPage {
     title:        String,
 }
-#[derive(TemplateOnce)]
-#[template(path = "mobile/users/account/anon_user.stpl")]
-struct AnonMobileUserPage {
-    title:        String,
-}
 
 
 pub async fn user_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
@@ -80,6 +75,11 @@ pub async fn user_page(session: Session, req: HttpRequest) -> actix_web::Result<
                 .body(body))
         }
         else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/users/account/anon_user.stpl")]
+            struct AnonMobileUserPage {
+                title:        String,
+            }
             let body = AnonMobileUserPage { title: "Трезвый.рус | Вход".to_string() }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
