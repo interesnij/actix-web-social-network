@@ -1,4 +1,4 @@
-<% if user.get_6_common_friends_of_user (request_user) %>
+<% if user.is_have_common_friends_of_user(request_user) %>
 <div class="card mb-3">
     <div class="p-1">
       <a href="/friends/<%= user.id %>/#tabhome323" class="ajax">
