@@ -969,6 +969,9 @@ impl User {
         if self.is_user_in_block(user_id) {
             return "desctop/users/button/".to_owned() + &suffix + &"blocked_user.html".to_string();
         }
+        else if self.is_self_user_in_block(user_id) {
+            return "desctop/users/button/".to_owned() + &suffix + &"blocker_user.html".to_string();
+        }
         else if self.is_connected_with_user_with_id(user_id){
             return "desctop/users/button/".to_owned() + &suffix + &"frend_user.html".to_string();
         }
