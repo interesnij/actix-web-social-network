@@ -22,15 +22,15 @@ pub async fn user_page(session: Session, req: HttpRequest) -> actix_web::Result<
     let _type = get_folder(req);
 
     if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let _template = _type + &"users/account/user.stpl".to_string();
+
         #[derive(TemplateOnce)]
-        #[template(path = "users/account/user.stpl")]
+        #[template(path = _template)]
         struct UserPage {
             title:        String,
             request_user: User,
         }
-        let _request_user = get_request_user_data(session);
-        let _template = _type + &"users/account/user.stpl".to_string();
-
         let body = UserPage {
             title:        "Новости".to_string(),
             request_user: _request_user,
@@ -43,14 +43,14 @@ pub async fn user_page(session: Session, req: HttpRequest) -> actix_web::Result<
 
     } else {
         let _template = _type + &"users/account/anon_user.stpl".to_string();
-        //#[derive(TemplateOnce)]
-        //#[template(path = _template)]
-        //struct AnonUserPage {
-        //    title:  String,
-        //}
-        //let body = AnonUserPage { title: "Трезвый.рус | Вход".to_string() }
-        //.render_once()
-        //.map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        #[derive(TemplateOnce)]
+        #[template(path = _template)]
+        struct AnonUserPage {
+            title:  String,
+        }
+        let body = AnonUserPage { title: "Трезвый.рус | Вход".to_string() }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
             .body(body))
