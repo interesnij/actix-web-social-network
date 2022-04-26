@@ -35,9 +35,8 @@
             <span class="card mb-3 centered">
               <a class="ajax" href="/users/settings/general/">Редактировать</a>
             </span>
-           <% } else { %>
-              let block = user.get_buttons_profile(request_user.id);
-              <% include!(block); %>  
+           <% } else { %> 
+              <% include!(<%= buttons_block %>); %>
            <% } %>
         </div>
     </div>
