@@ -42,9 +42,9 @@ pub async fn user_page(session: Session, req: HttpRequest) -> actix_web::Result<
             .body(body))
 
     } else {
-        let _template: String = _type.to_string() + &"users/account/anon_user.stpl".to_string();
+        let _template = _type + &"users/account/anon_user.stpl".to_string();
         #[derive(TemplateOnce)]
-        #[template(path = _template)]
+        #[template(path = &_template)]
         struct AnonUserPage {
             title:  String,
         }
