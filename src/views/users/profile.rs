@@ -25,7 +25,7 @@ pub async fn user_page(session: Session, req: HttpRequest) -> actix_web::Result<
         let _request_user = get_request_user_data(session);
 
         #[derive(TemplateOnce)]
-        #[template(path = format!("{}users/account/user.stpl", _type))]
+        #[template(path = "${_type}users/account/user.stpl")]
         struct UserPage {
             title:        String,
             request_user: User,
