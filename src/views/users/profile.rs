@@ -24,9 +24,12 @@ pub fn user_routes(config: &mut web::ServiceConfig) {
 }
 
 pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    use crate::models::UserProfile;
+
     let _connection = establish_connection();
     let _type = get_folder(req);
     let _user = get_user(*_id);
+    let _profile = _user.get_profile();
 
 
     if is_signed_in(&session) {
@@ -41,12 +44,14 @@ pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
                 private_bools: Vec<bool>,
                 request_user: User,
                 user:         User,
+                user_profile: UserProfile,
             }
             let body = UserPage {
                 title:        _user.get_full_name().clone(),
                 private_bools: _user.get_profile_all_can_see(*_request_user_id).clone(),
                 request_user: _request_user,
                 user:         _user,
+                user_profile: _profile,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -60,12 +65,14 @@ pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
                 private_bools: Vec<bool>,
                 request_user: User,
                 user:         User,
+                user_profile: UserProfile,
             }
             let body = UserPage {
                 title:        _user.get_full_name().clone(),
                 private_bools: _user.get_profile_all_can_see(*_request_user_id).clone(),
                 request_user: _request_user,
                 user:         _user,
+                user_profile: _profile,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
