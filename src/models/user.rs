@@ -3441,7 +3441,7 @@ impl User {
     }
     pub fn get_profile_all_can_see(&self, user_id: i32) -> Vec<bool> {
         if self.id == user_id {
-            return vec![false, false, true, true, true, true, true, true, true, true, true, true, true, true];
+            return vec![true, true, true, true, true, true, true, true, true, true, true, true, true, true];
         }
         let private = self.get_private_model();
 
