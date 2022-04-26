@@ -3,7 +3,7 @@
   let staff = request_user.is_manager();
   let request_user_id = request_user.id;
 %>
-  <% if user.is_user_in_block(request_user_id) {
+  <% if user.is_user_in_block(request_user_id) { %>
     <button type="button" class="btn btn-sm border" style="width: -webkit-fill-available">
       Заблокирован
     </button>
