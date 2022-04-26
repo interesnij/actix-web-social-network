@@ -32,7 +32,14 @@
             </a>
           </div>
           <%= buttons_block %>
-
+          <% if is_my_user { %>
+            <span class="card mb-3 centered">
+              <a class="ajax" href="/users/settings/general/">Редактировать</a>
+            </span>
+           <% } else { %>
+            <%= buttons_block %>
+              
+           <% } %>
         </div>
     </div>
   </div>
