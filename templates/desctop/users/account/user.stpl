@@ -44,7 +44,15 @@
 
     <% if private_bools[3] == true { %>
       <% include!("friends.stpl"); %>
-    <% } %> 
+    <% } %>
+
+    <% if private_bools[1] == true { %>
+      <% include!("communities.stpl"); %>
+    <% } %>
+
+    <% if private_bools[10] == true { %>
+      <% include!("music.stpl"); %>
+    <% } %>
 
   </div>
 </div>

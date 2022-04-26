@@ -1,0 +1,41 @@
+<% if user.is_have_music() { %>
+<div class="card mb-3">
+    <div class="p-1">
+      <a href="/<%= user.id %>/music/" class="ajax">
+        <div class="media">
+            <div class="media-body">
+                <h6 class="content-color-primary mb-0">Аудиозаписи </h6>
+            </div>
+          <%= user.count_tracks() %>
+        </div>
+      </a>
+    </div>
+
+    <% for (i, object) in user.get_6_tracks().iter().enumirate() { %>
+    <div class="card border-top">
+        <div class="p-1">
+            <div class="media" music-counter="<%= i %>">
+              <figure>
+                <a class="pointer music_list_item">
+                  <%- object.get_image() %>
+                </a>
+              </figure>
+                <div class="media-body" style="line-height: 10px;">
+                    <h6 class="music_list_item mb-0" style="cursor:pointer"><a><%- object.title %></a></h6>
+                    <% if object.album_id.is_some() { %>
+                      <%- object.album_id.unwrap() %>
+                    <% } else { %>
+                      <% if object.community_id.is_some() { %>
+                        <a class="small ajax" href="/public<%= object.get_community().get_link() %>/"> <%= object.get_community().name %></a>
+                      <% } else { %>
+                        <a class="small ajax" href="/id<%= object.get_creator().get_link() %>/"><%= object.get_creator().get_full_name() %></a>
+                      <% } %>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% } %>
+</div>
+
+<% } %>

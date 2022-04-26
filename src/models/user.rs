@@ -2376,19 +2376,6 @@ impl User {
             .load::<User>(&_connection)
             .expect("E.");
     }
-    pub fn is_have_6_common_friends_of_user(&self, user: User) -> bool {
-        use crate::schema::users::dsl::users;
-
-        let _connection = establish_connection();
-        let self_friends = self.get_friends_ids();
-        let user_friends = user.get_friends_ids();
-        for (i, int) in self_friends.iter().enumerate() {
-            if user_friends.iter().any(|i| i==int) {
-                return true;
-            }
-        }
-        return false;
-    }
     pub fn get_common_friends_of_community(&self, community_id: i32) -> Vec<User> {
         use crate::schema::users::dsl::users;
         use crate::schema::communities_memberships::dsl::communities_memberships;
