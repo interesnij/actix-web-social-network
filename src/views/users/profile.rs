@@ -42,10 +42,10 @@ pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
                 private_bools: Vec<bool>,
             }
             let body = UserPage {
-                title:        &_user.get_full_name(),
-                request_user: &_request_user,
-                user:         &_user,
-                private_bools: &_user.get_profile_all_can_see(_request_user.id),
+                title:        _user.get_full_name(),
+                request_user: _request_user,
+                user:         _user,
+                private_bools: _user.get_profile_all_can_see(_request_user.id).clone(),
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -61,10 +61,10 @@ pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
                 private_bools: Vec<bool>,
             }
             let body = UserPage {
-                title:        &_user.get_full_name(),
-                request_user: &_request_user,
-                user:         &_user,
-                private_bools: &_user.get_profile_all_can_see(_request_user.id),
+                title:        _user.get_full_name(),
+                request_user: _request_user,
+                user:         _user,
+                private_bools: _user.get_profile_all_can_see(_request_user.id).clone(),
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
