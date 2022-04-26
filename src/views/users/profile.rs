@@ -25,8 +25,8 @@ pub async fn user_page(session: Session, req: HttpRequest) -> actix_web::Result<
         let _request_user = get_request_user_data(session);
 
         let mut _template = String::new();
-        _template.push_str(_type);
-        _template.push_str("users/account/user.stpl");
+        _template.push_str(&_type);
+        _template.push_str(&"users/account/user.stpl");
         //let _template: String = _type.to_string() + &"users/account/user.stpl".to_string();
 
         #[derive(TemplateOnce)]
