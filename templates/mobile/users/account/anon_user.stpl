@@ -1,0 +1,7 @@
+<% include!("../../../base_block/anon_base_mobile_header.stpl"); %>
+
+<div class="main-container container mt-3" data-type="page_feed">
+  {{ request_user }}
+</div>
+
+<% include!("../../../base_block/anon_base_mobile_footer.stpl"); %>

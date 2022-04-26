@@ -1,0 +1,7 @@
+<% include!("../../../base_block/base_header.stpl"); %>
+
+<div class="main-container" data-type="page_feed">
+
+</div>
+
+<% include!("../../../base_block/base_footer.stpl"); %>
