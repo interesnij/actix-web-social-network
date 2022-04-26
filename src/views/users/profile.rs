@@ -17,75 +17,41 @@ pub fn user_routes(config: &mut web::ServiceConfig) {
     config.route("/id{id}/", web::get().to(user_page));
 }
 
-#[derive(TemplateOnce)]
-#[template(path = "desctop/users/account/user.stpl")]
-struct DesctopUserPage {
-    title:        String,
-    request_user: User,
-}
-#[derive(TemplateOnce)]
-#[template(path = "mobile/users/account/user.stpl")]
-struct MobileUserPage {
-    title:        String,
-    request_user: User,
-}
-#[derive(TemplateOnce)]
-#[template(path = "desctop/users/account/anon_user.stpl")]
-struct AnonDesctopUserPage {
-    title:        String,
-}
-
-
 pub async fn user_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let _connection = establish_connection();
     let _type = get_folder(req);
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
+        let _template = _type + "users/account/user.stpl".to_string()
 
-        if _type == "desctop/".to_string() {
-            let body = DesctopUserPage {
-                title:        "Новости".to_string(),
-                request_user: _request_user,
-            }
-            .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+        #[derive(TemplateOnce)]
+        #[template(path = _template)]
+        struct UserPage {
+            title:        String,
+            request_user: User,
         }
-        else {
-            let body = MobileUserPage {
-                title:        "Новости".to_string(),
-                request_user: _request_user,
-            }
-            .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+        let body = UserPage {
+            title:        "Новости".to_string(),
+            request_user: _request_user,
         }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body(body))
 
     } else {
-        if _type == "desctop/".to_string() {
-            let body = AnonDesctopUserPage { title: "Трезвый.рус | Вход".to_string() }
-            .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+        let _template = _type + "users/account/anon_user.stpl".to_string()
+        #[derive(TemplateOnce)]
+        #[template(path = _template)]
+        struct AnonUserPage {
+            title:  String,
         }
-        else {
-            #[derive(TemplateOnce)]
-            #[template(path = "mobile/users/account/anon_user.stpl")]
-            struct AnonMobileUserPage {
-                title:        String,
-            }
-            let body = AnonMobileUserPage { title: "Трезвый.рус | Вход".to_string() }
-            .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
-        }
+        let body = AnonUserPage { title: "Трезвый.рус | Вход".to_string() }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body(body))
     }
 }
