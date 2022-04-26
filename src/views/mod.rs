@@ -1,9 +1,9 @@
 pub mod pages;
 pub mod auth;
-pub mod profile;
+pub mod users;
 
 pub use self::{
     pages::*,
     auth::*,
-    profile::*,
+    users::*,
 };
