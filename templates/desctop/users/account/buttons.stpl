@@ -60,6 +60,9 @@
       <span class="dropdown-item user_block">Заблокировать</span>
       <span class="dropdown-item create_claim">Пожаловаться</span>
   <% } %>
-
+  <% if staff { %>
+    <span class="dropdown-item create_repost">Поделиться</span>
+    <span class="dropdown-item create_close" style="font-weight: bold;">Закрыть</span>
+  <% } %>
   </div>
 </span>
