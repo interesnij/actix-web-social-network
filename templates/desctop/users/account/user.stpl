@@ -2,6 +2,10 @@
 
 <div class="main-container" data-type="page_feed">
 
+<%= user.get_profile_all_can_see() %>
+<% for i in user.get_profile_all_can_see().iter() { %>
+   <%= i %>
+ <% } %>
 </div>
 
 <% include!("../../../base_block/base_footer.stpl"); %>
