@@ -1,4 +1,4 @@
-<% for (i, user) in user.get_6_common_friends_of_user(request_user).iter() { %>
+<% for (i, user) in user.get_6_common_friends_of_user(request_user).iter().enumerate() { %>
 <% if i == 0 { %>
 <div class="card mb-3">
     <div class="p-1">
