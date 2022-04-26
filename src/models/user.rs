@@ -1364,6 +1364,15 @@ impl User {
             .load::<User>(&_connection)
             .expect("E.");
     }
+    pub fn get_6_friends(&self) -> Vec<User> {
+        use crate::schema::users::dsl::users;
+
+        let _connection = establish_connection();
+        return users
+            .filter(schema::users::id.eq_any(self.get_6_friends_ids()))
+            .load::<User>(&_connection)
+            .expect("E.");
+    }
     pub fn get_6_communities_ids(&self) -> Vec<i32> {
         use crate::schema::communities_memberships::dsl::communities_memberships;
         use crate::models::CommunitiesMembership;

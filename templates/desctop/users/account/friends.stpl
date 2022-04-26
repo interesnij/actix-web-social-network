@@ -6,7 +6,7 @@
             <div class="media-body">
                 <h6 class="content-color-primary mb-0">Друзья </h6>
             </div>
-          
+          <% user.count_friends() %>
         </div>
       </a>
     </div>
