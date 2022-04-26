@@ -66,3 +66,9 @@
   <% } %>
   </div>
 </span>
+
+<% if private_bools[4] == true { %>
+  <span class="centered">
+    <span class="btn btn-sm border user_send_page_message" style="width: -webkit-fill-available" data-pk="<%= user.id %>">Написать сообщение</span>
+  </span>
+<% } %>
