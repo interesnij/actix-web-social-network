@@ -967,25 +967,25 @@ impl User {
             suffix = "staff_".to_string();
         }
         if self.is_user_in_block(user_id) {
-            return "desctop/users/button/".to_owned() + &suffix + &"blocked_user.html".to_string();
+            return "desctop/users/button/".to_owned() + &suffix + &"blocked_user.stpl".to_string();
         }
         else if self.is_self_user_in_block(user_id) {
-            return "desctop/users/button/".to_owned() + &suffix + &"blocker_user.html".to_string();
+            return "desctop/users/button/".to_owned() + &suffix + &"blocker_user.stpl".to_string();
         }
         else if self.is_connected_with_user_with_id(user_id){
-            return "desctop/users/button/".to_owned() + &suffix + &"frend_user.html".to_string();
+            return "desctop/users/button/".to_owned() + &suffix + &"frend_user.stpl".to_string();
         }
         else if self.is_followers_user_view(user_id){
-            return "desctop/users/button/".to_owned() + &suffix + &"follow_user.html".to_string();
+            return "desctop/users/button/".to_owned() + &suffix + &"follow_user.stpl".to_string();
         }
         else if self.is_following_user_with_id(user_id){
-            return "desctop/users/button/".to_owned() + &suffix + &"following_user.html".to_string();
+            return "desctop/users/button/".to_owned() + &suffix + &"following_user.stpl".to_string();
         }
         else if self.is_followers_user_with_id(user_id){
-            return "desctop/users/button/".to_owned() + &suffix + &"follow_view_user.html".to_string();
+            return "desctop/users/button/".to_owned() + &suffix + &"follow_view_user.stpl".to_string();
         }
         else {
-            return "desctop/users/button/".to_owned() + &suffix + &"default_user.html".to_string();
+            return "desctop/users/button/".to_owned() + &suffix + &"default_user.stpl".to_string();
         }
     }
     pub fn get_profile(&self) -> UserProfile {
