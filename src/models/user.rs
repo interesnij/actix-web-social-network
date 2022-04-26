@@ -2354,9 +2354,8 @@ impl User {
         let _connection = establish_connection();
         let self_friends = self.get_friends_ids();
         let user_friends = user.get_friends_ids();
-        let mut stack = Vec::new();
-        for (i, int) in self_friends.iter().enumerate() {
-            if i < 7 && user_friends.iter().any(|i| i==int) {
+        for int in self_friends.iter().enumerate() {
+            if user_friends.iter().any(|i| i==int) {
                 return true;
             }
         }
