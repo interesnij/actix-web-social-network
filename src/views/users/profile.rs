@@ -23,7 +23,11 @@ pub async fn user_page(session: Session, req: HttpRequest) -> actix_web::Result<
 
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
-        let _template: String = _type.to_string() + &"users/account/user.stpl".to_string();
+
+        let mut _template = String::new();
+        _template.push_str(_type);
+        _template.push_str("users/account/user.stpl");
+        //let _template: String = _type.to_string() + &"users/account/user.stpl".to_string();
 
         #[derive(TemplateOnce)]
         #[template(path = _template)]
@@ -44,7 +48,7 @@ pub async fn user_page(session: Session, req: HttpRequest) -> actix_web::Result<
     } else {
         let _template = _type + &"users/account/anon_user.stpl".to_string();
         #[derive(TemplateOnce)]
-        #[template(path = &_template)]
+        #[template(path = _template)]
         struct AnonUserPage {
             title:  String,
         }
