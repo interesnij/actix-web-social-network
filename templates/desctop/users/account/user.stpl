@@ -31,13 +31,13 @@
               </figure>
             </a>
           </div>
-          
+
           <% if is_my_user { %>
             <span class="card mb-3 centered">
               <a class="ajax" href="/users/settings/general/">Редактировать</a>
             </span>
            <% } else { %>
-            <% include!("./buttons.stpl"); %>
+            <% include!("buttons.stpl"); %>
            <% } %>
         </div>
     </div>
