@@ -50,7 +50,7 @@ pub async fn index(session: Session, req: HttpRequest) -> actix_web::Result<Http
     let _type = get_folder(req);
     if is_signed_in(&session) {
 
-        let (_request_user, _background) = get_request_user_data(session);
+        let _request_user = get_request_user_data(session);
 
         if _type == "desctop/".to_string() {
             let body = DesctopNewsListTemplate {
