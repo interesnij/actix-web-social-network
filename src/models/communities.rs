@@ -146,7 +146,7 @@ impl Community {
     pub fn get_b_avatar(&self) -> String {
         let avatar_pk = self.get_avatar_pk();
         if avatar_pk != 0 {
-            return "<img src='".to_string() + &self.b_avatar + "' class='detail_photo pointer' photo-pk='".to_string() + &avatar_pk.to_string() + "'>".to_string();
+            return "<img src='".to_string() + &self.b_avatar + &"' class='detail_photo pointer' photo-pk='".to_string() + &avatar_pk.to_string() + &"'>".to_string();
         }
         else {
             return "<img src='/static/images/no_img/b_avatar.png' />".to_string();
