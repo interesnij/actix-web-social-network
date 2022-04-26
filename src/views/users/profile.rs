@@ -24,17 +24,21 @@ pub async fn user_page(session: Session, req: HttpRequest) -> actix_web::Result<
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
 
-
-        #[derive(TemplateOnce)]
         if _type == "desctop/".to_string() {
+            #[derive(TemplateOnce)]
             #[template(path = "desctop/users/account/user.stpl")];
+            struct UserPage {
+                title:        String,
+                request_user: User,
+            };
         }
         else {
+            #[derive(TemplateOnce)]
             #[template(path = "mobile/users/account/user.stpl")];
-        }
-        struct UserPage {
-            title:        String,
-            request_user: User,
+            struct UserPage {
+                title:        String,
+                request_user: User,
+            };
         }
         let body = UserPage {
             title:        "Новости".to_string(),
