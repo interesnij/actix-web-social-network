@@ -38,7 +38,7 @@
             </span>
            <% } else { %>
             <%= buttons_block %>
-            <% include!( "/".to_string() + &buttons_block ); %>
+            <% include!(<%= buttons_block %>); %>
            <% } %>
         </div>
     </div>
