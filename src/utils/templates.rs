@@ -22,12 +22,9 @@ pub fn get_folder(req: HttpRequest) -> String {
     _type
 }
 
-pub fn get_request_user_data(session: Session) -> (User, String) {
+pub fn get_request_user_data(session: Session) -> User {
     use crate::models::SessionUser;
-    use crate::schema::{
-        design_settings::dsl::design_settings,
-        users::dsl::users,
-    };
+    use crate::schema::users::dsl::users;
 
     let _connection = establish_connection();
     let mut user_id = 0;
@@ -38,27 +35,20 @@ pub fn get_request_user_data(session: Session) -> (User, String) {
             user_id = user.id;
         }
     if user_id != 0 {
-        use crate::models::DesignSetting;
-        let _design = design_settings
-            .filter(schema::design_settings::user_id.eq(&user_id))
-            .load::<DesignSetting>(&_connection)
-            .expect("E");
-        let background = &_design[0].background;
-
-        (users
+        users
             .filter(schema::users::id.eq(user_id))
             .load::<User>(&_connection)
             .expect("E")
             .into_iter()
             .nth(0)
-            .unwrap(), background.to_string())
+            .unwrap()
     } else {
-        (users
+        users
             .filter(schema::users::id.eq(1))
             .load::<User>(&_connection)
             .expect("E")
             .into_iter()
             .nth(0)
-            .unwrap(), "".to_string())
+            .unwrap()
     }
 }
