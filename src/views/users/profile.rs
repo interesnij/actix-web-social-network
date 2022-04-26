@@ -24,8 +24,14 @@ pub async fn user_page(session: Session, req: HttpRequest) -> actix_web::Result<
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
 
+
         #[derive(TemplateOnce)]
-        #[template(path = "${_type}users/account/user.stpl")]
+        if _type == "desctop/".to_string() {
+            #[template(path = "desctop/users/account/user.stpl")];
+        }
+        else {
+            #[template(path = "mobile/users/account/user.stpl")];
+        }
         struct UserPage {
             title:        String,
             request_user: User,
