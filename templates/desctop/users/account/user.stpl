@@ -1,8 +1,23 @@
 <% include!("../../../base_block/base_header.stpl"); %>
 
-<div class="main-container" data-type="page_feed">
-
+<div class="main-container"  data-pk="<%= user.id %>" data-type="user_main">
 <%= private_bools[0] %>
+<%= is_my_user %>
+
+<div class="row user_page">
+  <div class="col-lg-4 col-md-5 order-1">
+    <div class="card mb-3">
+        <div class="card-body">
+          <div class="row align-items-center no-gutters">
+            <a class="col">
+              <figure class="mx-auto mb-3 avatar_figure">
+                <%- user.get_b_avatar %>
+              </figure>
+            </a>
+          </div>
+        </div>
+    </div>
+  </div>
 </div>
 
 <% include!("../../../base_block/base_footer.stpl"); %>
