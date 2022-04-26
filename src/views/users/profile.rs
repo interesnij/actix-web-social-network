@@ -30,7 +30,7 @@ pub async fn user_page(session: Session, req: HttpRequest) -> actix_web::Result<
         //let _template: String = _type.to_string() + &"users/account/user.stpl".to_string();
 
         #[derive(TemplateOnce)]
-        #[template(path = _template)]
+        #[template(path = _template.to_string())]
         struct UserPage {
             title:        String,
             request_user: User,
