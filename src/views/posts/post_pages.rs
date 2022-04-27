@@ -16,7 +16,7 @@ use crate::utils::{
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::{User, PostList, Post};
+use crate::models::{User, PostList, Post, Community};
 use serde::Deserialize;
 
 
