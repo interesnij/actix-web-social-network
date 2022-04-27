@@ -40,17 +40,21 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
     let params = params_some.unwrap();
     let mut list: PostList;
     let mut is_page_list: bool;
+    let mut is_section_open = true;
     let object_list: Vec<Post>;
+    let page_user: Option<User>;
+    let page_community: Option<Community>;
 
     if params.user.is_some() {
         let user = get_user(params.user.unwrap());
         list = get_post_list(user.get_selected_post_list_pk());
-        is_page_list = true;
+        page_user = Some(page_user);
     }
     else if params.community.is_some() {
         let community = get_community(params.community.unwrap());
         list = get_post_list(community.get_selected_post_list_pk());
         is_page_list = true;
+        page_community = Some(page_community);
     }
     else {
         list = get_post_list(params.list.unwrap());
@@ -70,6 +74,12 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         let _request_user_id = &_request_user.id;
         let is_user_can_see_post_list = list.is_user_can_see_el(*_request_user_id);
         let is_user_can_create_posts = list.is_user_can_create_el(*_request_user_id);
+        if page_user.is_some() {
+            is_section_open = page_user.is_user_can_see_post(*_request_user_id);
+        }
+        else if page_community.is_some(){
+            is_section_open = page_community.is_user_can_see_post(*_request_user_id);
+        }
 
         if _type == "desctop/".to_string() {
             if list.community_id.is_some() {
@@ -83,6 +93,9 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     is_user_can_see_post_list: bool,
                     is_user_can_create_posts: bool,
                     object_list: Vec<Post>,
+                    user: Option<User>,
+                    community: Option<Community>,
+                    is_section_open: bool,
                 }
                 let body = UserPage {
                     list:                      list,
@@ -91,6 +104,9 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     is_user_can_see_post_list: is_user_can_see_post_list,
                     is_user_can_create_posts:  is_user_can_create_posts,
                     object_list: object_list,
+                    user: Some(page_user),
+                    community: Some(page_community),
+                    is_section_open: is_section_open,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -106,6 +122,9 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     is_user_can_see_post_list: bool,
                     is_user_can_create_posts: bool,
                     object_list: Vec<Post>,
+                    user: Option<User>,
+                    community: Option<Community>,
+                    is_section_open: bool,
                 }
                 let body = UserPage {
                     list:                      list,
@@ -114,6 +133,9 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     is_user_can_see_post_list: is_user_can_see_post_list,
                     is_user_can_create_posts:  is_user_can_create_posts,
                     object_list: object_list,
+                    user: Some(page_user),
+                    community: Some(page_community),
+                    is_section_open: is_section_open,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -131,6 +153,9 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     is_user_can_see_post_list: bool,
                     is_user_can_create_posts: bool,
                     object_list: Vec<Post>,
+                    user: Option<User>,
+                    community: Option<Community>,
+                    is_section_open: bool,
                 }
                 let body = UserPage {
                     list:                      list,
@@ -139,6 +164,9 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     is_user_can_see_post_list: is_user_can_see_post_list,
                     is_user_can_create_posts:  is_user_can_create_posts,
                     object_list: object_list,
+                    user: Some(page_user),
+                    community: Some(page_community),
+                    is_section_open: is_section_open,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -154,6 +182,9 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     is_user_can_see_post_list: bool,
                     is_user_can_create_posts: bool,
                     object_list: Vec<Post>,
+                    user: Option<User>,
+                    community: Option<Community>,
+                    is_section_open: bool,
                 }
                 let body = UserPage {
                     list:                      list,
@@ -162,6 +193,9 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     is_user_can_see_post_list: is_user_can_see_post_list,
                     is_user_can_create_posts:  is_user_can_create_posts,
                     object_list: object_list,
+                    user: Some(page_user),
+                    community: Some(page_community),
+                    is_section_open: is_section_open,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -171,6 +205,12 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
 
     } else {
         let is_user_can_see_post_list = list.is_anon_user_can_see_el();
+        if page_user.is_some() {
+            is_section_open = page_user.is_anon_user_can_see_post();
+        }
+        else if page_community.is_some(){
+            is_section_open = page_community.is_anon_user_can_see_post();
+        }
 
         if _type == "desctop/".to_string() {
             if list.community_id.is_some() {
@@ -181,12 +221,18 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     is_page_list: bool,
                     list:  PostList,
                     object_list: Vec<Post>,
+                    user: Option<User>,
+                    community: Option<Community>,
+                    is_section_open: bool,
                 }
                 let body = UserPage {
                     is_user_can_see_post_list: is_user_can_see_post_list,
                     is_page_list: is_page_list,
                     list:  list,
                     object_list: object_list,
+                    user: Some(page_user),
+                    community: Some(page_community),
+                    is_section_open: is_section_open,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -199,12 +245,18 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     is_page_list: bool,
                     list:  PostList,
                     object_list: Vec<Post>,
+                    user: Option<User>,
+                    community: Option<Community>,
                 }
                 let body = UserPage {
                     is_user_can_see_post_list: is_user_can_see_post_list,
                     is_page_list: is_page_list,
                     list:  list,
                     object_list: object_list,
+                    user: Some(page_user),
+                    community: Some(page_community),
+                    is_section_open: bool,
+                    is_section_open: is_section_open,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -220,12 +272,18 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     is_page_list: bool,
                     list:  PostList,
                     object_list: Vec<Post>,
+                    user: Option<User>,
+                    community: Option<Community>,
+                    is_section_open: bool,
                 }
                 let body = UserPage {
                     is_user_can_see_post_list: is_user_can_see_post_list,
                     is_page_list: is_page_list,
                     list:  list,
                     object_list: object_list,
+                    user: Some(page_user),
+                    community: Some(page_community),
+                    is_section_open: is_section_open,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -238,12 +296,18 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     is_page_list: bool,
                     list:  PostList,
                     object_list: Vec<Post>,
+                    user: Option<User>,
+                    community: Option<Community>,
+                    is_section_open: bool,
                 }
                 let body = UserPage {
                     is_user_can_see_post_list: is_user_can_see_post_list,
                     is_page_list: is_page_list,
                     list:  list,
                     object_list: object_list,
+                    user: Some(page_user),
+                    community: Some(page_community),
+                    is_section_open: is_section_open,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
