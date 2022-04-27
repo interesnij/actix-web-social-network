@@ -39,11 +39,10 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
     }
     let params = params_some.unwrap();
     let mut list: PostList;
-    let mut is_page_list: bool;
-    let mut is_section_open = true;
+    let is_page_list: bool;
     let object_list: Vec<Post>;
-    let mut page_user: Option<User>;
-    let mut page_community: Option<Community>;
+    let page_user: Option<User>;
+    let page_community: Option<Community>;
 
     if params.user.is_some() {
         let user = get_user(params.user.unwrap());
