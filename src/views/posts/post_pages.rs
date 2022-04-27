@@ -38,11 +38,11 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         to_home();
     }
     let params = params_some.unwrap();
-    let mut list: PostList;
+    let list: PostList;
     let is_page_list: bool;
     let object_list: Vec<Post>;
-    let page_user: Option<User>;
-    let page_community: Option<Community>;
+    let page_user: Option<User> = None;
+    let page_community: Option<Community> = None;
 
     if params.user.is_some() {
         let user = get_user(params.user.unwrap());
