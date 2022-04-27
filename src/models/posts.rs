@@ -143,6 +143,9 @@ impl PostList {
     pub fn get_code(&self) -> String {
         return "lpo".to_string() + &self.get_str_id();
     }
+    pub fn is_open(&self) -> bool {
+        return self.types < 10;
+    }
     pub fn get_longest_penalties(&self) -> String {
         use crate::schema::moderated_penalties::dsl::moderated_penalties;
         use crate::models::ModeratedPenaltie;
