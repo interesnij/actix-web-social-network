@@ -100,13 +100,13 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 let body = UserPage {
                     list:                      list,
                     request_user:              _request_user,
-                    is_page_list:              is_page_list,
                     is_user_can_see_post_list: is_user_can_see_post_list,
                     is_user_can_create_posts:  is_user_can_create_posts,
                     object_list: object_list,
                     user: page_user,
                     community: page_community,
                     is_section_open: is_section_open,
+                    is_page_list: is_page_list,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -129,13 +129,13 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 let body = UserPage {
                     list:                      list,
                     request_user:              _request_user,
-                    is_page_list:              is_page_list,
                     is_user_can_see_post_list: is_user_can_see_post_list,
                     is_user_can_create_posts:  is_user_can_create_posts,
                     object_list: object_list,
                     user: page_user,
                     community: page_community,
                     is_section_open: is_section_open,
+                    is_page_list: is_page_list,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -160,13 +160,13 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 let body = UserPage {
                     list:                      list,
                     request_user:              _request_user,
-                    is_page_list:              is_page_list,
                     is_user_can_see_post_list: is_user_can_see_post_list,
                     is_user_can_create_posts:  is_user_can_create_posts,
                     object_list: object_list,
                     user: page_user,
                     community: page_community,
                     is_section_open: is_section_open,
+                    is_page_list: is_page_list,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -189,13 +189,13 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 let body = UserPage {
                     list:                      list,
                     request_user:              _request_user,
-                    is_page_list:              is_page_list,
                     is_user_can_see_post_list: is_user_can_see_post_list,
                     is_user_can_create_posts:  is_user_can_create_posts,
                     object_list: object_list,
                     user: page_user,
                     community: page_community,
                     is_section_open: is_section_open,
+                    is_page_list: is_page_list,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -234,7 +234,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     user: page_user,
                     community: page_community,
                     is_section_open: is_section_open,
-                    is_page_list: bool,
+                    is_page_list: is_page_list,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -253,12 +253,12 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 }
                 let body = UserPage {
                     is_user_can_see_post_list: is_user_can_see_post_list,
-                    is_page_list: is_page_list,
                     list:  list,
                     object_list: object_list,
                     user: page_user,
                     community: page_community,
                     is_section_open: is_section_open,
+                    is_page_list: is_page_list,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
