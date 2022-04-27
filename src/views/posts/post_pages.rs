@@ -72,11 +72,11 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         let _request_user_id = &_request_user.id;
         let is_user_can_see_post_list = list.is_user_can_see_el(*_request_user_id);
         let is_user_can_create_posts = list.is_user_can_create_el(*_request_user_id);
-        if page_user.is_some() {
+        if &page_user.is_some() {
             is_section_open = page_user.as_ref().unwrap().is_user_can_see_post(*_request_user_id);
             is_page_list = true;
         }
-        else if page_community.is_some(){
+        else if &page_community.is_some(){
             is_section_open = page_community.as_ref().unwrap().is_user_can_see_post(*_request_user_id);
             is_page_list = true;
         }
