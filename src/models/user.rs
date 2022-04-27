@@ -585,7 +585,7 @@ impl User {
             return "<i>Онлайн</i>".to_string() + &device;
         }
         else {
-            return gender + &self.last_activity.unwrap().format("%d/%m/%Y").to_string() + &device;
+            return gender + &self.last_activity.format("%d/%m/%Y").to_string() + &device;
         }
     }
     pub fn is_desctop(&self) -> bool {
