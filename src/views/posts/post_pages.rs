@@ -48,13 +48,13 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
     if params.user.is_some() {
         let user = get_user(params.user.unwrap());
         list = get_post_list(user.get_selected_post_list_pk());
-        page_user = Some(page_user);
+        page_user = Some(user);
     }
     else if params.community.is_some() {
         let community = get_community(params.community.unwrap());
         list = get_post_list(community.get_selected_post_list_pk());
         is_page_list = true;
-        page_community = Some(page_community);
+        page_community = Some(community);
     }
     else {
         list = get_post_list(params.list.unwrap());
@@ -231,7 +231,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     list:  list,
                     object_list: object_list,
                     user: page_user,
-                    community: Some(page_community),
+                    community: page_community,
                     is_section_open: is_section_open,
                 }
                 .render_once()
