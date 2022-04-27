@@ -5,14 +5,12 @@ use actix_web::{
     error::InternalError,
     http::StatusCode,
 };
-use serde::Deserialize;
 use crate::utils::{
     is_signed_in,
     get_folder,
     get_request_user_data,
     get_user,
     get_community,
-    get_user,
     get_post_list,
 };
 use actix_session::Session;
@@ -60,7 +58,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
         let _request_user_id = &_request_user.id;
-        let is_user_can_see_post_list = list.is_user_can_see_el(_request_user_id);
+        let is_user_can_see_post_list = list.is_user_can_see_el(*_request_user_id);
         let is_user_can_create_posts = list.is_user_can_create_el(*_request_user_id);
 
         if _type == "desctop/".to_string() {
