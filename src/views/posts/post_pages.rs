@@ -53,12 +53,10 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
     else if params.community.is_some() {
         let community = get_community(params.community.unwrap());
         list = get_post_list(community.get_selected_post_list_pk());
-        is_page_list = true;
         page_community = Some(community);
     }
     else {
         list = get_post_list(params.list.unwrap());
-        is_page_list = false;
     }
 
     if params.page.is_some() {
@@ -76,9 +74,11 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         let is_user_can_create_posts = list.is_user_can_create_el(*_request_user_id);
         if page_user.is_some() {
             is_section_open = page_user.as_ref().unwrap().is_user_can_see_post(*_request_user_id);
+            is_page_list = true;
         }
         else if page_community.is_some(){
             is_section_open = page_community.as_ref().unwrap().is_user_can_see_post(*_request_user_id);
+            is_page_list = true;
         }
 
         if _type == "desctop/".to_string() {
@@ -207,9 +207,11 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         let is_user_can_see_post_list = list.is_anon_user_can_see_el();
         if page_user.is_some() {
             is_section_open = page_user.as_ref().unwrap().is_anon_user_can_see_post();
+            is_page_list = true;
         }
         else if page_community.is_some(){
             is_section_open = page_community.as_ref().unwrap().is_anon_user_can_see_post();
+            is_page_list = true;
         }
 
         if _type == "desctop/".to_string() {
