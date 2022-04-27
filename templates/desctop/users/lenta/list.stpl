@@ -5,7 +5,11 @@
 <div class="csslider infinity slider_100 mt-2">
   <p>Особые записи</p>
   <% for (i, object) in user.get_fixed_posts_ids().iter().enumerate() { %>
-    <input type="radio" name="slides" <% if i == 0 { %>checked="checked"<% } %> id="s_<%= i %>" />
+    <input type="radio" name="slides"
+      <% if i == 0 { %>
+        checked="checked"
+      <% } %>
+      id="s_<%= i %>" />
   <% } %>
   <ul>
     <% for object in user.get_fixed_posts().iter() { %>
@@ -47,7 +51,7 @@
           <% if not list.is_open() == true { %>
             not open!
 
-          <% } elif !object_list.is_empty() { %>
+          <% } else if !object_list.is_empty() { %>
 
             <% for object in object_list.iter() { %>
               <% if object.community_id.is_some() { %>
