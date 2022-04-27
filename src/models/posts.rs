@@ -244,7 +244,7 @@ impl PostList {
             .load::<Post>(&_connection)
             .expect("E.");
     }
-    pub fn get_paginate_items(&self, limit: i32, offset: i32) -> Vec<Post> {
+    pub fn get_paginate_items(&self, limit: i64, offset: i64) -> Vec<Post> {
         use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
