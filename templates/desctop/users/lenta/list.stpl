@@ -1,10 +1,12 @@
-<span class="load_list">
-<% if user.as_ref().unwrap().is_user_can_see_post(request_user.id) == true { %>
+<% let f_user = user.as_ref().unwrap(); %>
 
-<% if user.as_ref().unwrap().count_fix_items() > 1 { %>
+<span class="load_list">
+<% if f_user.is_user_can_see_post(request_user.id) == true { %>
+
+<% if f_user.count_fix_items() > 1 { %>
 <div class="csslider infinity slider_100 mt-2">
   <p>Особые записи</p>
-  <% for (i, object) in user.as_ref().unwrap().get_fixed_posts_ids().iter().enumerate() { %>
+  <% for (i, object) in f_user.get_fixed_posts_ids().iter().enumerate() { %>
     <input type="radio" name="slides"
       <% if i == 0 { %>
         checked="checked"
@@ -12,7 +14,7 @@
       id="s_<%= i %>" />
   <% } %>
   <ul>
-    <% for object in user.as_ref().unwrap().get_fixed_posts().iter() { %>
+    <% for object in f_user.get_fixed_posts().iter() { %>
     <li class="scrollable">
       <% if object.community_id.is_some() { %>
         <% include!("../../communities/lenta/fix_post.stpl"); %>
@@ -23,17 +25,17 @@
     <% } %>
   </ul>
   <div class="slides_arrows">
-    <% for (i, object) in user.as_ref().unwrap().get_fixed_posts_ids().iter().enumerate() { %>
+    <% for (i, object) in f_user.get_fixed_posts_ids().iter().enumerate() { %>
       <label for="s_<%= i %>"></label>
     <% } %>
 
     <label class="goto_first" for="s_1"></label>
-    <label class="goto_last" for="s_<%= user.as_ref().unwrap().count_fix_items() %>"></label>
+    <label class="goto_last" for="s_<%= f_user.count_fix_items() %>"></label>
   </div>
 </div>
-<% } else if user.as_ref().unwrap().count_fix_items() == 1 { %>
+<% } else if f_user.count_fix_items() == 1 { %>
 
-  <% for object in user.as_ref().unwrap().get_fixed_posts().iter() { %>
+  <% for object in f_user.get_fixed_posts().iter() { %>
     <% if object.community_id.is_some() { %>
       <% include!("../../communities/lenta/fix_post.stpl"); %>
     <% } else { %>
