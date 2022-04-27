@@ -1163,17 +1163,6 @@ impl User {
         );
     }
 
-    pub fn count_communities_ru(&self) -> String {
-        use crate::utils::get_count_for_ru;
-
-        return get_count_for_ru(
-            self.count_communities(),
-            " сообщество".to_string(),
-            " сообщества".to_string(),
-            " сообществ".to_string(),
-        );
-    }
-
     pub fn count_videos(&self) -> i32 {
         return self.get_profile().videos;
     }
