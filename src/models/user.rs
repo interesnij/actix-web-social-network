@@ -1059,6 +1059,9 @@ impl User {
     pub fn is_have_doc(&self) -> bool {
         return self.get_profile().docs > 0;
     }
+    pub fn is_have_good(&self) -> bool {
+        return self.get_profile().goods > 0;
+    }
     pub fn is_have_post(&self) -> bool {
         return self.get_profile().posts > 0;
     }
