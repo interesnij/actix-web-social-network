@@ -89,13 +89,13 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 struct UserPage {
                     list:         PostList,
                     request_user: User,
-                    is_page_list: bool,
                     is_user_can_see_post_list: bool,
                     is_user_can_create_posts: bool,
                     object_list: Vec<Post>,
                     user: Option<User>,
                     community: Option<Community>,
                     is_section_open: bool,
+                    is_page_list: bool,
                 }
                 let body = UserPage {
                     list:                      list,
@@ -118,13 +118,13 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 struct UserPage {
                     list:         PostList,
                     request_user: User,
-                    is_page_list: bool,
                     is_user_can_see_post_list: bool,
                     is_user_can_create_posts: bool,
                     object_list: Vec<Post>,
                     user: Option<User>,
                     community: Option<Community>,
                     is_section_open: bool,
+                    is_page_list: bool,
                 }
                 let body = UserPage {
                     list:                      list,
@@ -149,13 +149,13 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 struct UserPage {
                     list:         PostList,
                     request_user: User,
-                    is_page_list: bool,
                     is_user_can_see_post_list: bool,
                     is_user_can_create_posts: bool,
                     object_list: Vec<Post>,
                     user: Option<User>,
                     community: Option<Community>,
                     is_section_open: bool,
+                    is_page_list: bool,
                 }
                 let body = UserPage {
                     list:                      list,
@@ -178,13 +178,13 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 struct UserPage {
                     list:         PostList,
                     request_user: User,
-                    is_page_list: bool,
                     is_user_can_see_post_list: bool,
                     is_user_can_create_posts: bool,
                     object_list: Vec<Post>,
                     user: Option<User>,
                     community: Option<Community>,
                     is_section_open: bool,
+                    is_page_list: bool,
                 }
                 let body = UserPage {
                     list:                      list,
@@ -220,21 +220,21 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 #[template(path = "desctop/communities/lenta/anon_list.stpl")]
                 struct UserPage {
                     is_user_can_see_post_list: bool,
-                    is_page_list: bool,
                     list:  PostList,
                     object_list: Vec<Post>,
                     user: Option<User>,
                     community: Option<Community>,
                     is_section_open: bool,
+                    is_page_list: bool,
                 }
                 let body = UserPage {
                     is_user_can_see_post_list: is_user_can_see_post_list,
-                    is_page_list: is_page_list,
                     list:  list,
                     object_list: object_list,
                     user: page_user,
                     community: page_community,
                     is_section_open: is_section_open,
+                    is_page_list: bool,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -244,12 +244,12 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 #[template(path = "desctop/users/lenta/anon_list.stpl")]
                 struct UserPage {
                     is_user_can_see_post_list: bool,
-                    is_page_list: bool,
                     list:  PostList,
                     object_list: Vec<Post>,
                     user: Option<User>,
                     community: Option<Community>,
                     is_section_open: bool,
+                    is_page_list: bool,
                 }
                 let body = UserPage {
                     is_user_can_see_post_list: is_user_can_see_post_list,
@@ -271,12 +271,12 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 #[template(path = "mobile/communities/lenta/anon_list.stpl")]
                 struct UserPage {
                     is_user_can_see_post_list: bool,
-                    is_page_list: bool,
                     list:  PostList,
                     object_list: Vec<Post>,
                     user: Option<User>,
                     community: Option<Community>,
                     is_section_open: bool,
+                    is_page_list: bool,
                 }
                 let body = UserPage {
                     is_user_can_see_post_list: is_user_can_see_post_list,
@@ -295,12 +295,12 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 #[template(path = "mobile/users/lenta/anon_list.stpl")]
                 struct UserPage {
                     is_user_can_see_post_list: bool,
-                    is_page_list: bool,
                     list:  PostList,
                     object_list: Vec<Post>,
                     user: Option<User>,
                     community: Option<Community>,
                     is_section_open: bool,
+                    is_page_list: bool,
                 }
                 let body = UserPage {
                     is_user_can_see_post_list: is_user_can_see_post_list,
