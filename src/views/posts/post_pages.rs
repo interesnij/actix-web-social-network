@@ -104,8 +104,8 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     is_user_can_see_post_list: is_user_can_see_post_list,
                     is_user_can_create_posts:  is_user_can_create_posts,
                     object_list: object_list,
-                    user: Some(page_user),
-                    community: Some(page_community),
+                    user: page_user,
+                    community: page_community,
                     is_section_open: is_section_open,
                 }
                 .render_once()
@@ -133,8 +133,8 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     is_user_can_see_post_list: is_user_can_see_post_list,
                     is_user_can_create_posts:  is_user_can_create_posts,
                     object_list: object_list,
-                    user: Some(page_user),
-                    community: Some(page_community),
+                    user: page_user,
+                    community: page_community,
                     is_section_open: is_section_open,
                 }
                 .render_once()
@@ -164,8 +164,8 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     is_user_can_see_post_list: is_user_can_see_post_list,
                     is_user_can_create_posts:  is_user_can_create_posts,
                     object_list: object_list,
-                    user: Some(page_user),
-                    community: Some(page_community),
+                    user: page_user,
+                    community: page_community,
                     is_section_open: is_section_open,
                 }
                 .render_once()
@@ -193,8 +193,8 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     is_user_can_see_post_list: is_user_can_see_post_list,
                     is_user_can_create_posts:  is_user_can_create_posts,
                     object_list: object_list,
-                    user: Some(page_user),
-                    community: Some(page_community),
+                    user: page_user,
+                    community: page_community,
                     is_section_open: is_section_open,
                 }
                 .render_once()
@@ -230,7 +230,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     is_page_list: is_page_list,
                     list:  list,
                     object_list: object_list,
-                    user: Some(page_user),
+                    user: page_user,
                     community: Some(page_community),
                     is_section_open: is_section_open,
                 }
@@ -254,8 +254,8 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     is_page_list: is_page_list,
                     list:  list,
                     object_list: object_list,
-                    user: Some(page_user),
-                    community: Some(page_community),
+                    user: page_user,
+                    community: page_community,
                     is_section_open: is_section_open,
                 }
                 .render_once()
@@ -281,8 +281,8 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     is_page_list: is_page_list,
                     list:  list,
                     object_list: object_list,
-                    user: Some(page_user),
-                    community: Some(page_community),
+                    user: page_user,
+                    community: page_community,
                     is_section_open: is_section_open,
                 }
                 .render_once()
@@ -305,8 +305,8 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     is_page_list: is_page_list,
                     list:  list,
                     object_list: object_list,
-                    user: Some(page_user),
-                    community: Some(page_community),
+                    user: page_user,
+                    community: page_community,
                     is_section_open: is_section_open,
                 }
                 .render_once()
