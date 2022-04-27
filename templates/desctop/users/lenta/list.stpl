@@ -44,7 +44,7 @@
 <% } %>
 
 <% include!("../../users/lenta/lists.stpl"); %>
-  <span class="span_list_pk" list-pk="<% list.id %>">
+  <span class="span_list_pk" list-pk="">
     <span class="list_pk" data-uuid="<% list.id %>">
       <% if is_user_can_see_post_list == true { %>
         <span class="post_stream is_paginate">
