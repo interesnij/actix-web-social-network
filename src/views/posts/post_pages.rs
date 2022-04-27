@@ -68,7 +68,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 let folder: &str = "desctop/";
                 let template: &str = "communities/lenta/list.stpl";
                 #[derive(TemplateOnce)]
-                #[template(path = "{}{}", folder, template)]
+                #[template(path = ("{}{}", folder, template))]
                 struct UserPage {
                     list:         PostList,
                     request_user: User,
