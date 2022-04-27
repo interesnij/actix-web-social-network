@@ -160,7 +160,7 @@
         <a class="dropdown-item create_claim pointer">Пожаловаться</a>
       <% } %>
   </span>
-  % } %>
+  <% } %>
 
 <% if private_bools[4] == true { %>
   <span class="centered">
