@@ -65,9 +65,10 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         if _type == "desctop/".to_string() {
             if list.community_id.is_some() {
 
-                let t_path: &str = "desctop/".to_string() + &"communities/lenta/list.stpl".to_string();
+                let folder: &str = "desctop/";
+                let template: &str = "communities/lenta/list.stpl";
                 #[derive(TemplateOnce)]
-                #[template(path = t_path)]
+                #[template(path = folder + template)]
                 struct UserPage {
                     list:         PostList,
                     request_user: User,
