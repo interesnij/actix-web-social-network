@@ -96,9 +96,6 @@
 
       <% include!("stat.stpl"); %>
 
-      {% if is_good_open %}
-        {% include 'desctop/users/profile/goods.html' %}
-      {% endif %}
       <% if private_bools[8] == true { %>
         <% include!("goods.stpl"); %>
       <% } %>
