@@ -21,7 +21,7 @@ use crate::models::{User, PostList, Post};
 use serde::Deserialize;
 
 
-pub fn user_routes(config: &mut web::ServiceConfig) {
+pub fn post_routes(config: &mut web::ServiceConfig) {
     config.route("/posts/list/", web::get().to(post_list_page));
 }
 
