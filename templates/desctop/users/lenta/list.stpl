@@ -12,7 +12,7 @@
       id="s_<%= i %>" />
   <% } %>
   <ul>
-    <% for object in user.get_fixed_posts().iter() { %>
+    <% for object in user.unwrap().get_fixed_posts().iter() { %>
     <li class="scrollable">
       <% if object.community_id.is_some() { %>
         <% include!("../../communities/lenta/fix_post.stpl"); %>
@@ -23,17 +23,17 @@
     <% } %>
   </ul>
   <div class="slides_arrows">
-    <% for (i, object) in user.get_fixed_posts_ids().iter().enumerate() { %>
+    <% for (i, object) in user.unwrap().get_fixed_posts_ids().iter().enumerate() { %>
       <label for="s_<%= i %>"></label>
     <% } %>
 
     <label class="goto_first" for="s_1"></label>
-    <label class="goto_last" for="s_<%= user.count_fix_items() %>"></label>
+    <label class="goto_last" for="s_<%= user.unwrap().count_fix_items() %>"></label>
   </div>
 </div>
-<% } else if user.count_fix_items() == 1 { %>
+<% } else if user.unwrap().count_fix_items() == 1 { %>
 
-  <% for object in user.get_fixed_posts().iter() { %>
+  <% for object in user.unwrap().get_fixed_posts().iter() { %>
     <% if object.community_id.is_some() { %>
       <% include!("../../communities/lenta/fix_post.stpl"); %>
     <% } else { %>
