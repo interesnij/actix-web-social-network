@@ -4,6 +4,7 @@ use crate::views::{
     pages,
     auth,
     profile,
+    profile,
 };
 
 pub fn routes(cfg: &mut web::ServiceConfig) {

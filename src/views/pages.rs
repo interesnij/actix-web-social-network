@@ -1,6 +1,5 @@
 use actix_web::{
     HttpRequest,
-    //Responder,
     HttpResponse,
     error::InternalError,
     http::StatusCode,
@@ -8,7 +7,6 @@ use actix_web::{
 };
 use serde::Deserialize;
 use crate::utils::{is_signed_in, establish_connection, get_folder, get_request_user_data,to_home,};
-//use diesel::prelude::*;
 use actix_session::Session;
 use sailfish::TemplateOnce;
 use crate::models::User;
