@@ -10,7 +10,7 @@
   <ul>
     <% for object in user.get_fixed_posts().iter() { %>
     <li class="scrollable">
-      <% if object.community_id.is_some() %>
+      <% if object.community_id.is_some() { %>
         <% include!("../../communities/lenta/fix_post.stpl"); %>
       <% } else { %>
         <% include!("../../users/lenta/fix_post.stpl"); %>
@@ -30,7 +30,7 @@
 <% } else if user.count_fix_items() == 1 { %>
 
   <% for object in user.get_fixed_posts().iter() { %>
-    <% if object.community_id.is_some() %>
+    <% if object.community_id.is_some() { %>
       <% include!("../../communities/lenta/fix_post.stpl"); %>
     <% } else { %>
       <% include!("../../users/lenta/fix_post.stpl"); %>
@@ -47,10 +47,10 @@
           <% if not list.is_open() == true { %>
             not open!
 
-          <% } elif object_list { %>
+          <% } elif !object_list.is_empty() { %>
 
             <% for object in object_list.iter() { %>
-              <% if object.community_id.is_some() %>
+              <% if object.community_id.is_some() { %>
                 <% include!("../../posts/post_community/post.stpl"); %>
               <% } else { %>
                 <% include!("../../posts/post_user/post.stpl"); %>
@@ -63,7 +63,7 @@
             -->
           <% } %>
 
-          <% if !object && !object_list { %>
+          <% if !object && object_list.is_empty() { %>
             <% include!("../../users/lenta/no_items.stpl"); %>
           <% } %>
         </span>

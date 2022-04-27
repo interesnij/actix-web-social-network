@@ -58,7 +58,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
     }
 
     if params.page.is_some() {
-        object_list = list.get_paginate_items(20, ((params.page.unwrap() - 1) * 20).into();
+        object_list = list.get_paginate_items(20, ((params.page.unwrap() - 1) * 20).into());
     }
     else {
         object_list = list.get_paginate_items(20, 0);
