@@ -61,7 +61,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         let _request_user = get_request_user_data(session);
         let _request_user_id = &_request_user.id;
         let is_user_can_see_post_list = list.is_user_can_see_el(_request_user_id);
-        let is_user_can_create_posts = list.is_user_can_create_el(_request_user_id);
+        let is_user_can_create_posts = list.is_user_can_create_el(*_request_user_id);
 
         if _type == "desctop/".to_string() {
             if list.community_id.is_some() {
@@ -153,7 +153,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         }
 
     } else {
-        let is_user_can_see_post_list = list.is_anon_user_can_see_el(_request_user_id);
+        let is_user_can_see_post_list = list.is_anon_user_can_see_el();
 
         if _type == "desctop/".to_string() {
             if list.community_id.is_some() {
@@ -162,12 +162,12 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 struct UserPage {
                     is_user_can_see_post_list: bool,
                     is_page_list: bool,
-                    user:  User,
+                    list:  PostList,
                 }
                 let body = UserPage {
                     is_user_can_see_post_list: is_user_can_see_post_list,
                     is_page_list: is_page_list,
-                    user:  _user,
+                    list:  list,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -178,12 +178,12 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 struct UserPage {
                     is_user_can_see_post_list: bool,
                     is_page_list: bool,
-                    user:  User,
+                    list:  PostList,
                 }
                 let body = UserPage {
                     is_user_can_see_post_list: is_user_can_see_post_list,
                     is_page_list: is_page_list,
-                    user:  _user,
+                    list:  list,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -197,12 +197,12 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 struct UserPage {
                     is_user_can_see_post_list: bool,
                     is_page_list: bool,
-                    user:  User,
+                    list:  PostList,
                 }
                 let body = UserPage {
                     is_user_can_see_post_list: is_user_can_see_post_list,
                     is_page_list: is_page_list,
-                    user:  _user,
+                    list:  list,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -213,12 +213,12 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 struct UserPage {
                     is_user_can_see_post_list: bool,
                     is_page_list: bool,
-                    user:  User,
+                    list:  PostList,
                 }
                 let body = UserPage {
                     is_user_can_see_post_list: is_user_can_see_post_list,
                     is_page_list: is_page_list,
-                    user:  _user,
+                    list:  list,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
