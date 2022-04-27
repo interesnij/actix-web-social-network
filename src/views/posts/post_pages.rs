@@ -15,34 +15,13 @@ use crate::utils::{
     to_home,
 };
 use actix_session::Session;
-
-use sailfish::{TemplateOnce, compile, TemplateData};
-//use sailfish::dynamic::compile;
-//use sailfish_macros::TemplateData;
-
+use sailfish::TemplateOnce;
 use crate::models::{User, PostList, Post};
 use serde::Deserialize;
 
 
 pub fn post_routes(config: &mut web::ServiceConfig) {
     config.route("/posts/list/", web::get().to(post_list_page));
-    config.route("/test/", web::get().to(test_page));
-}
-
-#[derive(TemplateData)]
-pub struct Team {
-    name: String,
-    score: u8
-}
-pub async fn test_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    let template: DynamicTemplate<Team> = compile::<Team>("desctop/".to_string() + &"communities/lenta/list.stpl".to_string()).unwrap();
-    let data = Team {
-        name: "Jiangsu".into(),
-        score: 43
-    };
-    let result: String = unsafe { template.render(data).unwrap() };
-    println!("{}", result);
-    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(result))
 }
 
 pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
