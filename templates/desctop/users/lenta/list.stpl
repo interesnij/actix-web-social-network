@@ -45,7 +45,8 @@
 
 <% } %>
 
-<% include!("../../users/lenta/lists.stpl"); %>
+<% include!("lists.stpl"); %>
+
   <span class="span_list_pk" list-pk="<%= list.id %>">
     <span class="list_pk" data-uuid="<%= list.id %>">
       <% if is_user_can_see_post_list == true { %>
