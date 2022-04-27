@@ -51,7 +51,7 @@
           <% if list.is_open() == false { %>
             not open!
 
-          <% } else if !object_list.is_empty() { %>
+          <% } else if object_list.len() > 0 { %>
 
             <% for object in object_list.iter() { %>
               <% if object.community_id.is_some() { %>
@@ -67,7 +67,7 @@
             -->
           <% } %>
 
-          <% if object_list.is_empty() { %>
+          <% if object_list.len() == 0{ %>
             <% include!("../../users/lenta/no_items.stpl"); %>
           <% } %>
         </span>
