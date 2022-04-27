@@ -15,13 +15,33 @@ use crate::utils::{
     to_home,
 };
 use actix_session::Session;
-use sailfish::TemplateOnce;
+
+use sailfish::{TemplateOnce, dynamic::compile};
+use sailfish_macros::TemplateData;
+
 use crate::models::{User, PostList, Post};
 use serde::Deserialize;
 
 
 pub fn post_routes(config: &mut web::ServiceConfig) {
     config.route("/posts/list/", web::get().to(post_list_page));
+    config.route("/test/", web::get().to(test_page));
+}
+
+pub async fn test_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    #[derive(TemplateData)]
+    pub struct Team {
+        name: String,
+        score: u8
+    }
+
+    let template: DynamicTemplate<Team> = compile::<Team>("desctop/".to_string() + &"communities/lenta/list.stpl".to_string()).unwrap();
+    let data = Team {
+        name: "Jiangsu".into(),
+        score: 43
+    };
+    let result: String = unsafe { template.render(data).unwrap() };
+    println!("{}", result);
 }
 
 pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
@@ -65,10 +85,8 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         if _type == "desctop/".to_string() {
             if list.community_id.is_some() {
 
-                let folder: &str = "desctop/";
-                let template: &str = "communities/lenta/list.stpl";
                 #[derive(TemplateOnce)]
-                #[template(path = ("{}{}", folder, template))]
+                #[template(path = "desctop/communities/lenta/list.stpl")]
                 struct UserPage {
                     list:         PostList,
                     request_user: User,
