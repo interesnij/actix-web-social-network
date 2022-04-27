@@ -49,14 +49,17 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         let user = get_user(params.user.unwrap());
         list = get_post_list(user.get_selected_post_list_pk());
         page_user = Some(user);
+        is_page_list = true;
     }
     else if params.community.is_some() {
         let community = get_community(params.community.unwrap());
         list = get_post_list(community.get_selected_post_list_pk());
         page_community = Some(community);
+        is_page_list = true;
     }
     else {
         list = get_post_list(params.list.unwrap());
+        is_page_list = false;
     }
 
     if params.page.is_some() {
@@ -72,14 +75,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         let _request_user_id = &_request_user.id;
         let is_user_can_see_post_list = list.is_user_can_see_el(*_request_user_id);
         let is_user_can_create_posts = list.is_user_can_create_el(*_request_user_id);
-        if params.user.is_some() {
-            is_section_open = page_user.as_ref().unwrap().is_user_can_see_post(*_request_user_id);
-            is_page_list = true;
-        }
-        else if params.community.is_some(){
-            is_section_open = page_community.as_ref().unwrap().is_user_can_see_post(*_request_user_id);
-            is_page_list = true;
-        }
 
         if _type == "desctop/".to_string() {
             if list.community_id.is_some() {
@@ -94,7 +89,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: Vec<Post>,
                     user: Option<User>,
                     community: Option<Community>,
-                    is_section_open: bool,
                     is_page_list: bool,
                 }
                 let body = UserPage {
@@ -105,7 +99,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: object_list,
                     user: page_user,
                     community: page_community,
-                    is_section_open: is_section_open,
                     is_page_list: is_page_list,
                 }
                 .render_once()
@@ -123,7 +116,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: Vec<Post>,
                     user: Option<User>,
                     community: Option<Community>,
-                    is_section_open: bool,
                     is_page_list: bool,
                 }
                 let body = UserPage {
@@ -134,7 +126,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: object_list,
                     user: page_user,
                     community: page_community,
-                    is_section_open: is_section_open,
                     is_page_list: is_page_list,
                 }
                 .render_once()
@@ -154,7 +145,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: Vec<Post>,
                     user: Option<User>,
                     community: Option<Community>,
-                    is_section_open: bool,
                     is_page_list: bool,
                 }
                 let body = UserPage {
@@ -165,7 +155,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: object_list,
                     user: page_user,
                     community: page_community,
-                    is_section_open: is_section_open,
                     is_page_list: is_page_list,
                 }
                 .render_once()
@@ -183,7 +172,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: Vec<Post>,
                     user: Option<User>,
                     community: Option<Community>,
-                    is_section_open: bool,
                     is_page_list: bool,
                 }
                 let body = UserPage {
@@ -194,7 +182,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: object_list,
                     user: page_user,
                     community: page_community,
-                    is_section_open: is_section_open,
                     is_page_list: is_page_list,
                 }
                 .render_once()
@@ -205,14 +192,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
 
     } else {
         let is_user_can_see_post_list = list.is_anon_user_can_see_el();
-        if page_user.is_some() {
-            is_section_open = page_user.as_ref().unwrap().is_anon_user_can_see_post();
-            is_page_list = true;
-        }
-        else if page_community.is_some(){
-            is_section_open = page_community.as_ref().unwrap().is_anon_user_can_see_post();
-            is_page_list = true;
-        }
 
         if _type == "desctop/".to_string() {
             if list.community_id.is_some() {
@@ -224,7 +203,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: Vec<Post>,
                     user: Option<User>,
                     community: Option<Community>,
-                    is_section_open: bool,
                     is_page_list: bool,
                 }
                 let body = UserPage {
@@ -233,7 +211,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: object_list,
                     user: page_user,
                     community: page_community,
-                    is_section_open: is_section_open,
                     is_page_list: is_page_list,
                 }
                 .render_once()
@@ -248,7 +225,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: Vec<Post>,
                     user: Option<User>,
                     community: Option<Community>,
-                    is_section_open: bool,
                     is_page_list: bool,
                 }
                 let body = UserPage {
@@ -257,7 +233,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: object_list,
                     user: page_user,
                     community: page_community,
-                    is_section_open: is_section_open,
                     is_page_list: is_page_list,
                 }
                 .render_once()
@@ -275,7 +250,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: Vec<Post>,
                     user: Option<User>,
                     community: Option<Community>,
-                    is_section_open: bool,
                     is_page_list: bool,
                 }
                 let body = UserPage {
@@ -285,7 +259,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: object_list,
                     user: page_user,
                     community: page_community,
-                    is_section_open: is_section_open,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -299,7 +272,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: Vec<Post>,
                     user: Option<User>,
                     community: Option<Community>,
-                    is_section_open: bool,
                     is_page_list: bool,
                 }
                 let body = UserPage {
@@ -309,7 +281,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: object_list,
                     user: page_user,
                     community: page_community,
-                    is_section_open: is_section_open,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
