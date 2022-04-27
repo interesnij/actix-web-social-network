@@ -64,7 +64,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         if _type == "desctop/".to_string() {
             if list.community_id.is_some() {
                 #[derive(TemplateOnce)]
-                #[template(path = "desctop/communties/lenta/list.stpl")]
+                #[template(path = "desctop/communities/lenta/list.stpl")]
                 struct UserPage {
                     list:         PostList,
                     request_user: User,
@@ -108,7 +108,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         else {
             if list.community_id.is_some() {
                 #[derive(TemplateOnce)]
-                #[template(path = "mobile/communties/lenta/list.stpl")]
+                #[template(path = "mobile/communities/lenta/list.stpl")]
                 struct UserPage {
                     list:         PostList,
                     request_user: User,
@@ -156,7 +156,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         if _type == "desctop/".to_string() {
             if list.community_id.is_some() {
                 #[derive(TemplateOnce)]
-                #[template(path = "desctop/communties/lenta/anon_list.stpl")]
+                #[template(path = "desctop/communities/lenta/anon_list.stpl")]
                 struct UserPage {
                     is_user_can_see_post_list: bool,
                     is_page_list: bool,
@@ -191,7 +191,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         else {
             if list.community_id.is_some() {
                 #[derive(TemplateOnce)]
-                #[template(path = "mobile/communties/lenta/anon_list.stpl")]
+                #[template(path = "mobile/communities/lenta/anon_list.stpl")]
                 struct UserPage {
                     is_user_can_see_post_list: bool,
                     is_page_list: bool,
