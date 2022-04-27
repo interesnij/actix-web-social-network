@@ -206,7 +206,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
     } else {
         let is_user_can_see_post_list = list.is_anon_user_can_see_el();
         if page_user.is_some() {
-            is_section_open = page_user.is_anon_user_can_see_post();
+            is_section_open = page_user.unwrap().is_anon_user_can_see_post();
         }
         else if page_community.is_some(){
             is_section_open = page_community.is_anon_user_can_see_post();
@@ -247,6 +247,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: Vec<Post>,
                     user: Option<User>,
                     community: Option<Community>,
+                    is_section_open: bool,
                 }
                 let body = UserPage {
                     is_user_can_see_post_list: is_user_can_see_post_list,
@@ -255,7 +256,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: object_list,
                     user: Some(page_user),
                     community: Some(page_community),
-                    is_section_open: bool,
                     is_section_open: is_section_open,
                 }
                 .render_once()

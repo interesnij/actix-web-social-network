@@ -1,10 +1,10 @@
 <span class="load_list">
 <% if is_section_open == true { %>
 
-<% if user.count_fix_items() > 1 { %>
+<% if user.unwrap().count_fix_items() > 1 { %>
 <div class="csslider infinity slider_100 mt-2">
   <p>Особые записи</p>
-  <% for (i, object) in user.get_fixed_posts_ids().iter().enumerate() { %>
+  <% for (i, object) in user.unwrap().get_fixed_posts_ids().iter().enumerate() { %>
     <input type="radio" name="slides"
       <% if i == 0 { %>
         checked="checked"
