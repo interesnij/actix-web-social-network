@@ -12,6 +12,7 @@ use crate::utils::{
     get_user,
     get_community,
     get_post_list,
+    to_home,
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
@@ -33,8 +34,8 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
 
     let params_some = web::Query::<GetListParams>::from_query(&req.query_string());
     if !params_some.is_ok() {
-        HttpResponse::Ok().body("Not ok".to_string())
-    };
+        to_home();
+    }
     let params = params_some.unwrap();
     let mut list: PostList;
     let mut is_page_list: bool;
