@@ -16,7 +16,8 @@ use crate::utils::{
 };
 use actix_session::Session;
 
-use sailfish::{TemplateOnce, dynamic::compile};
+use sailfish::TemplateOnce;
+use sailfish::dynamic::compile;
 use sailfish_macros::TemplateData;
 
 use crate::models::{User, PostList, Post};
@@ -42,6 +43,7 @@ pub async fn test_page(session: Session, req: HttpRequest) -> actix_web::Result<
     };
     let result: String = unsafe { template.render(data).unwrap() };
     println!("{}", result);
+    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(result))
 }
 
 pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
