@@ -6,7 +6,7 @@
             <div class="media-body">
                 <h6 class="content-color-primary mb-0">Видео </h6>
             </div>
-          <%= user.count_video() %>
+          <%= user.count_videos() %>
         </div>
       </a>
     </div>
