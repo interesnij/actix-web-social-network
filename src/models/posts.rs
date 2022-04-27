@@ -244,6 +244,19 @@ impl PostList {
             .load::<Post>(&_connection)
             .expect("E.");
     }
+    pub fn get_paginate_items(&self, limit: i32, offset: i32) -> Vec<Post> {
+        use crate::schema::posts::dsl::posts;
+
+        let _connection = establish_connection();
+        return posts
+            .filter(schema::posts::post_list_id.eq(self.id))
+            .filter(schema::posts::types.eq("a"))
+            .limit(limit)
+            .offset(offset)
+            .order(schema::posts::created.desc())
+            .load::<Post>(&_connection)
+            .expect("E.");
+    }
     pub fn count_items(&self) -> String {
         if self.count > 0 {
             return self.count.to_string()
