@@ -1,7 +1,7 @@
 <div class="row overflow-x-auto no-gutters pb-2">
   <div class="col-12">
   <ul class="date-list border-top" style="width:max-content">
-    <% for (i, object) in f_user.get_post_lists.iter().enumerate() { %>
+    <% for (i, object) in f_user.get_post_lists().iter().enumerate() { %>
         <% if object.community_id.is_some() { %>
         <% let community = object.get_community(); %>
         <div class="date community list u_list
