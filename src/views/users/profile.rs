@@ -89,10 +89,12 @@ pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
             #[template(path = "desctop/users/account/anon_user.stpl")]
             struct UserPage {
                 title: String,
+                private_bools: Vec<bool>,
                 user:  User,
             }
             let body = UserPage {
                 title: _user.get_full_name(),
+                private_bools: _user.get_anon_profile_all_can_see(),
                 user:  _user,
             }
             .render_once()
@@ -104,10 +106,12 @@ pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
             #[template(path = "mobile/users/account/anon_user.stpl")]
             struct UserPage {
                 title: String,
+                private_bools: Vec<bool>,
                 user:  User,
             }
             let body = UserPage {
                 title: _user.get_full_name(),
+                private_bools: _user.get_anon_profile_all_can_see(),
                 user:  _user,
             }
             .render_once()
