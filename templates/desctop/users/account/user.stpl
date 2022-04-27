@@ -6,10 +6,11 @@
   <div class="col-lg-4 col-md-5 order-1">
     <div class="card mb-3">
         <div class="card-body">
+        <% if is_my_user { %>
           <div class="row align-items-center no-gutters">
             <a class="col">
               <figure class="mx-auto mb-3 avatar_figure">
-              <% if is_my_user { %>
+
                 <% if user.b_avatar.is_some() { %>
                   <%- user.get_b_avatar() %>
                   <form id="add_user_avatar">
@@ -22,21 +23,16 @@
                     <img src="/static/images/no_img/b_avatar.png" class="previous_click pointer">
                   </form>
                 <% } %>
-
-               <% } else { %>
-                  <%- user.get_b_avatar() %>
-               <% } %>
               </figure>
             </a>
           </div>
 
-          <% if is_my_user { %>
-            <span class="card mb-3 centered">
-              <a class="ajax" href="/users/settings/general/">Редактировать</a>
-            </span>
-           <% } else { %>
-            <% include!("buttons.stpl"); %>
-           <% } %>
+          <span class="card mb-3 centered">
+            <a class="ajax" href="/users/settings/general/">Редактировать</a>
+          </span>
+        <% } else { %>
+          <% include!("buttons.stpl"); %>
+        <% } %>
         </div>
     </div>
 
