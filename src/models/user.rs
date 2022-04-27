@@ -1087,7 +1087,7 @@ impl User {
     pub fn count_followers(&self) -> i32 {
         return self.get_profile().follows;
     }
-    pub fn count_followers_ru(&self) -> i32 {
+    pub fn count_followers_ru(&self) -> String {
         use crate::utils::get_count_for_ru;
 
         return get_count_for_ru (
@@ -1111,7 +1111,7 @@ impl User {
     pub fn count_goods(&self) -> i32 {
         return self.get_profile().goods;
     }
-    pub fn count_goods_ru(&self) -> i32 {
+    pub fn count_goods_ru(&self) -> String {
         use crate::utils::get_count_for_ru;
 
         return get_count_for_ru (
@@ -1125,7 +1125,7 @@ impl User {
     pub fn count_tracks(&self) -> i32 {
         return self.get_profile().tracks;
     }
-    pub fn count_tracks_ru(&self) -> i32 {
+    pub fn count_tracks_ru(&self) -> String {
         use crate::utils::get_count_for_ru;
 
         return get_count_for_ru (
@@ -1152,7 +1152,7 @@ impl User {
     pub fn count_communities(&self) -> i32 {
         return self.get_profile().communities;
     }
-    pub fn count_communities_ru(&self) -> i32 {
+    pub fn count_communities_ru(&self) -> String {
         use crate::utils::get_count_for_ru;
 
         return get_count_for_ru (
@@ -1166,7 +1166,7 @@ impl User {
     pub fn count_videos(&self) -> i32 {
         return self.get_profile().videos;
     }
-    pub fn count_videos_ru(&self) -> i32 {
+    pub fn count_videos_ru(&self) -> String {
         use crate::utils::get_count_for_ru;
 
         return get_count_for_ru (
