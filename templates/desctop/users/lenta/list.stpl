@@ -63,7 +63,7 @@
             -->
           <% } %>
 
-          <% if !object && !object_list %>
+          <% if !object && !object_list { %>
             <% include!("../../users/lenta/no_items.stpl"); %>
           <% } %>
         </span>
