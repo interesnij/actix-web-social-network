@@ -2620,6 +2620,19 @@ impl Post {
 
         return new_comment;
     }
+    pub fn get_parent(&self) -> Post {
+        use crate::schema::posts::dsl::posts;
+
+        let _connection = establish_connection();
+        return posts
+            .filter(schema::posts::id.eq(self.parent_id.unwrap()))
+            .filter(schema::posts::types.eq_any(vec!["a", "b"]))
+            .load::<Post>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
 }
 
 /////// PostComment //////
