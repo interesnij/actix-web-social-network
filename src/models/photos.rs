@@ -1534,7 +1534,7 @@ impl PhotoList {
             return community.get_staff_users_ids().iter().any(|&i| i==user_id);
         }
         else {
-            return self.user_id == user.id;
+            return self.user_id == user_id;
         }
     }
 }
@@ -1629,7 +1629,7 @@ impl Photo {
             return community.get_staff_users_ids().iter().any(|&i| i==user_id);
         }
         else {
-            return self.user_id == user.id;
+            return self.user_id == user_id;
         }
     }
     pub fn is_photo(&self) -> bool {

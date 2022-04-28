@@ -1533,7 +1533,7 @@ impl GoodList {
             return community.get_staff_users_ids().iter().any(|&i| i==user_id);
         }
         else {
-            return self.user_id == user.id;
+            return self.user_id == user_id;
         }
     }
 }
@@ -1641,7 +1641,7 @@ impl Good {
             return community.get_staff_users_ids().iter().any(|&i| i==user_id);
         }
         else {
-            return self.user_id == user.id;
+            return self.user_id == user_id;
         }
     }
     pub fn get_code(&self) -> String {

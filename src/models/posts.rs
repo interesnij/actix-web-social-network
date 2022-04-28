@@ -1564,7 +1564,7 @@ impl PostList {
             return community.get_staff_users_ids().iter().any(|&i| i==user_id);
         }
         else {
-            return self.user_id == user.id;
+            return self.user_id == user_id;
         }
     }
 }
@@ -1760,7 +1760,7 @@ impl Post {
             return community.get_staff_users_ids().iter().any(|&i| i==user_id);
         }
         else {
-            return self.user_id == user.id;
+            return self.user_id == user_id;
         }
     }
     pub fn create_post(creator: User, content: Option<String>, category_id: Option<i32>,

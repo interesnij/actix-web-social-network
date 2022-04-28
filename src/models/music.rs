@@ -1288,7 +1288,7 @@ impl MusicList {
             return community.get_staff_users_ids().iter().any(|&i| i==user_id);
         }
         else {
-            return self.user_id == user.id;
+            return self.user_id == user_id;
         }
     }
 }
@@ -1393,7 +1393,7 @@ impl Music {
             return community.get_staff_users_ids().iter().any(|&i| i==user_id);
         }
         else {
-            return self.user_id == user.id;
+            return self.user_id == user_id;
         }
     }
     pub fn get_longest_penalties(&self) -> String {

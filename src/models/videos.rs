@@ -1531,7 +1531,7 @@ impl VideoList {
             return community.get_staff_users_ids().iter().any(|&i| i==user_id);
         }
         else {
-            return self.user_id == user.id;
+            return self.user_id == user_id;
         }
     }
 }
@@ -1711,7 +1711,7 @@ impl Video {
             return community.get_staff_users_ids().iter().any(|&i| i==user_id);
         }
         else {
-            return self.user_id == user.id;
+            return self.user_id == user_id;
         }
     }
     pub fn get_description(&self) -> String {
