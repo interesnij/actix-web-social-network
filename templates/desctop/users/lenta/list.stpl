@@ -51,8 +51,8 @@
     <span class="list_pk" data-uuid="<%= list.id %>">
       <% if is_user_can_see_post_list == true { %>
       <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %>: </span>
-      <% include!("../../generic/items/list_meta.stpl"); %>
-      
+      <% include!("generic/items/list_meta.stpl"); %>
+
         <span class="post_stream is_paginate">
           <% if list.is_open() == false { %>
             not open!
