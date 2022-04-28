@@ -1,4 +1,4 @@
-use diesel::prelude::*;
+//use diesel::prelude::*;
 use crate::schema;
 use crate::schema::{
     notifications,

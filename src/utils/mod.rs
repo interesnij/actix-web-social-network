@@ -8,7 +8,7 @@ pub use self::{
     progs::*,
 };
 
-use serde::{Serialize, Deserialize};
+use serde::Deserialize};
 use argonautica::{Hasher, Verifier};
 use actix_session::Session;
 use diesel::prelude::*;

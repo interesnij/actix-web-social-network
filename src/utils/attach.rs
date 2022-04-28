@@ -1171,8 +1171,6 @@ pub fn post_elements(attach: String, user_id: i32) -> String {
 }
 
 pub fn anon_post_elements(attach: String) -> String {
-    use crate::schema::users::dsl::users;
-
     let _connection = establish_connection();
     let v: Vec<&str> = attach.split(",").collect();
     let mut block = "".to_string();
@@ -1204,8 +1202,6 @@ pub fn anon_post_elements(attach: String) -> String {
     return "<div class='attach_container'>".to_owned() + &block + &"</div>".to_string();
 }
 pub fn edit_post_elements(attach: String) -> String {
-    use crate::schema::users::dsl::users;
-
     let _connection = establish_connection();
     let v: Vec<&str> = attach.split(",").collect();
     let mut block = "".to_string();
@@ -1282,8 +1278,6 @@ pub fn comment_elements(attach: String, user_id: i32) -> String {
 }
 
 pub fn anon_comment_elements(attach: String) -> String {
-    use crate::schema::users::dsl::users;
-
     let _connection = establish_connection();
     let v: Vec<&str> = attach.split(",").collect();
     let mut block = "".to_string();
@@ -1315,8 +1309,6 @@ pub fn anon_comment_elements(attach: String) -> String {
     return "<div class='attach_container'>".to_owned() + &block + &"</div>".to_string();
 }
 pub fn edit_comment_elements(attach: String) -> String {
-    use crate::schema::users::dsl::users;
-
     let _connection = establish_connection();
     let v: Vec<&str> = attach.split(",").collect();
     let mut block = "".to_string();
@@ -1393,8 +1385,6 @@ pub fn message_elements(attach: String, user_id: i32) -> String {
 }
 
 pub fn anon_message_elements(attach: String) -> String {
-    use crate::schema::users::dsl::users;
-
     let _connection = establish_connection();
     let v: Vec<&str> = attach.split(",").collect();
     let mut block = "".to_string();
@@ -1426,8 +1416,6 @@ pub fn anon_message_elements(attach: String) -> String {
     return "<div class='attach_container'>".to_owned() + &block + &"</div>".to_string();
 }
 pub fn edit_message_elements(attach: String) -> String {
-    use crate::schema::users::dsl::users;
-
     let _connection = establish_connection();
     let v: Vec<&str> = attach.split(",").collect();
     let mut block = "".to_string();

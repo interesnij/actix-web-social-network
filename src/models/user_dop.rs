@@ -1,5 +1,5 @@
 use crate::schema;
-use diesel::prelude::*;
+//use diesel::prelude::*;
 use crate::schema::{
     user_profiles,
     user_locations,
