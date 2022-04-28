@@ -30,11 +30,12 @@
                     тема
                   </a>
                   <div class="dropdown-menu" style="left: 100px;">
-                    <% for object in request_user.get_post_categories().iter() { %>
-                    <span data-pk="<%= object.id %>">
-                      <a class="dropdown-item cat_list_select" style="padding-left: 30px;"><%= object.name %></a>
+                    <span data-pk="1">
+                      <a class="dropdown-item cat_list_select" style="padding-left: 30px;">IT</a>
                     </span>
-                    <% } %>
+                    <span data-pk="2">
+                      <a class="dropdown-item cat_list_select" style="padding-left: 30px;">Красота</a>
+                    </span>
                   </div>
                 </div>
 
