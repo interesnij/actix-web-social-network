@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="col" data-type="<%= prefix %><%= comment.id %>" data-subtype="comment">
                         <span class="like like2
-                        <% if comment.likes().iter().any(|&i.id| i==request_user.id) { %>
+                        <% if comment.likes().iter().any(|i.id| i==request_user.id) { %>
                           btn_success
                         <% } else { %>
                           btn_default
@@ -59,7 +59,7 @@
                         <% } %>
                         </span>
                         <span class="dislike dislike2
-                        <% if comment.dislikes().iter().any(|&i| i.id==request_user.id) { %>
+                        <% if comment.dislikes().iter().any(|i| i.id==request_user.id) { %>
                           btn_danger
                         <% } else { %>
                           btn_default
