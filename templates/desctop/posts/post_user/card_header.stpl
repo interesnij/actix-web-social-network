@@ -22,7 +22,7 @@
             <div class="dropdown-menu dropdown-menu-right" data-type="pos<%= object.id %>">
               <% if request_user.id == post_creator.id && object.is_fixed() == true { %>
                 <span class="dropdown-item u_post_unfixed">Открепить</span>
-              <% } else if { %>
+              <% } else { %>
                 <span class="dropdown-item u_post_fixed">Закрепить</span>
               <% } %>
 
