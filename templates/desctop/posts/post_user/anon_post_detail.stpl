@@ -3,7 +3,7 @@
   <% include!("anon_card_header.stpl"); %>
 
   <% if object.content.is_some() { %>
-    <div class="fullscreen text_support pointer">
+    <div class="text_support">
       <%- object.get_format_text() %>
     </div>
   <% } %>

@@ -52,7 +52,7 @@
   <% } %>
   <% } %>
 
-  <% if parent.text.is_some() { %>
+  <% if parent.content.is_some() { %>
     <div class="fullscreen text_support pointer">
       <%- parent.get_format_text() %>
     </div>

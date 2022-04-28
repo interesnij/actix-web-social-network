@@ -1,0 +1,86 @@
+<% let reply_creator = reply.get_commenter(); %>
+
+<div class="media reply">
+   <a href="<%= reply_creator.get_link() %>" class="ajax">
+     <figure>
+       <%- reply_creator.get_s_avatar() %>
+     </figure>
+   </a>
+    <div class="media-body" style="overflow: inherit;">
+    <h5 class="mt-0">
+        <a href="<%= reply_creator.get_link() %>" class="ajax">
+            <span class="commenter_first_name"><%= reply_creator.first_name %></span> <%= reply_creator.last_name %>
+        </a>
+        <small class="text-muted float-right"><%= reply.created %></small>
+    </h5>
+
+    <% if reply.sticker_id.is_some() { %>
+    <% let reply_sticker = reply.get_sticker(); %>
+    <div data-id="<%= reply_sticker.id %>" class="comment_sticker mt-1 pointer show_cticker_info">
+        <img src="<%= reply_sticker.image %>" style="width: 128px;">
+    </div>
+    <% } else { %>
+
+    <span class="comment_text text_support"><%- reply.get_format_text() %></span>
+
+      <% if reply.attach.is_some() { %>
+        <%- reply.get_attach(request_user.id) %>
+      <% } %>
+    <% } %>
+
+        <div class="">
+            <div class="row">
+                <div class="col" data-type="<%= prefix %><%= reply.id %>" data-subtype="comment">
+                    <span class="like btn_default" title="Нравится">
+                        <svg class="svg_s_info" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M0 0h24v24H0V0zm0 0h24v24H0V0z" fill="none"></path>
+                            <path d="M9 21h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.58 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2zM9 9l4.34-4.34L12 10h9v2l-3 7H9V9zM1 9h4v12H1z"></path>
+                        </svg>
+                        <span class="likes_count"><%= reply.likes_count() %></span>
+                    </span>
+
+                    <span class="comment_like_window">
+                      <% if reply.is_have_likes() == true { %>
+                    <div class="comment_like_pop">
+                      <span class="item_likes pointer">Оценили: <span data-count="like"><%= reply.likes_count() %></span> <%= reply.likes_count_ru() %></span>
+                      <span style="display: flex;margin-top: 10px;">
+                        <% for user in reply.window_likes().iter() { %>
+                          <% include!('../../generic/user/voter.stpl'); %>
+                        <% } %>
+                      </span>
+                    </div>
+                    <% } %>
+                    </span>
+
+                    <span class="dislike btn_default" title="Не нравится">
+                        <svg viewBox="0 0 24 24" class="svg_s_info" fill="currentColor">
+                            <path d="M0 0h24v24H0V0zm0 0h24v24H0V0z" fill="none"></path>
+                            <path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm0 12l-4.34 4.34L12 14H3v-2l3-7h9v10zm4-12h4v12h-4z"></path>
+                        </svg>
+                        <span class="dislikes_count"><%= reply.dislikes_count() %></span>
+                    </span>
+
+                    <span class="comment_dislike_window custom_color">
+                     <% if reply.is_have_dislikes() == true { %>
+                     <div class="comment_dislike_pop">
+                     <span class="item_dislikes pointer">Не оценили: <span data-count="dislike"><%= reply.dislikes_count() %></span> <%= reply.dislikes_count_ru() %></span>
+                     <span style="display: flex;margin-top: 10px;">
+                      <% for user in reply.window_dislikes().iter() { %>
+                        <% include!('../../generic/user/voter.stpl'); %>
+                      <% } %>
+                      </span>
+                      </div>
+                      <% } %>
+                    </span>
+
+                    <span flow="up" tooltip="Ответить" class="content-color-secondary reply_comment" style="font-size:15px;cursor:pointer">
+                        <svg class="svg_s_info" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path d="M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z" />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

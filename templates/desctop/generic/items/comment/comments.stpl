@@ -15,13 +15,13 @@
                   <p class="underline" style="display: flex;">Комментарий удален</p>
                 </div>
               <% } else { %>
-                <% include!("reply.stpl"); %>
+                <% include!("anon_reply.stpl"); %>
               <% } %>
             <% } %>
         </span>
       </div>
     <% } else { %>
-      <% include!("parent.stpl"); %>
+      <% include!("anon_parent.stpl"); %>
     <% } %>
   <% } %>
 
