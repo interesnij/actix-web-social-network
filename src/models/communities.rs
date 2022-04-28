@@ -1897,7 +1897,7 @@ impl Community {
         };
         return stack;
     }
-    pub fn get_staff_users_ids(&self) -> Vec<i32> {
+    pub fn get_staff_users_ids(&self) -> Vec<i32> { 
         use crate::schema::communities_memberships::dsl::communities_memberships;
 
         let _connection = establish_connection();

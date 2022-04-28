@@ -111,9 +111,10 @@ impl DocList {
     pub fn is_doc_list(&self) -> bool {
         return true;
     }
-    pub fn is_user_can_edit_delete_item(&self, user: User) -> bool {
+    pub fn is_user_can_edit_delete_item(&self, user_id: i32) -> bool {
         if self.community_id.is_some() {
-            return user.is_staff_of_community(self.community_id.unwrap());
+            let community = self.get_community();
+            return community.get_staff_users_ids().iter().any(|&i| i==user_id);
         }
         else {
             return self.user_id == user.id;
@@ -1265,9 +1266,10 @@ impl Doc {
     pub fn get_code(&self) -> String {
         return "doc".to_string() + &self.get_str_id();
     }
-    pub fn is_user_can_edit_delete_item(&self, user: User) -> bool {
+    pub fn is_user_can_edit_delete_item(&self, user_id: i32) -> bool {
         if self.community_id.is_some() {
-            return user.is_staff_of_community(self.community_id.unwrap());
+            let community = self.get_community();
+            return community.get_staff_users_ids().iter().any(|&i| i==user_id);
         }
         else {
             return self.user_id == user.id;
