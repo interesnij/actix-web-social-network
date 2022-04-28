@@ -6,6 +6,7 @@
     <% } %>
 ">
 
+<% let is_moderator: bool = request_user.perm > 9; %>
 <% if list.is_user_can_edit_delete_item(request_user) { %>
   <a class="create_list pointer" tooltip="Добавить список" flow="up">
     <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24">
@@ -25,7 +26,7 @@
     </a>
   <% } %>
 
-<% } else if request_user.perm.clone() > 9 { %>
+<% } else if is_moderator == true { %>
   <a class="create_close pointer" tooltip="Закрыть" flow="up">
     <svg class="svg_s_info" fill="currentColor" viewBox="0 0 24 24">
       <path d="M0 0h24v24H0z" fill="none" />
