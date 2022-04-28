@@ -2152,45 +2152,70 @@ impl PhotoComment {
 
     pub fn likes(&self) -> Vec<PhotoCommentVote> {
         use crate::schema::photo_comment_votes::dsl::photo_comment_votes;
+        use crate::utils::get_users_from_ids;
 
         let _connection = establish_connection();
-        return photo_comment_votes
+        let votes = photo_comment_votes
             .filter(schema::photo_comment_votes::photo_comment_id.eq(self.id))
             .filter(schema::photo_comment_votes::vote.eq(1))
             .load::<PhotoCommentVote>(&_connection)
             .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
     }
     pub fn dislikes(&self) -> Vec<PhotoCommentVote> {
         use crate::schema::photo_comment_votes::dsl::photo_comment_votes;
+        use crate::utils::get_users_from_ids;
 
         let _connection = establish_connection();
-        return photo_comment_votes
+        let votes = photo_comment_votes
             .filter(schema::photo_comment_votes::photo_comment_id.eq(self.id))
             .filter(schema::photo_comment_votes::vote.eq(-1))
             .load::<PhotoCommentVote>(&_connection)
             .expect("E");
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
     }
     pub fn window_likes(&self) -> Vec<PhotoCommentVote> {
         use crate::schema::photo_comment_votes::dsl::photo_comment_votes;
+        use crate::utils::get_users_from_ids;
 
         let _connection = establish_connection();
-        return photo_comment_votes
+        let votes = photo_comment_votes
             .filter(schema::photo_comment_votes::photo_comment_id.eq(self.id))
             .filter(schema::photo_comment_votes::vote.eq(1))
             .limit(6)
             .load::<PhotoCommentVote>(&_connection)
             .expect("E");
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
     }
     pub fn window_dislikes(&self) -> Vec<PhotoCommentVote> {
         use crate::schema::photo_comment_votes::dsl::photo_comment_votes;
+        use crate::utils::get_users_from_ids;
 
         let _connection = establish_connection();
-        return photo_comment_votes
+        let votes = photo_comment_votes
             .filter(schema::photo_comment_votes::photo_comment_id.eq(self.id))
             .filter(schema::photo_comment_votes::vote.eq(-1))
             .limit(6)
             .load::<PhotoCommentVote>(&_connection)
             .expect("E");
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
     }
     pub fn get_replies(&self) -> Vec<PhotoComment> {
         use crate::schema::photo_comments::dsl::photo_comments;

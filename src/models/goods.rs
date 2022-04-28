@@ -2175,45 +2175,73 @@ impl GoodComment {
 
     pub fn likes(&self) -> Vec<GoodCommentVote> {
         use crate::schema::good_comment_votes::dsl::good_comment_votes;
+        use crate::utils::get_users_from_ids;
 
         let _connection = establish_connection();
-        return good_comment_votes
+        let votes = good_comment_votes
             .filter(schema::good_comment_votes::good_comment_id.eq(self.id))
             .filter(schema::good_comment_votes::vote.eq(1))
             .load::<GoodCommentVote>(&_connection)
             .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
     }
     pub fn dislikes(&self) -> Vec<GoodCommentVote> {
         use crate::schema::good_comment_votes::dsl::good_comment_votes;
+        use crate::utils::get_users_from_ids;
 
         let _connection = establish_connection();
-        return good_comment_votes
+        let votes = good_comment_votes
             .filter(schema::good_comment_votes::good_comment_id.eq(self.id))
             .filter(schema::good_comment_votes::vote.eq(-1))
             .load::<GoodCommentVote>(&_connection)
             .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
     }
     pub fn window_likes(&self) -> Vec<GoodCommentVote> {
         use crate::schema::good_comment_votes::dsl::good_comment_votes;
+        use crate::utils::get_users_from_ids;
 
         let _connection = establish_connection();
-        return good_comment_votes
+        let votes = good_comment_votes
             .filter(schema::good_comment_votes::good_comment_id.eq(self.id))
             .filter(schema::good_comment_votes::vote.eq(1))
             .limit(6)
             .load::<GoodCommentVote>(&_connection)
             .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
     }
     pub fn window_dislikes(&self) -> Vec<GoodCommentVote> {
         use crate::schema::good_comment_votes::dsl::good_comment_votes;
+        use crate::utils::get_users_from_ids;
 
         let _connection = establish_connection();
-        return good_comment_votes
+        let votes = good_comment_votes
             .filter(schema::good_comment_votes::good_comment_id.eq(self.id))
             .filter(schema::good_comment_votes::vote.eq(-1))
             .limit(6)
             .load::<GoodCommentVote>(&_connection)
             .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
     }
     pub fn get_replies(&self) -> Vec<GoodComment> {
         use crate::schema::good_comments::dsl::good_comments;

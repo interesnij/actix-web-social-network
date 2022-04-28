@@ -2170,45 +2170,73 @@ impl VideoComment {
 
     pub fn likes(&self) -> Vec<VideoCommentVote> {
         use crate::schema::video_comment_votes::dsl::video_comment_votes;
+        use crate::utils::get_users_from_ids;
 
         let _connection = establish_connection();
-        return video_comment_votes
+        let votes = video_comment_votes
             .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
             .filter(schema::video_comment_votes::vote.eq(1))
             .load::<VideoCommentVote>(&_connection)
             .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
     }
     pub fn dislikes(&self) -> Vec<VideoCommentVote> {
         use crate::schema::video_comment_votes::dsl::video_comment_votes;
+        use crate::utils::get_users_from_ids;
 
         let _connection = establish_connection();
-        return video_comment_votes
+        let votes = video_comment_votes
             .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
             .filter(schema::video_comment_votes::vote.eq(-1))
             .load::<VideoCommentVote>(&_connection)
             .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
     }
     pub fn window_likes(&self) -> Vec<VideoCommentVote> {
         use crate::schema::video_comment_votes::dsl::video_comment_votes;
+        use crate::utils::get_users_from_ids;
 
         let _connection = establish_connection();
-        return video_comment_votes
+        let votes = video_comment_votes
             .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
             .filter(schema::video_comment_votes::vote.eq(1))
             .limit(6)
             .load::<VideoCommentVote>(&_connection)
             .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
     }
     pub fn window_dislikes(&self) -> Vec<VideoCommentVote> {
         use crate::schema::video_comment_votes::dsl::video_comment_votes;
+        use crate::utils::get_users_from_ids;
 
         let _connection = establish_connection();
-        return video_comment_votes
+        let votes = video_comment_votes
             .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
             .filter(schema::video_comment_votes::vote.eq(-1))
             .limit(6)
             .load::<VideoCommentVote>(&_connection)
             .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
     }
     pub fn get_replies(&self) -> Vec<VideoComment> {
         use crate::schema::video_comments::dsl::video_comments;
