@@ -1528,7 +1528,14 @@ impl PhotoList {
             .expect("E");
        return true;
     }
-
+    pub fn is_user_can_edit_delete_item(&self, user: User) -> bool {
+        if self.community_id.is_some() {
+            return user.is_staff_of_community(self.community_id.unwrap());
+        }
+        else {
+            return self.user_id == user.id;
+        }
+    }
 }
 /////// Photo //////
 
