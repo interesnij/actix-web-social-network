@@ -1886,6 +1886,18 @@ impl GoodComment {
             .nth(0)
             .unwrap();
     }
+    pub fn get_sticker(&self) -> Sticker {
+        use crate::schema::stickers::dsl::stickers;
+
+        let _connection = establish_connection();
+        return stickers
+            .filter(schema::stickers::id.eq(self.sticker_id.unwrap()))
+            .load::<Sticker>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
     pub fn get_commenter(&self) -> User {
         use crate::schema::users::dsl::users;
 
