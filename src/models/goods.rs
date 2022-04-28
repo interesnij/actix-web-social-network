@@ -2173,7 +2173,7 @@ impl GoodComment {
         return self.repost > 0;
     }
 
-    pub fn likes(&self) -> Vec<GoodCommentVote> {
+    pub fn likes(&self) -> Vec<User> {
         use crate::schema::good_comment_votes::dsl::good_comment_votes;
         use crate::utils::get_users_from_ids;
 
@@ -2190,7 +2190,7 @@ impl GoodComment {
         };
         return get_users_from_ids(stack);
     }
-    pub fn dislikes(&self) -> Vec<GoodCommentVote> {
+    pub fn dislikes(&self) -> Vec<User> {
         use crate::schema::good_comment_votes::dsl::good_comment_votes;
         use crate::utils::get_users_from_ids;
 
@@ -2207,7 +2207,7 @@ impl GoodComment {
         };
         return get_users_from_ids(stack);
     }
-    pub fn window_likes(&self) -> Vec<GoodCommentVote> {
+    pub fn window_likes(&self) -> Vec<User> {
         use crate::schema::good_comment_votes::dsl::good_comment_votes;
         use crate::utils::get_users_from_ids;
 
@@ -2225,7 +2225,7 @@ impl GoodComment {
         };
         return get_users_from_ids(stack);
     }
-    pub fn window_dislikes(&self) -> Vec<GoodCommentVote> {
+    pub fn window_dislikes(&self) -> Vec<User> {
         use crate::schema::good_comment_votes::dsl::good_comment_votes;
         use crate::utils::get_users_from_ids;
 

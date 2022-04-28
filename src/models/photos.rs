@@ -2150,7 +2150,7 @@ impl PhotoComment {
         return self.repost > 0;
     }
 
-    pub fn likes(&self) -> Vec<PhotoCommentVote> {
+    pub fn likes(&self) -> Vec<User> {
         use crate::schema::photo_comment_votes::dsl::photo_comment_votes;
         use crate::utils::get_users_from_ids;
 
@@ -2167,7 +2167,7 @@ impl PhotoComment {
         };
         return get_users_from_ids(stack);
     }
-    pub fn dislikes(&self) -> Vec<PhotoCommentVote> {
+    pub fn dislikes(&self) -> Vec<User> {
         use crate::schema::photo_comment_votes::dsl::photo_comment_votes;
         use crate::utils::get_users_from_ids;
 
@@ -2183,7 +2183,7 @@ impl PhotoComment {
         };
         return get_users_from_ids(stack);
     }
-    pub fn window_likes(&self) -> Vec<PhotoCommentVote> {
+    pub fn window_likes(&self) -> Vec<User> {
         use crate::schema::photo_comment_votes::dsl::photo_comment_votes;
         use crate::utils::get_users_from_ids;
 
@@ -2200,7 +2200,7 @@ impl PhotoComment {
         };
         return get_users_from_ids(stack);
     }
-    pub fn window_dislikes(&self) -> Vec<PhotoCommentVote> {
+    pub fn window_dislikes(&self) -> Vec<User> {
         use crate::schema::photo_comment_votes::dsl::photo_comment_votes;
         use crate::utils::get_users_from_ids;
 

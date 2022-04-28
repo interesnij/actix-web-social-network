@@ -2168,7 +2168,7 @@ impl VideoComment {
         return self.repost > 0;
     }
 
-    pub fn likes(&self) -> Vec<VideoCommentVote> {
+    pub fn likes(&self) -> Vec<User> {
         use crate::schema::video_comment_votes::dsl::video_comment_votes;
         use crate::utils::get_users_from_ids;
 
@@ -2185,7 +2185,7 @@ impl VideoComment {
         };
         return get_users_from_ids(stack);
     }
-    pub fn dislikes(&self) -> Vec<VideoCommentVote> {
+    pub fn dislikes(&self) -> Vec<User> {
         use crate::schema::video_comment_votes::dsl::video_comment_votes;
         use crate::utils::get_users_from_ids;
 
@@ -2202,7 +2202,7 @@ impl VideoComment {
         };
         return get_users_from_ids(stack);
     }
-    pub fn window_likes(&self) -> Vec<VideoCommentVote> {
+    pub fn window_likes(&self) -> Vec<User> {
         use crate::schema::video_comment_votes::dsl::video_comment_votes;
         use crate::utils::get_users_from_ids;
 
@@ -2220,7 +2220,7 @@ impl VideoComment {
         };
         return get_users_from_ids(stack);
     }
-    pub fn window_dislikes(&self) -> Vec<VideoCommentVote> {
+    pub fn window_dislikes(&self) -> Vec<User> {
         use crate::schema::video_comment_votes::dsl::video_comment_votes;
         use crate::utils::get_users_from_ids;
 

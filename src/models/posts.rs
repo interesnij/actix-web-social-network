@@ -2470,7 +2470,7 @@ impl Post {
         return "files_0".to_string();
     }
 
-    pub fn likes(&self) -> Vec<PostVote> {
+    pub fn likes(&self) -> Vec<User> {
         use crate::schema::post_votes::dsl::post_votes;
         use crate::utils::get_users_from_ids;
 
@@ -2478,7 +2478,7 @@ impl Post {
         let votes = post_votes
             .filter(schema::post_votes::post_id.eq(self.id))
             .filter(schema::post_votes::vote.eq(1))
-            .load::<PostVote>(&_connection)
+            .load::<User>(&_connection)
             .expect("E");
         let mut stack = Vec::new();
         for _item in votes.iter() {
@@ -2486,7 +2486,7 @@ impl Post {
         };
         return get_users_from_ids(stack);
     }
-    pub fn dislikes(&self) -> Vec<PostVote> {
+    pub fn dislikes(&self) -> Vec<User> {
         use crate::schema::post_votes::dsl::post_votes;
         use crate::utils::get_users_from_ids;
 
@@ -2494,7 +2494,7 @@ impl Post {
         let votes = post_votes
             .filter(schema::post_votes::post_id.eq(self.id))
             .filter(schema::post_votes::vote.eq(-1))
-            .load::<PostVote>(&_connection)
+            .load::<User>(&_connection)
             .expect("E");
 
         let mut stack = Vec::new();
@@ -2524,7 +2524,7 @@ impl Post {
             .load::<Post>(&_connection)
             .expect("E");
     }
-    pub fn window_likes(&self) -> Vec<PostVote> {
+    pub fn window_likes(&self) -> Vec<User> {
         use crate::schema::post_votes::dsl::post_votes;
         use crate::utils::get_users_from_ids;
 
@@ -2542,7 +2542,7 @@ impl Post {
         };
         return get_users_from_ids(stack);
     }
-    pub fn window_dislikes(&self) -> Vec<PostVote> {
+    pub fn window_dislikes(&self) -> Vec<User> {
         use crate::schema::post_votes::dsl::post_votes;
         use crate::utils::get_users_from_ids;
 
@@ -3059,7 +3059,7 @@ impl PostComment {
         return self.disliked > 0;
     }
 
-    pub fn likes(&self) -> Vec<PostCommentVote> {
+    pub fn likes(&self) -> Vec<User> {
         use crate::schema::post_comment_votes::dsl::post_comment_votes;
         use crate::utils::get_users_from_ids;
 
@@ -3076,7 +3076,7 @@ impl PostComment {
         };
         return get_users_from_ids(stack);
     }
-    pub fn dislikes(&self) -> Vec<PostCommentVote> {
+    pub fn dislikes(&self) -> Vec<User> {
         use crate::schema::post_comment_votes::dsl::post_comment_votes;
         use crate::utils::get_users_from_ids;
 
@@ -3093,7 +3093,7 @@ impl PostComment {
         };
         return get_users_from_ids(stack);
     }
-    pub fn window_likes(&self) -> Vec<PostCommentVote> {
+    pub fn window_likes(&self) -> Vec<User> {
         use crate::schema::post_comment_votes::dsl::post_comment_votes;
         use crate::utils::get_users_from_ids;
 
@@ -3111,7 +3111,7 @@ impl PostComment {
         };
         return get_users_from_ids(stack);
     }
-    pub fn window_dislikes(&self) -> Vec<PostCommentVote> {
+    pub fn window_dislikes(&self) -> Vec<User> {
         use crate::schema::post_comment_votes::dsl::post_comment_votes;
         use crate::utils::get_users_from_ids;
 
