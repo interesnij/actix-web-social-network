@@ -2432,6 +2432,9 @@ impl Post {
     pub fn is_have_dislikes(&self) -> bool {
         return self.disliked > 0;
     }
+    pub fn is_have_reposts(&self) -> bool {
+        return self.repost > 0;
+    }
 
     pub fn fixed_post(&self, user: User) -> bool {
         if user.is_can_fixed_post() {

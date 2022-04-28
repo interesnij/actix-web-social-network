@@ -2144,6 +2144,9 @@ impl VideoComment {
     pub fn is_have_dislikes(&self) -> bool {
         return self.disliked > 0;
     }
+    pub fn is_have_reposts(&self) -> bool {
+        return self.repost > 0;
+    }
 
     pub fn likes(&self) -> Vec<VideoCommentVote> {
         use crate::schema::video_comment_votes::dsl::video_comment_votes;

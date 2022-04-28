@@ -2150,6 +2150,9 @@ impl GoodComment {
     pub fn is_have_dislikes(&self) -> bool {
         return self.disliked > 0;
     }
+    pub fn is_have_reposts(&self) -> bool {
+        return self.repost > 0;
+    }
 
     pub fn likes(&self) -> Vec<GoodCommentVote> {
         use crate::schema::good_comment_votes::dsl::good_comment_votes;
