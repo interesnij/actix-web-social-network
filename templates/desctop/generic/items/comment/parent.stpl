@@ -52,7 +52,7 @@
                           <span class="item_likes pointer">Оценили: <span data-count="like"><%= comment.likes_count() %></span> <%= comment.likes_count_ru() %></span>
                           <span style="display: flex;margin-top: 10px;">
                             <% for user in comment.window_likes().iter() { %>
-                              <% include!('../../generic/user/voter.stpl'); %>
+                              <% include!("../../generic/user/voter.stpl"); %>
                             <% } %>
                           </span>
                         </div>
@@ -78,7 +78,7 @@
                         <span class="item_dislikes pointer">Не оценили: <span data-count="dislike"><%= comment.dislikes_count() %></span> <%= comment.dislikes_count_ru() %></span>
                         <span style="display: flex;margin-top: 10px;">
                           <% for user in comment.window_dislikes().iter() { %>
-                            <% include!('../../generic/user/voter.stpl'); %>
+                            <% include!("../../generic/user/voter.stpl"); %>
                           <% } %>
                           </span>
                         </div>
