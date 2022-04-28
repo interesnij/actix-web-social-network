@@ -8,7 +8,7 @@ use crate::models::{
     Chat, Message, UserLocation, Smile, Sticker, Community, UserProfile, Friend,
     Post, Photo, Music, Video, Survey, Doc, Good,
     PostList, PhotoList, MusicList, VideoList, SurveyList, DocList, GoodList,
-    Follow, Notification, UserPrivate, UserBlock,
+    Follow, Notification, UserPrivate, UserBlock, PostCategory,
 };
 
 ///// Типы пользоватетеля
@@ -4707,6 +4707,13 @@ impl User {
           .execute(&_connection)
           .expect("E");
         return true;
+    }
+
+    pub fn get_post_categories(&self) -> Vec<PostCategorie> {
+        let _connection = establish_connection();
+        return schema::post_categories::table
+            .load::<PostCategorie>(&_connection)
+            .expect("could not load tags");
     }
 }
 
