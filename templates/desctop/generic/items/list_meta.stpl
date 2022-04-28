@@ -1,5 +1,5 @@
 
-<span data-type="<%= list.get_code() %>" data-community-id="<%= list.community_id.unwrap() %>">
+<span data-type="<%= list.get_code() %>" data-community-id="<%= list.community_id %>">
 
 <% if request_user.is_moderator() { %>
 <a class="create_close pointer" tooltip="Закрыть" flow="up">
