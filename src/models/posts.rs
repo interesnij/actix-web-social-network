@@ -2478,7 +2478,7 @@ impl Post {
         let votes = post_votes
             .filter(schema::post_votes::post_id.eq(self.id))
             .filter(schema::post_votes::vote.eq(1))
-            .load::<User>(&_connection)
+            .load::<PostVote>(&_connection)
             .expect("E");
         let mut stack = Vec::new();
         for _item in votes.iter() {
@@ -2494,7 +2494,7 @@ impl Post {
         let votes = post_votes
             .filter(schema::post_votes::post_id.eq(self.id))
             .filter(schema::post_votes::vote.eq(-1))
-            .load::<User>(&_connection)
+            .load::<PostVote>(&_connection)
             .expect("E");
 
         let mut stack = Vec::new();
