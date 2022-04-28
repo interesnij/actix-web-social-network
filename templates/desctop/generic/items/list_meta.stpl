@@ -25,7 +25,7 @@
     </a>
   <% } %>
 
-<% } else if request_user.perm > 9 { %>
+<% } else if request_user.perm.clone() > 9 { %>
   <a class="create_close pointer" tooltip="Закрыть" flow="up">
     <svg class="svg_s_info" fill="currentColor" viewBox="0 0 24 24">
       <path d="M0 0h24v24H0z" fill="none" />
