@@ -20,7 +20,7 @@
               <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
             </a>
             <div class="dropdown-menu dropdown-menu-right" data-type="pos<%= object.id %>">
-              <% if request_user.id == post_creator.id && object.is_fixed() { %>
+              <% if request_user.id == post_creator.id && object.is_fixed() == true { %>
                 <span class="dropdown-item u_post_unfixed">Открепить</span>
               <% } else if { %>
                 <span class="dropdown-item u_post_fixed">Закрепить</span>
@@ -30,9 +30,8 @@
                 <span class="dropdown-item u_post_remove">Удалить запись</span>
                 <span class="dropdown-item u_post_edit">Редактировать</span>
                 <span class="dropdown-item item_stat_f">Статистика записи</span>
-              <% } %>
 
-              <% } else if request_user.is_moderator { %>
+              <% } else if request_user.is_moderator() == true { %>
                 <span class="dropdown-item u_post_close">Закрыть</span>
               <% } else if { %>
                 <span class="dropdown-item post_claim">Пожаловаться</span>
