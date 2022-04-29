@@ -13,7 +13,7 @@
                 </div>
                 <div class="form-group">
                   <label>Описание</label>
-                  <input <%= description %> name="description" class="form-control">
+                  <input <% if description.is_some() { %><%= description.unwrap() %><% } %> name="description" class="form-control">
                 </div>
                 <% if community_id.is_some() { %>
                   <% include!("../../base_block/perm/edit_community_list_perm.stpl"); %>
