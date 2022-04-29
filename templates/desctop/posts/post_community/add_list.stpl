@@ -13,7 +13,7 @@
                   <label>Описание</label>
                   <input name="description" class="form-control">
               </div>
-              <% include!("../../../base_block/perm/create_community_list_comment_perm.html"); %>
+              <% include!("../../../base_block/perm/create_community_list_comment_perm.stpl"); %>
 
             </div>
             <div class="card-footer">
