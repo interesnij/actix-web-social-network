@@ -268,7 +268,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         let mut text = "".to_string();
         let mut have_comments = false;
         let mut name = "".to_string();
-        let mut description = "".to_string();
+        let mut description = None;
 
         let mut can_see_el = "".to_string();
         let mut can_see_comment = "".to_string();
@@ -294,7 +294,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             have_comments = true;
             let list = get_post_list(pk);
             name = list.name;
-            description = list.description;
+            description = Some(list.description);
             can_see_el = list.can_see_el;
             can_see_comment = list.can_see_comment;
             create_el = list.create_el;
@@ -308,7 +308,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             have_comments = true;
             let list = get_photo_list(pk);
             name = list.name;
-            description = list.description;
+            description = Some(list.description);
             can_see_el = list.can_see_el;
             can_see_comment = list.can_see_comment;
             create_el = list.create_el;
@@ -322,7 +322,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             have_comments = true;
             let list = get_good_list(pk);
             name = list.name;
-            description = list.description;
+            description = Some(list.description);
             can_see_el = list.can_see_el;
             can_see_comment = list.can_see_comment;
             create_el = list.create_el;
@@ -336,7 +336,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             have_comments = true;
             let list = get_video_list(pk);
             name = list.name;
-            description = list.description;
+            description = Some(list.description);
             can_see_el = list.can_see_el;
             can_see_comment = list.can_see_comment;
             create_el = list.create_el;
@@ -350,7 +350,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             have_comments = false;
             let list = get_doc_list(pk);
             name = list.name;
-            description = list.description;
+            description = Some(list.description);
             can_see_el = list.can_see_el;
             create_el = list.create_el;
             copy_el = list.copy_el;
@@ -362,7 +362,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             have_comments = false;
             let list = get_music_list(pk);
             name = list.name;
-            description = list.description;
+            description = Some(list.description);
             can_see_el = list.can_see_el;
             create_el = list.create_el;
             copy_el = list.copy_el;
@@ -374,7 +374,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             have_comments = false;
             let list = get_survey_list(pk);
             name = list.name;
-            description = list.description;
+            description = Some(list.description);
             can_see_el = list.can_see_el;
             create_el = list.create_el;
             copy_el = list.copy_el;
@@ -390,7 +390,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 text:         String,
                 community_id: Option<i32>,
                 name:         String,
-                description:  String,
+                description:  Option<String>,
                 can_see_el:   String,
                 can_see_comment:   String,
                 create_el:    String,
@@ -416,7 +416,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 community_id: params.community_id.clone(),
 
                 name:         name,
-                description:  description,
+                description: Some(list.description),
                 can_see_el:   can_see_el,
                 can_see_comment:   can_see_comment,
                 create_el:    create_el,
@@ -450,7 +450,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 text:         String,
                 community_id: Option<i32>,
                 name:         String,
-                description:  String,
+                description:  Option<String>,
                 can_see_el:   String,
                 create_el:    String,
                 copy_el:      String,
@@ -470,7 +470,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 community_id: params.community_id.clone(),
 
                 name:         name,
-                description:  description,
+                description:  Some(list.description),
                 can_see_el:   can_see_el,
                 create_el:    create_el,
                 copy_el:      copy_el,
