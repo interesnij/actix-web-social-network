@@ -1,19 +1,17 @@
 <%
 use crate::models::{PostList, PhotoList};
-use crate::utils::get_post_list;
-use crate::utils::get_photo_list;
+use crate::utils::{get_post_list, get_photo_list}
 
 enum ModelSwitch {
-    get_post_list(pk),
-    get_photo_list(pk),
+    get_post_list(i32),
+    get_photo_list(i32),
 };
+
 let mut list: ModelSwitch;
 if let suffix = "lpo".to_string() {
-use crate::utils::get_post_list;
   list = ModelSwitch::get_post_list(pk);
 }
 if let suffix = "lph".to_string() {
-  use crate::utils::get_photo_list;
   list = ModelSwitch::get_photo_list(pk);
 }
 %>
