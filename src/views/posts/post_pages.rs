@@ -53,7 +53,8 @@ pub async fn add_user_post_list_page(session: Session, req: HttpRequest) -> acti
 pub async fn edit_user_post_list_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
-        let list = get_post_list(_id);
+        let _list_id : i32 = *_id;
+        let list = get_post_list(_list_id); 
         //let creator = get_user(list.user_id);
 
         #[derive(TemplateOnce)]
