@@ -52,7 +52,7 @@ on('body', 'click', '.create_list', function() {
   parent = this.parentElement;
   type = parent.getAttribute('data-type');
   community_id = parent.getAttribute('data-community-id');
-  if (type.indexOf('lpo')) {
+  if (type.indexOf('lpo') !== -1) {
     if (community_id) {
       url = "/posts/add_user_list/";
     } else {
