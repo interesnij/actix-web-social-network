@@ -294,7 +294,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             have_comments = true;
             let list = get_post_list(pk);
             name = list.name;
-            description = Some(list.description);
+            description = list.description;
             can_see_el = list.can_see_el;
             can_see_comment = list.can_see_comment;
             create_el = list.create_el;
@@ -308,7 +308,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             have_comments = true;
             let list = get_photo_list(pk);
             name = list.name;
-            description = Some(list.description);
+            description = list.description;
             can_see_el = list.can_see_el;
             can_see_comment = list.can_see_comment;
             create_el = list.create_el;
@@ -322,7 +322,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             have_comments = true;
             let list = get_good_list(pk);
             name = list.name;
-            description = Some(list.description);
+            description = list.description;
             can_see_el = list.can_see_el;
             can_see_comment = list.can_see_comment;
             create_el = list.create_el;
@@ -336,7 +336,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             have_comments = true;
             let list = get_video_list(pk);
             name = list.name;
-            description = Some(list.description);
+            description = list.description;
             can_see_el = list.can_see_el;
             can_see_comment = list.can_see_comment;
             create_el = list.create_el;
@@ -350,7 +350,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             have_comments = false;
             let list = get_doc_list(pk);
             name = list.name;
-            description = Some(list.description);
+            description = list.description;
             can_see_el = list.can_see_el;
             create_el = list.create_el;
             copy_el = list.copy_el;
@@ -362,7 +362,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             have_comments = false;
             let list = get_music_list(pk);
             name = list.name;
-            description = Some(list.description);
+            description = list.description;
             can_see_el = list.can_see_el;
             create_el = list.create_el;
             copy_el = list.copy_el;
@@ -374,7 +374,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             have_comments = false;
             let list = get_survey_list(pk);
             name = list.name;
-            description = Some(list.description);
+            description = list.description;
             can_see_el = list.can_see_el;
             create_el = list.create_el;
             copy_el = list.copy_el;
