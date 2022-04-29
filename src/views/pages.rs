@@ -19,33 +19,31 @@ pub fn pages_routes(config: &mut web::ServiceConfig) {
     //config.route("/add_list/", web::post().to(post_add_list_page));
 }
 
-// контекст шаблонов входа или страницы новостей, в зависимости
-// от статуса аутентификации пользователя
-#[derive(TemplateOnce)]
-#[template(path = "desctop/main/auth/auth.stpl")]
-struct DesctopAuthTemplate {
-    title: String,
-}
-#[derive(TemplateOnce)]
-#[template(path = "desctop/main/lists/news_list.stpl")]
-struct DesctopNewsListTemplate {
-    title:        String,
-    request_user: User,
-}
-
-#[derive(TemplateOnce)]
-#[template(path = "mobile/main/auth/auth.stpl")]
-struct MobileAuthTemplate {
-    title: String,
-}
-#[derive(TemplateOnce)]
-#[template(path = "mobile/main/lists/news_list.stpl")]
-struct MobileNewsListTemplate {
-    title:        String,
-    request_user: User,
-}
-
 pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    #[derive(TemplateOnce)]
+    #[template(path = "desctop/main/auth/auth.stpl")]
+    struct DesctopAuthTemplate {
+        title: String,
+    }
+    #[derive(TemplateOnce)]
+    #[template(path = "desctop/main/lists/news_list.stpl")]
+    struct DesctopNewsListTemplate {
+        title:        String,
+        request_user: User,
+    }
+
+    #[derive(TemplateOnce)]
+    #[template(path = "mobile/main/auth/auth.stpl")]
+    struct MobileAuthTemplate {
+        title: String,
+    }
+    #[derive(TemplateOnce)]
+    #[template(path = "mobile/main/lists/news_list.stpl")]
+    struct MobileNewsListTemplate {
+        title:        String,
+        request_user: User,
+    }
+
     let _connection = establish_connection();
     let _type = get_folder(req);
     if is_signed_in(&session) {
@@ -95,21 +93,20 @@ pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result
     }
 }
 
-// контекст шаблонов рекомендаций записей
-//DesctopFeaturedListTemplate<'a> == request_user: &'a User
-#[derive(TemplateOnce)]
-#[template(path = "desctop/main/lists/featured_list.stpl")]
-struct DesctopFeaturedListTemplate {
-    title:        String,
-    request_user: User,
-}
-#[derive(TemplateOnce)]
-#[template(path = "mobile/main/lists/featured_list.stpl")]
-struct MobileFeaturedListTemplate {
-    title:        String,
-    request_user: User,
-}
 pub async fn featured_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    #[derive(TemplateOnce)]
+    #[template(path = "desctop/main/lists/featured_list.stpl")]
+    struct DesctopFeaturedListTemplate {
+        title:        String,
+        request_user: User,
+    }
+    #[derive(TemplateOnce)]
+    #[template(path = "mobile/main/lists/featured_list.stpl")]
+    struct MobileFeaturedListTemplate {
+        title:        String,
+        request_user: User,
+    }
+
     let _connection = establish_connection();
     let _type = get_folder(req);
     if is_signed_in(&session) {
