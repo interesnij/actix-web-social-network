@@ -1,11 +1,15 @@
 <%
-let list;
+let list = None;
 if let suffix = "lpo".to_string() {
   use crate::utils::get_post_list;
-  list = get_post_list(pk);
+  list = Some(get_post_list(pk));
+}
+if let suffix = "lph".to_string() {
+  use crate::utils::get_photo_list;
+  list = Some(get_photo_list(pk));
 }
 %>
-<%= list.id %>
+<%= list.unwrap().id %>
 <form community-pk=">" class="is_stat_list case_create" data-pk="" data-type="">
   <input type="hidden" name="type" value="<%= suffix %><%= pk %>" class="type">
       <input type="hidden" name="community_id" value="<% if community_id.is_some() { %> <%= community_id.unwrap() %> <% } %>">
