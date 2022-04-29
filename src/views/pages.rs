@@ -1,3 +1,4 @@
+use diesel::prelude::*;
 use actix_web::{
     HttpRequest,
     HttpResponse,
@@ -141,7 +142,6 @@ pub async fn featured_list_page(session: Session, req: HttpRequest) -> actix_web
 
 pub async fn add_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     use crate::models::Community;
-    use diesel::prelude::*;
 
     let _connection = establish_connection();
     if is_signed_in(&session) {
