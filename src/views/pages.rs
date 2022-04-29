@@ -283,7 +283,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             "lvi" => get_video_list(pk),
             "ldo" => get_doc_list(pk),
             "lmu" => get_music_list(pk),
-            "lsu" => get_survey_list(pk)),
+            "lsu" => get_survey_list(pk),
             _ => "".to_string(),
         };
 
