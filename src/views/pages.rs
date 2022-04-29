@@ -164,20 +164,30 @@ pub async fn get_add_list_page(session: Session, req: HttpRequest) -> actix_web:
         if params.community_id.is_some() {
             use crate::utils::get_community;
 
-            community = get_community(params.community_id.unwrap());
-            if !community.get_staff_users_ids().iter().any(|&i| i==_request_user.id) {
+            let _community = get_community(params.community_id.unwrap());
+            if !_community.get_staff_users_ids().iter().any(|&i| i==_request_user.id) {
                 to_home();
             }
+            community = Some(_community);
         }
         let suffix = params.type[..3];
-        let (text, have_comments) = match suffix {
-            "lpo" => {"Создание списка записей".to_string(); true},
-            "lph" => {"Создание фотоальбома".to_string(); true}
-            "lgo" => {"Создание подборки товаров".to_string(); true}
-            "lvi" => {"Создание видеоальбома".to_string(); true}
-            "ldo" => {"Создание списка документов".to_string(); false}
-            "lmu" => {"Создание плейлиста".to_string(); false}
-            "lsu" => {"Создание опросов".to_string(); false}
+        let text = match suffix {
+            "lpo" => "Создание списка записей".to_string(),
+            "lph" => "Создание фотоальбома".to_string(),
+            "lgo" => "Создание подборки товаров".to_string(),
+            "lvi" => "Создание видеоальбома".to_string(),
+            "ldo" => "Создание списка документов".to_string(),
+            "lmu" => "Создание плейлиста".to_string(),
+            "lsu" => "Создание опросов".to_string(),
+        }
+        let have_comments = match suffix {
+            "lpo" => true,
+            "lph" => true,
+            "lgo" => true,
+            "lvi" => true,
+            "ldo" => false,
+            "lmu" => false,
+            "lsu" => false,
         }
 
         if have_comments == true {
