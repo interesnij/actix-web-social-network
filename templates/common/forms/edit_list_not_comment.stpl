@@ -1,6 +1,6 @@
 <%
-if suffix == "lpo".to_string() {
-  use crate::utils::get_post_list ;
+if let suffix = "lpo".to_string() {
+  use crate::utils::get_post_list;
   let list = get_post_list(pk);
 }
 %>
