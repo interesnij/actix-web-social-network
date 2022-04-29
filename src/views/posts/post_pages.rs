@@ -25,8 +25,8 @@ pub fn post_routes(config: &mut web::ServiceConfig) {
 
     config.route("/posts/add_user_list/", web::get().to(add_user_post_list_page));
     config.route("/posts/edit_user_list/{id}/", web::get().to(edit_user_post_list_page));
-    config.route("/posts/add_user_list/", web::post().to(add_user_post_list));
-    config.route("/posts/edit_user_list/{id}/", web::post().to(edit_user_post_list));
+    //config.route("/posts/add_user_list/", web::post().to(add_user_post_list));
+    //config.route("/posts/edit_user_list/{id}/", web::post().to(edit_user_post_list));
 }
 
 pub async fn add_user_post_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
