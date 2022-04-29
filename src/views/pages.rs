@@ -277,31 +277,39 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         let pk: i32 = params.types[3..].parse().unwrap();
         if let suffix = "lpo".to_string() {
             let list = get_post_list(pk);
+            let text = "Создание списка записей".to_string();
+            let have_comments = true;
         }
         if let suffix = "lph".to_string() {
             let list = get_photo_list(pk);
+            "Создание фотоальбома".to_string();
+            let have_comments = true;
         }
-
-        let text = match suffix {
-            "lpo" => "Создание списка записей".to_string(),
-            "lph" => "Создание фотоальбома".to_string(),
-            "lgo" => "Создание подборки товаров".to_string(),
-            "lvi" => "Создание видеоальбома".to_string(),
-            "ldo" => "Создание списка документов".to_string(),
-            "lmu" => "Создание плейлиста".to_string(),
-            "lsu" => "Создание опросов".to_string(),
-            _ => "".to_string(),
-        };
-        let have_comments = match suffix {
-            "lpo" => true,
-            "lph" => true,
-            "lgo" => true,
-            "lvi" => true,
-            "ldo" => false,
-            "lmu" => false,
-            "lsu" => false,
-            _ => false,
-        };
+        if let suffix = "lgo".to_string() {
+            let list = get_good_list(pk);
+            let text = "Создание подборки товаров".to_string();
+            let have_comments = true;
+        }
+        if let suffix = "lvi".to_string() {
+            let list = get_video_list(pk);
+            "Создание видеоальбома".to_string();
+            let have_comments = true;
+        }
+        if let suffix = "ldo".to_string() {
+            let list = get_doc_list(pk);
+            "Создание списка документов".to_string();
+            let have_comments = false;
+        }
+        if let suffix = "lmu".to_string() {
+            let list = get_music_list(pk);
+            "Создание плейлиста".to_string();
+            let have_comments = false;
+        }
+        if let suffix = "lsu".to_string() {
+            let list = get_survey_list(pk);
+            "Создание списка опросов".to_string();
+            let have_comments = false;
+        }
 
         if have_comments == true {
             #[derive(TemplateOnce)]
