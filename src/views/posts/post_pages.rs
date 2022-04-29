@@ -42,11 +42,11 @@ pub struct PostListForm {
     pub create_el: String,
     pub create_comment: String,
     pub copy_el: String,
-    pub can_see_el_users: Option<i32>,
-    pub can_see_comment_users: Option<i32>,
-    pub create_el_users: Option<i32>,
-    pub create_comment_users: Option<i32>,
-    pub copy_el_users: Option<i32>,
+    pub can_see_el_users: Vec<i32>,
+    pub can_see_comment_users: Vec<i32>,
+    pub create_el_users: Vec<i32>,
+    pub create_comment_users: Vec<i32>,
+    pub copy_el_users: Vec<i32>,
 }
 
 pub async fn post_list_form(payload: &mut Multipart) -> PostListForm {
@@ -64,16 +64,16 @@ pub async fn post_list_form(payload: &mut Multipart) -> PostListForm {
         create_comment_users: Vec::new(),
         copy_el_users: Vec::new(),
     };
+    let _list = [
+        "can_see_el_users",
+        "can_see_comment_users",
+        "create_el_users",
+        "create_comment_users",
+        "copy_el_users",
+    ];
 
     while let Some(item) = payload.next().await {
         let mut field: Field = item.expect("split_payload err");
-        let _list = [
-            "can_see_el_users",
-            "can_see_comment_users",
-            "create_el_users",
-            "create_comment_users",
-            "copy_el_users",
-        ];
 
         if _list.contains(field.name()) {
             while let Some(chunk) = field.next().await {
@@ -107,7 +107,7 @@ pub async fn post_list_form(payload: &mut Multipart) -> PostListForm {
                     if field.name() == "name" {
                         form.name = data_string
                     } else if field.name() == "description" {
-                        form.description = data_string
+                        form.description = Some(data_string)
                     }
                 }
             }
@@ -123,18 +123,18 @@ pub async fn add_user_post_list(session: Session, req: HttpRequest, mut payload:
         let new list = PostList::create_list (
             _request_user,
             form.name,
-            form.description,
+            Some(form.description),
             None,
             form.can_see_el,
             form.can_see_comment,
             form.create_el,
             form.create_comment,
             form.copy_el,
-            form.can_see_el_users,
-            form.can_see_comment_users,
-            form.create_el_users,
-            form.create_comment_users,
-            form.copy_el_users,
+            Some(form.can_see_el_users),
+            Some(form.can_see_comment_users),
+            Some(form.create_el_users),
+            Some(form.create_comment_users),
+            Some(form.copy_el_users),
         )
 
         #[derive(TemplateOnce)]
