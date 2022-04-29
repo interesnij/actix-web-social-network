@@ -171,7 +171,7 @@ pub async fn get_add_list_page(session: Session, req: HttpRequest) -> actix_web:
             community = Some(_community);
         }
         let suffix = &params.types[..3];
-        let text = match suffix.as_str() {
+        let text = match suffix {
             "lpo" => "Создание списка записей".to_string(),
             "lph" => "Создание фотоальбома".to_string(),
             "lgo" => "Создание подборки товаров".to_string(),
@@ -180,7 +180,7 @@ pub async fn get_add_list_page(session: Session, req: HttpRequest) -> actix_web:
             "lmu" => "Создание плейлиста".to_string(),
             "lsu" => "Создание опросов".to_string(),
         };
-        let have_comments = match suffix.as_str() {
+        let have_comments = match suffix {
             "lpo" => true,
             "lph" => true,
             "lgo" => true,
