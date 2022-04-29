@@ -5,7 +5,7 @@ use actix_web::{
     http::StatusCode,
     web,
 };
-//use serde::Deserialize;
+use serde::Deserialize;
 use crate::utils::{is_signed_in, establish_connection, get_folder, get_request_user_data,to_home,};
 use actix_session::Session;
 use sailfish::TemplateOnce;
@@ -203,7 +203,7 @@ pub async fn get_add_list_page(session: Session, req: HttpRequest) -> actix_web:
                 request_user: _request_user,
                 r#type: params.types,
                 text: text,
-                community: community;
+                community: community,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -224,7 +224,7 @@ pub async fn get_add_list_page(session: Session, req: HttpRequest) -> actix_web:
                 request_user: _request_user,
                 r#type: params.types,
                 text: text,
-                community: community;
+                community: community,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
