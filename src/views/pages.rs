@@ -316,7 +316,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             }
             let body = EditListCommentTemplate {
                 request_user: _request_user,
-                suffix: suffix,
+                suffix: suffix.to_string(),
                 pk: pk,
                 text: text,
                 community: community,
@@ -339,7 +339,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             }
             let body = EditListTemplate {
                 request_user: _request_user,
-                suffix: suffix,
+                suffix: suffix.to_string(),
                 pk: pk,
                 text: text,
                 community: community,
