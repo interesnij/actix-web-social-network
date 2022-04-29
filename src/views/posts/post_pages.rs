@@ -22,6 +22,111 @@ use serde::Deserialize;
 
 pub fn post_routes(config: &mut web::ServiceConfig) {
     config.route("/posts/list/", web::get().to(post_list_page));
+
+    config.route("/posts/add_user_list/", web::get().to(add_user_post_list_page));
+    config.route("/posts/edit_user_list/{id}/", web::get().to(edit_user_post_list_page));
+    config.route("/posts/add_user_list/", web::post().to(add_user_post_list));
+    config.route("/posts/edit_user_list/{id}/", web::post().to(edit_user_post_list));
+}
+
+pub async fn add_user_post_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+
+        #[derive(TemplateOnce)]
+        #[template(path = "common/posts/post_user/add_list.stpl")]
+        struct Template {
+            request_user: User,
+        }
+        let body = Template {
+            request_user: _request_user,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body(body))
+    } else {
+        Ok(to_home())
+    }
+}
+pub async fn edit_user_post_list_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let list = get_post_list(*_id);
+        let creator = get_user(list.user_id);
+
+        #[derive(TemplateOnce)]
+        #[template(path = "common/posts/post_user/edit_list.stpl")]
+        struct Template {
+            request_user: User,
+            list: PostList,
+            creator: User,
+        }
+        let body = Template {
+            request_user: _request_user,
+            list: list,
+            creator: creator,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body(body))
+    } else {
+        Ok(to_home())
+    }
+}
+pub async fn add_community_post_list_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let community = get_community(*_id);
+
+        #[derive(TemplateOnce)]
+        #[template(path = "common/posts/post_community/edit_list.stpl")]
+        struct Template {
+            request_user: User,
+            community: Community,
+        }
+        let body = Template {
+            request_user: _request_user,
+            community: community,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body(body))
+    } else {
+        Ok(to_home())
+    }
+}
+pub async fn edit_community_post_list_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let list = get_post_list(*_id);
+        let community = get_community(list.community_id.unwrap());
+
+        #[derive(TemplateOnce)]
+        #[template(path = "common/posts/post_community/edit_list.stpl")]
+        struct Template {
+            request_user: User,
+            community: Community,
+            list: PostList,
+        }
+        let body = Template {
+            request_user: _request_user,
+            community: community,
+            list: list,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body(body))
+    } else {
+        Ok(to_home())
+    }
 }
 
 pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
