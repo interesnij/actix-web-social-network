@@ -675,14 +675,36 @@ impl PostList {
         community_id: Option<i32>, can_see_el: String, can_see_comment: String,
         create_el: String, create_comment: String, copy_el: String,
         can_see_el_users: Option<Vec<i32>>, can_see_comment_users: Option<Vec<i32>>,create_el_users: Option<Vec<i32>>,
-        create_comment_users: Option<Vec<i32>>,copy_el_users: Option<Vec<i32>>) -> i32 {
+        create_comment_users: Option<Vec<i32>>,copy_el_users: Option<Vec<i32>>) -> PostList {
         use crate::models::{
             NewCommunityPostListPosition,
             NewUserPostListPosition,
         };
 
         let _connection = establish_connection();
-        let mut new_id = 1;
+
+        let new_post_list = NewPostList {
+            name: name,
+            community_id: community_id,
+            user_id: creator.id,
+            types: 2,
+            description: description,
+            created: chrono::Local::now().naive_utc(),
+            count: 0,
+            repost: 0,
+            copy: 0,
+            position: 0,
+            can_see_el: can_see_el.clone(),
+            can_see_comment: can_see_comment.clone(),
+            create_el: create_el.clone(),
+            create_comment: create_comment.clone(),
+            copy_el: copy_el.clone(),
+        };
+        let new_list = diesel::insert_into(schema::post_lists::table)
+            .values(&new_post_list)
+            .get_result::<PostList>(&_connection)
+            .expect("Error.");
+
         if community_id.is_some() {
             use crate::schema::communitys::dsl::communitys;
 
@@ -693,29 +715,6 @@ impl PostList {
                 .into_iter()
                 .nth(0)
                 .unwrap();
-
-            let new_post_list = NewPostList{
-                name: name,
-                community_id: Some(community.id),
-                user_id: creator.id,
-                types: 2,
-                description: description,
-                created: chrono::Local::now().naive_utc(),
-                count: 0,
-                repost: 0,
-                copy: 0,
-                position: 0,
-                can_see_el: can_see_el.clone(),
-                can_see_comment: can_see_comment.clone(),
-                create_el: create_el.clone(),
-                create_comment: create_comment.clone(),
-                copy_el: copy_el.clone(),
-            };
-            let new_list = diesel::insert_into(schema::post_lists::table)
-                .values(&new_post_list)
-                .get_result::<PostList>(&_connection)
-                .expect("Error.");
-            new_id = new_list.id;
 
             let _new_posts_list_position = NewCommunityPostListPosition {
                 community_id: community.id,
@@ -729,29 +728,6 @@ impl PostList {
                 .expect("Error saving post_list_position.");
         }
         else {
-            let new_post_list = NewPostList{
-                name: name,
-                community_id: None,
-                user_id: creator.id,
-                types: 2,
-                description: description,
-                created: chrono::Local::now().naive_utc(),
-                count: 0,
-                repost: 0,
-                copy: 0,
-                position: 0,
-                can_see_el: can_see_el.clone(),
-                can_see_comment: can_see_comment.clone(),
-                create_el: create_el.clone(),
-                create_comment: create_comment.clone(),
-                copy_el: copy_el.clone(),
-            };
-            let new_list = diesel::insert_into(schema::post_lists::table)
-                .values(&new_post_list)
-                .get_result::<PostList>(&_connection)
-                .expect("Error.");
-            new_id = new_list.id;
-
             let _new_posts_list_position = NewUserPostListPosition {
                 user_id:  creator.id,
                 list_id:  new_id,
@@ -958,7 +934,7 @@ impl PostList {
                 }
             }
         }
-        return new_id;
+        return new_list;
     }
     pub fn edit_list(&self, name: String, description: Option<String>,
         can_see_el: String, can_see_comment: String,
