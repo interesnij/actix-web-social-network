@@ -1,12 +1,20 @@
 <%
-let list = None;
+use crate::models::{PostList, PhotoList};
+
+let mut list = None;
+enum ModelSwitch {
+    PostList,
+    PhotoList,
+    Type3(DataType3),
+    Type4(DataType4),
+}
 if let suffix = "lpo".to_string() {
-  use crate::utils::get_post_list;
-  list = Some(get_post_list(pk));
+use crate::utils::get_post_list;
+  list: ModelSwitch::PostList = Some(get_post_list(pk));
 }
 if let suffix = "lph".to_string() {
   use crate::utils::get_photo_list;
-  list = Some(get_photo_list(pk));
+  list: ModelSwitch::PhotoList = Some(get_photo_list(pk));
 }
 %>
 <%= list.unwrap().id %>
