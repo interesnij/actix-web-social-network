@@ -196,13 +196,13 @@ pub async fn add_list_page(session: Session, req: HttpRequest) -> actix_web::Res
                 request_user: User,
                 r#type: String,
                 text: String,
-                community: Option<Community>,
+                community_id: Option<i32>,
             }
             let body = CreateListCommentTemplate {
                 request_user: _request_user,
                 r#type: params.types.clone(),
                 text: text,
-                community: community,
+                community_id: params.community_id.clone(),
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -217,13 +217,13 @@ pub async fn add_list_page(session: Session, req: HttpRequest) -> actix_web::Res
                 request_user: User,
                 r#type: String,
                 text: String,
-                community: Option<Community>,
+                community_id: Option<i32>,
             }
             let body = CreateListTemplate {
                 request_user: _request_user,
                 r#type: params.types.clone(),
                 text: text,
-                community: community,
+                community_id: params.community_id.clone(),
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -238,16 +238,6 @@ pub async fn add_list_page(session: Session, req: HttpRequest) -> actix_web::Res
 
 pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     use crate::models::Community;
-    use crate::utils::{
-        get_post_list,
-        get_photo_list,
-        get_good_list,
-        get_video_list,
-        get_doc_list,
-        get_music_list,
-        get_survey_list,
-    };
-
     let _connection = establish_connection();
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
@@ -312,14 +302,14 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 suffix: String,
                 pk: i32,
                 text: String,
-                community: Option<Community>,
+                community_id: Option<i32>,
             }
             let body = EditListCommentTemplate {
                 request_user: _request_user,
                 suffix: suffix.to_string(),
                 pk: pk,
                 text: text,
-                community: community,
+                community_id: params.community_id.clone(),
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -335,14 +325,14 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 suffix: String,
                 pk: i32,
                 text: String,
-                community: Option<Community>,
+                community_id: Option<i32>,
             }
             let body = EditListTemplate {
                 request_user: _request_user,
                 suffix: suffix.to_string(),
                 pk: pk,
                 text: text,
-                community: community,
+                community_id: params.community_id.clone(),
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
