@@ -9,10 +9,10 @@ pub fn add_post_list(pk: i32) -> String {
     use crate::models::PostList;
     let _connection = establish_connection();
 
-    let mut name = "".to_string();
-    let mut link = "".to_string();
-    let mut image = "".to_string();
-    let mut owner = "".to_string();
+    let name = "".to_string();
+    let link = "".to_string();
+    let image = "".to_string();
+    let owner = "".to_string();
 
     let list = post_lists
         .filter(schema::post_lists::id.eq(pk))
@@ -57,10 +57,10 @@ pub fn add_edited_post_list(pk: i32) -> String {
     use crate::models::PostList;
     let _connection = establish_connection();
 
-    let mut name = "".to_string();
-    let mut link = "".to_string();
-    let mut image = "".to_string();
-    let mut owner = "".to_string();
+    let name = "".to_string();
+    let link = "".to_string();
+    let image = "".to_string();
+    let owner = "".to_string();
 
     let list = post_lists
         .filter(schema::post_lists::id.eq(pk))

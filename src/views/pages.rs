@@ -179,6 +179,7 @@ pub async fn get_add_list_page(session: Session, req: HttpRequest) -> actix_web:
             "ldo" => "Создание списка документов".to_string(),
             "lmu" => "Создание плейлиста".to_string(),
             "lsu" => "Создание опросов".to_string(),
+            _ => "".to_string(),
         };
         let have_comments = match suffix {
             "lpo" => true,
@@ -188,6 +189,7 @@ pub async fn get_add_list_page(session: Session, req: HttpRequest) -> actix_web:
             "ldo" => false,
             "lmu" => false,
             "lsu" => false,
+            _ => false,
         };
 
         if have_comments == true {
