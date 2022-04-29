@@ -165,7 +165,7 @@ pub async fn add_list_page(session: Session, req: HttpRequest) -> actix_web::Res
             use crate::utils::get_community;
 
             let c_pk: i32 = params.community_id.unwrap().parse().unwrap();
-            let _community = get_community(params.community_id.unwrap());
+            let _community = get_community(c_pk);
             if !_community.get_staff_users_ids().iter().any(|&i| i==_request_user.id) {
                 to_home();
             }
@@ -262,7 +262,8 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         if params.community_id.is_some() {
             use crate::utils::get_community;
 
-            let _community = get_community(params.community_id.unwrap());
+            let c_pk: i32 = params.community_id.unwrap().parse().unwrap();
+            let _community = get_community(c_pk);
             if !_community.get_staff_users_ids().iter().any(|&i| i==_request_user.id) {
                 to_home();
             }
