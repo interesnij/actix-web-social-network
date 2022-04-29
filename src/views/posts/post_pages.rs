@@ -20,8 +20,10 @@ use actix_session::Session;
 use sailfish::TemplateOnce;
 use crate::models::{User, PostList, Post, Community};
 use serde::{Deserialize, Serialize};
+
 use actix_multipart::{Field, Multipart};
 use std::{borrow::BorrowMut, str};
+use futures::StreamExt;
 
 
 pub fn post_routes(config: &mut web::ServiceConfig) {
