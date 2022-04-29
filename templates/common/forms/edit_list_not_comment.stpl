@@ -1,6 +1,6 @@
 <%
 use crate::models::{PostList, PhotoList};
-use crate::utils::{get_post_list, get_photo_list}
+use crate::utils::{get_post_list, get_photo_list};
 
 enum ModelSwitch {
     get_post_list(i32),
