@@ -65,7 +65,7 @@ on('body', 'click', '.edit_list', function() {
   parent = this.parentElement;
   type = parent.getAttribute('data-type');
   community_id = parent.getAttribute('data-community-id');
-  pk = type[:3];
+  pk = type.slice(3); 
   if (type.indexOf('lpo') !== -1) {
     if (community_id) {
       url = "/posts/edit_community_list/" + community_id + "/";
