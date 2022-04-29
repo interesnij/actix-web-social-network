@@ -275,10 +275,10 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         }
         let suffix = &params.types[..3];
         let pk: i32 = params.types[3..].parse().unwrap();
-        if let suffix == "lpo".to_string() {
+        if let suffix = "lpo".to_string() {
             let list = get_post_list(pk);
         }
-        else if  suffix == "lpo".to_string() {
+        else if suffix = "lpo".to_string() {
             let list = get_photo_list(pk);
         }
 
