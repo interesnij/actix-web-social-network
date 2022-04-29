@@ -1,6 +1,6 @@
 <form community-pk="" class="is_stat_list case_create" data-pk="" data-type="">
   <input type="hidden" name="type" value="<%= types %>" class="types">
-      <input type="hidden" name="community_id" value="<% if community_id.is_some() { %> <%= community_id.unwrap() %> <% } %>">
+      <input type="hidden" name="community_id" value="<% if community_id.is_some() { %> <%= community_id.as_ref().unwrap() %> <% } %>">
       <div class="card">
           <div class="card-header border-bottom">
               <h5 class="content-color-primary mb-0"><%= text %></h5>
