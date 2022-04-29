@@ -265,33 +265,35 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         }
         let suffix = &params.types[..3];
         let pk: i32 = params.types[3..].parse().unwrap();
+        let mut text = "".to_string();
+        let mut have_comments = false;
         if let suffix = "lpo".to_string() {
-            let text = "Создание списка записей".to_string();
-            let have_comments = true;
+            text = "Создание списка записей".to_string();
+            have_comments = true;
         }
         if let suffix = "lph".to_string() {
-            "Создание фотоальбома".to_string();
-            let have_comments = true;
+            text = "Создание фотоальбома".to_string();
+            have_comments = true;
         }
         if let suffix = "lgo".to_string() {
-            let text = "Создание подборки товаров".to_string();
-            let have_comments = true;
+            text = "Создание подборки товаров".to_string();
+            have_comments = true;
         }
         if let suffix = "lvi".to_string() {
-            "Создание видеоальбома".to_string();
-            let have_comments = true;
+            text = "Создание видеоальбома".to_string();
+            have_comments = true;
         }
         if let suffix = "ldo".to_string() {
-            "Создание списка документов".to_string();
-            let have_comments = false;
+            text = "Создание списка документов".to_string();
+            have_comments = false;
         }
         if let suffix = "lmu".to_string() {
-            "Создание плейлиста".to_string();
-            let have_comments = false;
+            text = "Создание плейлиста".to_string();
+            have_comments = false;
         }
         if let suffix = "lsu".to_string() {
-            "Создание списка опросов".to_string();
-            let have_comments = false;
+            text = "Создание списка опросов".to_string();
+            have_comments = false;
         }
 
         if have_comments == true {
