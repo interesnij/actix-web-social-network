@@ -54,9 +54,9 @@ on('body', 'click', '.create_list', function() {
   community_id = parent.getAttribute('data-community-id');
   if (type.indexOf('lpo') !== -1) {
     if (community_id) {
-      url = "/posts/add_community_list/";
+      url = "/posts/add_community_list/" + community_id + "/";
     } else {
-      url = "/posts/add_user_list/"url;
+      url = "/posts/add_user_list/";
     }
   }
   create_fullscreen(url, "worker_fullscreen");
@@ -68,9 +68,9 @@ on('body', 'click', '.edit_list', function() {
   pk = type[:3];
   if (type.indexOf('lpo') !== -1) {
     if (community_id) {
-      url = "/posts/edit_community_list/";
+      url = "/posts/edit_community_list/" + community_id + "/";
     } else {
-      url = "/posts/edit_user_list/" + community_id + "/";
+      url = "/posts/edit_user_list/";
     }
   }
   create_fullscreen(url + pk + "/", "worker_fullscreen");
