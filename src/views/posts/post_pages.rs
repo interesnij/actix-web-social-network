@@ -84,7 +84,7 @@ pub async fn add_community_post_list_page(session: Session, req: HttpRequest, _i
         let community = get_community(*_id);
 
         #[derive(TemplateOnce)]
-        #[template(path = "desctop/posts/post_community/edit_list.stpl")]
+        #[template(path = "desctop/posts/post_community/add_list.stpl")]
         struct Template {
             request_user: User,
             community: Community,
