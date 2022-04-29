@@ -54,19 +54,19 @@ pub async fn edit_user_post_list_page(session: Session, req: HttpRequest, _id: w
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
         let list = get_post_list(*_id);
-        let creator = get_user(list.user_id);
+        //let creator = get_user(list.user_id);
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/posts/post_user/edit_list.stpl")]
         struct Template {
             request_user: User,
             list: PostList,
-            creator: User,
+            //creator: User,
         }
         let body = Template {
             request_user: _request_user,
             list: list,
-            creator: creator,
+            //creator: creator,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
