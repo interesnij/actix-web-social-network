@@ -153,17 +153,18 @@ pub async fn add_list_page(session: Session, req: HttpRequest) -> actix_web::Res
         #[derive(Deserialize)]
         struct GetParams {
             pub types: String,
-            pub community_id: Option<i32>,
+            pub community_id: Option<String>,
         }
 
         let params_some = web::Query::<GetParams>::from_query(&req.query_string());
-        if !params_some.is_ok() {
+        if params_some.is_err() {
             to_home();
         }
         let params = params_some.unwrap();
         if params.community_id.is_some() {
             use crate::utils::get_community;
 
+            let c_pk: i32 = params.community_id.unwrap().parse().unwrap();
             let _community = get_community(params.community_id.unwrap());
             if !_community.get_staff_users_ids().iter().any(|&i| i==_request_user.id) {
                 to_home();
@@ -199,7 +200,7 @@ pub async fn add_list_page(session: Session, req: HttpRequest) -> actix_web::Res
                 request_user: User,
                 types: String,
                 text: String,
-                community_id: Option<i32>,
+                community_id: Option<String>,
             }
             let body = CreateListCommentTemplate {
                 request_user: _request_user,
@@ -220,7 +221,7 @@ pub async fn add_list_page(session: Session, req: HttpRequest) -> actix_web::Res
                 request_user: User,
                 types: String,
                 text: String,
-                community_id: Option<i32>,
+                community_id: Option<String>,
             }
             let body = CreateListTemplate {
                 request_user: _request_user,
@@ -250,7 +251,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         #[derive(Deserialize)]
         struct GetParams {
             pub types: String,
-            pub community_id: Option<i32>,
+            pub community_id: Option<String>,
         }
 
         let params_some = web::Query::<GetParams>::from_query(&req.query_string());
@@ -336,7 +337,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     };
                 can_see_el_include_users = Some(get_users_from_ids(stack));
             }
-            
+
         }
         if let suffix = "lph".to_string() {
             use crate::utils::get_photo_list;
@@ -425,7 +426,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 suffix:       String,
                 pk:           i32,
                 text:         String,
-                community_id: Option<i32>,
+                community_id: Option<String>,
                 name:         String,
                 description:  Option<String>,
                 can_see_el:   String,
@@ -485,7 +486,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 suffix:       String,
                 pk:           i32,
                 text:         String,
-                community_id: Option<i32>,
+                community_id: Option<String>,
                 name:         String,
                 description:  Option<String>,
                 can_see_el:   String,
