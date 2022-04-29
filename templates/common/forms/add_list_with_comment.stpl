@@ -14,7 +14,7 @@
                   <label>Описание</label>
                   <input name="description" class="form-control">
                 </div>
-                <% if community.is_some() { %>
+                <% if community_id.is_some() { %>
                   <% include!("../../base_block/perm/create_community_list_comment_perm.stpl"); %>
                 <% } else { %>
                   <% include!("../../base_block/perm/create_user_list_comment_perm.stpl"); %>
