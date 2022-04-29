@@ -194,13 +194,13 @@ pub async fn add_list_page(session: Session, req: HttpRequest) -> actix_web::Res
             #[template(path = "common/forms/add_list_with_comment.stpl")]
             struct CreateListCommentTemplate {
                 request_user: User,
-                r#type: String,
+                types: String,
                 text: String,
                 community_id: Option<i32>,
             }
             let body = CreateListCommentTemplate {
                 request_user: _request_user,
-                r#type: params.types.clone(),
+                types: params.types.clone(),
                 text: text,
                 community_id: params.community_id.clone(),
             }
@@ -215,13 +215,13 @@ pub async fn add_list_page(session: Session, req: HttpRequest) -> actix_web::Res
             #[template(path = "common/forms/add_list_not_comment.stpl")]
             struct CreateListTemplate {
                 request_user: User,
-                r#type: String,
+                types: String,
                 text: String,
                 community_id: Option<i32>,
             }
             let body = CreateListTemplate {
                 request_user: _request_user,
-                r#type: params.types.clone(),
+                types: params.types.clone(),
                 text: text,
                 community_id: params.community_id.clone(),
             }
