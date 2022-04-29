@@ -3,19 +3,21 @@ use crate::models::{PostList, PhotoList};
 use crate::utils::{get_post_list, get_photo_list};
 
 enum ModelSwitch {
-    get_post_list(i32),
-    get_photo_list(i32),
+    PostList,
+    PhotoList,
 }
 
 let mut list: ModelSwitch;
 if let suffix = "lpo".to_string() {
-  list = ModelSwitch::get_post_list(pk);
+  list = ModelSwitch::PostList;
+  list = get_post_list(pk);
 }
 if let suffix = "lph".to_string() {
-  list = ModelSwitch::get_photo_list(pk);
+  list = ModelSwitch::PhotoList;
+  list = get_photo_list(pk);
 }
 %>
-<%= list.unwrap().id %>
+<%= list. %>
 <form community-pk=">" class="is_stat_list case_create" data-pk="" data-type="">
   <input type="hidden" name="type" value="<%= suffix %><%= pk %>" class="type">
       <input type="hidden" name="community_id" value="<% if community_id.is_some() { %> <%= community_id.unwrap() %> <% } %>">
