@@ -120,7 +120,7 @@ pub async fn add_user_post_list(session: Session, req: HttpRequest, mut payload:
 
         let _request_user = get_request_user_data(session);
         let form = post_list_form(payload.borrow_mut()).await;
-        let new list = PostList::create_list (
+        let new_list = PostList::create_list (
             _request_user,
             form.name,
             Some(form.description),
