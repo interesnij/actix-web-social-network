@@ -17,7 +17,7 @@ if let suffix = "lph".to_string() {
   list = get_photo_list(pk);
 }
 %>
-<%= list. %>
+<%= list.name %>
 <form community-pk=">" class="is_stat_list case_create" data-pk="" data-type="">
   <input type="hidden" name="type" value="<%= suffix %><%= pk %>" class="type">
       <input type="hidden" name="community_id" value="<% if community_id.is_some() { %> <%= community_id.unwrap() %> <% } %>">
