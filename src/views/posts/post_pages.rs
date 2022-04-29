@@ -75,7 +75,7 @@ pub async fn post_list_form(payload: &mut Multipart) -> PostListForm {
     while let Some(item) = payload.next().await {
         let mut field: Field = item.expect("split_payload err");
 
-        if _list.contains(field.name()) {
+        if _list.contains(&field.name()) {
             while let Some(chunk) = field.next().await {
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
