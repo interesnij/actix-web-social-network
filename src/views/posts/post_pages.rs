@@ -123,7 +123,7 @@ pub async fn add_user_post_list(session: Session, req: HttpRequest, mut payload:
         let new_list = PostList::create_list (
             _request_user,
             form.name,
-            Some(form.description),
+            form.description,
             None,
             form.can_see_el,
             form.can_see_comment,
@@ -138,14 +138,14 @@ pub async fn add_user_post_list(session: Session, req: HttpRequest, mut payload:
         );
 
         #[derive(TemplateOnce)]
-        #[template(path = "desctop/users/lenta/my_list.stpl")]
+        #[template(path = "desctop/users/lenta/list.stpl")]
         struct Template {
             request_user: User,
             list: PostList,
         }
         let body = Template {
             request_user: _request_user,
-            list: list,
+            list: new_list,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
