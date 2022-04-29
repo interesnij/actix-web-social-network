@@ -237,6 +237,8 @@ pub async fn add_list_page(session: Session, req: HttpRequest) -> actix_web::Res
 }
 
 pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    use crate::models::Community;
+
     let _connection = establish_connection();
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
@@ -416,7 +418,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 community_id: params.community_id.clone(),
 
                 name:         name,
-                description:  Some(description),
+                description:  description,
                 can_see_el:   can_see_el,
                 can_see_comment:   can_see_comment,
                 create_el:    create_el,
@@ -470,7 +472,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 community_id: params.community_id.clone(),
 
                 name:         name,
-                description:  Some(description),
+                description:  description,
                 can_see_el:   can_see_el,
                 create_el:    create_el,
                 copy_el:      copy_el,

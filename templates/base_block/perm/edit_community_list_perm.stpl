@@ -58,7 +58,7 @@
       <a class="menu_drop_2 pointer">Подписчики</a>
       <span class="collector"></span>
 
-      <% } else if list.create_el == "h" { %>
+      <% } else if create_el == "h" { %>
       <input class="input" name="create_el" type="hidden" value="h" />
       <a class="menu_drop_2 pointer">Администраторы</a>
       <span class="collector"></span>
