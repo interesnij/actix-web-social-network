@@ -427,11 +427,11 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
 
                 can_see_el_exclude_users: can_see_el_exclude_users,
                 can_see_el_include_users: can_see_el_include_users,
-                can_see_comment_exclude_users: can_see_comment_include_users,
+                can_see_comment_exclude_users: can_see_comment_exclude_users,
                 can_see_comment_include_users: can_see_comment_include_users,
                 create_el_exclude_users: create_el_exclude_users,
                 create_el_include_users: create_el_include_users,
-                create_comment_exclude_users: create_comment_include_users,
+                create_comment_exclude_users: create_comment_exclude_users,
                 create_comment_include_users: create_comment_include_users,
                 copy_el_exclude_users: copy_el_exclude_users,
                 copy_el_include_users: copy_el_include_users,
