@@ -135,7 +135,7 @@ pub async fn add_user_post_list(session: Session, req: HttpRequest, mut payload:
             Some(form.create_el_users),
             Some(form.create_comment_users),
             Some(form.copy_el_users),
-        )
+        );
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/lenta/my_list.stpl")]
