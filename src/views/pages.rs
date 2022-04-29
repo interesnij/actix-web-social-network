@@ -143,6 +143,8 @@ pub async fn featured_list_page(session: Session, req: HttpRequest) -> actix_web
 }
 
 pub async fn get_add_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    use crate::models::Community;
+
     let _connection = establish_connection();
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
@@ -154,7 +156,7 @@ pub async fn get_add_list_page(session: Session, req: HttpRequest) -> actix_web:
             pub community_id: Option<i32>,
         }
 
-        let params_some = web::Query::<GetListParams>::from_query(&req.query_string());
+        let params_some = web::Query::<GetParams>::from_query(&req.query_string());
         if !params_some.is_ok() {
             to_home();
         }
@@ -168,7 +170,7 @@ pub async fn get_add_list_page(session: Session, req: HttpRequest) -> actix_web:
             }
         }
         let suffix = params.type[..3];
-        let (text, have_comments) = match code {
+        let (text, have_comments) = match suffix {
             "lpo" => {"Создание списка записей".to_string(); true},
             "lph" => {"Создание фотоальбома".to_string(); true}
             "lgo" => {"Создание подборки товаров".to_string(); true}
