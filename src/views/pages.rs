@@ -470,7 +470,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 community_id: params.community_id.clone(),
 
                 name:         name,
-                description:  Some(description),,
+                description:  Some(description),
                 can_see_el:   can_see_el,
                 create_el:    create_el,
                 copy_el:      copy_el,
