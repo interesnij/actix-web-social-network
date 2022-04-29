@@ -60,7 +60,7 @@ pub fn add_edited_post_list(pk: i32) -> String {
     let name = "".to_string();
     let link = "".to_string();
     let image = "".to_string();
-    //let owner = "".to_string();
+    let mut owner = "".to_string();
 
     let list = post_lists
         .filter(schema::post_lists::id.eq(pk))
@@ -73,11 +73,11 @@ pub fn add_edited_post_list(pk: i32) -> String {
 
     if list.community_id.is_some() {
         let community = list.get_community();
-        let owner = community.id.to_string();
+        owner = community.id.to_string();
     }
     else {
         let creator = list.get_creator();
-        let owner = creator.id.to_string();
+        owner = creator.id.to_string();
     }
 
     return "<div class='folder' owner-pk='".to_string() + &owner.to_string() +
