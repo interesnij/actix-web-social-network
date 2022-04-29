@@ -9,10 +9,10 @@ pub fn add_post_list(pk: i32) -> String {
     use crate::models::PostList;
     let _connection = establish_connection();
 
-    let name = "".to_string();
-    let link = "".to_string();
-    let image = "".to_string();
-    let owner = "".to_string();
+    //let name = "".to_string();
+    //let link = "".to_string();
+    //let image = "".to_string();
+    //let owner = "".to_string();
 
     let list = post_lists
         .filter(schema::post_lists::id.eq(pk))
@@ -25,17 +25,17 @@ pub fn add_post_list(pk: i32) -> String {
 
     if list.community_id.is_some() {
         let community = list.get_community();
-        name = community.name.clone();
-        link = community.get_link().clone();
-        image = community.get_bb_avatar();
-        owner = community.id.to_string();
+        let name = community.name.clone();
+        let link = community.get_link().clone();
+        let image = community.get_bb_avatar();
+        let owner = community.id.to_string();
     }
     else {
         let creator = list.get_creator();
-        name = creator.get_full_name().clone();
-        link = creator.get_link().clone();
-        image = creator.get_bb_avatar();
-        owner = creator.id.to_string();
+        let name = creator.get_full_name().clone();
+        let link = creator.get_link().clone();
+        let image = creator.get_bb_avatar();
+        let owner = creator.id.to_string();
     }
 
     return "<div style='flex-basis: 100%;' class='card'>
@@ -60,7 +60,7 @@ pub fn add_edited_post_list(pk: i32) -> String {
     let name = "".to_string();
     let link = "".to_string();
     let image = "".to_string();
-    let owner = "".to_string();
+    //let owner = "".to_string();
 
     let list = post_lists
         .filter(schema::post_lists::id.eq(pk))
@@ -73,11 +73,11 @@ pub fn add_edited_post_list(pk: i32) -> String {
 
     if list.community_id.is_some() {
         let community = list.get_community();
-        owner = community.id.to_string();
+        let owner = community.id.to_string();
     }
     else {
         let creator = list.get_creator();
-        owner = creator.id.to_string();
+        let owner = creator.id.to_string();
     }
 
     return "<div class='folder' owner-pk='".to_string() + &owner.to_string() +
