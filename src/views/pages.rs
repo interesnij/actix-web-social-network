@@ -278,11 +278,11 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
 
         let mut can_see_el_exclude_users: Option<Vec<User>> = None;
         let mut can_see_el_include_users: Option<Vec<User>> = None;
-        let mut can_see_comment_include_users: Option<Vec<User>> = None;
+        let mut can_see_comment_exclude_users: Option<Vec<User>> = None;
         let mut can_see_comment_include_users: Option<Vec<User>> = None;
         let mut create_el_exclude_users: Option<Vec<User>> = None;
         let mut create_el_include_users: Option<Vec<User>> = None;
-        let mut create_comment_include_users: Option<Vec<User>> = None;
+        let mut create_comment_exclude_users: Option<Vec<User>> = None;
         let mut create_comment_include_users: Option<Vec<User>> = None;
         let mut copy_el_exclude_users: Option<Vec<User>> = None;
         let mut copy_el_include_users: Option<Vec<User>> = None;
@@ -306,7 +306,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
 
             text = "Создание фотоальбома".to_string();
             have_comments = true;
-            let list = get_post_list(pk);
+            let list = get_photo_list(pk);
             name = list.name;
             description = list.description;
             can_see_el = list.can_see_el;
@@ -320,7 +320,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
 
             text = "Создание подборки товаров".to_string();
             have_comments = true;
-            let list = get_post_list(pk);
+            let list = get_good_list(pk);
             name = list.name;
             description = list.description;
             can_see_el = list.can_see_el;
@@ -334,7 +334,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
 
             text = "Создание видеоальбома".to_string();
             have_comments = true;
-            let list = get_post_list(pk);
+            let list = get_video_list(pk);
             name = list.name;
             description = list.description;
             can_see_el = list.can_see_el;
@@ -348,7 +348,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
 
             text = "Создание списка документов".to_string();
             have_comments = false;
-            let list = get_post_list(pk);
+            let list = get_doc_list(pk);
             name = list.name;
             description = list.description;
             can_see_el = list.can_see_el;
@@ -360,7 +360,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
 
             text = "Создание плейлиста".to_string();
             have_comments = false;
-            let list = get_post_list(pk);
+            let list = get_music_list(pk);
             name = list.name;
             description = list.description;
             can_see_el = list.can_see_el;
@@ -372,7 +372,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
 
             text = "Создание списка опросов".to_string();
             have_comments = false;
-            let list = get_post_list(pk);
+            let list = get_survey_list(pk);
             name = list.name;
             description = list.description;
             can_see_el = list.can_see_el;
@@ -399,11 +399,11 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
 
                 can_see_el_exclude_users: Option<Vec<User>>,
                 can_see_el_include_users: Option<Vec<User>>,
-                can_see_comment_include_users: Option<Vec<User>>,
+                can_see_comment_exclude_users: Option<Vec<User>>,
                 can_see_comment_include_users: Option<Vec<User>>,
                 create_el_exclude_users: Option<Vec<User>>,
                 create_el_include_users: Option<Vec<User>>,
-                create_comment_include_users: Option<Vec<User>>,
+                create_comment_exclude_users: Option<Vec<User>>,
                 create_comment_include_users: Option<Vec<User>>,
                 copy_el_exclude_users: Option<Vec<User>>,
                 copy_el_include_users: Option<Vec<User>>,
@@ -425,11 +425,11 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
 
                 can_see_el_exclude_users: can_see_el_exclude_users,
                 can_see_el_include_users: can_see_el_include_users,
-                can_see_comment_include_users: can_see_comment_include_users,
+                can_see_comment_exclude_users: can_see_comment_include_users,
                 can_see_comment_include_users: can_see_comment_include_users,
                 create_el_exclude_users: create_el_exclude_users,
                 create_el_include_users: create_el_include_users,
-                create_comment_include_users: create_comment_include_users,
+                create_comment_exclude_users: create_comment_include_users,
                 create_comment_include_users: create_comment_include_users,
                 copy_el_exclude_users: copy_el_exclude_users,
                 copy_el_include_users: copy_el_include_users,
@@ -459,8 +459,8 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 can_see_el_include_users: Option<Vec<User>>,
                 create_el_exclude_users: Option<Vec<User>>,
                 create_el_include_users: Option<Vec<User>>,
-                copy_el_include_users: Option<Vec<User>>,
                 copy_el_exclude_users: Option<Vec<User>>,
+                copy_el_include_users: Option<Vec<User>>,
             }
             let body = EditListTemplate {
                 request_user: _request_user,
