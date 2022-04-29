@@ -54,17 +54,17 @@ pub async fn edit_user_post_list_page(session: Session, req: HttpRequest, _id: w
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
         let _list_id : i32 = *_id;
-        let list = get_post_list(_list_id); 
+        let list = get_post_list(_list_id);
         //let creator = get_user(list.user_id);
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/posts/post_user/edit_list.stpl")]
-        struct Template {
+        struct YTemplate {
             request_user: User,
             list: PostList,
             //creator: User,
         }
-        let body = Template {
+        let body = YTemplate {
             request_user: _request_user,
             list: list,
             //creator: creator,
