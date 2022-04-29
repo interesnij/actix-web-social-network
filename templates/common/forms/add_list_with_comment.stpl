@@ -1,4 +1,4 @@
-<form community-pk="<% if community.is_some() { %> <%= community.id.unwrap() <% } %>" class="is_stat_list case_create" data-pk="<% if community.is_some() { %> <%= community.id.unwrap() <% } %>" data-type="">
+<form community-pk="" class="is_stat_list case_create" data-pk="" data-type="">
   <input type="hidden" name="type" value="<%= suffix %><%= pk %>" class="type">
       <input type="hidden" name="community_id" value="<% if community.is_some() { %> <%= community.id.unwrap() <% } %>">
       <div class="card">
