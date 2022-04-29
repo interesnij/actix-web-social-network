@@ -18,6 +18,7 @@ pub fn pages_routes(config: &mut web::ServiceConfig) {
     config.route("/", web::get().to(index_page));
     config.route("/featured/", web::get().to(featured_list_page));
     config.route("/add_list/", web::get().to(add_list_page));
+    config.route("/edit_list/", web::get().to(edit_list_page));
     //config.route("/add_list/", web::post().to(add_list));
 }
 
