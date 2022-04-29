@@ -259,18 +259,17 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             to_home();
         }
         let params = params_some.unwrap();
-        //if params.community_id.is_some() && !params.community_id.as_ref().unwrap().is_empty() {
-        //    use crate::utils::get_community;
+        if params.community_id.is_some() && !params.community_id.as_ref().unwrap().is_empty() {
+            use crate::utils::get_community;
 
-        //    let c_pk: i32 = params.community_id.as_ref().unwrap().parse().unwrap();
-        //    let _community = get_community(c_pk);
-        //    if !_community.get_staff_users_ids().iter().any(|&i| i==_request_user.id) {
-        //        to_home();
-        //    }
-        //    community = Some(_community);
-        //}
+            let c_pk: i32 = params.community_id.as_ref().unwrap().parse().unwrap();
+            let _community = get_community(c_pk);
+            if !_community.get_staff_users_ids().iter().any(|&i| i==_request_user.id) {
+                to_home();
+            }
+            community = Some(_community);
+        }
         let suffix = &params.types[..3];
-        println!("{:?}", suffix);
         let pk: i32 = params.types[3..].parse().unwrap();
 
         let mut text = "".to_string();
@@ -297,6 +296,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
 
         if let suffix = "lpo".to_string() {
             use crate::utils::get_post_list;
+            println!("Создание списка записей!!!");
 
             text = "Создание списка записей".to_string();
             have_comments = true;
@@ -344,6 +344,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         if let suffix = "lph".to_string() {
             use crate::utils::get_photo_list;
 
+            println!("Создание фотоальбома!!!");
             text = "Создание фотоальбома".to_string();
             have_comments = true;
             let list = get_photo_list(pk);
