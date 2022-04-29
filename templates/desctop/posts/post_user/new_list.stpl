@@ -1,0 +1,15 @@
+
+<span class="load_list">
+  <span class="span_list_pk" list-pk="<%= list.id %>">
+    <span class="list_pk" data-uuid="<%= list.id %>">
+      <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %>: </span>
+
+      <% include!("../../generic/items/list_meta.stpl"); %>
+        <% include!("new_post.stpl"); %>
+
+        <span class="post_stream is_paginate">
+            <% include!("../../users/lenta/no_items.stpl"); %>
+        </span>
+    </span>
+  </span>
+</span>
