@@ -152,7 +152,7 @@ pub async fn get_add_list_page(session: Session, req: HttpRequest) -> actix_web:
 
         #[derive(Deserialize)]
         struct GetParams {
-            pub type: String,
+            pub types: String,
             pub community_id: Option<i32>,
         }
 
@@ -170,7 +170,7 @@ pub async fn get_add_list_page(session: Session, req: HttpRequest) -> actix_web:
             }
             community = Some(_community);
         }
-        let suffix = params.type[..3];
+        let suffix = params.types[..3];
         let text = match suffix {
             "lpo" => "Создание списка записей".to_string(),
             "lph" => "Создание фотоальбома".to_string(),
@@ -195,13 +195,13 @@ pub async fn get_add_list_page(session: Session, req: HttpRequest) -> actix_web:
             #[template(path = "common/forms/add_list_with_comment.stpl")]
             struct CreateListCommentTemplate {
                 request_user: User,
-                type: String,
+                r#type: String,
                 text: String,
                 community: Option<Community>,
             }
             let body = CreateListCommentTemplate {
                 request_user: _request_user,
-                type: params.type,
+                r#type: params.types,
                 text: text,
                 community: community;
             }
@@ -216,13 +216,13 @@ pub async fn get_add_list_page(session: Session, req: HttpRequest) -> actix_web:
             #[template(path = "common/forms/add_list_not_comment.stpl")]
             struct CreateListTemplate {
                 request_user: User,
-                type: String,
+                r#type: String,
                 text: String,
                 community: Option<Community>,
             }
             let body = CreateListTemplate {
                 request_user: _request_user,
-                type: params.type,
+                r#type: params.types,
                 text: text,
                 community: community;
             }
