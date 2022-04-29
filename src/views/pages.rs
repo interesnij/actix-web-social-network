@@ -168,7 +168,7 @@ pub async fn add_list_page(session: Session, req: HttpRequest) -> actix_web::Res
             community = Some(_community);
         }
         let suffix = &params.types[..3];
-        let (text2, have_comments2) = match suffix {
+        let (text2; have_comments2) = match suffix {
             "lpo" => {"Создание списка записей".to_string(); true}
             "lph" => {"Создание фотоальбома".to_string(); true}
             "lgo" => {"Создание подборки товаров".to_string(); true}
