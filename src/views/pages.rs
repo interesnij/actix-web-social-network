@@ -255,20 +255,20 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         }
 
         let params_some = web::Query::<GetParams>::from_query(&req.query_string());
-        if !params_some.is_ok() {
+        if params_some.is_err() {
             to_home();
         }
         let params = params_some.unwrap();
-        if params.community_id.is_some() && !params.community_id.as_ref().unwrap().is_empty() {
-            use crate::utils::get_community;
+        //if params.community_id.is_some() && !params.community_id.as_ref().unwrap().is_empty() {
+        //    use crate::utils::get_community;
 
-            let c_pk: i32 = params.community_id.as_ref().unwrap().parse().unwrap();
-            let _community = get_community(c_pk);
-            if !_community.get_staff_users_ids().iter().any(|&i| i==_request_user.id) {
-                to_home();
-            }
-            community = Some(_community);
-        }
+        //    let c_pk: i32 = params.community_id.as_ref().unwrap().parse().unwrap();
+        //    let _community = get_community(c_pk);
+        //    if !_community.get_staff_users_ids().iter().any(|&i| i==_request_user.id) {
+        //        to_home();
+        //    }
+        //    community = Some(_community);
+        //}
         let suffix = &params.types[..3];
         println!("{:?}", suffix);
         let pk: i32 = params.types[3..].parse().unwrap();
