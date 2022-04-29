@@ -303,7 +303,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             create_comment = list.create_comment;
             copy_el = list.copy_el;
             if can_see_el == "d".to_string() && can_see_el == "i".to_string() {
-                can_see_el_exclude_users = Some(list.get_can_see_el_exclude_users());
+                can_see_el_exclude_users = Some(list.get_can_see_el_exclude_users().clone());
             }
             else if can_see_el == "e".to_string() && can_see_el == "j".to_string() {
                 can_see_el_include_users = Some(list.get_can_see_el_include_users());
