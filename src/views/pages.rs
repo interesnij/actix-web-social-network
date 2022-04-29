@@ -275,17 +275,12 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         }
         let suffix = &params.types[..3];
         let pk: i32 = params.types[3..].parse().unwrap();
-
-        let list = match suffix {
-            "lpo" => get_post_list(pk),
-            "lph" => get_photo_list(pk),
-            "lgo" => get_good_list(pk),
-            "lvi" => get_video_list(pk),
-            "ldo" => get_doc_list(pk),
-            "lmu" => get_music_list(pk),
-            "lsu" => get_survey_list(pk),
-            _ => "".to_string(),
-        };
+        if let suffix == "lpo".to_string() {
+            let list = get_post_list(pk);
+        }
+        else if  suffix == "lpo".to_string() {
+            let list = get_photo_list(pk);
+        }
 
         let text = match suffix {
             "lpo" => "Создание списка записей".to_string(),
