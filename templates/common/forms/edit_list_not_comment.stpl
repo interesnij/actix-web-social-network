@@ -5,8 +5,6 @@ let mut list = None;
 enum ModelSwitch {
     PostList,
     PhotoList,
-    Type3(DataType3),
-    Type4(DataType4),
 }
 if let suffix = "lpo".to_string() {
 use crate::utils::get_post_list;
