@@ -148,7 +148,7 @@ pub async fn get_add_list_page(session: Session, req: HttpRequest) -> actix_web:
     let _connection = establish_connection();
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
-        let community: Option<Community> = None;
+        let mut community: Option<Community> = None;
 
         #[derive(Deserialize)]
         struct GetParams {
@@ -201,7 +201,7 @@ pub async fn get_add_list_page(session: Session, req: HttpRequest) -> actix_web:
             }
             let body = CreateListCommentTemplate {
                 request_user: _request_user,
-                r#type: params.types,
+                r#type: params.types.clone(),
                 text: text,
                 community: community,
             }
@@ -222,7 +222,7 @@ pub async fn get_add_list_page(session: Session, req: HttpRequest) -> actix_web:
             }
             let body = CreateListTemplate {
                 request_user: _request_user,
-                r#type: params.types,
+                r#type: params.types.clone(),
                 text: text,
                 community: community,
             }
