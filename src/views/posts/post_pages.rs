@@ -140,7 +140,7 @@ pub async fn add_user_post_list(session: Session, req: HttpRequest, mut payload:
         );
 
         #[derive(TemplateOnce)]
-        #[template(path = "desctop/posts/post_user/new_list.stpl")]
+        #[template(path = "desctop/users/lenta/new_list.stpl")]
         struct Template {
             request_user: User,
             list: PostList,
