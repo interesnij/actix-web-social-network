@@ -52,13 +52,13 @@ on('body', 'click', '.create_list', function() {
   parent = this.parentElement;
   type = parent.getAttribute('data-type');
   community_id = parent.getAttribute('data-community-id');
-  create_fullscreen("/add_list/?type=" + type + "&community_id=" + community_id, "worker_fullscreen");
+  create_fullscreen("/add_list/?types=" + type + "&community_id=" + community_id, "worker_fullscreen");
 });
 on('body', 'click', '.edit_list', function() {
   parent = this.parentElement;
   type = parent.getAttribute('data-type');
   community_id = parent.getAttribute('data-community-id');
-  create_fullscreen("/edit_list/?type=" + type + "&community_id=" + community_id, "worker_fullscreen");
+  create_fullscreen("/edit_list/?types=" + type + "&community_id=" + community_id, "worker_fullscreen");
 });
 
 on('body', 'click', '.comment_likes', function() {

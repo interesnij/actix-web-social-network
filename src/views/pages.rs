@@ -305,6 +305,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             create_el = list.create_el;
             create_comment = list.create_comment;
             copy_el = list.copy_el;
+
             if can_see_el == "d".to_string() && can_see_el == "i".to_string() {
                 use crate::schema::post_list_perms::dsl::post_list_perms;
                 use crate::models::PostListPerm;
@@ -335,6 +336,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     };
                 can_see_el_include_users = Some(get_users_from_ids(stack));
             }
+            
         }
         if let suffix = "lph".to_string() {
             use crate::utils::get_photo_list;
