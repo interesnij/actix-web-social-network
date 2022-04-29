@@ -15,8 +15,8 @@ use crate::models::User;
 pub fn pages_routes(config: &mut web::ServiceConfig) {
     config.route("/", web::get().to(index_page));
     config.route("/featured/", web::get().to(featured_list_page));
-    config.route("/add_list/", web::get().to(get_add_list_page));
-    //config.route("/add_list/", web::post().to(post_add_list_page));
+    config.route("/add_list/", web::get().to(add_list_page));
+    //config.route("/add_list/", web::post().to(add_list));
 }
 
 pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
@@ -139,7 +139,7 @@ pub async fn featured_list_page(session: Session, req: HttpRequest) -> actix_web
     }
 }
 
-pub async fn get_add_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+pub async fn add_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     use crate::models::Community;
 
     let _connection = establish_connection();
