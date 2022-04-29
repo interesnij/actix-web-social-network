@@ -168,16 +168,6 @@ pub async fn add_list_page(session: Session, req: HttpRequest) -> actix_web::Res
             community = Some(_community);
         }
         let suffix = &params.types[..3];
-        let (text2; have_comments2) = match suffix {
-            "lpo" => {"Создание списка записей".to_string(); true}
-            "lph" => {"Создание фотоальбома".to_string(); true}
-            "lgo" => {"Создание подборки товаров".to_string(); true}
-            "lvi" => {"Создание видеоальбома".to_string(); true}
-            "ldo" => {"Создание списка документов".to_string(); false}
-            "lmu" => {"Создание плейлиста".to_string(); false}
-            "lsu" => {"Создание опросов".to_string(); false}
-            _ => {"".to_string(); false}
-        };
         let text = match suffix {
             "lpo" => "Создание списка записей".to_string(),
             "lph" => "Создание фотоальбома".to_string(),
@@ -230,6 +220,125 @@ pub async fn add_list_page(session: Session, req: HttpRequest) -> actix_web::Res
                 community: Option<Community>,
             }
             let body = CreateListTemplate {
+                request_user: _request_user,
+                r#type: params.types.clone(),
+                text: text,
+                community: community,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body))
+        }
+    } else {
+        Ok(to_home())
+    }
+}
+
+pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    use crate::models::Community;
+    use crate::utils::{
+        get_post_list,
+        get_photo_list,
+        get_good_list,
+        get_video_list,
+        get_doc_list,
+        get_music_list,
+        get_survey_list,
+    };
+
+    let _connection = establish_connection();
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let mut community: Option<Community> = None;
+
+        #[derive(Deserialize)]
+        struct GetParams {
+            pub types: String,
+            pub community_id: Option<i32>,
+        }
+
+        let params_some = web::Query::<GetParams>::from_query(&req.query_string());
+        if !params_some.is_ok() {
+            to_home();
+        }
+        let params = params_some.unwrap();
+        if params.community_id.is_some() {
+            use crate::utils::get_community;
+
+            let _community = get_community(params.community_id.unwrap());
+            if !_community.get_staff_users_ids().iter().any(|&i| i==_request_user.id) {
+                to_home();
+            }
+            community = Some(_community);
+        }
+        let suffix = &params.types[..3];
+        let pk: i32 = item[3..].parse().unwrap();
+
+        let list = match suffix {
+            "lpo" => get_post_list(pk),
+            "lph" => get_photo_list(pk),
+            "lgo" => get_good_list(pk),
+            "lvi" => get_video_list(pk),
+            "ldo" => get_doc_list(pk),
+            "lmu" => get_music_list(pk),
+            "lsu" => get_survey_list(pk)),
+            _ => "".to_string(),
+        };
+
+        let text = match suffix {
+            "lpo" => "Создание списка записей".to_string(),
+            "lph" => "Создание фотоальбома".to_string(),
+            "lgo" => "Создание подборки товаров".to_string(),
+            "lvi" => "Создание видеоальбома".to_string(),
+            "ldo" => "Создание списка документов".to_string(),
+            "lmu" => "Создание плейлиста".to_string(),
+            "lsu" => "Создание опросов".to_string(),
+            _ => "".to_string(),
+        };
+        let have_comments = match suffix {
+            "lpo" => true,
+            "lph" => true,
+            "lgo" => true,
+            "lvi" => true,
+            "ldo" => false,
+            "lmu" => false,
+            "lsu" => false,
+            _ => false,
+        };
+
+        if have_comments == true {
+            #[derive(TemplateOnce)]
+            #[template(path = "common/forms/edit_list_with_comment.stpl")]
+            struct EditListCommentTemplate {
+                request_user: User,
+                r#type: String,
+                text: String,
+                community: Option<Community>,
+            }
+            let body = EditListCommentTemplate {
+                request_user: _request_user,
+                r#type: params.types.clone(),
+                text: text,
+                community: community,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "common/forms/edit_list_not_comment.stpl")]
+            struct EditListTemplate {
+                request_user: User,
+                r#type: String,
+                text: String,
+                community: Option<Community>,
+            }
+            let body = EditListTemplate {
                 request_user: _request_user,
                 r#type: params.types.clone(),
                 text: text,
