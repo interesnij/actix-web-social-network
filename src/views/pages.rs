@@ -270,6 +270,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             community = Some(_community);
         }
         let suffix = &params.types[..3];
+        println!("{:?}", suffix);
         let pk: i32 = params.types[3..].parse().unwrap();
 
         let mut text = "".to_string();
