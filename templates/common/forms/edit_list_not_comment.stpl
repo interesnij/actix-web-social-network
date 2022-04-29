@@ -1,7 +1,8 @@
 <%
+let list = None;
 if let suffix = "lpo".to_string() {
   use crate::utils::get_post_list;
-  let list = get_post_list(pk);
+  list = get_post_list(pk);
 }
 %>
 <%= list.id %>
