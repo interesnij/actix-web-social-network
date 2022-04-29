@@ -259,7 +259,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             to_home();
         }
         let params = params_some.unwrap();
-        if params.community_id.is_some() {
+        if params.community_id.is_some() && !params.community_id.as_ref().unwrap().is_empty() {
             use crate::utils::get_community;
 
             let c_pk: i32 = params.community_id.as_ref().unwrap().parse().unwrap();
