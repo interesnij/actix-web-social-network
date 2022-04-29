@@ -25,7 +25,7 @@
       <input class="input" name="can_see_el" type="hidden" value="i" />
       <a class="menu_drop_2 pointer underline">Подписчики, кроме</a>
       <span class="collector">:
-        <% for object in list.get_can_see_el_exclude_users.iter() { %>
+        <% for object in list.get_can_see_el_exclude_users().iter() { %>
           <a href="<%= object.get_link() %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
         <% } %>
       </span>
