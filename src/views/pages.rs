@@ -276,37 +276,30 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         let suffix = &params.types[..3];
         let pk: i32 = params.types[3..].parse().unwrap();
         if let suffix = "lpo".to_string() {
-            let list = get_post_list(pk);
             let text = "Создание списка записей".to_string();
             let have_comments = true;
         }
         if let suffix = "lph".to_string() {
-            let list = get_photo_list(pk);
             "Создание фотоальбома".to_string();
             let have_comments = true;
         }
         if let suffix = "lgo".to_string() {
-            let list = get_good_list(pk);
             let text = "Создание подборки товаров".to_string();
             let have_comments = true;
         }
         if let suffix = "lvi".to_string() {
-            let list = get_video_list(pk);
             "Создание видеоальбома".to_string();
             let have_comments = true;
         }
         if let suffix = "ldo".to_string() {
-            let list = get_doc_list(pk);
             "Создание списка документов".to_string();
             let have_comments = false;
         }
         if let suffix = "lmu".to_string() {
-            let list = get_music_list(pk);
             "Создание плейлиста".to_string();
             let have_comments = false;
         }
         if let suffix = "lsu".to_string() {
-            let list = get_survey_list(pk);
             "Создание списка опросов".to_string();
             let have_comments = false;
         }
@@ -316,13 +309,15 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[template(path = "common/forms/edit_list_with_comment.stpl")]
             struct EditListCommentTemplate {
                 request_user: User,
-                r#type: String,
+                suffix: String,
+                pk: i32,
                 text: String,
                 community: Option<Community>,
             }
             let body = EditListCommentTemplate {
                 request_user: _request_user,
-                r#type: params.types.clone(),
+                suffix: suffix,
+                pk: pk,
                 text: text,
                 community: community,
             }
@@ -337,13 +332,15 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[template(path = "common/forms/edit_list_not_comment.stpl")]
             struct EditListTemplate {
                 request_user: User,
-                r#type: String,
+                suffix: String,
+                pk: i32,
                 text: String,
                 community: Option<Community>,
             }
             let body = EditListTemplate {
                 request_user: _request_user,
-                r#type: params.types.clone(),
+                suffix: suffix,
+                pk: pk,
                 text: text,
                 community: community,
             }
