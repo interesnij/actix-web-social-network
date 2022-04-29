@@ -237,7 +237,6 @@ pub async fn add_list_page(session: Session, req: HttpRequest) -> actix_web::Res
 }
 
 pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    use crate::models::Community;
     let _connection = establish_connection();
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
@@ -265,35 +264,120 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         }
         let suffix = &params.types[..3];
         let pk: i32 = params.types[3..].parse().unwrap();
+
         let mut text = "".to_string();
         let mut have_comments = false;
+        let mut name = "".to_string();
+        let mut description = "".to_string();
+
+        let mut can_see_el = "".to_string();
+        let mut can_see_comment = "".to_string();
+        let mut create_el = "".to_string();
+        let mut create_comment = "".to_string();
+        let mut copy_el = "".to_string();
+
+        let mut can_see_el_exclude_users: Option<Vec<User>> = None;
+        let mut can_see_el_include_users: Option<Vec<User>> = None;
+        let mut can_see_comment_include_users: Option<Vec<User>> = None;
+        let mut can_see_comment_include_users: Option<Vec<User>> = None;
+        let mut create_el_exclude_users: Option<Vec<User>> = None;
+        let mut create_el_include_users: Option<Vec<User>> = None;
+        let mut create_comment_include_users: Option<Vec<User>> = None;
+        let mut create_comment_include_users: Option<Vec<User>> = None;
+        let mut copy_el_exclude_users: Option<Vec<User>> = None;
+        let mut copy_el_include_users: Option<Vec<User>> = None;
+
         if let suffix = "lpo".to_string() {
+            use crate::utils::get_post_list;
+
             text = "Создание списка записей".to_string();
             have_comments = true;
+            let list = get_post_list(pk);
+            name = list.name;
+            description = list.description;
+            can_see_el = list.can_see_el;
+            can_see_comment = list.can_see_comment;
+            create_el = list.create_el;
+            create_comment = list.create_comment;
+            copy_el = list.copy_el;
         }
         if let suffix = "lph".to_string() {
+            use crate::utils::get_photo_list;
+
             text = "Создание фотоальбома".to_string();
             have_comments = true;
+            let list = get_post_list(pk);
+            name = list.name;
+            description = list.description;
+            can_see_el = list.can_see_el;
+            can_see_comment = list.can_see_comment;
+            create_el = list.create_el;
+            create_comment = list.create_comment;
+            copy_el = list.copy_el;
         }
         if let suffix = "lgo".to_string() {
+            use crate::utils::get_good_list;
+
             text = "Создание подборки товаров".to_string();
             have_comments = true;
+            let list = get_post_list(pk);
+            name = list.name;
+            description = list.description;
+            can_see_el = list.can_see_el;
+            can_see_comment = list.can_see_comment;
+            create_el = list.create_el;
+            create_comment = list.create_comment;
+            copy_el = list.copy_el;
         }
         if let suffix = "lvi".to_string() {
+            use crate::utils::get_video_list;
+
             text = "Создание видеоальбома".to_string();
             have_comments = true;
+            let list = get_post_list(pk);
+            name = list.name;
+            description = list.description;
+            can_see_el = list.can_see_el;
+            can_see_comment = list.can_see_comment;
+            create_el = list.create_el;
+            create_comment = list.create_comment;
+            copy_el = list.copy_el;
         }
         if let suffix = "ldo".to_string() {
+            use crate::utils::get_doc_list;
+
             text = "Создание списка документов".to_string();
             have_comments = false;
+            let list = get_post_list(pk);
+            name = list.name;
+            description = list.description;
+            can_see_el = list.can_see_el;
+            create_el = list.create_el;
+            copy_el = list.copy_el;
         }
         if let suffix = "lmu".to_string() {
+            use crate::utils::get_music_list;
+
             text = "Создание плейлиста".to_string();
             have_comments = false;
+            let list = get_post_list(pk);
+            name = list.name;
+            description = list.description;
+            can_see_el = list.can_see_el;
+            create_el = list.create_el;
+            copy_el = list.copy_el;
         }
         if let suffix = "lsu".to_string() {
+            use crate::utils::get_survey_list;
+
             text = "Создание списка опросов".to_string();
             have_comments = false;
+            let list = get_post_list(pk);
+            name = list.name;
+            description = list.description;
+            can_see_el = list.can_see_el;
+            create_el = list.create_el;
+            copy_el = list.copy_el;
         }
 
         if have_comments == true {
@@ -301,10 +385,28 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[template(path = "common/forms/edit_list_with_comment.stpl")]
             struct EditListCommentTemplate {
                 request_user: User,
-                suffix: String,
-                pk: i32,
-                text: String,
+                suffix:       String,
+                pk:           i32,
+                text:         String,
                 community_id: Option<i32>,
+                name:         String,
+                description:  String,
+                can_see_el:   String,
+                can_see_comment:   String,
+                create_el:    String,
+                create_comment:    String,
+                copy_el:      String,
+
+                can_see_el_exclude_users: Option<Vec<User>>,
+                can_see_el_include_users: Option<Vec<User>>,
+                can_see_comment_include_users: Option<Vec<User>>,
+                can_see_comment_include_users: Option<Vec<User>>,
+                create_el_exclude_users: Option<Vec<User>>,
+                create_el_include_users: Option<Vec<User>>,
+                create_comment_include_users: Option<Vec<User>>,
+                create_comment_include_users: Option<Vec<User>>,
+                copy_el_exclude_users: Option<Vec<User>>,
+                copy_el_include_users: Option<Vec<User>>,
             }
             let body = EditListCommentTemplate {
                 request_user: _request_user,
@@ -312,6 +414,25 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 pk: pk,
                 text: text,
                 community_id: params.community_id.clone(),
+
+                name:         name,
+                description:  description,
+                can_see_el:   can_see_el,
+                can_see_comment:   can_see_comment,
+                create_el:    create_el,
+                create_comment:    create_comment,
+                copy_el:      copy_el,
+
+                can_see_el_exclude_users: can_see_el_exclude_users,
+                can_see_el_include_users: can_see_el_include_users,
+                can_see_comment_include_users: can_see_comment_include_users,
+                can_see_comment_include_users: can_see_comment_include_users,
+                create_el_exclude_users: create_el_exclude_users,
+                create_el_include_users: create_el_include_users,
+                create_comment_include_users: create_comment_include_users,
+                create_comment_include_users: create_comment_include_users,
+                copy_el_exclude_users: copy_el_exclude_users,
+                copy_el_include_users: copy_el_include_users,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -324,10 +445,22 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[template(path = "common/forms/edit_list_not_comment.stpl")]
             struct EditListTemplate {
                 request_user: User,
-                suffix: String,
-                pk: i32,
-                text: String,
+                suffix:       String,
+                pk:           i32,
+                text:         String,
                 community_id: Option<i32>,
+                name:         String,
+                description:  String,
+                can_see_el:   String,
+                create_el:    String,
+                copy_el:      String,
+
+                can_see_el_exclude_users: Option<Vec<User>>,
+                can_see_el_include_users: Option<Vec<User>>,
+                create_el_exclude_users: Option<Vec<User>>,
+                create_el_include_users: Option<Vec<User>>,
+                copy_el_include_users: Option<Vec<User>>,
+                copy_el_exclude_users: Option<Vec<User>>,
             }
             let body = EditListTemplate {
                 request_user: _request_user,
@@ -335,6 +468,19 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 pk: pk,
                 text: text,
                 community_id: params.community_id.clone(),
+
+                name:         name,
+                description:  description,
+                can_see_el:   can_see_el,
+                create_el:    create_el,
+                copy_el:      copy_el,
+
+                can_see_el_exclude_users: can_see_el_exclude_users,
+                can_see_el_include_users: can_see_el_include_users,
+                create_el_exclude_users: create_el_exclude_users,
+                create_el_include_users: create_el_include_users,
+                copy_el_exclude_users: copy_el_exclude_users,
+                copy_el_include_users: copy_el_include_users,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

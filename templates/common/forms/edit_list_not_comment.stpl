@@ -1,23 +1,4 @@
-<%
-use crate::models::{PostList, PhotoList};
-use crate::utils::{get_post_list, get_photo_list};
 
-enum ModelSwitch {
-    PostList,
-    PhotoList,
-}
-
-let mut list: ModelSwitch;
-if let suffix = "lpo".to_string() {
-  list = ModelSwitch::PostList;
-  list = get_post_list(pk);
-}
-if let suffix = "lph".to_string() {
-  list = ModelSwitch::PhotoList;
-  list = get_photo_list(pk);
-}
-%>
-<%= list.name %>
 <form community-pk=">" class="is_stat_list case_create" data-pk="" data-type="">
   <input type="hidden" name="type" value="<%= suffix %><%= pk %>" class="type">
       <input type="hidden" name="community_id" value="<% if community_id.is_some() { %> <%= community_id.unwrap() %> <% } %>">
@@ -28,11 +9,11 @@ if let suffix = "lph".to_string() {
           <div class="card-body">
                 <div class="form-group">
                   <label>Название</label>
-                  <input type="text" name="name" class="form-control" id="id_name">
+                  <input value="<%= name %>" type="text" name="name" class="form-control" id="id_name">
                 </div>
                 <div class="form-group">
                   <label>Описание</label>
-                  <input name="description" class="form-control">
+                  <input <%= list.description %> name="description" class="form-control">
                 </div>
                 <% if community_id.is_some() { %>
                   <% include!("../../base_block/perm/edit_community_list_perm.stpl"); %>
