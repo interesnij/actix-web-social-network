@@ -309,7 +309,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 use crate::models::PostListPerm;
                 use crate::utils::get_users_from_ids;
                 let items = post_list_perms
-                    .filter(schema::post_list_perms::post_list_id.eq(self.id))
+                    .filter(schema::post_list_perms::post_list_id.eq(list.id))
                     .filter(schema::post_list_perms::can_see_item.eq("b"))
                     .load::<PostListPerm>(&_connection)
                     .expect("E");
@@ -324,7 +324,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                 use crate::models::PostListPerm;
                 use crate::utils::get_users_from_ids;
                 let items = post_list_perms
-                    .filter(schema::post_list_perms::post_list_id.eq(self.id))
+                    .filter(schema::post_list_perms::post_list_id.eq(list.id))
                     .filter(schema::post_list_perms::can_see_item.eq("a"))
                     .load::<PostListPerm>(&_connection)
                     .expect("E");
