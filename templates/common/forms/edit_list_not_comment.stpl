@@ -22,9 +22,9 @@ if suffix == "lpo" {
                   <input name="description" class="form-control">
                 </div>
                 <% if community.is_some() { %>
-                  <% include!("../../../base_block/perm/edit_community_list_perm.html"); %>
+                  <% include!("../../../base_block/perm/edit_community_list_perm.stpl"); %>
                 <% } else { %>
-                  <% include!("../../../base_block/perm/edit_user_list_perm.html"); %>
+                  <% include!("../../../base_block/perm/edit_user_list_perm.stpl"); %>
                 <% } %>
           </div>
           <div class="card-footer">
