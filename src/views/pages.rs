@@ -303,10 +303,34 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
             create_comment = list.create_comment;
             copy_el = list.copy_el;
             if can_see_el == "d".to_string() && can_see_el == "i".to_string() {
-                can_see_el_exclude_users = list.get_can_see_el_exclude_users();
+                use crate::schema::post_list_perms::dsl::post_list_perms;
+                use crate::models::PostListPerm;
+                use crate::utils::get_users_from_ids;
+                let items = post_list_perms
+                    .filter(schema::post_list_perms::post_list_id.eq(self.id))
+                    .filter(schema::post_list_perms::can_see_item.eq("b"))
+                    .load::<PostListPerm>(&_connection)
+                    .expect("E");
+                let mut stack = Vec::new();
+                    for _item in items.iter() {
+                        stack.push(_item.user_id);
+                    };
+                can_see_el_exclude_users = get_users_from_ids(stack);
             }
             else if can_see_el == "e".to_string() && can_see_el == "j".to_string() {
-                can_see_el_include_users = Some(list.get_can_see_el_include_users());
+                use crate::schema::post_list_perms::dsl::post_list_perms;
+                use crate::models::PostListPerm;
+                use crate::utils::get_users_from_ids;
+                let items = post_list_perms
+                    .filter(schema::post_list_perms::post_list_id.eq(self.id))
+                    .filter(schema::post_list_perms::can_see_item.eq("a"))
+                    .load::<PostListPerm>(&_connection)
+                    .expect("E");
+                let mut stack = Vec::new();
+                    for _item in items.iter() {
+                        stack.push(_item.user_id);
+                    };
+                can_see_el_include_users = get_users_from_ids(stack);
             }
         }
         if let suffix = "lph".to_string() {
