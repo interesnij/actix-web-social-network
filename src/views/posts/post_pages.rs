@@ -34,7 +34,7 @@ pub async fn add_user_post_list_page(session: Session, req: HttpRequest) -> acti
         let _request_user = get_request_user_data(session);
 
         #[derive(TemplateOnce)]
-        #[template(path = "common/posts/post_user/add_list.stpl")]
+        #[template(path = "desctop/posts/post_user/add_list.stpl")]
         struct Template {
             request_user: User,
         }
@@ -57,7 +57,7 @@ pub async fn edit_user_post_list_page(session: Session, req: HttpRequest, _id: w
         let creator = get_user(list.user_id);
 
         #[derive(TemplateOnce)]
-        #[template(path = "common/posts/post_user/edit_list.stpl")]
+        #[template(path = "desctop/posts/post_user/edit_list.stpl")]
         struct Template {
             request_user: User,
             list: PostList,
@@ -83,7 +83,7 @@ pub async fn add_community_post_list_page(session: Session, req: HttpRequest, _i
         let community = get_community(*_id);
 
         #[derive(TemplateOnce)]
-        #[template(path = "common/posts/post_community/edit_list.stpl")]
+        #[template(path = "desctop/posts/post_community/edit_list.stpl")]
         struct Template {
             request_user: User,
             community: Community,
@@ -108,7 +108,7 @@ pub async fn edit_community_post_list_page(session: Session, req: HttpRequest, _
         let community = get_community(list.community_id.unwrap());
 
         #[derive(TemplateOnce)]
-        #[template(path = "common/posts/post_community/edit_list.stpl")]
+        #[template(path = "desctop/posts/post_community/edit_list.stpl")]
         struct Template {
             request_user: User,
             community: Community,
