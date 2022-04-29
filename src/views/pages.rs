@@ -141,6 +141,7 @@ pub async fn featured_list_page(session: Session, req: HttpRequest) -> actix_web
 
 pub async fn add_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     use crate::models::Community;
+    use diesel::prelude::*;
 
     let _connection = establish_connection();
     if is_signed_in(&session) {
@@ -315,7 +316,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     for _item in items.iter() {
                         stack.push(_item.user_id);
                     };
-                can_see_el_exclude_users = get_users_from_ids(stack);
+                can_see_el_exclude_users = Some(get_users_from_ids(stack));
             }
             else if can_see_el == "e".to_string() && can_see_el == "j".to_string() {
                 use crate::schema::post_list_perms::dsl::post_list_perms;
@@ -330,7 +331,7 @@ pub async fn edit_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     for _item in items.iter() {
                         stack.push(_item.user_id);
                     };
-                can_see_el_include_users = get_users_from_ids(stack);
+                can_see_el_include_users = Some(get_users_from_ids(stack));
             }
         }
         if let suffix = "lph".to_string() {
