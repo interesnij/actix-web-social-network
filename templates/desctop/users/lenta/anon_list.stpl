@@ -1,5 +1,5 @@
 <span class="load_list">
-
+  <% let f_user = user.as_ref().unwrap(); %>
   <% if f_user.get_private_model().can_see_post == "a" { %>
 
   <% if is_page_list == true { %>
