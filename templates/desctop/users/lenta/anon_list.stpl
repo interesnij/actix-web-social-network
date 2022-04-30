@@ -1,6 +1,6 @@
 <span class="load_list">
 
-<% let f_user = user.as_ref().unwrap(); %>
+<% let f_user = user.as_ref().unwrap();
   let mut guess = String::new();
   guess = f_user.get_private_model().can_see_post;
 %>
