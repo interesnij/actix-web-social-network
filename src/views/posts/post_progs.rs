@@ -19,7 +19,7 @@ use crate::utils::{
 use actix_session::Session;
 use sailfish::TemplateOnce;
 use crate::models::{User, PostList, Post, Community};
-use serde::{Deserialize, Serialize};
+//use serde::{Deserialize, Serialize};
 use std::borrow::BorrowMut;
 use actix_multipart::Multipart;
 
@@ -29,6 +29,8 @@ pub fn post_progs(config: &mut web::ServiceConfig) {
     config.route("/posts/edit_user_list/{id}/", web::post().to(edit_user_post_list));
     config.route("/posts/add_community_list/{id}/", web::post().to(add_community_post_list));
     config.route("/posts/edit_community_list/{id}/", web::post().to(edit_community_post_list));
+    config.route("/posts/delete_list/{id}/", web::post().to(delete_post_list));
+    config.route("/posts/recover_list/{id}/", web::post().to(recover_post_list));
 }
 
 pub async fn add_user_post_list(session: Session, req: HttpRequest, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
@@ -220,4 +222,49 @@ pub async fn edit_community_post_list(session: Session, req: HttpRequest, mut pa
         .content_type("text/html; charset=utf-8")
         .body(""))
 }
+}
+
+
+pub async fn delete_post_list(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+
+        let list = get_post_list(*_id);
+        let _request_user = get_request_user_data(session);
+        if list.user_id == _request_user.id {
+            let res = list.delete_item();
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(res))
+        } else {
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body(""))
+    }
+}
+
+pub async fn recover_post_list(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+
+        let list = get_post_list(*_id);
+        let _request_user = get_request_user_data(session);
+        if list.user_id == _request_user.id {
+            let res = list.restore_item();
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(res))
+        } else {
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body(""))
+    }
 }
