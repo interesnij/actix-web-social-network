@@ -56,14 +56,12 @@
         let var_1 = list.can_see_el;
         let var_2 = list.can_see_el == "a";
         let var_3 = list.can_see_el.eq("a");
-        let var_4 = list.can_see_el == 'a';
         let var_5 = list.can_see_el.contains("a");
         let var_6 = list.can_see_el != "a";
       %>
       1 <%= var_1 %> <br>
       2 <%= var_2 %> <br>
       3 <%= var_3 %> <br>
-      4 <%= var_4 %> <br>
       5 <%= var_5 %> <br>
       6 <%= var_6 %> <br>
       <% if list.can_see_el == "a" { %>
