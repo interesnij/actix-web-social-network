@@ -43,7 +43,7 @@
       </span>
   </span>
   <span class="repost_window">
-    <% if object.is_have_reposts() == true %>
+    <% if object.is_have_reposts() == true { %>
   <div class="repost_pop">
     <span class="item_reposts pointer">Поделились: <%= object.count_reposts() %> <%= object.count_reposts_ru() %></span>
     <span style="display: flex;margin-top: 10px;">
