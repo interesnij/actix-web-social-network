@@ -669,7 +669,7 @@ impl GoodList {
             copy_el: copy_el.clone(),
         };
         let new_list = diesel::insert_into(schema::good_lists::table)
-            .values(&new_list)
+            .values(&new_list_form)
             .get_result::<GoodList>(&_connection)
             .expect("Error.");
 
