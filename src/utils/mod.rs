@@ -1,11 +1,13 @@
 mod templates;
 mod attach;
 mod progs;
+mod forms;
 
 pub use self::{
     templates::*,
     attach::*,
     progs::*,
+    forms::*,
 };
 
 use serde::Deserialize;
