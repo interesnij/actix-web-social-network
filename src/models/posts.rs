@@ -1963,7 +1963,7 @@ impl Post {
                 .unwrap();
 
             Post::create_post (
-                list.get_creator(),
+                list.user_id,
                 item.content.clone(),
                 item.post_categorie_id.clone(),
                 list,
