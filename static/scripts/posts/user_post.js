@@ -380,8 +380,60 @@ on('body', 'click', '.delete_list', function() {
   _this.removeAttribute('tooltip');
   parent = _this.parentElement;
   type = parent.getAttribute('data-type');
+  community_id = parent.getAttribute('data-community-id');
+  pk = type.slice(3);
+  if (type.indexOf('lpo') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/posts/delete_community_list/" + community_id + "/";
+    } else {
+      url = "/posts/delete_user_list/";
+    }
+  }
+  else if (type.indexOf('lph') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/photos/delete_community_list/" + community_id + "/";
+    } else {
+      url = "/photos/delete_user_list/";
+    }
+  }
+  else if (type.indexOf('ldo') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/docs/delete_community_list/" + community_id + "/";
+    } else {
+      url = "/docs/delete_user_list/";
+    }
+  }
+  else if (type.indexOf('lgo') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/goods/delete_community_list/" + community_id + "/";
+    } else {
+      url = "/goods/delete_user_list/";
+    }
+  }
+  else if (type.indexOf('lmu') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/music/delete_community_list/" + community_id + "/";
+    } else {
+      url = "/music/delete_user_list/";
+    }
+  }
+  else if (type.indexOf('lsu') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/survey/delete_community_list/" + community_id + "/";
+    } else {
+      url = "/survey/delete_user_list/";
+    }
+  }
+  else if (type.indexOf('lvi') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/video/delete_community_list/" + community_id + "/";
+    } else {
+      url = "/video/delete_user_list/";
+    }
+  }
+
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/users/progs/delete_list/?type=" + type , true );
+  link_.open( 'GET', url + pk + "/" , true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -405,8 +457,60 @@ on('body', 'click', '.recover_list', function() {
   _this.setAttribute('tooltip', 'Удалить список');
   parent = _this.parentElement;
   type = parent.getAttribute('data-type');
+  community_id = parent.getAttribute('data-community-id');
+  pk = type.slice(3);
+  if (type.indexOf('lpo') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/posts/recover_community_list/" + community_id + "/";
+    } else {
+      url = "/posts/recover_user_list/";
+    }
+  }
+  else if (type.indexOf('lph') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/photos/recover_community_list/" + community_id + "/";
+    } else {
+      url = "/photos/recover_user_list/";
+    }
+  }
+  else if (type.indexOf('ldo') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/docs/recover_community_list/" + community_id + "/";
+    } else {
+      url = "/docs/recover_user_list/";
+    }
+  }
+  else if (type.indexOf('lgo') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/goods/recover_community_list/" + community_id + "/";
+    } else {
+      url = "/goods/recover_user_list/";
+    }
+  }
+  else if (type.indexOf('lmu') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/music/recover_community_list/" + community_id + "/";
+    } else {
+      url = "/music/recover_user_list/";
+    }
+  }
+  else if (type.indexOf('lsu') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/survey/recover_community_list/" + community_id + "/";
+    } else {
+      url = "/survey/recover_user_list/";
+    }
+  }
+  else if (type.indexOf('lvi') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/video/recover_community_list/" + community_id + "/";
+    } else {
+      url = "/video/recover_user_list/";
+    }
+  }
+
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/users/progs/recover_list/?type=" + type, true );
+  link_.open( 'GET', url + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {

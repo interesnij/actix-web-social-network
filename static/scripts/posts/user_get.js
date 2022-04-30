@@ -53,10 +53,52 @@ on('body', 'click', '.create_list', function() {
   type = parent.getAttribute('data-type');
   community_id = parent.getAttribute('data-community-id');
   if (type.indexOf('lpo') !== -1) {
-    if (community_id === "") {
+    if (community_id && community_id !== "") {
       url = "/posts/add_community_list/" + community_id + "/";
     } else {
       url = "/posts/add_user_list/";
+    }
+  }
+  else if (type.indexOf('lph') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/photos/add_community_list/" + community_id + "/";
+    } else {
+      url = "/photos/add_user_list/";
+    }
+  }
+  else if (type.indexOf('ldo') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/docs/add_community_list/" + community_id + "/";
+    } else {
+      url = "/docs/add_user_list/";
+    }
+  }
+  else if (type.indexOf('lgo') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/goods/add_community_list/" + community_id + "/";
+    } else {
+      url = "/goods/add_user_list/";
+    }
+  }
+  else if (type.indexOf('lmu') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/music/add_community_list/" + community_id + "/";
+    } else {
+      url = "/music/add_user_list/";
+    }
+  }
+  else if (type.indexOf('lsu') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/survey/add_community_list/" + community_id + "/";
+    } else {
+      url = "/survey/add_user_list/";
+    }
+  }
+  else if (type.indexOf('lvi') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/video/add_community_list/" + community_id + "/";
+    } else {
+      url = "/video/add_user_list/";
     }
   }
   create_fullscreen(url, "worker_fullscreen");
@@ -67,10 +109,52 @@ on('body', 'click', '.edit_list', function() {
   community_id = parent.getAttribute('data-community-id');
   pk = type.slice(3);
   if (type.indexOf('lpo') !== -1) {
-    if (community_id === "") {
+    if (community_id && community_id !== "") {
       url = "/posts/edit_community_list/" + community_id + "/";
     } else {
       url = "/posts/edit_user_list/";
+    }
+  }
+  else if (type.indexOf('lph') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/photos/edit_community_list/" + community_id + "/";
+    } else {
+      url = "/photos/edit_user_list/";
+    }
+  }
+  else if (type.indexOf('ldo') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/docs/edit_community_list/" + community_id + "/";
+    } else {
+      url = "/docs/edit_user_list/";
+    }
+  }
+  else if (type.indexOf('lgo') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/goods/edit_community_list/" + community_id + "/";
+    } else {
+      url = "/goods/edit_user_list/";
+    }
+  }
+  else if (type.indexOf('lmu') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/music/edit_community_list/" + community_id + "/";
+    } else {
+      url = "/music/edit_user_list/";
+    }
+  }
+  else if (type.indexOf('lsu') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/survey/edit_community_list/" + community_id + "/";
+    } else {
+      url = "/survey/edit_user_list/";
+    }
+  }
+  else if (type.indexOf('lvi') !== -1) {
+    if (community_id && community_id !== "") {
+      url = "/video/edit_community_list/" + community_id + "/";
+    } else {
+      url = "/video/edit_user_list/";
     }
   }
   create_fullscreen(url + pk + "/", "worker_fullscreen");
