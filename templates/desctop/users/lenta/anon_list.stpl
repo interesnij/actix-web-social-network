@@ -54,10 +54,10 @@
     <span class="list_pk" data-uuid="<%= list.id %>">
       <%
         let var_1 = list.can_see_el;
-        let var_2 = list.can_see_el == "a";
-        let var_3 = list.can_see_el.eq("a");
-        let var_5 = list.can_see_el.contains("a");
-        let var_6 = list.can_see_el != "a";
+        let var_2 = list.can_see_el.clone() == "a";
+        let var_3 = list.can_see_el.clone().eq("a");
+        let var_5 = list.can_see_el.clone().contains("a");
+        let var_6 = list.can_see_el.clone() != "a";
       %>
       1 <%= var_1 %> <br>
       2 <%= var_2 %> <br>
