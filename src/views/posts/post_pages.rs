@@ -31,14 +31,31 @@ pub fn post_routes(config: &mut web::ServiceConfig) {
     config.route("/posts/edit_community_list/{id}/", web::get().to(edit_community_post_list_page));
 }
 
+pub fn get_error_page() {
+    #[derive(TemplateOnce)]
+    #[template(path = "common/error.stpl")]
+    struct Template {
+        text: String,
+    }
+    let body = Template {
+        text: "gggg".to_string(),
+    }
+    .render_once()
+    .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+    Ok(HttpResponse::Ok()
+        .content_type("text/html; charset=utf-8")
+        .body(body))
+}
+
 pub async fn add_user_post_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     if !is_signed_in(&session) {
-        Ok(to_home())
+        get_error_page()
     }
+
     let _request_user = get_request_user_data(session);
     if list.user_id != _request_user.id {
-        Ok(to_home())
-    };
+        get_error_page()
+    }
     #[derive(TemplateOnce)]
     #[template(path = "desctop/posts/post_user/add_list.stpl")]
     struct Template {
@@ -55,13 +72,13 @@ pub async fn add_user_post_list_page(session: Session, req: HttpRequest) -> acti
 }
 pub async fn edit_user_post_list_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if !is_signed_in(&session) {
-        Ok(to_home())
-    };
+        get_error_page()
+    }
     let _request_user = get_request_user_data(session);
     let _list_id : i32 = *_id;
     let list = get_post_list(_list_id);
     if list.user_id != _request_user.id {
-        Ok(to_home())
+        get_error_page()
     }
 
     #[derive(TemplateOnce)]
