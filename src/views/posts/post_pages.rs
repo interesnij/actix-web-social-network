@@ -35,14 +35,14 @@ pub async fn add_user_post_list_page(session: Session, req: HttpRequest) -> acti
     if !is_signed_in(&session) {
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
-            .body())
+            .body(""))
     }
 
     let _request_user = get_request_user_data(session);
     if list.user_id != _request_user.id {
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
-            .body())
+            .body(""))
     }
     #[derive(TemplateOnce)]
     #[template(path = "desctop/posts/post_user/add_list.stpl")]
@@ -62,7 +62,7 @@ pub async fn edit_user_post_list_page(session: Session, req: HttpRequest, _id: w
     if !is_signed_in(&session) {
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
-            .body())
+            .body(""))
     }
     let _request_user = get_request_user_data(session);
     let _list_id : i32 = *_id;
@@ -70,7 +70,7 @@ pub async fn edit_user_post_list_page(session: Session, req: HttpRequest, _id: w
     if list.user_id != _request_user.id {
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
-            .body())
+            .body(""))
     }
 
     #[derive(TemplateOnce)]

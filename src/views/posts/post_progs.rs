@@ -156,7 +156,7 @@ pub async fn add_user_post_list(session: Session, req: HttpRequest, mut payload:
     } else {
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
-            .body())
+            .body(""))
     }
 }
 
@@ -199,7 +199,7 @@ pub async fn edit_user_post_list(session: Session, req: HttpRequest, mut payload
     } else {
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
-            .body())
+            .body(""))
     }
 }
 
@@ -244,7 +244,7 @@ pub async fn add_community_post_list(session: Session, req: HttpRequest, mut pay
     } else {
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
-            .body())
+            .body(""))
     }
 }
 
@@ -288,6 +288,6 @@ pub async fn edit_community_post_list(session: Session, req: HttpRequest, mut pa
     } else {
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
-            .body())
+            .body(""))
     }
 }
