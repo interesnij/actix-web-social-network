@@ -727,7 +727,7 @@ on('#ajax', 'click', '#edit_list_btn', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     name = form.querySelector('#id_name').value;
 
-    if (folder == "/posts") {
+    if (folder == "/posts") {   
       lists = document.body.querySelector(".date-list");
       title = lists.querySelector( '[list-pk=' + '"' + pk + '"' + ']' );
       console.log(title.querySelector(".list_name"));
