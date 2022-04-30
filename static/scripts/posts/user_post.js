@@ -89,7 +89,7 @@ on('body', 'change', '.case_all_input', function() {
         jsonResponse = JSON.parse(link_.responseText);
         document.body.querySelector("#upload_video_pk").setAttribute("value", jsonResponse.pk)
       }
-      else { 
+      else {
         response = document.createElement("span");
         response.innerHTML = link_.responseText;
         lenta = form.parentElement.parentElement.parentElement.querySelector(".is_paginate");
@@ -616,18 +616,24 @@ on('#ajax', 'click', '#create_copy_btn', function() {
 
 on('#ajax', 'click', '#create_list_btn', function() {
   form_post = this.parentElement.parentElement.parentElement;
-  type = form_post.querySelector(".type").value;
-  console.log(type.slice(0,3));
   if (!form_post.querySelector("#id_name").value){
     form_post.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
     return
   } else { this.disabled = true };
+  community_id = form_post.getAttribute("community-pk");
+  folder = form_post.getAttribute("data-folder");
+    if (community_id !== "") {
+      url = folder + "/add_community_list/" + community_id + "/";
+    } else {
+      url = folder + "/add_user_list/";
+    }
+  }
 
   form_data = new FormData(form_post);
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/users/progs/create_list/", true );
+  link_.open( 'POST', url, true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -636,7 +642,7 @@ on('#ajax', 'click', '#create_list_btn', function() {
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
 
-    if (type.slice(0,3) == "lpo") {
+    if (folder == "/posts") {
       post_stream = document.body.querySelector(".span_list_pk");
       post_stream.innerHTML = '';
       post_stream.innerHTML = '<div class="card mb-3 items_empty centered"><div class="card-body"><svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M22 13h-8v-2h8v2zm0-6h-8v2h8V7zm-8 10h8v-2h-8v2zm-2-8v6c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2zm-1.5 6l-2.25-3-1.75 2.26-1.25-1.51L3.5 15h7z"/></svg></div><h6 style="margin: 20px;">Пока записей нет...</h6></div>';
@@ -700,17 +706,24 @@ on('#ajax', 'click', '#create_list_btn', function() {
 
 on('#ajax', 'click', '#edit_list_btn', function() {
   form = this.parentElement.parentElement.parentElement;
-  type = form.querySelector(".type").value;
   form_data = new FormData(form);
   if (!form.querySelector("#id_name").value){
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
     return
   } else { this.disabled = true }
-  pk = form.getAttribute("data-pk")
+  pk = form.getAttribute("data-pk");
+  community_id = form_post.getAttribute("community-pk");
+  folder = form_post.getAttribute("data-folder");
+    if (community_id !== "") {
+      url = folder + "/edit_community_list/" + community_id + "/";
+    } else {
+      url = folder + "/edit_user_list/";
+    }
+  }
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/users/progs/edit_list/", true );
+  link_.open( 'POST', url, true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -718,10 +731,10 @@ on('#ajax', 'click', '#edit_list_btn', function() {
     close_work_fullscreen();
     name = form.querySelector('#id_name').value;
 
-    if (type.slice(0,3) == "lpo") {
+    if (folder == "/posts") {
       title = document.body.querySelector( '[list-pk=' + '"' + pk + '"' + ']' );
-      title.querySelector(".list_name").innerHTML = name }
-    else {
+      title.querySelector(".list_name").innerHTML = name
+    } else {
       list = document.body.querySelector( '[data-pk=' + '"' + pk + '"' + ']' );
       list.querySelector('.list_name') ? list.querySelector('.list_name').innerHTML = name : null;
       document.body.querySelector('.second_list_name').innerHTML = name;

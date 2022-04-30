@@ -1,5 +1,5 @@
 
-    <form id="post_list_form" data-target="user" class="is_stat_list case_create" data-pk="<%= request_user.id %>" data-type="create_user_post_list">
+    <form id="post_list_form" data-folder="/posts" class="is_stat_list case_create" data-pk="<%= request_user.id %>" data-type="create_user_post_list">
         <div class="card mb-3">
             <div class="card-header border-bottom">
                 <h5 class="content-color-primary mb-0">Создание списка записей</h5>

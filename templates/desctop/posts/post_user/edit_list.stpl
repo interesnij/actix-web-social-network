@@ -1,5 +1,5 @@
 
-    <form id="post_list_form" data-target="user" data-list="pos<%= list.id %>" data-pk="<%= list.id %>" class="is_stat_list case_create" data-type="edit_user_post_list">
+    <form id="post_list_form" data-folder="/posts" data-pk="<%= list.id %>" class="is_stat_list case_create" data-type="edit_user_post_list">
     <div class="card mb-3">
         <div class="card-header border-bottom">
             <h5 class="content-color-primary mb-0">Изменение списка записей</h5>
@@ -22,7 +22,7 @@
         </div>
         <div class="card-footer">
             <button class="btn btn-sm border item_fullscreen_hide">Отмена</button>
-            <button type="button" class="btn btn-sm btn-success float-right" id="u_edit_post_list_btn">Создать</button>
+            <button type="button" class="btn btn-sm btn-success float-right" id="u_edit_post_list_btn">Изменить</button>
         </div>
     </div>
     </form>
