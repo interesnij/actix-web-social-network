@@ -643,7 +643,7 @@ impl PhotoList {
         community_id: Option<i32>, can_see_el: String, can_see_comment: String,
         create_el: String, create_comment: String, copy_el: String,
         can_see_el_users: Option<Vec<i32>>, can_see_comment_users: Option<Vec<i32>>,create_el_users: Option<Vec<i32>>,
-        create_comment_users: Option<Vec<i32>>,copy_el_users: Option<Vec<i32>>) -> i32 {
+        create_comment_users: Option<Vec<i32>>,copy_el_users: Option<Vec<i32>>) -> PhotoList {
         use crate::models::{
             NewCommunityPhotoListPosition,
             NewUserPhotoListPosition,

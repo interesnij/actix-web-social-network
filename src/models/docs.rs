@@ -493,7 +493,7 @@ impl DocList {
     pub fn create_list(creator: User, name: String, description: Option<String>,
         community_id: Option<i32>, can_see_el: String, create_el: String, copy_el: String,
         can_see_el_users: Option<Vec<i32>>, create_el_users: Option<Vec<i32>>,
-        copy_el_users: Option<Vec<i32>>) -> i32 {
+        copy_el_users: Option<Vec<i32>>) -> DocList {
 
         use crate::models::{
             NewCommunityDocListPosition,
