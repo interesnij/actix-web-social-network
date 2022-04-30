@@ -31,7 +31,7 @@ pub fn post_routes(config: &mut web::ServiceConfig) {
     config.route("/posts/edit_community_list/{id}/", web::get().to(edit_community_post_list_page));
 }
 
-pub fn get_error_page() -> Result<HttpResponse, _> {
+pub fn get_error_page() -> HttpResponse {
     #[derive(TemplateOnce)]
     #[template(path = "common/error.stpl")]
     struct Template {
