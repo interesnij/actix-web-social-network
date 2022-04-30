@@ -1065,6 +1065,7 @@ impl DocList {
     }
     pub fn close_item(&self) -> bool {
         use crate::schema::user_doc_list_positions::dsl::user_doc_list_positions;
+        let _connection = establish_connection();
         if self.community_id.is_some() {
             use crate::schema::community_doc_list_positions::dsl::community_doc_list_positions;
             use crate::models::CommunityDocListPosition;
