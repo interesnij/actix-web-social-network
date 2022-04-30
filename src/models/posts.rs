@@ -1801,7 +1801,7 @@ impl Post {
             return self.user_id == user_id;
         }
     }
-    pub fn create_post(creator: User, content: Option<String>, category_id: Option<i32>,
+    pub fn create_post(user_id: i32, content: Option<String>, category_id: Option<i32>,
         list: PostList, attach: Option<String>, parent_id: Option<i32>,
         comment_enabled: bool, is_signature: bool, votes_on: bool,
         community_id: Option<i32>, types: Option<String>) -> Post {
@@ -1839,7 +1839,7 @@ impl Post {
               content: content,
               community_id: community_id,
               post_categorie_id: category_id,
-              user_id: creator.id,
+              user_id: user_id,
               post_list_id: list.id,
               types: _types,
               attach: Some(new_attach),
@@ -1864,7 +1864,9 @@ impl Post {
         }
         else {
             use crate::models::UserProfile;
+            use crate::utils::get_user;
 
+            let creator = get_user(user_id);
             let profile = creator.get_profile();
             diesel::update(&profile)
               .set(schema::user_profiles::posts.eq(profile.posts + 1))
@@ -1875,7 +1877,7 @@ impl Post {
               content: content,
               community_id: None,
               post_categorie_id: category_id,
-              user_id: creator.id,
+              user_id: user_id,
               post_list_id: list.id,
               types: _types,
               attach: Some(new_attach),

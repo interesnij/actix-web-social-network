@@ -400,11 +400,12 @@ pub async fn post_form(payload: &mut Multipart) -> PostForm {
 pub async fn add_user_post(session: Session, req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
+        let user_id = _request_user.id;
         let list = get_post_list(*_id);
         if list.is_user_can_create_el(_request_user.id) {
             let form = post_form(payload.borrow_mut()).await;
             let new_post = Post::create_post (
-                _request_user,
+                user_id,
                 form.content,
                 form.cat,
                 list,
@@ -449,10 +450,11 @@ pub async fn add_community_post(session: Session, req: HttpRequest, mut payload:
         let _request_user = get_request_user_data(session);
         let list = get_post_list(*_id);
         let community_id = list.community_id;
+        let user_id = _request_user.id;
         if list.is_user_can_create_el(_request_user.id) {
             let form = post_form(payload.borrow_mut()).await;
             let new_post = Post::create_post (
-                _request_user,
+                user_id,
                 form.content,
                 form.cat,
                 list,
