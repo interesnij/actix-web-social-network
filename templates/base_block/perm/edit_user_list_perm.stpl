@@ -38,6 +38,10 @@
           <a href="<%= object.get_link() %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
           <% } %>
       </span>
+      <% } else { %>
+        <input class="input" name="can_see_el" type="hidden" value="a" />
+        <a class="menu_drop_2 pointer">Все пользователи</a>
+        <span class="collector"></span>
       <% } %>
       <div class="dropdown-menu" data-action="can_see_el" style="top: 30px;">
         <% include!("user_drops.stpl"); %>
@@ -85,6 +89,10 @@
         <a href="<%= object.get_link() %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
         <% } %>
     </span>
+    <% } else { %>
+      <input class="input" name="create_el" type="hidden" value="g" />
+      <a class="menu_drop_2 pointer">Все пользователи</a>
+      <span class="collector"></span>
     <% } %>
       <div class="dropdown-menu" data-action="create_el" style="top: 30px;">
         <% include!("user_drops.stpl"); %>
@@ -132,6 +140,10 @@
             <a href="<%= object.get_link() %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
             <% } %>
         </span>
+        <% } else { %>
+          <input class="input" name="copy_el" type="hidden" value="g" />
+          <a class="menu_drop_2 pointer">Только я<</a>
+          <span class="collector"></span>
         <% } %>
           <div class="dropdown-menu" data-action="copy_el" style="top: 30px;">
             <% include!("user_drops.stpl"); %>
