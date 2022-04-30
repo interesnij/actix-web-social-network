@@ -366,7 +366,7 @@ pub async fn post_form(payload: &mut Multipart) -> PostForm {
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
                     let data_string = s.to_string();
-                    form.attach = data_string;
+                    form.attach = Some(data_string);
                 }
             }
         }
