@@ -173,6 +173,8 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
     else {
         list = get_post_list(params.list.unwrap());
         is_page_list = false;
+        let user = get_user(list.user_id);
+        page_user = Some(user);
     }
 
     if params.page.is_some() {

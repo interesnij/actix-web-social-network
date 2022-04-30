@@ -1,10 +1,10 @@
 <span class="load_list">
 
-<% if is_page_list == true { %>
-  <% let f_user = user.as_ref().unwrap(); %>
-
+<% let f_user = user.as_ref().unwrap(); %>
 
   <% if f_user.is_user_can_see_post(request_user.id) == true { %>
+
+  <% if is_page_list == true { %>
 
   <% if f_user.count_fix_items() > 1 { %>
   <div class="csslider infinity slider_100 mt-2">
@@ -27,16 +27,16 @@
         </li>
       <% } %>
     </ul>
-  <div class="slides_arrows">
-    <% for (i, object) in f_user.get_fixed_posts_ids().iter().enumerate() { %>
-      <label for="s_<%= i %>"></label>
-    <% } %>
+    <div class="slides_arrows">
+      <% for (i, object) in f_user.get_fixed_posts_ids().iter().enumerate() { %>
+        <label for="s_<%= i %>"></label>
+      <% } %>
 
-    <label class="goto_first" for="s_1"></label>
-    <label class="goto_last" for="s_<%= f_user.count_fix_items() %>"></label>
+      <label class="goto_first" for="s_1"></label>
+      <label class="goto_last" for="s_<%= f_user.count_fix_items() %>"></label>
+    </div>
   </div>
-</div>
-<% } else if f_user.count_fix_items() == 1 { %>
+  <% } else if f_user.count_fix_items() == 1 { %>
 
   <% for object in f_user.get_fixed_posts().iter() { %>
     <% if object.community_id.is_some() { %>
@@ -45,7 +45,7 @@
       <% include!("../../users/lenta/fix_post.stpl"); %>
     <% } %>
   <% } %>
-
+  <% } %>
 <% } %>
 
 <% include!("lists.stpl"); %>
