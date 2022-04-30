@@ -348,7 +348,7 @@ pub async fn post_form(payload: &mut Multipart) -> PostForm {
                 if let Ok(s) = str::from_utf8(&data) {
                     let data_string = s.to_string();
                     let _int: i32 = data_string.parse().unwrap();
-                    form.cat = _int;
+                    form.cat = Some(_int);
                 }
             }
         }
@@ -357,7 +357,7 @@ pub async fn post_form(payload: &mut Multipart) -> PostForm {
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
                     let data_string = s.to_string();
-                    form.content = data_string;
+                    form.content = Some(data_string);
                 }
             }
         }
@@ -401,34 +401,85 @@ pub async fn add_user_post(session: Session, req: HttpRequest, mut payload: Mult
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
         let list = get_post_list(*_id);
-        let form = post_form(payload.borrow_mut()).await;
-        let new_post = Post::create_post (
-            _request_user,
-            form.content,
-            form.cat,
-            list,
-            form.attach,
-            None,
-            form.comment_enabled,
-            false,
-            form.votes_on,
-            None,
-            Some("a".to_string()),
-        );
+        if list.is_user_can_create_el(_request_user.id) {
+            let form = post_form(payload.borrow_mut()).await;
+            let new_post = Post::create_post (
+                _request_user,
+                form.content,
+                form.cat,
+                list,
+                form.attach,
+                None,
+                form.comment_enabled,
+                false,
+                form.votes_on,
+                None,
+                Some("a".to_string()),
+            );
 
-        #[derive(TemplateOnce)]
-        #[template(path = "desctop/posts/post_user/new_post.stpl")]
-        struct Template {
-            object: Post,
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/posts/post_user/new_post.stpl")]
+            struct Template {
+                object: Post,
+            }
+            let body = Template {
+                object: new_post,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body))
+        } else {
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(""))
         }
-        let body = Template {
-            object: new_post,
-        }
-        .render_once()
-        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+    } else {
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
-            .body(body))
+            .body(""))
+    }
+}
+
+pub async fn add_community_post(session: Session, req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let list = get_post_list(*_id);
+        if list.is_user_can_create_el(_request_user.id) {
+            let form = post_form(payload.borrow_mut()).await;
+            let new_post = Post::create_post (
+                _request_user,
+                form.content,
+                form.cat,
+                list,
+                form.attach,
+                None,
+                form.comment_enabled,
+                false,
+                form.votes_on,
+                list.community_id,
+                Some("a".to_string()),
+            );
+
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/posts/post_community/new_post.stpl")]
+            struct Template {
+                object: Post,
+            }
+            let body = Template {
+                object: new_post,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body))
+        } else {
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(""))
+        }
     } else {
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
