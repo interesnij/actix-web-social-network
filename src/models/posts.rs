@@ -658,10 +658,10 @@ impl PostList {
     }
     pub fn is_anon_user_can_see_el(&self) -> bool {
         let var: &str = &self.can_see_el;
-        return var.eq("a")
+        return self.can_see_el == "a";
     }
     pub fn is_anon_user_can_see_comment(&self) -> bool {
-        return self.can_see_comment == "a".to_string()
+        return self.can_see_comment == "a";
     }
     pub fn is_anon_user_can_create_item(&self) -> bool {
         return self.create_el == "a".to_string()
