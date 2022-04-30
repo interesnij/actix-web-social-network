@@ -1071,7 +1071,7 @@ impl DocList {
             use crate::models::CommunityDocListPosition;
 
             let list_positions = community_doc_list_positions
-                .filter(schema::community_doc_list_positions::community_id.eq(self.community_pk))
+                .filter(schema::community_doc_list_positions::community_id.eq(self.community_id))
                 .filter(schema::user_doc_list_positions::list_id.eq(self.id))
                 .load::<CommunityDocListPosition>(&_connection)
                 .expect("E.");
