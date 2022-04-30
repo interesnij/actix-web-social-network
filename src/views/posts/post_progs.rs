@@ -20,7 +20,7 @@ use actix_session::Session;
 use sailfish::TemplateOnce;
 use crate::models::{User, PostList, Post, Community};
 use serde::{Deserialize, Serialize};
-use std::{borrow::BorrowMut, str};
+use std::borrow::BorrowMut;
 use actix_multipart::Multipart;
 
 
