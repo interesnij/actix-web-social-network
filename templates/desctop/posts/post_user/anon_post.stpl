@@ -8,7 +8,7 @@
     </div>
   <% } %>
 
-  <% include!("../../generic/items/post.stpl"); %>
+  <% include!("../../generic/items/anon_post.stpl"); %> 
 
   <div class="card-footer border-top py-2">
       <div class="row">

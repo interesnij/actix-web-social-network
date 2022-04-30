@@ -1,5 +1,4 @@
 <span class="load_list">
-
 <% let f_user = user.as_ref().unwrap(); %>
 
   <% if f_user.is_user_can_see_post(request_user.id) == true { %>

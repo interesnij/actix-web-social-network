@@ -1,0 +1,66 @@
+
+
+<% if object.attach.is_some() { %>
+  <%- object.get_anon_attach() %>
+<% } %>
+
+<% if object.parent_id.is_some() { %>
+<% let parent = object.get_parent(); %>
+
+<span data-pk="<%= parent.id %>">
+  <% if parent.types != "r" { %>
+
+  <% if parent.community_id.is_some() { %>
+
+  <% let community = parent.get_community(); %>
+  <div class="card-header">
+      <div class="media">
+      <a href="<%= community.get_link() %>" class="ajax">
+        <figure>
+          <img src="<%= community.get_bb_avatar() %>" style="border-radius: 50px;width:50px;" alt="image">
+        </figure>
+      </a>
+      <div class="media-body">
+        <h6 class="mb-0">
+          <a href="<%= community.get_link() %>" class="ajax">
+            <%= community.name %> &nbsp;
+          </a>
+        </h6>
+        <p class="mb-0 wall_fullscreen pointer"><%= parent.created.format("%Y-%m-%d %H:%M:%S.%f").to_string() %></p>
+      </div>
+      </div>
+  </div>
+  <% } else { %>
+  <% let creator = parent.get_creator(); %>
+  <div class="card-header">
+      <div class="media">
+      <a href="<%= creator.get_link() %>" class="ajax">
+        <figure>
+          <img src="<%= creator.get_bb_avatar() %>" style="border-radius: 50px;width:50px;" alt="image">
+        </figure>
+      </a>
+      <div class="media-body">
+        <h6 class="mb-0">
+          <a href="<%= creator.get_link() %>" class="ajax">
+            <%= creator.get_full_name() %> &nbsp;
+          </a>
+        </h6>
+        <p class="mb-0 wall_fullscreen pointer"><%= parent.created.format("%Y-%m-%d %H:%M:%S.%f").to_string() %></p>
+      </div>
+      </div>
+  </div>
+  <% } %>
+  <% } %>
+
+  <% if parent.content.is_some() { %>
+    <div class="fullscreen text_support pointer">
+      <%- parent.get_format_text() %>
+    </div>
+  <% } %>
+
+  <% if parent.attach.is_some() { %>
+    <%- parent.get_anon_attach() %>
+  <% } %>
+</span>
+
+<% } %>
