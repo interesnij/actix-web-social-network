@@ -158,7 +158,7 @@ on('#ajax', 'click', '#u_add_post_btn', function() {
   };
 
   $input = document.createElement("input");
-  $input.setAttribute("name", "text");
+  $input.setAttribute("name", "content");
   $input.setAttribute("type", "hidden");
   $input.classList.add("input_text");
   $input.value = _text;
@@ -238,7 +238,7 @@ on('body', 'click', '.comment_edit_btn', function() {
   span_form = form.parentElement;
   block = span_form.parentElement.parentElement.parentElement;
   $input = document.createElement("input");
-  $input.setAttribute("name", "text");
+  $input.setAttribute("name", "content");
   $input.setAttribute("type", "hidden");
   $input.classList.add("input_text");
   $input.value = form.querySelector(".smile_supported").innerHTML;
@@ -668,7 +668,7 @@ on('#ajax', 'click', '#create_repost_btn', function() {
   _text = _val.innerHTML;
 
   $input = document.createElement("input");
-  $input.setAttribute("name", "text");
+  $input.setAttribute("name", "content");
   $input.setAttribute("type", "hidden");
   $input.classList.add("input_text");
   $input.value = _text;

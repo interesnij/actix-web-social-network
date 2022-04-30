@@ -19,9 +19,12 @@ use crate::utils::{
 use actix_session::Session;
 use sailfish::TemplateOnce;
 use crate::models::{User, PostList, Post, Community};
-//use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize};
+
+use std::str;
+use actix_multipart::{Field, Multipart};
+use futures::StreamExt;
 use std::borrow::BorrowMut;
-use actix_multipart::Multipart;
 
 
 pub fn post_progs(config: &mut web::ServiceConfig) {
@@ -33,6 +36,9 @@ pub fn post_progs(config: &mut web::ServiceConfig) {
     config.route("/posts/recover_user_list/{id}/", web::get().to(recover_user_post_list));
     config.route("/posts/delete_community_list/{id}/", web::get().to(delete_community_post_list));
     config.route("/posts/recover_community_list/{id}/", web::get().to(recover_community_post_list));
+
+    config.route("/posts/add_user_post/{id}/", web::post().to(add_user_post));
+    config.route("/posts/add_community_post/{id}/", web::post().to(add_community_post));
 }
 
 pub async fn add_user_post_list(session: Session, req: HttpRequest, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
@@ -308,6 +314,121 @@ pub async fn recover_community_post_list(session: Session, req: HttpRequest, _id
             .content_type("text/html; charset=utf-8")
             .body(""))
         }
+    } else {
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body(""))
+    }
+}
+
+#[derive(Deserialize, Serialize, Debug)]
+pub struct PostForm {
+    pub content: Option<String>,
+    pub cat: Option<i32>,
+    pub attach: Option<i32>,
+    pub comment_enabled: bool,
+    pub votes_on: bool,
+}
+
+pub async fn post_form(payload: &mut Multipart) -> PostForm {
+    let mut form: PostForm = PostForm {
+        content: None,
+        cat: 0,
+        attach: None,
+        comment_enabled: true,
+        votes_on: true,
+    };
+
+    while let Some(item) = payload.next().await {
+        let mut field: Field = item.expect("split_payload err");
+
+        if field.name() == "cat" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let data_string = s.to_string();
+                    let _int: i32 = data_string.parse().unwrap();
+                    form.cat = _int;
+                }
+            }
+        }
+        else if field.name() == "content" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let data_string = s.to_string();
+                    form.content = data_string;
+                }
+            }
+        }
+        else if field.name() == "attach" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let data_string = s.to_string();
+                    form.attach = data_string;
+                }
+            }
+        }
+        else if field.name() == "comment_enabled" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    if s.to_string() == "on" {
+                        form.comment_enabled = true;
+                    } else {
+                        form.comment_enabled = false;
+                    }
+                }
+            }
+        }
+        else if field.name() == "votes_on" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    if s.to_string() == "on" {
+                        form.votes_on = true;
+                    } else {
+                        form.votes_on = false;
+                    }
+                }
+            }
+        }
+    }
+    form
+}
+pub async fn add_user_post(session: Session, req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let list = get_post_list(*_id);
+        let form = post_form(payload.borrow_mut()).await;
+        let new_post = Post::create_item (
+            _request_user,
+            Some(form.content),
+            Some(form.cat),
+            list,
+            Some(form.attach),
+            None,
+            form.comment_enabled,
+            false,
+            form.votes_on,
+            None,
+            Some("a".to_string()),
+        );
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/posts/post_user/new_post.stpl")]
+        struct Template {
+            object: Post,
+        }
+        let body = Template {
+            object: new_post,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body(body))
     } else {
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")

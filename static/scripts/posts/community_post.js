@@ -13,7 +13,7 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
   };
 
   $input = document.createElement("input");
-  $input.setAttribute("name", "text");
+  $input.setAttribute("name", "content");
   $input.setAttribute("type", "hidden");
   $input.classList.add("input_text");
   $input.value = _text;
@@ -66,7 +66,7 @@ on('#ajax', 'click', '#c_edit_post_btn', function() {
   };
 
   $input = document.createElement("input");
-  $input.setAttribute("name", "text");
+  $input.setAttribute("name", "content");
   $input.setAttribute("type", "hidden");
   $input.classList.add("input_text");
   $input.value = form_post.querySelector(".smile_supported").innerHTML;
