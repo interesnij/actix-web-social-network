@@ -325,7 +325,7 @@ pub async fn recover_community_post_list(session: Session, req: HttpRequest, _id
 pub struct PostForm {
     pub content: Option<String>,
     pub cat: Option<i32>,
-    pub attach: Option<i32>,
+    pub attach: Option<String>,
     pub comment_enabled: bool,
     pub votes_on: bool,
 }
