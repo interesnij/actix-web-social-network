@@ -152,12 +152,16 @@ pub async fn add_user_post_list(session: Session, req: HttpRequest, mut payload:
             Ok(HttpResponse::Ok()
                 .content_type("text/html; charset=utf-8")
                 .body(body))
+            } else {
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(""))
+            }
+        } else {
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(""))
         }
-    } else {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(""))
-    }
 }
 
 pub async fn edit_user_post_list(session: Session, req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
@@ -195,6 +199,10 @@ pub async fn edit_user_post_list(session: Session, req: HttpRequest, mut payload
             Ok(HttpResponse::Ok()
                 .content_type("text/html; charset=utf-8")
                 .body(body))
+        } else {
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body(""))
         }
     } else {
         Ok(HttpResponse::Ok()
@@ -240,11 +248,16 @@ pub async fn add_community_post_list(session: Session, req: HttpRequest, mut pay
             Ok(HttpResponse::Ok()
                 .content_type("text/html; charset=utf-8")
                 .body(body))
-        }
     } else {
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
             .body(""))
+    }
+
+} else {
+    Ok(HttpResponse::Ok()
+        .content_type("text/html; charset=utf-8")
+        .body(""))
     }
 }
 
@@ -284,10 +297,14 @@ pub async fn edit_community_post_list(session: Session, req: HttpRequest, mut pa
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
             .body(body))
-        }
-    } else {
+        } else {
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
             .body(""))
     }
+} else {
+    Ok(HttpResponse::Ok()
+        .content_type("text/html; charset=utf-8")
+        .body(""))
+}
 }
