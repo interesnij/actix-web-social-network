@@ -727,17 +727,16 @@ on('#ajax', 'click', '#edit_list_btn', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     name = form.querySelector('#id_name').value;
 
-    if (folder == "/posts") {   
+    if (folder == "/posts") {
       lists = document.body.querySelector(".date-list");
       title = lists.querySelector( '[list-pk=' + '"' + pk + '"' + ']' );
-      console.log(title.querySelector(".list_name"));
-      console.log(name);
-      title.querySelector(".list_name").innerHTML = name;
+      title.querySelector("h6").innerHTML = name;
     } else {
       list = document.body.querySelector( '[data-pk=' + '"' + pk + '"' + ']' );
       list.querySelector('.list_name') ? list.querySelector('.list_name').innerHTML = name : null;
-      document.body.querySelector('.second_list_name').innerHTML = name;
+
     };
+    document.body.querySelector('.second_list_name').innerHTML = name;
     close_work_fullscreen();
     toast_success("Список изменен");
     //main_container = document.body.querySelector(".main-container");
