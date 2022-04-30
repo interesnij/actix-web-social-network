@@ -1072,7 +1072,7 @@ impl DocList {
 
             let list_positions = community_doc_list_positions
                 .filter(schema::community_doc_list_positions::community_id.eq(self.community_id.unwrap()))
-                .filter(schema::user_doc_list_positions::list_id.eq(self.id))
+                .filter(schema::community_doc_list_positions::list_id.eq(self.id))
                 .load::<CommunityDocListPosition>(&_connection)
                 .expect("E.");
             if list_positions.len() > 0 {
@@ -1099,7 +1099,6 @@ impl DocList {
                   .expect("Error.");
             }
         }
-        let _connection = establish_connection();
         let user_types = self.types;
         let close_case = match user_types {
             1 => 21,
