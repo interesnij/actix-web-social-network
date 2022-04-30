@@ -380,7 +380,7 @@ on('body', 'click', '.delete_list', function() {
   _this.removeAttribute('tooltip');
   parent = _this.parentElement;
   type = parent.getAttribute('data-type');
-  community_id = parent.getAttribute('data-community-id');
+  community_id = parent.getAttribute('data-community-id').trim();
   pk = type.slice(3);
   if (type.indexOf('lpo') !== -1) {
     if (community_id && community_id !== "") {
@@ -457,7 +457,7 @@ on('body', 'click', '.recover_list', function() {
   _this.setAttribute('tooltip', 'Удалить список');
   parent = _this.parentElement;
   type = parent.getAttribute('data-type');
-  community_id = parent.getAttribute('data-community-id');
+  community_id = parent.getAttribute('data-community-id').trim();
   pk = type.slice(3);
   if (type.indexOf('lpo') !== -1) {
     if (community_id && community_id !== "") {
