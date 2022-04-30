@@ -333,7 +333,7 @@ pub struct PostForm {
 pub async fn post_form(payload: &mut Multipart) -> PostForm {
     let mut form: PostForm = PostForm {
         content: None,
-        cat: 0,
+        cat: None,
         attach: None,
         comment_enabled: true,
         votes_on: true,
@@ -348,7 +348,7 @@ pub async fn post_form(payload: &mut Multipart) -> PostForm {
                 if let Ok(s) = str::from_utf8(&data) {
                     let data_string = s.to_string();
                     let _int: i32 = data_string.parse().unwrap();
-                    form.cat = _int;
+                    form.cat = Some(_int);
                 }
             }
         }
@@ -357,7 +357,7 @@ pub async fn post_form(payload: &mut Multipart) -> PostForm {
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
                     let data_string = s.to_string();
-                    form.content = data_string;
+                    form.content = Some(data_string);
                 }
             }
         }
@@ -366,7 +366,7 @@ pub async fn post_form(payload: &mut Multipart) -> PostForm {
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
                     let data_string = s.to_string();
-                    form.attach = data_string;
+                    form.attach = Some(data_string);
                 }
             }
         }
@@ -402,7 +402,7 @@ pub async fn add_user_post(session: Session, req: HttpRequest, mut payload: Mult
         let _request_user = get_request_user_data(session);
         let list = get_post_list(*_id);
         let form = post_form(payload.borrow_mut()).await;
-        let new_post = Post::create_item (
+        let new_post = Post::create_post (
             _request_user,
             Some(form.content),
             Some(form.cat),

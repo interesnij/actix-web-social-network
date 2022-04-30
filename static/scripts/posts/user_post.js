@@ -169,7 +169,7 @@ on('#ajax', 'click', '#u_add_post_btn', function() {
   pk = form_post.parentElement.parentElement.getAttribute("data-uuid");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/posts/user_progs/add_post/" + pk + "/", true );
+  link_.open( 'POST', "/posts/add_user_post/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
