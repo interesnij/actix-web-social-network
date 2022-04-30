@@ -29,10 +29,10 @@ pub fn post_progs(config: &mut web::ServiceConfig) {
     config.route("/posts/edit_user_list/{id}/", web::post().to(edit_user_post_list));
     config.route("/posts/add_community_list/{id}/", web::post().to(add_community_post_list));
     config.route("/posts/edit_community_list/{id}/", web::post().to(edit_community_post_list));
-    config.route("/posts/delete_user_list/{id}/", web::post().to(delete_user_post_list));
-    config.route("/posts/recover_user_list/{id}/", web::post().to(recover_user_post_list));
-    config.route("/posts/delete_community_list/{id}/", web::post().to(delete_community_post_list));
-    config.route("/posts/recover_community_list/{id}/", web::post().to(recover_community_post_list));
+    config.route("/posts/delete_user_list/{id}/", web::get().to(delete_user_post_list));
+    config.route("/posts/recover_user_list/{id}/", web::get().to(recover_user_post_list));
+    config.route("/posts/delete_community_list/{id}/", web::get().to(delete_community_post_list));
+    config.route("/posts/recover_community_list/{id}/", web::get().to(recover_community_post_list));
 }
 
 pub async fn add_user_post_list(session: Session, req: HttpRequest, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
