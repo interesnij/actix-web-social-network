@@ -725,17 +725,18 @@ on('#ajax', 'click', '#edit_list_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    close_work_fullscreen();
     name = form.querySelector('#id_name').value;
 
     if (folder == "/posts") {
-      title = document.body.querySelector( '[list-pk=' + '"' + pk + '"' + ']' );
+      lists = document.body.querySelector(".date-list");
+      title = lists.querySelector( '[list-pk=' + '"' + pk + '"' + ']' );
       title.querySelector(".list_name").innerHTML = name
     } else {
       list = document.body.querySelector( '[data-pk=' + '"' + pk + '"' + ']' );
       list.querySelector('.list_name') ? list.querySelector('.list_name').innerHTML = name : null;
       document.body.querySelector('.second_list_name').innerHTML = name;
     };
+    close_work_fullscreen();
     toast_success("Список изменен");
     //main_container = document.body.querySelector(".main-container");
     //add_list_in_all_stat(stat_class,pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
