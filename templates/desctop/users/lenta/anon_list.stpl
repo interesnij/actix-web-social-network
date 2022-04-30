@@ -52,7 +52,7 @@
 
   <span class="span_list_pk" list-pk="<%= list.id %>">
     <span class="list_pk" data-uuid="<%= list.id %>">
-      <% if list.can_see_el == "a" { %> 
+      <% if list.can_see_el == "a".as_str() { %> 
       <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %>: </span>
 
         <span class="post_stream is_paginate">
