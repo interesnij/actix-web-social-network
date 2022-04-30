@@ -1,7 +1,7 @@
 
 
 <% if object.attach.is_some() { %>
-  <%= object.attach %>
+  <%= object.attach.as_deref().unwrap() %>
 <% } %>
 
 <% if object.parent_id.is_some() { %>
