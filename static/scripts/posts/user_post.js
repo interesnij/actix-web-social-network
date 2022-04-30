@@ -714,10 +714,11 @@ on('#ajax', 'click', '#edit_list_btn', function() {
   pk = form.getAttribute("data-pk");
   community_id = form_post.getAttribute("community-pk");
   folder = form_post.getAttribute("data-folder");
+  pk = form_post.getAttribute("data-pk");
   if (community_id !== "") {
-    url = folder + "/edit_community_list/" + community_id + "/";
+    url = folder + "/edit_community_list/" + pk + "/";
   } else {
-    url = folder + "/edit_user_list/";
+    url = folder + "/edit_user_list/" + pk + "/";
   }
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
