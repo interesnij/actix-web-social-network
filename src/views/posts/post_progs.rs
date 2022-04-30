@@ -201,14 +201,14 @@ pub async fn add_community_post_list(session: Session, req: HttpRequest, mut pay
         let community = get_community(*_id);
         let _request_user = get_request_user_data(session);
         if !community.get_administrators_ids().iter().any(|&i| i==_request_user.id) {
-            Ok(to_home())
+            Ok(to_home());
         }
         let form = post_list_form(payload.borrow_mut()).await;
         let new_list = PostList::create_list (
             _request_user,
             form.name,
             form.description,
-            *_id,
+            Some(*_id),
             form.can_see_el,
             form.can_see_comment,
             form.create_el,
