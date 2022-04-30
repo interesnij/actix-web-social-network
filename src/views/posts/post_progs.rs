@@ -29,8 +29,10 @@ pub fn post_progs(config: &mut web::ServiceConfig) {
     config.route("/posts/edit_user_list/{id}/", web::post().to(edit_user_post_list));
     config.route("/posts/add_community_list/{id}/", web::post().to(add_community_post_list));
     config.route("/posts/edit_community_list/{id}/", web::post().to(edit_community_post_list));
-    config.route("/posts/delete_list/{id}/", web::post().to(delete_post_list));
-    config.route("/posts/recover_list/{id}/", web::post().to(recover_post_list));
+    config.route("/posts/delete_user_list/{id}/", web::post().to(delete_user_post_list));
+    config.route("/posts/recover_user_list/{id}/", web::post().to(recover_user_post_list));
+    config.route("/posts/delete_community_list/{id}/", web::post().to(delete_community_post_list));
+    config.route("/posts/recover_community_list/{id}/", web::post().to(recover_community_post_list));
 }
 
 pub async fn add_user_post_list(session: Session, req: HttpRequest, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
@@ -225,7 +227,7 @@ pub async fn edit_community_post_list(session: Session, req: HttpRequest, mut pa
 }
 
 
-pub async fn delete_post_list(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn delete_user_post_list(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
 
         let list = get_post_list(*_id);
@@ -247,12 +249,56 @@ pub async fn delete_post_list(session: Session, req: HttpRequest, _id: web::Path
     }
 }
 
-pub async fn recover_post_list(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn recover_user_post_list(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
 
         let list = get_post_list(*_id);
         let _request_user = get_request_user_data(session);
         if list.user_id == _request_user.id {
+            list.restore_item();
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body("ok"))
+        } else {
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body(""))
+    }
+}
+
+pub async fn delete_community_post_list(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+
+        let list = get_post_list(*_id);
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_administrator_of_community(list.community_id.unwrap()) {
+            let res = list.delete_item();
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body("ok"))
+        } else {
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body(""))
+    }
+}
+
+pub async fn recover_community_post_list(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+
+        let list = get_post_list(*_id);
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_administrator_of_community(list.community_id.unwrap()) {
             list.restore_item();
             Ok(HttpResponse::Ok()
                 .content_type("text/html; charset=utf-8")
