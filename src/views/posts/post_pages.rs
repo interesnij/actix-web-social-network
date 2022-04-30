@@ -59,7 +59,7 @@ pub async fn add_user_post_list_page(session: Session, req: HttpRequest) -> acti
 }
 pub async fn edit_user_post_list_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if !is_signed_in(&session) {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""));
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
         let _request_user = get_request_user_data(session);
@@ -70,22 +70,24 @@ pub async fn edit_user_post_list_page(session: Session, req: HttpRequest, _id: w
                 .content_type("text/html; charset=utf-8")
                 .body(""))
         }
+        else {
 
-        #[derive(TemplateOnce)]
-        #[template(path = "desctop/posts/post_user/edit_list.stpl")]
-        struct YTemplate {
-            request_user: User,
-            list: PostList,
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/posts/post_user/edit_list.stpl")]
+            struct YTemplate {
+                request_user: User,
+                list: PostList,
             }
-        let body = YTemplate {
-            request_user: _request_user,
-            list: list,
+            let body = YTemplate {
+                request_user: _request_user,
+                list: list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body))
         }
-        .render_once()
-        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(body))
     }
 }
 pub async fn add_community_post_list_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
@@ -151,8 +153,8 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
     }
 
     let params_some = web::Query::<GetListParams>::from_query(&req.query_string());
-    if !params_some.is_ok() {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""));
+    if params_some.is_err() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     let params = params_some.unwrap();
     let list: PostList;
