@@ -1,9 +1,5 @@
 <span class="load_list">
 
-<% let f_user = user.as_ref().unwrap();%>
-<% if f_user.perm == 60 { %>
-  true
-<% } %>
 <%= f_user.perm %>
   <% if f_user.get_private_model().can_see_post == "a" { %>
 
@@ -56,18 +52,10 @@
   <span class="span_list_pk" list-pk="<%= list.id %>">
     <span class="list_pk" data-uuid="<%= list.id %>">
       <%
-        let var_1 = &list.can_see_el;
-        let var_2 = &list.can_see_el == "a";
-        let var_3 = var_1.eq("a");
-        let var_5 = var_1.contains("a");
-        let var_6 = var_1 != "a";
+        let var_1 = list.can_see_el.clone().to_string() == "a";
       %>
       1 <%= var_1 %> <br>
-      2 <%= var_2 %> <br>
-      3 <%= var_3 %> <br>
-      5 <%= var_5 %> <br>
-      6 <%= var_6 %> <br>
-      <% if var_1 == "a" { %>
+      <% if var_1 == true { %>
       <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %>: </span>
 
         <span class="post_stream is_paginate">
