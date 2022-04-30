@@ -650,7 +650,29 @@ impl PhotoList {
         };
 
         let _connection = establish_connection();
-        let mut new_id = 1;
+        let new_list_form = NewPhotoList{
+            name: name,
+            community_id: community_id,
+            user_id: creator.id,
+            types: 2,
+            description: description,
+            cover_photo: None,
+            created: chrono::Local::now().naive_utc(),
+            count: 0,
+            repost: 0,
+            copy: 0,
+            position: 0,
+            can_see_el: can_see_el.clone(),
+            can_see_comment: can_see_comment.clone(),
+            create_el: create_el.clone(),
+            create_comment: create_comment.clone(),
+            copy_el: copy_el.clone(),
+        };
+        let new_list = diesel::insert_into(schema::photo_lists::table)
+            .values(&new_list_form)
+            .get_result::<PhotoList>(&_connection)
+            .expect("Error.");
+
         if community_id.is_some() {
             use crate::schema::communitys::dsl::communitys;
 
@@ -662,33 +684,9 @@ impl PhotoList {
                 .nth(0)
                 .unwrap();
 
-            let new_photo_list = NewPhotoList{
-                name: name,
-                community_id: Some(community.id),
-                user_id: creator.id,
-                types: 2,
-                description: description,
-                cover_photo: None,
-                created: chrono::Local::now().naive_utc(),
-                count: 0,
-                repost: 0,
-                copy: 0,
-                position: 0,
-                can_see_el: can_see_el.clone(),
-                can_see_comment: can_see_comment.clone(),
-                create_el: create_el.clone(),
-                create_comment: create_comment.clone(),
-                copy_el: copy_el.clone(),
-            };
-            let new_list = diesel::insert_into(schema::photo_lists::table)
-                .values(&new_photo_list)
-                .get_result::<PhotoList>(&_connection)
-                .expect("Error.");
-            new_id = new_list.id;
-
             let _new_photos_list_position = NewCommunityPhotoListPosition {
                 community_id: community.id,
-                list_id:      new_id,
+                list_id:      new_list.id,
                 position:     community.get_photo_lists_new_position(),
                 types:        "a".to_string(),
             };
@@ -698,33 +696,9 @@ impl PhotoList {
                 .expect("Error saving photo_list_position.");
         }
         else {
-            let new_photo_list = NewPhotoList{
-                name: name,
-                community_id: None,
-                user_id: creator.id,
-                types: 2,
-                description: description,
-                cover_photo: None,
-                created: chrono::Local::now().naive_utc(),
-                count: 0,
-                repost: 0,
-                copy: 0,
-                position: 0,
-                can_see_el: can_see_el.clone(),
-                can_see_comment: can_see_comment.clone(),
-                create_el: create_el.clone(),
-                create_comment: create_comment.clone(),
-                copy_el: copy_el.clone(),
-            };
-            let new_list = diesel::insert_into(schema::photo_lists::table)
-                .values(&new_photo_list)
-                .get_result::<PhotoList>(&_connection)
-                .expect("Error.");
-            new_id = new_list.id;
-
             let _new_photos_list_position = NewUserPhotoListPosition {
                 user_id:  creator.id,
-                list_id:  new_id,
+                list_id:  new_list.id,
                 position: creator.get_photo_lists_new_position(),
                 types:    "a".to_string(),
             };
@@ -739,7 +713,7 @@ impl PhotoList {
                 for user_id in can_see_el_users.unwrap() {
                     let _new_exclude = NewPhotoListPerm {
                         user_id:      user_id,
-                        photo_list_id: new_id,
+                        photo_list_id: new_list.id,
                         can_see_item: Some("b".to_string()),
                         can_see_comment: None,
                         create_item: None,
@@ -758,7 +732,7 @@ impl PhotoList {
                 for user_id in can_see_el_users.unwrap() {
                     let _new_include = NewPhotoListPerm {
                         user_id:      user_id,
-                        photo_list_id: new_id,
+                        photo_list_id: new_list.id,
                         can_see_item: Some("a".to_string()),
                         can_see_comment: None,
                         create_item: None,
@@ -778,7 +752,7 @@ impl PhotoList {
                 for user_id in can_see_comment_users.unwrap() {
                     let _new_exclude = NewPhotoListPerm {
                         user_id:      user_id,
-                        photo_list_id: new_id,
+                        photo_list_id: new_list.id,
                         can_see_item: None,
                         can_see_comment: Some("b".to_string()),
                         create_item: None,
@@ -797,7 +771,7 @@ impl PhotoList {
                 for user_id in can_see_comment_users.unwrap() {
                     let _new_include = NewPhotoListPerm {
                         user_id:      user_id,
-                        photo_list_id: new_id,
+                        photo_list_id: new_list.id,
                         can_see_item: None,
                         can_see_comment: Some("a".to_string()),
                         create_item: None,
@@ -817,7 +791,7 @@ impl PhotoList {
                 for user_id in create_el_users.unwrap() {
                     let _new_exclude = NewPhotoListPerm {
                         user_id:      user_id,
-                        photo_list_id: new_id,
+                        photo_list_id: new_list.id,
                         can_see_item: None,
                         can_see_comment: None,
                         create_item: Some("b".to_string()),
@@ -836,7 +810,7 @@ impl PhotoList {
                 for user_id in create_el_users.unwrap() {
                     let _new_include = NewPhotoListPerm {
                         user_id:      user_id,
-                        photo_list_id: new_id,
+                        photo_list_id: new_list.id,
                         can_see_item: None,
                         can_see_comment: None,
                         create_item: Some("a".to_string()),
@@ -856,7 +830,7 @@ impl PhotoList {
                 for user_id in create_comment_users.unwrap() {
                     let _new_exclude = NewPhotoListPerm {
                         user_id:      user_id,
-                        photo_list_id: new_id,
+                        photo_list_id: new_list.id,
                         can_see_item: None,
                         can_see_comment: None,
                         create_item: None,
@@ -875,7 +849,7 @@ impl PhotoList {
                 for user_id in create_comment_users.unwrap() {
                     let _new_include = NewPhotoListPerm {
                         user_id:      user_id,
-                        photo_list_id: new_id,
+                        photo_list_id: new_list.id,
                         can_see_item: None,
                         can_see_comment: None,
                         create_item: None,
@@ -895,7 +869,7 @@ impl PhotoList {
                 for user_id in copy_el_users.unwrap() {
                     let _new_exclude = NewPhotoListPerm {
                         user_id:      user_id,
-                        photo_list_id: new_id,
+                        photo_list_id: new_list.id,
                         can_see_item: None,
                         can_see_comment: None,
                         create_item: None,
@@ -914,7 +888,7 @@ impl PhotoList {
                 for user_id in copy_el_users.unwrap() {
                     let _new_include = NewPhotoListPerm {
                         user_id:      user_id,
-                        photo_list_id: new_id,
+                        photo_list_id: new_list.id,
                         can_see_item: None,
                         can_see_comment: None,
                         create_item: None,
@@ -928,7 +902,7 @@ impl PhotoList {
                 }
             }
         }
-        return new_id;
+        return new_list;
     }
     pub fn edit_list(&self, name: String, description: Option<String>,
         can_see_el: String, can_see_comment: String,

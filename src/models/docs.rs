@@ -501,7 +501,26 @@ impl DocList {
         };
 
         let _connection = establish_connection();
-        let mut new_id = 1;
+        let new_list_form = NewDocList {
+            name: name,
+            community_id: community_id,
+            user_id: creator.id,
+            types: 2,
+            description: description,
+            created: chrono::Local::now().naive_utc(),
+            count: 0,
+            repost: 0,
+            copy: 0,
+            position: 0,
+            can_see_el: can_see_el.clone(),
+            create_el: create_el.clone(),
+            copy_el: copy_el.clone(),
+        };
+        let new_list = diesel::insert_into(schema::doc_lists::table)
+            .values(&new_list_form)
+            .get_result::<DocList>(&_connection)
+            .expect("Error.");
+
         if community_id.is_some() {
             use crate::schema::communitys::dsl::communitys;
 
@@ -513,30 +532,9 @@ impl DocList {
                 .nth(0)
                 .unwrap();
 
-            let new_list = NewDocList{
-                name: name,
-                community_id: Some(community.id),
-                user_id: creator.id,
-                types: 2,
-                description: description,
-                created: chrono::Local::now().naive_utc(),
-                count: 0,
-                repost: 0,
-                copy: 0,
-                position: 0,
-                can_see_el: can_see_el.clone(),
-                create_el: create_el.clone(),
-                copy_el: copy_el.clone(),
-            };
-            let new_list = diesel::insert_into(schema::doc_lists::table)
-                .values(&new_list)
-                .get_result::<DocList>(&_connection)
-                .expect("Error.");
-            new_id = new_list.id;
-
             let _new_list_position = NewCommunityDocListPosition {
                 community_id: community.id,
-                list_id:      new_id,
+                list_id:      new_list.id,
                 position:     community.get_doc_lists_new_position(),
                 types:        "a".to_string(),
             };
@@ -546,30 +544,9 @@ impl DocList {
                 .expect("Error saving doc_list_position.");
         }
         else {
-            let new_list_form = NewDocList{
-                name: name,
-                community_id: None,
-                user_id: creator.id,
-                types: 2,
-                description: description,
-                created: chrono::Local::now().naive_utc(),
-                count: 0,
-                repost: 0,
-                copy: 0,
-                position: 0,
-                can_see_el: can_see_el.clone(),
-                create_el: create_el.clone(),
-                copy_el: copy_el.clone(),
-            };
-            let new_list = diesel::insert_into(schema::doc_lists::table)
-                .values(&new_list_form)
-                .get_result::<DocList>(&_connection)
-                .expect("Error.");
-            new_id = new_list.id;
-
             let _new_list_position = NewUserDocListPosition {
                 user_id:  creator.id,
-                list_id:  new_id,
+                list_id:  new_list.id,
                 position: creator.get_doc_lists_new_position(),
                 types:    "a".to_string(),
             };
@@ -584,7 +561,7 @@ impl DocList {
                 for user_id in can_see_el_users.unwrap() {
                     let _new_exclude = NewDocListPerm {
                         user_id:      user_id,
-                        doc_list_id:  new_id,
+                        doc_list_id:  new_list.id,
                         can_see_item: Some("b".to_string()),
                         create_item: None,
                         can_copy: None,
@@ -601,7 +578,7 @@ impl DocList {
                 for user_id in can_see_el_users.unwrap() {
                     let _new_include = NewDocListPerm {
                         user_id:      user_id,
-                        doc_list_id: new_id,
+                        doc_list_id: new_list.id,
                         can_see_item: Some("a".to_string()),
                         create_item: None,
                         can_copy: None,
@@ -619,7 +596,7 @@ impl DocList {
                 for user_id in create_el_users.unwrap() {
                     let _new_exclude = NewDocListPerm {
                         user_id:      user_id,
-                        doc_list_id: new_id,
+                        doc_list_id: new_list.id,
                         can_see_item: None,
                         create_item: Some("b".to_string()),
                         can_copy: None,
@@ -636,7 +613,7 @@ impl DocList {
                 for user_id in create_el_users.unwrap() {
                     let _new_include = NewDocListPerm {
                         user_id:      user_id,
-                        doc_list_id: new_id,
+                        doc_list_id: new_list.id,
                         can_see_item: None,
                         create_item: Some("a".to_string()),
                         can_copy: None,
@@ -654,7 +631,7 @@ impl DocList {
                 for user_id in copy_el_users.unwrap() {
                     let _new_exclude = NewDocListPerm {
                         user_id:      user_id,
-                        doc_list_id: new_id,
+                        doc_list_id: new_list.id,
                         can_see_item: None,
                         create_item: None,
                         can_copy: Some("b".to_string()),
@@ -671,7 +648,7 @@ impl DocList {
                 for user_id in copy_el_users.unwrap() {
                     let _new_include = NewDocListPerm {
                         user_id:      user_id,
-                        doc_list_id: new_id,
+                        doc_list_id: new_list.id,
                         can_see_item: None,
                         create_item: None,
                         can_copy: Some("a".to_string()),
@@ -683,7 +660,7 @@ impl DocList {
                 }
             }
         }
-        return new_id;
+        return new_list;
     }
     pub fn edit_list(&self, name: String, description: Option<String>,
         can_see_el: String, create_el: String, copy_el: String,

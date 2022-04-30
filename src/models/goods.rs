@@ -651,7 +651,28 @@ impl GoodList {
         };
 
         let _connection = establish_connection();
-        let mut new_id = 1;
+        let new_list_form = NewGoodList{
+            name: name,
+            community_id: community_id,
+            user_id: creator.id,
+            types: 2,
+            description: description,
+            created: chrono::Local::now().naive_utc(),
+            count: 0,
+            repost: 0,
+            copy: 0,
+            position: 0,
+            can_see_el: can_see_el.clone(),
+            can_see_comment: can_see_comment.clone(),
+            create_el: create_el.clone(),
+            create_comment: create_comment.clone(),
+            copy_el: copy_el.clone(),
+        };
+        let new_list = diesel::insert_into(schema::good_lists::table)
+            .values(&new_list)
+            .get_result::<GoodList>(&_connection)
+            .expect("Error.");
+
         if community_id.is_some() {
             use crate::schema::communitys::dsl::communitys;
 
@@ -663,32 +684,9 @@ impl GoodList {
                 .nth(0)
                 .unwrap();
 
-            let new_good_list = NewGoodList{
-                name: name,
-                community_id: Some(community.id),
-                user_id: creator.id,
-                types: 2,
-                description: description,
-                created: chrono::Local::now().naive_utc(),
-                count: 0,
-                repost: 0,
-                copy: 0,
-                position: 0,
-                can_see_el: can_see_el.clone(),
-                can_see_comment: can_see_comment.clone(),
-                create_el: create_el.clone(),
-                create_comment: create_comment.clone(),
-                copy_el: copy_el.clone(),
-            };
-            let new_list = diesel::insert_into(schema::good_lists::table)
-                .values(&new_good_list)
-                .get_result::<GoodList>(&_connection)
-                .expect("Error.");
-            new_id = new_list.id;
-
             let _new_goods_list_position = NewCommunityGoodListPosition {
                 community_id: community.id,
-                list_id:      new_id,
+                list_id:      new_list.id,
                 position:     community.get_good_lists_new_position(),
                 types:        "a".to_string(),
             };
@@ -698,32 +696,9 @@ impl GoodList {
                 .expect("Error saving good_list_position.");
         }
         else {
-            let new_good_list = NewGoodList{
-                name: name,
-                community_id: None,
-                user_id: creator.id,
-                types: 2,
-                description: description,
-                created: chrono::Local::now().naive_utc(),
-                count: 0,
-                repost: 0,
-                copy: 0,
-                position: 0,
-                can_see_el: can_see_el.clone(),
-                can_see_comment: can_see_comment.clone(),
-                create_el: create_el.clone(),
-                create_comment: create_comment.clone(),
-                copy_el: copy_el.clone(),
-            };
-            let new_list = diesel::insert_into(schema::good_lists::table)
-                .values(&new_good_list)
-                .get_result::<GoodList>(&_connection)
-                .expect("Error.");
-            new_id = new_list.id;
-
             let _new_goods_list_position = NewUserGoodListPosition {
                 user_id:  creator.id,
-                list_id:  new_id,
+                list_id:  new_list.id,
                 position: creator.get_good_lists_new_position(),
                 types:    "a".to_string(),
             };
@@ -738,7 +713,7 @@ impl GoodList {
                 for user_id in can_see_el_users.unwrap() {
                     let _new_exclude = NewGoodListPerm {
                         user_id:      user_id,
-                        good_list_id: new_id,
+                        good_list_id: new_list.id,
                         can_see_item: Some("b".to_string()),
                         can_see_comment: None,
                         create_item: None,
@@ -757,7 +732,7 @@ impl GoodList {
                 for user_id in can_see_el_users.unwrap() {
                     let _new_include = NewGoodListPerm {
                         user_id:      user_id,
-                        good_list_id: new_id,
+                        good_list_id: new_list.id,
                         can_see_item: Some("a".to_string()),
                         can_see_comment: None,
                         create_item: None,
@@ -777,7 +752,7 @@ impl GoodList {
                 for user_id in can_see_comment_users.unwrap() {
                     let _new_exclude = NewGoodListPerm {
                         user_id:      user_id,
-                        good_list_id: new_id,
+                        good_list_id: new_list.id,
                         can_see_item: None,
                         can_see_comment: Some("b".to_string()),
                         create_item: None,
@@ -796,7 +771,7 @@ impl GoodList {
                 for user_id in can_see_comment_users.unwrap() {
                     let _new_include = NewGoodListPerm {
                         user_id:      user_id,
-                        good_list_id: new_id,
+                        good_list_id: new_list.id,
                         can_see_item: None,
                         can_see_comment: Some("a".to_string()),
                         create_item: None,
@@ -816,7 +791,7 @@ impl GoodList {
                 for user_id in create_el_users.unwrap() {
                     let _new_exclude = NewGoodListPerm {
                         user_id:      user_id,
-                        good_list_id: new_id,
+                        good_list_id: new_list.id,
                         can_see_item: None,
                         can_see_comment: None,
                         create_item: Some("b".to_string()),
@@ -835,7 +810,7 @@ impl GoodList {
                 for user_id in create_el_users.unwrap() {
                     let _new_include = NewGoodListPerm {
                         user_id:      user_id,
-                        good_list_id: new_id,
+                        good_list_id: new_list.id,
                         can_see_item: None,
                         can_see_comment: None,
                         create_item: Some("a".to_string()),
@@ -855,7 +830,7 @@ impl GoodList {
                 for user_id in create_comment_users.unwrap() {
                     let _new_exclude = NewGoodListPerm {
                         user_id:      user_id,
-                        good_list_id: new_id,
+                        good_list_id: new_list.id,
                         can_see_item: None,
                         can_see_comment: None,
                         create_item: None,
@@ -874,7 +849,7 @@ impl GoodList {
                 for user_id in create_comment_users.unwrap() {
                     let _new_include = NewGoodListPerm {
                         user_id:      user_id,
-                        good_list_id: new_id,
+                        good_list_id: new_list.id,
                         can_see_item: None,
                         can_see_comment: None,
                         create_item: None,
@@ -894,7 +869,7 @@ impl GoodList {
                 for user_id in copy_el_users.unwrap() {
                     let _new_exclude = NewGoodListPerm {
                         user_id:      user_id,
-                        good_list_id: new_id,
+                        good_list_id: new_list.id,
                         can_see_item: None,
                         can_see_comment: None,
                         create_item: None,
@@ -913,7 +888,7 @@ impl GoodList {
                 for user_id in copy_el_users.unwrap() {
                     let _new_include = NewGoodListPerm {
                         user_id:      user_id,
-                        good_list_id: new_id,
+                        good_list_id: new_list.id,
                         can_see_item: None,
                         can_see_comment: None,
                         create_item: None,
@@ -927,7 +902,7 @@ impl GoodList {
                 }
             }
         }
-        return new_id;
+        return new_list;
     }
     pub fn edit_list(&self, name: String, description: Option<String>,
         can_see_el: String, can_see_comment: String,
