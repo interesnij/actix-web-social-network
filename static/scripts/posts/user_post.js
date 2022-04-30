@@ -713,7 +713,7 @@ on('#ajax', 'click', '#edit_list_btn', function() {
   } else { this.disabled = true }
   pk = form.getAttribute("data-pk");
   folder = form.getAttribute("data-folder");
-  if (form.getAttribute("community-pk") !== "") {
+  if (form.getAttribute("community-pk") && form.getAttribute("community-pk") !== "") {
     url = folder + "/edit_community_list/" + pk + "/";
   } else {
     url = folder + "/edit_user_list/" + pk + "/";
