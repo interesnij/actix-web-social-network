@@ -234,7 +234,7 @@ pub async fn delete_post_list(session: Session, req: HttpRequest, _id: web::Path
             let res = list.delete_item();
             Ok(HttpResponse::Ok()
                 .content_type("text/html; charset=utf-8")
-                .body(res))
+                .body("ok"))
         } else {
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
@@ -253,10 +253,10 @@ pub async fn recover_post_list(session: Session, req: HttpRequest, _id: web::Pat
         let list = get_post_list(*_id);
         let _request_user = get_request_user_data(session);
         if list.user_id == _request_user.id {
-            let res = list.restore_item();
+            list.restore_item();
             Ok(HttpResponse::Ok()
                 .content_type("text/html; charset=utf-8")
-                .body(res))
+                .body("ok"))
         } else {
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
