@@ -3759,7 +3759,7 @@ impl User {
     }
     pub fn is_anon_user_can_see_post(&self) -> bool {
         let private = self.get_private_model();
-        return private.can_see_post == "a".to_string();
+        return private.can_see_post == 'a'; 
     }
     pub fn is_anon_user_can_see_all(&self) -> bool {
         let private = self.get_private_model();
