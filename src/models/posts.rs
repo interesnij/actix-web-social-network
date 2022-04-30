@@ -657,7 +657,7 @@ impl PostList {
         }
     }
     pub fn is_anon_user_can_see_el(&self) -> bool {
-        return self.can_see_el == "a".to_string()
+        return self.can_see_el == "a"
     }
     pub fn is_anon_user_can_see_comment(&self) -> bool {
         return self.can_see_comment == "a".to_string()
