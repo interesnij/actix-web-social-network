@@ -1,7 +1,7 @@
 <div class="row mb-1 form_group_flex">
     <label class="col-md-6">Кто видит список</label>
     <span class="col-md-6">
-      <input class="input" name="can_see_el" type="hidden" value="1" />
+      <input class="input" name="can_see_el" type="hidden" value="a" />
       <a class="menu_drop_2 pointer">Все пользователи</a>
       <span class="collector"></span>
 
@@ -15,7 +15,7 @@
     <label class="col-md-6">Кто видит комментарии</label>
     <span class="col-md-6">
 
-      <input class="input" name="can_see_comment" type="hidden" value="1" />
+      <input class="input" name="can_see_comment" type="hidden" value="a" />
       <a class="menu_drop_2 pointer">Все пользователи</a>
       <span class="collector"></span>
 
@@ -28,7 +28,7 @@
 <div class="row mb-1 form_group_flex">
     <label class="col-md-6">Кто создает элементы</label>
     <span class="col-md-6">
-      <input class="input" name="create_el" type="hidden" value="8" />
+      <input class="input" name="create_el" type="hidden" value="h" />
       <a class="menu_drop_2 pointer">Администраторы</a>
       <span class="collector"></span>
 
@@ -42,7 +42,7 @@
     <label class="col-md-6">Кто пишет комментарии</label>
     <span class="col-md-6">
 
-      <input class="input" name="create_comment" type="hidden" value="1" />
+      <input class="input" name="create_comment" type="hidden" value="h" />
       <a class="menu_drop_2 pointer">Все пользователи</a>
       <span class="collector"></span>
 
@@ -55,7 +55,7 @@
 <div class="row mb-1 form_group_flex">
     <label class="col-md-6">Кто копирует список/элементы</label>
     <span class="col-md-6">
-      <input class="input" name="copy_el" type="hidden" value="1" />
+      <input class="input" name="copy_el" type="hidden" value="a" />
       <a class="menu_drop_2 pointer">Все пользователи</a>
       <span class="collector"></span>
 
