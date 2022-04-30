@@ -120,48 +120,42 @@ pub async fn add_user_post_list(session: Session, req: HttpRequest, mut payload:
     if is_signed_in(&session) {
 
         let _request_user = get_request_user_data(session);
-        if list.user_id == _request_user.id {
-            let form = post_list_form(payload.borrow_mut()).await;
-            let new_list = PostList::create_list (
-                _request_user,
-                form.name,
-                form.description,
-                None,
-                form.can_see_el,
-                form.can_see_comment,
-                form.create_el,
-                form.create_comment,
-                form.copy_el,
-                Some(form.can_see_el_users),
-                Some(form.can_see_comment_users),
-                Some(form.create_el_users),
-                Some(form.create_comment_users),
-                Some(form.copy_el_users),
-            );
+        let form = post_list_form(payload.borrow_mut()).await;
+        let new_list = PostList::create_list (
+            _request_user,
+            form.name,
+            form.description,
+            None,
+            form.can_see_el,
+            form.can_see_comment,
+            form.create_el,
+            form.create_comment,
+            form.copy_el,
+            Some(form.can_see_el_users),
+            Some(form.can_see_comment_users),
+            Some(form.create_el_users),
+            Some(form.create_comment_users),
+            Some(form.copy_el_users),
+        );
 
-            #[derive(TemplateOnce)]
-            #[template(path = "desctop/users/lenta/new_list.stpl")]
-            struct Template {
-                list: PostList,
-            }
-            let body = Template {
-                list: new_list,
-            }
-            .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
-            } else {
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(""))
-            }
-        } else {
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(""))
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/users/lenta/new_list.stpl")]
+        struct Template {
+            list: PostList,
         }
+        let body = Template {
+            list: new_list,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body(body))
+    } else {
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body(""))
+    }
 }
 
 pub async fn edit_user_post_list(session: Session, req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {

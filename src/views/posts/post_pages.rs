@@ -149,7 +149,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
 
     let params_some = web::Query::<GetListParams>::from_query(&req.query_string());
     if params_some.is_err() {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""));
+        HttpResponse::Ok().content_type("text/html; charset=utf-8").body("");
     }
     let params = params_some.unwrap();
     let list: PostList;
