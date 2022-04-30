@@ -1976,7 +1976,7 @@ impl User {
         let _connection = establish_connection();
         let _post_list_positions  = user_post_list_positions
             .filter(schema::user_post_list_positions::user_id.eq(self.id))
-            .filter(schema::user_post_list_positions::types.eq(1))
+            .filter(schema::user_post_list_positions::types.eq("a"))
             .order(schema::user_post_list_positions::position.desc())
             .limit(1)
             .load::<UserPostListPosition>(&_connection)
