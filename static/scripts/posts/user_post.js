@@ -712,10 +712,8 @@ on('#ajax', 'click', '#edit_list_btn', function() {
     return
   } else { this.disabled = true }
   pk = form.getAttribute("data-pk");
-  community_id = form_post.getAttribute("community-pk");
   folder = form_post.getAttribute("data-folder");
-  pk = form_post.getAttribute("data-pk");
-  if (community_id !== "") {
+  if (form_post.getAttribute("community-pk") !== "") {
     url = folder + "/edit_community_list/" + pk + "/";
   } else {
     url = folder + "/edit_user_list/" + pk + "/";
