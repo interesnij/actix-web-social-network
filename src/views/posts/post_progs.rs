@@ -246,7 +246,7 @@ pub async fn edit_community_post_list(session: Session, req: HttpRequest, mut pa
         let community = get_community(list.community_id.unwrap());
         let _request_user = get_request_user_data(session);
         if !community.get_administrators_ids().iter().any(|&i| i==_request_user.id) {
-            Ok(to_home())
+            Ok(to_home());
         }
         let form = post_list_form(payload.borrow_mut()).await;
         list.edit_list (
