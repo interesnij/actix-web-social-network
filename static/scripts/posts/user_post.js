@@ -730,7 +730,9 @@ on('#ajax', 'click', '#edit_list_btn', function() {
     if (folder == "/posts") {
       lists = document.body.querySelector(".date-list");
       title = lists.querySelector( '[list-pk=' + '"' + pk + '"' + ']' );
-      title.querySelector(".list_name").innerHTML = name
+      console.log(title.querySelector(".list_name"));
+      console.log(name);
+      title.querySelector(".list_name").innerHTML = name;
     } else {
       list = document.body.querySelector( '[data-pk=' + '"' + pk + '"' + ']' );
       list.querySelector('.list_name') ? list.querySelector('.list_name').innerHTML = name : null;
