@@ -49,36 +49,12 @@ pub fn get_error_page() -> HttpResponse {
 
 pub async fn add_user_post_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     if !is_signed_in(&session) {
-        #[derive(TemplateOnce)]
-        #[template(path = "common/error.stpl")]
-        struct Template {
-            text: String,
-        }
-        let body = Template {
-            text: "gggg".to_string(),
-        }
-        .render_once()
-        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(body))
+        Ok(to_home());
     }
 
     let _request_user = get_request_user_data(session);
     if list.user_id != _request_user.id {
-        #[derive(TemplateOnce)]
-        #[template(path = "common/error.stpl")]
-        struct Template {
-            text: String,
-        }
-        let body = Template {
-            text: "gggg".to_string(),
-        }
-        .render_once()
-        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(body))
+        Ok(to_home());
     }
     #[derive(TemplateOnce)]
     #[template(path = "desctop/posts/post_user/add_list.stpl")]
@@ -141,9 +117,8 @@ pub async fn add_community_post_list_page(session: Session, req: HttpRequest, _i
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
             .body(body))
-    } else {
-        Ok(to_home())
     }
+    Ok(to_home())
 }
 pub async fn edit_community_post_list_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
@@ -168,9 +143,8 @@ pub async fn edit_community_post_list_page(session: Session, req: HttpRequest, _
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
             .body(body))
-    } else {
-        Ok(to_home())
     }
+    Ok(to_home())
 }
 
 pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
