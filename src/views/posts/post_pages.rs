@@ -27,6 +27,8 @@ pub fn post_routes(config: &mut web::ServiceConfig) {
 
     config.route("/posts/add_user_list/", web::get().to(add_user_post_list_page));
     config.route("/posts/edit_user_list/{id}/", web::get().to(edit_user_post_list_page));
+    config.route("/posts/add_community_list//{id}", web::get().to(add_community_post_list_page));
+    config.route("/posts/edit_community_list/{id}/", web::get().to(edit_community_post_list_page));
 }
 
 pub async fn add_user_post_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
@@ -55,19 +57,16 @@ pub async fn edit_user_post_list_page(session: Session, req: HttpRequest, _id: w
         let _request_user = get_request_user_data(session);
         let _list_id : i32 = *_id;
         let list = get_post_list(_list_id);
-        //let creator = get_user(list.user_id);
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/posts/post_user/edit_list.stpl")]
         struct YTemplate {
             request_user: User,
             list: PostList,
-            //creator: User,
         }
         let body = YTemplate {
             request_user: _request_user,
             list: list,
-            //creator: creator,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
