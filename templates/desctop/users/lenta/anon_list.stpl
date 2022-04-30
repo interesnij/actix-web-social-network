@@ -2,7 +2,7 @@
 
 <% let f_user = user.as_ref().unwrap(); %>
 
-
+  can_see_post <%= f_user.get_profile().can_see_post %>
   <% if f_user.is_anon_user_can_see_post() == true { %>
 
   <% if is_page_list == true { %>

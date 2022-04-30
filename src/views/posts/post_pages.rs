@@ -230,7 +230,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     is_user_can_create_posts: bool,
                     object_list: Vec<Post>,
                     user: Option<User>,
-                    community: Option<Community>,
                     is_page_list: bool,
                 }
                 let body = UserPage {
@@ -240,7 +239,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     is_user_can_create_posts:  is_user_can_create_posts,
                     object_list: object_list,
                     user: page_user,
-                    community: page_community,
                     is_page_list: is_page_list,
                 }
                 .render_once()
@@ -286,7 +284,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     is_user_can_create_posts: bool,
                     object_list: Vec<Post>,
                     user: Option<User>,
-                    community: Option<Community>,
                     is_page_list: bool,
                 }
                 let body = UserPage {
@@ -296,7 +293,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     is_user_can_create_posts:  is_user_can_create_posts,
                     object_list: object_list,
                     user: page_user,
-                    community: page_community,
                     is_page_list: is_page_list,
                 }
                 .render_once()
@@ -339,7 +335,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     list:  PostList,
                     object_list: Vec<Post>,
                     user: Option<User>,
-                    community: Option<Community>,
                     is_page_list: bool,
                 }
                 let body = UserPage {
@@ -347,7 +342,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     list:  list,
                     object_list: object_list,
                     user: page_user,
-                    community: page_community,
                     is_page_list: is_page_list,
                 }
                 .render_once()
