@@ -56,7 +56,7 @@
         let var_1 = list.can_see_el;
         let var_2 = list.can_see_el == "a";
         let var_3 = list.can_see_el.eq("a");
-        let var_4 = list.can_see_el.eq('a');
+        let var_4 = list.can_see_el.eq(&'a');
         let var_5 = list.can_see_el.contains("a");
         let var_6 = list.can_see_el != "a";
       %>
