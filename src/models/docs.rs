@@ -1064,6 +1064,7 @@ impl DocList {
 
     }
     pub fn close_item(&self) -> bool {
+        let _connection = establish_connection();
         let user_types = self.types;
         let close_case = match user_types {
             1 => 21,

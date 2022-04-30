@@ -1435,6 +1435,37 @@ impl PhotoList {
 
     pub fn delete_item(&self) -> bool {
         let _connection = establish_connection();
+        if self.community_id.is_some() {
+            use crate::schema::community_photo_list_positions::dsl::community_photo_list_positions;
+
+            let list_positions = community_photo_list_positions
+                .filter(schema::community_photo_list_positions::community_id.eq(self.community_id.unwrap()))
+                .filter(schema::community_photo_list_positions::list_id.eq(self.id))
+                .load::<CommunityPhotoListPosition>(&_connection)
+                .expect("E.");
+            if list_positions.len() > 0 {
+                let list_position = list_positions.into_iter().nth(0).unwrap();
+                diesel::update(&list_position)
+                  .set(schema::community_photo_list_positions::types.eq("b"))
+                  .get_result::<CommunityPhotoListPosition>(&_connection)
+                  .expect("Error.");
+            }
+        } else {
+            use crate::schema::user_photo_list_positions::dsl::user_photo_list_positions;
+
+            let list_positions = user_photo_list_positions
+                .filter(schema::user_photo_list_positions::user_id.eq(self.user_id))
+                .filter(schema::user_photo_list_positions::list_id.eq(self.id))
+                .load::<UserPhotoListPosition>(&_connection)
+                .expect("E.");
+            if list_positions.len() > 0 {
+                let list_position = list_positions.into_iter().nth(0).unwrap();
+                diesel::update(&list_position)
+                  .set(schema::user_photo_list_positions::types.eq("b"))
+                  .get_result::<UserPhotoListPosition>(&_connection)
+                  .expect("Error.");
+            }
+        }
         let user_types = self.types;
         let close_case = match user_types {
             1 => 11,
@@ -1452,6 +1483,37 @@ impl PhotoList {
     }
     pub fn restore_item(&self) -> bool {
         let _connection = establish_connection();
+        if self.community_id.is_some() {
+            use crate::schema::community_photo_list_positions::dsl::community_photo_list_positions;
+
+            let list_positions = community_photo_list_positions
+                .filter(schema::community_photo_list_positions::community_id.eq(self.community_id.unwrap()))
+                .filter(schema::community_photo_list_positions::list_id.eq(self.id))
+                .load::<CommunityPhotoListPosition>(&_connection)
+                .expect("E.");
+            if list_positions.len() > 0 {
+                let list_position = list_positions.into_iter().nth(0).unwrap();
+                diesel::update(&list_position)
+                  .set(schema::community_photo_list_positions::types.eq("b"))
+                  .get_result::<CommunityPhotoListPosition>(&_connection)
+                  .expect("Error.");
+            }
+        } else {
+            use crate::schema::user_photo_list_positions::dsl::user_photo_list_positions;
+
+            let list_positions = user_photo_list_positions
+                .filter(schema::user_photo_list_positions::user_id.eq(self.user_id))
+                .filter(schema::user_photo_list_positions::list_id.eq(self.id))
+                .load::<UserPhotoListPosition>(&_connection)
+                .expect("E.");
+            if list_positions.len() > 0 {
+                let list_position = list_positions.into_iter().nth(0).unwrap();
+                diesel::update(&list_position)
+                  .set(schema::user_photo_list_positions::types.eq("a"))
+                  .get_result::<UserPhotoListPosition>(&_connection)
+                  .expect("Error.");
+            }
+        }
         let user_types = self.types;
         let close_case = match user_types {
             11 => 1,

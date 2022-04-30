@@ -1435,6 +1435,37 @@ impl GoodList {
 
     pub fn delete_item(&self) -> bool {
         let _connection = establish_connection();
+        if self.community_id.is_some() {
+            use crate::schema::community_good_list_positions::dsl::community_good_list_positions;
+
+            let list_positions = community_good_list_positions
+                .filter(schema::community_good_list_positions::community_id.eq(self.community_id.unwrap()))
+                .filter(schema::community_good_list_positions::list_id.eq(self.id))
+                .load::<CommunityGoodListPosition>(&_connection)
+                .expect("E.");
+            if list_positions.len() > 0 {
+                let list_position = list_positions.into_iter().nth(0).unwrap();
+                diesel::update(&list_position)
+                  .set(schema::community_good_list_positions::types.eq("b"))
+                  .get_result::<CommunityGoodListPosition>(&_connection)
+                  .expect("Error.");
+            }
+        } else {
+            use crate::schema::user_good_list_positions::dsl::user_good_list_positions;
+
+            let list_positions = user_good_list_positions
+                .filter(schema::user_good_list_positions::user_id.eq(self.user_id))
+                .filter(schema::user_good_list_positions::list_id.eq(self.id))
+                .load::<UserGoodListPosition>(&_connection)
+                .expect("E.");
+            if list_positions.len() > 0 {
+                let list_position = list_positions.into_iter().nth(0).unwrap();
+                diesel::update(&list_position)
+                  .set(schema::user_good_list_positions::types.eq("b"))
+                  .get_result::<UserGoodListPosition>(&_connection)
+                  .expect("Error.");
+            }
+        }
         let user_types = self.types;
         let close_case = match user_types {
             1 => 11,
@@ -1452,6 +1483,37 @@ impl GoodList {
     }
     pub fn restore_item(&self) -> bool {
         let _connection = establish_connection();
+        if self.community_id.is_some() {
+            use crate::schema::community_good_list_positions::dsl::community_good_list_positions;
+
+            let list_positions = community_good_list_positions
+                .filter(schema::community_good_list_positions::community_id.eq(self.community_id.unwrap()))
+                .filter(schema::community_good_list_positions::list_id.eq(self.id))
+                .load::<CommunityGoodListPosition>(&_connection)
+                .expect("E.");
+            if list_positions.len() > 0 {
+                let list_position = list_positions.into_iter().nth(0).unwrap();
+                diesel::update(&list_position)
+                  .set(schema::community_good_list_positions::types.eq("b"))
+                  .get_result::<CommunityGoodListPosition>(&_connection)
+                  .expect("Error.");
+            }
+        } else {
+            use crate::schema::user_good_list_positions::dsl::user_good_list_positions;
+
+            let list_positions = user_good_list_positions
+                .filter(schema::user_good_list_positions::user_id.eq(self.user_id))
+                .filter(schema::user_good_list_positions::list_id.eq(self.id))
+                .load::<UserGoodListPosition>(&_connection)
+                .expect("E.");
+            if list_positions.len() > 0 {
+                let list_position = list_positions.into_iter().nth(0).unwrap();
+                diesel::update(&list_position)
+                  .set(schema::user_good_list_positions::types.eq("a"))
+                  .get_result::<UserGoodListPosition>(&_connection)
+                  .expect("Error.");
+            }
+        }
         let user_types = self.types;
         let close_case = match user_types {
             11 => 1,
