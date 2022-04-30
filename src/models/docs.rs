@@ -1064,41 +1064,6 @@ impl DocList {
 
     }
     pub fn close_item(&self) -> bool {
-        use crate::schema::user_doc_list_positions::dsl::user_doc_list_positions;
-        let _connection = establish_connection();
-        if self.community_id.is_some() {
-            use crate::schema::community_doc_list_positions::dsl::community_doc_list_positions;
-            use crate::models::CommunityDocListPosition;
-
-            let list_positions = community_doc_list_positions
-                .filter(schema::community_doc_list_positions::community_id.eq(self.community_id.unwrap()))
-                .filter(schema::community_doc_list_positions::list_id.eq(self.id))
-                .load::<CommunityDocListPosition>(&_connection)
-                .expect("E.");
-            if list_positions.len() > 0 {
-                let list_position = list_positions.into_iter().nth(0).unwrap();
-                diesel::update(&list_position)
-                  .set(schema::community_doc_list_positions::types.eq("b"))
-                  .get_result::<CommunityDocListPosition>(&_connection)
-                  .expect("Error.");
-            }
-        } else {
-            use crate::schema::user_doc_list_positions::dsl::user_doc_list_positions;
-            use crate::models::UserDocListPosition;
-
-            let list_positions = user_doc_list_positions
-                .filter(schema::user_doc_list_positions::user_id.eq(self.user_id))
-                .filter(schema::user_doc_list_positions::list_id.eq(self.id))
-                .load::<UserDocListPosition>(&_connection)
-                .expect("E.");
-            if list_positions.len() > 0 {
-                let list_position = list_positions.into_iter().nth(0).unwrap();
-                diesel::update(&list_position)
-                  .set(schema::user_doc_list_positions::types.eq("b"))
-                  .get_result::<UserDocListPosition>(&_connection)
-                  .expect("Error.");
-            }
-        }
         let user_types = self.types;
         let close_case = match user_types {
             1 => 21,
@@ -1133,8 +1098,38 @@ impl DocList {
     }
 
     pub fn delete_item(&self) -> bool {
-
         let _connection = establish_connection();
+        if self.community_id.is_some() {
+            use crate::schema::community_doc_list_positions::dsl::community_doc_list_positions;
+
+            let list_positions = community_doc_list_positions
+                .filter(schema::community_doc_list_positions::community_id.eq(self.community_id.unwrap()))
+                .filter(schema::community_doc_list_positions::list_id.eq(self.id))
+                .load::<CommunityDocListPosition>(&_connection)
+                .expect("E.");
+            if list_positions.len() > 0 {
+                let list_position = list_positions.into_iter().nth(0).unwrap();
+                diesel::update(&list_position)
+                  .set(schema::community_doc_list_positions::types.eq("b"))
+                  .get_result::<CommunityDocListPosition>(&_connection)
+                  .expect("Error.");
+            }
+        } else {
+            use crate::schema::user_doc_list_positions::dsl::user_doc_list_positions;
+
+            let list_positions = user_doc_list_positions
+                .filter(schema::user_doc_list_positions::user_id.eq(self.user_id))
+                .filter(schema::user_doc_list_positions::list_id.eq(self.id))
+                .load::<UserDocListPosition>(&_connection)
+                .expect("E.");
+            if list_positions.len() > 0 {
+                let list_position = list_positions.into_iter().nth(0).unwrap();
+                diesel::update(&list_position)
+                  .set(schema::user_doc_list_positions::types.eq("b"))
+                  .get_result::<UserDocListPosition>(&_connection)
+                  .expect("Error.");
+            }
+        }
         let user_types = self.types;
         let close_case = match user_types {
             1 => 11,
@@ -1152,6 +1147,38 @@ impl DocList {
     }
     pub fn restore_item(&self) -> bool {
         let _connection = establish_connection();
+        if self.community_id.is_some() {
+            use crate::schema::community_doc_list_positions::dsl::community_doc_list_positions;
+
+            let list_positions = community_doc_list_positions
+                .filter(schema::community_doc_list_positions::community_id.eq(self.community_id.unwrap()))
+                .filter(schema::community_doc_list_positions::list_id.eq(self.id))
+                .load::<CommunityDocListPosition>(&_connection)
+                .expect("E.");
+            if list_positions.len() > 0 {
+                let list_position = list_positions.into_iter().nth(0).unwrap();
+                diesel::update(&list_position)
+                  .set(schema::community_doc_list_positions::types.eq("a"))
+                  .get_result::<CommunityDocListPosition>(&_connection)
+                  .expect("Error.");
+            }
+        } else {
+            use crate::schema::user_doc_list_positions::dsl::user_doc_list_positions;
+
+            let list_positions = user_doc_list_positions
+                .filter(schema::user_doc_list_positions::user_id.eq(self.user_id))
+                .filter(schema::user_doc_list_positions::list_id.eq(self.id))
+                .load::<UserDocListPosition>(&_connection)
+                .expect("E.");
+            if list_positions.len() > 0 {
+                let list_position = list_positions.into_iter().nth(0).unwrap();
+                diesel::update(&list_position)
+                  .set(schema::user_doc_list_positions::types.eq("a"))
+                  .get_result::<UserDocListPosition>(&_connection)
+                  .expect("Error.");
+            }
+        }
+
         let user_types = self.types;
         let close_case = match user_types {
             11 => 1,
