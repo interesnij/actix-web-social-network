@@ -1,7 +1,7 @@
 
 
 <% if object.attach.is_some() { %>
-  <%= object.attach.as_deref().unwrap() %>
+  <%- object.get_attach(request_user.id) %>
 <% } %>
 
 <% if object.parent_id.is_some() { %>
