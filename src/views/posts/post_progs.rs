@@ -110,6 +110,21 @@ pub async fn post_list_form(payload: &mut Multipart) -> PostListForm {
                     } else if field.name() == "description" {
                         form.description = Some(data_string)
                     }
+                    else if field.name() == "can_see_el" {
+                        form.can_see_el = Some(data_string)
+                    }
+                    else if field.name() == "can_see_comment" {
+                        form.can_see_comment = Some(data_string)
+                    }
+                    else if field.name() == "create_el" {
+                        form.create_el = Some(data_string)
+                    }
+                    else if field.name() == "create_comment" {
+                        form.create_comment = Some(data_string)
+                    }
+                    else if field.name() == "copy_el" {
+                        form.copy_el = Some(data_string)
+                    }
                 }
             }
         }
