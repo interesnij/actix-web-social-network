@@ -52,7 +52,21 @@
 
   <span class="span_list_pk" list-pk="<%= list.id %>">
     <span class="list_pk" data-uuid="<%= list.id %>">
-      <% if list.can_see_el == "a".as_str() { %> 
+      <%
+        let var_1 = list.can_see_el;
+        let var_2 = list.can_see_el == "a";
+        let var_3 = list.can_see_el.eq("a");
+        let var_4 = list.can_see_el.eq('a');
+        let var_5 = list.can_see_el.contains("a");
+        let var_6 = list.can_see_el != "a";
+      %>
+      1 <%= list.var_1 %> <br>
+      2 <%= list.var_2 %> <br>
+      3 <%= list.var_3 %> <br>
+      4 <%= list.var_4 %> <br>
+      5 <%= list.var_5 %> <br>
+      6 <%= list.var_6 %> <br>
+      <% if list.can_see_el == "a" { %>
       <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %>: </span>
 
         <span class="post_stream is_paginate">
