@@ -54,7 +54,7 @@
     <span class="list_pk" data-uuid="<%= list.id %>">
       <%
         let var_1 = &list.can_see_el;
-        let var_2 = var_1 == "a";
+        let var_2 == "a";
         let var_3 = var_1.eq("a");
         let var_5 = var_1.contains("a");
         let var_6 = var_1 != "a";
