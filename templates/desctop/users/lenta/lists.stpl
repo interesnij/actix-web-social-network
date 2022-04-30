@@ -16,7 +16,7 @@
               <figure><%- community.get_s_avatar() %></figure>
             </a>
             <div class="media-body">
-              <h6 class="my-0 mt-1"><%= object.name %> (<%= object.count %>)</h6>
+              <h6 class="my-0 mt-1 list_name"><%= object.name %> (<%= object.count %>)</h6>
             </div>
           </div>
         </div>
@@ -34,7 +34,7 @@
                 <figure><%- creator.get_s_avatar() %></figure>
               </a>
               <div class="media-body">
-                <h6 class="my-0 mt-1"><%= object.name %> (<%= object.count %>)</h6>
+                <h6 class="my-0 mt-1 list_name"><%= object.name %> (<%= object.count %>)</h6>
               </div>
             </div>
           </div>
