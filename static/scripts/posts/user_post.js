@@ -623,7 +623,7 @@ on('#ajax', 'click', '#create_list_btn', function() {
   } else { this.disabled = true };
   community_id = form_post.getAttribute("community-pk");
   folder = form_post.getAttribute("data-folder");
-  if (community_id !== "") {
+  if (form_post.getAttribute("community-pk") && form_post.getAttribute("community-pk") !== "") {
     url = folder + "/add_community_list/" + community_id + "/";
   } else {
     url = folder + "/add_user_list/";
