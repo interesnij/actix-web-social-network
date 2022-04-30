@@ -348,7 +348,7 @@ pub async fn post_form(payload: &mut Multipart) -> PostForm {
                 if let Ok(s) = str::from_utf8(&data) {
                     let data_string = s.to_string();
                     let _int: i32 = data_string.parse().unwrap();
-                    form.cat = Some(_int);
+                    form.cat = _int;
                 }
             }
         }
@@ -357,7 +357,7 @@ pub async fn post_form(payload: &mut Multipart) -> PostForm {
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
                     let data_string = s.to_string();
-                    form.content = Some(data_string);
+                    form.content = data_string;
                 }
             }
         }
@@ -366,7 +366,7 @@ pub async fn post_form(payload: &mut Multipart) -> PostForm {
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
                     let data_string = s.to_string();
-                    form.attach = Some(data_string);
+                    form.attach = data_string;
                 }
             }
         }
@@ -404,10 +404,10 @@ pub async fn add_user_post(session: Session, req: HttpRequest, mut payload: Mult
         let form = post_form(payload.borrow_mut()).await;
         let new_post = Post::create_post (
             _request_user,
-            Some(form.content),
-            Some(form.cat),
+            form.content,
+            form.cat,
             list,
-            Some(form.attach),
+            form.attach,
             None,
             form.comment_enabled,
             false,
