@@ -202,7 +202,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: Vec<Post>,
                     user: Option<User>,
                     community: Option<Community>,
-                    //is_page_list: bool,
+                    is_page_list: bool,
                 }
                 let body = UserPage {
                     list:                      list,
@@ -212,7 +212,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: object_list,
                     user: page_user,
                     community: page_community,
-                    //is_page_list: is_page_list,
+                    is_page_list: is_page_list,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
