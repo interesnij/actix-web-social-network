@@ -64,7 +64,7 @@
       3 <%= var_3 %> <br>
       5 <%= var_5 %> <br>
       6 <%= var_6 %> <br>
-      <% if list.can_see_el == "a" { %>
+      <% if var_1 == "a" { %>
       <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %>: </span>
 
         <span class="post_stream is_paginate">
