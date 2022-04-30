@@ -37,24 +37,19 @@ pub async fn add_user_post_list_page(session: Session, req: HttpRequest) -> acti
     }
     else {
         let _request_user = get_request_user_data(session);
-        if list.user_id != _request_user.id {
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/posts/post_user/add_list.stpl")]
+        struct Template {
+            request_user: User,
         }
-        else {
-            #[derive(TemplateOnce)]
-            #[template(path = "desctop/posts/post_user/add_list.stpl")]
-            struct Template {
-                request_user: User,
-            }
-            let body = Template {
-                request_user: _request_user,
-            }
-            .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(body))
+        let body = Template {
+            request_user: _request_user,
         }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok()
+        .content_type("text/html; charset=utf-8")
+        .body(body))
     }
 }
 pub async fn edit_user_post_list_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
@@ -154,7 +149,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
 
     let params_some = web::Query::<GetListParams>::from_query(&req.query_string());
     if params_some.is_err() {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""));
     }
     let params = params_some.unwrap();
     let list: PostList;
