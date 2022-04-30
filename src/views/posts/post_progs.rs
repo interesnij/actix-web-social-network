@@ -421,9 +421,11 @@ pub async fn add_user_post(session: Session, req: HttpRequest, mut payload: Mult
             #[template(path = "desctop/posts/post_user/new_post.stpl")]
             struct Template {
                 object: Post,
+                request_user: User,
             }
             let body = Template {
                 object: new_post,
+                request_user: _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -446,6 +448,7 @@ pub async fn add_community_post(session: Session, req: HttpRequest, mut payload:
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
         let list = get_post_list(*_id);
+        let community_id = list.community_id;
         if list.is_user_can_create_el(_request_user.id) {
             let form = post_form(payload.borrow_mut()).await;
             let new_post = Post::create_post (
@@ -458,7 +461,7 @@ pub async fn add_community_post(session: Session, req: HttpRequest, mut payload:
                 form.comment_enabled,
                 false,
                 form.votes_on,
-                list.community_id,
+                community_id,
                 Some("a".to_string()),
             );
 
@@ -466,9 +469,11 @@ pub async fn add_community_post(session: Session, req: HttpRequest, mut payload:
             #[template(path = "desctop/posts/post_community/new_post.stpl")]
             struct Template {
                 object: Post,
+                request_user: User,
             }
             let body = Template {
                 object: new_post,
+                request_user: _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
