@@ -1064,6 +1064,38 @@ impl DocList {
 
     }
     pub fn close_item(&self) -> bool {
+        use crate::schema::user_doc_list_positions::dsl::user_doc_list_positions;
+        if self.community_id.is_some() {
+            use crate::schema::community_doc_list_positions::dsl::community_doc_list_positions;
+            use crate::models::CommunityDocListPosition;
+
+            let list_positions = community_doc_list_positions
+                .filter(schema::community_doc_list_positions::community_id.eq(community_pk))
+                .load::<CommunityDocListPosition>(&_connection)
+                .expect("E.");
+            if list_positions.len() > 0 {
+                let list_position = list_positions.into_iter().nth(0).unwrap();
+                diesel::update(&list_position)
+                  .set(schema::community_doc_list_positions::types.eq("b"))
+                  .get_result::<CommunityDocListPosition>(&_connection)
+                  .expect("Error.");
+            }
+        } else {
+            use crate::schema::user_doc_list_positions::dsl::user_doc_list_positions;
+            use crate::models::UserDocListPosition;
+
+            let list_positions = user_doc_list_positions
+                .filter(schema::user_doc_list_positions::community_id.eq(community_pk))
+                .load::<UserDocListPosition>(&_connection)
+                .expect("E.");
+            if list_positions.len() > 0 {
+                let list_position = list_positions.into_iter().nth(0).unwrap();
+                diesel::update(&list_position)
+                  .set(schema::user_doc_list_positions::types.eq("b"))
+                  .get_result::<UserDocListPosition>(&_connection)
+                  .expect("Error.");
+            }
+        }
         let _connection = establish_connection();
         let user_types = self.types;
         let close_case = match user_types {
@@ -1099,6 +1131,7 @@ impl DocList {
     }
 
     pub fn delete_item(&self) -> bool {
+
         let _connection = establish_connection();
         let user_types = self.types;
         let close_case = match user_types {
