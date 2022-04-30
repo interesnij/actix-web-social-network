@@ -34,20 +34,21 @@ pub fn post_routes(config: &mut web::ServiceConfig) {
 pub async fn add_user_post_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
-
-        #[derive(TemplateOnce)]
-        #[template(path = "desctop/posts/post_user/add_list.stpl")]
-        struct Template {
-            request_user: User,
+        if list.user_id == _request_user.id {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/posts/post_user/add_list.stpl")]
+            struct Template {
+                request_user: User,
+            }
+            let body = Template {
+                request_user: _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body))
         }
-        let body = Template {
-            request_user: _request_user,
-        }
-        .render_once()
-        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(body))
     } else {
         Ok(to_home())
     }
@@ -57,22 +58,24 @@ pub async fn edit_user_post_list_page(session: Session, req: HttpRequest, _id: w
         let _request_user = get_request_user_data(session);
         let _list_id : i32 = *_id;
         let list = get_post_list(_list_id);
+        if list.user_id == _request_user.id {
 
-        #[derive(TemplateOnce)]
-        #[template(path = "desctop/posts/post_user/edit_list.stpl")]
-        struct YTemplate {
-            request_user: User,
-            list: PostList,
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/posts/post_user/edit_list.stpl")]
+            struct YTemplate {
+                request_user: User,
+                list: PostList,
+            }
+            let body = YTemplate {
+                request_user: _request_user,
+                list: list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body))
         }
-        let body = YTemplate {
-            request_user: _request_user,
-            list: list,
-        }
-        .render_once()
-        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(body))
     } else {
         Ok(to_home())
     }

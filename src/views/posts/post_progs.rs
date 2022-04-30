@@ -120,37 +120,39 @@ pub async fn add_user_post_list(session: Session, req: HttpRequest, mut payload:
     if is_signed_in(&session) {
 
         let _request_user = get_request_user_data(session);
-        let form = post_list_form(payload.borrow_mut()).await;
-        let new_list = PostList::create_list (
-            _request_user,
-            form.name,
-            form.description,
-            None,
-            form.can_see_el,
-            form.can_see_comment,
-            form.create_el,
-            form.create_comment,
-            form.copy_el,
-            Some(form.can_see_el_users),
-            Some(form.can_see_comment_users),
-            Some(form.create_el_users),
-            Some(form.create_comment_users),
-            Some(form.copy_el_users),
-        );
+        if list.user_id == _request_user.id {
+            let form = post_list_form(payload.borrow_mut()).await;
+            let new_list = PostList::create_list (
+                _request_user,
+                form.name,
+                form.description,
+                None,
+                form.can_see_el,
+                form.can_see_comment,
+                form.create_el,
+                form.create_comment,
+                form.copy_el,
+                Some(form.can_see_el_users),
+                Some(form.can_see_comment_users),
+                Some(form.create_el_users),
+                Some(form.create_comment_users),
+                Some(form.copy_el_users),
+            );
 
-        #[derive(TemplateOnce)]
-        #[template(path = "desctop/users/lenta/new_list.stpl")]
-        struct Template {
-            list: PostList,
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/users/lenta/new_list.stpl")]
+            struct Template {
+                list: PostList,
+            }
+            let body = Template {
+                list: new_list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body))
         }
-        let body = Template {
-            list: new_list,
-        }
-        .render_once()
-        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(body))
     } else {
         Ok(to_home())
     }
@@ -161,36 +163,38 @@ pub async fn edit_user_post_list(session: Session, req: HttpRequest, mut payload
 
         let list = get_post_list(*_id);
         let _request_user = get_request_user_data(session);
-        let form = post_list_form(payload.borrow_mut()).await;
-        list.edit_list (
-            form.name,
-            form.description,
-            form.can_see_el,
-            form.can_see_comment,
-            form.create_el,
-            form.create_comment,
-            form.copy_el,
-            Some(form.can_see_el_users),
-            Some(form.can_see_comment_users),
-            Some(form.create_el_users),
-            Some(form.create_comment_users),
-            Some(form.copy_el_users),
-        );
+        if list.user_id == _request_user.id {
+            let form = post_list_form(payload.borrow_mut()).await;
+            list.edit_list (
+                form.name,
+                form.description,
+                form.can_see_el,
+                form.can_see_comment,
+                form.create_el,
+                form.create_comment,
+                form.copy_el,
+                Some(form.can_see_el_users),
+                Some(form.can_see_comment_users),
+                Some(form.create_el_users),
+                Some(form.create_comment_users),
+                Some(form.copy_el_users),
+            );
 
-        #[derive(TemplateOnce)]
-        #[template(path = "desctop/users/lenta/new_list.stpl")]
-        struct Template {
-            list: PostList,
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/users/lenta/new_list.stpl")]
+            struct Template {
+                list: PostList,
+            }
+            let body = Template {
+                list: list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body))
         }
-        let body = Template {
-            list: list,
-        }
-        .render_once()
-        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(body))
-    } else {
+    }  else {
         Ok(to_home())
     }
 }
@@ -200,40 +204,39 @@ pub async fn add_community_post_list(session: Session, req: HttpRequest, mut pay
 
         let community = get_community(*_id);
         let _request_user = get_request_user_data(session);
-        if !community.get_administrators_ids().iter().any(|&i| i==_request_user.id) {
-            Ok(to_home());
-        }
-        let form = post_list_form(payload.borrow_mut()).await;
-        let new_list = PostList::create_list (
-            _request_user,
-            form.name,
-            form.description,
-            Some(*_id),
-            form.can_see_el,
-            form.can_see_comment,
-            form.create_el,
-            form.create_comment,
-            form.copy_el,
-            Some(form.can_see_el_users),
-            Some(form.can_see_comment_users),
-            Some(form.create_el_users),
-            Some(form.create_comment_users),
-            Some(form.copy_el_users),
-        );
+        if community.get_administrators_ids().iter().any(|&i| i==_request_user.id) {
+            let form = post_list_form(payload.borrow_mut()).await;
+            let new_list = PostList::create_list (
+                _request_user,
+                form.name,
+                form.description,
+                Some(*_id),
+                form.can_see_el,
+                form.can_see_comment,
+                form.create_el,
+                form.create_comment,
+                form.copy_el,
+                Some(form.can_see_el_users),
+                Some(form.can_see_comment_users),
+                Some(form.create_el_users),
+                Some(form.create_comment_users),
+                Some(form.copy_el_users),
+            );
 
-        #[derive(TemplateOnce)]
-        #[template(path = "desctop/communities/lenta/new_list.stpl")]
-        struct Template {
-            list: PostList,
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/communities/lenta/new_list.stpl")]
+            struct Template {
+                list: PostList,
+            }
+            let body = Template {
+                list: new_list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body))
         }
-        let body = Template {
-            list: new_list,
-        }
-        .render_once()
-        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(body))
     } else {
         Ok(to_home())
     }
@@ -245,24 +248,22 @@ pub async fn edit_community_post_list(session: Session, req: HttpRequest, mut pa
         let list = get_post_list(*_id);
         let community = get_community(list.community_id.unwrap());
         let _request_user = get_request_user_data(session);
-        if !community.get_administrators_ids().iter().any(|&i| i==_request_user.id) {
-            Ok(to_home());
-        }
-        let form = post_list_form(payload.borrow_mut()).await;
-        list.edit_list (
-            form.name,
-            form.description,
-            form.can_see_el,
-            form.can_see_comment,
-            form.create_el,
-            form.create_comment,
-            form.copy_el,
-            Some(form.can_see_el_users),
-            Some(form.can_see_comment_users),
-            Some(form.create_el_users),
-            Some(form.create_comment_users),
-            Some(form.copy_el_users),
-        );
+        if community.get_administrators_ids().iter().any(|&i| i==_request_user.id) {
+            let form = post_list_form(payload.borrow_mut()).await;
+            list.edit_list (
+                form.name,
+                form.description,
+                form.can_see_el,
+                form.can_see_comment,
+                form.create_el,
+                form.create_comment,
+                form.copy_el,
+                Some(form.can_see_el_users),
+                Some(form.can_see_comment_users),
+                Some(form.create_el_users),
+                Some(form.create_comment_users),
+                Some(form.copy_el_users),
+            );
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/lenta/new_list.stpl")]
@@ -277,6 +278,7 @@ pub async fn edit_community_post_list(session: Session, req: HttpRequest, mut pa
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
             .body(body))
+        }
     } else {
         Ok(to_home())
     }
