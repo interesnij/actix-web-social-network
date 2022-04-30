@@ -19,7 +19,7 @@ use crate::utils::{
 use actix_session::Session;
 use sailfish::TemplateOnce;
 use crate::models::{User, PostList, Post, Community};
-use serde::Serialize;
+use serde::Deserialize;
 
 
 pub fn post_routes(config: &mut web::ServiceConfig) {
