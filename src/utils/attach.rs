@@ -1144,28 +1144,30 @@ pub fn post_elements(attach: String, user_id: i32) -> String {
         .unwrap();
 
     for item in v.iter() {
-        let pk: i32 = item[3..].parse().unwrap();
-        let code = &item[..3];
+        if item.len() > 3 {
+            let pk: i32 = item[3..].parse().unwrap();
+            let code = &item[..3];
 
-        let html = match code {
-            "pho" => add_photo(pk, "post_photo".to_string()),
-            "vid" => add_video(pk, "post_video".to_string()),
-            "goo" => add_good(pk),
-            "mus" => add_music(pk, user.is_moderator(), user_id),
-            "doc" => add_doc(pk, user.is_moderator(), user_id),
-            "sur" => add_survey(pk, user.is_moderator(), user_id),
-            "use" => add_user(pk),
-            "com" => add_community(pk),
+            let html = match code {
+                "pho" => add_photo(pk, "post_photo".to_string()),
+                "vid" => add_video(pk, "post_video".to_string()),
+                "goo" => add_good(pk),
+                "mus" => add_music(pk, user.is_moderator(), user_id),
+                "doc" => add_doc(pk, user.is_moderator(), user_id),
+                "sur" => add_survey(pk, user.is_moderator(), user_id),
+                "use" => add_user(pk),
+                "com" => add_community(pk),
 
-            "lmu" => add_music_list(pk),
-            "ldo" => add_doc_list(pk),
-            "lpo" => add_post_list(pk),
-            "lvi" => add_video_list(pk),
-            "lph" => add_photo_list(pk),
-            "lgo" => add_good_list(pk),
-            _ => "".to_string(),
-        };
-        block = block + &html;
+                "lmu" => add_music_list(pk),
+                "ldo" => add_doc_list(pk),
+                "lpo" => add_post_list(pk),
+                "lvi" => add_video_list(pk),
+                "lph" => add_photo_list(pk),
+                "lgo" => add_good_list(pk),
+                _ => "".to_string(),
+            };
+            block = block + &html;
+        }
     }
     return "<div class='attach_container'>".to_owned() + &block + &"</div>".to_string();
 }
