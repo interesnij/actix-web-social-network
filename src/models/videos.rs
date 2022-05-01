@@ -1854,6 +1854,7 @@ impl Video {
                 .unwrap();
 
             Video::create_video (
+                item.title.clone(),
                 item.community_id,
                 list.user_id,
                 list,
