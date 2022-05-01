@@ -14,7 +14,7 @@
               <input
               <% if list.description.is_some() { %>
                 value="<%= list.description.as_ref().unwrap() %>"
-              <% } else if { %>
+              <% } else { %>
                 value=""
               <% } %>
               " name="description" class="form-control">
