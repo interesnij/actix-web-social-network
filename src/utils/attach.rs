@@ -1233,8 +1233,8 @@ pub fn edit_post_elements(attach: String) -> String {
                 "lgo" => add_edited_good_list(pk),
                 _ => "".to_string(),
             }
+            block = block + &html;
         };
-        block = block + &html;
     }
     return "<div class='attach_container'>".to_owned() + &block + &"</div>".to_string();
 }
