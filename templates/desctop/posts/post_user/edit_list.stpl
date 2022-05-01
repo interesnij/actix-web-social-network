@@ -11,9 +11,12 @@
           </div>
           <div class="form-group">
               <label>Описание</label>
-              <input value="
               <% if list.description.is_some() { %>
-                <%= list.description.as_ref().unwrap().trim() %>
+              <input
+              <% if list.description.is_some() { %>
+                value="<%= list.description.as_ref().unwrap() %>"
+              <% } else if { %>
+                value=""
               <% } %>
               " name="description" class="form-control">
           </div>
