@@ -1236,6 +1236,15 @@ impl User {
             .expect("Error.");
         return true;
     }
+    pub fn plus_surveys(&self, count: i32) -> bool {
+        let profile = self.get_profile();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::user_profiles::surveys.eq(profile.surveys + count))
+            .get_result::<UserProfile>(&_connection)
+            .expect("Error.");
+        return true;
+    }
     pub fn plus_tracks(&self, count: i32) -> bool {
         let profile = self.get_profile();
         let _connection = establish_connection();
@@ -1367,6 +1376,15 @@ impl User {
         let _connection = establish_connection();
         diesel::update(&profile)
             .set(schema::user_profiles::friends.eq(profile.friends - count))
+            .get_result::<UserProfile>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_surveys(&self, count: i32) -> bool {
+        let profile = self.get_profile();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::user_profiles::surveys.eq(profile.surveys - count))
             .get_result::<UserProfile>(&_connection)
             .expect("Error.");
         return true;
@@ -3759,7 +3777,7 @@ impl User {
     }
     pub fn is_anon_user_can_see_post(&self) -> bool {
         let private = self.get_private_model();
-        return private.can_see_post == "a"; 
+        return private.can_see_post == "a";
     }
     pub fn is_anon_user_can_see_all(&self) -> bool {
         let private = self.get_private_model();

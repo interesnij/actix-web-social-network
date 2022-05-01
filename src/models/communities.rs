@@ -300,6 +300,15 @@ impl Community {
             .expect("Error.");
         return true;
     }
+    pub fn plus_surveys(&self, count: i32) -> bool {
+        let profile = self.get_info_model();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::community_infos::surveys.eq(profile.surveys + count))
+            .get_result::<CommunityInfo>(&_connection)
+            .expect("Error.");
+        return true;
+    }
     pub fn plus_tracks(&self, count: i32) -> bool {
         let profile = self.get_info_model();
         let _connection = establish_connection();
@@ -332,6 +341,15 @@ impl Community {
         let _connection = establish_connection();
         diesel::update(&profile)
             .set(schema::community_infos::photos.eq(profile.photos - count))
+            .get_result::<CommunityInfo>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_surveys(&self, count: i32) -> bool {
+        let profile = self.get_info_model();
+        let _connection = establish_connection();
+        diesel::update(&profile)
+            .set(schema::community_infos::surveys.eq(profile.surveys - count))
             .get_result::<CommunityInfo>(&_connection)
             .expect("Error.");
         return true;
@@ -1897,7 +1915,7 @@ impl Community {
         };
         return stack;
     }
-    pub fn get_staff_users_ids(&self) -> Vec<i32> { 
+    pub fn get_staff_users_ids(&self) -> Vec<i32> {
         use crate::schema::communities_memberships::dsl::communities_memberships;
 
         let _connection = establish_connection();
