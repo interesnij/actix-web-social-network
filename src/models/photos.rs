@@ -1835,19 +1835,18 @@ impl Photo {
                 .into_iter()
                 .nth(0)
                 .unwrap();
-
+                community_id: Option<i32>, user_id: i32,
+                    list: PhotoList, preview: String, file: String,
+                    description: String, comment_enabled: bool, votes_on: bool
             Photo::create_photo (
+                item.community_id,
                 list.user_id,
-                item.content.clone(),
-                item.post_categorie_id.clone(),
                 list,
-                item.attach.clone(),
-                item.parent_id.clone(),
-                item.comment_enabled.clone(),
-                item.is_signature.clone(),
-                item.votes_on.clone(),
-                item.community_id.clone(),
+                item.preview.clone(),
+                item.file.clone(),
                 None,
+                true,
+                true,
             );
         }
         diesel::update(&item)
@@ -2200,10 +2199,10 @@ impl Photo {
        return true;
     }
     pub fn get_format_text(&self) -> String {
-        if self.content.is_some() {
-            let unwrap = self.content.as_ref().unwrap();
+        if self.description.is_some() {
+            let unwrap = self.description.as_ref().unwrap();
             if unwrap.len() <= 101 {
-                return self.content.as_ref().unwrap().to_string();
+                return self.description.as_ref().unwrap().to_string();
             }
             else {
                 let new_str = unwrap[..100].to_owned() + &"<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + &unwrap[101..] + &"</span>";
@@ -2324,14 +2323,6 @@ impl Photo {
     }
     pub fn is_have_reposts(&self) -> bool {
         return self.repost > 0;
-    }
-
-    pub fn get_count_attach(&self) -> String {
-        if self.attach.is_some() {
-            let self_attach = self.attach.as_deref().unwrap().split(",").collect::<Vec<_>>();
-            return "files_".to_string() + &self_attach.len().to_string();
-        }
-        return "files_0".to_string();
     }
 
     pub fn likes(&self) -> Vec<User> {
