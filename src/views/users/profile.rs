@@ -32,12 +32,14 @@ pub fn my_user_account(folder: String, user: User, request_user: User) -> actix_
             private_bools: Vec<bool>,
             request_user: User,
             user:         User,
+            is_my_user:   bool
         }
         let body = UserPage {
             title:        user.get_full_name().clone(),
-            private_bools: user.get_profile_all_can_see(*_request_user_id).clone(),
+            private_bools: user.get_profile_all_can_see(*request_user.id).clone(),
             request_user: request_user,
             user:         user,
+            is_my_user:   true,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -50,12 +52,14 @@ pub fn my_user_account(folder: String, user: User, request_user: User) -> actix_
             private_bools: Vec<bool>,
             request_user: User,
             user:         User,
+            is_my_user:   bool
         }
         let body = UserPage {
             title:        user.get_full_name().clone(),
-            private_bools: user.get_profile_all_can_see(*_request_user_id).clone(),
+            private_bools: user.get_profile_all_can_see(*request_user.id).clone(),
             request_user: request_user,
             user:         user,
+            is_my_user:   true,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
