@@ -2700,53 +2700,53 @@ impl Community {
 
     pub fn is_anon_user_can_see_info(&self) -> bool {
         let private = self.get_private_model();
-        return private.can_see_info == "a".to_string();
+        return private.can_see_info == "a";
     }
     pub fn is_anon_user_can_see_member(&self) -> bool {
         let private = self.get_private_model();
-        return private.can_see_member == "a".to_string();
+        return private.can_see_member == "a";
     }
 
     pub fn is_anon_user_can_send_message(&self) -> bool {
         let private = self.get_private_model();
-        return private.can_send_message == "a".to_string();
+        return private.can_send_message == "a";
     }
     pub fn is_anon_user_can_see_doc(&self) -> bool {
         let private = self.get_private_model();
-        return private.can_see_doc == "a".to_string();
+        return private.can_see_doc == "a";
     }
     pub fn is_anon_user_can_see_music(&self) -> bool {
         let private = self.get_private_model();
-        return private.can_see_music == "a".to_string();
+        return private.can_see_music == "a";
     }
     pub fn is_anon_user_can_see_survey(&self) -> bool {
         let private = self.get_private_model();
-        return private.can_see_survey == "a".to_string();
+        return private.can_see_survey == "a";
     }
     pub fn is_anon_user_can_see_post(&self) -> bool {
         let private = self.get_private_model();
-        return private.can_see_post == "a".to_string();
+        return private.can_see_post == "a";
     }
     pub fn is_anon_user_can_see_photo(&self) -> bool {
         let private = self.get_private_model();
-        return private.can_see_photo == "a".to_string();
+        return private.can_see_photo == "a";
     }
     pub fn is_anon_user_can_see_good(&self) -> bool {
         let private = self.get_private_model();
-        return private.can_see_good == "a".to_string();
+        return private.can_see_good == "a";
     }
     pub fn is_anon_user_can_see_video(&self) -> bool {
         let private = self.get_private_model();
-        return private.can_see_video == "a".to_string();
+        return private.can_see_video == "a";
     }
 
     pub fn is_anon_user_can_see_planner(&self) -> bool {
         let private = self.get_private_model();
-        return private.can_see_planner == "a".to_string();
+        return private.can_see_planner == "a";
     }
     pub fn is_anon_user_can_see_forum(&self) -> bool {
         let private = self.get_private_model();
-        return private.can_see_forum == "a".to_string();
+        return private.can_see_forum == "a";
     }
 
     pub fn get_community_all_can_see(&self, user_id: i32) -> Vec<bool> {

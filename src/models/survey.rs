@@ -477,13 +477,13 @@ impl SurveyList {
         }
     }
     pub fn is_anon_user_can_see_el(&self) -> bool {
-        return self.can_see_el == "a".to_string()
+        return self.can_see_el == "a";
     }
     pub fn is_anon_user_can_create_item(&self) -> bool {
-        return self.create_el == "a".to_string()
+        return self.create_el == "a";
     }
     pub fn is_anon_user_can_copy_el(&self) -> bool {
-        return self.copy_el == "a".to_string()
+        return self.copy_el == "a";
     }
     pub fn create_list(creator: User, name: String, description: Option<String>,
         community_id: Option<i32>, can_see_el: String, create_el: String, copy_el: String,
