@@ -1232,7 +1232,7 @@ pub fn edit_post_elements(attach: String) -> String {
                 "lph" => add_edited_photo_list(pk),
                 "lgo" => add_edited_good_list(pk),
                 _ => "".to_string(),
-            }
+            };
             block = block + &html;
         };
     }
