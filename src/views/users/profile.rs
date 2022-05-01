@@ -34,10 +34,10 @@ pub fn my_user_account(folder: String, user: User, request_user: User) -> actix_
             user:         User,
         }
         let body = UserPage {
-            title:        _user.get_full_name().clone(),
-            private_bools: _user.get_profile_all_can_see(*_request_user_id).clone(),
-            request_user: _request_user,
-            user:         _user,
+            title:        user.get_full_name().clone(),
+            private_bools: user.get_profile_all_can_see(*_request_user_id).clone(),
+            request_user: request_user,
+            user:         user,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -52,10 +52,10 @@ pub fn my_user_account(folder: String, user: User, request_user: User) -> actix_
             user:         User,
         }
         let body = UserPage {
-            title:        _user.get_full_name().clone(),
-            private_bools: _user.get_profile_all_can_see(*_request_user_id).clone(),
-            request_user: _request_user,
-            user:         _user,
+            title:        user.get_full_name().clone(),
+            private_bools: user.get_profile_all_can_see(*_request_user_id).clone(),
+            request_user: request_user,
+            user:         user,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -72,7 +72,6 @@ pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
 
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
-        let _request_user_id = &_request_user.id;
 
         if &_user.id == &_request_user.id {
             return my_user_account(_type, _user, _request_user)
