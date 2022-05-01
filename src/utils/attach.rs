@@ -1,7 +1,8 @@
+#[macro_use(concat_string)]
+extern crate concat_string;
 use crate::utils::establish_connection;
 use crate::schema;
 use diesel::prelude::*;
-use crate::utils::User;
 
 
 pub fn add_post_list(pk: i32) -> String {
