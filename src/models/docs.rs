@@ -1379,7 +1379,7 @@ impl Doc {
             .unwrap();
     }
     pub fn get_list(&self) -> DocList {
-        use crate::schema::post_lists::dsl::post_lists;
+        use crate::schema::doc_lists::dsl::doc_lists;
 
         let _connection = establish_connection();
         return doc_lists

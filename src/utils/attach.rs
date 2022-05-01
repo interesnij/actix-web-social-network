@@ -1,4 +1,4 @@
-#[macro_use(concat_string)]
+//#[macro_use(concat_string)]
 use concat_string;
 use crate::utils::establish_connection;
 use crate::schema;
