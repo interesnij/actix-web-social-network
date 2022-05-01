@@ -1472,7 +1472,7 @@ impl Doc {
                 item.community_id,
                 list.user_id,
                 list,
-                item.types_2,
+                item.types_2.clone(),
                 item.file.clone(),
             );
         }
