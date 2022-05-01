@@ -1504,6 +1504,73 @@ impl Doc {
             .expect("Error.");
         return self;
     }
+
+    pub fn is_open(&self) -> bool {
+        return self.types == "a" && self.types == "b";
+    }
+    pub fn is_deleted(&self) -> bool {
+        return self.types == "c";
+    }
+    pub fn is_closed(&self) -> bool {
+        return self.types == "h";
+    }
+
+    pub fn close_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "a" => "h",
+            "b" => "n",
+            _ => "h",
+        };
+        diesel::update(self)
+            .set(schema::docs::types.eq(close_case))
+            .get_result::<Doc>(&_connection)
+            .expect("E");
+        let list = self.get_list();
+        diesel::update(&list)
+            .set(schema::doc_lists::count.eq(list.count - 1))
+            .get_result::<DocList>(&_connection)
+            .expect("E");
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            community.minus_docs(1);
+        }
+        else {
+            let creator = self.get_creator();
+            creator.minus_docs(1);
+        }
+       return true;
+    }
+    pub fn unclose_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "h" => "a",
+            "n" => "b",
+            _ => "a",
+        };
+        diesel::update(self)
+            .set(schema::docs::types.eq(close_case))
+            .get_result::<Doc>(&_connection)
+            .expect("E");
+        let list = self.get_list();
+        diesel::update(&list)
+            .set(schema::doc_lists::count.eq(list.count + 1))
+            .get_result::<DocList>(&_connection)
+            .expect("E");
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            community.plus_docs(1);
+        }
+        else {
+            let creator = self.get_creator();
+            creator.plus_docs(1);
+         }
+       return true;
+    }
 }
 
 /////// UserDocListCollection //////
