@@ -1424,7 +1424,7 @@ impl Doc {
             view: 0,
             repost: 0,
             copy: 0,
-            position: list.count.parse(),
+            position: list.count.into(),
           };
           let new_doc = diesel::insert_into(schema::docs::table)
               .values(&new_doc_form)
