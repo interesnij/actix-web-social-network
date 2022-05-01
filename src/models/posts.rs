@@ -1948,6 +1948,15 @@ impl Post {
           .set(schema::posts::copy.eq(item.copy + count))
           .get_result::<Post>(&_connection)
           .expect("Error.");
+
+        if item.community_id.is_some() {
+            let community = item.get_community();
+            community.plus_posts(count);
+        }
+        else {
+            let creator = item.get_creator();
+            creator.plus_posts(count);
+          }
         return true;
     }
 

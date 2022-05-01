@@ -1442,6 +1442,55 @@ impl Doc {
             return new_doc;
         }
     }
+
+    pub fn copy_item(pk: i32, lists: Vec<i32>) -> bool {
+        use crate::schema::docs::dsl::docs;
+        use crate::schema::doc_lists::dsl::doc_lists;
+
+        let _connection = establish_connection();
+        let item = docs
+            .filter(schema::docs::id.eq(pk))
+            .filter(schema::docs::types.eq("a"))
+            .load::<Doc>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        let mut count = 0;
+        for list_id in lists.iter() {
+            count += 1;
+            let list = doc_lists
+                .filter(schema::doc_lists::id.eq(list_id))
+                .filter(schema::doc_lists::types.lt(10))
+                .load::<DocList>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+            Doc::create_doc (
+                item.title.clone(),
+                item.community_id,
+                list.user_id,
+                list,
+                item.types_2,
+                item.file.clone(),
+            );
+        }
+        diesel::update(&item)
+          .set(schema::docs::copy.eq(item.copy + count))
+          .get_result::<Doc>(&_connection)
+          .expect("Error.");
+
+        if item.community_id.is_some() {
+            let community = item.get_community();
+            community.plus_docs(count);
+        }
+        else {
+            let creator = item.get_creator();
+            creator.plus_posts(count);
+          }
+        return true;
+    }
 }
 
 /////// UserDocListCollection //////
