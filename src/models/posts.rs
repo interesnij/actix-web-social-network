@@ -2208,7 +2208,16 @@ impl Post {
             .set(schema::post_lists::count.eq(list.count - 1))
             .get_result::<PostList>(&_connection)
             .expect("E");
-       return true;
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            community.minus_posts(1);
+        }
+        else {
+            let creator = self.get_creator();
+            creator.minus_posts(1);
+         }
+      return true;
     }
     pub fn restore_item(&self) -> bool {
         let _connection = establish_connection();
@@ -2229,6 +2238,15 @@ impl Post {
             .set(schema::post_lists::count.eq(list.count + 1))
             .get_result::<PostList>(&_connection)
             .expect("E");
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            community.plus_posts(1);
+        }
+        else {
+            let creator = self.get_creator();
+            creator.plus_posts(1);
+         }
        return true;
     }
 
@@ -2249,6 +2267,15 @@ impl Post {
             .set(schema::post_lists::count.eq(list.count - 1))
             .get_result::<PostList>(&_connection)
             .expect("E");
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            community.minus_posts(1);
+        }
+        else {
+            let creator = self.get_creator();
+            creator.minus_posts(1);
+        }
        return true;
     }
     pub fn unclose_item(&self) -> bool {
@@ -2268,6 +2295,15 @@ impl Post {
             .set(schema::post_lists::count.eq(list.count + 1))
             .get_result::<PostList>(&_connection)
             .expect("E");
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            community.plus_posts(1);
+        }
+        else {
+            let creator = self.get_creator();
+            creator.plus_posts(1);
+         }
        return true;
     }
     pub fn get_format_text(&self) -> String {

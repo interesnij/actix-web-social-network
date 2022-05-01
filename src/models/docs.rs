@@ -1491,6 +1491,19 @@ impl Doc {
           }
         return true;
     }
+    pub fn edit_doc(&self, title: String, types_2: String) -> &Doc {
+        let _connection = establish_connection();
+
+        let edit_doc = EditDoc {
+            title: title,
+            types_2: types_2,
+        };
+        diesel::update(self)
+            .set(edit_doc)
+            .get_result::<Doc>(&_connection)
+            .expect("Error.");
+        return self;
+    }
 }
 
 /////// UserDocListCollection //////
