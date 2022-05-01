@@ -1835,13 +1835,14 @@ impl Photo {
                 .into_iter()
                 .nth(0)
                 .unwrap();
+
             Photo::create_photo (
                 item.community_id,
                 list.user_id,
                 list,
                 item.preview.clone(),
                 item.file.clone(),
-                None,
+                item.description.clone(),
                 true,
                 true,
             );
