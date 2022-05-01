@@ -1521,7 +1521,7 @@ impl Music {
             return "<a href='".to_owned() + &creator.get_link() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": аудиозапись"
         }
     }
-    pub fn create_music(title: String, community_id: Option<i32>, user_id: i32, list: MusicList,
+    pub fn create_track(title: String, community_id: Option<i32>, user_id: i32, list: MusicList,
         genre_id: Option<i32>, album_id: Option<i32>, file: String, image: Option<String>) -> Music {
 
         let _connection = establish_connection();
@@ -1594,8 +1594,10 @@ impl Music {
                 item.community_id,
                 list.user_id,
                 list,
-                item.types_2.clone(),
+                item.genre_id,
+                item.album_id,
                 item.file.clone(),
+                item.image.clone(),
             );
         }
         diesel::update(&item)

@@ -1646,7 +1646,7 @@ pub struct Post {
     pub disliked:          i32,
     pub repost:            i32,
     pub copy:              i32,
-    pub position:          i32,
+    pub position:          i16,
     pub is_signature:      bool,
     pub parent_id:         Option<i32>,
 }
