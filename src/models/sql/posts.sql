@@ -52,7 +52,7 @@ CREATE TABLE posts (
     disliked        INT NOT NULL,
     repost          INT NOT NULL,
     copy            INT NOT NULL,
-    position        INT NOT NULL,
+    position        SMALLINT NOT NULL, 
     is_signature    BOOLEAN NOT NULL DEFAULT false,
     parent_id       INT NOT NULL,
 

@@ -31,7 +31,7 @@ pub struct SParams {
 #[derive(Deserialize)]
 pub struct JsonPosition {
     pub key:   i32,
-    pub value: i32,
+    pub value: i16,
 }
 #[derive(Deserialize)]
 pub struct JsonReactions {

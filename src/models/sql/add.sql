@@ -82,8 +82,8 @@ ALTER TABLE new_friends_perms DROP COLUMN can_copy_post;
 ALTER TABLE table_name RENAME old_field TO new_field;
 
 -- сменить тип данных
-ALTER TABLE table_name ALTER COLUMN any_field SET
-DATA TYPE VARCHAR(255);
+ALTER TABLE posts ALTER COLUMN position SET
+DATA TYPE SMALLINT;
 
 -- изменить значение по умолчанию
 ALTER TABLE table_name ALTER COLUMN any_field SET
