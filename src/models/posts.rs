@@ -1846,7 +1846,7 @@ impl Post {
           disliked: 0,
           repost: 0,
           copy: 0,
-          position: list.count,
+          position: (list.count).try_into().unwrap(),
           is_signature: is_signature,
           parent_id: parent_id,
         };

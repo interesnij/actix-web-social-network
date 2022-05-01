@@ -1656,7 +1656,7 @@ impl Music {
             .expect("E");
         let list = self.get_list();
         diesel::update(&list)
-            .set(schema::doc_lists::count.eq(list.count - 1))
+            .set(schema::music_lists::count.eq(list.count - 1))
             .get_result::<MusicList>(&_connection)
             .expect("E");
 
