@@ -1873,7 +1873,7 @@ impl Post {
         attach: Option<String>) -> Post {
 
         let _connection = establish_connection();
-        let mut new_attach = "".to_string();
+        let mut new_attach: Option<String> = None;
         if attach.is_some() {
             new_attach = attach.unwrap().replace("'", "").replace("[", "").replace("]", "").replace(" ", "");
         }
@@ -1965,7 +1965,7 @@ impl Post {
         is_signature: bool) -> &Post {
 
         let _connection = establish_connection();
-        let mut new_attach = "".to_string();
+        let mut new_attach: Option<String> = None;
         if attach.is_some() {
             new_attach = attach.as_ref().unwrap().replace("'", "").replace("[", "").replace("]", "").replace(" ", "");
         }
@@ -2645,7 +2645,7 @@ impl Post {
         use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
-        let mut new_attach = "".to_string();
+        let mut new_attach: Option<String> = None;
         if attach.is_some() {
             new_attach = attach.unwrap().replace("'", "").replace("[", "").replace("]", "").replace(" ", "");
         }
