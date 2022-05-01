@@ -1779,7 +1779,7 @@ impl Photo {
           types: "a".to_string(),
           preview: preview,
           file: file,
-          description: Some(description),
+          description: description,
           comment_enabled: comment_enabled,
           votes_on: votes_on,
 
