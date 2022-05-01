@@ -1834,11 +1834,11 @@ impl Post {
             use crate::models::CommunityInfo;
 
             let community = list.get_community();
-            let profile = community.get_info_model();
-            diesel::update(&profile)
-              .set(schema::community_infos::posts.eq(profile.posts + 1))
-              .get_result::<CommunityInfo>(&_connection)
-              .expect("Error.");
+            //let profile = community.get_info_model();
+            //diesel::update(&profile)
+            //  .set(schema::community_infos::posts.eq(profile.posts + 1))
+            //  .get_result::<CommunityInfo>(&_connection)
+            //  .expect("Error.");
 
             let new_post_form = NewPost {
               content: content,
@@ -1865,6 +1865,7 @@ impl Post {
                 .values(&new_post_form)
                 .get_result::<Post>(&_connection)
                 .expect("Error.");
+            community.plus_posts(1);
             return new_post;
         }
         else {
@@ -1872,11 +1873,11 @@ impl Post {
             use crate::utils::get_user;
 
             let creator = get_user(user_id);
-            let profile = creator.get_profile();
-            diesel::update(&profile)
-              .set(schema::user_profiles::posts.eq(profile.posts + 1))
-              .get_result::<UserProfile>(&_connection)
-              .expect("Error.");
+            //let profile = creator.get_profile();
+            //diesel::update(&profile)
+            //  .set(schema::user_profiles::posts.eq(profile.posts + 1))
+            //  .get_result::<UserProfile>(&_connection)
+            //  .expect("Error.");
 
             let new_post_form = NewPost {
               content: content,
@@ -1903,6 +1904,8 @@ impl Post {
                 .values(&new_post_form)
                 .get_result::<Post>(&_connection)
                 .expect("Error.");
+
+            creator.plus_posts(1);
             return new_post;
         }
     }

@@ -1378,6 +1378,19 @@ impl Doc {
             .nth(0)
             .unwrap();
     }
+    pub fn get_list(&self) -> DocList {
+        use crate::schema::post_lists::dsl::post_lists;
+
+        let _connection = establish_connection();
+        return doc_lists
+            .filter(schema::doc_lists::id.eq(self.doc_lists_id))
+            .filter(schema::doc_lists::types.lt(10))
+            .load::<DocList>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
     pub fn get_description(&self) -> String {
         if self.community_id.is_some() {
             let community = self.get_community();
@@ -1386,6 +1399,16 @@ impl Doc {
         else {
             let creator = self.get_creator();
             return "<a href='".to_owned() + &creator.get_link() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": документ"
+        }
+    }
+
+    pub fn is_user_can_edit_delete_item(&self, user_id: i32) -> bool {
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            return community.get_staff_users_ids().iter().any(|&i| i==user_id);
+        }
+        else {
+            return self.user_id == user_id;
         }
     }
 }
