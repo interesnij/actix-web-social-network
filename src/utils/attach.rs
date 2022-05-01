@@ -1280,7 +1280,7 @@ pub fn comment_elements(attach: String, user_id: i32) -> String {
                 _ => "".to_string(),
             };
             block = block + &html;
-        }
+        };
     }
     return "<div class='attach_container'>".to_owned() + &block + &"</div>".to_string();
 }
