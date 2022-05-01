@@ -36,7 +36,7 @@ pub fn my_user_account(folder: String, user: User, request_user: User) -> actix_
         }
         let body = UserPage {
             title:        user.get_full_name().clone(),
-            private_bools: user.get_profile_all_can_see(*request_user.id).clone(),
+            private_bools: user.get_profile_all_can_see(request_user.id),
             request_user: request_user,
             user:         user,
             is_my_user:   true,
@@ -56,7 +56,7 @@ pub fn my_user_account(folder: String, user: User, request_user: User) -> actix_
         }
         let body = UserPage {
             title:        user.get_full_name().clone(),
-            private_bools: user.get_profile_all_can_see(*request_user.id).clone(),
+            private_bools: user.get_profile_all_can_see(request_user.id),
             request_user: request_user,
             user:         user,
             is_my_user:   true,
