@@ -1402,13 +1402,15 @@ impl Doc {
         }
     }
     pub fn create_doc(title: String, community_id: Option<i32>, user_id: i32,
-        list: DocList, types_2: String, file: String) -> Post {
+        list: DocList, types_2: String, file: String) -> Doc {
 
         let _connection = establish_connection();
         diesel::update(&list)
           .set(schema::doc_lists::count.eq(list.count + 1))
           .get_result::<DocList>(&_connection)
           .expect("Error.");
+
+
 
         let new_doc_form = NewDoc {
             title: title,
@@ -1422,7 +1424,7 @@ impl Doc {
             view: 0,
             repost: 0,
             copy: 0,
-            position: list.count,
+            position: list.count.parse(),
           };
           let new_doc = diesel::insert_into(schema::docs::table)
               .values(&new_doc_form)
