@@ -41,7 +41,7 @@ pub fn post_progs(config: &mut web::ServiceConfig) {
     config.route("/posts/add_community_post/{id}/", web::post().to(add_community_post));
 }
 
-pub async fn add_user_post_list(session: Session, req: HttpRequest, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
+pub async fn add_user_post_list(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         use crate::utils::post_list_form;
 
@@ -84,7 +84,7 @@ pub async fn add_user_post_list(session: Session, req: HttpRequest, mut payload:
     }
 }
 
-pub async fn edit_user_post_list(session: Session, req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn edit_user_post_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         use crate::utils::post_list_form;
 
@@ -132,7 +132,7 @@ pub async fn edit_user_post_list(session: Session, req: HttpRequest, mut payload
     }
 }
 
-pub async fn add_community_post_list(session: Session, req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn add_community_post_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         use crate::utils::post_list_form;
 
@@ -183,7 +183,7 @@ pub async fn add_community_post_list(session: Session, req: HttpRequest, mut pay
     }
 }
 
-pub async fn edit_community_post_list(session: Session, req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn edit_community_post_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         use crate::utils::post_list_form;
 
@@ -233,7 +233,7 @@ pub async fn edit_community_post_list(session: Session, req: HttpRequest, mut pa
 }
 
 
-pub async fn delete_user_post_list(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn delete_user_post_list(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
 
         let list = get_post_list(*_id);
@@ -255,7 +255,7 @@ pub async fn delete_user_post_list(session: Session, req: HttpRequest, _id: web:
     }
 }
 
-pub async fn recover_user_post_list(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn recover_user_post_list(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
 
         let list = get_post_list(*_id);
@@ -277,7 +277,7 @@ pub async fn recover_user_post_list(session: Session, req: HttpRequest, _id: web
     }
 }
 
-pub async fn delete_community_post_list(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn delete_community_post_list(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
 
         let list = get_post_list(*_id);
@@ -299,7 +299,7 @@ pub async fn delete_community_post_list(session: Session, req: HttpRequest, _id:
     }
 }
 
-pub async fn recover_community_post_list(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn recover_community_post_list(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
 
         let list = get_post_list(*_id);
@@ -397,7 +397,7 @@ pub async fn post_form(payload: &mut Multipart) -> PostForm {
     }
     form
 }
-pub async fn add_user_post(session: Session, req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn add_user_post(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
         let user_id = _request_user.id;
@@ -445,7 +445,7 @@ pub async fn add_user_post(session: Session, req: HttpRequest, mut payload: Mult
     }
 }
 
-pub async fn add_community_post(session: Session, req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn add_community_post(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
         let list = get_post_list(*_id);

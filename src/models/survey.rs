@@ -1461,6 +1461,20 @@ impl Survey {
             return "/static/images/no_img/list.jpg".to_string();
         }
     }
+
+    pub fn get_list(&self) -> SurveyList {
+        use crate::schema::survey_lists::dsl::survey_lists;
+
+        let _connection = establish_connection();
+        return survey_lists
+            .filter(schema::survey_lists::id.eq(self.survey_list_id))
+            .filter(schema::survey_lists::types.lt(10))
+            .load::<SurveyList>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
     pub fn get_description(&self) -> String {
         if self.community_id.is_some() {
             let community = self.get_community();
@@ -1470,6 +1484,162 @@ impl Survey {
             let creator = self.get_creator();
             return "<a href='".to_owned() + &creator.get_link() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": опрос"
         }
+    }
+    pub fn create_survey(title: String, community_id: Option<i32>, user_id: i32,
+        list: SurveyList, image: Option<String>, is_anonymous: bool,
+        is_multiple: bool, is_no_edited: bool, time_end:Option<NaiveDateTime>) -> Survey {
+
+        let _connection = establish_connection();
+        diesel::update(&list)
+          .set(schema::survey_lists::count.eq(list.count + 1))
+          .get_result::<SurveyList>(&_connection)
+          .expect("Error.");
+
+        let new_survey_form = NewSurvey {
+            title: title,
+            community_id: community_id,
+            user_id: user_id,
+            survey_list_id: list.id,
+            types: "a".to_string(),
+            image: image,
+            is_anonymous: is_anonymous,
+            is_multiple: is_multiple,
+            is_no_edited: is_no_edited,
+            time_end: time_end,
+            created: chrono::Local::now().naive_utc(),
+            view: 0,
+            repost: 0,
+            copy: 0,
+            position: (list.count).try_into().unwrap(),
+            vote: 0,
+          };
+          let new_survey = diesel::insert_into(schema::surveys::table)
+              .values(&new_survey_form)
+              .get_result::<Survey>(&_connection)
+              .expect("Error.");
+
+        if community_id.is_some() {
+            let community = list.get_community();
+            community.plus_surveys(1);
+            return new_survey;
+        }
+        else {
+            use crate::utils::get_user;
+
+            let creator = get_user(user_id);
+            creator.plus_surveys(1);
+            return new_survey;
+        }
+    }
+
+    pub fn edit_survey(&self, title: String,
+        image: Option<String>, is_anonymous: bool, is_multiple: bool,
+        is_no_edited: bool, time_end:Option<NaiveDateTime>) -> &Survey {
+        let _connection = establish_connection();
+
+        let edit_survey = EditSurvey {
+            title: title,
+            image: image,
+            is_anonymous: is_anonymous,
+            is_multiple: is_multiple,
+            is_no_edited: is_no_edited,
+            time_end: time_end,
+        };
+        diesel::update(self)
+            .set(edit_survey)
+            .get_result::<Survey>(&_connection)
+            .expect("Error.");
+        return self;
+    }
+
+    pub fn is_open(&self) -> bool {
+        return self.types == "a" && self.types == "b";
+    }
+    pub fn is_deleted(&self) -> bool {
+        return self.types == "c";
+    }
+    pub fn is_closed(&self) -> bool {
+        return self.types == "h";
+    }
+
+    pub fn close_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "a" => "h",
+            "b" => "n",
+            _ => "h",
+        };
+        diesel::update(self)
+            .set(schema::surveys::types.eq(close_case))
+            .get_result::<Survey>(&_connection)
+            .expect("E");
+        let list = self.get_list();
+        diesel::update(&list)
+            .set(schema::survey_lists::count.eq(list.count - 1))
+            .get_result::<SurveyList>(&_connection)
+            .expect("E");
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            community.minus_surveys(1);
+        }
+        else {
+            let creator = self.get_creator();
+            creator.minus_surveys(1);
+        }
+       return true;
+    }
+    pub fn unclose_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "h" => "a",
+            "n" => "b",
+            _ => "a",
+        };
+        diesel::update(self)
+            .set(schema::surveys::types.eq(close_case))
+            .get_result::<Survey>(&_connection)
+            .expect("E");
+        let list = self.get_list();
+        diesel::update(&list)
+            .set(schema::survey_lists::count.eq(list.count + 1))
+            .get_result::<SurveyList>(&_connection)
+            .expect("E");
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            community.plus_surveys(1);
+        }
+        else {
+            let creator = self.get_creator();
+            creator.plus_surveys(1);
+         }
+       return true;
+    }
+
+    pub fn change_position(query: Json<Vec<JsonPosition>>) -> bool {
+        use crate::schema::surveys::dsl::surveys;
+
+        let _connection = establish_connection();
+        for i in query.iter() {
+            let item = surveys
+                .filter(schema::surveys::id.eq(i.key))
+                .filter(schema::surveys::types.eq("a"))
+                .limit(1)
+                .load::<Survey>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+
+            diesel::update(&item)
+                .set(schema::surveys::position.eq(i.value))
+                .get_result::<Survey>(&_connection)
+                .expect("Error.");
+        }
+        return true;
     }
 }
 
