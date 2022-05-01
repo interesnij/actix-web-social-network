@@ -1885,7 +1885,7 @@ impl Post {
               user_id: user_id,
               post_list_id: list.id,
               types: _types,
-              attach: Some(new_attach),
+              attach: new_attach,
               comment_enabled: comment_enabled,
               votes_on: votes_on,
               created: chrono::Local::now().naive_utc(),
