@@ -1410,8 +1410,6 @@ impl Doc {
           .get_result::<DocList>(&_connection)
           .expect("Error.");
 
-
-        let count: i16 = list.count + 1;
         let new_doc_form = NewDoc {
             title: title,
             community_id: community_id,
@@ -1424,7 +1422,7 @@ impl Doc {
             view: 0,
             repost: 0,
             copy: 0,
-            position: count,
+            position: (list.count).try_into().unwrap(),
           };
           let new_doc = diesel::insert_into(schema::docs::table)
               .values(&new_doc_form)
