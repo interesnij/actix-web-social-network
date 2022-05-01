@@ -3,6 +3,7 @@ extern crate concat_string;
 use crate::utils::establish_connection;
 use crate::schema;
 use diesel::prelude::*;
+use crate::models::User;
 
 
 pub fn add_post_list(pk: i32) -> String {
