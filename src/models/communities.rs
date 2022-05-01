@@ -304,7 +304,7 @@ impl Community {
         let profile = self.get_info_model();
         let _connection = establish_connection();
         diesel::update(&profile)
-            .set(schema::community_infos::surveys.eq(profile.surveys + count))
+            .set(schema::community_infos::surveys.eq(profile.survey + count))
             .get_result::<CommunityInfo>(&_connection)
             .expect("Error.");
         return true;
@@ -349,7 +349,7 @@ impl Community {
         let profile = self.get_info_model();
         let _connection = establish_connection();
         diesel::update(&profile)
-            .set(schema::community_infos::surveys.eq(profile.surveys - count))
+            .set(schema::community_infos::surveys.eq(profile.survey - count))
             .get_result::<CommunityInfo>(&_connection)
             .expect("Error.");
         return true;

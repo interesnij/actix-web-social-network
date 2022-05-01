@@ -1240,7 +1240,7 @@ impl User {
         let profile = self.get_profile();
         let _connection = establish_connection();
         diesel::update(&profile)
-            .set(schema::user_profiles::surveys.eq(profile.surveys + count))
+            .set(schema::user_profiles::surveys.eq(profile.survey + count))
             .get_result::<UserProfile>(&_connection)
             .expect("Error.");
         return true;
@@ -1384,7 +1384,7 @@ impl User {
         let profile = self.get_profile();
         let _connection = establish_connection();
         diesel::update(&profile)
-            .set(schema::user_profiles::surveys.eq(profile.surveys - count))
+            .set(schema::user_profiles::surveys.eq(profile.survey - count))
             .get_result::<UserProfile>(&_connection)
             .expect("Error.");
         return true;
