@@ -1829,82 +1829,42 @@ impl Post {
         else {
             _types = "a".to_string();
         }
+        let new_post_form = NewPost {
+          content: content,
+          community_id: community_id,
+          post_categorie_id: category_id,
+          user_id: user_id,
+          post_list_id: list.id,
+          types: _types,
+          attach: new_attach,
+          comment_enabled: comment_enabled,
+          votes_on: votes_on,
+          created: chrono::Local::now().naive_utc(),
+          comment: 0,
+          view: 0,
+          liked: 0,
+          disliked: 0,
+          repost: 0,
+          copy: 0,
+          position: list.count,
+          is_signature: is_signature,
+          parent_id: parent_id,
+        };
+        let new_post = diesel::insert_into(schema::posts::table)
+            .values(&new_post_form)
+            .get_result::<Post>(&_connection)
+            .expect("Error.");
 
         if community_id.is_some() {
-            use crate::models::CommunityInfo;
-
+            use crate::utils::get_community;
             let community = list.get_community();
-            //let profile = community.get_info_model();
-            //diesel::update(&profile)
-            //  .set(schema::community_infos::posts.eq(profile.posts + 1))
-            //  .get_result::<CommunityInfo>(&_connection)
-            //  .expect("Error.");
-
-            let new_post_form = NewPost {
-              content: content,
-              community_id: community_id,
-              post_categorie_id: category_id,
-              user_id: user_id,
-              post_list_id: list.id,
-              types: _types,
-              attach: new_attach,
-              comment_enabled: comment_enabled,
-              votes_on: votes_on,
-              created: chrono::Local::now().naive_utc(),
-              comment: 0,
-              view: 0,
-              liked: 0,
-              disliked: 0,
-              repost: 0,
-              copy: 0,
-              position: list.count,
-              is_signature: is_signature,
-              parent_id: parent_id,
-            };
-            let new_post = diesel::insert_into(schema::posts::table)
-                .values(&new_post_form)
-                .get_result::<Post>(&_connection)
-                .expect("Error.");
             community.plus_posts(1);
             return new_post;
         }
         else {
-            use crate::models::UserProfile;
             use crate::utils::get_user;
 
             let creator = get_user(user_id);
-            //let profile = creator.get_profile();
-            //diesel::update(&profile)
-            //  .set(schema::user_profiles::posts.eq(profile.posts + 1))
-            //  .get_result::<UserProfile>(&_connection)
-            //  .expect("Error.");
-
-            let new_post_form = NewPost {
-              content: content,
-              community_id: None,
-              post_categorie_id: category_id,
-              user_id: user_id,
-              post_list_id: list.id,
-              types: _types,
-              attach: new_attach,
-              comment_enabled: comment_enabled,
-              votes_on: votes_on,
-              created: chrono::Local::now().naive_utc(),
-              comment: 0,
-              view: 0,
-              liked: 0,
-              disliked: 0,
-              repost: 0,
-              copy: 0,
-              position: list.count,
-              is_signature: false,
-              parent_id: parent_id,
-            };
-            let new_post = diesel::insert_into(schema::posts::table)
-                .values(&new_post_form)
-                .get_result::<Post>(&_connection)
-                .expect("Error.");
-
             creator.plus_posts(1);
             return new_post;
         }

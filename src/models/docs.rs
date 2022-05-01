@@ -1401,7 +1401,47 @@ impl Doc {
             return "<a href='".to_owned() + &creator.get_link() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": документ"
         }
     }
+    pub fn create_doc(title: String, community_id: Option<i32>, user_id: i32,
+        list: DocList, types_2: String, file: String) -> Post {
 
+        let _connection = establish_connection();
+        diesel::update(&list)
+          .set(schema::doc_lists::count.eq(list.count + 1))
+          .get_result::<DocList>(&_connection)
+          .expect("Error.");
+
+        let new_doc_form = NewDoc {
+            title: title,
+            community_id: community_id,
+            user_id: user_id,
+            doc_list_id: list.id,
+            types: "a".to_string(),
+            types_2: types_2,
+            file: file,
+            created: chrono::Local::now().naive_utc(),
+            view: 0,
+            repost: 0,
+            copy: 0,
+            position: list.count,
+          };
+          let new_doc = diesel::insert_into(schema::docs::table)
+              .values(&new_doc_form)
+              .get_result::<Doc>(&_connection)
+              .expect("Error.");
+
+        if community_id.is_some() {
+            let community = list.get_community();
+            community.plus_docs(1);
+            return new_post;
+        }
+        else {
+            use crate::utils::get_user;
+
+            let creator = get_user(user_id);
+            creator.plus_docs(1);
+            return new_post;
+        }
+    }
 }
 
 /////// UserDocListCollection //////
