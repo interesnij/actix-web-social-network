@@ -1971,7 +1971,13 @@ impl Post {
         let _connection = establish_connection();
         let mut new_attach: Option<String> = None;
         if attach.is_some() {
-            new_attach = attach.as_ref().unwrap().replace("'", "").replace("[", "").replace("]", "").replace(" ", "");
+            new_attach = Some(attach
+                .as_ref()
+                .unwrap()
+                .replace("'", "")
+                .replace("[", "")
+                .replace("]", "")
+                .replace(" ", ""));
         }
 
         let edit_post = EditPost {
@@ -2668,7 +2674,7 @@ impl Post {
             sticker_id: sticker_id,
             parent_id:  parent_id,
             content:    content,
-            attach:     Some(new_attach),
+            attach:     new_attach,
             types:      "a".to_string(),
             created:    chrono::Local::now().naive_utc(),
             liked:      0,

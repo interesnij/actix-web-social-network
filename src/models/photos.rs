@@ -1835,9 +1835,6 @@ impl Photo {
                 .into_iter()
                 .nth(0)
                 .unwrap();
-                community_id: Option<i32>, user_id: i32,
-                    list: PhotoList, preview: String, file: String,
-                    description: String, comment_enabled: bool, votes_on: bool
             Photo::create_photo (
                 item.community_id,
                 list.user_id,
