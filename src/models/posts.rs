@@ -1809,7 +1809,12 @@ impl Post {
         let _connection = establish_connection();
         let mut new_attach: Option<String> = None;
         if attach.is_some() {
-            new_attach = attach.unwrap().replace("'", "").replace("[", "").replace("]", "").replace(" ", "");
+            new_attach = Some(attach.unwrap()
+                .replace("'", "")
+                .replace("[", "")
+                .replace("]", "")
+                .replace(" ", "")
+            );
         }
         diesel::update(&list)
           .set(schema::post_lists::count.eq(list.count + 1))
@@ -1842,7 +1847,7 @@ impl Post {
               user_id: user_id,
               post_list_id: list.id,
               types: _types,
-              attach: Some(new_attach),
+              attach: new_attach,
               comment_enabled: comment_enabled,
               votes_on: votes_on,
               created: chrono::Local::now().naive_utc(),
