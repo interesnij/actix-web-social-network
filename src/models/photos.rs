@@ -2244,47 +2244,6 @@ impl Photo {
         }
     }
 
-    pub fn get_attach_photos(&self) -> Vec<Photo> {
-        use crate::schema::photos::dsl::photos;
-
-        let _connection = establish_connection();
-        let attach = self.attach.as_ref().unwrap().to_string();
-        let v: Vec<&str> = attach.split(",").collect();
-        let mut stack = Vec::new();
-        for item in v.iter() {
-            let pk: i32 = item[3..].parse().unwrap();
-            let code = &item[..3];
-            if code == "pho".to_string() {
-                stack.push(pk);
-            }
-        }
-
-        return photos
-            .filter(schema::photos::id.eq_any(stack))
-            .load::<Photo>(&_connection)
-            .expect("E");
-    }
-    pub fn get_attach_videos(&self) -> Vec<Video> {
-        use crate::schema::videos::dsl::videos;
-
-        let _connection = establish_connection();
-        let attach = self.attach.as_ref().unwrap().to_string();
-        let v: Vec<&str> = attach.split(",").collect();
-        let mut stack = Vec::new();
-        for item in v.iter() {
-            let pk: i32 = item[3..].parse().unwrap();
-            let code = &item[..3];
-            if code == "vid".to_string() {
-                stack.push(pk);
-            }
-        }
-
-        return videos
-            .filter(schema::videos::id.eq_any(stack))
-            .load::<Video>(&_connection)
-            .expect("E");
-    }
-
     pub fn likes_count_ru(&self) -> String {
         use crate::utils::get_count_for_ru;
 
@@ -2427,11 +2386,11 @@ impl Photo {
         let _connection = establish_connection();
         let mut new_attach: Option<String> = None;
         if attach.is_some() {
-            new_attach = attach.unwrap()
+            new_attach = Some(attach.unwrap()
                 .replace("'", "")
                 .replace("[", "")
                 .replace("]", "")
-                .replace(" ", "");
+                .replace(" ", ""));
         }
         diesel::update(self)
           .set(schema::photos::comment.eq(self.comment + 1))

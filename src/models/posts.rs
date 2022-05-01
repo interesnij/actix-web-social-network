@@ -1875,7 +1875,11 @@ impl Post {
         let _connection = establish_connection();
         let mut new_attach: Option<String> = None;
         if attach.is_some() {
-            new_attach = attach.unwrap().replace("'", "").replace("[", "").replace("]", "").replace(" ", "");
+            new_attach = Some(attach.unwrap()
+                .replace("'", "")
+                .replace("[", "")
+                .replace("]", "")
+                .replace(" ", ""));
         }
 
         let new_post_form = NewPost {
