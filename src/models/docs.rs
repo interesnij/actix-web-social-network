@@ -1383,7 +1383,7 @@ impl Doc {
 
         let _connection = establish_connection();
         return doc_lists
-            .filter(schema::doc_lists::id.eq(self.doc_lists_id))
+            .filter(schema::doc_lists::id.eq(self.doc_list_id))
             .filter(schema::doc_lists::types.lt(10))
             .load::<DocList>(&_connection)
             .expect("E")
@@ -1401,7 +1401,7 @@ impl Doc {
             return "<a href='".to_owned() + &creator.get_link() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": документ"
         }
     }
-    
+
 }
 
 /////// UserDocListCollection //////
