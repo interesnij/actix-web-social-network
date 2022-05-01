@@ -13,7 +13,7 @@
               <label>Описание</label>
               <input value="
               <% if list.description.is_some() { %>
-                <%= list.description.as_ref().unwrap() | trim %>
+                <%= list.description.as_ref().unwrap().trim() %>
               <% } %>
               " name="description" class="form-control">
           </div>
