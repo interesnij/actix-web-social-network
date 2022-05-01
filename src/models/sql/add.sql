@@ -69,8 +69,8 @@ SELECT * FROM table_1 as tab1 LEFT JOIN table_2 as tab2 ON (tab1.field = tab2.fi
 -- ***************************************
 
 -- Добавление поля в таблицу
-ALTER TABLE table_name ADD COLUMN new_field
-BOOLEAN NOT NULL DEFAULT TRUE;
+ALTER TABLE user_profiles ADD COLUMN survey
+INT NOT NULL DEFAULT 0;
 
 -- добавление поля с автоинкрементом и primary key в таблицу
 ALTER TABLE new_friends_perms ADD COLUMN can_create_post "char";

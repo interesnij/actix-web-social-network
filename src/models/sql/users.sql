@@ -30,7 +30,7 @@ CREATE TABLE user_profiles (
     id             SERIAL PRIMARY KEY,
     user_id        INT NOT NULL,
     posts          INT NOT NULL,
-    views_post     INT NOT NULL,
+    views_post      INT NOT NULL,
     friends        INT NOT NULL,
     follows        INT NOT NULL,
     communities    INT NOT NULL,
@@ -42,7 +42,6 @@ CREATE TABLE user_profiles (
     articles       INT NOT NULL,
     --messages      INT NOT NULL,
     --planners      INT NOT NULL,
-    --surveys      INT NOT NULL,
     --avatar_id      INT NOT NULL,
     activity       VARCHAR(500),
     interests      VARCHAR(500),
@@ -51,6 +50,7 @@ CREATE TABLE user_profiles (
     favorite_books VARCHAR(500),
     favorite_game  VARCHAR(500),
     about          VARCHAR(500),
+    survey         INT NOT NULL,
 
     CONSTRAINT fk_user_profile
         FOREIGN KEY(user_id)

@@ -67,7 +67,6 @@ pub struct UserProfile {
     pub articles:       i32,
     //pub messages:     i32,
     //pub planners:     i32,
-    //pub surveys:      i32,
     //pub avatar_id:    i32,
     pub activity:       Option<String>,
     pub interests:      Option<String>,
@@ -76,6 +75,7 @@ pub struct UserProfile {
     pub favorite_books: Option<String>,
     pub favorite_game:  Option<String>,
     pub about:          Option<String>,
+    pub survey:         i32,
 }
 
 #[derive(Deserialize, Insertable)]
@@ -95,7 +95,6 @@ pub struct NewUserProfile {
     pub articles:       i32,
     //pub messages:     i32,
     //pub planners:     i32,
-    //pub surveys:      i32,
     //pub avatar_id:    i32,
     pub activity:       Option<String>,
     pub interests:      Option<String>,
@@ -104,6 +103,7 @@ pub struct NewUserProfile {
     pub favorite_books: Option<String>,
     pub favorite_game:  Option<String>,
     pub about:          Option<String>,
+    pub survey:         i32,
 }
 
 /////// UserLocation //////
