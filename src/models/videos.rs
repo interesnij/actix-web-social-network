@@ -2063,7 +2063,7 @@ impl Video {
                 };
                 diesel::update(self)
                     .set(reactions)
-                    .get_result::<video>(&_connection)
+                    .get_result::<Video>(&_connection)
                     .expect("Error.");
             }
             else {
