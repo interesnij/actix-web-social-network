@@ -1763,7 +1763,7 @@ impl Photo {
     }
     pub fn create_photo(community_id: Option<i32>, user_id: i32,
         list: PhotoList, preview: String, file: String,
-        description: String, comment_enabled: bool, votes_on: bool) -> Photo {
+        description: Option<String>, comment_enabled: bool, votes_on: bool) -> Photo {
 
         let _connection = establish_connection();
 
@@ -1842,7 +1842,7 @@ impl Photo {
                 list,
                 item.preview.clone(),
                 item.file.clone(),
-                item.description.clone(),
+                None,
                 true,
                 true,
             );
