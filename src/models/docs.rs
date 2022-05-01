@@ -1411,7 +1411,7 @@ impl Doc {
           .expect("Error.");
 
 
-
+        let count: i16 = list.count + 1;
         let new_doc_form = NewDoc {
             title: title,
             community_id: community_id,
@@ -1424,7 +1424,7 @@ impl Doc {
             view: 0,
             repost: 0,
             copy: 0,
-            position: list.count.into(),
+            position: count,
           };
           let new_doc = diesel::insert_into(schema::docs::table)
               .values(&new_doc_form)
@@ -1434,14 +1434,14 @@ impl Doc {
         if community_id.is_some() {
             let community = list.get_community();
             community.plus_docs(1);
-            return new_post;
+            return new_doc;
         }
         else {
             use crate::utils::get_user;
 
             let creator = get_user(user_id);
             creator.plus_docs(1);
-            return new_post;
+            return new_doc;
         }
     }
 }
