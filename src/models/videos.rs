@@ -1761,6 +1761,682 @@ impl Video {
             return "<a href='".to_owned() + &creator.get_link() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": видеозапись"
         }
     }
+
+    pub fn get_list(&self) -> VideoList {
+        use crate::schema::video_lists::dsl::video_lists;
+
+        let _connection = establish_connection();
+        return video_lists
+            .filter(schema::video_lists::id.eq(self.video_list_id))
+            .filter(schema::video_lists::types.lt(10))
+            .load::<VideoList>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+
+    pub fn create_video(title: String, community_id: Option<i32>, user_id: i32,
+        list: VideoList, preview: Option<String>, image: Option<String>, file: String,
+        description: Option<String>, comment_enabled: bool, votes_on: bool) -> Video {
+
+        let _connection = establish_connection();
+
+        diesel::update(&list)
+          .set(schema::video_lists::count.eq(list.count + 1))
+          .get_result::<VideoList>(&_connection)
+          .expect("Error.");
+
+        let new_video_form = NewVideo {
+          title: title,
+          community_id: community_id,
+          user_id: user_id,
+          video_list_id: list.id,
+          types: "a".to_string(),
+          preview: preview,
+          image: image,
+          file: file,
+          description: description,
+          comment_enabled: comment_enabled,
+          votes_on: votes_on,
+          created: chrono::Local::now().naive_utc(),
+
+          comment: 0,
+          view: 0,
+          liked: 0,
+          disliked: 0,
+          repost: 0,
+          copy: 0,
+          position: (list.count).try_into().unwrap(),
+        };
+        let new_video = diesel::insert_into(schema::videos::table)
+            .values(&new_video_form)
+            .get_result::<Video>(&_connection)
+            .expect("Error.");
+
+        if community_id.is_some() {
+            use crate::utils::get_community;
+            let community = list.get_community();
+            community.plus_videos(1);
+            return new_video;
+        }
+        else {
+            use crate::utils::get_user;
+
+            let creator = get_user(user_id);
+            creator.plus_videos(1);
+            return new_video;
+        }
+    }
+    pub fn copy_item(pk: i32, lists: Vec<i32>) -> bool {
+        use crate::schema::videos::dsl::videos;
+        use crate::schema::video_lists::dsl::video_lists;
+
+        let _connection = establish_connection();
+        let item = videos
+            .filter(schema::videos::id.eq(pk))
+            .filter(schema::videos::types.eq("a"))
+            .load::<Video>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        let mut count = 0;
+        for list_id in lists.iter() {
+            count += 1;
+            let list = video_lists
+                .filter(schema::video_lists::id.eq(list_id))
+                .filter(schema::video_lists::types.lt(10))
+                .load::<VideoList>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+
+            Video::create_video (
+                item.community_id,
+                list.user_id,
+                list,
+                item.preview.clone(),
+                item.image.clone(),
+                item.file.clone(),
+                None,
+                true,
+                true,
+            );
+        }
+        diesel::update(&item)
+          .set(schema::videos::copy.eq(item.copy + count))
+          .get_result::<Video>(&_connection)
+          .expect("Error.");
+
+        if item.community_id.is_some() {
+            let community = item.get_community();
+            community.plus_videos(count);
+        }
+        else {
+            let creator = item.get_creator();
+            creator.plus_videos(count);
+          }
+        return true;
+    }
+
+    pub fn edit_video(&self, title: String, preview: Option<String>,
+        image: Option<String>, description: Option<String>,
+        comment_enabled: bool, votes_on: bool) -> &Video {
+
+        let _connection = establish_connection();
+
+        let edit_video = EditVideo {
+            title: title,
+            preview: preview,
+            image: image,
+            description: description,
+            comment_enabled: comment_enabled,
+            votes_on: votes_on,
+        };
+        diesel::update(self)
+            .set(edit_video)
+            .get_result::<Video>(&_connection)
+            .expect("Error.");
+        return self;
+    }
+    pub fn plus_likes(&self, count: i32) -> bool {
+        let _connection = establish_connection();
+        diesel::update(self)
+            .set(schema::videos::liked.eq(self.liked + count))
+            .get_result::<Video>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn plus_dislikes(&self, count: i32) -> bool {
+        let _connection = establish_connection();
+        diesel::update(self)
+            .set(schema::videos::disliked.eq(self.disliked + count))
+            .get_result::<Video>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn plus_comments(&self, count: i32) -> bool {
+        let _connection = establish_connection();
+        diesel::update(self)
+            .set(schema::videos::comment.eq(self.comment + count))
+            .get_result::<Video>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_likes(&self, count: i32) -> bool {
+        let _connection = establish_connection();
+        diesel::update(self)
+            .set(schema::videos::liked.eq(self.liked - count))
+            .get_result::<Video>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_dislikes(&self, count: i32) -> bool {
+        let _connection = establish_connection();
+        diesel::update(self)
+            .set(schema::videos::disliked.eq(self.disliked - count))
+            .get_result::<Video>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_comments(&self, count: i32) -> bool {
+        let _connection = establish_connection();
+        diesel::update(self)
+            .set(schema::videos::comment.eq(self.comment - count))
+            .get_result::<Video>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+
+    pub fn is_open(&self) -> bool {
+        return self.types == "a" && self.types == "b";
+    }
+    pub fn is_deleted(&self) -> bool {
+        return self.types == "c";
+    }
+    pub fn is_closed(&self) -> bool {
+        return self.types == "h";
+    }
+
+    pub fn send_like(&self, user: User) -> Json<JsonReactions> {
+        let list = self.get_list();
+        if self.votes_on == false && !list.is_user_can_see_el(user.id) {
+            return Json(JsonReactions {
+                like_count:    self.liked,
+                dislike_count: self.disliked,
+            });
+        }
+        use crate::schema::video_votes::dsl::video_votes;
+
+        let _connection = establish_connection();
+
+        let votes = video_votes
+            .filter(schema::video_votes::user_id.eq(user.id))
+            .filter(schema::video_votes::video_id.eq(self.id))
+            .load::<VideoVote>(&_connection)
+            .expect("E.");
+        if votes.len() > 0 {
+            let vote = votes.into_iter().nth(0).unwrap();
+            if vote.vote != 1 {
+                diesel::update(&vote)
+                    .set(schema::video_votes::vote.eq(1))
+                    .get_result::<VideoVote>(&_connection)
+                    .expect("Error.");
+
+                let reactions = VideoReactionsUpdate {
+                    liked:    self.liked + 1,
+                    disliked: self.disliked - 1,
+                };
+                diesel::update(self)
+                    .set(reactions)
+                    .get_result::<Video>(&_connection)
+                    .expect("Error.");
+            }
+            else {
+                diesel::delete(video_votes
+                    .filter(schema::video_votes::user_id.eq(user.id))
+                    .filter(schema::video_votes::video_id.eq(self.id))
+                    )
+                    .execute(&_connection)
+                    .expect("E");
+
+                diesel::update(self)
+                    .set(schema::videos::liked.eq(self.liked - 1))
+                    .get_result::<Video>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else {
+            let new_vote = NewVideoVote {
+                vote: 1,
+                user_id: user.id,
+                video_id: self.id,
+            };
+            diesel::insert_into(schema::video_votes::table)
+                .values(&new_vote)
+                .get_result::<VideoVote>(&_connection)
+                .expect("Error.");
+
+            diesel::update(self)
+                .set(schema::videos::liked.eq(self.liked + 1))
+                .get_result::<Video>(&_connection)
+                .expect("Error.");
+        }
+        let reactions = JsonReactions {
+            like_count:    self.liked,
+            dislike_count: self.disliked,
+        };
+        return Json(reactions);
+    }
+
+    pub fn send_dislike(&self, user: User) -> Json<JsonReactions> {
+        let list = self.get_list();
+        if self.votes_on == false && !list.is_user_can_see_el(user.id) {
+            return Json(JsonReactions {
+                like_count:    self.liked,
+                dislike_count: self.disliked,
+            });
+        }
+        use crate::schema::video_votes::dsl::video_votes;
+
+        let _connection = establish_connection();
+
+        let votes = video_votes
+            .filter(schema::video_votes::user_id.eq(user.id))
+            .filter(schema::video_votes::video_id.eq(self.id))
+            .load::<VideoVote>(&_connection)
+            .expect("E.");
+        if votes.len() > 0 {
+            let vote = votes.into_iter().nth(0).unwrap();
+            if vote.vote != -1 {
+                diesel::update(&vote)
+                    .set(schema::video_votes::vote.eq(-1))
+                    .get_result::<VideoVote>(&_connection)
+                    .expect("Error.");
+
+                let reactions = VideoReactionsUpdate {
+                    liked:    self.liked - 1,
+                    disliked: self.disliked + 1,
+                };
+                diesel::update(self)
+                    .set(reactions)
+                    .get_result::<video>(&_connection)
+                    .expect("Error.");
+            }
+            else {
+                diesel::delete(video_votes
+                    .filter(schema::video_votes::user_id.eq(user.id))
+                    .filter(schema::video_votes::video_id.eq(self.id))
+                    )
+                    .execute(&_connection)
+                    .expect("E");
+
+                diesel::update(self)
+                    .set(schema::videos::liked.eq(self.disliked - 1))
+                    .get_result::<Video>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else {
+            let new_vote = NewVideoVote {
+                vote: 1,
+                user_id: user.id,
+                video_id: self.id,
+            };
+            diesel::insert_into(schema::video_votes::table)
+                .values(&new_vote)
+                .get_result::<VideoVote>(&_connection)
+                .expect("Error.");
+
+            diesel::update(self)
+                .set(schema::videos::liked.eq(self.disliked + 1))
+                .get_result::<Video>(&_connection)
+                .expect("Error.");
+        }
+        let reactions = JsonReactions {
+            like_count:    self.liked,
+            dislike_count: self.disliked,
+        };
+        return Json(reactions);
+    }
+    pub fn delete_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "a" => "c",
+            "b" => "m",
+            "f" => "i",
+            "g" => "y",
+            _ => "c",
+        };
+        diesel::update(self)
+            .set(schema::videos::types.eq(close_case))
+            .get_result::<Video>(&_connection)
+            .expect("E");
+        let list = self.get_list();
+        diesel::update(&list)
+            .set(schema::video_lists::count.eq(list.count - 1))
+            .get_result::<VideoList>(&_connection)
+            .expect("E");
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            community.minus_videos(1);
+        }
+        else {
+            let creator = self.get_creator();
+            creator.minus_videos(1);
+         }
+      return true;
+    }
+    pub fn restore_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "c" => "a",
+            "m" => "b",
+            "i" => "f",
+            "y" => "g",
+            _ => "a",
+        };
+        diesel::update(self)
+            .set(schema::videos::types.eq(close_case))
+            .get_result::<Video>(&_connection)
+            .expect("E");
+        let list = self.get_list();
+        diesel::update(&list)
+            .set(schema::video_lists::count.eq(list.count + 1))
+            .get_result::<VideoList>(&_connection)
+            .expect("E");
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            community.plus_videos(1);
+        }
+        else {
+            let creator = self.get_creator();
+            creator.plus_videos(1);
+         }
+       return true;
+    }
+
+    pub fn close_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "a" => "h",
+            "b" => "n",
+            _ => "h",
+        };
+        diesel::update(self)
+            .set(schema::videos::types.eq(close_case))
+            .get_result::<Video>(&_connection)
+            .expect("E");
+        let list = self.get_list();
+        diesel::update(&list)
+            .set(schema::video_lists::count.eq(list.count - 1))
+            .get_result::<VideoList>(&_connection)
+            .expect("E");
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            community.minus_videos(1);
+        }
+        else {
+            let creator = self.get_creator();
+            creator.minus_videos(1);
+        }
+       return true;
+    }
+    pub fn unclose_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "h" => "a",
+            "n" => "b",
+            _ => "a",
+        };
+        diesel::update(self)
+            .set(schema::videos::types.eq(close_case))
+            .get_result::<Video>(&_connection)
+            .expect("E");
+        let list = self.get_list();
+        diesel::update(&list)
+            .set(schema::video_lists::count.eq(list.count + 1))
+            .get_result::<VideoList>(&_connection)
+            .expect("E");
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            community.plus_videos(1);
+        }
+        else {
+            let creator = self.get_creator();
+            creator.plus_videos(1);
+         }
+       return true;
+    }
+    pub fn get_format_text(&self) -> String {
+        if self.description.is_some() {
+            let unwrap = self.description.as_ref().unwrap();
+            if unwrap.len() <= 101 {
+                return self.description.as_ref().unwrap().to_string();
+            }
+            else {
+                let new_str = unwrap[..100].to_owned() + &"<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + &unwrap[101..] + &"</span>";
+                return new_str;
+            }
+        } else { return "".to_string(); }
+    }
+
+    pub fn count_comments(&self) -> String {
+        if self.comment == 0 {
+            return "".to_string();
+        }
+        else {
+            return self.comment.to_string();
+        }
+    }
+    pub fn likes_count(&self) -> String {
+        if self.liked == 0 {
+            return "".to_string();
+        }
+        else {
+            return self.liked.to_string();
+        }
+    }
+    pub fn dislikes_count(&self) -> String {
+        if self.disliked == 0 {
+            return "".to_string();
+        }
+        else {
+            return self.disliked.to_string();
+        }
+    }
+    pub fn count_reposts(&self) -> String {
+        if self.repost == 0 {
+            return "".to_string();
+        }
+        else {
+            return self.repost.to_string();
+        }
+    }
+
+    pub fn likes_count_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            self.liked,
+            " человек".to_string(),
+            " человека".to_string(),
+            " человек".to_string(),
+        );
+    }
+    pub fn dislikes_count_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            self.disliked,
+            " человек".to_string(),
+            " человека".to_string(),
+            " человек".to_string(),
+        );
+    }
+    pub fn reposts_count_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            self.repost,
+            " человек".to_string(),
+            " человека".to_string(),
+            " человек".to_string(),
+        );
+    }
+    pub fn is_have_likes(&self) -> bool {
+        return self.liked > 0;
+    }
+    pub fn is_have_dislikes(&self) -> bool {
+        return self.disliked > 0;
+    }
+    pub fn is_have_reposts(&self) -> bool {
+        return self.repost > 0;
+    }
+
+    pub fn likes(&self) -> Vec<User> {
+        use crate::schema::video_votes::dsl::video_votes;
+        use crate::utils::get_users_from_ids;
+
+        let _connection = establish_connection();
+        let votes = video_votes
+            .filter(schema::video_votes::video_id.eq(self.id))
+            .filter(schema::video_votes::vote.eq(1))
+            .load::<VideoVote>(&_connection)
+            .expect("E");
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
+    }
+    pub fn dislikes(&self) -> Vec<User> {
+        use crate::schema::video_votes::dsl::video_votes;
+        use crate::utils::get_users_from_ids;
+
+        let _connection = establish_connection();
+        let votes = video_votes
+            .filter(schema::video_votes::video_id.eq(self.id))
+            .filter(schema::video_votes::vote.eq(-1))
+            .load::<VideoVote>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
+    }
+
+    pub fn window_likes(&self) -> Vec<User> {
+        use crate::schema::video_votes::dsl::video_votes;
+        use crate::utils::get_users_from_ids;
+
+        let _connection = establish_connection();
+        let votes = video_votes
+            .filter(schema::video_votes::video_id.eq(self.id))
+            .filter(schema::video_votes::vote.eq(1))
+            .limit(6)
+            .load::<VideoVote>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
+    }
+    pub fn window_dislikes(&self) -> Vec<User> {
+        use crate::schema::video_votes::dsl::video_votes;
+        use crate::utils::get_users_from_ids;
+
+        let _connection = establish_connection();
+        let votes = video_votes
+            .filter(schema::video_votes::video_id.eq(self.id))
+            .filter(schema::video_votes::vote.eq(-1))
+            .limit(6)
+            .load::<VideoVote>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
+    }
+    pub fn change_position(query: Json<Vec<JsonPosition>>) -> bool {
+        use crate::schema::videos::dsl::videos;
+
+        let _connection = establish_connection();
+        for i in query.iter() {
+            let item = videos
+                .filter(schema::videos::id.eq(i.key))
+                .filter(schema::videos::types.eq("a"))
+                .limit(1)
+                .load::<Video>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+
+            diesel::update(&item)
+                .set(schema::videos::position.eq(i.value))
+                .get_result::<Video>(&_connection)
+                .expect("Error.");
+        }
+        return true;
+    }
+
+    pub fn create_comment(&self, user: User, attach: Option<String>,
+        parent_id: Option<i32>, content: Option<String>, sticker_id: Option<i32>) -> VideoComment {
+
+        use crate::schema::video_comments::dsl::video_comments;
+        use crate::schema::videos::dsl::videos;
+
+        let _connection = establish_connection();
+        let mut new_attach: Option<String> = None;
+        if attach.is_some() {
+            new_attach = Some(attach.unwrap()
+                .replace("'", "")
+                .replace("[", "")
+                .replace("]", "")
+                .replace(" ", ""));
+        }
+        diesel::update(self)
+          .set(schema::videos::comment.eq(self.comment + 1))
+          .get_result::<Video>(&_connection)
+          .expect("Error.");
+
+        let new_comment_form = NewVideoComment {
+            video_id:   self.id,
+            user_id:    user.id,
+            sticker_id: sticker_id,
+            parent_id:  parent_id,
+            content:    content,
+            attach:     new_attach,
+            types:      "a".to_string(),
+            created:    chrono::Local::now().naive_utc(),
+            liked:      0,
+            disliked:   0,
+            repost:     0,
+        };
+        let new_comment = diesel::insert_into(schema::video_comments::table)
+            .values(&new_comment_form)
+            .get_result::<VideoComment>(&_connection)
+            .expect("Error.");
+
+        return new_comment;
+    }
 }
 /////// VideoComment //////
 
