@@ -1807,7 +1807,7 @@ impl Post {
         community_id: Option<i32>, types: Option<String>) -> Post {
 
         let _connection = establish_connection();
-        let mut new_attach = "".to_string();
+        let mut new_attach: Option<String> = None;
         if attach.is_some() {
             new_attach = attach.unwrap().replace("'", "").replace("[", "").replace("]", "").replace(" ", "");
         }

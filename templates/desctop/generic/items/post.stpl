@@ -1,6 +1,4 @@
 
-<%= object.attach.as_deref().unwrap() %>
-
 <% if object.attach.is_some() { %>
 attach.is_some() !!
   <%- object.get_attach(request_user.id) %>
