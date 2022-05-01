@@ -1497,6 +1497,20 @@ impl Music {
             .nth(0)
             .unwrap();
     }
+
+    pub fn get_list(&self) -> MusicList {
+        use crate::schema::music_lists::dsl::music_lists;
+
+        let _connection = establish_connection();
+        return music_lists
+            .filter(schema::music_lists::id.eq(self.music_list_id))
+            .filter(schema::music_lists::types.lt(10))
+            .load::<MusicList>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
     pub fn get_description(&self) -> String {
         if self.community_id.is_some() {
             let community = self.get_community();
@@ -1506,6 +1520,204 @@ impl Music {
             let creator = self.get_creator();
             return "<a href='".to_owned() + &creator.get_link() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": аудиозапись"
         }
+    }
+    pub fn create_music(title: String, community_id: Option<i32>, user_id: i32, list: MusicList,
+        genre_id: Option<i32>, album_id: Option<i32>, file: String, image: Option<String>) -> Music {
+
+        let _connection = establish_connection();
+        diesel::update(&list)
+          .set(schema::music_lists::count.eq(list.count + 1))
+          .get_result::<MusicList>(&_connection)
+          .expect("Error.");
+
+        let new_music_form = NewMusic {
+            title: title,
+            community_id: community_id,
+            user_id: user_id,
+            music_list_id: list.id,
+            genre_id: genre_id,
+            album_id: album_id,
+            types: "a".to_string(),
+            file: file,
+            image: image,
+            created: chrono::Local::now().naive_utc(),
+            view: 0,
+            repost: 0,
+            copy: 0,
+            position: (list.count).try_into().unwrap(),
+          };
+          let new_music = diesel::insert_into(schema::musics::table)
+              .values(&new_music_form)
+              .get_result::<Music>(&_connection)
+              .expect("Error.");
+
+        if community_id.is_some() {
+            let community = list.get_community();
+            community.plus_tracks(1);
+            return new_music;
+        }
+        else {
+            use crate::utils::get_user;
+
+            let creator = get_user(user_id);
+            creator.plus_tracks(1);
+            return new_music;
+        }
+    }
+
+    pub fn copy_item(pk: i32, lists: Vec<i32>) -> bool {
+        use crate::schema::musics::dsl::musics;
+        use crate::schema::music_lists::dsl::music_lists;
+
+        let _connection = establish_connection();
+        let item = musics
+            .filter(schema::musics::id.eq(pk))
+            .filter(schema::musics::types.eq("a"))
+            .load::<Music>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        let mut count = 0;
+        for list_id in lists.iter() {
+            count += 1;
+            let list = music_lists
+                .filter(schema::music_lists::id.eq(list_id))
+                .filter(schema::music_lists::types.lt(10))
+                .load::<MusicList>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+            Music::create_track (
+                item.title.clone(),
+                item.community_id,
+                list.user_id,
+                list,
+                item.types_2.clone(),
+                item.file.clone(),
+            );
+        }
+        diesel::update(&item)
+          .set(schema::musics::copy.eq(item.copy + count))
+          .get_result::<Music>(&_connection)
+          .expect("Error.");
+
+        if item.community_id.is_some() {
+            let community = item.get_community();
+            community.plus_tracks(count);
+        }
+        else {
+            let creator = item.get_creator();
+            creator.plus_tracks(count);
+          }
+        return true;
+    }
+    pub fn edit_music(&self, title: String, genre_id: Option<i32>,
+        album_id: Option<i32>, image: Option<String>) -> &Music {
+        let _connection = establish_connection();
+
+        let edit_music = EditMusic {
+            title: title,
+            genre_id: genre_id,
+            album_id: album_id,
+            image: image,
+        };
+        diesel::update(self)
+            .set(edit_music)
+            .get_result::<Music>(&_connection)
+            .expect("Error.");
+        return self;
+    }
+
+    pub fn is_open(&self) -> bool {
+        return self.types == "a" && self.types == "b";
+    }
+    pub fn is_deleted(&self) -> bool {
+        return self.types == "c";
+    }
+    pub fn is_closed(&self) -> bool {
+        return self.types == "h";
+    }
+
+    pub fn close_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "a" => "h",
+            "b" => "n",
+            _ => "h",
+        };
+        diesel::update(self)
+            .set(schema::musics::types.eq(close_case))
+            .get_result::<Music>(&_connection)
+            .expect("E");
+        let list = self.get_list();
+        diesel::update(&list)
+            .set(schema::doc_lists::count.eq(list.count - 1))
+            .get_result::<MusicList>(&_connection)
+            .expect("E");
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            community.minus_tracks(1);
+        }
+        else {
+            let creator = self.get_creator();
+            creator.minus_tracks(1);
+        }
+       return true;
+    }
+    pub fn unclose_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "h" => "a",
+            "n" => "b",
+            _ => "a",
+        };
+        diesel::update(self)
+            .set(schema::musics::types.eq(close_case))
+            .get_result::<Music>(&_connection)
+            .expect("E");
+        let list = self.get_list();
+        diesel::update(&list)
+            .set(schema::music_lists::count.eq(list.count + 1))
+            .get_result::<MusicList>(&_connection)
+            .expect("E");
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            community.plus_tracks(1);
+        }
+        else {
+            let creator = self.get_creator();
+            creator.plus_tracks(1);
+         }
+       return true;
+    }
+
+    pub fn change_position(query: Json<Vec<JsonPosition>>) -> bool {
+        use crate::schema::musics::dsl::musics;
+
+        let _connection = establish_connection();
+        for i in query.iter() {
+            let item = musics
+                .filter(schema::musics::id.eq(i.key))
+                .filter(schema::musics::types.eq("a"))
+                .limit(1)
+                .load::<Music>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+
+            diesel::update(&item)
+                .set(schema::musics::position.eq(i.value))
+                .get_result::<Music>(&_connection)
+                .expect("Error.");
+        }
+        return true;
     }
 }
 

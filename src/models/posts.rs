@@ -2620,7 +2620,6 @@ impl Post {
 
         let _connection = establish_connection();
         for i in query.iter() {
-            //let _json: JsonPosition = serde_json::from_str(&i).unwrap();
             let item = posts
                 .filter(schema::posts::id.eq(i.key))
                 .filter(schema::posts::types.eq("a"))

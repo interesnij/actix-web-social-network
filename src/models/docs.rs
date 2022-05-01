@@ -1571,6 +1571,29 @@ impl Doc {
          }
        return true;
     }
+
+    pub fn change_position(query: Json<Vec<JsonPosition>>) -> bool {
+        use crate::schema::docs::dsl::docs;
+
+        let _connection = establish_connection();
+        for i in query.iter() {
+            let item = docs
+                .filter(schema::docs::id.eq(i.key))
+                .filter(schema::docs::types.eq("a"))
+                .limit(1)
+                .load::<Doc>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+
+            diesel::update(&item)
+                .set(schema::docs::position.eq(i.value))
+                .get_result::<Doc>(&_connection)
+                .expect("Error.");
+        }
+        return true;
+    }
 }
 
 /////// UserDocListCollection //////
