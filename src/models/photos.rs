@@ -1779,7 +1779,7 @@ impl Photo {
           types: "a".to_string(),
           preview: preview,
           file: file,
-          description: description,
+          description: Some(description),
           comment_enabled: comment_enabled,
           votes_on: votes_on,
 
@@ -2403,7 +2403,7 @@ impl Photo {
             sticker_id: sticker_id,
             parent_id:  parent_id,
             content:    content,
-            attach:     Some(new_attach),
+            attach:     new_attach,
             types:      "a".to_string(),
             created:    chrono::Local::now().naive_utc(),
             liked:      0,

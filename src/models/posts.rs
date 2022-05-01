@@ -1889,7 +1889,7 @@ impl Post {
             user_id: user_id,
             post_list_id: 0,
             types: "r".to_string(),
-            attach: Some(new_attach),
+            attach: new_attach,
             comment_enabled: false,
             votes_on: false,
             created: chrono::Local::now().naive_utc(),
@@ -1977,7 +1977,7 @@ impl Post {
         let edit_post = EditPost {
             content: content,
             post_categorie_id: post_categorie_id,
-            attach: Some(new_attach),
+            attach: new_attach,
             comment_enabled: comment_enabled,
             votes_on: votes_on,
             is_signature: is_signature,
@@ -2651,7 +2651,11 @@ impl Post {
         let _connection = establish_connection();
         let mut new_attach: Option<String> = None;
         if attach.is_some() {
-            new_attach = attach.unwrap().replace("'", "").replace("[", "").replace("]", "").replace(" ", "");
+            new_attach = Some(attach.unwrap()
+                .replace("'", "")
+                .replace("[", "")
+                .replace("]", "")
+                .replace(" ", ""));
         }
         diesel::update(self)
           .set(schema::posts::comment.eq(self.comment + 1))
