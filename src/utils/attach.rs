@@ -1,5 +1,5 @@
 #[macro_use(concat_string)]
-extern crate concat_string;
+use crate::concat_string;
 use crate::utils::establish_connection;
 use crate::schema;
 use diesel::prelude::*;
