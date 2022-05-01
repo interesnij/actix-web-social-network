@@ -1659,15 +1659,6 @@ impl Photo {
     pub fn get_str_id(&self) -> String {
         return self.id.to_string();
     }
-    pub fn is_user_can_edit_delete_item(&self, user_id: i32) -> bool {
-        if self.community_id.is_some() {
-            let community = self.get_community();
-            return community.get_staff_users_ids().iter().any(|&i| i==user_id);
-        }
-        else {
-            return self.user_id == user_id;
-        }
-    }
     pub fn is_photo(&self) -> bool {
         return true;
     }
@@ -1882,8 +1873,8 @@ impl Photo {
 
         let edit_photo = EditPhoto {
             description: description,
+            comment_enabled: comment_enabled,
             votes_on: votes_on,
-            is_signature: is_signature,
         };
         diesel::update(self)
             .set(edit_photo)
@@ -2219,34 +2210,6 @@ impl Photo {
                 return new_str;
             }
         } else { return "".to_string(); }
-    }
-
-    pub fn get_attach(&self, user_id: i32) -> String {
-        if self.attach.is_some() {
-            use crate::utils::photo_elements;
-            return photo_elements(self.attach.as_ref().unwrap().to_string(), user_id);
-        }
-        else {
-            return "".to_string();
-        }
-    }
-    pub fn get_anon_attach(&self) -> String {
-        if self.attach.is_some() {
-            use crate::utils::anon_photo_elements;
-            return anon_photo_elements(self.attach.as_ref().unwrap().to_string());
-        }
-        else {
-            return "".to_string();
-        }
-    }
-    pub fn get_edit_attach(&self) -> String {
-        if self.attach.is_some() {
-            use crate::utils::edit_photo_elements;
-            return edit_photo_elements(self.attach.as_ref().unwrap().to_string());
-        }
-        else {
-            return "".to_string();
-        }
     }
 
     pub fn count_comments(&self) -> String {
