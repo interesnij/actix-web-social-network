@@ -76,6 +76,9 @@ pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
         if &_user.id == &_request_user.id {
             return my_user_account(_type, _user, _request_user)
         }
+        else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
     } else {
         if _type == "desctop/".to_string() {
             #[derive(TemplateOnce)]
