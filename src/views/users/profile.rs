@@ -101,6 +101,7 @@ pub fn anon_user_account(folder: String, user: User) -> actix_web::Result<HttpRe
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
 }
 
 pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
@@ -121,6 +122,5 @@ pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
         }
     } else {
         return anon_user_account(_type, _user)
-        }
     }
 }
