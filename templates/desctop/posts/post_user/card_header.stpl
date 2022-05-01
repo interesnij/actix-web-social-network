@@ -29,6 +29,20 @@
               <% if request_user.id == object.get_list().user_id { %>
                 <span class="dropdown-item u_post_remove">Удалить запись</span>
                 <span class="dropdown-item u_post_edit">Редактировать</span>
+                <span>
+                  <% if object.comment_enabled { %>
+                    <span class="dropdown-item u_post_off_comment">Выкл. комментарии</span>
+                  <% } else { %>
+                    <span class="dropdown-item u_post_on_comment">Вкл. комментарии</span>
+                  <% } %>
+                </span>
+                <span>
+                  <% if object.votes_on { %>
+                    <span class="dropdown-item u_post_off_votes">Выкл. реакции</span>
+                  <% } else { %>
+                    <span class="dropdown-item u_post_on_votes">Вкл. реакции</span>
+                  <% } %>
+                </span>
                 <span class="dropdown-item item_stat_f">Статистика записи</span>
 
               <% } else if request_user.is_moderator() == true { %>
