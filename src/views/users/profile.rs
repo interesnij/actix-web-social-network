@@ -67,6 +67,42 @@ pub fn my_user_account(folder: String, user: User, request_user: User) -> actix_
     }
 }
 
+pub fn anon_user_account(folder: String, user: User) -> actix_web::Result<HttpResponse> {
+    if folder == "desctop/".to_string() {
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/users/account/anon_user.stpl")]
+        struct UserPage {
+            title: String,
+            private_bools: Vec<bool>,
+            user:  User,
+        }
+        let body = UserPage {
+            title: user.get_full_name(),
+            private_bools: user.get_anon_profile_all_can_see(),
+            user:  user,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+    else {
+        #[derive(TemplateOnce)]
+        #[template(path = "mobile/users/account/anon_user.stpl")]
+        struct UserPage {
+            title: String,
+            private_bools: Vec<bool>,
+            user:  User,
+        }
+        let body = UserPage {
+            title: user.get_full_name(),
+            private_bools: user.get_anon_profile_all_can_see(),
+            user:  user,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+}
+
 pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     use crate::models::UserProfile;
 
@@ -84,39 +120,7 @@ pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
         }
     } else {
-        if _type == "desctop/".to_string() {
-            #[derive(TemplateOnce)]
-            #[template(path = "desctop/users/account/anon_user.stpl")]
-            struct UserPage {
-                title: String,
-                private_bools: Vec<bool>,
-                user:  User,
-            }
-            let body = UserPage {
-                title: _user.get_full_name(),
-                private_bools: _user.get_anon_profile_all_can_see(),
-                user:  _user,
-            }
-            .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
-        }
-        else {
-            #[derive(TemplateOnce)]
-            #[template(path = "mobile/users/account/anon_user.stpl")]
-            struct UserPage {
-                title: String,
-                private_bools: Vec<bool>,
-                user:  User,
-            }
-            let body = UserPage {
-                title: _user.get_full_name(),
-                private_bools: _user.get_anon_profile_all_can_see(),
-                user:  _user,
-            }
-            .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        return anon_user_account(_type, _user)
         }
     }
 }
