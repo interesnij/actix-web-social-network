@@ -146,7 +146,6 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
         pub community: Option<i32>,
         pub list: Option<i32>,
     }
-
     let params_some = web::Query::<GetListParams>::from_query(&req.query_string());
     if params_some.is_err() {
         HttpResponse::Ok().content_type("text/html; charset=utf-8").body("");

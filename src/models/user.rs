@@ -2415,7 +2415,7 @@ impl User {
             .load::<User>(&_connection)
             .expect("E.");
     }
-    pub fn get_all_users(&self) -> Vec<User> {
+    pub fn get_all_users_count(&self) -> usize {
         use crate::schema::users::dsl::users;
 
         let _connection = establish_connection();
@@ -2424,14 +2424,59 @@ impl User {
                 .filter(schema::users::types.eq(7))
                 .or_filter(schema::users::perm.lt(9))
                 .load::<User>(&_connection)
-                .expect("E.");
+                .expect("E.").len();
         }
         else {
             return users
                 .filter(schema::users::types.gt(10))
                 .load::<User>(&_connection)
+                .expect("E.").len();
+        }
+    }
+    pub fn get_users(&self, limit: i64, offset: i64) -> Vec<User> {
+        use crate::schema::users::dsl::users;
+
+        let _connection = establish_connection();
+        if self.types == 3 {
+            return users
+                .filter(schema::users::types.eq(7))
+                .or_filter(schema::users::perm.lt(9))
+                .limit(limit)
+                .offset(offset)
+                .load::<User>(&_connection)
                 .expect("E.");
         }
+        else {
+            return users
+                .filter(schema::users::types.gt(10))
+                .limit(limit)
+                .offset(offset)
+                .load::<User>(&_connection)
+                .expect("E.");
+        }
+    }
+    pub fn get_anon_users(limit: i64, offset: i64) -> Vec<User> {
+        use crate::schema::users::dsl::users;
+
+        let _connection = establish_connection();
+        return users
+            .filter(schema::users::types.gt(10))
+            .limit(limit)
+            .offset(offset)
+            .load::<User>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_anon_users_count(limit: i64, offset: i64) -> usize {
+        use crate::schema::users::dsl::users;
+
+        let _connection = establish_connection();
+        return users
+            .filter(schema::users::types.gt(10))
+            .limit(limit)
+            .offset(offset)
+            .load::<User>(&_connection)
+            .expect("E.")
+            .len();
     }
     pub fn get_followings(&self) -> Vec<User> {
         use crate::schema::follows::dsl::follows;

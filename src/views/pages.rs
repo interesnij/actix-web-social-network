@@ -138,3 +138,132 @@ pub async fn featured_list_page(session: Session, req: HttpRequest) -> actix_web
         Ok(to_home())
     }
 }
+
+
+pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    use ctare::utils::PaginationParams;
+
+    let params_some = web::Query::<PaginationParams>::from_query(&req.query_string());
+    let mut next_page_number = 0;
+    let object_list: Vec<User>;
+
+    let _connection = establish_connection();
+    let _type = get_folder(req);
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if params.page.is_some() {
+            let page = params.page.unwrap();
+            let step = ((page - 1) * 20).into();
+            object_list = _request_user.get_users(20, step);
+            if _request_user.get_all_users_count() > page * 20 {
+                next_page_number = page + 1;
+            }
+        }
+        else {
+            object_list = list.get_paginate_items(20, 0);
+            if list.count > 20 {
+                next_page_number = 2;
+            }
+        }
+
+        if _type == "desctop/".to_string() {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/users/lists/all_users.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+                next_page_number: i32,
+                object_list: Vec<User>,
+            }
+
+            let body = DesctopNewsListTemplate {
+                title:        "Пользователи".to_string(),
+                request_user: _request_user,
+                next_page_number: next_page_number,
+                object_list: object_list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/users/lists/all_users.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+                next_page_number: i32,
+                object_list: Vec<User>,
+            }
+
+            let body = DesctopNewsListTemplate {
+                title:        "Пользователи".to_string(),
+                request_user: _request_user,
+                next_page_number: next_page_number,
+                object_list: object_list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body))
+        }
+
+    } else {
+        if params.page.is_some() {
+            let page = params.page.unwrap();
+            let step = ((page - 1) * 20).into();
+            object_list = User::get_anon_users(20, step);
+            if User::get_anon_users_count > page * 20 {
+                next_page_number = page + 1;
+            }
+        }
+        else {
+            object_list = list.get_paginate_items(20, 0);
+            if list.count > 20 {
+                next_page_number = 2;
+            }
+        }
+
+        if _type == "desctop/".to_string() {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/users/lists/anon_all_users.stpl")]
+            struct Template {
+                title:        String,
+                next_page_number: i32,
+                object_list: Vec<User>,
+            }
+            let body = DesctopAuthTemplate {
+                title: "Пользователи".to_string(),
+                next_page_number: next_page_number,
+                object_list: object_list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/users/lists/anon_all_users.stpl")]
+            struct Template {
+                title:        String,
+                next_page_number: i32,
+                object_list: Vec<User>,
+            }
+            let body = MobileAuthTemplate {
+                title: "Пользователи".to_string(),
+                next_page_number: next_page_number,
+                object_list: object_list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body))
+        }
+    }
+}

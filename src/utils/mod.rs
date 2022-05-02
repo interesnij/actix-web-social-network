@@ -39,6 +39,11 @@ pub struct JsonReactions {
     pub dislike_count: i32,
 }
 
+#[derive(Deserialize)]
+struct PaginationParams {
+    pub page: Option<i32>,
+}
+
 pub fn establish_connection() -> PgConnection {
     use dotenv::dotenv;
 

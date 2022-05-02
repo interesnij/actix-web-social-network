@@ -228,6 +228,19 @@ impl GoodList {
             .load::<Good>(&_connection)
             .expect("E.");
     }
+    pub fn get_paginate_items(&self, limit: i64, offset: i64) -> Vec<Good> {
+        use crate::schema::goods::dsl::goods;
+
+        let _connection = establish_connection();
+        return goods
+            .filter(schema::goods::good_list_id.eq(self.id))
+            .filter(schema::goods::types.eq("a"))
+            .limit(limit)
+            .offset(offset)
+            .order(schema::goods::created.desc())
+            .load::<Good>(&_connection)
+            .expect("E.");
+    }
     pub fn count_items(&self) -> String {
         if self.count > 0 {
             return self.count.to_string()

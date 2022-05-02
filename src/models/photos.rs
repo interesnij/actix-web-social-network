@@ -228,6 +228,19 @@ impl PhotoList {
             .load::<Photo>(&_connection)
             .expect("E.");
     }
+    pub fn get_paginate_items(&self, limit: i64, offset: i64) -> Vec<Photo> {
+        use crate::schema::photos::dsl::photos;
+
+        let _connection = establish_connection();
+        return photos
+            .filter(schema::photos::photo_list_id.eq(self.id))
+            .filter(schema::photos::types.eq("a"))
+            .limit(limit)
+            .offset(offset)
+            .order(schema::photos::created.desc())
+            .load::<Photo>(&_connection)
+            .expect("E.");
+    }
     pub fn count_items(&self) -> String {
         if self.count > 0 {
             return self.count.to_string()

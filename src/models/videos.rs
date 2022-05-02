@@ -227,6 +227,19 @@ impl VideoList {
             .load::<Video>(&_connection)
             .expect("E.");
     }
+    pub fn get_paginate_items(&self, limit: i64, offset: i64) -> Vec<Video> {
+        use crate::schema::videos::dsl::videos;
+
+        let _connection = establish_connection();
+        return videos
+            .filter(schema::videos::video_list_id.eq(self.id))
+            .filter(schema::videos::types.eq("a"))
+            .limit(limit)
+            .offset(offset)
+            .order(schema::videos::created.desc())
+            .load::<Video>(&_connection)
+            .expect("E.");
+    }
     pub fn count_items(&self) -> String {
         if self.count > 0 {
             return self.count.to_string()
@@ -2437,6 +2450,19 @@ impl Video {
             .expect("Error.");
 
         return new_comment;
+    }
+    pub fn get_comments(&self, limit: i64, offset: i64) -> Vec<VideoComment> {
+        use crate::schema::video_comments::dsl::video_comments;
+
+        let _connection = establish_connection();
+
+        return video_comments
+            .filter(schema::video_comments::video_id.eq(self.id))
+            .filter(schema::video_comments::types.eq_any(vec!["a","b"]))
+            .limit(limit)
+            .offset(offset)
+            .load::<VideoComment>(&_connection)
+            .expect("E.");
     }
 }
 /////// VideoComment //////

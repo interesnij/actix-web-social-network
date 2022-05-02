@@ -224,6 +224,19 @@ impl DocList {
             .load::<Doc>(&_connection)
             .expect("E.");
     }
+    pub fn get_paginate_items(&self, limit: i64, offset: i64) -> Vec<Doc> {
+        use crate::schema::docs::dsl::docs;
+
+        let _connection = establish_connection();
+        return docs
+            .filter(schema::docs::doc_list_id.eq(self.id))
+            .filter(schema::docs::types.eq("a"))
+            .limit(limit)
+            .offset(offset)
+            .order(schema::docs::created.desc())
+            .load::<Doc>(&_connection)
+            .expect("E.");
+    }
     pub fn count_items(&self) -> String {
         if self.count > 0 {
             return self.count.to_string()

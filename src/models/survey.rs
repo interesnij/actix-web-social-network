@@ -219,6 +219,19 @@ impl SurveyList {
             .load::<Survey>(&_connection)
             .expect("E.");
     }
+    pub fn get_paginate_items(&self, limit: i64, offset: i64) -> Vec<Survey> {
+        use crate::schema::surveys::dsl::surveys;
+
+        let _connection = establish_connection();
+        return surveys
+            .filter(schema::surveys::survey_list_id.eq(self.id))
+            .filter(schema::surveys::types.eq("a"))
+            .limit(limit)
+            .offset(offset)
+            .order(schema::surveys::created.desc())
+            .load::<Survey>(&_connection)
+            .expect("E.");
+    }
     pub fn count_items(&self) -> String {
         if self.count > 0 {
             return self.count.to_string()

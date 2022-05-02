@@ -313,6 +313,19 @@ impl MusicList {
             .load::<Music>(&_connection)
             .expect("E.");
     }
+    pub fn get_paginate_items(&self, limit: i64, offset: i64) -> Vec<Music> {
+        use crate::schema::musics::dsl::musics;
+
+        let _connection = establish_connection();
+        return musics
+            .filter(schema::musics::music_list_id.eq(self.id))
+            .filter(schema::musics::types.eq("a"))
+            .limit(limit)
+            .offset(offset)
+            .order(schema::musics::created.desc())
+            .load::<Music>(&_connection)
+            .expect("E.");
+    }
     pub fn count_items(&self) -> String {
         if self.count > 0 {
             return self.count.to_string()
