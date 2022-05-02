@@ -103,6 +103,38 @@ pub fn anon_user_account(folder: String, user: User) -> actix_web::Result<HttpRe
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
 }
+pub fn self_block_account(folder: String, user: User, request_user: User) -> actix_web::Result<HttpResponse> {
+    if folder == "desctop/".to_string() {
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/users/account/self_block_user.stpl")]
+        struct UserPage {
+            title: String,
+            user:  User,
+        }
+        let body = UserPage {
+            title: user.get_full_name(),
+            user:  user,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+    else {
+        #[derive(TemplateOnce)]
+        #[template(path = "mobile/users/account/self_block_user.stpl")]
+        struct UserPage {
+            title: String,
+            user:  User,
+        }
+        let body = UserPage {
+            title: user.get_full_name(),
+            user:  user,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
 
 pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     use crate::models::UserProfile;
@@ -114,12 +146,18 @@ pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
 
-        if &_user.id == &_request_user.id {
-            return my_user_account(_type, _user, _request_user)
-        }
-        else {
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
-        }
+        let response: bool = true;
+        return match response {
+            &_user.id == &_request_user.id => my_user_account(_type, _user, _request_user),
+            _request_user.is_self_user_in_block(_user.id) => self_block_account(_type, _user, _request_user),
+            _ => Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("")),
+        };
+        //if &_user.id == &_request_user.id {
+        //    return my_user_account(_type, _user, _request_user)
+        //}
+        //else {
+        //    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        //}
     } else {
         return anon_user_account(_type, _user)
     }
