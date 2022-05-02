@@ -1786,6 +1786,19 @@ impl Good {
             return "<a href='".to_owned() + &creator.get_link() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": товар"
         }
     }
+    pub fn get_comments(&self, limit: i64, offset: i64) -> Vec<GoodComment> {
+        use crate::schema::good_comments::dsl::good_comments;
+
+        let _connection = establish_connection();
+
+        return good_comments
+            .filter(schema::good_comments::good_id.eq(self.id))
+            .filter(schema::good_comments::types.eq_any(vec!["a","b"]))
+            .limit(limit)
+            .offset(offset)
+            .load::<GoodComment>(&_connection)
+            .expect("E.");
+    }
 }
 
 /////// GoodComment //////

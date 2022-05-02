@@ -2428,6 +2428,19 @@ impl Photo {
 
         return new_comment;
     }
+    pub fn get_comments(&self, limit: i64, offset: i64) -> Vec<PhotoComment> {
+        use crate::schema::photo_comments::dsl::photo_comments;
+
+        let _connection = establish_connection();
+
+        return photo_comments
+            .filter(schema::photo_comments::photo_id.eq(self.id))
+            .filter(schema::photo_comments::types.eq_any(vec!["a","b"]))
+            .limit(limit)
+            .offset(offset)
+            .load::<PhotoComment>(&_connection)
+            .expect("E.");
+    }
 }
 
 /////// PhotoComment //////

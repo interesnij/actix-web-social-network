@@ -2433,6 +2433,16 @@ impl User {
                 .expect("E.").len();
         }
     }
+    pub fn get_all_communities_count() -> usize {
+        use crate::schema::communitys::dsl::communitys;
+
+        let _connection = establish_connection();
+        return communitys
+            .filter(schema::communitys::types.gt(10))
+            .load::<Community>(&_connection)
+            .expect("E.").len();
+        }
+    }
     pub fn get_users(&self, limit: i64, offset: i64) -> Vec<User> {
         use crate::schema::users::dsl::users;
 
@@ -2464,6 +2474,17 @@ impl User {
             .limit(limit)
             .offset(offset)
             .load::<User>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_all_comunities(limit: i64, offset: i64) -> Vec<Community> {
+        use crate::schema::communitys::dsl::communitys;
+
+        let _connection = establish_connection();
+        return users
+            .filter(schema::communitys::types.gt(10))
+            .limit(limit)
+            .offset(offset)
+            .load::<Community>(&_connection)
             .expect("E.");
     }
     pub fn get_anon_users_count() -> usize {

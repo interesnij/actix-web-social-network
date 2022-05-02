@@ -17,6 +17,8 @@ use crate::models::User;
 pub fn pages_routes(config: &mut web::ServiceConfig) {
     config.route("/", web::get().to(index_page));
     config.route("/featured/", web::get().to(featured_list_page));
+    config.route("/all-users/", web::get().to(all_users_page));
+    config.route("/all-communities/", web::get().to(all_communities_page));
 }
 
 pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
@@ -263,6 +265,152 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
         else {
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/lists/anon_all_users.stpl")]
+            struct Template {
+                title:        String,
+                next_page_number: i32,
+                object_list: Vec<User>,
+                count_users: usize,
+            }
+            let body = Template {
+                title: "Пользователи".to_string(),
+                next_page_number: next_page_number,
+                object_list: object_list,
+                count_users: count,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body))
+        }
+    }
+}
+
+
+pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    use crate::utils::PaginationParams;
+    use crate::models::Community;
+
+    let params_some = web::Query::<PaginationParams>::from_query(&req.query_string());
+    let mut page: i32 = 0;
+    if params_some.is_ok() {
+        let params = params_some.unwrap();
+        page = params.page.unwrap();
+    }
+    else {
+        page = 1;
+    }
+    let mut next_page_number = 0;
+    let object_list: Vec<Community>;
+
+    let _connection = establish_connection();
+    let _type = get_folder(req);
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let count = _User::get_all_communities_count();
+        if page > 1 {
+            let step = (page - 1) * 20;
+            object_list = User::get_all_communities(20, step.into());
+            if count > (page * 20).try_into().unwrap() {
+                next_page_number = page + 1;
+            }
+        }
+        else {
+            object_list = User::get_all_communities(20, 0);
+            if count > 20.try_into().unwrap() {
+                next_page_number = 2;
+            }
+        }
+
+        if _type == "desctop/".to_string() {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/users/lists/all_communities.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+                next_page_number: i32,
+                object_list: Vec<User>,
+                count_users: usize,
+            }
+
+            let body = Template {
+                title:        "Пользователи".to_string(),
+                request_user: _request_user,
+                next_page_number: next_page_number,
+                object_list: object_list,
+                count_users: count,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/users/lists/all_communities.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+                next_page_number: i32,
+                object_list: Vec<User>,
+                count_users: usize,
+            }
+
+            let body = Template {
+                title:        "Пользователи".to_string(),
+                request_user: _request_user,
+                next_page_number: next_page_number,
+                object_list: object_list,
+                count_users: count,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body))
+        }
+
+    } else {
+        let count = User::get_all_communities_count();
+        if page > 1 {
+            let step = (page - 1) * 20;
+            object_list = User::get_all_communities(20, step.into());
+            if count > (page * 20).try_into().unwrap() {
+                next_page_number = page + 1;
+            }
+        }
+        else {
+            object_list = User::get_all_communities(20, 0);
+            if count > 20.try_into().unwrap() {
+                next_page_number = 2;
+            }
+        }
+
+        if _type == "desctop/".to_string() {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/users/lists/anon_all_communities.stpl")]
+            struct Template {
+                title:        String,
+                next_page_number: i32,
+                object_list: Vec<User>,
+                count_users: usize,
+            }
+            let body = Template {
+                title: "Пользователи".to_string(),
+                next_page_number: next_page_number,
+                object_list: object_list,
+                count_users: count,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/users/lists/anon_all_communities.stpl")]
             struct Template {
                 title:        String,
                 next_page_number: i32,

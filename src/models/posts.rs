@@ -2701,6 +2701,19 @@ impl Post {
             .nth(0)
             .unwrap();
     }
+    pub fn get_comments(&self, limit: i64, offset: i64) -> Vec<PostComment> {
+        use crate::schema::post_comments::dsl::post_comments;
+
+        let _connection = establish_connection();
+
+        return post_comments
+            .filter(schema::post_comments::post_id.eq(self.id))
+            .filter(schema::post_comments::types.eq_any(vec!["a","b"]))
+            .limit(limit)
+            .offset(offset)
+            .load::<PostComment>(&_connection)
+            .expect("E.");
+    }
 }
 
 /////// PostComment //////
