@@ -2472,8 +2472,6 @@ impl User {
         let _connection = establish_connection();
         return users
             .filter(schema::users::types.gt(10))
-            .limit(limit)
-            .offset(offset)
             .load::<User>(&_connection)
             .expect("E.")
             .len();

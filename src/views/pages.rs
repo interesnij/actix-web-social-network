@@ -183,7 +183,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
                 object_list: Vec<User>,
             }
 
-            let body = DesctopNewsListTemplate {
+            let body = Template {
                 title:        "Пользователи".to_string(),
                 request_user: _request_user,
                 next_page_number: next_page_number,
@@ -205,7 +205,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
                 object_list: Vec<User>,
             }
 
-            let body = DesctopNewsListTemplate {
+            let body = Template {
                 title:        "Пользователи".to_string(),
                 request_user: _request_user,
                 next_page_number: next_page_number,
@@ -241,7 +241,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
                 next_page_number: i32,
                 object_list: Vec<User>,
             }
-            let body = DesctopAuthTemplate {
+            let body = Template {
                 title: "Пользователи".to_string(),
                 next_page_number: next_page_number,
                 object_list: object_list,
@@ -260,7 +260,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
                 next_page_number: i32,
                 object_list: Vec<User>,
             }
-            let body = MobileAuthTemplate {
+            let body = Template {
                 title: "Пользователи".to_string(),
                 next_page_number: next_page_number,
                 object_list: object_list,
