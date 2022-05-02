@@ -12,9 +12,6 @@ use crate::models::{
     VideoList, Video, VideoComment,
 };
 
-#[macro_use(concat_string)]
-extern crate concat_string;
-
 
 pub fn get_user(pk: i32) -> User {
     use crate::schema::users::dsl::users;
