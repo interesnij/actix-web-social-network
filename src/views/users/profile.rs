@@ -23,6 +23,34 @@ pub fn user_routes(config: &mut web::ServiceConfig) {
     config.route("/id{id}/", web::get().to(user_page));
 }
 
+pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    use crate::models::UserProfile;
+
+    let _connection = establish_connection();
+    let _type = get_folder(req);
+    let _user = get_user(*_id);
+
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+
+        if &_user.id == &_request_user.id {
+            return my_user_account(_type, _user, _request_user)
+        }
+        else if _request_user.is_self_user_in_block(_user.id) {
+            return self_block_account(_type, _user, _request_user)
+        }
+        else if _request_user.is_user_in_block(_user.id) {
+            return block_account(_type, _user, _request_user)
+        }
+        else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        return anon_user_account(_type, _user)
+    }
+}
+
+
 pub fn my_user_account(folder: String, user: User, request_user: User) -> actix_web::Result<HttpResponse> {
     if folder == "desctop/".to_string() {
         #[derive(TemplateOnce)]
@@ -135,27 +163,35 @@ pub fn self_block_account(folder: String, user: User, request_user: User) -> act
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
 }
-
-pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    use crate::models::UserProfile;
-
-    let _connection = establish_connection();
-    let _type = get_folder(req);
-    let _user = get_user(*_id);
-
-    if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
-
-        if &_user.id == &_request_user.id {
-            return my_user_account(_type, _user, _request_user)
+pub fn block_account(folder: String, user: User, request_user: User) -> actix_web::Result<HttpResponse> {
+    if folder == "desctop/".to_string() {
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/users/account/block_user.stpl")]
+        struct UserPage {
+            title: String,
+            user:  User,
         }
-        else if _request_user.is_self_user_in_block(_user.id) {
-            return self_block_account(_type, _user, _request_user)
+        let body = UserPage {
+            title: user.get_full_name(),
+            user:  user,
         }
-        else {
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+    else {
+        #[derive(TemplateOnce)]
+        #[template(path = "mobile/users/account/block_user.stpl")]
+        struct UserPage {
+            title: String,
+            user:  User,
         }
-    } else {
-        return anon_user_account(_type, _user)
+        let body = UserPage {
+            title: user.get_full_name(),
+            user:  user,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
 }
