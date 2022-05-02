@@ -1,7 +1,7 @@
 <% include!("../../../base_block/anon_base_header.stpl"); %>
 
 <div class="main-container" data-type="user_main">
-
+ 
 </div>
 
 <% include!("../../../base_block/anon_base_footer.stpl"); %>
