@@ -144,6 +144,14 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
     use ctare::utils::PaginationParams;
 
     let params_some = web::Query::<PaginationParams>::from_query(&req.query_string());
+    let mut page = 0;
+    if params_some.is_ok() {
+        let params = params_some.unwrap();
+        page = params.page.unwrap();
+    }
+    else {
+        page = 1;
+    }
     let mut next_page_number = 0;
     let object_list: Vec<User>;
 
@@ -151,8 +159,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
     let _type = get_folder(req);
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
-        if params.page.is_some() {
-            let page = params.page.unwrap();
+        if page > 1 {
             let step = ((page - 1) * 20).into();
             object_list = _request_user.get_users(20, step);
             if _request_user.get_all_users_count() > page * 20 {

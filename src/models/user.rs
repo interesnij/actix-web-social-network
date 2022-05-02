@@ -2466,7 +2466,7 @@ impl User {
             .load::<User>(&_connection)
             .expect("E.");
     }
-    pub fn get_anon_users_count(limit: i64, offset: i64) -> usize {
+    pub fn get_anon_users_count() -> usize {
         use crate::schema::users::dsl::users;
 
         let _connection = establish_connection();
