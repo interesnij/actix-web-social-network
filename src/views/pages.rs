@@ -141,7 +141,7 @@ pub async fn featured_list_page(session: Session, req: HttpRequest) -> actix_web
 
 
 pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    use ctare::utils::PaginationParams;
+    use crate::utils::PaginationParams;
 
     let params_some = web::Query::<PaginationParams>::from_query(&req.query_string());
     let mut page = 0;
@@ -168,7 +168,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
         }
         else {
             object_list = list.get_paginate_items(20, 0);
-            if list.count > 20 {
+            if _request_user.get_all_users_count() > 20 {
                 next_page_number = 2;
             }
         }
@@ -219,8 +219,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
         }
 
     } else {
-        if params.page.is_some() {
-            let page = params.page.unwrap();
+        if page > 1 {
             let step = ((page - 1) * 20).into();
             object_list = User::get_anon_users(20, step);
             if User::get_anon_users_count() > page * 20 {
