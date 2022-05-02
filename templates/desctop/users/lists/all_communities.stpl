@@ -1,6 +1,6 @@
 <% include!("../../../base_block/base_header.stpl"); %>
 
-<div class="main-container" data-type="user_main">
+<div class="row main-container" data-type="user_main">
 <div class="col-md-8 mt-3">
     <div class="input-group mb-3">
         <input type="text" class="form-control form-control-sm" placeholder="Поиск сообществ">
