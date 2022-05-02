@@ -287,7 +287,7 @@ pub fn get_post_user_perm(user: User, request_user: User) -> (bool, String) {
     else { return (true, "".to_string());}
 }
 
-pub fn get_user_permission(user: User, request_user: User, part: String)
+pub fn get_user_permission(user: User, request_user: User, part: &str)
     -> (bool, String) {
 
     if request_user.types > 10 {
