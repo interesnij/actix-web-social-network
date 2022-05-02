@@ -1,4 +1,5 @@
 use crate::utils::establish_connection;
+use concat_string;
 use crate::schema;
 use diesel::prelude::*;
 use crate::models::{
@@ -261,4 +262,63 @@ pub fn get_message(pk: i32) -> Message {
         .into_iter()
         .nth(0)
         .unwrap();
+}
+
+static BAD_TOP: &str = "<div class='card mt-3 centered'><div class='card-body' style='margin-top: 10%;'><svg fill='currentColor' class='thumb_big svg_default' viewBox='0 0 24 24'>";
+static BAD_MEDIUM: &str = "</svg></div><h6 style='text-align: center;margin-bottom: 20px;' class='text-center'>";
+static BAD_BOTTOM: &str = "</h6></div>";
+
+pub fn get_post_user_perm(user: User, request_user: i32) -> (bool, String) {
+    if user.is_user_in_block(request_user.id) {
+        return (
+            false,
+            concat_string!(
+                BAD_TOP,
+                "<path d='M0 0h24v24H0zm0 0h24v24H0zm0 0h24v24H0zm0 0h24v24H0z' fill='none' /><path d='M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z'/>",
+                BAD_MEDIUM,
+                "<a href='", user.get_link(),
+                "' class='ajax underline'>", user.get_full_name(),
+                "</a> ограничил", user.get_gender_a(),
+                " доступ к своей странице.",
+                BAD_BOTTOM
+            )
+        )
+    }
+}
+
+pub fn get_user_permission(user: User, request_user: User, part: String)
+    -> (bool, String) {
+
+    if request_user.types > 10 {
+        if request_user.is_closed() {
+            return (
+                false,
+                concat_string!(
+                    BAD_TOP,
+                    "<g><rect fill='none' height='24' width='24'/></g><g><path d='M14,8c0-2.21-1.79-4-4-4S6,5.79,6,8s1.79,4,4,4S14,10.21,14,8z M17,10v2h6v-2H17z M2,18v2h16v-2c0-2.66-5.33-4-8-4 S2,15.34,2,18z'/></g>",
+                    BAD_MEDIUM,
+                    "Ваша страница заблокирована за нарушение правил сайта. Если Вы не согласны с примененными к Вашей странице санкциями, напишите в <a href='/chat/",
+                    request_user.get_or_create_support_chat_pk(),
+                    "/' class='ajax underline'> техподдержку </a>",
+                    BAD_BOTTOM
+                )
+            )
+        }
+        else { return (true, "".to_string());}
+    }
+    else {
+        return match part.as_str() {
+            "post" => get_post_user_perm(user, request_user),
+            //"photo" => get_photo_user_perm(user, request_user),
+            //"doc" => get_doc_user_perm(user, request_user),
+            //"good" => get_good_user_perm(user, request_user),
+            //"music" => get_music_user_perm(user, request_user),
+            //"survey" => get_survey_user_perm(user, request_user),
+            //"video" => get_video_user_perm(user, request_user),
+            //"default" => get_default_user_perm(user, request_user),
+            //"planner" => get_default_user_perm(user, request_user),
+            //"forum" => get_forum_user_perm(user, request_user),
+            "_" => (true, "".to_string()),
+        };
+    }
 }

@@ -4805,6 +4805,12 @@ impl User {
             .load::<PostCategorie>(&_connection)
             .expect("could not load tags");
     }
+    pub fn get_gender_a(&self) -> String {
+        if self.gender == "b" {
+            return "a".to_string();
+        }
+        return "".to_string();
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]

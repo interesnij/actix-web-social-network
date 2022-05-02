@@ -21,6 +21,50 @@ use crate::models::User;
 
 pub fn user_routes(config: &mut web::ServiceConfig) {
     config.route("/id{id}/", web::get().to(user_page));
+    config.route("/users/{id}/wall/", web::get().to(user_wall_page));
+}
+
+pub async fn user_wall_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let _connection = establish_connection();
+    let _type = get_folder(req);
+    let _user = get_user(*_id);
+    let mut next_page_number = 0;
+    let object_list: Vec<Post>;
+    let list = get_post_list(_user.get_selected_post_list_pk());
+
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if &_user.id == &_request_user.id {
+            if _user.types > 10 {
+                return my_bad_account(_type, _user, _request_user)
+            }
+            else {
+                return my_user_account(_type, _user, _request_user)
+            }
+        }
+        else if _user.types > 10 {
+            return bad_account(_type, _user, _request_user)
+        }
+        else if _request_user.is_self_user_in_block(_user.id) {
+            return self_block_account(_type, _user, _request_user)
+        }
+        else if !_user.is_user_can_see_all(_request_user.id) {
+            return close_account(_type, _user, _request_user)
+        }
+        else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        if !_user.is_anon_user_can_see_all() {
+            return anon_close_account(_type, _user)
+        }
+        else if _user.types > 10 {
+            return anon_bad_account(_type, _user)
+        }
+        else {
+            return anon_user_account(_type, _user)
+        }
+    }
 }
 
 pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
@@ -62,7 +106,6 @@ pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
         }
     }
 }
-
 
 pub fn my_user_account(folder: String, user: User, request_user: User) -> actix_web::Result<HttpResponse> {
     if folder == "desctop/".to_string() {
