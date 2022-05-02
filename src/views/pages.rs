@@ -144,7 +144,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
     use crate::utils::PaginationParams;
 
     let params_some = web::Query::<PaginationParams>::from_query(&req.query_string());
-    let mut page = 0;
+    let mut page: i32 = 0;
     if params_some.is_ok() {
         let params = params_some.unwrap();
         page = params.page.unwrap();
@@ -179,7 +179,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
             struct Template {
                 title:        String,
                 request_user: User,
-                next_page_number: i64,
+                next_page_number: i32,
                 object_list: Vec<User>,
             }
 
@@ -201,7 +201,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
             struct Template {
                 title:        String,
                 request_user: User,
-                next_page_number: i64,
+                next_page_number: i32,
                 object_list: Vec<User>,
             }
 
@@ -238,7 +238,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[template(path = "desctop/users/lists/anon_all_users.stpl")]
             struct Template {
                 title:        String,
-                next_page_number: i64,
+                next_page_number: i32,
                 object_list: Vec<User>,
             }
             let body = Template {
@@ -257,7 +257,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[template(path = "mobile/users/lists/anon_all_users.stpl")]
             struct Template {
                 title:        String,
-                next_page_number: i64,
+                next_page_number: i32,
                 object_list: Vec<User>,
             }
             let body = Template {
