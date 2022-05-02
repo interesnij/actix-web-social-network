@@ -162,13 +162,13 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
         if page > 1 {
             let step = (page - 1) * 20;
             object_list = _request_user.get_users(20, step);
-            if _request_user.get_all_users_count() > page * 20 {
+            if _request_user.get_all_users_count() > (page * 20).try_into().unwrap() {
                 next_page_number = page + 1;
             }
         }
         else {
             object_list = list.get_paginate_items(20, 0);
-            if _request_user.get_all_users_count() > 20 {
+            if _request_user.get_all_users_count() > 20.try_into().unwrap() {
                 next_page_number = 2;
             }
         }
@@ -222,13 +222,13 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
         if page > 1 {
             let step = (page - 1) * 20;
             object_list = User::get_anon_users(20, step);
-            if User::get_anon_users_count() > page * 20 {
+            if User::get_anon_users_count() > (page * 20).try_into().unwrap() {
                 next_page_number = page + 1;
             }
         }
         else {
             object_list = User::get_anon_users(20, 0);
-            if User::get_anon_users_count() > 20 {
+            if User::get_anon_users_count() > 20.try_into().unwrap() {
                 next_page_number = 2;
             }
         }
