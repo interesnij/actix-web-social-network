@@ -307,7 +307,7 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
     let _type = get_folder(req);
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
-        let count = _User::get_all_communities_count();
+        let count = User::get_all_communities_count();
         if page > 1 {
             let step = (page - 1) * 20;
             object_list = User::get_all_communities(20, step.into());
