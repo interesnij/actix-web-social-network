@@ -19,7 +19,7 @@
         </div>
         <div class="card-body px-0 py-0">
           <% if count_communities > 0 { %>
-            <div class="list-group is_paginate">
+            <ul class="list-group is_paginate">
                 <% for community in object_list.iter() { %>
                 <li class="list-group-item">
                     <div class="media">
