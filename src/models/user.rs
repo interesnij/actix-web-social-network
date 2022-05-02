@@ -2479,7 +2479,7 @@ impl User {
         use crate::schema::communitys::dsl::communitys;
 
         let _connection = establish_connection();
-        return users
+        return communitys
             .filter(schema::communitys::types.gt(10))
             .limit(limit)
             .offset(offset)
