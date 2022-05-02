@@ -35,7 +35,7 @@
                       <div class="media-body">
                           <h6 class="my-0 mt-1">
                             <a href="<%= community.get_link() %>" class="ajax">
-                              <%= object.name %> &nbsp;
+                              <%= community.name %> &nbsp;
                             </a>
                           </h6>
                           <p class="small"><%= community.count_members_ru() %></p>
