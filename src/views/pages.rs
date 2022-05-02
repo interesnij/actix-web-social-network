@@ -159,16 +159,17 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
     let _type = get_folder(req);
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
+        let count = _request_user.get_all_users_count();
         if page > 1 {
             let step = (page - 1) * 20;
             object_list = _request_user.get_users(20, step.into());
-            if _request_user.get_all_users_count() > (page * 20).try_into().unwrap() {
+            if count > (page * 20).try_into().unwrap() {
                 next_page_number = page + 1;
             }
         }
         else {
             object_list = _request_user.get_users(20, 0);
-            if _request_user.get_all_users_count() > 20.try_into().unwrap() {
+            if count > 20.try_into().unwrap() {
                 next_page_number = 2;
             }
         }
@@ -181,6 +182,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
                 request_user: User,
                 next_page_number: i32,
                 object_list: Vec<User>,
+                count_users: usize,
             }
 
             let body = Template {
@@ -188,6 +190,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
                 request_user: _request_user,
                 next_page_number: next_page_number,
                 object_list: object_list,
+                count_users: count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -203,6 +206,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
                 request_user: User,
                 next_page_number: i32,
                 object_list: Vec<User>,
+                count_users: usize,
             }
 
             let body = Template {
@@ -210,6 +214,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
                 request_user: _request_user,
                 next_page_number: next_page_number,
                 object_list: object_list,
+                count_users: count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -219,16 +224,17 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
         }
 
     } else {
+        let count = User::get_anon_users_count();
         if page > 1 {
             let step = (page - 1) * 20;
             object_list = User::get_anon_users(20, step.into());
-            if User::get_anon_users_count() > (page * 20).try_into().unwrap() {
+            if count > (page * 20).try_into().unwrap() {
                 next_page_number = page + 1;
             }
         }
         else {
             object_list = User::get_anon_users(20, 0);
-            if User::get_anon_users_count() > 20.try_into().unwrap() {
+            if count > 20.try_into().unwrap() {
                 next_page_number = 2;
             }
         }
@@ -240,11 +246,13 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
                 title:        String,
                 next_page_number: i32,
                 object_list: Vec<User>,
+                count_users: usize,
             }
             let body = Template {
                 title: "Пользователи".to_string(),
                 next_page_number: next_page_number,
                 object_list: object_list,
+                count_users: count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -259,11 +267,13 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
                 title:        String,
                 next_page_number: i32,
                 object_list: Vec<User>,
+                count_users: usize,
             }
             let body = Template {
                 title: "Пользователи".to_string(),
                 next_page_number: next_page_number,
                 object_list: object_list,
+                count_users: count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
