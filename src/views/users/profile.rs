@@ -16,7 +16,7 @@ use crate::utils::{
 //use diesel::prelude::*;
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::User;
+use crate::models::{User, Post};
 
 
 pub fn user_routes(config: &mut web::ServiceConfig) {
