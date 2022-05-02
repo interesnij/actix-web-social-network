@@ -13,7 +13,7 @@ use crate::models::{
 };
 
 #[macro_use(concat_string)]
-use crate::concat_string;
+extern crate concat_string;
 
 
 pub fn get_user(pk: i32) -> User {
