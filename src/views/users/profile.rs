@@ -52,10 +52,10 @@ pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
         }
     } else {
         if !_user.is_anon_user_can_see_all() {
-            return anon_close_account(_type, _request_user)
+            return anon_close_account(_type, _user)
         }
         else if _user.types > 10 {
-            return anon_bad_account(_type, _request_user)
+            return anon_bad_account(_type, _user)
         }
         else {
             return anon_user_account(_type, _user)
