@@ -23,7 +23,7 @@
               <ul class="list-group is_paginate">
                   <% for object in object_list.iter() { %>
                   <li class="list-group-item">
-                      {% include 'desctop/generic/user/card_go_profile.stpl' %}
+                      <% include!("../../generic/user/card_go_profile.stpl"); %>
                   </li>
                   <% } %>
                   <% if next_page_number > 0 { %>
