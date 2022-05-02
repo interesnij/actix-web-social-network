@@ -149,7 +149,12 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
     let mut page: i32 = 0;
     if params_some.is_ok() {
         let params = params_some.unwrap();
-        page = params.page.unwrap();
+        if params.page.is_some() {
+            page = params.page.unwrap();
+        }
+        else {
+            page = 1;
+        }
     }
     else {
         page = 1;
@@ -295,7 +300,12 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
     let mut page: i32 = 0;
     if params_some.is_ok() {
         let params = params_some.unwrap();
-        page = params.page.unwrap();
+        if params.page.is_some() {
+            page = params.page.unwrap();
+        }
+        else {
+            page = 1;
+        }
     }
     else {
         page = 1;
