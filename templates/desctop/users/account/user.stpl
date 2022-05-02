@@ -6,33 +6,7 @@
   <div class="col-lg-4 col-md-5 order-1">
     <div class="card mb-3">
         <div class="card-body">
-        <% if is_my_user { %>
-          <div class="row align-items-center no-gutters">
-            <a class="col">
-              <figure class="mx-auto mb-3 avatar_figure">
-
-                <% if user.b_avatar.is_some() { %>
-                  <%- user.get_b_avatar() %>
-                  <form id="add_user_avatar">
-                    <input type="file" id="user_avatar_upload" name="file" style="display:none">
-                    <p class="previous_click change_avatar pointer" style="display:none; color:white !important"> Загрузить аватар</p>
-                  </form>
-                <% } else { %>
-                  <form id="add_user_avatar">
-                    <input type="file" id="user_avatar_upload" name="file" style="display:none">
-                    <img src="/static/images/no_img/b_avatar.png" class="previous_click pointer">
-                  </form>
-                <% } %>
-              </figure>
-            </a>
-          </div>
-
-          <span class="card mb-3 centered">
-            <a class="ajax" href="/users/settings/general/">Редактировать</a>
-          </span>
-        <% } else { %>
           <% include!("buttons.stpl"); %>
-        <% } %>
         </div>
     </div>
 

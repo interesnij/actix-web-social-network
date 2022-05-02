@@ -154,6 +154,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
     let params = params_some.unwrap();
     let list: PostList;
     let is_page_list: bool;
+    let mut next_page_number = 0;
     let object_list: Vec<Post>;
     let mut page_user: Option<User> = None;
     let mut page_community: Option<Community> = None;
@@ -178,7 +179,9 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
     }
 
     if params.page.is_some() {
-        object_list = list.get_paginate_items(20, ((params.page.unwrap() - 1) * 20).into());
+        let page = params.page.unwrap();
+        object_list = list.get_paginate_items(20, ((page - 1) * 20).into());
+        next_page_number = page + 1;
     }
     else {
         object_list = list.get_paginate_items(20, 0);
@@ -205,6 +208,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     user: Option<User>,
                     community: Option<Community>,
                     is_page_list: bool,
+                    next_page_number: i32,
                 }
                 let body = UserPage {
                     list:                      list,
@@ -215,6 +219,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     user: page_user,
                     community: page_community,
                     is_page_list: is_page_list,
+                    next_page_number: next_page_number,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -231,6 +236,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: Vec<Post>,
                     user: Option<User>,
                     is_page_list: bool,
+                    next_page_number: i32,
                 }
                 let body = UserPage {
                     list:                      list,
@@ -240,6 +246,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: object_list,
                     user: page_user,
                     is_page_list: is_page_list,
+                    next_page_number: next_page_number,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -259,6 +266,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     user: Option<User>,
                     community: Option<Community>,
                     is_page_list: bool,
+                    next_page_number: i32,
                 }
                 let body = UserPage {
                     list:                      list,
@@ -269,6 +277,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     user: page_user,
                     community: page_community,
                     is_page_list: is_page_list,
+                    next_page_number: next_page_number,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -285,6 +294,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: Vec<Post>,
                     user: Option<User>,
                     is_page_list: bool,
+                    next_page_number: i32,
                 }
                 let body = UserPage {
                     list:                      list,
@@ -294,6 +304,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: object_list,
                     user: page_user,
                     is_page_list: is_page_list,
+                    next_page_number: next_page_number,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -315,6 +326,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     user: Option<User>,
                     community: Option<Community>,
                     is_page_list: bool,
+                    next_page_number: i32,
                 }
                 let body = UserPage {
                     is_user_can_see_post_list: is_user_can_see_post_list,
@@ -336,6 +348,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: Vec<Post>,
                     user: Option<User>,
                     is_page_list: bool,
+                    next_page_number: i32,
                 }
                 let body = UserPage {
                     is_user_can_see_post_list: is_user_can_see_post_list,
@@ -343,6 +356,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: object_list,
                     user: page_user,
                     is_page_list: is_page_list,
+                    next_page_number: next_page_number,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -360,6 +374,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     user: Option<User>,
                     community: Option<Community>,
                     is_page_list: bool,
+                    next_page_number: i32,
                 }
                 let body = UserPage {
                     is_user_can_see_post_list: is_user_can_see_post_list,
@@ -368,6 +383,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: object_list,
                     user: page_user,
                     community: page_community,
+                    next_page_number: next_page_number,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -382,6 +398,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     user: Option<User>,
                     community: Option<Community>,
                     is_page_list: bool,
+                    next_page_number: i32,
                 }
                 let body = UserPage {
                     is_user_can_see_post_list: is_user_can_see_post_list,
@@ -390,6 +407,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     object_list: object_list,
                     user: page_user,
                     community: page_community,
+                    next_page_number: next_page_number,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

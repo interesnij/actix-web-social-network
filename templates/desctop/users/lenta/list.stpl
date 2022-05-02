@@ -72,11 +72,11 @@
                 <% include!("../../posts/post_user/post.stpl"); %>
               <% } %>
             <% } %>
-            <!--
-            <div class="load centered m-1 next_page_list" data-link="/posts/list/?list={{ list.id }}&page={{ page_obj.next_page_number }}">
+            <% if next_page_number > 0 { %>
+              <div class="load centered m-1 next_page_list" data-link="/posts/list/?list=<%= list.id %>&page=<%= next_page_number %>">
                 <img src="/static/images/preloader.gif">
-            </div>
-            -->
+              </div>
+            <% } %>
           <% } %>
 
           <% if object_list.len() == 0 { %>
