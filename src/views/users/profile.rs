@@ -146,18 +146,15 @@ pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
 
-        let response: bool = true;
-        return match response {
-            &_user.id == &_request_user.id => my_user_account(_type, _user, _request_user),
-            _request_user.is_self_user_in_block(_user.id) => self_block_account(_type, _user, _request_user),
-            _ => Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("")),
-        };
-        //if &_user.id == &_request_user.id {
-        //    return my_user_account(_type, _user, _request_user)
-        //}
-        //else {
-        //    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
-        //}
+        if &_user.id == &_request_user.id {
+            return my_user_account(_type, _user, _request_user)
+        }
+        else if _request_user.is_self_user_in_block(_user.id) {
+            return self_block_account(_type, _user, _request_user)
+        }
+        else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
     } else {
         return anon_user_account(_type, _user)
     }
