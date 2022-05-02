@@ -2433,7 +2433,7 @@ impl User {
                 .expect("E.").len();
         }
     }
-    pub fn get_users(&self, limit: i64, offset: i64) -> Vec<User> {
+    pub fn get_users(&self, limit: i64, offset: i32) -> Vec<User> {
         use crate::schema::users::dsl::users;
 
         let _connection = establish_connection();
@@ -2455,7 +2455,7 @@ impl User {
                 .expect("E.");
         }
     }
-    pub fn get_anon_users(limit: i64, offset: i64) -> Vec<User> {
+    pub fn get_anon_users(limit: i64, offset: i32) -> Vec<User> {
         use crate::schema::users::dsl::users;
 
         let _connection = establish_connection();
