@@ -309,7 +309,7 @@ pub fn get_user_permission(user: User, request_user: User, part: &str)
         else { return (true, "".to_string());}
     }
     else {
-        return match part {
+        return match part.as_str() {
             "post" => get_post_user_perm(user, request_user),
             //"photo" => get_photo_user_perm(user, request_user),
             //"doc" => get_doc_user_perm(user, request_user),
