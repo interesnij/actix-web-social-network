@@ -15,7 +15,7 @@
         <a href="<%= object.get_link() %>" class="ajax">
             <h6 class="my-0 mt-1"><%= object.get_full_name() %></h6>
         </a>
-        <% if object.is_user_can_send_message(request.user.pk) { %>
+        <% if object.is_user_can_send_message(request_user.id) { %>
           <a class="small user_send_page_message">Написать сообщение</a>
         <% } else { %>
           <a href="<%= object.get_link() %>" class="small ajax">Перейти</a>
