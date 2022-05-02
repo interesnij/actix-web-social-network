@@ -37,7 +37,7 @@
     <div class="card mb-3">
         <div class="card-header">
             <div class="media centered">
-                <a href="/all_users/" class="ajax">
+                <a href="/all-users/" class="ajax">
                     <div class="media-body">
                         <h6 class="content-color-primary mb-0">Найдите друзей </h6>
                     </div>
@@ -53,7 +53,7 @@
     <div class="card mb-3">
         <div class="card-header">
             <div class="media centered">
-                <a href="/all_communities/" class="ajax">
+                <a href="/all-communities/" class="ajax">
                     <div class="media-body">
                         <h6 class="content-color-primary mb-0">Вступайте в группы</h6>
                     </div>

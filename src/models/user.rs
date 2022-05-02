@@ -2428,7 +2428,7 @@ impl User {
         }
         else {
             return users
-                .filter(schema::users::types.gt(10))
+                .filter(schema::users::types.lt(10))
                 .load::<User>(&_connection)
                 .expect("E.").len();
         }
@@ -2438,7 +2438,7 @@ impl User {
 
         let _connection = establish_connection();
         return communitys
-            .filter(schema::communitys::types.gt(10))
+            .filter(schema::communitys::types.lt(10))
             .load::<Community>(&_connection)
             .expect("E.").len();
     }
@@ -2457,7 +2457,7 @@ impl User {
         }
         else {
             return users
-                .filter(schema::users::types.gt(10))
+                .filter(schema::users::types.lt(10))
                 .limit(limit)
                 .offset(offset)
                 .load::<User>(&_connection)
@@ -2469,7 +2469,7 @@ impl User {
 
         let _connection = establish_connection();
         return users
-            .filter(schema::users::types.gt(10))
+            .filter(schema::users::types.lt(10))
             .limit(limit)
             .offset(offset)
             .load::<User>(&_connection)
@@ -2480,7 +2480,7 @@ impl User {
 
         let _connection = establish_connection();
         return communitys
-            .filter(schema::communitys::types.gt(10))
+            .filter(schema::communitys::types.lt(10))
             .limit(limit)
             .offset(offset)
             .load::<Community>(&_connection)
@@ -2491,7 +2491,7 @@ impl User {
 
         let _connection = establish_connection();
         return users
-            .filter(schema::users::types.gt(10))
+            .filter(schema::users::types.lt(10))
             .load::<User>(&_connection)
             .expect("E.")
             .len();
