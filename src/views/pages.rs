@@ -216,13 +216,13 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
             let page = params.page.unwrap();
             let step = ((page - 1) * 20).into();
             object_list = User::get_anon_users(20, step);
-            if User::get_anon_users_count > page * 20 {
+            if User::get_anon_users_count() > page * 20 {
                 next_page_number = page + 1;
             }
         }
         else {
-            object_list = list.get_paginate_items(20, 0);
-            if list.count > 20 {
+            object_list = User::get_anon_users(20, 0);
+            if User::get_anon_users_count() > 20 {
                 next_page_number = 2;
             }
         }
