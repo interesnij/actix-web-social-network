@@ -13,7 +13,7 @@
               </a>
             </h6>
             <a class="mb-0 wall_fullscreen pointer">
-              <%= object.created.to_rfc2822().to_string() %>
+              <%= object.created.date().to_string() %>
             </a>
         </div>
 
