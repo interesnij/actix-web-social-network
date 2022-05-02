@@ -1,5 +1,5 @@
 use crate::utils::establish_connection;
-use crate::concat_string;
+
 use crate::schema;
 use diesel::prelude::*;
 use crate::models::{
@@ -11,6 +11,9 @@ use crate::models::{
     Survey, SurveyList,
     VideoList, Video, VideoComment,
 };
+
+#[macro_use(concat_string)]
+use crate::concat_string;
 
 
 pub fn get_user(pk: i32) -> User {
