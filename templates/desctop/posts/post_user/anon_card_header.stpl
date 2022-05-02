@@ -13,7 +13,7 @@
               </a>
             </h6>
             <a class="mb-0 wall_fullscreen pointer">
-              <%= object.created.date().to_string() %>
+              <%= object.created.format("%Y-%m-%d %H:%M:%S").to_string() %>
             </a>
         </div>
 
