@@ -26,7 +26,7 @@
             </a>
           </div>
 
-          <span class="card mb-3 centered">
+          <span class="card centered">
             <a class="ajax" href="/users/settings/general/">Редактировать</a>
           </span>
         </div>
