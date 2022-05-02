@@ -180,8 +180,8 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
 
     if params.page.is_some() {
         let page = params.page.unwrap();
-        let step = (page - 1) * 20;
-        object_list = list.get_paginate_items(20, step).into());
+        let step = ((page - 1) * 20).into();
+        object_list = list.get_paginate_items(20, step);
         if object_list.len() > step {
             next_page_number = page + 1;
         }
