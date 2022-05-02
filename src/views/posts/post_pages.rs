@@ -335,6 +335,7 @@ pub async fn post_list_page(session: Session, req: HttpRequest) -> actix_web::Re
                     user: page_user,
                     community: page_community,
                     is_page_list: is_page_list,
+                    next_page_number: next_page_number,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
