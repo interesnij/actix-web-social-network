@@ -40,7 +40,7 @@ pub struct JsonReactions {
 }
 
 #[derive(Deserialize)]
-struct PaginationParams {
+pub struct PaginationParams {
     pub page: Option<i32>,
 }
 
