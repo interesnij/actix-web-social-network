@@ -160,7 +160,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
         if page > 1 {
-            let step = ((page - 1) * 20).into();
+            let step = (page - 1) * 20;
             object_list = _request_user.get_users(20, step);
             if _request_user.get_all_users_count() > page * 20 {
                 next_page_number = page + 1;
@@ -220,7 +220,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
 
     } else {
         if page > 1 {
-            let step = ((page - 1) * 20).into();
+            let step = (page - 1) * 20;
             object_list = User::get_anon_users(20, step);
             if User::get_anon_users_count() > page * 20 {
                 next_page_number = page + 1;
