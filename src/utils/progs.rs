@@ -1,5 +1,5 @@
 use crate::utils::establish_connection;
-use concat_string;
+use crate::concat_string;
 use crate::schema;
 use diesel::prelude::*;
 use crate::models::{
@@ -268,7 +268,7 @@ static BAD_TOP: &str = "<div class='card mt-3 centered'><div class='card-body' s
 static BAD_MEDIUM: &str = "</svg></div><h6 style='text-align: center;margin-bottom: 20px;' class='text-center'>";
 static BAD_BOTTOM: &str = "</h6></div>";
 
-pub fn get_post_user_perm(user: User, request_user: i32) -> (bool, String) {
+pub fn get_post_user_perm(user: User, request_user: User) -> (bool, String) {
     if user.is_user_in_block(request_user.id) {
         return (
             false,
