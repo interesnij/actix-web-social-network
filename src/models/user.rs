@@ -2475,7 +2475,7 @@ impl User {
             .load::<User>(&_connection)
             .expect("E.");
     }
-    pub fn get_all_comunities(limit: i64, offset: i64) -> Vec<Community> {
+    pub fn get_all_communities(limit: i64, offset: i64) -> Vec<Community> {
         use crate::schema::communitys::dsl::communitys;
 
         let _connection = establish_connection();

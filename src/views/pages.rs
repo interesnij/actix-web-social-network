@@ -329,7 +329,7 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
                 title:        String,
                 request_user: User,
                 next_page_number: i32,
-                object_list: Vec<User>,
+                object_list: Vec<Community>,
                 count_users: usize,
             }
 
@@ -353,7 +353,7 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
                 title:        String,
                 request_user: User,
                 next_page_number: i32,
-                object_list: Vec<User>,
+                object_list: Vec<Community>,
                 count_users: usize,
             }
 
@@ -393,7 +393,7 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
             struct Template {
                 title:        String,
                 next_page_number: i32,
-                object_list: Vec<User>,
+                object_list: Vec<Community>,
                 count_users: usize,
             }
             let body = Template {
@@ -414,7 +414,7 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
             struct Template {
                 title:        String,
                 next_page_number: i32,
-                object_list: Vec<User>,
+                object_list: Vec<Community>,
                 count_users: usize,
             }
             let body = Template {
