@@ -152,7 +152,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
     else {
         page = 1;
     }
-    let mut next_page_number = 0;
+    let mut next_page_number: i32 = 0;
     let object_list: Vec<User>;
 
     let _connection = establish_connection();
