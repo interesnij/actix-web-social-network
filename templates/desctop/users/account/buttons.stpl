@@ -26,26 +26,6 @@
         <a class="dropdown-item create_claim pointer">Пожаловаться</a>
       <% } %>
   </span>
-  <% } else if user.is_self_user_in_block(request_user_id) { %>
-    <div class="row align-items-center no-gutters">
-      <a class="col">
-        <figure class="mx-auto mb-3">
-          <%- user.get_bb_avatar() %>
-        </figure>
-      </a>
-    </div>
-  <span style="margin-bottom: 10px;position:relative" class="centered dropdown">
-  <button type="button" class="btn btn-sm border" style="width: -webkit-fill-available">
-    Вы заблокированы
-  </button>
-  <div class="dropdown-menu" data-type="use<%= request_user_id %>" style="margin-top:5px;width:100%">
-    <span class="dropdown-item create_repost">Поделиться</span>
-  <% if staff { %>
-    <span class="dropdown-item create_close" style="font-weight: bold;">Закрыть</span>
-  <% } else { %>
-    <a class="dropdown-item create_claim pointer">Пожаловаться</a>
-  <% } %>
-  </span>
   <% } else if user.is_connected_with_user_with_id(request_user_id) { %>
     <div class="row align-items-center no-gutters">
       <a class="col">
