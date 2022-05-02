@@ -17,7 +17,7 @@
             </a>
             <div class="media-body">
               <h6 class="my-0 mt-1 list_name"><%= object.name %>
-                <% if f_user.id == request_user.id { %>
+                <% if !request_user.is_empty() && f_user.id == request_user.id { %>
                   (<span class="handle"><%= object.count %></span>)
                 <% } else { %>
                   (<%= object.count %>)
