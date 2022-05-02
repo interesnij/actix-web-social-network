@@ -167,7 +167,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
             }
         }
         else {
-            object_list = list.get_paginate_items(20, 0);
+            object_list = _request_user.get_users(20, 0);
             if _request_user.get_all_users_count() > 20.try_into().unwrap() {
                 next_page_number = 2;
             }
