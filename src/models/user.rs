@@ -2441,7 +2441,6 @@ impl User {
             .filter(schema::communitys::types.gt(10))
             .load::<Community>(&_connection)
             .expect("E.").len();
-        }
     }
     pub fn get_users(&self, limit: i64, offset: i64) -> Vec<User> {
         use crate::schema::users::dsl::users;
