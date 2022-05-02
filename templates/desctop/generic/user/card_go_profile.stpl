@@ -1,4 +1,4 @@
-{% load message %}
+
 <div class="media">
     <a href="<%= object.get_link() %>" class="ajax">
         <figure>

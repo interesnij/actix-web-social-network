@@ -340,7 +340,7 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
                 request_user: User,
                 next_page_number: i32,
                 object_list: Vec<Community>,
-                count_users: usize,
+                count_communities: usize,
             }
 
             let body = Template {
@@ -348,7 +348,7 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
                 request_user: _request_user,
                 next_page_number: next_page_number,
                 object_list: object_list,
-                count_users: count,
+                count_communities: count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -364,7 +364,7 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
                 request_user: User,
                 next_page_number: i32,
                 object_list: Vec<Community>,
-                count_users: usize,
+                count_communities: usize,
             }
 
             let body = Template {
@@ -372,7 +372,7 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
                 request_user: _request_user,
                 next_page_number: next_page_number,
                 object_list: object_list,
-                count_users: count,
+                count_communities: count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -404,13 +404,13 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
                 title:        String,
                 next_page_number: i32,
                 object_list: Vec<Community>,
-                count_users: usize,
+                count_communities: usize,
             }
             let body = Template {
                 title: "Пользователи".to_string(),
                 next_page_number: next_page_number,
                 object_list: object_list,
-                count_users: count,
+                count_communities: count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -425,13 +425,13 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
                 title:        String,
                 next_page_number: i32,
                 object_list: Vec<Community>,
-                count_users: usize,
+                count_communities: usize,
             }
             let body = Template {
                 title: "Пользователи".to_string(),
                 next_page_number: next_page_number,
                 object_list: object_list,
-                count_users: count,
+                count_communities: count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

@@ -1,7 +1,6 @@
 <% include!("../../../base_block/anon_base_header.stpl"); %>
 
 <div class="main-container" data-type="user_main">
-<div class="main-container" data-type="user_main">
 <div class="row">
     <div class="col-md-8 mt-3">
         <div class="input-group mb-3">
@@ -47,7 +46,6 @@
     <div class="col-md-4 mt-3">
       <% include!("../../friends/featured_users.stpl"); %>
     </div>
-</div>
 </div>
 </div>
 
