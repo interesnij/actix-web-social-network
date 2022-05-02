@@ -144,7 +144,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
     use crate::utils::PaginationParams;
 
     let params_some = web::Query::<PaginationParams>::from_query(&req.query_string());
-    let mut page = 0;
+    let mut page: i32 = 0;
     if params_some.is_ok() {
         let params = params_some.unwrap();
         page = params.page.unwrap();
