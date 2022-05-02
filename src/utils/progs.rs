@@ -284,6 +284,7 @@ pub fn get_post_user_perm(user: User, request_user: User) -> (bool, String) {
             )
         )
     }
+    else { return (true, "".to_string());}
 }
 
 pub fn get_user_permission(user: User, request_user: User, part: String)
@@ -291,6 +292,7 @@ pub fn get_user_permission(user: User, request_user: User, part: String)
 
     if request_user.types > 10 {
         if request_user.is_closed() {
+            let chat_pk = request_user.get_or_create_support_chat_pk().to_string();
             return (
                 false,
                 concat_string!(
@@ -298,7 +300,7 @@ pub fn get_user_permission(user: User, request_user: User, part: String)
                     "<g><rect fill='none' height='24' width='24'/></g><g><path d='M14,8c0-2.21-1.79-4-4-4S6,5.79,6,8s1.79,4,4,4S14,10.21,14,8z M17,10v2h6v-2H17z M2,18v2h16v-2c0-2.66-5.33-4-8-4 S2,15.34,2,18z'/></g>",
                     BAD_MEDIUM,
                     "Ваша страница заблокирована за нарушение правил сайта. Если Вы не согласны с примененными к Вашей странице санкциями, напишите в <a href='/chat/",
-                    request_user.get_or_create_support_chat_pk(),
+                    chat_pk,
                     "/' class='ajax underline'> техподдержку </a>",
                     BAD_BOTTOM
                 )
