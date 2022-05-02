@@ -273,7 +273,7 @@ pub fn close_account(folder: String, user: User, request_user: User) -> actix_we
     }
 }
 
-pub fn anon_bad_account(folder: String, user: User, request_user: User) -> actix_web::Result<HttpResponse> {
+pub fn anon_bad_account(folder: String, user: User) -> actix_web::Result<HttpResponse> {
     if folder == "desctop/".to_string() {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/anon_bad_user.stpl")]
@@ -306,7 +306,7 @@ pub fn anon_bad_account(folder: String, user: User, request_user: User) -> actix
     }
 }
 
-pub fn anon_close_account(folder: String, user: User, request_user: User) -> actix_web::Result<HttpResponse> {
+pub fn anon_close_account(folder: String, user: User) -> actix_web::Result<HttpResponse> {
     if folder == "desctop/".to_string() {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/anon_close_user.stpl")]
