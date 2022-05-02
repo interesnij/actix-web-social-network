@@ -20,7 +20,7 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
   form_post.append($input);
   form_data = new FormData(form_post);
 
-  lenta_load = form_post.parentElement.nextElementSibling.nextElementSibling;
+  lenta_load = form_post.parentElement.nextElementSibling;
   pk = form_post.parentElement.parentElement.getAttribute("data-uuid");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
