@@ -814,12 +814,7 @@ function open_video_fullscreen(url) {
 function if_list(block) {
   if (block.querySelector('.load_post_list')) {
       _block = block.querySelector('.load_post_list');
-      if (_block.getAttribute("user-pk")) {
-        link = "/posts/list/?user=" + _block.getAttribute("user-pk")
-      } else if (_block.getAttribute("community-pk")){
-        link = "/posts/list/?community=" + _block.getAttribute("community-pk")
-      };
-      list_block_load(_block, ".load_list", link);
+      list_block_load(_block, ".load_list", _block.getAttribute("data-link"));
       scrolled(_block.querySelector('.list_pk'));
   } else if (block.querySelector('.is_block_post_paginate')) {
         lenta = block.querySelector('.is_block_post_paginate');
