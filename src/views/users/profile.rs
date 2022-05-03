@@ -29,6 +29,7 @@ pub fn user_routes(config: &mut web::ServiceConfig) {
 
 pub async fn user_wall_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     use crate::utils::PaginationParams;
+    use crate::models::PostList;
 
     let params_some = web::Query::<PaginationParams>::from_query(&req.query_string());
     let mut page: i32 = 0;

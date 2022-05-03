@@ -1,8 +1,6 @@
 <span class="load_list">
   <% if user.is_anon_user_can_see_post() { %>
 
-  <% if is_page_list == true { %>
-
   <% if user.count_fix_items() > 1 { %>
   <div class="csslider infinity slider_100 mt-2">
     <p>Особые записи</p>
@@ -43,7 +41,6 @@
     <% } %>
   <% } %>
   <% } %>
-<% } %>
 
 <% include!("anon_lists.stpl"); %>
 
