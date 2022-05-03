@@ -650,6 +650,9 @@ pub fn get_anon_community_permission(community: Community) -> (bool, String) {
                 )
             )
         }
+        else {
+            return (true, "".to_string())
+        }
     }
     else {
         return (true, "".to_string())
