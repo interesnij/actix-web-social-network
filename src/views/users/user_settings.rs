@@ -114,7 +114,7 @@ pub async fn get_background(session: Session, color: web::Path<String>) -> actix
             .expect("E");
 
         diesel::update(&backgrounds[0])
-          .set(schema::design_settings::background.eq(*color))
+          .set(schema::design_settings::background.eq(*color.clone()))
              .get_result::<DesignSetting>(&_connection)
              .expect("Error.");
 
