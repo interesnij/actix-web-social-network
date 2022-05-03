@@ -53,13 +53,13 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, _id: web::Path<i
     let count = list.count;
     if page > 1 {
         let step = (page - 1) * 20;
-        object_list = list.get_items(20, step.into());
+        object_list = list.get_paginate_items(20, step.into());
         if count > (page * 20).try_into().unwrap() {
             next_page_number = page + 1;
         }
     }
     else {
-        object_list = list.get_items(20, 0);
+        object_list = list.get_paginate_items(20, 0);
         if count > 20.try_into().unwrap() {
             next_page_number = 2;
         }
@@ -130,6 +130,7 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, _id: web::Path<i
         }
     } else {
         let (is_open, text) = get_anon_user_permission(_user);
+        let is_user_can_see_post_list = list.is_anon_user_can_see_el();
         if is_open == false {
             use users::templ::close_item;
             return close_item(text)
@@ -140,7 +141,6 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, _id: web::Path<i
             struct Template {
                 list:         PostList,
                 is_user_can_see_post_list: bool,
-                is_user_can_create_posts: bool,
                 object_list: Vec<Post>,
                 user: User,
                 next_page_number: i32,
@@ -148,7 +148,6 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, _id: web::Path<i
             let body = Template {
                 list:                      list,
                 is_user_can_see_post_list: is_user_can_see_post_list,
-                is_user_can_create_posts:  is_user_can_create_posts,
                 object_list: object_list,
                 user: _user,
                 next_page_number: next_page_number,
@@ -163,7 +162,6 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, _id: web::Path<i
             struct Template {
                 list:         PostList,
                 is_user_can_see_post_list: bool,
-                is_user_can_create_posts: bool,
                 object_list: Vec<Post>,
                 user: User,
                 next_page_number: i32,
@@ -171,7 +169,6 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, _id: web::Path<i
             let body = Template {
                 list:                      list,
                 is_user_can_see_post_list: is_user_can_see_post_list,
-                is_user_can_create_posts:  is_user_can_create_posts,
                 object_list: object_list,
                 user: _user,
                 next_page_number: next_page_number,
