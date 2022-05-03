@@ -597,7 +597,7 @@ impl Chat {
         };
         return stack;
     }
-    pub fn get_messages(&self) -> Vec<Message> {
+    pub fn get_messages(&self, limit: i64, offset: i64) -> Vec<Message> {
         use crate::schema::messages::dsl::messages;
 
         let _connection = establish_connection();
@@ -608,7 +608,7 @@ impl Chat {
             .load::<Message>(&_connection)
             .expect("E");
     }
-    pub fn get_messages_for_user(&self, user_id: i32) -> Vec<Message> {
+    pub fn get_messages_for_user(&self, limit: i64, offset: i64, user_id: i32) -> Vec<Message> {
         use crate::schema::messages::dsl::messages;
         use crate::schema::message_options::dsl::message_options;
 
@@ -619,12 +619,14 @@ impl Chat {
             .load::<MessageOption>(&_connection)
             .expect("E")
             .len() == 0 {
-                return self.get_messages();
+                return self.get_messages(limit, offset);
             }
 
         let get_messages = messages
             .filter(schema::messages::chat_id.eq(self.id))
             .filter(schema::messages::types.lt(10))
+            .limit(limit)
+            .offset(offset)
             .order(schema::messages::created.desc())
             .load::<Message>(&_connection)
             .expect("E");
@@ -645,6 +647,8 @@ impl Chat {
         return messages
             .filter(schema::messages::id.eq_any(stack))
             .filter(schema::messages::types.lt(10))
+            .limit(limit)
+            .offset(offset)
             .order(schema::messages::created.desc())
             .load::<Message>(&_connection)
             .expect("E");
