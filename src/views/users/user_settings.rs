@@ -125,7 +125,7 @@ pub async fn get_background(session: Session, color: web::Path<String>) -> actix
 
         let new_background = EditDesignSetting {
             color: *color.clone(),
-        }
+        };
 
         diesel::update(&backgrounds[0])
           .set(new_background)
