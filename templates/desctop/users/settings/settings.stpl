@@ -1,5 +1,15 @@
 <% include!("../../../base_block/base_header.stpl"); %>
-<div class="main-container" data-pk="<%= request_user.id %>" data-type="user_settings">
+<div class="main-container" data-pk="<%= request_user.id %>" data-type="user_design_settings">
+
+<div class="row">
+      <div class="col-md-9">
+
+      </div>
+      <div class="col-md-3 left_menu">
+        <% include!("menu.stpl"); %>
+      </div>
+
+    </div>
 
 </div>
 <% include!("../../../base_block/base_footer.stpl"); %>
