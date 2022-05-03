@@ -5,9 +5,9 @@
 <div class="collapse">
   <div class="card card-body" style="display: contents;">
     <ul>
-      <li><a href="/settings/" class="ajax">Общее</a></li>
-      <li><a href="/settings_info/" class="ajax">Информация</a></li>
-      <li><a href="/design_settings/" class="ajax">Внешний вид</a></li>
+      <li><a href="/users/settings/" class="ajax">Общее</a></li>
+      <li><a href="/users/settings_info/" class="ajax">Информация</a></li>
+      <li><a href="/users/design_settings/" class="ajax">Внешний вид</a></li>
     </ul>
   </div>
 </div>
