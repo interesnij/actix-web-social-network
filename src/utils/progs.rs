@@ -268,7 +268,7 @@ static BAD_TOP: &str = "<div class='card mt-3 centered'><div class='card-body' s
 static BAD_MEDIUM: &str = "</svg></div><h6 style='text-align: center;margin-bottom: 20px;' class='text-center'>";
 static BAD_BOTTOM: &str = "</h6></div>";
 
-pub fn get_user_permission(user: User, request_user: User)
+pub fn get_user_permission(user: &User, request_user: &User)
     -> (bool, String) {
 
     if request_user.types > 10 {
@@ -484,7 +484,7 @@ pub fn get_anon_user_permission(user: &User) -> (bool, String) {
 }
 
 
-pub fn get_community_permission(community: Community, request_user: User)
+pub fn get_community_permission(community: &Community, request_user: &User)
     -> (bool, String) {
 
     if request_user.types > 10 {
@@ -603,7 +603,7 @@ pub fn get_community_permission(community: Community, request_user: User)
     }
 }
 
-pub fn get_anon_community_permission(community: Community) -> (bool, String) {
+pub fn get_anon_community_permission(community: &Community) -> (bool, String) {
     if community.types > 10 {
         if community.is_closed() {
             return (

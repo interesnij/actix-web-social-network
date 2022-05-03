@@ -68,7 +68,7 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, _id: web::Path<i
 
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
-        let (is_open, text) = get_user_permission(_user, _request_user);
+        let (is_open, text) = get_user_permission(&_user, &_request_user);
         let _request_user_id = &_request_user.id;
         let is_user_can_see_post_list = list.is_user_can_see_el(*_request_user_id);
         let is_user_can_create_posts = list.is_user_can_create_el(*_request_user_id);
