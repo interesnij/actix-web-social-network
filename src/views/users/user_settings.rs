@@ -25,7 +25,7 @@ pub async fn settings_page(session: Session, req: HttpRequest) -> actix_web::Res
 
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
-        if folder == "desctop/".to_string() {
+        if _type == "desctop/".to_string() {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/settings/settings.stpl")]
             struct UserPage {
@@ -33,7 +33,7 @@ pub async fn settings_page(session: Session, req: HttpRequest) -> actix_web::Res
                 request_user: User,
             }
             let body = UserPage {
-                title:        "Настройки профиля",
+                title:        "Настройки профиля".to_string(),
                 request_user: request_user,
             }
             .render_once()
@@ -47,7 +47,7 @@ pub async fn settings_page(session: Session, req: HttpRequest) -> actix_web::Res
                 request_user: User,
             }
             let body = UserPage {
-                title:        "Настройки профиля",
+                title:        "Настройки профиля".to_string(),
                 request_user: request_user,
             }
             .render_once()
@@ -64,7 +64,7 @@ pub async fn design_settings_page(session: Session, req: HttpRequest) -> actix_w
 
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
-        if folder == "desctop/".to_string() {
+        if _type == "desctop/".to_string() {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/settings/design_settings.stpl")]
             struct UserPage {
@@ -73,7 +73,7 @@ pub async fn design_settings_page(session: Session, req: HttpRequest) -> actix_w
                 color:        String,
             }
             let body = UserPage {
-                title:        "Настройки профиля",
+                title:        "Настройки профиля".to_string(),
                 request_user: request_user,
                 color:        request_user.get_color_background(),
             }
@@ -89,7 +89,7 @@ pub async fn design_settings_page(session: Session, req: HttpRequest) -> actix_w
                 color:        String,
             }
             let body = UserPage {
-                title:        "Настройки профиля",
+                title:        "Настройки профиля".to_string(),
                 request_user: request_user,
                 color:        request_user.get_color_background(),
             }
@@ -114,7 +114,7 @@ pub async fn get_background(session: Session, color: web::Path<i32>) -> actix_we
             .expect("E");
 
         diesel::update(&backgrounds[0])
-          .set(schema::design_settings::background.eq(color))
+          .set(schema::design_settings::background.eq(*color))
              .get_result::<DesignSetting>(&_connection)
              .expect("Error.");
 

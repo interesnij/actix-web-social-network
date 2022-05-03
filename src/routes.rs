@@ -3,8 +3,7 @@ use actix_web::web;
 use crate::views::{
     pages,
     auth,
-    profile,
-
+    profile, user_settings,
     post_pages, post_progs,
 };
 
