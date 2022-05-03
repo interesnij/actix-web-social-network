@@ -409,7 +409,7 @@ pub fn get_user_permission(user: User, request_user: User)
     }
 }
 
-pub fn get_anon_user_permission(&user: User) -> (bool, String) {
+pub fn get_anon_user_permission(user: &User) -> (bool, String) {
     if user.types > 10 {
         if user.is_closed() {
             return (
