@@ -181,7 +181,6 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, _id: web::Path<i
 }
 
 pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    let _connection = establish_connection();
     let _type = get_folder(req);
     let _user = get_user(*_id);
 
