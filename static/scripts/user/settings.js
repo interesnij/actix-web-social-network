@@ -4,7 +4,7 @@ on('#ajax', 'click', '.color_change', function() {
   var input = span.querySelector(".custom-control-input");
   var list = document.querySelector(".theme-color");
   var link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/users/progs/color/" + color + "/", true );
+  link_.open( 'GET', "/users/settings/get_background/" + color + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link_.send();
   link_.onreadystatechange = function () {

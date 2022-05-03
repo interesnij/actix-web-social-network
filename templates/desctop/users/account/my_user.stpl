@@ -27,7 +27,7 @@
           </div>
 
           <span class="card centered">
-            <a class="ajax" href="/users/settings/general/">Редактировать</a>
+            <a class="ajax" href="/users/settings/">Редактировать</a>
           </span>
         </div>
     </div>
