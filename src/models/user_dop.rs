@@ -847,3 +847,8 @@ pub struct NewDesignSetting {
     pub user_id:    i32,
     pub background: String,
 }
+#[derive(Deserialize, AsChangeset)]
+#[table_name="design_settings"]
+pub struct EditDesignSetting {
+    pub background: String,
+}

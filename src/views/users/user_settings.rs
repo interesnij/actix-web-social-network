@@ -115,7 +115,7 @@ pub async fn design_settings_page(session: Session, req: HttpRequest) -> actix_w
 pub async fn get_background(session: Session, color: web::Path<String>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         use crate::schema::design_settings::dsl::design_settings;
-        use crate::models::DesignSetting;
+        use crate::models::{DesignSetting, EditDesignSetting};
         let _request_user = get_request_user_data(session);
         let _connection = establish_connection();
         let backgrounds = design_settings
@@ -123,10 +123,12 @@ pub async fn get_background(session: Session, color: web::Path<String>) -> actix
             .load::<DesignSetting>(&_connection)
             .expect("E");
 
-        let color = *color.clone();
+        let new_background = EditDesignSetting {
+            color: *color.clone(),
+        }
 
         diesel::update(&backgrounds[0])
-          .set(schema::design_settings::background.eq(color))
+          .set(new_background)
              .get_result::<DesignSetting>(&_connection)
              .expect("Error.");
 
