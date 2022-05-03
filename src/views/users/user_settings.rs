@@ -28,13 +28,13 @@ pub async fn settings_page(session: Session, req: HttpRequest) -> actix_web::Res
         if _type == "desctop/".to_string() {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/settings/settings.stpl")]
-            struct UserPage {
+            struct Template {
                 title:        String,
                 request_user: User,
             }
-            let body = UserPage {
+            let body = Template {
                 title:        "Настройки профиля".to_string(),
-                request_user: request_user,
+                request_user: _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -42,13 +42,13 @@ pub async fn settings_page(session: Session, req: HttpRequest) -> actix_web::Res
         } else {
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/settings/settings.stpl")]
-            struct UserPage {
+            struct Template {
                 title:        String,
                 request_user: User,
             }
-            let body = UserPage {
+            let body = Template {
                 title:        "Настройки профиля".to_string(),
-                request_user: request_user,
+                request_user: _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -67,15 +67,15 @@ pub async fn design_settings_page(session: Session, req: HttpRequest) -> actix_w
         if _type == "desctop/".to_string() {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/settings/design_settings.stpl")]
-            struct UserPage {
+            struct Template {
                 title:        String,
                 request_user: User,
                 color:        String,
             }
-            let body = UserPage {
+            let body = Template {
                 title:        "Настройки профиля".to_string(),
-                request_user: request_user,
-                color:        request_user.get_color_background(),
+                request_user: _request_user,
+                color:        _request_user.get_color_background(),
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -83,15 +83,15 @@ pub async fn design_settings_page(session: Session, req: HttpRequest) -> actix_w
         } else {
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/settings/design_settings.stpl")]
-            struct UserPage {
+            struct Template {
                 title:        String,
                 request_user: User,
                 color:        String,
             }
-            let body = UserPage {
+            let body = Template {
                 title:        "Настройки профиля".to_string(),
-                request_user: request_user,
-                color:        request_user.get_color_background(),
+                request_user: _request_user,
+                color:        _request_user.get_color_background(),
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -102,7 +102,7 @@ pub async fn design_settings_page(session: Session, req: HttpRequest) -> actix_w
     }
 }
 
-pub async fn get_background(session: Session, color: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn get_background(session: Session, color: web::Path<String>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         use crate::schema::design_settings::dsl::design_settings;
         use crate::models::DesignSetting;
