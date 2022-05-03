@@ -183,7 +183,7 @@ on('#ajax', 'click', '.post_list_change', function() {
     parent = this.parentElement.parentElement.parentElement;
     list = parent.querySelectorAll(".list");
     pk = this.getAttribute("data-pk");
-    if this.classList.contains("community") {
+    if (this.classList.contains("community")) {
       url = "/comunities/" + pk + "/wall/";
     }
     else {
