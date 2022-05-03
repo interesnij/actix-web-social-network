@@ -1,6 +1,7 @@
 use actix_web::{
     error::InternalError,
     http::StatusCode,
+    HttpResponse,
 };
 use sailfish::TemplateOnce;
 use crate::models::{User, PostList};
