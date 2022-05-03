@@ -1,0 +1,78 @@
+{% load message %}
+
+<div class="container mt-3 main-container" data-pk="{{ chat.pk }}" data-type="user_chat_fixed_messages">
+  <span class="load_block">
+    <div class="media mt-3" class="pk_saver" data-pk="{{ chat.pk }}" style="padding-left: 7px;">
+      <h5 class="mt-1">
+        Закрепленные сообщения (<span class="count_fixed_messages">{{ chat.get_fix_message_count }}</span>)
+      </h5>
+    </div>
+  <div class="container-fluid pk_saver">
+    <div class="list-group border-top border-bottom list-group-flush is_block_paginate">
+      {% if object_list %}
+      {% for object in object_list %}
+          <div class="message media pb-0 pt-1 border-bottom" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}" style="display:block">
+            <div class="media">
+              <figure>
+                <a href="{{ object.creator.get_link }}" class="ajax">
+                    {{ object.creator.get_40_avatar|safe }}
+                </a>
+              </figure>
+              <div class="media-body">
+                <h5 class="time-title mb-0">
+                  <a href="{{ object.creator.get_link }}" class="ajax creator_link"><span class="creator_name">{{ object.creator.get_full_name }}</span></a>
+                  <small class="float-right text-muted">{{ object.get_created }} {% if object.is_edited %}(ред.){% endif %}</small>
+                </h5>
+
+                {% if object.parent %}
+                  {{ object.get_parent_message|safe }}
+                {% endif %}
+
+                {% if object.voice %}
+                  <audio class="audio" src="{{ object.voice.url }}"></audio>
+                {% elif object.sticker %}
+                <div class="message_sticker mt-1">
+                  <img src="{{ object.sticker.image.url }}" style="width: 128px;" tooltip="{{ object.sticker.category.name }}" flow="up">
+                </div>
+                {% else %}
+
+                <span class="text toggle_fix_message">{{ object.text|safe }}</span>
+
+                {% if object.attach %}
+                  {{ object|get_attach:request.user|safe }}
+                {% endif %}
+
+                {% if object.repost %}
+                  {% include 'desctop/chat/message/repost.html' %}
+                {% endif %}
+                
+                {% if object.is_have_transfer %}
+                  {% include 'desctop/chat/message/transfers.html' %}
+                {% endif %}
+
+                {% endif %}
+              </div>
+            </div>
+            <p class="small">
+              <i>Закреплено {{ object.get_created }}</i>
+              {% if is_user_can_fix_item %}
+                <span class="u_message_unfixed pointer underline">Открепить</span>
+              {% endif %}
+            </p>
+          </div>
+
+      {% endfor %}
+        {% if page_obj.has_next %}
+        <div class="load centered m-1 next_page_list" data-link="/chat/{{ chat.pk }}/fixed_messages/?page={{ page_obj.next_page_number }}">
+            <img src="/static/images/preloader.gif">
+        </div>
+        {% endif %}
+      {% else %}
+      <div class="card mb-3 centered items_empty">
+        <h6 style="margin: 20px;text-align: center;"> Закрепленных сообщений нет...</h6>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  </span>
+</div>

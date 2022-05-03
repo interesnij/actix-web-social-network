@@ -11,7 +11,7 @@
          <a href="<%= reply_creator.get_link() %>" class="ajax">
              <span class="commenter_first_name"><%= reply_creator.first_name %></span> <%= reply_creator.last_name %>
          </a>
-         <small class="text-muted float-right"><%= reply.created.format("%Y-%m-%d %H:%M:%S.%f").to_string() %></small>
+         <small class="text-muted float-right"><%= reply.created.format("%d-%m-%Y в %H:%M").to_string() %></small>
      </h5>
 
      <% if reply.sticker_id.is_some() { %>

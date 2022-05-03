@@ -1,7 +1,4 @@
 <span class="load_list">
-
-  <% if user.is_user_can_see_post(request_user.id) == true { %>
-
   <% if user.count_fix_items() > 1 { %>
   <div class="csslider infinity slider_100 mt-2">
     <p>Особые записи</p>
@@ -47,7 +44,6 @@
 
   <span class="span_list_pk" list-pk="<%= list.id %>">
     <span class="list_pk" data-uuid="<%= list.id %>">
-    <%= next_page_number %>
       <% if is_user_can_see_post_list == true { %>
       <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %>: </span>
 
@@ -85,8 +81,4 @@
         <% } %>
     </span>
   </span>
-
-<% } else { %>
-    <% include!("../../generic/centered/private_post.stpl"); %>
-<% } %>
 </span>

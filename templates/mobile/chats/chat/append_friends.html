@@ -1,0 +1,49 @@
+<div class="px-0 card no-shadow main-container" chat-pk="{{ chat.pk }}" data-pk="none" data-type="none" style="min-height: 600px;">
+    <form>
+      {% csrf_token %}
+      <div class="card-header" style="min-height: 100px;">
+        <span class="header_title">Выбор собеседников<span>
+      </div>
+      <div class="card-body">
+        <div class="is_block_paginate">
+          {% if object_list %}
+          {% for object in object_list %}
+          <div class="media pointer add_member_chat_toggle border-bottom" data-link="{{ object.get_link }}" data-pk="{{ object.pk }}" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
+            <figure style="width:30px;">
+              {% if object.s_avatar %}
+                <img src="{{ object.s_avatar.url }}" style="width:40px;border-radius:40px;" alt="image">
+              {% else %}
+                <svg fill="currentColor" class="svg_default svg_default_40" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"/></svg>
+              {% endif %}
+            </figure>
+            <div class="media-body">
+              <h6 class="mb-0" style="padding-top: 10px;">
+                {{ object.get_full_name }}
+              </h6>
+            </div>
+            <span class="custom_color border item_attach_circle friends_chat_load_several" tooltip="Выбрать друга" flow="up">
+              <svg class="svg_default" fill="currentColor" viewBox="2 2 20 20">
+                <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"/>
+              </svg>
+          </span>
+          </div>
+          {% endfor %}
+
+          {% else %}
+          <div class="items_empty mb-3">
+            <div class="card-body"></div>
+            <h6 style="margin: 20px;text-align: center;">
+               Выбирать не из кого.
+            </h6>
+          </div>
+          {% endif %}
+
+        </div>
+      </div>
+      <div class="card-footer border-top">
+        <button type="button" class="btn btn-sm border form_btn" disabled id="append_friends_to_chat_btn" style="float: right;">
+          Выберите пользователей
+        </button>
+      </div>
+    </form>
+</div>

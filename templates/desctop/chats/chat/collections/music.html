@@ -1,0 +1,74 @@
+
+<div class="container mt-3">
+  <div class="row no-gutters" style="overflow-x: auto;">
+      <div class="col-12">
+          <ul style="width:max-content;list-style: none;" chat-pk="{{ chat.pk }}">
+            <li class="select_chat_collections pointer pr-2 float-left" data-type="photo">Фотографии</li>
+            <li class="select_chat_collections pointer pr-2 float-left" data-type="doc">Документы</li>
+            <li class="select_chat_collections pointer pr-2 float-left" data-type="video">Видеоролики</li>
+            <li class="select_chat_collections pointer pr-2 float-left" data-type="music">Аудиозаписи</li>
+            <li class="select_chat_collections pointer pr-2 float-left" data-type="good">Товары</li>
+            <li class="select_chat_collections pointer pr-2 float-left" data-type="post">Записи</li>
+          </ul>
+      </div>
+  </div>
+  <span class="load_block">
+    <div class="media mt-3" style="padding-left: 7px;">
+      <h5 class="mt-1">
+        <p>
+          <span class="second_list_name">Аудиозаписи</span>
+        </p>
+      </h5>
+    </div>
+    <div class="container-fluid pk_saver">
+      {% if object_list %}
+      <div class="row is_block_paginate is_stat_list" chat-pk="{{ chat.pk }}" data-pk="{{ list.pk }}" owner-pk="{{ list.community.pk }}" data-type="chat_music_list" style="display: block;">
+
+        {% for object in object_list %}
+          {% if object.is_music_list %}
+            <div class="custom_color row_item text-center has-background-img position-relative box-shadow" musiclist-pk="{{ object.pk }}">
+              <figure class="background-img">
+                <img src="{{ object.get_cover_photo }}"></figure>
+                <div class="container">
+                  <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i>
+                  <br>
+                  <span>
+                  <h4 class="load_music_list pointer">
+                    <a>{{ object.name }}</a>
+                  </h4>
+                  </span>
+                  <p class="lead">
+                    {% if object.community %}
+                      <a class="ajax underline" href="{{ object.community.get_link }}">{{ object.community.name }}</a>
+                    {% else %}
+                      <a class="ajax underline" href="{{ object.creator.get_link }}">{{ object.creator.get_full_name }}</a>
+                    {% endif %}
+                  </p>
+                  <hr class="my-3">
+                  <span>
+                  <a class="load_music_list pointer">{{ object.count_items_ru }}</a>
+                  </span>
+                </div>
+              </div>
+          {% else %}
+            {% if object.community %}
+              {% include 'desctop/communities/music/track.html' %}
+            {% else %}
+              {% include 'desctop/users/music/track.html' %}
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+          <div class="load centered m-1 next_page_list" data-link="/chat/{{ chat.pk }}/collections/?type=music&page={{ page_obj.next_page_number }}">
+              <img src="/static/images/preloader.gif">
+          </div>
+        {% endif %}
+
+      </div>
+      {% else %}
+        {% include 'desctop/users/music/main_list/no_tracks.html' %}
+      {% endif %}
+    </div>
+  </span>
+</div>

@@ -14,7 +14,7 @@
                 <%= post_creator.get_full_name() %>
               </a>
             </h6>
-            <a class="mb-0 wall_fullscreen pointer"><%= object.created.format("%Y-%m-%d %H:%M:%S.%f").to_string() %></a>
+            <a class="mb-0 wall_fullscreen pointer"><%= object.created.format("%d-%m-%Y в %H:%M").to_string() %></a>
         </div>
 
         <div class="dropdown">

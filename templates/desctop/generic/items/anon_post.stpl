@@ -26,7 +26,7 @@
             <%= community.name %> &nbsp;
           </a>
         </h6>
-        <p class="mb-0 wall_fullscreen pointer"><%= parent.created.format("%Y-%m-%d %H:%M:%S.%f").to_string() %></p>
+        <p class="mb-0 wall_fullscreen pointer"><%= parent.created.format("%d-%m-%Y в %H:%M").to_string() %></p>
       </div>
       </div>
   </div>
@@ -45,7 +45,7 @@
             <%= creator.get_full_name() %> &nbsp;
           </a>
         </h6>
-        <p class="mb-0 wall_fullscreen pointer"><%= parent.created.format("%Y-%m-%d %H:%M:%S.%f").to_string() %></p>
+        <p class="mb-0 wall_fullscreen pointer"><%= parent.created.format("%d-%m-%Y в %H:%M").to_string() %></p>
       </div>
       </div>
   </div>
