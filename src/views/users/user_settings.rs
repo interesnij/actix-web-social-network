@@ -85,7 +85,7 @@ pub async fn design_settings_page(session: Session, req: HttpRequest) -> actix_w
             let body = Template {
                 title:        "Настройки профиля".to_string(),
                 request_user: _request_user,
-                color:        _designs[0].background,
+                color:        _designs[0].background.clone(),
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -101,7 +101,7 @@ pub async fn design_settings_page(session: Session, req: HttpRequest) -> actix_w
             let body = Template {
                 title:        "Настройки профиля".to_string(),
                 request_user: _request_user,
-                color:        _designs[0].background,
+                color:        _designs[0].background.clone(),
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -123,7 +123,7 @@ pub async fn get_background(session: Session, color: web::Path<String>) -> actix
             .load::<DesignSetting>(&_connection)
             .expect("E");
 
-        let color: String = *color;
+        let color: String = &*color;
 
         diesel::update(&backgrounds[0])
           .set(schema::design_settings::background.eq(color))
