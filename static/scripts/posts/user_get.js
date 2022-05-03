@@ -184,10 +184,10 @@ on('#ajax', 'click', '.post_list_change', function() {
     list = parent.querySelectorAll(".list");
     pk = this.getAttribute("data-pk");
     if (this.classList.contains("community")) {
-      url = "/comunities/" + pk + "/wall/";
+      url = "/comunities/" + pk + "/wall/" + this.getAttribute("list-pk") + "/";
     }
     else {
-      url = "/users/" + pk + "/wall/";
+      url = "/users/" + pk + "/wall/" + this.getAttribute("list-pk") + "/";
     }
     for (var i = 0; i < list.length; i++) {
       list[i].classList.remove("active");

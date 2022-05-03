@@ -24,15 +24,16 @@ use crate::models::{User, Post};
 
 pub fn user_routes(config: &mut web::ServiceConfig) {
     config.route("/id{id}/", web::get().to(user_page));
-    config.route("/users/{id}/wall/", web::get().to(user_wall_page));
-} 
+    config.route("/users/{user_id}/wall/{list_id}/", web::get().to(user_wall_page));
+}
 
-pub async fn user_wall_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn user_wall_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
     use crate::utils::PaginationParams;
     use crate::models::PostList;
 
     let params_some = web::Query::<PaginationParams>::from_query(&req.query_string());
     let mut page: i32 = 0;
+    let mut next_page_number = 0;
     if params_some.is_ok() {
         let params = params_some.unwrap();
         if params.page.is_some() {
@@ -45,23 +46,26 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, _id: web::Path<i
     else {
         page = 1;
     }
-    let _type = get_folder(req);
-    let _user = get_user(*_id);
-    let mut next_page_number = 0;
-    let object_list: Vec<Post>;
-    let list = get_post_list(_user.get_selected_post_list_pk());
 
-    let count = list.count;
+    let user_id : i32 = param.0;
+    let list_id : i32 = param.1;
+
+    let _type = get_folder(req);
+
+    let _user = get_user(user_id);
+    let _list = get_post_list(list_id);
+
+    let object_list: Vec<Post>;
     if page > 1 {
         let step = (page - 1) * 20;
-        object_list = list.get_paginate_items(20, step.into());
-        if count > (page * 20).try_into().unwrap() {
+        object_list = _list.get_paginate_items(20, step.into());
+        if _list.count > (page * 20).try_into().unwrap() {
             next_page_number = page + 1;
         }
     }
     else {
-        object_list = list.get_paginate_items(20, 0);
-        if count > 20.try_into().unwrap() {
+        object_list = _list.get_paginate_items(20, 0);
+        if _list.count > 20.try_into().unwrap() {
             next_page_number = 2;
         }
     }
@@ -70,8 +74,8 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, _id: web::Path<i
         let _request_user = get_request_user_data(session);
         let (is_open, text) = get_user_permission(&_user, &_request_user);
         let _request_user_id = &_request_user.id;
-        let is_user_can_see_post_list = list.is_user_can_see_el(*_request_user_id);
-        let is_user_can_create_posts = list.is_user_can_create_el(*_request_user_id);
+        let is_user_can_see_post_list = _list.is_user_can_see_el(*_request_user_id);
+        let is_user_can_create_posts = _list.is_user_can_create_el(*_request_user_id);
 
         if is_open == false {
             use crate::views::close_item;
@@ -91,7 +95,7 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, _id: web::Path<i
                 next_page_number: i32,
             }
             let body = Template {
-                list:                      list,
+                list:                      _list,
                 request_user:              _request_user,
                 is_user_can_see_post_list: is_user_can_see_post_list,
                 is_user_can_create_posts:  is_user_can_create_posts,
@@ -116,7 +120,7 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, _id: web::Path<i
                 next_page_number: i32,
             }
             let body = Template {
-                list:                      list,
+                list:                      _list,
                 request_user:              _request_user,
                 is_user_can_see_post_list: is_user_can_see_post_list,
                 is_user_can_create_posts:  is_user_can_create_posts,
@@ -131,7 +135,7 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, _id: web::Path<i
         }
     } else {
         let (is_open, text) = get_anon_user_permission(&_user);
-        let is_user_can_see_post_list = list.is_anon_user_can_see_el();
+        let is_user_can_see_post_list = _list.is_anon_user_can_see_el();
         if is_open == false {
             use crate::views::close_item;
             return close_item(text)
@@ -147,7 +151,7 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, _id: web::Path<i
                 next_page_number: i32,
             }
             let body = Template {
-                list:                      list,
+                list:                      _list,
                 is_user_can_see_post_list: is_user_can_see_post_list,
                 object_list: object_list,
                 user: _user,
@@ -168,7 +172,7 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, _id: web::Path<i
                 next_page_number: i32,
             }
             let body = Template {
-                list:                      list,
+                list:                      _list,
                 is_user_can_see_post_list: is_user_can_see_post_list,
                 object_list: object_list,
                 user: _user,

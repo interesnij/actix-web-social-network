@@ -10,7 +10,7 @@
           <% } else { %>
             pointer post_list_change
           <% } %>"
-          data-pk="<%= community.id %>" list-pk="<%= object.id %>" data-type="community_post_list">
+          community-pk="<%= community.id %>" list-pk="<%= object.id %>" data-type="community_post_list">
           <div class="media">
             <a href="<%= community.get_link() %>" class="ajax">
               <figure><%- community.get_s_avatar() %></figure>
@@ -34,7 +34,7 @@
           <% } else { %>
             pointer post_list_change
           <% } %>"
-          data-type="user_post_list" data-pk="<%= user.id %>"> list-pk="<%= object.id %>"
+          user-pk="<%= user.id %>" data-type="user_post_list" list-pk="<%= object.id %>"
             <div class="media">
               <a href="<%= creator.get_link() %>" class="ajax">
                 <figure><%- creator.get_s_avatar() %></figure>
