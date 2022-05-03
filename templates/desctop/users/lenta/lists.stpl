@@ -34,7 +34,7 @@
           <% } else { %>
             pointer post_list_change
           <% } %>"
-          user-pk="<%= user.id %>" data-type="user_post_list" list-pk="<%= object.id %>"
+          user-pk="<%= user.id %>" data-type="user_post_list" list-pk="<%= object.id %>">
             <div class="media">
               <a href="<%= creator.get_link() %>" class="ajax">
                 <figure><%- creator.get_s_avatar() %></figure>
