@@ -87,7 +87,6 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, _id: web::Path<i
                 is_user_can_create_posts: bool,
                 object_list: Vec<Post>,
                 user: User,
-                is_page_list: bool,
                 next_page_number: i32,
             }
             let body = Template {
@@ -113,7 +112,6 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, _id: web::Path<i
                 is_user_can_create_posts: bool,
                 object_list: Vec<Post>,
                 user: User,
-                is_page_list: bool,
                 next_page_number: i32,
             }
             let body = Template {
@@ -145,7 +143,6 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, _id: web::Path<i
                 is_user_can_create_posts: bool,
                 object_list: Vec<Post>,
                 user: User,
-                is_page_list: bool,
                 next_page_number: i32,
             }
             let body = Template {
@@ -169,7 +166,6 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, _id: web::Path<i
                 is_user_can_create_posts: bool,
                 object_list: Vec<Post>,
                 user: User,
-                is_page_list: bool,
                 next_page_number: i32,
             }
             let body = Template {
