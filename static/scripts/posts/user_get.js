@@ -182,12 +182,19 @@ on('#ajax', 'click', '.post_list_change', function() {
   if (!this.classList.contains("tab_active")){
     parent = this.parentElement.parentElement.parentElement;
     list = parent.querySelectorAll(".list");
+    pk = this.getAttribute("data-pk");
+    if this.classList.contains("community") {
+      url = "/comunities/" + pk + "/wall/";
+    }
+    else {
+      url = "/users/" + pk + "/wall/";
+    }
     for (var i = 0; i < list.length; i++) {
       list[i].classList.remove("active");
       list[i].classList.add("pointer", "post_list_change");
     };
     block = parent.nextElementSibling;
-    list_block_load(block, ".span_list_pk", "/posts/list/?list=" + this.getAttribute("list-pk"));
+    list_block_load(block, ".span_list_pk", url);
     this.classList.remove("pointer", "post_list_change");
     this.classList.add("active");
     try{ reload_list_stat(this) }catch { null };

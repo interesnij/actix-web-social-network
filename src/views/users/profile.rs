@@ -25,7 +25,7 @@ use crate::models::{User, Post};
 pub fn user_routes(config: &mut web::ServiceConfig) {
     config.route("/id{id}/", web::get().to(user_page));
     config.route("/users/{id}/wall/", web::get().to(user_wall_page));
-}
+} 
 
 pub async fn user_wall_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     use crate::utils::PaginationParams;
