@@ -130,7 +130,7 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, _id: web::Path<i
 
         }
     } else {
-        let (is_open, text) = get_anon_user_permission(_user);
+        let (is_open, text) = get_anon_user_permission(&_user);
         let is_user_can_see_post_list = list.is_anon_user_can_see_el();
         if is_open == false {
             use crate::views::close_item;
