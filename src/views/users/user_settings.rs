@@ -63,7 +63,17 @@ pub async fn design_settings_page(session: Session, req: HttpRequest) -> actix_w
     let _type = get_folder(req);
 
     if is_signed_in(&session) {
+        use crate::schema::design_settings::dsl::design_settings;
+        use crate::models::DesignSetting;
+
         let _request_user = get_request_user_data(session);
+
+        let _connection = establish_connection();
+        let _designs = design_settings
+            .filter(schema::design_settings::user_id.eq(_request_user.id))
+            .load::<DesignSetting>(&_connection)
+            .expect("E");
+
         if _type == "desctop/".to_string() {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/settings/design_settings.stpl")]
@@ -75,7 +85,7 @@ pub async fn design_settings_page(session: Session, req: HttpRequest) -> actix_w
             let body = Template {
                 title:        "Настройки профиля".to_string(),
                 request_user: _request_user,
-                color:        _request_user.get_color_background(),
+                color:        _designs[0].background,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -91,7 +101,7 @@ pub async fn design_settings_page(session: Session, req: HttpRequest) -> actix_w
             let body = Template {
                 title:        "Настройки профиля".to_string(),
                 request_user: _request_user,
-                color:        _request_user.get_color_background(),
+                color:        _designs[0].background,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
