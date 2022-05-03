@@ -24,8 +24,6 @@ use serde::Deserialize;
 
 pub fn post_routes(config: &mut web::ServiceConfig) {
     config.route("/posts/list/", web::get().to(post_list_page));
-    //config.route("/posts/user_wall/{id}/", web::get().to(user_wall_page));
-    //config.route("/posts/community_wall/{id}/", web::get().to(community_wall_page));
 
     config.route("/posts/add_user_list/", web::get().to(add_user_post_list_page));
     config.route("/posts/edit_user_list/{id}/", web::get().to(edit_user_post_list_page));
