@@ -621,7 +621,7 @@ impl Chat {
             .expect("E").len() == 0;
     }
     pub fn get_first_message(&self, user_id: i32 ) -> Message {
-        return self.get_messages_for_user(user_id, 1, 0)[0];
+        return self.get_messages_for_user(1, 0, user_id)[0];
     }
 
     pub fn get_preview_message(&self, user_id: i32 ) -> String {
@@ -785,7 +785,7 @@ impl Chat {
                              .expect("E");
                         if supports.len() > 0 {
                             name = "Агент техподдержки №".to_string() + &supports[0].id.to_string();
-                            if user.get_online() {
+                            if user.is_online() {
                                 status = " <span class='status bg-success'></span>".to_string();
                             }
                         }
