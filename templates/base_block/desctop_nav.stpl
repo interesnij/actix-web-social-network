@@ -19,9 +19,9 @@
           </div>
           &nbsp;Сообщения
           <span class="new_unread_chats">
-          <% if request_user.get_unread_chats() > 0 { %>
+          <% if request_user.count_unread_chats() > 0 { %>
             <span class="border tab_badge_left_menu">
-              <%= request_user.get_unread_chats() %>
+              <%= request_user.count_unread_chats() %>
             </span>
           <% } %>
           </span>
