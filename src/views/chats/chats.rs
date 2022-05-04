@@ -72,12 +72,14 @@ pub async fn chats_list_page(session: Session, req: HttpRequest) -> actix_web::R
                 request_user: User,
                 favourite_messages_count: usize,
                 count_chats: usize,
+                next_page_number: i32,
             }
             let body = Template {
                 title:        "Сообщения".to_string(),
                 request_user: _request_user,
                 favourite_messages_count: favourite_messages_count,
                 count_chats: count,
+                next_page_number: next_page_number,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -90,12 +92,14 @@ pub async fn chats_list_page(session: Session, req: HttpRequest) -> actix_web::R
                 request_user: User,
                 favourite_messages_count: usize,
                 count_chats: usize,
+                next_page_number: i32,
             }
             let body = Template {
                 title:        "Сообщения".to_string(),
                 request_user: _request_user,
                 favourite_messages_count: favourite_messages_count,
                 count_chats: count,
+                next_page_number: next_page_number,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
