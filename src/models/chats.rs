@@ -597,6 +597,257 @@ impl Chat {
         };
         return stack;
     }
+    pub fn get_unread_message(&self, user_id: i32 ) -> Vec<Message> {
+        use crate::schema::messages::dsl::messages;
+
+        return messages
+            .filter(schema::messages::chat_id.eq(self.id))
+            .filter(schema::messages::unread.ed(true))
+            .filter(schema::messages::types.lt(10))
+            .filter(schema::messages::user_id.ne(user_id))
+            .load::<Message>(&_connection)
+            .expect("E");
+    }
+    pub fn is_empty(&self, user_id: i32) -> bool {
+        use crate::schema::messages::dsl::messages;
+
+        return messages
+            .filter(schema::messages::chat_id.eq(self.id))
+            .filter(schema::messages::types.lt(10))
+            .filter(schema::messages::user_id.ne(user_id))
+            .load::<Message>(&_connection)
+            .expect("E").len()  == 0;
+    }
+    pub fn get_first_message(&self, user_id: i32 ) -> Message {
+        return get_messages_for_user(user_id)[0];
+    }
+
+    pub fn get_preview_message(&self, user_id: i32 ) -> String {
+        let first_message = self.get_first_message(user_id);
+        let mut preview_text: String;
+        let mut is_read: String;
+        let mut creator_figure: String;
+        let mut created: String;
+        let mut beep_icon = "".to_string();
+
+        if self.is_have_draft_message_content(user_id) {
+            let message = self.get_draft_message(user_id);
+            preview_text = "Черновик: ".to_string() + &message.get_type_text();
+        }
+        else if self.is_empty(user_id) {
+            preview_text = "Нет сообщений".to_string();
+        }
+        else if first_message.is_manager() {
+            created = first_message.created.format("%d-%m-%Y в %H:%M").to_string();
+            if first_message.parent_id.is_some() {
+                let creator = first_message.get_creator();
+                let message = first_message.get_parent_message();
+                preview_text = concat_string!(
+                    creator.get_full_name(),
+                    first_message.text,
+                    "<span class='underline'>",
+                    message.get_text_60(),
+                    "</span>")
+            }
+            else {
+                preview_text = first_message.get_text_60();
+            }
+        }
+        else {
+            preview_text = first_message.get_text_60();
+            if first_message.user_id == user_id {
+                preview_text = "Вы: " + &first_message.get_type_text();
+                if first_message.unread == true {
+                    is_read = " bg-light-secondary".to_string();
+                }
+            }
+            else {
+                preview_text = first_message.get_type_text();
+            }
+
+        }
+        let member = self.get_chat_request_user(user_id);
+        if member.is_some() {
+            beep_icon = member.get_beep_icon();
+        }
+
+        if self.is_group() && self.is_public() {
+            let figure: String;
+            let name: String;
+
+            if self.image.is_some() {
+                figure = concat_string!(
+                    "<figure><img src='",
+                    self.image.as_deref().unwrap(),
+                    "style='border-radius:50px;width:50px;' alt='image'></figure>");
+            }
+            else {
+                figure = "<figure><img src='/static/images/group_chat.jpg' style='border-radius:50px;width:50px;' alt='image'></figure>".to_string();
+            }
+
+            if self.name.is_some() {
+                name = self.name.as_deref().unwrap();
+            }
+            else {
+                name = "Групповой чат".to_string();
+            }
+
+            let media_body = concat_string!(
+                "<div class='media-body'><h5 class='time-title mb-0'>",
+                chat_name, beep_icon,
+                "<small class='float-right text-muted'>",
+                created,
+                "</small></h5><p class='mb-0",
+                is_read
+                "' style='white-space: nowrap;'>",
+                preview_text,
+                "</p><span class='typed'></span></div>"
+            );
+            return concat_string!(
+                "<div class='media'>",
+                figure, media_body,
+                self.get_unread_count_message(user_id),
+                "</div>"
+            )
+        }
+        else if self.is_private() {
+            let member = self.get_chat_member(user_id);
+            let figure: String;
+            let name: String;
+            let status = "".to_string();
+
+            if self.image.is_some() {
+                figure = concat_string!(
+                    "<figure><img src='",
+                    self.image.as_deref().unwrap(),
+                    "style='border-radius:50px;width:50px;' alt='image'></figure>");
+            }
+            else if member.s_avatar.is_some() {
+                figure = concat_string!(
+                    "<figure><img src='",
+                    member.s_avatar.as_deref().unwrap(),
+                    "style='border-radius:50px;width:50px;' alt='image'></figure>");
+            }
+            else {
+                figure = "<figure><svg fill='currentColor' class='svg_default svg_default_50' viewBox='0 0 24 24'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/><path d='M0 0h24v24H0z' fill='none'/></svg></figure>".to_string();
+            }
+
+            if self.name.is_some() {
+                name = self.name.as_deref().unwrap();
+            }
+            else {
+                name = member.get_full_name();
+            }
+
+            if member.is_online() {
+                status = " <span class='status bg-success'></span>".to_string();
+            }
+
+            let media_body = concat_string!(
+                "<div class='media-body'><h5 class='time-title mb-0'>",
+                chat_name, beep_icon, status,
+                "<small class='float-right text-muted'>",
+                created,
+                "</small></h5><p class='mb-0",
+                is_read
+                "' style='white-space: nowrap;'>",
+                preview_text,
+                "</p><span class='typed'></span></div>"
+            );
+            return concat_string!(
+                "<div class='media'>",
+                figure, media_body,
+                self.get_unread_count_message(user_id),
+                "</div>"
+            )
+        }
+        else if self.is_support() {
+            let member = self.get_chat_member(user_id);
+            let figure = "<figure><svg fill='currentColor' class='svg_default svg_default_50' viewBox='0 0 24 24'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/><path d='M0 0h24v24H0z' fill='none'/></svg></figure>".to_string();
+            let name: String;
+            let status = "".to_string();
+
+            if self.members == 1 {
+                name = "Чат техподдержки".to_string();
+            }
+            else {
+                 use crate::schema::support_users::dsl::support_users;
+                 use crate::models::SupportUsers;
+
+                 let _connection = establish_connection();
+                 for user in self.get_members() {
+                     if user.id != self.user_id {
+                        supports = support_users
+                             .filter(schema::support_users::manager_id.eq(user.id))
+                             .load::<SupportUsers>(&_connection)
+                             .expect("E");
+                        if supports.len() > 0 {
+                            name = "Агент техподдержки №".to_string() + &supports[0].id.to_string();
+                            if user.get_online():
+                                status = " <span class='status bg-success'></span>".to_string();
+                        }
+                     }
+                 }
+            }
+
+            let media_body = concat_string!(
+                "<div class='media-body'><h5 class='time-title mb-0'>",
+                chat_name, beep_icon, status,
+                "<small class='float-right text-muted'>",
+                created,
+                "</small></h5><p class='mb-0",
+                is_read
+                "' style='white-space: nowrap;'>",
+                preview_text,
+                "</p><span class='typed'></span></div>"
+            );
+            return concat_string!(
+                "<div class='media'>",
+                figure, media_body,
+                self.get_unread_count_message(user_id),
+                "</div>"
+            )
+        }
+        else if self.is_manager() {
+            let figure = "<figure><svg fill='currentColor' class='svg_default svg_default_50' viewBox='0 0 24 24'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/><path d='M0 0h24v24H0z' fill='none'/></svg></figure>".to_string();
+            let name = self.name.as_deref().unwrap();
+
+            let media_body = concat_string!(
+                "<div class='media-body'><h5 class='time-title mb-0'>",
+                chat_name, beep_icon,
+                "<small class='float-right text-muted'>",
+                created,
+                "</small></h5><p class='mb-0",
+                is_read
+                "' style='white-space: nowrap;'>",
+                preview_text,
+                "</p><span class='typed'></span></div>"
+            );
+            return concat_string!(
+                "<div class='media'>",
+                figure, media_body,
+                self.get_unread_count_message(user_id),
+                "</div>"
+            )
+        }
+    }
+    pub fn get_unread_count_message(&self, user_id: i32 ) -> String {
+        use crate::schema::messages::dsl::messages;
+
+        let count = messages
+            .filter(schema::messages::chat_id.eq(self.id))
+            .filter(schema::messages::unread.ed(true))
+            .filter(schema::messages::types.lt(10))
+            .filter(schema::messages::user_id.ne(user_id))
+            .load::<Message>(&_connection)
+            .expect("E")
+            .len()
+
+        if count > 0 {
+            return "<span style='font-size: 80%' class='tab_badge custom_color'>" + &count.to_string() + &"</span>".to_string();
+        }
+        return "".to_string()
+    }
     pub fn get_messages(&self, limit: i64, offset: i64) -> Vec<Message> {
         use crate::schema::messages::dsl::messages;
 
@@ -1162,6 +1413,8 @@ impl Chat {
         }
         return true;
     }
+
+
 }
 
 /////// ChatUsers //////
@@ -1195,7 +1448,20 @@ pub struct NewChatUser {
 }
 impl ChatUser {
     pub fn beep(&self) -> bool {
-        return self.no_disturb.as_ref().unwrap() > &chrono::Local::now().naive_utc();
+        if self.no_disturb.is_some() {
+            return self.no_disturb.as_ref().unwrap() > &chrono::Local::now().naive_utc();
+        }
+        else {
+            return true;
+        }
+    }
+    pub fn get_beep_icon(&self) -> String {
+        if self.beep() {
+            return "".to_string();
+        }
+        else {
+            return " <svg style='width: 15px;' enable-background='new 0 0 24 24' height='15px' viewBox='0 0 24 24' width='17px' fill='currentColor'><path d='M0 0h24v24H0V0z' fill='none'/><path d='M4.34 2.93L2.93 4.34 7.29 8.7 7 9H3v6h4l5 5v-6.59l4.18 4.18c-.65.49-1.38.88-2.18 1.11v2.06c1.34-.3 2.57-.92 3.61-1.75l2.05 2.05 1.41-1.41L4.34 2.93zM10 15.17L7.83 13H5v-2h2.83l.88-.88L10 11.41v3.76zM19 12c0 .82-.15 1.61-.41 2.34l1.53 1.53c.56-1.17.88-2.48.88-3.87 0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zm-7-8l-1.88 1.88L12 7.76zm4.5 8c0-1.77-1.02-3.29-2.5-4.03v1.79l2.48 2.48c.01-.08.02-.16.02-.24z'/></svg>".to_string();
+        }
     }
 }
 
@@ -1412,6 +1678,52 @@ impl Message {
             &creator.get_link() +
             &"' class='ajax'>" +
             &"' class='ajax'>";
+    }
+    pub fn get_type_text(&self) -> String {
+        if self.attach.is_some() and self.text.is_some() {
+            return "<b class='i_link'>Текст и вложения</b>".to_string();
+        }
+        else if self.attach.is_some() {
+            return "<b class='i_link'>Вложения</b>".to_string();
+        }
+        else if self.text.is_some() {
+            return self.get_text_60();
+        }
+        else if self.voice.is_some() {
+            return "<b class='i_link'>Голосовое сообщение</b>".to_string();
+        }
+        else if self.sticker.is_some() {
+            return "<b class='i_link'>Наклейка</b>".to_string();
+        }
+        else if self.post_id.is_some() {
+            return "<b class='i_link'>Репост</b>".to_string();
+        }
+        else if self.parent_id.is_some() {
+            if self.is_manager() {
+                return concat_string!(
+                    "<b class='i_link'>",
+                    self.get_creator().get_full_name(),
+                    self.text.as_deref().unwrap(),
+                    "<span class='underline'>",
+                    self.get_parent_message().get_text_60(),
+                    "</span></b>"
+                );
+            }
+            else {
+                return "<b class='i_link'>Ответ на сообщение</b>".to_string();
+            }
+        }
+        else if self.is_have_transfer() {
+            if self.get_transfers_ids().len() > 1 {
+                return "<b class='i_link'>Пересланные сообщения</b>".to_string();
+            }
+            else {
+                return "<b class='i_link'>Пересланное сообщения</b>".to_string();
+            }
+        }
+        else {
+            return "Нет текста!".to_string()
+        }
     }
 }
 
