@@ -656,7 +656,7 @@ impl Chat {
         else {
             preview_text = first_message.get_text_60();
             if first_message.user_id == user_id {
-                preview_text = "Вы: " + &first_message.get_type_text();
+                preview_text = "Вы: ".to_owned() + &first_message.get_type_text();
                 if first_message.unread == true {
                     is_read = " bg-light-secondary".to_string();
                 }
@@ -666,9 +666,9 @@ impl Chat {
             }
 
         }
-        let member = self.get_chat_request_user(user_id);
+        let member = Some(self.get_chat_request_user(user_id));
         if member.is_some() {
-            beep_icon = member.get_beep_icon();
+            beep_icon = member.unwrap().get_beep_icon();
         }
 
         if self.is_group() && self.is_public() {
@@ -686,7 +686,7 @@ impl Chat {
             }
 
             if self.name.is_some() {
-                name = self.name.as_deref().unwrap();
+                name = self.name.as_deref().unwrap().to_string();
             }
             else {
                 name = "Групповой чат".to_string();
@@ -733,7 +733,7 @@ impl Chat {
             }
 
             if self.name.is_some() {
-                name = self.name.as_deref().unwrap();
+                name = self.name.as_deref().unwrap().to_string();
             }
             else {
                 name = member.get_full_name();
@@ -836,7 +836,7 @@ impl Chat {
 
         let count = messages
             .filter(schema::messages::chat_id.eq(self.id))
-            .filter(schema::messages::unread.ed(true))
+            .filter(schema::messages::unread.eq(true))
             .filter(schema::messages::types.lt(10))
             .filter(schema::messages::user_id.ne(user_id))
             .load::<Message>(&_connection)
@@ -844,7 +844,7 @@ impl Chat {
             .len()
 
         if count > 0 {
-            return "<span style='font-size: 80%' class='tab_badge custom_color'>" + &count.to_string() + &"</span>".to_string();
+            return "<span style='font-size: 80%' class='tab_badge custom_color'>".to_owned() + &count.to_string() + &"</span>".to_string();
         }
         return "".to_string()
     }
@@ -1679,6 +1679,20 @@ impl Message {
             &"' class='ajax'>" +
             &"' class='ajax'>";
     }
+    pub fn get_creator(&self) -> User {
+        use crate::schema::users::dsl::users;
+
+        let _connection = establish_connection();
+        return users
+            .filter(schema::users::id.eq(self.user_id))
+            .filter(schema::users::types.lt(10))
+            .load::<User>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+
     pub fn get_type_text(&self) -> String {
         if self.attach.is_some() and self.content.is_some() {
             return "<b class='i_link'>Текст и вложения</b>".to_string();
@@ -1714,7 +1728,7 @@ impl Message {
             }
         }
         else if self.is_have_transfer() {
-            if self.get_transfers_ids().len() > 1 {
+            if self.get_transfers().len() > 1 {
                 return "<b class='i_link'>Пересланные сообщения</b>".to_string();
             }
             else {
