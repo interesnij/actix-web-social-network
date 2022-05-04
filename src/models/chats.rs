@@ -625,6 +625,7 @@ impl Chat {
         use crate::schema::message_options::dsl::message_options;
 
         let _connection = establish_connection();
+
         if message_options
             .filter(schema::message_options::user_id.eq(user_id))
             .filter(schema::message_options::is_deleted.eq(true))
@@ -636,7 +637,10 @@ impl Chat {
                     .filter(schema::messages::types.lt(10))
                     .order(schema::messages::created.desc())
                     .load::<Message>(&_connection)
-                    .expect("E")[0];
+                    .expect("E")
+                    .into_iter()
+                    .nth(0)
+                    .unwrap();
             }
 
         let get_message = &messages
@@ -663,7 +667,10 @@ impl Chat {
             .filter(schema::messages::types.lt(10))
             .order(schema::messages::created.desc())
             .load::<Message>(&_connection)
-            .expect("E")[0];
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
     }
 
     pub fn get_preview_message(&self, user_id: i32 ) -> String {
