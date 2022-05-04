@@ -2810,7 +2810,7 @@ impl User {
         use crate::schema::messages::dsl::messages;
 
         let _connection = establish_connection();
-        let chats = self.get_all_chats();
+        let chats = self.get_all_chats(100, 0);
         let mut count = 0;
         for chat in chats {
             if messages
