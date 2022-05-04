@@ -621,7 +621,7 @@ impl Chat {
             .expect("E").len() == 0;
     }
     pub fn get_first_message(&self, user_id: i32 ) -> Message {
-        return self.get_messages_for_user(user_id)[0];
+        return self.get_messages_for_user(user_id, 1, 0)[0];
     }
 
     pub fn get_preview_message(&self, user_id: i32 ) -> String {
@@ -785,8 +785,9 @@ impl Chat {
                              .expect("E");
                         if supports.len() > 0 {
                             name = "Агент техподдержки №".to_string() + &supports[0].id.to_string();
-                            if user.get_online():
+                            if user.get_online() {
                                 status = " <span class='status bg-success'></span>".to_string();
+                            }
                         }
                      }
                  }
@@ -844,7 +845,7 @@ impl Chat {
             .filter(schema::messages::user_id.ne(user_id))
             .load::<Message>(&_connection)
             .expect("E")
-            .len()
+            .len();
 
         if count > 0 {
             return "<span style='font-size: 80%' class='tab_badge custom_color'>".to_owned() + &count.to_string() + &"</span>".to_string();
