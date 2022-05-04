@@ -2754,7 +2754,7 @@ impl User {
 
         for chat in chat_list.iter() {
             if !chat.is_group() || !chat.is_public() || !chat.is_not_empty() {
-                chat_list.retain(|&x| *x != chat);
+                chat_list.retain(|&x.id| x != chat.id);
             }
         }
         return chat_list;
