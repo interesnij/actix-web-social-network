@@ -55,7 +55,7 @@ use crate::models::{
     // 'e' Некоторые участники
     // 'f' Никто!
 
-#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
+#[derive(Debug, PartialEq, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(User)]
 #[belongs_to(Community)]
 pub struct Chat {
