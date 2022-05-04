@@ -644,7 +644,7 @@ impl Chat {
                 let message = first_message.get_parent_message();
                 preview_text = concat_string!(
                     creator.get_full_name(),
-                    first_message.text,
+                    first_message.content.as_deref().unwrap(),
                     "<span class='underline'>",
                     message.get_text_60(),
                     "</span>")
@@ -1680,13 +1680,13 @@ impl Message {
             &"' class='ajax'>";
     }
     pub fn get_type_text(&self) -> String {
-        if self.attach.is_some() and self.text.is_some() {
+        if self.attach.is_some() and self.content.is_some() {
             return "<b class='i_link'>Текст и вложения</b>".to_string();
         }
         else if self.attach.is_some() {
             return "<b class='i_link'>Вложения</b>".to_string();
         }
-        else if self.text.is_some() {
+        else if self.content.is_some() {
             return self.get_text_60();
         }
         else if self.voice.is_some() {
@@ -1703,7 +1703,7 @@ impl Message {
                 return concat_string!(
                     "<b class='i_link'>",
                     self.get_creator().get_full_name(),
-                    self.text.as_deref().unwrap(),
+                    self.content.as_deref().unwrap(),
                     "<span class='underline'>",
                     self.get_parent_message().get_text_60(),
                     "</span></b>"
@@ -1726,27 +1726,31 @@ impl Message {
         }
     }
     pub fn get_text_60(&self) -> String {
-        use lazy_static::lazy_static;
-        use regex::Regex;
+        if self.content.is_some() {
+            use lazy_static::lazy_static;
+            use regex::Regex;
 
-        lazy_static! {
-            static ref RE_IMG: Regex = Regex::new(r"<img.*?>").unwrap();
-            static ref RE_A: Regex = Regex::new(r"<a.*?>").unwrap();
-        }
-        let text = self.content;
-        let mut count = 60;
-        let mut link_text: Option<String> = None;
+            lazy_static! {
+                static ref RE_IMG: Regex = Regex::new(r"<img.*?>").unwrap();
+                static ref RE_A: Regex = Regex::new(r"<a.*?>").unwrap();
+            }
+            let text = self.content.as_deref().unwrap();
+            let mut count = 60;
+            let mut link_text: Option<String> = None;
 
-        let images = RE_IMG.find_iter(text).collect();
-        for image in images {
-            count += len(image);
-        }
+            let images = RE_IMG.find_iter(text).collect();
+            for image in images.iter() {
+                count += image.len();
+            }
 
-        let links = RE_A.find_iter(text).collect();
-        if links.len() > 0 {
-            return "<b class='i_link'>".to_string() + &links[0] + &"</b>".to_string();
+            let links = RE_A.find_iter(text).collect();
+            if links.len() > 0 {
+                return "<b class='i_link'>".to_string() + &links[0] + &"</b>".to_string();
+            }
+            return text[count..].to_string();
+        } else {
+            return "".to_string();
         }
-        return text[count..].to_string();
     }
 }
 
