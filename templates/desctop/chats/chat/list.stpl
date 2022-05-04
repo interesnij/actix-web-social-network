@@ -15,8 +15,8 @@
               <% if count_chats > 0 { %>
               <ul class="list-group is_paginate">
                 <% for object in object_list.iter() { %>
-                  <li class="list-group-item" data-pk="<%= object.pk %>">
-                    <a class="chat_ajax" href="/chat/<%= object.pk %>/">
+                  <li class="list-group-item" data-pk="<%= object.id %>">
+                    <a class="chat_ajax" href="/chat/<%= object.id %>/">
                       <%- object.get_preview_message(request_user.id) %>
                     </a>
                   </li>
