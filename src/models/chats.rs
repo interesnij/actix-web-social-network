@@ -696,7 +696,7 @@ impl Chat {
 
             let media_body = concat_string!(
                 "<div class='media-body'><h5 class='time-title mb-0'>",
-                chat_name, beep_icon,
+                name, beep_icon,
                 "<small class='float-right text-muted'>",
                 created,
                 "</small></h5><p class='mb-0",
@@ -747,7 +747,7 @@ impl Chat {
 
             let media_body = concat_string!(
                 "<div class='media-body'><h5 class='time-title mb-0'>",
-                chat_name, beep_icon, status,
+                name, beep_icon, status,
                 "<small class='float-right text-muted'>",
                 created,
                 "</small></h5><p class='mb-0",
@@ -795,7 +795,7 @@ impl Chat {
 
             let media_body = concat_string!(
                 "<div class='media-body'><h5 class='time-title mb-0'>",
-                chat_name, beep_icon, status,
+                name, beep_icon, status,
                 "<small class='float-right text-muted'>",
                 created,
                 "</small></h5><p class='mb-0",
@@ -817,7 +817,7 @@ impl Chat {
 
             let media_body = concat_string!(
                 "<div class='media-body'><h5 class='time-title mb-0'>",
-                chat_name, beep_icon,
+                name, beep_icon,
                 "<small class='float-right text-muted'>",
                 created,
                 "</small></h5><p class='mb-0",
@@ -1768,7 +1768,7 @@ impl Message {
             let mut count = 60;
             let mut link_text: Option<String> = None;
 
-            let images: Vec<&str> = RE_IMG.find_iter(text).collect(); 
+            let images: Vec<&str> = RE_IMG.find_iter(text).collect().into_iter();
             for image in images.iter() {
                 count += image.len();
             }
