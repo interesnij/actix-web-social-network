@@ -634,7 +634,7 @@ impl Chat {
                 return self.get_messages(1, 0)[0];
             }
 
-        let get_messages = messages
+        let get_message = messages
             .filter(schema::messages::chat_id.eq(self.id))
             .filter(schema::messages::types.lt(10))
             .order(schema::messages::created.desc())
@@ -642,19 +642,17 @@ impl Chat {
             .expect("E")[0];
 
         let mut stack = Vec::new();
-        for _item in get_messages.iter() {
-            if message_options
-                .filter(schema::message_options::user_id.eq(user_id))
-                .filter(schema::message_options::message_id.eq(_item.id))
-                .filter(schema::message_options::is_deleted.eq(true))
-                .limit(1)
-                .load::<MessageOption>(&_connection)
-                .expect("E")
-                .len() == 0 {
-                    stack.push(_item.id);
-                }
+        if message_options
+            .filter(schema::message_options::user_id.eq(user_id))
+            .filter(schema::message_options::message_id.eq(get_message.id))
+            .filter(schema::message_options::is_deleted.eq(true))
+            .limit(1)
+            .load::<MessageOption>(&_connection)
+            .expect("E")
+            .len() == 0 {
+                stack.push(get_message.id);
+            }
 
-        };
         return messages
             .filter(schema::messages::id.eq_any(stack))
             .filter(schema::messages::types.lt(10))
