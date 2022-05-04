@@ -1773,7 +1773,7 @@ impl Message {
 
             let images = RE_IMG.find_iter(text).collect::<Vec<_>>();
             for image in images.iter() {
-                count += image.len();
+                count += image.as_str().len();
             }
 
             let links = RE_A.find_iter(text).collect();
