@@ -600,9 +600,10 @@ impl Chat {
     pub fn get_unread_message(&self, user_id: i32 ) -> Vec<Message> {
         use crate::schema::messages::dsl::messages;
 
+        let _connection = establish_connection();
         return messages
             .filter(schema::messages::chat_id.eq(self.id))
-            .filter(schema::messages::unread.ed(true))
+            .filter(schema::messages::unread.eq(true))
             .filter(schema::messages::types.lt(10))
             .filter(schema::messages::user_id.ne(user_id))
             .load::<Message>(&_connection)
@@ -611,15 +612,16 @@ impl Chat {
     pub fn is_empty(&self, user_id: i32) -> bool {
         use crate::schema::messages::dsl::messages;
 
+        let _connection = establish_connection();
         return messages
             .filter(schema::messages::chat_id.eq(self.id))
             .filter(schema::messages::types.lt(10))
             .filter(schema::messages::user_id.ne(user_id))
             .load::<Message>(&_connection)
-            .expect("E").len()  == 0;
+            .expect("E").len() == 0;
     }
     pub fn get_first_message(&self, user_id: i32 ) -> Message {
-        return get_messages_for_user(user_id)[0];
+        return self.get_messages_for_user(user_id)[0];
     }
 
     pub fn get_preview_message(&self, user_id: i32 ) -> String {
@@ -641,7 +643,7 @@ impl Chat {
             created = first_message.created.format("%d-%m-%Y в %H:%M").to_string();
             if first_message.parent_id.is_some() {
                 let creator = first_message.get_creator();
-                let message = first_message.get_parent_message();
+                let message = first_message.get_parent();
                 preview_text = concat_string!(
                     creator.get_full_name(),
                     first_message.content.as_deref().unwrap(),
@@ -777,7 +779,7 @@ impl Chat {
                  let _connection = establish_connection();
                  for user in self.get_members() {
                      if user.id != self.user_id {
-                        supports = support_users
+                        let supports = support_users
                              .filter(schema::support_users::manager_id.eq(user.id))
                              .load::<SupportUsers>(&_connection)
                              .expect("E");
@@ -1692,6 +1694,19 @@ impl Message {
             .nth(0)
             .unwrap();
     }
+    pub fn get_parent(&self) -> Message {
+        use crate::schema::messages::dsl::messages;
+
+        let _connection = establish_connection();
+        return messages
+            .filter(schema::messages::id.eq(self.parent_id))
+            .filter(schema::messages::types.lt(10))
+            .load::<Message>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
 
     pub fn get_type_text(&self) -> String {
         if self.attach.is_some() and self.content.is_some() {
@@ -1706,7 +1721,7 @@ impl Message {
         else if self.voice.is_some() {
             return "<b class='i_link'>Голосовое сообщение</b>".to_string();
         }
-        else if self.sticker.is_some() {
+        else if self.sticker_id.is_some() {
             return "<b class='i_link'>Наклейка</b>".to_string();
         }
         else if self.post_id.is_some() {
@@ -1719,7 +1734,7 @@ impl Message {
                     self.get_creator().get_full_name(),
                     self.content.as_deref().unwrap(),
                     "<span class='underline'>",
-                    self.get_parent_message().get_text_60(),
+                    self.get_parent().get_text_60(),
                     "</span></b>"
                 );
             }
@@ -1752,7 +1767,7 @@ impl Message {
             let mut count = 60;
             let mut link_text: Option<String> = None;
 
-            let images = RE_IMG.find_iter(text).collect();
+            let images: Vec<String> = RE_IMG.find_iter(text).collect();
             for image in images.iter() {
                 count += image.len();
             }
