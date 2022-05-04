@@ -2754,10 +2754,16 @@ impl User {
 
         for chat in chat_list.iter() {
             if !chat.is_group() || !chat.is_public() || !chat.is_not_empty() {
-                chat_list.retain(|&x| x != chat);
+                stack.retain(|&x| x != chat.id);
             }
         }
-        return chat_list;
+
+        return chats
+            .filter(schema::chats::id.eq_any(stack))
+            .filter(schema::chats::types.lt(20))
+            .order(schema::chats::created.desc())
+            .load::<Chat>(&_connection)
+            .expect("E.");
     }
     pub fn get_all_chats_count(&self) -> usize {
         use crate::schema::chat_users::dsl::chat_users;
