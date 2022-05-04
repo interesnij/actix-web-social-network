@@ -631,7 +631,12 @@ impl Chat {
             .load::<MessageOption>(&_connection)
             .expect("E")
             .len() == 0 {
-                return self.get_messages(1, 0)[0];
+                return messages
+                    .filter(schema::messages::chat_id.eq(self.id))
+                    .filter(schema::messages::types.lt(10))
+                    .order(schema::messages::created.desc())
+                    .load::<Message>(&_connection)
+                    .expect("E")[0];
             }
 
         let get_message = &messages
@@ -900,6 +905,8 @@ impl Chat {
             .filter(schema::messages::chat_id.eq(self.id))
             .filter(schema::messages::types.lt(10))
             .order(schema::messages::created.desc())
+            .limit(limit)
+            .offset(offset)
             .load::<Message>(&_connection)
             .expect("E");
     }
