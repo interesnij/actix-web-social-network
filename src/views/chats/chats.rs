@@ -53,13 +53,13 @@ pub async fn chats_list_page(session: Session, req: HttpRequest) -> actix_web::R
 
         if page > 1 {
             let step = (page - 1) * 20;
-            object_list = _request_user.get_users(20, step.into());
+            object_list = _request_user.get_all_chats(20, step.into());
             if count > (page * 20).try_into().unwrap() {
                 next_page_number = page + 1;
             }
         }
         else {
-            object_list = _request_user.get_users(20, 0);
+            object_list = _request_user.get_all_chats(20, 0);
             if count > 20.try_into().unwrap() {
                 next_page_number = 2;
             }

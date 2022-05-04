@@ -20,7 +20,7 @@
         </div>
       </div>
     </div>
-    <% if request_user.is_have_deleted_support_chats() { %>
+    <% if request_user.get_deleted_support_chats().len() > 0 { %>
     <div class="card mt-2">
       <div class="card-header">
         <div class="media">
