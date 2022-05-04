@@ -620,8 +620,47 @@ impl Chat {
             .load::<Message>(&_connection)
             .expect("E").len() == 0;
     }
-    pub fn get_first_message(&self, user_id: i32 ) -> Message {
-        return self.get_messages_for_user(1, 0, user_id)[0];
+    pub fn get_first_message(&self, user_id: i32) -> Message {
+        use crate::schema::messages::dsl::messages;
+        use crate::schema::message_options::dsl::message_options;
+
+        let _connection = establish_connection();
+        if message_options
+            .filter(schema::message_options::user_id.eq(user_id))
+            .filter(schema::message_options::is_deleted.eq(true))
+            .load::<MessageOption>(&_connection)
+            .expect("E")
+            .len() == 0 {
+                return self.get_messages(1, 0)[0];
+            }
+
+        let get_messages = messages
+            .filter(schema::messages::chat_id.eq(self.id))
+            .filter(schema::messages::types.lt(10))
+            .order(schema::messages::created.desc())
+            .load::<Message>(&_connection)
+            .expect("E")[0];
+
+        let mut stack = Vec::new();
+        for _item in get_messages.iter() {
+            if message_options
+                .filter(schema::message_options::user_id.eq(user_id))
+                .filter(schema::message_options::message_id.eq(_item.id))
+                .filter(schema::message_options::is_deleted.eq(true))
+                .limit(1)
+                .load::<MessageOption>(&_connection)
+                .expect("E")
+                .len() == 0 {
+                    stack.push(_item.id);
+                }
+
+        };
+        return messages
+            .filter(schema::messages::id.eq_any(stack))
+            .filter(schema::messages::types.lt(10))
+            .order(schema::messages::created.desc())
+            .load::<Message>(&_connection)
+            .expect("E")[0];
     }
 
     pub fn get_preview_message(&self, user_id: i32 ) -> String {
@@ -716,7 +755,7 @@ impl Chat {
             let member = self.get_chat_member(user_id);
             let figure: String;
             let name: String;
-            let status = "".to_string();
+            let mut status = "".to_string();
 
             if self.image.is_some() {
                 figure = concat_string!(
@@ -766,7 +805,7 @@ impl Chat {
         else if self.is_support() {
             let member = self.get_chat_member(user_id);
             let figure = "<figure><svg fill='currentColor' class='svg_default svg_default_50' viewBox='0 0 24 24'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/><path d='M0 0h24v24H0z' fill='none'/></svg></figure>".to_string();
-            let name: String;
+            let mut name: String;
             let status = "".to_string();
 
             if self.members == 1 {
