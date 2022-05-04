@@ -700,7 +700,7 @@ impl Chat {
                 "<small class='float-right text-muted'>",
                 created,
                 "</small></h5><p class='mb-0",
-                is_read
+                is_read,
                 "' style='white-space: nowrap;'>",
                 preview_text,
                 "</p><span class='typed'></span></div>"
@@ -751,7 +751,7 @@ impl Chat {
                 "<small class='float-right text-muted'>",
                 created,
                 "</small></h5><p class='mb-0",
-                is_read
+                is_read,
                 "' style='white-space: nowrap;'>",
                 preview_text,
                 "</p><span class='typed'></span></div>"
@@ -774,14 +774,14 @@ impl Chat {
             }
             else {
                  use crate::schema::support_users::dsl::support_users;
-                 use crate::models::SupportUsers;
+                 use crate::models::SupportUser;
 
                  let _connection = establish_connection();
                  for user in self.get_members() {
                      if user.id != self.user_id {
                         let supports = support_users
                              .filter(schema::support_users::manager_id.eq(user.id))
-                             .load::<SupportUsers>(&_connection)
+                             .load::<SupportUser>(&_connection)
                              .expect("E");
                         if supports.len() > 0 {
                             name = "Агент техподдержки №".to_string() + &supports[0].id.to_string();
@@ -821,7 +821,7 @@ impl Chat {
                 "<small class='float-right text-muted'>",
                 created,
                 "</small></h5><p class='mb-0",
-                is_read
+                is_read,
                 "' style='white-space: nowrap;'>",
                 preview_text,
                 "</p><span class='typed'></span></div>"
@@ -1768,7 +1768,7 @@ impl Message {
             let mut count = 60;
             let mut link_text: Option<String> = None;
 
-            let images: Vec<String> = RE_IMG.find_iter(text).collect();
+            let images = RE_IMG.find_iter(text).collect();
             for image in images.iter() {
                 count += image.len();
             }
