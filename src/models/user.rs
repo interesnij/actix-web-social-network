@@ -2748,7 +2748,6 @@ impl User {
         let mut chat_list = chats
             .filter(schema::chats::id.eq_any(&stack))
             .filter(schema::chats::types.lt(20))
-            .order(schema::chats::created.desc())
             .load::<Chat>(&_connection)
             .expect("E.");
 
