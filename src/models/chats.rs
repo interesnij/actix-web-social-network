@@ -1768,7 +1768,7 @@ impl Message {
             let mut count = 60;
             let mut link_text: Option<String> = None;
 
-            let images = RE_IMG.find_iter(text).collect();
+            let images: Vec<&str> = RE_IMG.find_iter(text).collect(); 
             for image in images.iter() {
                 count += image.len();
             }
