@@ -1725,6 +1725,29 @@ impl Message {
             return "Нет текста!".to_string()
         }
     }
+    pub fn get_text_60(&self) -> String {
+        use lazy_static::lazy_static;
+        use regex::Regex;
+
+        lazy_static! {
+            static ref RE_IMG: Regex = Regex::new(r"<img.*?>").unwrap();
+            static ref RE_A: Regex = Regex::new(r"<a.*?>").unwrap();
+        }
+        let text = self.content;
+        let mut count = 60;
+        let mut link_text: Option<String> = None;
+
+        let images = RE_IMG.find_iter(text).collect();
+        for image in images {
+            count += len(image);
+        }
+
+        let links = RE_A.find_iter(text).collect();
+        if links.len() > 0 {
+            return "<b class='i_link'>".to_string() + &links[0] + &"</b>".to_string();
+        }
+        return text[count..].to_string();
+    }
 }
 
 /////// MessageOptions //////
