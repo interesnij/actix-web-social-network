@@ -2745,7 +2745,7 @@ impl User {
         for member in members_of_chats.iter() {
             stack.push(member.chat_id);
         }
-        let chat_list = chats
+        let mut chat_list = chats
             .filter(schema::chats::id.eq_any(stack))
             .filter(schema::chats::types.lt(20))
             .order(schema::chats::created.desc())
@@ -2754,7 +2754,7 @@ impl User {
 
         for chat in chat_list.iter() {
             if !chat.is_group() || !chat.is_public() || !chat.is_not_empty() {
-                chat_list.remove(chat);
+                chat_list.retain(|&x| x != chat);
             }
         }
         return chat_list;
