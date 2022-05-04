@@ -2754,7 +2754,7 @@ impl User {
 
         for chat in chat_list.iter() {
             if !chat.is_group() || !chat.is_public() || !chat.is_not_empty() {
-                let index = chat_list.iter().position(|&x| *x == chat).unwrap();
+                let index = chat_list.iter().position(|&x| x == chat).unwrap();
                 chat_list.remove(index);
                 //chat_list.retain(|&x| x != chat);
             }
