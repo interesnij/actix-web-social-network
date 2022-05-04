@@ -2728,7 +2728,7 @@ impl User {
             return "Предупреждение за нарушение правил соцсети трезвый.рус".to_string();
         }
     }
-    pub fn get_all_chats(&self, limit: i64, offset: i64) -> Vec<&Chat> {
+    pub fn get_all_chats(&self, limit: i64, offset: i64) -> Vec<Chat> {
         use crate::schema::chat_users::dsl::chat_users;
         use crate::schema::chats::dsl::chats;
         use crate::models::ChatUser;
@@ -2752,13 +2752,13 @@ impl User {
             .load::<Chat>(&_connection)
             .expect("E.");
 
-        let mut chats: Vec<Chat>;
+        let mut _chats: Vec<Chat>;
         for chat in chat_list.iter() {
             if chat.is_group() || chat.is_public() || chat.is_not_empty() {
-                chats.push(chat);
+                _chats.push(chat);
             }
         }
-        return chats;
+        return _chats;
     }
     pub fn get_all_chats_count(&self) -> usize {
         use crate::schema::chat_users::dsl::chat_users;
