@@ -1771,7 +1771,7 @@ impl Message {
             let mut count = 60;
             let mut link_text: Option<String> = None;
 
-            let images: regex::Match = RE_IMG.find_iter(text).collect::<Vec<_>>();
+            let images = RE_IMG.find_iter(text).collect::<Vec<_>>();
             for image in images.iter() {
                 count += image.len();
             }
