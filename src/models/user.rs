@@ -2755,7 +2755,7 @@ impl User {
         let mut chats: Vec<Chat>;
         for chat in chat_list.iter() {
             if chat.is_group() || chat.is_public() || chat.is_not_empty() {
-                chats.push(chat);
+                chats.push(&chat);
             }
         }
         return chats;
