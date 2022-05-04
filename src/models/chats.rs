@@ -799,7 +799,7 @@ impl Chat {
                 "<small class='float-right text-muted'>",
                 created,
                 "</small></h5><p class='mb-0",
-                is_read
+                is_read,
                 "' style='white-space: nowrap;'>",
                 preview_text,
                 "</p><span class='typed'></span></div>"
@@ -832,6 +832,9 @@ impl Chat {
                 self.get_unread_count_message(user_id),
                 "</div>"
             )
+        }
+        else {
+            return "".to_string();
         }
     }
     pub fn get_unread_count_message(&self, user_id: i32 ) -> String {
@@ -1768,7 +1771,7 @@ impl Message {
             let mut count = 60;
             let mut link_text: Option<String> = None;
 
-            let images: Vec<&str> = RE_IMG.find_iter(text).collect().into_iter();
+            let images: Vec<&str> = RE_IMG.find_iter(text).collect()::<Vec<_>>();
             for image in images.iter() {
                 count += image.len();
             }
