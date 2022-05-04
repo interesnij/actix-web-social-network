@@ -2753,7 +2753,7 @@ impl User {
             .expect("E.");
 
         for chat in chat_list.iter() {
-            if !chat.is_group() || !chat.is_public() || !chat.is_not_empty() {
+            if !chat.is_group() && !chat.is_public() && !chat.is_not_empty() {
                 stack.retain(|&x| x != chat.id);
             }
         }
