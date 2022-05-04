@@ -1776,7 +1776,7 @@ impl Message {
                 count += image.as_str().len();
             }
 
-            let links = RE_A.find_iter(text).collect();
+            let links = RE_A.find_iter(text).collect::<Vec<_>>();
             if links.len() > 0 {
                 return "<b class='i_link'>".to_string() + &links[0] + &"</b>".to_string();
             }
