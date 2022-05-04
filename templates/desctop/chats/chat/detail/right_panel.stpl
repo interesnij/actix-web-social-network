@@ -1,0 +1,33 @@
+<div class="col-12 col-md-4">
+  <div class="pos_sticky">
+    <div class="card mb-3">
+      <div class="p-1">
+        <% include!("../../../generic/user/card_go_user.stpl"); %>
+      </div>
+    </div>
+    <button class="btn btn-sm mb-2 border user_create_chat" data-pk="<%= request_user.id %>" style="width:100%;">Создать чат</button>
+    <div class="card mt-2 <% if !favourite_messages_count { %>hidden<% } %>">
+      <div class="card-header">
+        <div class="media favourite_block">
+          <a class="favourite_messages_list pointer">Избранное (<span class="favourite_messages_count"><%= favourite_messages_count %></span>)</a>
+        </div>
+      </div>
+    </div>
+    <div class="card mt-2">
+      <div class="card-header">
+        <div class="media">
+          <a href="/chat/<%= request_user.get_or_create_support_chat_pk() %>/" class="ajax">Задать вопрос</a>
+        </div>
+      </div>
+    </div>
+    <% if request_user.is_have_deleted_support_chats() { %>
+    <div class="card mt-2">
+      <div class="card-header">
+        <div class="media">
+          <a href="/chat/closed_support_chats/" class="ajax">Чаты с техподдержкой</a>
+        </div>
+      </div>
+    </div>
+    <% } %>
+  </div>
+</div>

@@ -2750,6 +2750,29 @@ impl User {
             .load::<Chat>(&_connection)
             .expect("E.");
     }
+    pub fn get_all_chats_count(&self) -> usize {
+        use crate::schema::chat_users::dsl::chat_users;
+        use crate::schema::chats::dsl::chats;
+        use crate::models::ChatUser;
+
+        let _connection = establish_connection();
+        let members_of_chats = chat_users
+            .filter(schema::chat_users::user_id.eq(self.id))
+            .filter(schema::chat_users::types.eq("a"))
+            .load::<ChatUser>(&_connection)
+            .expect("E.");
+        let mut stack = Vec::new();
+        for member in members_of_chats.iter() {
+            stack.push(member.chat_id);
+        }
+        return chats
+            .filter(schema::chats::id.eq_any(stack))
+            .filter(schema::chats::types.lt(20))
+            .order(schema::chats::created.desc())
+            .load::<Chat>(&_connection)
+            .expect("E.")
+            .len();
+    }
     pub fn is_administrator_of_chat(&self, chat_id: i32) -> bool {
         use crate::schema::chat_users::dsl::chat_users;
         use crate::models::ChatUser;
