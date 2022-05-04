@@ -836,6 +836,7 @@ impl Chat {
     pub fn get_unread_count_message(&self, user_id: i32 ) -> String {
         use crate::schema::messages::dsl::messages;
 
+        let _connection = establish_connection();
         let count = messages
             .filter(schema::messages::chat_id.eq(self.id))
             .filter(schema::messages::unread.eq(true))
@@ -1699,8 +1700,7 @@ impl Message {
 
         let _connection = establish_connection();
         return messages
-            .filter(schema::messages::id.eq(self.parent_id))
-            .filter(schema::messages::types.lt(10))
+            .filter(schema::messages::id.eq(self.parent_id.unwrap()))
             .load::<Message>(&_connection)
             .expect("E")
             .into_iter()
@@ -1709,7 +1709,7 @@ impl Message {
     }
 
     pub fn get_type_text(&self) -> String {
-        if self.attach.is_some() and self.content.is_some() {
+        if self.attach.is_some() && self.content.is_some() {
             return "<b class='i_link'>Текст и вложения</b>".to_string();
         }
         else if self.attach.is_some() {
