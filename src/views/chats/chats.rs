@@ -25,7 +25,6 @@ pub fn chats_routes(config: &mut web::ServiceConfig) {
 }
 
 pub async fn chats_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
-
     if is_signed_in(&session) {
         use crate::utils::PaginationParams;
 
