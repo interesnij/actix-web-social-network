@@ -5,10 +5,13 @@ use crate::views::{
     auth,
     profile, user_settings,
     post_pages, post_progs,
+    chats,
 };
 
 pub fn routes(cfg: &mut web::ServiceConfig) {
     cfg
+    .configure(chats::chats_routes)
+
     .configure(pages::pages_routes)
     .configure(profile::user_routes)
     .configure(user_settings::user_settings_routes)
