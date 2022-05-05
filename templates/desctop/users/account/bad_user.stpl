@@ -3,16 +3,23 @@
 <div class="main-container" data-pk="<%= user.id %>" data-type="user_main">
 
 <div class="row user_page">
-  <div class="col-lg-4 col-md-5 order-1">
-    <div class="card mb-3">
-        <div class="card-body">
-          <% include!("buttons.stpl"); %>
+<div class="col-lg-4 col-md-5 order-1">
+  <div class="card mb-3">
+      <div class="card-body">
+        <div class="row align-items-center no-gutters">
+          <a class="col">
+            <figure class="mx-auto mb-3 avatar_figure">
+              <% if user.b_avatar.is_some() { %>
+                <%- user.get_b_avatar() %>
+              <% } else { %>
+                  <img src="/static/images/no_img/b_avatar.png" class="">
+              <% } %>
+            </figure>
+          </a>
         </div>
-    </div>
-
-    <% include!("common_friends.stpl"); %>
-
+      </div>
   </div>
+</div>
 
   <div class="col-lg-8 col-md-7 col-sm-12 order-2">
       <div class="card mb-3" style="padding:10px">
