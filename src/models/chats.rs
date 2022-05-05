@@ -697,6 +697,93 @@ impl Chat {
             .nth(0)
             .unwrap();
     }
+    pub fn get_header_chat(&self, user_id: i32 ) -> String {
+        let mut beep_icon = "".to_string();
+        let mut muted_drop: String;
+        let mut fix_btn = "".to_string();
+
+        let mut chat_name: String;
+        let mut dop_drops = "".to_string();
+        let mut target_display: String;
+        let mut u_chat_info = "".to_string();
+        let member = Some(self.get_chat_request_user(user_id));
+        if member.is_some() {
+            beep_icon = member.unwrap().get_beep_icon();
+            if self.is_muted(user_id) {
+                muted_drop = "<span><a class='dropdown-item off_full_chat_notify pointer'>Откл. уведомления</a></span>".to_string();
+            }
+            else {
+                muted_drop = "<span><a class='dropdown-item on_full_chat_notify pointer'>Вкл. уведомления</a></span>".to_string();
+            }
+        }
+        if self.is_user_can_fix_item(user_id) {
+            fix_btn = "<span tooltip='Закрепить' flow='up'><svg class='svg_default_30 mr-1 pointer u_message_fixed' fill='currentColor' viewBox='0 0 24 24'><g><rect fill='none' height='24' width='24'/></g><g><path d='M16,9V4l1,0c0.55,0,1-0.45,1-1v0c0-0.55-0.45-1-1-1H7C6.45,2,6,2.45,6,3v0 c0,0.55,0.45,1,1,1l1,0v5c0,1.66-1.34,3-3,3h0v2h5.97v7l1,1l1-1v-7H19v-2h0C17.34,12,16,10.66,16,9z' fill-rule='evenodd'/></g></svg></span>".to_string();
+        }
+        let buttons = "<span class='console_btn_other btn_default' style='display:none;padding-top:5px'><span class='one_message'><span tooltip='Ответить' flow='up'><svg class='svg_default_30 mr-1 pointer u_message_reply' viewBox='0 0 24 24' fill='currentColor'><path d='M0 0h24v24H0V0z' fill='none'/><path d='M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z'/></svg></span><span tooltip='Пожаловаться' flow='up'><svg class='svg_default_30 mr-1 pointer u_message_claim' viewBox='0 0 24 24' fill='currentColor'><path d='M11 15h2v2h-2v-2zm0-8h2v6h-2V7zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z'/></svg></span><span tooltip='Редактировать' flow='up'><svg class='svg_default_30 mr-1 pointer u_message_edit' fill='currentColor' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none'/><path d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z'/></svg></span>".to_string() + &fix_btn + &"</span><span tooltip='Удалить' flow='up'><svg class='svg_default_30 mr-1 pointer u_message_delete' viewBox='0 0 24 24' fill='currentColor'><path d='M0 0h24v24H0V0z' fill='none'/><path d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4h-3.5z'/></svg></span><span tooltip='Переслать' flow='up'><svg class='svg_default_30 pointer u_message_transfer' viewBox='0 0 24 24' fill='currentColor'><path d='m0 0h24v24h-24z' fill='none'/><path fill='currentColor' d='m12.1 7.87v-3.47a1.32 1.32 0 0 1 2.17-1l8.94 7.6a1.32 1.32 0 0 1 .15 1.86l-.15.15-8.94 7.6a1.32 1.32 0 0 1 -2.17-1v-3.45c-4.68.11-8 1.09-9.89 2.87a1.15 1.15 0 0 1 -1.9-1.11c1.53-6.36 5.51-9.76 11.79-10.05zm1.8-2.42v4.2h-.9c-5.3 0-8.72 2.25-10.39 6.86 2.45-1.45 5.92-2.16 10.39-2.16h.9v4.2l7.71-6.55z' /></svg></span><span flow='up'><svg class='svg_default_30 ml-1 toggle_messages_favourite pointer' fill='currentColor' enable-background='new 0 0 24 24' viewBox='0 0 24 24'></svg></span></span>".to_string();
+
+        if self.is_public() {
+            chat_name = "Групповой чат".to_string();
+            target_display = "<span class='u_chat_info pointer type_display small' style='position:absolute;top: 21px;'>" + &self.get_members_count_ru() + &"</span>".to_string();
+            u_chat_info = "u_chat_info".to_string();
+            if self.is_user_can_add_members(user_id) {
+                dop_drops = dop_drops + &"<a class='dropdown-item u_add_members_in_chat pointer'>Добавить друзей</a>".to_string();
+            }
+            dop_drops = dop_drops + &"<a class='dropdown-item user_exit_in_user_chat pointer'>Выйти из чата</a>".to_string();
+        }
+        else if self.is_group() {
+            chat_name = "Публичный чат".to_string();
+            target_display = "<span class='type_display small' style='position:absolute;top: 21px;'>".to_owned() + &member.get_online_status() + &"</span>".to_string();
+            dop_drops = "<a class='dropdown-item add_member_in_chat pointer'>Добавить в чат</a>".to_string();
+        }
+        else if self.is_private() {
+            let member = self.get_chat_member(user_id);
+            chat_name = "<a href='".to_owned() + &member.get_link() + &"' target='_blank'>".to_string() + &member.get_full_name() + &"</a>".to_string();
+            target_display = "<span class='u_chat_info pointer type_display small' style='position:absolute;top: 21px;'>" + &self.get_members_count_ru() + &"</span>".to_string();
+            dop_drops = "<a class='dropdown-item add_member_in_chat pointer'>Добавить в чат</a>".to_string();
+        }
+        else if self.is_manager() {
+            chat_name = "Служебный чат".to_string();
+            target_display = "<span class='type_display small style='position:absolute;top: 21px;'>Категория такая-то</span>";
+        }
+        else if self.is_support() {
+            dop_drops = "<a class='dropdown-item close_support_chat pointer'>Закрыть заявку</a>".to_string();
+            if self.members == 1 {
+                chat_name = "Чат техподдержки".to_string();
+            }
+            else {
+                 use crate::schema::support_users::dsl::support_users;
+                 use crate::models::SupportUser;
+
+                 let _connection = establish_connection();
+                 for user in self.get_members() {
+                     if user.id != self.user_id {
+                        let supports = support_users
+                             .filter(schema::support_users::manager_id.eq(user.id))
+                             .load::<SupportUser>(&_connection)
+                             .expect("E");
+                        if supports.len() > 0 {
+                            chat_name = "Агент техподдержки №".to_string() + &supports[0].id.to_string();
+                            target_display = "<span class='type_display small' style='position:absolute;top: 21px;'>".to_owned() + &user.get_online_status() + &"</span>".to_string();
+                        }
+                     }
+                 }
+            }
+        }
+        let media_body = concat_string!(
+            "<div class='media-body' style='overflow: inherit;padding-top: 3px;'><h5 class='time-title mb-1'><span class='",
+            u_chat_info, "pointer'>", chat_name,
+            "</span><span class='notify_box'>", beep_icon,
+            "</h5><span class='mt-1 mb-2 target_display'>",
+            target_display, buttons,
+            "</span></div>"
+        );
+        let dropdown = concat_string!(
+            "<div class='dropdown d-inline-block'><a style='cursor:pointer' class='icon-circle icon-30 btn_default drop'><svg class='svg_info' fill='currentColor' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none'/><path d='M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z'/></svg></a><div class='dropdown-menu dropdown-menu-right' style='top: 29px; width: 100%;'><a class='dropdown-item chat_search pointer'>Поиск сообщений</a><a class='dropdown-item show_attach_files pointer'>Показать вложения</a>",
+            muted_drop, dop_drops,
+            "<a class='dropdown-item u_clean_chat_messages pointer'>Очистить историю</a></div></div>",
+        );
+        return concat_string!(media_body, dropdown);
+    }
 
     pub fn get_preview_message(&self, user_id: i32 ) -> String {
         let first_message = self.get_first_message(user_id);
