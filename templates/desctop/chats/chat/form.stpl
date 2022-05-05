@@ -30,8 +30,8 @@
         <% } %>
 
     </div>
-      <div class="row <%= get_memessagessage_draft.get_count_attach() %> special_block message_attach_block no-gutters">
-        <%= message.get_edit_attach(request)user.pk) %>
+      <div class="row <%= message.get_count_attach() %> special_block message_attach_block no-gutters">
+        <%= message.get_edit_attach(request_user.id) %>
       </div>
 
     <div class="input-group input-group-sm input_group_message">
