@@ -289,9 +289,26 @@ impl Chat {
             .load::<ChatUser>(&_connection)
             .expect("E");
     }
+    pub fn get_recipients_2(&self, user_id: i32) -> Vec<ChatUser> {}
     pub fn get_members(&self) -> Vec<User> {
         use crate::utils::get_users_from_ids;
         return get_users_from_ids(self.get_members_ids());
+    }
+    pub fn is_muted(&self, user_id: i32) -> bool {
+        use crate::schema::chat_users::dsl::chat_users;
+
+        let _connection = establish_connection();
+        users = chat_users
+            .filter(schema::chat_users::chat_id.eq(self.id))
+            .filter(schema::chat_users::user_id.ne(user_id))
+            .filter(schema::chat_users::types.eq("a"))
+            .load::<ChatUser>(&_connection)
+            .expect("E");
+        if users.len() > 0 {
+            let user = users.into_iter().nth(0).unwrap();
+            return user.beep();
+        }
+        return false;
     }
     pub fn get_administrators(&self) -> Vec<User> {
         use crate::utils::get_users_from_ids;
@@ -697,6 +714,7 @@ impl Chat {
             .nth(0)
             .unwrap();
     }
+
     pub fn get_header_chat(&self, user_id: i32 ) -> String {
         let mut beep_icon = "".to_string();
         let mut muted_drop: String;
@@ -725,7 +743,7 @@ impl Chat {
             chat_name = "Групповой чат".to_string();
             target_display = "<span class='u_chat_info pointer type_display small' style='position:absolute;top: 21px;'>".to_owned() + &self.get_members_count_ru() + &"</span>".to_string();
             u_chat_info = "u_chat_info".to_string();
-            if self.is_user_can_add_members(user_id) {
+            if self.is_user_can_add_in_chat(user_id) {
                 dop_drops = dop_drops + &"<a class='dropdown-item u_add_members_in_chat pointer'>Добавить друзей</a>".to_string();
             }
             dop_drops = dop_drops + &"<a class='dropdown-item user_exit_in_user_chat pointer'>Выйти из чата</a>".to_string();
