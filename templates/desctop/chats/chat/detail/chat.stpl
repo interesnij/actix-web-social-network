@@ -26,8 +26,8 @@
 
             <% if object_list.len() > 0 { %>
               <% for object in object_list.iter().reverce() { %>
-                <% include!("../../chat/message/message.stpl"); %>
-              <% } %>
+                <% include!("../../message/message.stpl"); %>
+              <% } %> 
             <% } else { %>
               <div class="items_empty mb-3">
                 <div class="card-body"></div>
