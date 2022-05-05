@@ -38,7 +38,7 @@
               <% } %>
             </ul>
         </div>
-      <% if chat.is_manager() == true { %>
+      <% if chat.is_manager() == false { %>
         <% include!("../form.stpl"); %>
       <% } %>
   </div>
