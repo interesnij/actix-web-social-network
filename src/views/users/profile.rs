@@ -419,14 +419,14 @@ pub fn close_account(folder: String, user: User, request_user: User) -> actix_we
         struct UserPage {
             title: String,
             user:  User,
+            private_bools: Vec<bool>,
             request_user: User,
-            private_bools: Vec<bool>
         }
         let body = UserPage {
             title: user.get_full_name(),
             user:  user,
-            request_user: request_user,
             private_bools: user.get_profile_all_can_see(request_user.id),
+            request_user: request_user,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -438,11 +438,13 @@ pub fn close_account(folder: String, user: User, request_user: User) -> actix_we
         struct UserPage {
             title: String,
             user:  User,
+            private_bools: Vec<bool>,
             request_user: User,
         }
         let body = UserPage {
             title: user.get_full_name(),
             user:  user,
+            private_bools: user.get_profile_all_can_see(request_user.id),
             request_user: request_user,
         }
         .render_once()
@@ -525,14 +527,14 @@ pub fn account(folder: String, user: User, request_user: User) -> actix_web::Res
         struct UserPage {
             title: String,
             user:  User,
+            private_bools: Vec<bool>,
             request_user: User,
-            private_bools: Vec<bool>
         }
         let body = UserPage {
             title: user.get_full_name(),
             user:  user,
-            request_user: request_user,
             private_bools: user.get_profile_all_can_see(request_user.id),
+            request_user: request_user,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -544,11 +546,13 @@ pub fn account(folder: String, user: User, request_user: User) -> actix_web::Res
         struct UserPage {
             title: String,
             user:  User,
+            private_bools: Vec<bool>,
             request_user: User,
         }
         let body = UserPage {
             title: user.get_full_name(),
             user:  user,
+            private_bools: user.get_profile_all_can_see(request_user.id),
             request_user: request_user,
         }
         .render_once()
