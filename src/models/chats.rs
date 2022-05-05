@@ -501,7 +501,7 @@ impl Chat {
             " сообщений".to_string(),
         );
     }
-    pub fn get_first_fix_message(&self) -> Message {
+    pub fn get_first_fix_message(&self) -> Option<Message> {
         use crate::schema::messages::dsl::messages;
 
         let _connection = establish_connection();
@@ -511,8 +511,7 @@ impl Chat {
             .load::<Message>(&_connection)
             .expect("E")
             .into_iter()
-            .nth(0)
-            .unwrap();
+            .nth(0);
     }
 
     pub fn create_membership(&self, user: User, is_administrator: bool) -> ChatUser {
