@@ -1712,7 +1712,16 @@ impl Message {
             let creator = self.get_creator();
             return "<i><a target='_blank' href='".to_owned() + &creator.get_link() + &"</a><span>".to_string() + &self.content.as_deref().unwrap() + &"</span><a class='pointer show_selected_fix_message underline'>".to_string() + &text + &"</a></i>".to_string();
         } else{
-            return (&self.content.as_deref().unwrap()).to_owned();
+            return (&self.content.as_deref().unwrap()).to_string();
+        }
+    }
+    pub fn get_edit_attach(&self) -> String {
+        if self.attach.is_some() {
+            use crate::utils::edit_message_elements;
+            return edit_message_elements(self.attach.as_ref().unwrap().to_string());
+        }
+        else {
+            return "".to_string();
         }
     }
     pub fn is_have_transfer(&self) -> bool {
