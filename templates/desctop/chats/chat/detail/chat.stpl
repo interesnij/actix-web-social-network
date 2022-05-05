@@ -26,7 +26,7 @@
 
             <% if object_list.len() > 0 { %>
               <% for object in object_list.iter().reverce() { %>
-                 include!("../../messages/message.stpl"); 
+                 include!("../../messages/message.stpl");
               <% } %>
             <% } else { %>
               <div class="items_empty mb-3">
@@ -43,7 +43,7 @@
       <% } %>
   </div>
 
-<% include!("detail/right_panel.stpl"); %>
+<% include!("right_panel.stpl"); %>
 
 </div>
 </div>
