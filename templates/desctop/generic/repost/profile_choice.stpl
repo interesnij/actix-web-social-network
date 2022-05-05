@@ -1,0 +1,36 @@
+<div class="form-group">
+  <div class="row">
+    <div class="col-md-6">
+      <% if object.is_user_list(request.user) { %>
+      <div class="" style="margin-bottom:10px">
+        <label>Это Ваш список</label>
+      </div>
+      <% } elif object.is_user_collection_list(request_user.id) { %>
+      <div class="" style="margin-bottom:10px">
+        <label>Список в коллекции - <a class="pointer remove_list_in_user_collections" data-pk="<%= request_user.id %>">удалить</a></label>
+      </div>
+      <% } else { %>
+      <div class="custom-control custom-radio" id="copy_for_profile" style="margin-bottom:10px">
+        <input type="radio" value="u<%= request_user.id %>" name="u_c" class="custom-control-input copy_for_profile">
+        <label class="custom-control-label">В коллекцию</label>
+      </div>
+      <% } %>
+
+      <% if !request_user.get_staffed_communities().len() > 0 { %>
+      <div class="custom-control custom-radio" style="margin-bottom:10px" flow="up" tooltip="У Вас нет управляемых сообществ">
+        <input type="radio" disabled="disabled" class="custom-control-input copy_for_communities">
+        <label class="custom-control-label">Закрыто</label>
+      </div>
+      <% } else { %>
+      <div class="custom-control custom-radio" id="copy_for_communities" style="margin-bottom:10px" data-type="<%= object.get_code %>">
+        <input type="radio" class="custom-control-input copy_for_communities">
+        <label class="custom-control-label">В сообщества</label>
+      </div>
+      <% } %>
+    </div>
+
+    <div class="col-md-6 text_support">
+      <div class="collector collectorrr"></div>
+    </div>
+  </div>
+</div>

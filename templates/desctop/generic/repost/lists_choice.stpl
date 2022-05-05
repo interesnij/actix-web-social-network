@@ -1,0 +1,38 @@
+<div class="form-group">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="custom-control custom-radio" id="repost_for_wall" style="margin-bottom:10px">
+        <input type="radio" class="custom-control-input" id="repost_radio_wall">
+        <label class="custom-control-label">В мои списки</label>
+      </div>
+
+      <% if !request_user.get_staffed_communities().len() > 0 { %>
+      <div class="custom-control custom-radio" style="margin-bottom:10px" flow="up" tooltip="У Вас нет управляемых сообществ">
+        <input type="radio" disabled="disabled" class="custom-control-input" id="repost_radio_community">
+        <label class="custom-control-label">Закрыто</label>
+      </div>
+      <% } else { %>
+      <div class="custom-control custom-radio" id="u_repost_for_community" style="margin-bottom:10px">
+        <input type="radio" class="custom-control-input" id="repost_radio_community">
+        <label class="custom-control-label">В сообщества</label>
+      </div>
+      <% } %>
+
+      <% if request_user.get_chats_and_friends.len() == 0 { %>
+      <div class="custom-control custom-radio" flow="up" tooltip="У Вас нет друзей и чатов" style="margin-bottom:10px">
+        <input type="radio" disabled="disabled" class="custom-control-input" id="repost_radio_message">
+        <label class="custom-control-label">Закрыто</label>
+      </div>
+      <% } else { %>
+      <div class="custom-control custom-radio" id="repost_for_message" style="margin-bottom:10px">
+        <input type="radio" class="custom-control-input" id="repost_radio_message">
+        <label class="custom-control-label">В сообщения</label>
+      </div>
+      <% } %>
+    </div>
+
+    <div class="col-md-6 text_support">
+      <div class="collector collector_active"></div>
+    </div>
+  </div>
+</div>

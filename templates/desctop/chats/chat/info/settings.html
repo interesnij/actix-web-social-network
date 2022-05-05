@@ -1,5 +1,4 @@
- <form class="is_stat_list" data-pk="{{ chat.pk }}" data-type="change_user_chat">
-   {% csrf_token %}
+ <form class="is_stat_list" data-pk="<%= chat.id %>" data-type="change_user_chat">
     <div class="card">
       <div class="card-header border-bottom">
         <h5 class="content-color-primary mb-0">Редактирование чата</h5>
@@ -7,7 +6,13 @@
       <div class="card-body">
         <div class="form-group">
           <label>Название</label>
-          <input type="text" name="name" class="form-control" id="id_name" value="{{ chat.name }}">
+          <input type="text" name="name" class="form-control" id="id_name"
+          <% if chat.name.is_some() { %>
+            value="<%= chat.name.as_deref().unwrap() %>"
+          <% } else { %>
+            value=""
+          <% } %>
+          >
         </div>
         <div class="form-group">
           <label>Обложка</label>
@@ -15,12 +20,12 @@
             <input type="file" name="image" accept="image/*" id="id_image">
           </div>
           <div id="video_holder" class="border pointer">
-            {% if chat.image %}
-              <img style="width: 100%;" src="{{ chat.image.url }}" />
-            {% else %}
+            <% if chat.image.is_some() { %>
+              <img style="width: 100%;" src="<%= chat.image.as_deref().unwrap() %>" />
+            <% } else { %>
               <h6>Обложка</h6>
               <i>(не обязательно)</i>
-            {% endif %}
+            <% } %>
           </div>
         </div>
 

@@ -1,0 +1,7 @@
+<% for object in object_list.iter() { %>
+  <div class="col-md-6 pointer col-lg-4 detail_photo p-1 pag" photo-pk="<%= object.id %>">
+    <div class="progressive replace" data-href="<%= object.file.as_deref().unwrap() %>">
+      <img class="preview image_fit_200" src="<%= object.preview.as_deref().unwrap() %>" alt="img">
+    </div>
+  </div>
+<% } %>

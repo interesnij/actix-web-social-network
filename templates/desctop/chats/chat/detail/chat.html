@@ -1,52 +1,48 @@
-{% extends "base.html" %}
-{% block title %}Сообщения{% endblock %}
-{% load message %}
-{% block content %}
 
-<div class="container mt-3 main-container pk_saver chat_container" data-pk="{{ chat.pk }}" chat-pk="{{ chat.pk }}" user-pk="{{ request.user.pk }}" data-type="page_chat">
+<div class="container mt-3 main-container pk_saver chat_container" data-pk="<%= chat.id %>" chat-pk="<%= chat.id %>" user-pk="<%= request_user.id %>" data-type="page_chat">
 <div class="row">
     <div class="col-md-8 main_chat_block">
       <div class="custom_color fixed_header_chat">
           <div class="chat_header ml-1 media w-100">
-            {{ get_header_chat|safe }}
+            <%- chat.get_header_chat() %>
           </div>
-          {% include 'desctop/chat/chat/search.html' %}
+          <% include!("../search.stpl"); %>
           <div class="fixed_messages">
-            {% if fix_message %}
-              {% include 'desctop/chat/chat/detail/fixed_message.html' %}
-            {% elif chat.is_support %}
-              {% include 'desctop/chat/chat/detail/support_block.html' %}
-            {% endif %}
+            <% if fix_message.is_some() { %>
+              <% include!("fixed_message.stpl"); %>
+            <% } elif chat.is_support() { %>
+              <% include!("support_block.stpl"); %>
+            <% } %>
           </div>
       </div>
-        <div class="px-0 card no-shadow chatview" chat-pk="{{ chat.pk }}">
+        <div class="px-0 card no-shadow chatview" chat-pk="<%= chat.id %>">
           <ul class="mt-2 chatlist app is_paginate">
-            {% if page_obj.has_next %}
-              <div class="load centered m-1 next_page_list" data-link="{% url 'chat_detail' pk=chat.pk %}?page={{ page_obj.next_page_number }}">
+            <% if next_page_number > 0 { %>
+            <div class="load centered m-1 next_page_list" data-link="/chat/<%= chat.id %>/?page=<%= next_page_number %>">
                 <img src="/static/images/preloader.gif">
-              </div>
-            {% endif %}
+            </div>
+            <% } %>
 
-            {% if object_list %}
-              {% for object in object_list reversed %}
-                {% include 'desctop/chat/message/message.html' %}
-              {% endfor %}
-            {% else %}
+            <% if object_list.len() > 0 { %>
+              <% for object in object_list.iter().reverce() { %>
+                <% include!("../chat/message/message.stpl"); %>
+              <% } %>
+            <% } else { %>
               <div class="items_empty mb-3">
                 <div class="card-body"></div>
                 <h6 style="margin: 20px;text-align: center;">
                   Пока сообщений нет.
                 </h6>
               </div>
-              {% endif %}
+              <% } %>
             </ul>
         </div>
-      {% if not chat.is_manager %}
-        {% include 'desctop/chat/chat/form.html' %}
-      {% endif %}
+      <% if chat.is_manager() == true { %>
+        <% include!("../form.stpl"); %>
+      <% } %>
   </div>
-{% include 'desctop/chat/chat/detail/right_panel.html' %}
+
+<% include!("detail/right_panel.stpl"); %>
 
 </div>
 </div>
-{% endblock %}

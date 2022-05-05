@@ -1,38 +1,37 @@
-{% load message %}
 
-{% if get_message_draft %}
+<% if get_message_draft.is_some() { %>
+  <% let message = get_message_draft.unwrap(); %>
 
 <form class="custom_color customize_form" style="position: sticky;bottom: 0;">
 <span class="user_typed_box small"></span>
 <canvas class="mic_visual_canvas"></canvas>
-    {% csrf_token %}
     <input class="type_hidden" type="hidden" name="text" />
     <div class="custom_color parent_message_block">
-        {% if get_message_draft.parent %}
-          {% with parent=get_message_draft.parent %}
+        <% if message.parent_id.is_some() { %>
+          <% let parent = message.get_parent(); %>
+          <% let parent_creator = parent.get_creator(); %>
         <div>
           <p>
-            <a class="underline" target="_blank" href="{{ parent.creator.get_link }}">
-              {{ parent.creator.get_full_name }}
+            <a class="underline" target="_blank" href="<%= parent_creator.get_link() %>">
+              <%= parent_creator.get_full_name() %>
             </a>
           </p>
           <div style="position:relative;padding-bottom:7px">
-            <input type="hidden" name="parent" value="{{ parent.uuid }}">
+            <input type="hidden" name="parent" value="<%= parent.id %>">
             <div style="overflow: hidden;text-overflow:ellipsis;padding-right:5px;">
-              <span style="white-space: nowrap;">{{ parent.get_preview_text }}</span>
+              <span style="white-space: nowrap;"><%= parent.get_preview_text() %></span>
               <span class="remove_parent_block message_form_parent_block pointer">x</span>
             </div>
           </div>
         </div>
-        {% endwith %}
 
-        {% elif get_message_draft.is_have_transfer %}
-          {{ get_message_draft.get_draft_transfers_block|safe }}
-        {% endif %}
+        <% } else if message.is_have_transfer() { %>
+          <%= message.get_draft_transfers_block() %>
+        <% } %>
 
     </div>
-      <div class="row {{ get_message_draft.get_count_attach }} special_block message_attach_block no-gutters">
-        {{ get_message_draft|get_edit_attach:request.user.pk|safe }}
+      <div class="row <%= get_memessagessage_draft.get_count_attach() %> special_block message_attach_block no-gutters">
+        <%= message.get_edit_attach(request)user.pk) %>
       </div>
 
     <div class="input-group input-group-sm input_group_message">
@@ -81,12 +80,11 @@
     </div>
 </form>
 
-{% else %}
+<% } else { %>
 
 <form class="customize_form custom_color" style="position: sticky;bottom: 0;">
   <span class="user_typed_box small"></span>
   <canvas class="mic_visual_canvas"></canvas>
-    {% csrf_token %}
     <input class="type_hidden" type="hidden" name="text" />
     <div class="custom_color parent_message_block"></div>
     <div class="row files_0 special_block no-gutters"></div>
@@ -137,4 +135,4 @@
     </div>
 </form>
 
-{% endif %}
+<% } %>

@@ -117,6 +117,32 @@ impl Chat {
             return "Без имени".to_string();
         }
     }
+    pub fn liked_manager(&self, user_id: i32) -> bool {
+        use crate::schema::support_user_votes::dsl::support_user_votes;
+        use crate::models::SupportUser;
+
+        let _connection = establish_connection();
+        return support_user_votes
+            .filter(schema::support_user_votes::user_id.eq(user_id))
+            .filter(schema::support_user_votes::manager_id.eq(self.get_chat_member(user_id).id))
+            .filter(schema::support_user_votes::vote.eq(1))
+            .load::<SupportUser>(&_connection)
+            .expect("E.")
+            .len() > 0;
+    }
+    pub fn disliked_manager(&self, user_id: i32) -> bool {
+        use crate::schema::support_user_votes::dsl::support_user_votes;
+        use crate::models::SupportUser;
+
+        let _connection = establish_connection();
+        return support_user_votes
+            .filter(schema::support_user_votes::user_id.eq(user_id))
+            .filter(schema::support_user_votes::manager_id.eq(self.get_chat_member(user_id).id))
+            .filter(schema::support_user_votes::vote.eq(-1))
+            .load::<SupportUser>(&_connection)
+            .expect("E.")
+            .len() > 0;
+    }
     pub fn is_chat(&self) -> bool {
         return true;
     }
@@ -306,6 +332,16 @@ impl Chat {
             .into_iter()
             .nth(0)
             .unwrap();
+    }
+    pub fn get_perm_display(&self, types: &str) -> String {
+        return match types.as_str() {
+            "a" => "Все участники",
+            "b" => "Создатель",
+            "c" => "Создатель и админы",
+            "d" => "Участники, кроме",
+            "e" => "Некоторые участники",
+            _ => "".to_string(),
+        };
     }
     pub fn get_chat_user(&self, user_id: i32) -> ChatUser {
         use crate::schema::chat_users::dsl::chat_users;
@@ -1524,6 +1560,13 @@ impl ChatUser {
 }
 
 /////// ChatPerm //////
+
+// 'a' Все участники
+// 'b' Создатель
+// 'c' Создатель и админы
+// 'd' Участники, кроме
+// 'e' Некоторые участники
+
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(ChatUser)]
 pub struct ChatIeSetting {
@@ -1757,6 +1800,18 @@ impl Message {
         return messages
             .filter(schema::messages::id.eq(self.parent_id.unwrap()))
             .load::<Message>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+    pub fn get_repost(&self) -> Post {
+        use crate::schema::posts::dsl::posts;
+
+        let _connection = establish_connection();
+        return posts
+            .filter(schema::posts::id.eq(self.post_id.unwrap()))
+            .load::<Post>(&_connection)
             .expect("E")
             .into_iter()
             .nth(0)

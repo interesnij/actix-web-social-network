@@ -1,6 +1,5 @@
 
-    <form id="add_chat_form" class="is_stat_list" data-pk="{{ user.pk }}" data-type="create_user_chat">
-      {% csrf_token %}
+    <form id="add_chat_form" class="is_stat_list" data-pk="<%= request_user.id %>" data-type="create_user_chat">
         <div class="card mb-3">
             <div class="card-header">
                 <div id="chat_members"></div>
@@ -43,7 +42,7 @@
             </div>
             <div class="card-footer">
                 <button class="btn border this_mob_fullscreen_hide">Отмена</button>
-                <button type="button" class="btn btn-success float-right" data-pk="{{ user.pk }}" id="add_chat_btn">Создать</button>
+                <button type="button" class="btn btn-success float-right" data-pk="<%= request_user.id %>" id="add_chat_btn">Создать</button>
             </div>
         </div>
     </form>
