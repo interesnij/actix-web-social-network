@@ -132,6 +132,12 @@ impl Community {
     pub fn get_str_id(&self) -> String {
         return self.id.to_string();
     }
+    pub fn is_identified(&self) -> bool {
+        return self.perm == "d";
+    }
+    pub fn is_identified_send(&self) -> bool {
+        return self.perm == "c";
+    }
     pub fn get_description(&self) -> String {
         return "<a href='".to_string() + &self.get_link() + &"' target='_blank'>".to_string() + &self.name + &"</a>".to_string();
     }

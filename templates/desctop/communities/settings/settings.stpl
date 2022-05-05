@@ -1,5 +1,0 @@
-<% include!("../../../base_block/base_header.stpl"); %>
-<div class="main-container" data-pk="<%= request_user.id %>" data-type="user_settings">
-
-</div>
-<% include!("../../../base_block/base_footer.stpl"); %>

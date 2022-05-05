@@ -1,0 +1,53 @@
+{% if community.is_have_music %}
+
+<div class="card mb-3 music_playlist" data-pk="{{ music_list.pk }}">
+    <div class="p-1">
+      <a href="{% url 'community_music' pk=community.pk %}" class="ajax">
+        <div class="media">
+            <div class="media-body">
+                <h6 class="content-color-primary mb-0">Аудиозаписи</h6>
+            </div>
+            {{ community.community_info.tracks }}
+        </div>
+      </a>
+    </div>
+
+    {% for object in community.get_6_tracks %}
+    <div class="card border-top">
+        <div class="p-1">
+            <div class="media" music-counter="{{ forloop.counter }}">
+              <figure>
+                <a class="pointer music_list_item">
+                  {{ object.get_image|safe }}
+                </a>
+              </figure>
+                <div class="media-body" style="line-height: 10px;">
+                    <p class="track_item music_list_item pointer" style="font-size: 17px;"><a>{{ object.title }}</a></p>
+                    {% if object.album %}
+
+                    {% else %}
+                      {% if object.community %}
+                        <a class="small ajax" href="{% url 'community_detail' pk=object.community.pk %}">{{ object.community.name }}</a>
+                      {% else %}
+                        <a class="small ajax" href="{% url 'user' pk=object.creator.pk %}">{{ object.creator.get_full_name }}</a>
+                      {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% elif is_staff %}
+<div class="card mb-3">
+    <div class="card-header">
+        <div class="media centered">
+            <a href="{% url 'community_music' pk=community.pk %}" class="ajax">
+                <div class="media-body">
+                    <h6 class="content-color-primary mb-0">Аудиозаписи</h6>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endif %}

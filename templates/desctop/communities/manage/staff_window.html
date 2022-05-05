@@ -1,0 +1,49 @@
+
+<div class="row justify-content-center">
+  <div class="card">
+    <div class="card-header border-bottom">
+        <h5 class="content-color-primary mb-0">Назначение руководителя</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-3 col-md-4">
+              {% include 'desctop/generic/user/figure.html' %}
+            </div>
+            <div class="col-lg-9 col-md-8">
+              {% include 'desctop/generic/user/user.html' %}
+              <p style="padding-top:10px;">Вы собираетесь назначить этого подписчика руководителем сообщества.</p>
+            </div>
+        </div>
+        <hr>
+        <div class="form-group ">
+            <div class="custom-control custom-radio">
+                <input type="radio" name="radiogroup-1" {% if moderator %} checked="checked"{% endif %} class="custom-control-input" id="user_moderator">
+                <label class="custom-control-label" for="user_moderator"><h6>Модератор</h6></label>
+                <p style="padding-top:10px;font-size:15px">Может удалять добавленные пользователями материалы, управлять чёрным списком сообщества</p>
+            </div>
+            <hr>
+            <div class="custom-control custom-radio">
+                <input type="radio" name="radiogroup-1" {% if editor %} checked="checked"{% endif %} class="custom-control-input" id="user_editor">
+                <label class="custom-control-label" for="user_editor"><h6>Редактор</h6>
+                  <p style="padding-top:10px;font-size:15px">Может писать от имени сообщества, добавлять, удалять и редактировать контент, обновлять основную фотографию</p>
+            </div>
+            <hr>
+            <div class="custom-control custom-radio">
+                <input type="radio" name="radiogroup-1"{% if administrator %} checked="checked"{% endif %} class="custom-control-input" id="user_administrator">
+                <label class="custom-control-label" for="user_administrator"><h6>Администратор</h6></label>
+                <p style="padding-top:10px;font-size:15px">Может назначать и снимать администраторов, изменять название и адрес сообщества</p>
+            </div>
+            <hr>
+            <div class="custom-control custom-radio">
+                <input type="radio" name="radiogroup-1"{% if advertiser %} checked="checked"{% endif %} class="custom-control-input" id="user_advertiser">
+                <label class="custom-control-label" for="user_advertiser"><h6>Рекламодатель</h6></label>
+                <p style="padding-top:10px;font-size:15px">Может размещать рекламные записи от имени сообщества</p>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <div class="card-footer">
+        <button class="btn btn-success float-right add_staff_options">Назначить</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+{% load exists %}
+
+<div class="card mt-3 user_draft_list">
+  <div class="p-1">
+    <a href="{% url 'community_user_draft_list' pk=community.pk %}" class="ajax">
+      <div class="media">
+          <div class="media-body">
+              <h6 class="content-color-primary mb-0">Предложенные записи</h6>
+          </div>
+          <span class="user_draft_count">{{ community|count_draft_posts_for_user:request.user.pk }}</span>
+      </div>
+    </a>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}{{ community.name }} | Мои предложенные записи{% endblock %}
+{% block content %}
+
+<div class="main-container row pk_saver" data-pk="{{ community.pk }}" data-type="community_user_draft_list">
+    <div class="col-md-8 mt-3">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control form-control-sm" placeholder="Поиск записей">
+            <div class="input-group-append">
+                <button class="btn btn-sm border" type="button">Искать</button>
+            </div>
+        </div>
+
+        <div class="mb-2">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                        <h5 class="mt-1">
+                          {% include 'desctop/generic/community/community.html' %}
+                          - Мои предложенные записи
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body px-0 py-0">
+                <ul class="list-group is_paginate">
+                  {% if object_list %}
+                    <div id="lenta_container">
+                        <div class="stream-update">
+                            <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
+                        </div>
+
+                        <span class="stream post_container">
+                          {% for object in object_list %}
+                          <div class="card mb-3" data-uuid="{{ object.uuid }}">
+                            <div class="card-header">
+                                <div class="media">
+                                  {% include 'desctop/generic/user/creator_figure.html' %}
+                                    <div class="media-body">
+                                        <h6 class="mb-0">
+                                          {% include 'desctop/generic/user/creator.html' %}
+                                        </h6>
+                                        <p class="mb-0">{{ object.get_created }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                              <div>
+                                <div>
+                              <div style="padding-left: 15px;">
+                                {% if object.text %}<p class="">{{ object.text }}</p>{% endif %}
+                              </div>
+                              {% include 'desctop/generic/attach/c_post_attach.html' %}
+
+                              <div class="card-footer border-top py-2">
+                                <a class="u_post_remove" style="cursor:pointer">Удалить</a>
+                              | <a class="u_post_edit" style="cursor:pointer">Редактировать</a>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% endfor %}
+                        </span>
+                    </div>
+
+                    {% else %}
+                    <div class="card mb-3 items_empty centered">
+                      <div class="card-body">
+                      <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M22 13h-8v-2h8v2zm0-6h-8v2h8V7zm-8 10h8v-2h-8v2zm-2-8v6c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2zm-1.5 6l-2.25-3-1.75 2.26-1.25-1.51L3.5 15h7z"/></svg>
+                      </div>
+                      <h6 style="margin: 20px;text-align: center;">Предложенных записей нет...</h6>
+                    </div>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mt-3">
+
+    </div>
+</div>
+{% endblock %}

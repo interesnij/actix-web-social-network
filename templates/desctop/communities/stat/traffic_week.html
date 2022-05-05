@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Посещаемость по неделям{% endblock %}
+{% load post_count %}
+{% block content %}
+
+<div class="container main-container">
+<div class="row">
+    <div class="col-md-9 order-1">
+        <div class="card">
+          <div class="card-header">
+              <div class="media">
+                  <div class="media-body">
+										<h5 class="mt-1">Посещаемость по неделям -
+											{% include 'desctop/generic/community/community.html' %}
+										</h5>
+									</div>
+                  <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle mb-2 drop">
+                    Неделя
+                </button>
+                <div class="dropdown-menu" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item ajax" href="{% url 'community_traffic_day' community.pk %}">День</a>
+                    <a class="dropdown-item ajax" href="{% url 'community_traffic_month' community.pk %}">Месяц</a>
+                    <a class="dropdown-item ajax" href="{% url 'community_traffic_year' community.pk %}">Год</a>
+                </div>
+            </div>
+              </div>
+          </div>
+
+          <div class="card-body px-0 py-0">
+            {% if views %}
+            <canvas id="canvas"
+                    dates='{% for week in range %}{{ week }}{% if not forloop.last %},{% endif %}{% endfor %}'
+                    label_1="Уникальные просмотры"
+                    label_2="Все просмотры"
+                    data_1="{% for view in un_views %}{{ view }}{% if not forloop.last %},{% endif %}{% endfor %}"
+                    data_2="{% for view in views %}{{ view }}{% if not forloop.last %},{% endif %}{% endfor %}">
+            </canvas>
+            {% else %}
+                <div><h5 class="mt-4 mb-2" style="margin:10px">Статистических данных пока нет.</h5></div>
+            {% endif %}
+
+            {{ mf_ages|safe }}
+          </div>
+        </div>
+    </div>
+
+		{% include 'desctop/communities/stat/menu.html' %}
+</div>
+</div>
+
+{% endblock %}

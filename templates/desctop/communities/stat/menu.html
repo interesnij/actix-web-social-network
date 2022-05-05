@@ -1,0 +1,72 @@
+<div class="col-md-3 order-2 left_menu">
+    <a class="mb-2 box-shadow mr-2 btn btn-link menu_drop">
+        Общее
+    </a>
+    <div class="collapse">
+      <div class="card card-body" style="display: contents;">
+        <ul>
+          <li><a href="{% url 'community_general_form' pk=community.pk %}" class="ajax">Информации</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <a class="mb-2 box-shadow mr-2 btn btn-link menu_drop" style="margin-top: 10px;">
+      Подписчики
+    </a>
+    <div class="collapse">
+      <div class="card card-body" style="display: contents;">
+        <ul>
+          <li><a href="{% url 'community_member_manage' pk=community.pk %}" class="ajax">Подписчики</a></li>
+          {% if community.is_closed %}
+            <li style="margin-bottom:8px;"><a href="{% url 'community_follows' pk=community.pk %}" class="ajax">Заявки на членство</a></li>
+          {% endif %}
+          <li><a href="{% url 'community_moders' pk=community.pk %}" class="ajax">Модераторы</a></li>
+          <li><a href="{% url 'community_editors' pk=community.pk %}" class="ajax">Редакторы</a></li>
+          <li><a href="{% url 'community_advertisers' pk=community.pk %}" class="ajax">Рекламодатели</a></li>
+          <li><a href="{% url 'community_admins' pk=community.pk %}" class="ajax">Администраторы</a></li>
+          <li><a href="{% url 'community_black_list' pk=community.pk %}" class="ajax">Черный список</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <a class="mb-2 box-shadow mr-2 btn btn-link menu_drop" style="margin-top: 10px;">
+        Приватность
+    </a>
+    <div class="collapse">
+      <div class="card card-body" style="display: contents;">
+        <ul>
+          <li><a href="{% url 'community_post_private' community.pk %}" class="ajax">Записи</a></li>
+          <li><a href="" class="ajax">Фотографии</a></li>
+          <li><a href="" class="ajax">Товары</a></li>
+          <li><a href="" class="ajax">Музыка</a></li>
+          <li><a href="" class="ajax">Видео</a></li>
+        </ul>
+      </div>
+    </div>
+    <a class="mb-2 box-shadow mr-2 btn btn-link menu_drop" style="margin-top: 10px;">
+        Уведомления
+    </a>
+    <div class="collapse">
+      <div class="card card-body" style="display: contents;">
+        <ul>
+          <li><a href="{% url 'community_post_notify' community.pk %}" class="ajax">Записи</a></li>
+          <li><a href="" class="ajax">Фотографии</a></li>
+          <li><a href="" class="ajax">Товары</a></li>
+          <li><a href="" class="ajax">Музыка</a></li>
+          <li><a href="" class="ajax">Видео</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <a class="mb-2 box-shadow mr-2 btn btn-link menu_drop" style="margin-top: 10px;">
+        Статистика
+    </a>
+    <div class="collapse show">
+      <div class="card card-body" style="display: contents;">
+        <ul style="list-style-type:none">
+          <li style="margin-bottom:8px;"><a href="{% url 'community_cuberture_day' community.pk %}" class="ajax">Обший охват</a></li>
+          <li style="margin-bottom:8px;"><a href="{% url 'community_traffic_day' community.pk %}" class="ajax">Посещаемость</a></li>
+        </ul>
+      </div>
+    </div>
+</div>
