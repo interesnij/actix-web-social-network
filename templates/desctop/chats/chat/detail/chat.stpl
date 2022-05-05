@@ -25,7 +25,7 @@
             <% } %>
 
             <% if object_list.len() > 0 { %>
-              <% for object in object_list.iter().reverce() { %>
+              <% for object in object_list.iter().rev() { %>
                  include!("../../messages/message.stpl");
               <% } %>
             <% } else { %>

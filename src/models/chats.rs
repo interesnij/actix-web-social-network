@@ -438,8 +438,7 @@ impl Chat {
             .load::<Message>(&_connection)
             .expect("E")
             .into_iter()
-            .nth(0)
-            .unwrap();
+            .nth(0);
     }
     pub fn is_have_draft_message(&self, user_id: i32) -> bool {
         use crate::schema::messages::dsl::messages;
