@@ -719,7 +719,7 @@ impl Chat {
         let mut muted_drop = "".to_string();
         let mut fix_btn = "".to_string();
 
-        let mut chat_name: String;
+        let mut chat_name = "".to_string();
         let mut dop_drops = "".to_string();
         let mut target_display: String;
         let mut u_chat_info = "".to_string();
