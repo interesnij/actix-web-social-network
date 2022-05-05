@@ -721,7 +721,7 @@ impl Chat {
 
         let mut chat_name = "".to_string();
         let mut dop_drops = "".to_string();
-        let mut target_display: String;
+        let mut target_display = "".to_string();
         let mut u_chat_info = "".to_string();
         let member = Some(self.get_chat_request_user(user_id));
         if member.is_some() {
