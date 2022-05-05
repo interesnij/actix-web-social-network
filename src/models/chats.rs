@@ -1715,7 +1715,7 @@ impl Message {
             return (&self.content.as_deref().unwrap()).to_string();
         }
     }
-    pub fn get_edit_attach(&self) -> String {
+    pub fn get_edit_attach(&self, user_id: i32) -> String {
         if self.attach.is_some() {
             use crate::utils::edit_message_elements;
             return edit_message_elements(self.attach.as_ref().unwrap().to_string());
