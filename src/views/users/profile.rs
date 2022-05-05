@@ -412,7 +412,7 @@ pub fn bad_account(folder: String, user: User, request_user: User) -> actix_web:
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
 }
-pub fn close_account(folder: String, user: User, request_user: User) -> actix_web::Result<HttpResponse> {
+pub fn close_account(folder: String, user: User, request_user: User, private_bools: Vec<bool>) -> actix_web::Result<HttpResponse> {
     if folder == "desctop/".to_string() {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/close_user.stpl")]
@@ -420,11 +420,13 @@ pub fn close_account(folder: String, user: User, request_user: User) -> actix_we
             title: String,
             user:  User,
             request_user: User,
+            private_bools: Vec<bool>
         }
         let body = UserPage {
             title: user.get_full_name(),
             user:  user,
             request_user: request_user,
+            private_bools: private_bools, 
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
