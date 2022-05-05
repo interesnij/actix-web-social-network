@@ -943,6 +943,48 @@ impl Chat {
             .load::<Message>(&_connection)
             .expect("E");
     }
+    pub fn count_messages_for_user(&self, user_id: i32) -> usize {
+        use crate::schema::messages::dsl::messages;
+        use crate::schema::message_options::dsl::message_options;
+
+        let _connection = establish_connection();
+        if message_options
+            .filter(schema::message_options::user_id.eq(user_id))
+            .filter(schema::message_options::is_deleted.eq(true))
+            .load::<MessageOption>(&_connection)
+            .expect("E")
+            .len() == 0 {
+                return self.get_messages(500, 0).len();
+            }
+
+        let get_messages = messages
+            .filter(schema::messages::chat_id.eq(self.id))
+            .filter(schema::messages::types.lt(10))
+            .order(schema::messages::created.desc())
+            .load::<Message>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in get_messages.iter() {
+            if message_options
+                .filter(schema::message_options::user_id.eq(user_id))
+                .filter(schema::message_options::message_id.eq(_item.id))
+                .filter(schema::message_options::is_deleted.eq(true))
+                .load::<MessageOption>(&_connection)
+                .expect("E")
+                .len() == 0 {
+                    stack.push(_item.id);
+                }
+
+        };
+        return messages
+            .filter(schema::messages::id.eq_any(stack))
+            .filter(schema::messages::types.lt(10))
+            .order(schema::messages::created.desc())
+            .load::<Message>(&_connection)
+            .expect("E")
+            .len();
+    }
     pub fn get_messages_for_user(&self, limit: i64, offset: i64, user_id: i32) -> Vec<Message> {
         use crate::schema::messages::dsl::messages;
         use crate::schema::message_options::dsl::message_options;
