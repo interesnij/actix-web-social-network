@@ -501,25 +501,7 @@ impl Chat {
             " сообщений".to_string(),
         );
     }
-    pub fn get_preview_text(&self) -> String {
-        if self.is_manager() { 
-            let creator = self.get_creator();
-            message = self.get_parent();
-            return creator.get_full_name() + &self.content.as_deref().unwrap() + &"<span class='underline'>".to_string() + &message.get_text_60() + &"</span>".to_string();
-        } else{
-            return self.get_type_text();
-        }
-    }
-    pub fn get_manager_text(&self) -> String {
-        if self.parent_id.is_some() {
-            let message = self.get_parent();
-            let text = message.get_type_text();
-            let creator = self.get_creator();
-            return "<i><a target='_blank' href='".to_owned() + &creator.get_link() + &"</a><span>".to_string() + &self.content.as_deref().unwrap() + &"</span><a class='pointer show_selected_fix_message underline'>".to_string() + &text + &"</a></i>".to_string();
-        } else{
-            return &self.content.as_deref().unwrap();
-        }
-    }
+
     pub fn get_first_fix_message(&self) -> Option<Message> {
         use crate::schema::messages::dsl::messages;
 
@@ -1712,6 +1694,25 @@ impl Message {
         }
         else {
             return "".to_string();
+        }
+    }
+    pub fn get_preview_text(&self) -> String {
+        if self.is_manager() {
+            let creator = self.get_creator();
+            message = self.get_parent();
+            return creator.get_full_name() + &self.content.as_deref().unwrap() + &"<span class='underline'>".to_string() + &message.get_text_60() + &"</span>".to_string();
+        } else{
+            return self.get_type_text();
+        }
+    }
+    pub fn get_manager_text(&self) -> String {
+        if self.parent_id.is_some() {
+            let message = self.get_parent();
+            let text = message.get_type_text();
+            let creator = self.get_creator();
+            return "<i><a target='_blank' href='".to_owned() + &creator.get_link() + &"</a><span>".to_string() + &self.content.as_deref().unwrap() + &"</span><a class='pointer show_selected_fix_message underline'>".to_string() + &text + &"</a></i>".to_string();
+        } else{
+            return &self.content.as_deref().unwrap();
         }
     }
     pub fn is_have_transfer(&self) -> bool {
