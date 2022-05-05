@@ -716,7 +716,7 @@ impl Chat {
 
     pub fn get_header_chat(&self, user_id: i32 ) -> String {
         let mut beep_icon = "".to_string();
-        let mut muted_drop: String;
+        let mut muted_drop = "".to_string();
         let mut fix_btn = "".to_string();
 
         let mut chat_name: String;
