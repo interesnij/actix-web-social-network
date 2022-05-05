@@ -206,10 +206,10 @@ pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
             return self_block_account(_type, _user, _request_user)
         }
         else if !_user.is_user_can_see_all(_request_user.id) {
-            return close_account(_type, _user, _request_user)
+            return close_account(_type, _user, _request_user, )
         }
         else {
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+            return account(_type, _user, _request_user, private_bools)
         }
     } else {
         if !_user.is_anon_user_can_see_all() {
@@ -412,7 +412,7 @@ pub fn bad_account(folder: String, user: User, request_user: User) -> actix_web:
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
 }
-pub fn close_account(folder: String, user: User, request_user: User, private_bools: Vec<bool>) -> actix_web::Result<HttpResponse> {
+pub fn close_account(folder: String, user: User, request_user: User) -> actix_web::Result<HttpResponse> {
     if folder == "desctop/".to_string() {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/close_user.stpl")]
@@ -426,7 +426,7 @@ pub fn close_account(folder: String, user: User, request_user: User, private_boo
             title: user.get_full_name(),
             user:  user,
             request_user: request_user,
-            private_bools: private_bools, 
+            private_bools: user.get_profile_all_can_see(request_user.id),
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -510,6 +510,46 @@ pub fn anon_close_account(folder: String, user: User) -> actix_web::Result<HttpR
         let body = UserPage {
             title: user.get_full_name(),
             user:  user,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+
+
+pub fn account(folder: String, user: User, request_user: User) -> actix_web::Result<HttpResponse> {
+    if folder == "desctop/".to_string() {
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/users/account/user.stpl")]
+        struct UserPage {
+            title: String,
+            user:  User,
+            request_user: User,
+            private_bools: Vec<bool>
+        }
+        let body = UserPage {
+            title: user.get_full_name(),
+            user:  user,
+            request_user: request_user,
+            private_bools: user.get_profile_all_can_see(request_user.id),
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+    else {
+        #[derive(TemplateOnce)]
+        #[template(path = "mobile/users/account/user.stpl")]
+        struct UserPage {
+            title: String,
+            user:  User,
+            request_user: User,
+        }
+        let body = UserPage {
+            title: user.get_full_name(),
+            user:  user,
+            request_user: request_user,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
