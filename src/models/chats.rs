@@ -427,7 +427,7 @@ impl Chat {
             .expect("Error.");
         return true;
     }
-    pub fn get_draft_message(&self, user_id: i32) -> Message {
+    pub fn get_draft_message(&self, user_id: i32) -> Option<Message> {
         use crate::schema::messages::dsl::messages;
 
         let _connection = establish_connection();
