@@ -749,7 +749,7 @@ impl Chat {
         }
         else if self.is_group() {
             chat_name = "Публичный чат".to_string();
-            target_display = "<span class='type_display small' style='position:absolute;top: 21px;'>".to_owned() + &member.get_online_status() + &"</span>".to_string();
+            target_display = "<span class='u_chat_info pointer type_display small' style='position:absolute;top: 21px;'></span>".to_string();
             dop_drops = "<a class='dropdown-item add_member_in_chat pointer'>Добавить в чат</a>".to_string();
         }
         else if self.is_private() {
