@@ -47,10 +47,10 @@
         <% } %>
 
         <% if object.post_id.is_some() { %>
-          <% include!("../message/repost.stpl"); %>
+          <% include!("repost.stpl"); %>
         <% } %>
         <% if object.is_have_transfer() { %>
-          <% include!("../message/transfers.stpl"); %>
+          <% include!("transfers.stpl"); %>
         <% } %>
 
         <% } %>
