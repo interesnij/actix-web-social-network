@@ -164,7 +164,7 @@ pub async fn chat_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
                 favourite_messages_count: usize,
                 count_messages: usize,
                 next_page_number: i32,
-                object_list: Vec<Chat>,
+                object_list: Vec<Message>,
             }
             let body = Template {
                 title:        "Сообщения".to_string(),
@@ -186,7 +186,7 @@ pub async fn chat_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
                 favourite_messages_count: usize,
                 count_messages: usize,
                 next_page_number: i32,
-                object_list: Vec<Chat>,
+                object_list: Vec<Message>,
             }
             let body = Template {
                 title:        "Сообщения".to_string(),

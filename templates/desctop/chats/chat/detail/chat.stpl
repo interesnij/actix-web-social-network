@@ -10,7 +10,7 @@
           <div class="fixed_messages">
             <% if fix_message.is_some() { %>
               <% include!("fixed_message.stpl"); %>
-            <% } elif chat.is_support() { %>
+            <% } else if chat.is_support() { %>
               <% include!("support_block.stpl"); %>
             <% } %>
           </div>
