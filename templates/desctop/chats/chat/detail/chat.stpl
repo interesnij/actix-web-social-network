@@ -2,6 +2,7 @@
 
 <div class="container mt-3 main-container pk_saver chat_container" data-pk="<%= chat.id %>" chat-pk="<%= chat.id %>" user-pk="<%= request_user.id %>" data-type="page_chat">
 <div class="row">
+<%= chat.types %>
     <div class="col-md-8 main_chat_block">
       <div class="custom_color fixed_header_chat">
           <div class="chat_header ml-1 media w-100">
