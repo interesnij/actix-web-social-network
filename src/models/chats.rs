@@ -501,8 +501,8 @@ impl Chat {
             " сообщений".to_string(),
         );
     }
-    pub fn get_first_fix_message(&self) -> String {
-        if self.is_manager() {
+    pub fn get_preview_text(&self) -> String {
+        if self.is_manager() { 
             let creator = self.get_creator();
             message = self.get_parent();
             return creator.get_full_name() + &self.content.as_deref().unwrap() + &"<span class='underline'>".to_string() + &message.get_text_60() + &"</span>".to_string();
