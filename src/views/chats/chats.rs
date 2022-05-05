@@ -174,7 +174,7 @@ pub async fn chat_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
                 count_messages: count,
                 next_page_number: next_page_number,
                 object_list: object_list,
-                chat: chat,
+                chat: _chat,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -198,7 +198,7 @@ pub async fn chat_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
                 count_messages: count,
                 next_page_number: next_page_number,
                 object_list: object_list,
-                chat: chat,
+                chat: _chat,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
