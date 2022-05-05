@@ -199,7 +199,7 @@ impl Chat {
         return self.types < 10;
     }
     pub fn is_support(&self) -> bool {
-        return self.types > 10 && self.types < 10;
+        return self.types > 10 && self.types < 20;
     }
     pub fn is_support_1(&self) -> bool {
         return self.types == 11;
