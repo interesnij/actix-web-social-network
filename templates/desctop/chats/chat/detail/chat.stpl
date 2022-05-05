@@ -1,4 +1,4 @@
-<% include!("../../../base_block/base_header.stpl"); %>
+<% include!("../../../../base_block/base_header.stpl"); %>
 
 <div class="container mt-3 main-container pk_saver chat_container" data-pk="<%= chat.id %>" chat-pk="<%= chat.id %>" user-pk="<%= request_user.id %>" data-type="page_chat">
 <div class="row">
@@ -48,4 +48,4 @@
 </div>
 </div>
 
-<% include!("../../../base_block/base_footer.stpl"); %>
+<% include!("../../../../base_block/base_footer.stpl"); %>
