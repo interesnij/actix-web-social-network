@@ -209,7 +209,7 @@ pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
             return close_account(_type, _user, _request_user, )
         }
         else {
-            return account(_type, _user, _request_user, private_bools)
+            return account(_type, _user, _request_user)
         }
     } else {
         if !_user.is_anon_user_can_see_all() {
