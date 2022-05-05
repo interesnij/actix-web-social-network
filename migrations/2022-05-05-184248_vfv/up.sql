@@ -1,0 +1,7 @@
+-- Your SQL goes here
+
+ALTER TABLE communitys ALTER COLUMN status SET
+DATA TYPE VARCHAR(100);
+
+ALTER TABLE communitys ALTER COLUMN status
+DROP NOT NULL;
