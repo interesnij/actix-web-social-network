@@ -1,7 +1,7 @@
 <%
-  let f_message = fix_message.unwrap();
+  let f_message = chat.get_first_fix_message();
   let fix_creator = f_message.get_creator();
-%>
+%> 
 
 <div class="mt-1 pointer show_chat_fixed_messages custom_color border-bottom border-top" style="padding-left:7px;line-height: 100%;">
   <p>
