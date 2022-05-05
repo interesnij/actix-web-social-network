@@ -1,6 +1,6 @@
 
-<% if chat.get_draft_message().is_some() { %>
-  <% let message = get_draft_message().unwrap(); %> 
+<% if chat.get_draft_message(request_user.id).is_some() { %>
+  <% let message = get_draft_message(request_user.id).unwrap(); %>
 
 <form class="custom_color customize_form" style="position: sticky;bottom: 0;">
 <span class="user_typed_box small"></span>

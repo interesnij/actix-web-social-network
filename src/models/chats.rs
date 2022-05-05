@@ -707,7 +707,7 @@ impl Chat {
         let mut beep_icon = "".to_string();
 
         if self.is_have_draft_message_content(user_id) {
-            let message = self.get_draft_message(user_id);
+            let message = self.get_draft_message(user_id).unwrap();
             preview_text = "Черновик: ".to_string() + &message.get_type_text();
         }
         else if self.is_empty(user_id) {
