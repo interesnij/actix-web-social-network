@@ -119,27 +119,27 @@ impl Chat {
     }
     pub fn liked_manager(&self, user_id: i32) -> bool {
         use crate::schema::support_user_votes::dsl::support_user_votes;
-        use crate::models::SupportUser;
+        use crate::models::SupportUserVote;
 
         let _connection = establish_connection();
         return support_user_votes
             .filter(schema::support_user_votes::user_id.eq(user_id))
             .filter(schema::support_user_votes::manager_id.eq(self.get_chat_member(user_id).id))
             .filter(schema::support_user_votes::vote.eq(1))
-            .load::<SupportUser>(&_connection)
+            .load::<SupportUserVote>(&_connection)
             .expect("E.")
             .len() > 0;
     }
     pub fn disliked_manager(&self, user_id: i32) -> bool {
         use crate::schema::support_user_votes::dsl::support_user_votes;
-        use crate::models::SupportUser;
+        use crate::models::SupportUserVote;
 
         let _connection = establish_connection();
         return support_user_votes
             .filter(schema::support_user_votes::user_id.eq(user_id))
             .filter(schema::support_user_votes::manager_id.eq(self.get_chat_member(user_id).id))
             .filter(schema::support_user_votes::vote.eq(-1))
-            .load::<SupportUser>(&_connection)
+            .load::<SupportUserVote>(&_connection)
             .expect("E.")
             .len() > 0;
     }
@@ -332,16 +332,6 @@ impl Chat {
             .into_iter()
             .nth(0)
             .unwrap();
-    }
-    pub fn get_perm_display(&self, types: &str) -> String {
-        return match types.as_str() {
-            "a" => "Все участники",
-            "b" => "Создатель",
-            "c" => "Создатель и админы",
-            "d" => "Участники, кроме",
-            "e" => "Некоторые участники",
-            _ => "".to_string(),
-        };
     }
     pub fn get_chat_user(&self, user_id: i32) -> ChatUser {
         use crate::schema::chat_users::dsl::chat_users;

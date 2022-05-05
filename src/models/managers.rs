@@ -7,6 +7,7 @@ use crate::schema::{
     moderated_logs,
     staff_logs,
     support_users,
+    support_user_votes,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
@@ -233,4 +234,21 @@ pub struct NewSupportUser {
     pub points:          i32,
     pub chats:           i16,
     pub created:         chrono::NaiveDateTime,
+}
+
+/////// SupportUser //////
+
+#[derive(Debug, Queryable, Serialize, Identifiable)]
+pub struct SupportUserVote {
+    pub id:              i32,
+    pub vote:            i16,
+    pub user_id:         i32,
+    pub manager_id:      i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="support_user_votes"]
+pub struct NewSupportUserVote {
+    pub vote:            i16,
+    pub user_id:         i32,
+    pub manager_id:      i32,
 }
