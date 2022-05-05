@@ -289,7 +289,6 @@ impl Chat {
             .load::<ChatUser>(&_connection)
             .expect("E");
     }
-    pub fn get_recipients_2(&self, user_id: i32) -> Vec<ChatUser> {}
     pub fn get_members(&self) -> Vec<User> {
         use crate::utils::get_users_from_ids;
         return get_users_from_ids(self.get_members_ids());
@@ -298,7 +297,7 @@ impl Chat {
         use crate::schema::chat_users::dsl::chat_users;
 
         let _connection = establish_connection();
-        users = chat_users
+        let users = chat_users
             .filter(schema::chat_users::chat_id.eq(self.id))
             .filter(schema::chat_users::user_id.ne(user_id))
             .filter(schema::chat_users::types.eq("a"))
