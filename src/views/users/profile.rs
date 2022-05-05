@@ -418,7 +418,6 @@ pub fn close_account(folder: String, user: User, request_user: User) -> actix_we
         #[template(path = "desctop/users/account/close_user.stpl")]
         struct UserPage {
             title: String,
-            user:  User,
             private_bools: Vec<bool>,
             request_user: User,
             user:  User,
@@ -438,7 +437,6 @@ pub fn close_account(folder: String, user: User, request_user: User) -> actix_we
         #[template(path = "mobile/users/account/close_user.stpl")]
         struct UserPage {
             title: String,
-            user:  User,
             private_bools: Vec<bool>,
             request_user: User,
             user:  User,
@@ -528,7 +526,6 @@ pub fn account(folder: String, user: User, request_user: User) -> actix_web::Res
         #[template(path = "desctop/users/account/user.stpl")]
         struct UserPage {
             title: String,
-            user:  User,
             private_bools: Vec<bool>,
             request_user: User,
             user:  User,
@@ -548,7 +545,6 @@ pub fn account(folder: String, user: User, request_user: User) -> actix_web::Res
         #[template(path = "mobile/users/account/user.stpl")]
         struct UserPage {
             title: String,
-            user:  User,
             private_bools: Vec<bool>,
             request_user: User,
             user:  User,
