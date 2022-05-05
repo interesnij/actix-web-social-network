@@ -311,10 +311,12 @@ pub fn self_block_account(folder: String, user: User, request_user: User) -> act
         struct UserPage {
             title: String,
             user:  User,
+            request_user: User,
         }
         let body = UserPage {
             title: user.get_full_name(),
             user:  user,
+            request_user: request_user,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -326,10 +328,12 @@ pub fn self_block_account(folder: String, user: User, request_user: User) -> act
         struct UserPage {
             title: String,
             user:  User,
+            request_user: User,
         }
         let body = UserPage {
             title: user.get_full_name(),
             user:  user,
+            request_user: request_user,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -343,10 +347,12 @@ pub fn my_bad_account(folder: String, user: User, request_user: User) -> actix_w
         struct UserPage {
             title: String,
             user:  User,
+            request_user: User,
         }
         let body = UserPage {
             title: user.get_full_name(),
             user:  user,
+            request_user: request_user,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -358,10 +364,12 @@ pub fn my_bad_account(folder: String, user: User, request_user: User) -> actix_w
         struct UserPage {
             title: String,
             user:  User,
+            request_user: User,
         }
         let body = UserPage {
             title: user.get_full_name(),
             user:  user,
+            request_user: request_user,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -375,10 +383,12 @@ pub fn bad_account(folder: String, user: User, request_user: User) -> actix_web:
         struct UserPage {
             title: String,
             user:  User,
+            request_user: User,
         }
         let body = UserPage {
             title: user.get_full_name(),
             user:  user,
+            request_user: request_user,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -390,10 +400,12 @@ pub fn bad_account(folder: String, user: User, request_user: User) -> actix_web:
         struct UserPage {
             title: String,
             user:  User,
+            request_user: User,
         }
         let body = UserPage {
             title: user.get_full_name(),
             user:  user,
+            request_user: request_user,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -407,10 +419,12 @@ pub fn close_account(folder: String, user: User, request_user: User) -> actix_we
         struct UserPage {
             title: String,
             user:  User,
+            request_user: User,
         }
         let body = UserPage {
             title: user.get_full_name(),
             user:  user,
+            request_user: request_user,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -422,10 +436,12 @@ pub fn close_account(folder: String, user: User, request_user: User) -> actix_we
         struct UserPage {
             title: String,
             user:  User,
+            request_user: User,
         }
         let body = UserPage {
             title: user.get_full_name(),
             user:  user,
+            request_user: request_user,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
