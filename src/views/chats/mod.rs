@@ -1,7 +1,11 @@
 pub mod chats;
-//pub mod chats_user_progs;
 
 pub use self::{
     chats::*,
-    //chats_user_progs::*,
 };
+
+pub fn chat_routes(cfg: &mut ServiceConfig) {
+    cfg
+    .configure(chats_pages)
+    ;
+}

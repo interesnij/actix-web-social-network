@@ -4,20 +4,16 @@ use crate::views::{
     pages,
     auth,
     user_routes,
-    post_pages, post_progs,
-    chats,
+    post_routes,
+    chat_routes,
 };
 
 pub fn routes(cfg: &mut web::ServiceConfig) {
     cfg
-    .configure(chats::chats_routes)
-
     .configure(pages::pages_routes)
-    .configure(user_routes)
-
-    .configure(post_pages::post_routes)
-    .configure(post_progs::post_progs)
-
     .configure(auth::auth_routes)
+    .configure(user_routes)
+    .configure(post_routes)
+    .configure(chats_routes)
     ;
 }
