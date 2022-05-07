@@ -12,7 +12,7 @@
     <ul>
       <% for object in user.get_fixed_posts().iter() { %>
       <li class="scrollable">
-        <% if object.user.is_some() { %>
+        <% if object.community_id.is_some() { %>
           <% include!("../../communities/lenta/fix_post.stpl"); %>
         <% } else { %>
           <% include!("../../users/lenta/fix_post.stpl"); %>
