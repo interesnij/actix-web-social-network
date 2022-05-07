@@ -80,3 +80,36 @@ pub fn count_communities_ru(&self) -> String {
 10. can_see_doc
 11. can_see_planner
 12. can_see_survey
+
+
+===========
+Приватность - видимость сообщества:
+0. can_see_info
+1. can_see_member
+2. can_send_message
+3. can_see_doc
+4. can_see_music
+5. can_see_survey
+6. can_see_post
+7. can_see_photo
+8. can_see_good
+9. can_see_video
+10. can_see_planner
+11. can_see_forum
+12. can_see_stat
+13. can_see_settings
+
+Приватность - видимость сообщества для анонима:
+0. can_see_info
+1. can_see_member
+2. can_see_doc
+3. can_see_music
+4. can_see_survey
+5. can_see_post
+6. can_see_photo
+7. can_see_good
+8. can_see_video
+9. can_see_planner
+10. can_see_forum
+11. can_see_stat
+12. can_see_settings

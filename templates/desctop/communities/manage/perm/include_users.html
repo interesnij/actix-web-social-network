@@ -1,6 +1,5 @@
 <div class="px-0 card no-shadow main-container" chat-pk="{{ community.pk }}" data-pk="none" data-type="none" style="min-height: 600px;">
     <form data-type="{{ type }}" class="" data-pk="{{ community.pk }}">
-      {% csrf_token %}
       <input type="hidden" name="type" value="{{ type }}">
       <div class="card-header" style="min-height: 100px;">
         {% if users %}

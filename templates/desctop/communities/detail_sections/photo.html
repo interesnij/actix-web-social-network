@@ -1,31 +1,31 @@
-{% if community.is_have_photo %}
+<% if community.is_have_photo() { %>
 
 <div class="card mb-3">
     <div class="p-1">
-      <a href="{% url 'community_gallery' pk=community.pk %}" class="ajax">
+      <a href="/community/<%=community.id %>/photos/" class="ajax">
         <div class="media">
             <div class="media-body">
                 <h6 class="content-color-primary mb-0">Фото </h6>
             </div>
-            {{ community.community_info.photos }}
+            <%= community.count_photos() %>
         </div>
       </a>
     </div>
     <div class="card-body p-1">
         <div class="row no-gutters">
-          {% for community in user.get_6_photos %}
-            <div style="flex: 0 0 33.33333%;max-width:33.33333%;padding:5px;" class="detail_photo pointer" photo-pk="{{ object.pk }}">
-              <img class="image_fit_70" src="{{ object.file.url }}" alt="">
+          <% for object in community.get_6_photos().iter() { %>
+            <div style="flex: 0 0 33.33333%;max-width:33.33333%;padding:5px;" class="detail_photo pointer" photo-pk="<%= object.id %>">
+              <img class="image_fit_70" src="<%= object.file %>" alt="">
             </div>
-          {% endfor %}
+          <% } %>
         </div>
     </div>
 </div>
-{% elif is_staff %}
+<% } else if request_user.is_administrator_of_community(community.id) { %>
 <div class="card mb-3">
     <div class="card-header">
         <div class="media centered">
-            <a href="{% url 'community_gallery' pk=community.pk %}" class="ajax">
+            <a href="/community/<%=community.id %>/photos/" class="ajax">
                 <div class="media-body">
                     <h6 class="content-color-primary mb-0">Фотографии</h6>
                 </div>
@@ -33,4 +33,4 @@
         </div>
     </div>
 </div>
-{% endif %}
+<% } %>

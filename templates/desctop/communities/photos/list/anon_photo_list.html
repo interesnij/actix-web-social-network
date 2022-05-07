@@ -1,18 +1,14 @@
 
-{% if not list.is_open %}
-  {% load user %}
-  {% include list|get_bad_item:request.user %}
-
-{% elif object_list %}
-{% for object in object_list %}
-  {% include 'desctop/generic/items/photo.html' %}
+<% if object_list.len() > 0 { %>
+  <% for object in object_list.iter() { %>
+    <% include!("../../../generic/items/photo.stpl"); %>
 {% endfor %}
-  {% if page_obj.has_next %}
-  <div class="load centered m-1 next_page_list" data-link="{% url 'load_photos_list' pk=list.pk %}?page={{ page_obj.next_page_number }}">
+  <% if next_page_number > 0 { %>
+  <div class="load centered m-1 next_page_list" data-link="/community/<%= community.id %>/photos_list/<%= list.id %>/?page=<%= next_page_number %>">
       <img src="/static/images/preloader.gif">
   </div>
   {% endif %}
 
 {% else %}
-  {% include 'desctop/communities/photos/main_list/no_photos.html' %}
+  <% include!("../no_photos.stpl"); %>
 {% endif %}

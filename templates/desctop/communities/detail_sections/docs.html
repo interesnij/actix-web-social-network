@@ -1,18 +1,18 @@
-{% if community.is_have_doc %}
+<% if community.is_have_doc() { %>
 
 <div class="card mb-3">
     <div class="p-1">
-      <a href="{% url 'community_docs' pk=community.pk %}" class="ajax">
+      <a href="/community/<%=community.id %>/docs/" class="ajax">
         <div class="media">
             <div class="media-body">
                 <h6 class="content-color-primary mb-0">Документы</h6>
             </div>
-            {{ community.community_info.docs }}
+            <%= community.count_docs() %>
         </div>
       </a>
     </div>
 
-    {% for object in community.get_6_docs %}
+    <% for object in community.get_6_docs().iter() { %>
     <div class="card border-top">
         <div class="p-1">
             <div class="media">
@@ -20,19 +20,19 @@
                 <path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
               </svg>
                 <div class="media-body">
-                    <a href="{{ object.file.url }}" target="_blank" rel="nofollow">{{ object.title }}</a>
-                    <p class="small">{{ object.file.size|filesizeformat }} | {{ object.get_mime_type }}</p>
+                    <a href="<%= object.file %>" target="_blank" rel="nofollow"><%= object.title %></a>
+                    <p class="small"><%= object.types_2 %></p>
                 </div>
             </div>
         </div>
     </div>
-    {% endfor %}
+    <% } %>
 </div>
-{% elif is_staff %}
+<% } else if request_user.is_administrator_of_community(community.id) { %>
 <div class="card mb-3">
     <div class="card-header">
         <div class="media centered">
-            <a href="{% url 'community_docs' pk=community.pk %}" class="ajax">
+            <a href="/community/<%=community.id %>/docs/" class="ajax">
                 <div class="media-body">
                     <h6 class="content-color-primary mb-0">Документы</h6>
                 </div>
@@ -40,4 +40,4 @@
         </div>
     </div>
 </div>
-{% endif %}
+<% } %>

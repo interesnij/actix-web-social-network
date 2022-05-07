@@ -1,48 +1,47 @@
-{% if community.is_have_music %}
+<% if community.is_have_music() { %>
 
-<div class="card mb-3 music_playlist" data-pk="{{ music_list.pk }}">
+<div class="card mb-3 music_playlist">
     <div class="p-1">
-      <a href="{% url 'community_music' pk=community.pk %}" class="ajax">
+      <a href="/community/<%=community.id %>/music/" class="ajax">
         <div class="media">
             <div class="media-body">
                 <h6 class="content-color-primary mb-0">Аудиозаписи</h6>
             </div>
-            {{ community.community_info.tracks }}
+            <%= community.count_tracks() %>
         </div>
       </a>
     </div>
 
-    {% for object in community.get_6_tracks %}
+    <% for object in community.get_6_tracks().iter() { %>
     <div class="card border-top">
         <div class="p-1">
-            <div class="media" music-counter="{{ forloop.counter }}">
+            <div class="media" music-counter="">
               <figure>
                 <a class="pointer music_list_item">
-                  {{ object.get_image|safe }}
+                  <%- object.get_image() %>
                 </a>
               </figure>
                 <div class="media-body" style="line-height: 10px;">
-                    <p class="track_item music_list_item pointer" style="font-size: 17px;"><a>{{ object.title }}</a></p>
-                    {% if object.album %}
-
-                    {% else %}
-                      {% if object.community %}
-                        <a class="small ajax" href="{% url 'community_detail' pk=object.community.pk %}">{{ object.community.name }}</a>
-                      {% else %}
-                        <a class="small ajax" href="{% url 'user' pk=object.creator.pk %}">{{ object.creator.get_full_name }}</a>
-                      {% endif %}
-                    {% endif %}
+                    <p class="track_item music_list_item pointer" style="font-size: 17px;"><a><%= object.title %></a></p>
+                      <% if object.community_id.is_some() { %>
+                        <% let community = object.get_community(); %>
+                        <a class="small ajax" href="<%= community.get_link() %>"><%= community.name %></a>
+                      <% } else { %>
+                        <% let creator = object.get_creator(); %>
+                        <a class="small ajax" href="<%= creator.get_link() %>"><%= creator.get_full_name() %></a>
+                      <% } %>
+                    <% } %>
                 </div>
             </div>
         </div>
     </div>
-    {% endfor %}
+    <% } %>
 </div>
-{% elif is_staff %}
+<% } else if request_user.is_administrator_of_community(community.id) { %>
 <div class="card mb-3">
     <div class="card-header">
         <div class="media centered">
-            <a href="{% url 'community_music' pk=community.pk %}" class="ajax">
+            <a href="/community/<%=community.id %>/music/" class="ajax">
                 <div class="media-body">
                     <h6 class="content-color-primary mb-0">Аудиозаписи</h6>
                 </div>
@@ -50,4 +49,4 @@
         </div>
     </div>
 </div>
-{% endif %}
+<% } %>

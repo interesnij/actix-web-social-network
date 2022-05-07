@@ -40,8 +40,8 @@
 {% endif %}
 
 {% include 'desctop/communities/lenta/lists.html' %}
-  <span class="span_list_pk" list-pk="{{ list.pk }}">
-    <span class="list_pk" data-uuid="{{ list.pk }}">
+  <span class="span_list_pk" list-pk="<% list.id %>">
+    <span class="list_pk" data-uuid="<% list.id %>">
       {% if is_user_can_see_post_list %}
         <span class="post_stream is_paginate">
           {% for object in object_list %}

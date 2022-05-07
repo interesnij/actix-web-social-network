@@ -767,7 +767,7 @@ impl Community {
         let _connection = establish_connection();
         let new_community_form = NewCommunity{
                 name:                    name,
-                status:                  "a".to_string(),
+                status:                  None,
                 types:                    types,
                 perm:                     "a".to_string(),
                 level:                    100,
@@ -990,36 +990,113 @@ impl Community {
     pub fn count_goods(&self) -> i32 {
         return self.get_info_model().goods;
     }
+    pub fn count_goods_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru(
+            self.count_goods(),
+            " товар".to_string(),
+            " товара".to_string(),
+            " товаров".to_string(),
+        );
+    }
+
     pub fn count_tracks(&self) -> i32 {
         return self.get_info_model().tracks;
     }
+    pub fn count_tracks_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru(
+            self.count_tracks(),
+            " аудиозапись".to_string(),
+            " аудиозаписи".to_string(),
+            " аудиозаписей".to_string(),
+        );
+    }
+
     pub fn count_photos(&self) -> i32 {
         return self.get_info_model().photos;
     }
+    pub fn count_photos_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru(
+            self.count_photos(),
+            " фотография".to_string(),
+            " фотографии".to_string(),
+            " фотографий".to_string(),
+        );
+    }
+
     pub fn count_docs(&self) -> i32 {
         return self.get_info_model().docs;
     }
+    pub fn count_docs_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru(
+            self.count_docs(),
+            " документ".to_string(),
+            " документа".to_string(),
+            " документов".to_string(),
+        );
+    }
+
     pub fn count_posts(&self) -> i32 {
         return self.get_info_model().posts;
     }
+    pub fn count_posts_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru(
+            self.count_posts(),
+            " запись".to_string(),
+            " записи".to_string(),
+            " записей".to_string(),
+        );
+    }
+
     pub fn count_articles(&self) -> i32 {
         return self.get_info_model().articles;
+    }
+    pub fn count_articles_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru(
+            self.count_articles(),
+            " статья".to_string(),
+            " статьи".to_string(),
+            " статей".to_string(),
+        );
+    }
+
+    pub fn count_videos(&self) -> i32 {
+        return self.get_info_model().videos;
+    }
+    pub fn count_videos_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru(
+            self.count_videos(),
+            " видеозапись".to_string(),
+            " видеозаписи".to_string(),
+            " видеозаписей".to_string(),
+        );
+    }
+
+    pub fn count_members(&self) -> i32 {
+        return self.get_info_model().members;
     }
     pub fn count_members_ru(&self) -> String {
         use crate::utils::get_count_for_ru;
 
         return get_count_for_ru(
             self.count_members(),
-            " сообщество".to_string(),
-            " сообщества".to_string(),
-            " сообществ".to_string(),
+            " подписчик".to_string(),
+            " подписчика".to_string(),
+            " подписчиков".to_string(),
         );
-    }
-    pub fn count_videos(&self) -> i32 {
-        return self.get_info_model().videos;
-    }
-    pub fn count_members(&self) -> i32 {
-        return self.get_info_model().members;
     }
 
     pub fn get_good_list(&self) -> GoodList {
@@ -1921,6 +1998,22 @@ impl Community {
         };
         return stack;
     }
+    pub fn get_6_members_ids(&self) -> Vec<i32> {
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+
+        let _connection = establish_connection();
+        let items = communities_memberships
+            .filter(schema::communities_memberships::community_id.eq(self.id))
+            .limit(6)
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
     pub fn get_staff_users_ids(&self) -> Vec<i32> {
         use crate::schema::communities_memberships::dsl::communities_memberships;
 
@@ -2498,6 +2591,10 @@ impl Community {
         use crate::utils::get_users_from_ids;
         return get_users_from_ids(self.get_members_ids());
     }
+    pub fn get_6_members(&self) -> Vec<User> {
+        use crate::utils::get_users_from_ids;
+        return get_users_from_ids(self.get_6_members_ids());
+    }
     pub fn get_administrators(&self) -> Vec<User> {
         use crate::utils::get_users_from_ids;
         return get_users_from_ids(self.get_administrators_ids());
@@ -2757,13 +2854,12 @@ impl Community {
 
     pub fn get_community_all_can_see(&self, user_id: i32) -> Vec<bool> {
         if self.id == self.user_id {
-            // 12
-            return vec![true, true, true, true, true, true, true, true, true, true, true, true];
+            // 14
+            return vec![true, true, true, true, true, true, true, true, true, true, true, true, true, true];
         }
         let private = self.get_private_model();
 
         let mut bool_stack = Vec::new();
-        bool_stack.push(true);
 
         let can_see_info = private.can_see_info;
         let bool_can_see_info = match can_see_info.as_str() {
@@ -2921,17 +3017,42 @@ impl Community {
         };
         bool_stack.push(bool_can_see_forum);
 
+        let can_see_stat = private.can_see_stat;
+        let bool_can_see_stat = match can_see_stat.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_forum_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_forum_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_stat);
+
+        let can_see_settings = private.can_see_settings;
+        let bool_can_see_settings = match can_see_settings.as_str() {
+            "a" => true,
+            "b" => self.get_members_ids().iter().any(|&i| i==user_id),
+            "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
+            "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
+            "e" => self.user_id == user_id,
+            "f" => !self.get_can_see_forum_exclude_users_ids().iter().any(|&i| i==user_id),
+            "g" => self.get_can_see_forum_include_users_ids().iter().any(|&i| i==user_id),
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_settings);
+
         return bool_stack;
     }
     pub fn get_anon_community_all_can_see(&self) -> Vec<bool> {
         if self.id == self.user_id {
-            // 11
-            return vec![true, true, true, true, true, true, true, true, true, true, true];
+            // 13
+            return vec![true, true, true, true, true, true, true, true, true, true, true, true, true];
         }
         let private = self.get_private_model();
 
         let mut bool_stack = Vec::new();
-        bool_stack.push(true);
 
         let can_see_info = private.can_see_info;
         let bool_can_see_info = match can_see_info.as_str() {
@@ -3009,6 +3130,20 @@ impl Community {
             _ => false,
         };
         bool_stack.push(bool_can_see_forum);
+
+        let can_see_stat = private.can_see_stat;
+        let bool_can_see_stat = match can_see_stat.as_str() {
+            "a" => true,
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_stat);
+
+        let can_see_settings = private.can_see_settings;
+        let bool_can_see_settings = match can_see_settings.as_str() {
+            "a" => true,
+            _ => false,
+        };
+        bool_stack.push(bool_can_see_settings);
 
         return bool_stack;
     }

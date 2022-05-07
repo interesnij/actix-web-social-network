@@ -1,14 +1,10 @@
-{% extends "base.html" %}
-{% block title %}{{ list.name }} - мой альбом{% endblock %}
-{% block content %}
 
 <div class="main-container mt-3 pk_saver" data-pk="{{ community.pk }}" data-type="community_photo_list">
   <span class="load_block" data-pk="{{ community.pk }}">
   <div class="media mt-3" style="padding-left: 7px;">
-    <form  data-uuid="{{ list.uuid }}">
-      {% csrf_token %}
+    <form  data-uuid="<%= list.id %>">
     <h5 class="mt-1">
-      <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count_items }})
+      <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %></span> (<%= list.count_items() %>)
         <input accept="image/*" type="file" class="add_photos_in_list" name="file" style="display:none" multiple="multiple">
         <span class="pointer badge badge-light-success previous_click">Добавить фото</span>
         {% if community.pk == list.community.pk and not list.is_main %}
@@ -29,5 +25,3 @@
   </div>
 </span>
 </div>
-
-{% endblock %}

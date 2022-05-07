@@ -1,9 +1,8 @@
 
 <div class="card mb-3" style="border:1px solid rgba(0, 0, 0, 0.125);">
-    <form id="c_form_post" name="new_post" enctype="multipart/form-data">
-        {% csrf_token %}
+    <form id="form_post" name="new_post">
         <div class="card-body p-0">
-            <div style="display:inline-block" contenteditable="true" placeholder="Что у Вас нового?" class="form-control new_element_text smile_supported input_new_post_in_list"></div>
+            <div style="display:inline-block" contenteditable="true" placeholder="Добавить запись в список" class="form-control new_element_text input_new_post_in_list smile_supported"></div>
         </div>
         <div class="card-footer border-top btn_default" style="padding: 0 15px;display:none">
             <span class="files_0 row"></span>
@@ -31,11 +30,12 @@
                     тема
                   </a>
                   <div class="dropdown-menu" style="left: 100px;">
-                    {% for object in user.get_post_categories %}
-                    <span data-pk="{{ object.pk }}">
-                      <a class="dropdown-item cat_list_select" style="padding-left: 30px;">{{ object.name }}</a>
+                    <span data-pk="1">
+                      <a class="dropdown-item cat_list_select" style="padding-left: 30px;">IT</a>
                     </span>
-                    {% endfor %}
+                    <span data-pk="2">
+                      <a class="dropdown-item cat_list_select" style="padding-left: 30px;">Красота</a>
+                    </span>
                   </div>
                 </div>
 
@@ -45,8 +45,8 @@
                   <div class="dropdown-menu" style="left: -126px;">
                       <a class="dropdown-item">
                         <div class="custom-control custom-checkbox">
-                          <input type="checkbox" name="comments_enabled" class="custom-control-input" checked id="id_comments_enabled">
-                          <label class="custom-control-label" for="id_comments_enabled" style="padding-top: 5px;">Комментарии включены</label>
+                          <input type="checkbox" name="comment_enabled" class="custom-control-input" checked id="id_comment_enabled">
+                          <label class="custom-control-label" for="id_comment_enabled" style="padding-top: 5px;">Комментарии включены</label>
                         </div>
                       </a>
                       <a class="dropdown-item">

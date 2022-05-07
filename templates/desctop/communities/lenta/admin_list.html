@@ -40,22 +40,22 @@
 {% endif %}
 
 {% include 'desctop/communities/lenta/admin_lists.html' %}
-  <span class="span_list_pk" list-pk="{{ list.pk }}">
-    <span class="list_pk" data-uuid="{{ list.pk }}">
+  <span class="span_list_pk" list-pk="<% list.id %>">
+    <span class="list_pk" data-uuid="<% list.id %>">
       {% if is_user_can_see_post_list %}
 
-      <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}: </span>
-      {% include 'desctop/generic/items/list_meta.html' %}
+      <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %>: </span>
+      <% include!("../../../generic/items/list_meta.stpl"); %>
 
         {% if is_user_can_create_posts %}
-          {% include 'desctop/communities/detail_sections/create_post.html' %}
+          <% include!("../detail_sections/create_post.stpl"); %>
         {% elif is_user_can_create_offer_post %}
-          {% include 'desctop/communities/detail_sections/create_offer_post.html' %}
+          <% include!("../detail_sections/create_offer_post.stpl"); %>
         {% endif %}
         <span></span>
         <span class="post_stream drag_container is_paginate" data-type="pos" data-community-id="{{ list.community.pk }}">
           {% for object in object_list %}
-            {% include 'desctop/posts/post_community/admin_post.html' %}
+            <% include!("../../posts/post_community/admin_post.stpl"); %>
           {% endfor %}
           {% if page_obj.has_next %}
           <div class="load centered m-1 next_page_list" data-link="/posts/list/?community={{ community.pk }}&page={{ page_obj.next_page_number }}">
@@ -64,11 +64,11 @@
           {% endif %}
 
           {% if not object and not object_list %}
-            {% include 'desctop/communities/lenta/no_items.html' %}
+            <% include!("no_items.stpl"); %>
           {% endif %}
         </span>
         {% else %}
-          {% include 'desctop/generic/centered/private_list.html' %}
+          <% include!("../../generic/centered/private_list.stpl"); %>
         {% endif %}
     </span>
   </span>

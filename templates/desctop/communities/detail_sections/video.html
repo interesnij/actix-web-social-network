@@ -1,31 +1,31 @@
-{% if community.is_have_video %}
+<% if community.is_have_video() { %>
 
 <div class="card mb-3">
     <div class="p-1">
-      <a href="{% url 'community_video' pk=community.pk %}" class="ajax">
+      <a href="/community/<%=community.id %>/video/" class="ajax">
         <div class="media">
             <div class="media-body">
                 <h6 class="content-color-primary mb-0">Видео </h6>
             </div>
-            {{ community.community_info.videos }}
+            <%= community.count_videos() %>
         </div>
       </a>
     </div>
     <div class="card-body p-1">
-        {% for object in community.get_2_videos %}
+        <% for object in community.get_2_videos().iter() { %>
           <div class="media-body position-relative">
-            <img class="image_fit_200" src="{{ object.image.url }}" alt="">
-            <div class="video_icon_play_v2 video_list_detail" video-counter="{{ forloop.counter }}" video-pk="{{ object.pk }}"></div>
-            <a>{{ object.title }}</a>
+            <img class="image_fit_200" src="<%= object.get_image() %>" alt="">
+            <div class="video_icon_play_v2 video_list_detail" video-counter="" video-pk="<%= object.id %>"></div>
+            <a><%= object.title %></a>
           </div>
-        {% endfor %}
+        <% } %>
     </div>
 </div>
-{% elif is_staff %}
+<% } else if request_user.is_administrator_of_community(community.id) { %>
 <div class="card mb-3">
     <div class="card-header">
         <div class="media centered">
-            <a href="{% url 'community_video' pk=community.pk %}" class="ajax">
+            <a href="/community/<%= community.id %>/video/" class="ajax">
                 <div class="media-body">
                     <h6 class="content-color-primary mb-0">Видеозаписи</h6>
                 </div>
@@ -33,4 +33,4 @@
         </div>
     </div>
 </div>
-{% endif %}
+<% } %>

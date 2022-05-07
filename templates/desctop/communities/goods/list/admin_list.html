@@ -1,16 +1,5 @@
-{% extends "base.html" %}
-{% load liked_user %}
-{% block title %}{{ community.name }} | Товары - {{ list.title }}{% endblock %}
-{% block meta %}
-<meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/communities/{{ community.pk }}/goods_list/{{ list.uuid }}" />
-<meta property="og:type" content="website" />
-<meta property="og:title" content="Товары сообщества {{ community.name }} - {{ list.name }}" />
-<meta property="og:image" content="https://xn--b1afgj5al1e.xn--p1acf{{ community.get_b_avatar }}"/>
-{% endblock %}
-{% block content %}
 
-<div class="main-container mt-3" data-pk="{{ list.pk }}" data-type="community_goods_list">
-  {% if is_user_can_see_good_section %}
+<div class="main-container mt-3" data-pk="<% list.id %>" data-type="community_goods_list">
         <div class="input-group mb-3">
             <input type="text" class="form-control form-control-sm" placeholder="Поиск по товарам">
             <div class="input-group-append">
@@ -23,51 +12,42 @@
               <div style="display:flex">
                 <svg fill="currentColor" class="svg_default" style="width:50px;height:50px" viewBox="0 0 24 24"><g><rect fill="none" height="24" width="24"/><path d="M18,6h-2c0-2.21-1.79-4-4-4S8,3.79,8,6H6C4.9,6,4,6.9,4,8v12c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V8C20,6.9,19.1,6,18,6z M10,10c0,0.55-0.45,1-1,1s-1-0.45-1-1V8h2V10z M12,4c1.1,0,2,0.9,2,2h-4C10,4.9,10.9,4,12,4z M16,10c0,0.55-0.45,1-1,1 s-1-0.45-1-1V8h2V10z"/></g></svg>
                 <div class="media-body" style="margin-left: 10px;">
-                  <h6 class="my-0 mt-1"><span class="list_name">{{ list.name }}</span>&nbsp;({{ list.count_items }})</h6>
+                  <h6 class="my-0 mt-1"><span class="list_name"><%= list.name %></span>&nbsp;(<%= list.count_items() %>)</h6>
                 </div>
               </div>
             </div>
           </div>
           <span class="load_block">
-            <div class="media mt-3 uuid_saver" data-pk="{{ list.pk }}" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
+            <div class="media mt-3 uuid_saver" data-pk="<% list.id %>" data-uuid="<% list.id %>" style="padding-left: 7px;">
               <h5 class="mt-1">
-                <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count_items }})
+                <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %></span> (<%= list.count_items() %>)
                 {% if is_user_can_create_goods %}
                 <a class="pointer c_good_add hide_delete" tooltip="Добавить товар" flow="up">
                   <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                 </a>
                 {% endif %}
-                {% include 'desctop/generic/items/list_meta.html' %}
+                <% include!("../../../generic/items/list_meta.stpl"); %>
               </h5>
             </div>
         <div class="card mb-2">
           <div class="card-body">
-            <div class="row is_paginate drag_container is_stat_list" data-pk="{{ list.pk }}" data-type="goo" data-community-id="{{ list.community.pk }}">
-              {% if not list.is_open %}
-                {% load user %}
-                {% include list|get_bad_item:request.user %}
+            <div class="row is_paginate drag_container is_stat_list" data-pk="<% list.id %>" data-type="goo" data-community-id="<%= list.community_id.unwrap() %>">
 
-              {% elif object_list %}
-
-              {% for object in object_list %}
-                {% include 'desctop/communities/goods/main_list/good.html' %}
+              <% if object_list.len() > 0 { %>
+                <% for object in object_list.iter() { %>
+                  <% include!("../good.stpl"); %>
               {% endfor %}
-              {% if page_obj.has_next %}
-              <div class="load centered m-1 next_page_list" data-link="{% url 'community_goods_list' pk=community.pk uuid=list.uuid %}?page={{ page_obj.next_page_number }}">
+              <% if next_page_number > 0 { %>
+              <div class="load centered m-1 next_page_list" data-link="/community/<%= community.id %>/goods_list/<%= list.id %>/?page=<%= next_page_number %>">
                   <img src="/static/images/preloader.gif">
               </div>
               {% endif %}
 
               {% else %}
-                {% include 'desctop/communities/goods/main_list/no_goods.html' %}
+                <% include!("../no_goods.stpl"); %>
               {% endif %}
               </div>
             </div>
         </div>
       </span>
-      {% else %}
-        {% include 'desctop/generic/centered/private_page.html' %}
-      {% endif %}
 </div>
-
-{% endblock %}

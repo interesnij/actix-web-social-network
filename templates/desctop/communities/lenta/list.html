@@ -40,22 +40,22 @@
 {% endif %}
 
 {% include 'desctop/communities/lenta/lists.html' %}
-  <span class="span_list_pk" list-pk="{{ list.pk }}">
-    <span class="list_pk" data-uuid="{{ list.pk }}">
+  <span class="span_list_pk" list-pk="<% list.id %>">
+    <span class="list_pk" data-uuid="<% list.id %>">
       {% if is_user_can_see_post_list %}
 
       <span>{{ list.name }}: </span>
-      {% include 'desctop/generic/items/list_meta.html' %}
+      <% include!("../../../generic/items/list_meta.stpl"); %>
 
-        {% if is_user_can_create_posts %}
-          {% include 'desctop/communities/detail_sections/create_post.html' %}
-        {% elif is_user_can_create_offer_post %}
-          {% include 'desctop/communities/detail_sections/create_offer_post.html' %}
-        {% endif %}
+      {% if is_user_can_create_posts %}
+        <% include!("../detail_sections/create_post.stpl"); %>
+      {% elif is_user_can_create_offer_post %}
+        <% include!("../detail_sections/create_offer_post.stpl"); %>
+      {% endif %}
         <span></span>
         <span class="post_stream is_paginate">
           {% for object in object_list %}
-            {% include 'desctop/posts/post_community/post.html' %}
+            <% include!("../../posts/post_community/admin_post.stpl"); %>
           {% endfor %}
           {% if page_obj.has_next %}
           <div class="load centered m-1 next_page_list" data-link="/posts/list/?community={{ community.pk }}&page={{ page_obj.next_page_number }}">
@@ -64,16 +64,16 @@
           {% endif %}
 
           {% if not object and not object_list %}
-            {% include 'desctop/communities/lenta/no_items.html' %}
+            <% include!("no_items.stpl"); %>
           {% endif %}
         </span>
         {% else %}
-          {% include 'desctop/generic/centered/private_list.html' %}
+          <% include!("../../generic/centered/private_list.stpl"); %>
         {% endif %}
     </span>
   </span>
 
 {% else %}
-    {% include 'desctop/generic/centered/private_post.html' %}
+  <% include!("../../generic/centered/private_post.stpl"); %>
 {% endif %}
 </span>

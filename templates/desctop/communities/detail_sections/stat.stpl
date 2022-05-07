@@ -1,0 +1,104 @@
+
+<div class="row no-gutters mb-3 mt-1">
+  <% if community.count_posts() > 0 && private_bools[6] == true { %>
+   <div class="col text-center">
+     <div class="media">
+       <div class="media-body">
+         <h6 class="content-color-primary mb-0"><% community.count_posts() %></h6>
+         <p class="content-color-secondary mb-0"><% community.count_posts_ru() %></p>
+       </div>
+     </div>
+   </div>
+   <% } %>
+  <% if community.count_members() > 0 && private_bools[1] == true { %>
+   <div class="col text-center">
+     <div class="media">
+       <div class="media-body">
+         <h6 class="content-color-primary mb-0">
+           <a href="/community/<%=community.id %>/members/" class="ajax">
+           <%= community.count_members() %>
+           </a>
+         </h6>
+         <p class="content-color-secondary mb-0">
+          <a href="/community/<%=community.id %>/members/" class="ajax">
+           <%= community.count_members_ru() %>
+          </a>
+         </p>
+       </div>
+     </div>
+   </div>
+   <% } %>
+   <% if community.count_goods() > 0 && private_bools[8] == true { %>
+   <div class="col text-center">
+     <div class="media">
+       <div class="media-body">
+         <h6 class="content-color-primary mb-0">
+           <a href="/community/<%=community.id %>/goods/" class="ajax">
+             <%= community.count_goods() %>
+           </a>
+         </h6>
+         <p class="content-color-secondary mb-0">
+           <a href="/community/<%=community.id %>/goods/" class="ajax">
+             <%= community.count_goods_ru() %>
+           </a>
+         </p>
+       </div>
+     </div>
+   </div>
+   <% } %>
+   <% if community.count_photos() > 0 && private_bools[7] == true { %>
+   <div class="col text-center">
+     <div class="media">
+       <div class="media-body">
+         <h6 class="content-color-primary mb-0">
+           <a href="/community/<%=community.id %>/photos/" class="ajax">
+           <%= community.count_photos() %>
+           </a>
+         </h6>
+         <p class="content-color-secondary mb-0">
+           <a href="/community/<%=community.id %>/photos/" class="ajax">
+             <%= community.count_photos_ru() %>
+           </a>
+         </p>
+       </div>
+     </div>
+   </div>
+   <% } %>
+  <% if community.count_tracks() > 0 && private_bools[4] == true { %>
+   <div class="col text-center">
+     <div class="media">
+       <div class="media-body">
+         <h6 class="content-color-primary mb-0">
+          <a href="/community/<%=community.id %>/music/" class="ajax">
+            <%= community.count_tracks() %>
+          </a>
+         </h6>
+         <p class="content-color-secondary mb-0">
+           <a href="/community/<%=community.id %>/music/" class="ajax">
+             <%= community.count_tracks_ru() %>
+           </a>
+         </p>
+       </div>
+     </div>
+   </div>
+   <% } %>
+   <% if community.count_videos() > 0 && private_bools[9] == true { %>
+   <div class="col text-center">
+     <div class="media">
+       <div class="media-body">
+         <h6 class="content-color-primary mb-0">
+
+           <a href="/community/<%=community.id %>/video/" class="ajax">
+             <%= community.count_videos() %>
+           </a>
+         </h6>
+         <p class="content-color-secondary mb-0">
+           <a href="/community/<%=community.id %>/video/" class="ajax">
+             <%= community.count_videos_ru() %>
+           </a>
+         </p>
+       </div>
+     </div>
+   </div>
+   <% } %>
+ </div>

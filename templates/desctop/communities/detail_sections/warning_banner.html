@@ -1,4 +1,4 @@
-{% if community.is_have_warning_banner %}
+<% if community.is_have_warning_banner() { %>
 <div class="card mb-3 item_fullscreen">
   <span class="this_fullscreen_hide">
     <svg class="svg_default svg_default_30" fill="currentColor" viewBox="0 0 24 24">
@@ -10,15 +10,16 @@
         <h6 class="card-title mb-0">Сообщество может быть опасно</h6>
     </div>
     <div class="card-body">
-      {% if community.get_moderated_description %}
-        <p class="context-menu-promise"> <span class="underline">Комментарий управленца</span>: {{ community.get_moderated_description|linebreaks }}</p>
-      {% else %}
-        <p class="context-menu-promise">Модератор не дал объяснений</p>
-      {% endif %}
+      <p class="context-menu-promise">
+        <span class="underline">Комментарий управленца</span>
+        : <%= community.get_moderated_description() %>
+      </p>
     </div>
     <div class="card-footer">
-        <a class="context-menu-promise btn btn-success" style="color:white !important">Подробнее</a>
+        <a class="context-menu-promise btn btn-success" style="color:white !important">
+          Подробнее
+        </a>
     </div>
   </div>
 </div>
-{% endif %}
+<% } %>
