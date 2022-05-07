@@ -12,7 +12,7 @@
     <ul>
       <% for object in user.get_fixed_posts().iter() { %>
       <li class="scrollable">
-        <% if object.community_id.is_some() { %>
+        <% if object.user.is_some() { %>
           <% include!("../../communities/lenta/fix_post.stpl"); %>
         <% } else { %>
           <% include!("../../users/lenta/fix_post.stpl"); %>
@@ -66,14 +66,14 @@
               <% } %>
             <% } %>
             <% if next_page_number > 0 { %>
-              <div class="load centered m-1 next_page_list" data-link="/users/<%= user.id %>/wall/<%= list.id %>/?page=<%= next_page_number %>">
+              <div class="load centered m-1 next_page_list" data-link="/communities/<%= community.id %>/wall/<%= list.id %>/?page=<%= next_page_number %>">
                 <img src="/static/images/preloader.gif">
               </div>
             <% } %>
           <% } %>
 
           <% if object_list.len() == 0 { %>
-            <% include!("../../users/lenta/no_items.stpl"); %>
+            <% include!("../../communities/lenta/no_items.stpl"); %>
           <% } %>
         </span>
         <% } else { %>

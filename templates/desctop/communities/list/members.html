@@ -12,24 +12,20 @@
                 <div class="media">
                     <div class="media-body">
                         <h5 class="mt-1">Подписчики сообщества
-                            {% include 'desctop/generic/community/community.html' %}
+                          <a class="underline ajax" href="<%= community.get_link() %>">
+                            <%= community.name %>
+                          </a>
                         </h5>
                     </div>
                 </div>
             </div>
             <div class="card-body px-0 py-0">
                 <ul class="list-group is_paginate">
-                    {% for user in object_list %}
+                  <% for object in object_list.iter() { %>
                     <li class="list-group-item">
-                        <div class="media">
-                          {% include 'desctop/generic/user/figure.html' %}
-                          <div class="media-body">
-                              {% include 'desctop/generic/user/user.html' %}
-                              <a href="" class="small">Написать</a>
-                          </div>
-                        </div>
+                        <% include!("../../generic/user/card_send_message.stpl"); %>
                     </li>
-                    {% endfor %}
+                  <% } %>
                 </ul>
             </div>
         </div>

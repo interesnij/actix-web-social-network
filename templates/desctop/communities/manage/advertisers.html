@@ -1,8 +1,5 @@
-{% extends "base.html" %}
-{% block title %}Рекламодатели сообщества - {{ community.name }}{% endblock %}
-{% block content %}
 
-<div class="mt-4 main-container pk_saver" data-pk="{{ community.pk }}" data-type="community_manage_advertisers">
+<div class="mt-4 main-container pk_saver" data-pk="<%= community.id %>" data-type="community_manage_advertisers">
 <div class="row">
     <div class="col-md-8 order-1">
         <div class="input-group mb-3">
@@ -16,33 +13,47 @@
                 <div class="media">
                     <div class="media-body">
                         <h5 class="mt-1">Рекламодатели сообщества -
-                            {% include 'desctop/generic/community/community.html' %}
+                          <a class="underline ajax" href="<%= community.get_link() %>">
+                            <%= community.name %>
+                          </a>
                         </h5>
                     </div>
                 </div>
             </div>
 
             <div class="card-body px-0 py-0">
-              {% if object_list %}
+              <% if object_list.len() > 0 { %>
                 <ul class="list-group is_paginate">
-                    {% for user in object_list %}
-                    <li class="list-group-item li_{{ user.pk }}" data-uuid="{{ user.uuid }}" data-pk="{{ community.pk }}">
+                    <% for object in object_list.iter() { %>
+                    <li class="list-group-item" data-pk="<%= object.id %>">
                         <div class="media">
-                          {% include 'desctop/generic/user/figure.html' %}
+                          <a href="<%= object.get_link() %>" class="ajax">
+                              <figure>
+                                  <% if object.s_avatar.is_some() { %>
+                                  <img src="<%= object.s_avatar.as_deref().unwrap() %>" style="border-radius:50px;width:50px;" alt="image">
+                                  <% } else { %>
+                                  <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24">
+                                      <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                      <path d="M0 0h24v24H0z" fill="none" /></svg>
+                                  <% } %>
+                              </figure>
+                          </a>
                           <div class="media-body">
-                              {% include 'desctop/generic/user/user.html' %}
+                            <a href="<%= object.get_link() %>" class="ajax">
+                                <h6 class="my-0 mt-1"><%= object.get_full_name() %></h6>
+                            </a>
                               <span class="staff_btn">
                                 Рекламодатель<br>
-                                <span class="small">
+                                <span class="small" data-pk="<%= object.id %>">
                                   <a class="show_staff_window pointer">Редактировать</a> | <a class="remove_advertiser pointer">Разжаловать</a>
                                 </span>
                               </span>
                           </div>
                         </div>
                     </li>
-                    {% endfor %}
+                    <% } %>
                 </ul>
-                {% else %}
+                <% } else { %>
                 <div class="col-12">
                   <div class="card items_empty centered">
                     <div class="card-body">
@@ -51,15 +62,13 @@
                     <h6 style="margin: 20px;text-align: center;">Рекламодателей пока нет</h6>
                   </div>
                 </div>
-                {% endif %}
+                <% } %>
             </div>
         </div>
     </div>
 
     <div class="col-md-4 order-2 left_menu">
-        {% include 'desctop/communities/manage/menu.html' %}
+        <% include!("menu.stpl"); %>
     </div>
 </div>
 </div>
-
-{% endblock %}

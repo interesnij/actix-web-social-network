@@ -1,5 +1,5 @@
-<form id="add_community_form" class="is_stat_list" data-pk="{{ request.user.pk }}" data-type="create_user_community">
-  {% csrf_token %}
+<form id="add_community_form" class="is_stat_list" data-pk="<%= request_user.id %>" data-type="create_user_community">
+
   <div class="card mb-3">
     <div class="card-header border-bottom">
       <h5 class="content-color-primary mb-0">Создание сообщества</h5>
@@ -13,9 +13,9 @@
         <label>Категория</label>
         <select class="form-control" id="sub_category" data-live-search="true" tabindex="-1" aria-hidden="true">
           <option value="">Выберите тематику</option>
-          {% for object in categories %}
-          <option data-order="{{ object.order }}" value="{{ object.order }}">{{ object.name }}</option>
-          {% endfor %}
+          <% for object in categories.iter() { %>
+            <option data-order="<%= object.order %>" value="<%= object.order %>"><%= object.name %></option>
+          <% } %>
         </select>
         <div id="subcat"></div>
       </div>

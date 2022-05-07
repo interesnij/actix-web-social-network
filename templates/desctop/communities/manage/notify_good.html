@@ -1,62 +1,60 @@
-{% extends "base.html" %}
-{% block title %}Уведомления товаров - {{ community.name }}{% endblock %}
-{% block content %}
 
-<div class="mt-4 main-container pk_saver" data-pk="{{ community.pk }}" data-type="community_manage_notify_goods">
+<div class="mt-4 main-container pk_saver" data-pk="<%= community.id %>" data-type="community_manage_notify_goods">
     <div class="row">
         <div class="col-md-8 order-1">
             <form id="community_notify_good_form" class="contact-form">
-                {% csrf_token %}
                 <div class="card mb-3">
                     <div class="card-header border-bottom">
                         <h5 class="content-color-primary mb-0">Уведомления товаров -
-                          {% include 'desctop/generic/community/community.html' %}
+                          <a class="underline ajax" href="<%= community.get_link() %>">
+                            <%= community.name %>
+                          </a>
                         </h5>
                     </div>
                     <div class="card-body">
                       <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                           Комментарии к товарам
-                          <input type="checkbox" {% if notify_good.comment %} checked {% endif %} name="comment" id="id_comment" class="switch switch-sm">
+                          <input type="checkbox" <% if notify_good.comment { %> checked <% } %> name="comment" id="id_comment" class="switch switch-sm">
                           <label style="margin-right:12px;bottom: 5px;" for="id_comment" class="bg_success mb-2 border float-right"></label>
                       </p>
                       <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                           Ответы на комментарии
-                          <input type="checkbox" {% if notify_good.comment_reply %} checked {% endif %} name="comment_reply" id="id_comment_reply" class="switch switch-sm">
+                          <input type="checkbox" <% if notify_good.comment_reply { %> checked <% } %> name="comment_reply" id="id_comment_reply" class="switch switch-sm">
                           <label style="margin-right:12px;bottom: 5px;" for="id_comment_reply" class="bg_success mb-2 border float-right"></label>
                       </p>
                       <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                           Репосты товаров
-                          <input type="checkbox" {% if notify_good.repost %} checked {% endif %} name="repost" id="id_repost" class="switch switch-sm">
+                          <input type="checkbox" <% if notify_good.repost { %> checked <% } %> name="repost" id="id_repost" class="switch switch-sm">
                           <label style="margin-right:12px;bottom: 5px;" for="id_repost" class="bg_success mb-2 border float-right"></label>
                       </p>
                       <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                           Лайки на товары
-                          <input type="checkbox" {% if notify_good.like %} checked {% endif %} name="like" id="id_like" class="switch switch-sm">
+                          <input type="checkbox" <% if notify_good.liked { %> checked <% } %> name="liked" id="id_like" class="switch switch-sm">
                           <label style="margin-right:12px;bottom: 5px;" for="id_like" class="bg_success mb-2 border float-right"></label>
                       </p>
                       <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                           Дизайки на товары
-                          <input type="checkbox" {% if notify_good.dislike %} checked {% endif %} name="dislike" id="id_dislike" class="switch switch-sm">
+                          <input type="checkbox" <% if notify_good.disliked { %> checked <% } %> name="disliked" id="id_dislike" class="switch switch-sm">
                           <label style="margin-right:12px;bottom: 5px;" for="id_dislike" class="bg_success mb-2 border float-right"></label>
                       </p>
                       <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                           Лайки на комментарии
-                          <input type="checkbox" {% if notify_good.comment_like %} checked {% endif %} name="comment_like" id="id_comment_like" class="switch switch-sm">
+                          <input type="checkbox" <% if notify_good.comment_liked { %> checked <% } %> name="comment_liked" id="id_comment_like" class="switch switch-sm">
                           <label style="margin-right:12px;bottom: 5px;" for="id_comment_like" class="bg_success mb-2 border float-right"></label>
                       </p>
                       <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                           Дизайки на комментарии
-                          <input type="checkbox" {% if notify_good.comment_dislike %} checked {% endif %} name="comment_dislike" id="id_comment_dislike" class="switch switch-sm">
+                          <input type="checkbox" <% if notify_good.comment_disliked { %> checked <% } %> name="comment_disliked" id="id_comment_dislike" class="switch switch-sm">
                           <label style="margin-right:12px;bottom: 5px;" for="id_comment_dislike" class="bg_success mb-2 border float-right"></label>
                       </p>
                       <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                           Лайки на ответы
-                          <input type="checkbox" {% if notify_good.comment_reply_like %} checked {% endif %} name="comment_reply_like" id="id_comment_reply_like" class="switch switch-sm">
+                          <input type="checkbox" <% if notify_good.comment_reply_liked { %> checked <% } %> name="comment_reply_liked" id="id_comment_reply_like" class="switch switch-sm">
                           <label style="margin-right:12px;bottom: 5px;" for="id_comment_reply_like" class="bg_success mb-2 border float-right"></label>
                       </p>
                       <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                           Дизайки на ответы
-                          <input type="checkbox" {% if notify_good.comment_reply_dislike %} checked {% endif %} name="comment_reply_dislike" id="id_comment_reply_dislike" class="switch switch-sm">
+                          <input type="checkbox" <% if notify_good.id_comment_reply_disliked { %> checked <% } %> name="comment_reply_disliked" id="id_comment_reply_dislike" class="switch switch-sm">
                           <label style="margin-right:12px;bottom: 5px;" for="id_comment_reply_dislike" class="bg_success mb-2 border float-right"></label>
                       </p>
 
@@ -68,9 +66,7 @@
             </form>
         </div>
         <div class="col-md-4 order-2 left_menu">
-            {% include 'desctop/communities/manage/menu.html' %}
+            <% include!("menu.stpl"); %>
         </div>
     </div>
 </div>
-
-{% endblock %}

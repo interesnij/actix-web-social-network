@@ -1,16 +1,14 @@
-{% extends "base.html" %}
-{% block title %}Информация - {{ community.name }} {% endblock %}
-{% block content %}
 
-<div class="mt-4 main-container pk_saver" data-pk="{{ community.pk }}"  data-type="community_manage_general">
+<div class="mt-4 main-container pk_saver" data-pk="<%= community.id %>"  data-type="community_manage_general">
     <div class="row">
         <div class="col-md-8 order-1">
             <form id="community_general_info_form" class="contact-form">
-                {% csrf_token %}
                 <div class="card mb-3">
                     <div class="card-header border-bottom">
                         <h5 class="content-color-primary mb-0">Изменение информации -
-                          {% include 'desctop/generic/community/community.html' %}
+                          <a class="underline ajax" href="<%= community.get_link() %>">
+                            <%= community.name %>
+                          </a>
                         </h5>
                     </div>
                     <div class="card-body">
@@ -19,31 +17,45 @@
                                 <div class="form-group row">
                                     <div class="col-lg-12 col-md-12">
                                         <label>Название</label>
-                                        {{ form.name }}
+                                        <input value="<%= community.name %>" type="text" name="name" id="id_name" class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="form-group ">
                                     <label>Категория</label>
-                                    {{ form.category }}
+                                    <% for object in categories.iter() { %>
+                                      <option
+                                        data-order="<%= object.order %>"
+                                        value="<%= object.order %>"
+                                        <% if community.community_subcategory_id == object.id { %>
+                                          selected=""
+                                        <% } %>
+                                      >
+                                        <%= object.name %>
+                                      </option>
+                                    <% } %>
                                     <div id="subcat"></div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-lg-12 col-md-12">
                                         <label>Статус</label>
-                                        {{ form.status }}
+                                        <% if community.status.is_some() { %>
+                                          value="<%= community.status.unwrap() %>"
+                                        <% } else { %>
+                                          value=""
+                                        <% } %>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-lg-12 col-md-12">
                                         <label>Верификация</label>
-                                        {% if community.is_standart %}
+                                        <% if community.is_standart() { %>
                                           <a class="pointer create_community_verification">Подать заявку</a>
-                                        {% elif community.is_verified_send %}
+                                        <% } else if community.is_verified_send() { %>
                                           <a class="pointer created_community_verification">Заявка отправлена</a>
-                                        {% else %}
+                                        <% } else { %>
                                           <p>Сообщество верифицировано</p>
-                                        {% endif %}
+                                        <% } %>
                                     </div>
                                 </div>
                             </div>
@@ -57,10 +69,8 @@
         </div>
 
         <div class="col-md-4 order-2 left_menu">
-            {% include 'desctop/communities/manage/menu.html' %}
+            <% include!("menu.stpl"); %>
         </div>
 
     </div>
 </div>
-
-{% endblock %}

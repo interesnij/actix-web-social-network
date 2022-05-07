@@ -1,0 +1,1 @@
+<% include!("../../posts/post_community/anon_post.stpl"); %>

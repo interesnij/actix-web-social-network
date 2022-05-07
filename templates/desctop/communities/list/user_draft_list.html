@@ -13,7 +13,9 @@
                 <div class="media">
                     <div class="media-body">
                         <h5 class="mt-1">
-                          {% include 'desctop/generic/community/community.html' %}
+                          <a class="underline ajax" href="<%= community.get_link() %>">
+                            <%= community.name %>
+                          </a>
                           - Мои предложенные записи
                         </h5>
                     </div>
