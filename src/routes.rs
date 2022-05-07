@@ -14,6 +14,6 @@ pub fn routes(cfg: &mut web::ServiceConfig) {
     .configure(auth::auth_routes)
     .configure(user_routes)
     .configure(post_routes)
-    .configure(chats_routes)
+    .configure(chat_routes)
     ;
 }
