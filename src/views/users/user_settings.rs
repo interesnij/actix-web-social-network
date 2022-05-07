@@ -14,7 +14,7 @@ use sailfish::TemplateOnce;
 use crate::models::User;
 
 
-pub fn profile_settings_routes(config: &mut web::ServiceConfig) {
+pub fn profile_settings_urls(config: &mut web::ServiceConfig) {
     config.route("/users/settings/", web::get().to(settings_page));
     config.route("/users/design_settings/", web::get().to(design_settings_page));
     config.route("/users/settings/get_background/{color}/", web::get().to(get_background));

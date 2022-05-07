@@ -11,7 +11,7 @@ pub use self::{
 
 pub fn user_routes(cfg: &mut ServiceConfig) {
     cfg
-    .configure(profile_routes)
-    .configure(profile_settings_routes)
+    .configure(profile_urls)
+    .configure(profile_settings_urls)
     ;
 }

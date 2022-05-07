@@ -7,6 +7,6 @@ pub use self::{
 
 pub fn chat_routes(cfg: &mut ServiceConfig) {
     cfg
-    .configure(chats_pages)
+    .configure(chat_pages_urls)
     ;
 }
