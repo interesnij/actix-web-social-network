@@ -4,8 +4,8 @@
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
-         <h6 class="content-color-primary mb-0"><% community.count_posts() %></h6>
-         <p class="content-color-secondary mb-0"><% community.count_posts_ru() %></p>
+         <h6 class="content-color-primary mb-0"><%= community.count_posts() %></h6>
+         <p class="content-color-secondary mb-0"><%= community.count_posts_ru() %></p>
        </div>
      </div>
    </div>

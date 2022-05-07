@@ -349,7 +349,7 @@ pub fn my_bad_account(folder: String, request_user: User) -> actix_web::Result<H
             request_user: User,
         }
         let body = UserPage {
-            title: user.get_full_name(),
+            title: request_user.get_full_name(),
             request_user: request_user,
         }
         .render_once()
@@ -364,7 +364,7 @@ pub fn my_bad_account(folder: String, request_user: User) -> actix_web::Result<H
             request_user: User,
         }
         let body = UserPage {
-            title: user.get_full_name(),
+            title: request_user.get_full_name(),
             request_user: request_user,
         }
         .render_once()
