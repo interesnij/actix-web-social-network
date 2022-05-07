@@ -1,5 +1,6 @@
 pub mod post_pages;
 pub mod post_progs;
+use actix_web::web::ServiceConfig;
 
 pub use self::{
     post_pages::*,

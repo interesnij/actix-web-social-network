@@ -1,7 +1,8 @@
-pub mod chats;
+pub mod chat_pages;
+use actix_web::web::ServiceConfig;
 
 pub use self::{
-    chats::*,
+    chat_pages::*,
 };
 
 pub fn chat_routes(cfg: &mut ServiceConfig) {
