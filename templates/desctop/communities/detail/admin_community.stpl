@@ -53,7 +53,7 @@
             <% include!("../detail_sections/goods.stpl"); %>
 
             <span class="draft_post_container">
-              <% if request_user.get_draft_posts_of_community_with_pk(community.id) { %>
+              <% if request_user.get_draft_posts_of_community_with_pk(community.id).len() > 0 { %>
               <div class="card mt-3 user_draft_list">
                 <div class="card-header">
                   <a href="/community/<%= community.id %>/draft/" class="ajax">
