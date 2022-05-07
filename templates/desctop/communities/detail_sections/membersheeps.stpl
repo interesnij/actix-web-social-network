@@ -12,7 +12,7 @@
     </a>
   </div>
 
-    <% for user in community.get_6_members().iter() { %>
+    <% for object in community.get_6_members().iter() { %>
     <div class="card border-top">
         <div class="p-1">
             <div class="media">

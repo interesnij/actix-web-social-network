@@ -12,7 +12,7 @@
     </a>
   </div>
   <div style="display: flex; flex-wrap: wrap;">
-    <% for object in community.get_3_goods().iter { %>
+    <% for object in community.get_3_goods().iter() { %>
     <div class="col-md-4 mb-3">
             <div class="border c_good_detail pointer" good-pk="<%= object.id %>">
                 <div class="row align-items-center no-gutters">
