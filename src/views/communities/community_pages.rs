@@ -19,7 +19,7 @@ use crate::utils::{
 
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::{User, Post};
+use crate::models::{User, Post, Community};
 
 
 pub fn community_urls(config: &mut web::ServiceConfig) {
@@ -225,6 +225,9 @@ pub async fn community_page(session: Session, req: HttpRequest, _id: web::Path<i
         else if _community.is_private() {
             return private_community(_type, _community, _request_user)
         }
+        else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
     } else {
         if _community.types > 10 {
             return anon_bad_community(_type, _community)
@@ -237,6 +240,9 @@ pub async fn community_page(session: Session, req: HttpRequest, _id: web::Path<i
         }
         else if _community.is_private() {
             return anon_private_community(_type, _community)
+        }
+        else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
         }
     }
 }
