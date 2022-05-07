@@ -329,11 +329,13 @@ pub fn close_community(folder: String, community: Community, request_user: User)
         #[template(path = "desctop/communities/detail/close_community.stpl")]
         struct Template {
             title:        String,
+            private_bools: Vec<bool>,
             community:    Community,
             request_user: User,
         }
         let body = Template {
             title:        community.name,
+            private_bools: community.get_community_all_can_see(request_user.id),
             community:    community,
             request_user: request_user,
         }
@@ -346,11 +348,13 @@ pub fn close_community(folder: String, community: Community, request_user: User)
         #[template(path = "mobile/communities/detail/close_community.stpl")]
         struct Template {
             title:        String,
+            private_bools: Vec<bool>,
             community:    Community,
             request_user: User,
         }
         let body = Template {
             title:        community.name,
+            private_bools: community.get_community_all_can_see(request_user.id),
             community:    community,
             request_user: request_user,
         }
@@ -437,11 +441,13 @@ pub fn follow_community(folder: String, community: Community, request_user: User
         #[template(path = "desctop/communities/detail/follow_community.stpl")]
         struct Template {
             title:        String,
+            private_bools: Vec<bool>,
             community:    Community,
             request_user: User,
         }
         let body = Template {
             title:        community.name,
+            private_bools: community.get_community_all_can_see(request_user.id),
             community:    community,
             request_user: request_user,
         }
@@ -454,11 +460,13 @@ pub fn follow_community(folder: String, community: Community, request_user: User
         #[template(path = "mobile/communities/detail/follow_community.stpl")]
         struct Template {
             title:        String,
+            private_bools: Vec<bool>,
             community:    Community,
             request_user: User,
         }
         let body = Template {
             title:        community.name,
+            private_bools: community.get_community_all_can_see(request_user.id),
             community:    community,
             request_user: request_user,
         }
@@ -618,12 +626,14 @@ pub fn anon_close_community(folder: String, community: Community) -> actix_web::
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/anon_close_community.stpl")]
         struct Template {
-            title:        String,
-            community:    Community,
+            title:         String,
+            private_bools: Vec<bool>,
+            community:     Community,
         }
         let body = Template {
-            title:        community.name,
-            community:    community,
+            title: community.name,
+            private_bools: community.get_anon_community_all_can_see(),
+            community:  community,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -633,12 +643,14 @@ pub fn anon_close_community(folder: String, community: Community) -> actix_web::
         #[derive(TemplateOnce)]
         #[template(path = "mobile/communities/detail/anon_close_community.stpl")]
         struct Template {
-            title:        String,
-            community:    Community,
+            title:         String,
+            private_bools: Vec<bool>,
+            community:     Community,
         }
         let body = Template {
-            title:        community.name,
-            community:    community,
+            title: community.name,
+            private_bools: community.get_anon_community_all_can_see(),
+            community:  community,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

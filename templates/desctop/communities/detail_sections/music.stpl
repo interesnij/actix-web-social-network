@@ -30,7 +30,6 @@
                         <% let creator = object.get_creator(); %>
                         <a class="small ajax" href="<%= creator.get_link() %>"><%= creator.get_full_name() %></a>
                       <% } %>
-                    <% } %>
                 </div>
             </div>
         </div>

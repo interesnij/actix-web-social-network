@@ -1,4 +1,4 @@
-<% if common_friends.len() > 0 { %>
+<% if community.get_common_friends_of_community().len() > 0 { %>
 <div class="card mb-3">
     <div class="p-1">
         <div class="media">
@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <% for user in common_friends.iter() { %>
+    <% for user in community.get_common_friends_of_community().iter() { %>
     <div class="card border-top">
         <div class="p-1">
             <div class="media">
