@@ -450,9 +450,6 @@ impl Community {
     pub fn is_public(&self) -> bool {
         return self.types == 3;
     }
-    pub fn is_verified(&self) -> bool {
-        return self.perm == 4;
-    }
     pub fn is_open(&self) -> bool {
         return self.types < 10;
     }

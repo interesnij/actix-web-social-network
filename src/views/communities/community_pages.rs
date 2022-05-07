@@ -210,7 +210,7 @@ pub async fn community_page(session: Session, req: HttpRequest, _id: web::Path<i
         else if _request_user.is_follow_from_community(_community.id) {
             return follow_community(_type, _community, _request_user)
         }
-        else if _request_user.is_child() && !_community.is_verified() {
+        else if _request_user.is_child() && !_community.is_identified() {
             return no_child_safety_community(_type, _community, _request_user)
         }
         else if _request_user.is_member_of_community(_community.id) {
@@ -258,7 +258,7 @@ pub fn admin_community(folder: String, community: Community, request_user: User)
             community:     Community,
         }
         let body = UserPage {
-            title:         community.name.clone(),
+            title:         community,
             private_bools: community.get_community_all_can_see(request_user.id),
             request_user:  request_user,
             community:     community,
@@ -273,10 +273,10 @@ pub fn admin_community(folder: String, community: Community, request_user: User)
             title:         String,
             private_bools: Vec<bool>,
             request_user:  User,
-            user:          Community,
+            community:     Community,
         }
         let body = UserPage {
-            title:         community.name.clone(),
+            title:         community.name,
             private_bools: community.get_community_all_can_see(request_user.id),
             request_user:  request_user,
             community:     community,
@@ -314,7 +314,7 @@ pub fn anon_community(folder: String, community: Community) -> actix_web::Result
             community:     Community,
         }
         let body = UserPage {
-            title: community.get_full_name(),
+            title: community.name,
             private_bools: community.get_anon_community_all_can_see(),
             community:  community,
         }
