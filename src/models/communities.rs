@@ -249,6 +249,24 @@ impl Community {
             return "@public".to_string() + &self.get_str_id();
         }
     }
+    pub fn is_have_music(&self) -> bool {
+        return self.get_info_model().tracks > 0;
+    }
+    pub fn is_have_photo(&self) -> bool {
+        return self.get_info_model().photos > 0;
+    }
+    pub fn is_have_video(&self) -> bool {
+        return self.get_info_model().videos > 0;
+    }
+    pub fn is_have_doc(&self) -> bool {
+        return self.get_info_model().docs > 0;
+    }
+    pub fn is_have_good(&self) -> bool {
+        return self.get_info_model().goods > 0;
+    }
+    pub fn is_have_post(&self) -> bool {
+        return self.get_info_model().posts > 0;
+    }
     pub fn get_info_model(&self) -> CommunityInfo {
         use crate::schema::community_infos::dsl::community_infos;
 

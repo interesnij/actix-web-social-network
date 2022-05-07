@@ -82,7 +82,7 @@
                 <a class="create_repost pointer">Поделиться</a>
               </div>
           </div>
-          <% if community.get_common_friends_of_community().len() > 1 { %>
+          <% if request_user.get_common_friends_of_community(community.id).len() > 1 { %>
             <% include!("../detail_sections/frends_member.stpl"); %>
           <% } %>
           <% if private_bools[1] == true { %>
