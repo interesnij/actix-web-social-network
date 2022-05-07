@@ -21,7 +21,7 @@
         </div>
     </div>
 </div>
-<% } else if request_user.is_administrator_of_community(community.id) { %>
+<% } else if !request_user.is_empty() && request_user.is_administrator_of_community(community.id) { %>
 <div class="card mb-3">
     <div class="card-header">
         <div class="media centered">
