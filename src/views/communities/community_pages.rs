@@ -193,7 +193,7 @@ pub async fn community_page(session: Session, req: HttpRequest, _id: web::Path<i
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
         if _request_user.types > 10 {
-            use crate::users::profile::my_bad_account;
+            use crate::views::my_bad_account;
             return my_bad_account(_type, _request_user)
         }
         else if _request_user.is_administrator_of_community(_community.id) {
@@ -297,7 +297,7 @@ pub fn anon_community(folder: String, community: Community) -> actix_web::Result
             community:     Community,
         }
         let body = UserPage {
-            title: community.get_full_name(),
+            title: community.name,
             private_bools: community.get_anon_community_all_can_see(),
             community:  community,
         }
