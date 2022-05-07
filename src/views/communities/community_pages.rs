@@ -251,14 +251,14 @@ pub fn admin_community(folder: String, community: Community, request_user: User)
     if folder == "desctop/".to_string() {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/admin_community.stpl")]
-        struct UserPage {
+        struct Template {
             title:         String,
             private_bools: Vec<bool>,
             request_user:  User,
             community:     Community,
         }
-        let body = UserPage {
-            title:         community,
+        let body = Template {
+            title:         community.name,
             private_bools: community.get_community_all_can_see(request_user.id),
             request_user:  request_user,
             community:     community,
@@ -269,13 +269,13 @@ pub fn admin_community(folder: String, community: Community, request_user: User)
     } else {
         #[derive(TemplateOnce)]
         #[template(path = "mobile/communities/detail/admin_community.stpl")]
-        struct UserPage {
+        struct Template {
             title:         String,
             private_bools: Vec<bool>,
             request_user:  User,
             community:     Community,
         }
-        let body = UserPage {
+        let body = Template {
             title:         community.name,
             private_bools: community.get_community_all_can_see(request_user.id),
             request_user:  request_user,
@@ -291,12 +291,12 @@ pub fn anon_community(folder: String, community: Community) -> actix_web::Result
     if folder == "desctop/".to_string() {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/anon_community.stpl")]
-        struct UserPage {
+        struct Template {
             title:         String,
             private_bools: Vec<bool>,
             community:     Community,
         }
-        let body = UserPage {
+        let body = Template {
             title: community.name,
             private_bools: community.get_anon_community_all_can_see(),
             community:  community,
@@ -308,12 +308,12 @@ pub fn anon_community(folder: String, community: Community) -> actix_web::Result
     else {
         #[derive(TemplateOnce)]
         #[template(path = "mobile/communities/detail/anon_community.stpl")]
-        struct UserPage {
+        struct Template {
             title:         String,
             private_bools: Vec<bool>,
             community:     Community,
         }
-        let body = UserPage {
+        let body = Template {
             title: community.name,
             private_bools: community.get_anon_community_all_can_see(),
             community:  community,
@@ -327,12 +327,12 @@ pub fn close_community(folder: String, community: Community, request_user: User)
     if folder == "desctop/".to_string() {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/close_community.stpl")]
-        struct UserPage {
+        struct Template {
             title:        String,
             community:    Community,
             request_user: User,
         }
-        let body = UserPage {
+        let body = Template {
             title:        community.name,
             community:    community,
             request_user: request_user,
@@ -344,12 +344,12 @@ pub fn close_community(folder: String, community: Community, request_user: User)
     else {
         #[derive(TemplateOnce)]
         #[template(path = "mobile/communities/detail/close_community.stpl")]
-        struct UserPage {
+        struct Template {
             title:        String,
             community:    Community,
             request_user: User,
         }
-        let body = UserPage {
+        let body = Template {
             title:        community.name,
             community:    community,
             request_user: request_user,
@@ -363,12 +363,12 @@ pub fn private_community(folder: String, community: Community, request_user: Use
     if folder == "desctop/".to_string() {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/private_community.stpl")]
-        struct UserPage {
+        struct Template {
             title:        String,
             community:    Community,
             request_user: User,
         }
-        let body = UserPage {
+        let body = Template {
             title:        community.name,
             community:    community,
             request_user: request_user,
@@ -380,12 +380,12 @@ pub fn private_community(folder: String, community: Community, request_user: Use
     else {
         #[derive(TemplateOnce)]
         #[template(path = "mobile/communities/detail/private_community.stpl")]
-        struct UserPage {
+        struct Template {
             title:        String,
             community:    Community,
             request_user: User,
         }
-        let body = UserPage {
+        let body = Template {
             title:        community.name,
             community:    community,
             request_user: request_user,
@@ -399,12 +399,12 @@ pub fn no_child_safety_community(folder: String, community: Community, request_u
     if folder == "desctop/".to_string() {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/no_child_safety.stpl")]
-        struct UserPage {
+        struct Template {
             title:        String,
             community:    Community,
             request_user: User,
         }
-        let body = UserPage {
+        let body = Template {
             title:        community.name,
             community:    community,
             request_user: request_user,
@@ -416,12 +416,12 @@ pub fn no_child_safety_community(folder: String, community: Community, request_u
     else {
         #[derive(TemplateOnce)]
         #[template(path = "mobile/communities/detail/no_child_safety.stpl")]
-        struct UserPage {
+        struct Template {
             title:        String,
             community:    Community,
             request_user: User,
         }
-        let body = UserPage {
+        let body = Template {
             title:        community.name,
             community:    community,
             request_user: request_user,
@@ -435,12 +435,12 @@ pub fn follow_community(folder: String, community: Community, request_user: User
     if folder == "desctop/".to_string() {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/follow_community.stpl")]
-        struct UserPage {
+        struct Template {
             title:        String,
             community:    Community,
             request_user: User,
         }
-        let body = UserPage {
+        let body = Template {
             title:        community.name,
             community:    community,
             request_user: request_user,
@@ -452,12 +452,12 @@ pub fn follow_community(folder: String, community: Community, request_user: User
     else {
         #[derive(TemplateOnce)]
         #[template(path = "mobile/communities/detail/follow_community.stpl")]
-        struct UserPage {
+        struct Template {
             title:        String,
             community:    Community,
             request_user: User,
         }
-        let body = UserPage {
+        let body = Template {
             title:        community.name,
             community:    community,
             request_user: request_user,
@@ -471,12 +471,12 @@ pub fn admin_bad_community(folder: String, community: Community, request_user: U
     if folder == "desctop/".to_string() {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/admin_bad_community.stpl")]
-        struct UserPage {
+        struct Template {
             title:        String,
             community:    Community,
             request_user: User,
         }
-        let body = UserPage {
+        let body = Template {
             title:        community.name,
             community:    community,
             request_user: request_user,
@@ -488,12 +488,12 @@ pub fn admin_bad_community(folder: String, community: Community, request_user: U
     else {
         #[derive(TemplateOnce)]
         #[template(path = "mobile/communities/detail/admin_bad_community.stpl")]
-        struct UserPage {
+        struct Template {
             title:        String,
             community:    Community,
             request_user: User,
         }
-        let body = UserPage {
+        let body = Template {
             title:        community.name,
             community:    community,
             request_user: request_user,
@@ -507,12 +507,12 @@ pub fn bad_community(folder: String, community: Community, request_user: User) -
     if folder == "desctop/".to_string() {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/bad_community.stpl")]
-        struct UserPage {
+        struct Template {
             title:        String,
             community:    Community,
             request_user: User,
         }
-        let body = UserPage {
+        let body = Template {
             title:        community.name,
             community:    community,
             request_user: request_user,
@@ -524,12 +524,12 @@ pub fn bad_community(folder: String, community: Community, request_user: User) -
     else {
         #[derive(TemplateOnce)]
         #[template(path = "mobile/communities/detail/bad_community.stpl")]
-        struct UserPage {
+        struct Template {
             title:        String,
             community:    Community,
             request_user: User,
         }
-        let body = UserPage {
+        let body = Template {
             title:        community.name,
             community:    community,
             request_user: request_user,
@@ -543,13 +543,13 @@ pub fn public_community(folder: String, community: Community, request_user: User
     if folder == "desctop/".to_string() {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/public_community.stpl")]
-        struct UserPage {
+        struct Template {
             title:        String,
             private_bools: Vec<bool>,
             community:    Community,
             request_user: User,
         }
-        let body = UserPage {
+        let body = Template {
             title:        community.name,
             private_bools: community.get_community_all_can_see(request_user.id),
             community:    community,
@@ -562,13 +562,13 @@ pub fn public_community(folder: String, community: Community, request_user: User
     else {
         #[derive(TemplateOnce)]
         #[template(path = "mobile/communities/detail/public_community.stpl")]
-        struct UserPage {
+        struct Template {
             title:        String,
             private_bools: Vec<bool>,
             community:    Community,
             request_user: User,
         }
-        let body = UserPage {
+        let body = Template {
             title:        community.name,
             private_bools: community.get_community_all_can_see(request_user.id),
             community:    community,
@@ -584,11 +584,11 @@ pub fn anon_bad_community(folder: String, community: Community) -> actix_web::Re
     if folder == "desctop/".to_string() {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/anon_bad_community.stpl")]
-        struct UserPage {
+        struct Template {
             title:        String,
             community:    Community,
         }
-        let body = UserPage {
+        let body = Template {
             title:        community.name,
             community:    community,
         }
@@ -599,11 +599,11 @@ pub fn anon_bad_community(folder: String, community: Community) -> actix_web::Re
     else {
         #[derive(TemplateOnce)]
         #[template(path = "mobile/communities/detail/anon_bad_community.stpl")]
-        struct UserPage {
+        struct Template {
             title:        String,
             community:    Community,
         }
-        let body = UserPage {
+        let body = Template {
             title:        community.name,
             community:    community,
         }
@@ -617,11 +617,11 @@ pub fn anon_close_community(folder: String, community: Community) -> actix_web::
     if folder == "desctop/".to_string() {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/anon_close_community.stpl")]
-        struct UserPage {
+        struct Template {
             title:        String,
             community:    Community,
         }
-        let body = UserPage {
+        let body = Template {
             title:        community.name,
             community:    community,
         }
@@ -632,11 +632,11 @@ pub fn anon_close_community(folder: String, community: Community) -> actix_web::
     else {
         #[derive(TemplateOnce)]
         #[template(path = "mobile/communities/detail/anon_close_community.stpl")]
-        struct UserPage {
+        struct Template {
             title:        String,
             community:    Community,
         }
-        let body = UserPage {
+        let body = Template {
             title:        community.name,
             community:    community,
         }
@@ -650,11 +650,11 @@ pub fn anon_private_community(folder: String, community: Community) -> actix_web
     if folder == "desctop/".to_string() {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/anon_private_community.stpl")]
-        struct UserPage {
+        struct Template {
             title:        String,
             community:    Community,
         }
-        let body = UserPage {
+        let body = Template {
             title:        community.name,
             community:    community,
         }
@@ -665,11 +665,11 @@ pub fn anon_private_community(folder: String, community: Community) -> actix_web
     else {
         #[derive(TemplateOnce)]
         #[template(path = "mobile/communities/detail/anon_private_community.stpl")]
-        struct UserPage {
+        struct Template {
             title:        String,
             community:    Community,
         }
-        let body = UserPage {
+        let body = Template {
             title:        community.name,
             community:    community,
         }
