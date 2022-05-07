@@ -1,0 +1,3 @@
+<% include!("../../../base_block/base_mobile_header.stpl"); %>
+
+<% include!("../../../base_block/base_mobile_footer.stpl"); %>

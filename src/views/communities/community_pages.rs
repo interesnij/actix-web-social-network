@@ -353,7 +353,7 @@ pub fn close_community(folder: String, community: Community, request_user: User)
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
 }
-pub fn close_community(folder: String, community: Community, request_user: User) -> actix_web::Result<HttpResponse> {
+pub fn private_community(folder: String, community: Community, request_user: User) -> actix_web::Result<HttpResponse> {
     if folder == "desctop/".to_string() {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/private_community.stpl")]
