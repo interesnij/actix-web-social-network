@@ -49,8 +49,47 @@
 
           <% include!("../detail_sections/anon_stat.stpl"); %>
 
-          <% if private_bools[7] == true { %>
-            <% include!("../detail_sections/goods.stpl"); %>
+          <% if private_bools[7] == true && community.is_have_good() { %>
+
+          <div class="card mt-3">
+            <div class="p-1">
+              <a href="/community/<%=community.id %>/goods/" class="ajax">
+                <div class="media">
+                    <div class="media-body">
+                        <h6 class="content-color-primary mb-0">Товары</h6>
+                    </div>
+                    <%= community.count_goods() %>
+                </div>
+              </a>
+            </div>
+            <div style="display: flex; flex-wrap: wrap;">
+              <% for object in community.get_3_goods().iter() { %>
+              <div class="col-md-4 mb-3">
+                      <div class="border c_good_detail pointer" good-pk="<%= object.id %>">
+                          <div class="row align-items-center no-gutters">
+                              <div class="col">
+                                      <div class="text-center">
+                                        <img class="image_fit_200" src="<%= object.get_image() %>" alt="img">
+                                      </div>
+                              </div>
+                          </div>
+                          <p class="mb-1 header-color-primary text-center" style="overflow: hidden; white-space: nowrap;"><%= object.title %>/p>
+                          <div class="row bg-light-secondary text-center" style="margin-left: 0;margin-right: 0;">
+                                <div class="col py-3">
+                                    <p class="content-color-primary mb-0">
+                                      <% if object.price.is_some() { %>
+                                        <%= object.price.unwrap() %> ₽
+                                      <% } else { %>
+                                        Без цены
+                                      <% } %>
+                                    </p>
+                                </div>
+                            </div>
+                      </div>
+              </div>
+              <% } %>
+            </div>
+          </div>
           <% } %>
 
           <div class="load_post_list mt-3 post_view_generator" community-pk="<%= community.id %>"></div>
@@ -73,17 +112,122 @@
             <% include!("../detail_sections/membersheeps.stpl"); %>
           <% } %>
 
-          <% if private_bools[6] == true { %>
-            <% include!("../detail_sections/photo.stpl"); %>
+          <% if private_bools[6] == true && if community.is_have_photo() { %>
+          <div class="card mb-3">
+              <div class="p-1">
+                <a href="/community/<%=community.id %>/photos/" class="ajax">
+                  <div class="media">
+                      <div class="media-body">
+                          <h6 class="content-color-primary mb-0">Фото </h6>
+                      </div>
+                      <%= community.count_photos() %>
+                  </div>
+                </a>
+              </div>
+              <div class="card-body p-1">
+                  <div class="row no-gutters">
+                    <% for object in community.get_6_photos().iter() { %>
+                      <div style="flex: 0 0 33.33333%;max-width:33.33333%;padding:5px;" class="detail_photo pointer" photo-pk="<%= object.id %>">
+                        <img class="image_fit_70" src="<%= object.file %>" alt="">
+                      </div>
+                    <% } %>
+                  </div>
+              </div>
+          </div>
           <% } %>
-          <% if private_bools[3] == true { %>
-            <% include!("../detail_sections/music.stpl"); %>
+
+          <% if private_bools[3] == true && if community.is_have_music() { %>
+          <div class="card mb-3 music_playlist">
+              <div class="p-1">
+                <a href="/community/<%=community.id %>/music/" class="ajax">
+                  <div class="media">
+                      <div class="media-body">
+                          <h6 class="content-color-primary mb-0">Аудиозаписи</h6>
+                      </div>
+                      <%= community.count_tracks() %>
+                  </div>
+                </a>
+              </div>
+
+              <% for object in community.get_6_tracks().iter() { %>
+              <div class="card border-top">
+                  <div class="p-1">
+                      <div class="media" music-counter="">
+                        <figure>
+                          <a class="pointer music_list_item">
+                            <%- object.get_image() %>
+                          </a>
+                        </figure>
+                          <div class="media-body" style="line-height: 10px;">
+                              <p class="track_item music_list_item pointer" style="font-size: 17px;"><a><%= object.title %></a></p>
+                                <% if object.community_id.is_some() { %>
+                                  <% let community = object.get_community(); %>
+                                  <a class="small ajax" href="<%= community.get_link() %>"><%= community.name %></a>
+                                <% } else { %>
+                                  <% let creator = object.get_creator(); %>
+                                  <a class="small ajax" href="<%= creator.get_link() %>"><%= creator.get_full_name() %></a>
+                                <% } %>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <% } %>
+          </div>
           <% } %>
-          <% if private_bools[8] == true { %>
-            <% include!("../detail_sections/video.stpl"); %>
+
+          <% if private_bools[8] == true && if community.is_have_video() { %>
+          <div class="card mb-3">
+              <div class="p-1">
+                <a href="/community/<%=community.id %>/video/" class="ajax">
+                  <div class="media">
+                      <div class="media-body">
+                          <h6 class="content-color-primary mb-0">Видео </h6>
+                      </div>
+                      <%= community.count_videos() %>
+                  </div>
+                </a>
+              </div>
+              <div class="card-body p-1">
+                  <% for object in community.get_2_videos().iter() { %>
+                    <div class="media-body position-relative">
+                      <img class="image_fit_200" src="<%= object.get_image() %>" alt="">
+                      <div class="video_icon_play_v2 video_list_detail" video-counter="" video-pk="<%= object.id %>"></div>
+                      <a><%= object.title %></a>
+                    </div>
+                  <% } %>
+              </div>
+          </div>
           <% } %>
-          <% if private_bools[2] == true { %>
-            <% include!("../detail_sections/docs.stpl"); %>
+
+          <% if private_bools[2] == true && if community.is_have_doc() { %>
+          <div class="card mb-3">
+              <div class="p-1">
+                <a href="/community/<%=community.id %>/docs/" class="ajax">
+                  <div class="media">
+                      <div class="media-body">
+                          <h6 class="content-color-primary mb-0">Документы</h6>
+                      </div>
+                      <%= community.count_docs() %>
+                  </div>
+                </a>
+              </div>
+
+              <% for object in community.get_6_docs().iter() { %>
+              <div class="card border-top">
+                  <div class="p-1">
+                      <div class="media">
+                        <svg fill="currentColor" class="svg_default" style="width:45px;margin: 0;" viewBox="0 0 24 24">
+                          <path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                        </svg>
+                          <div class="media-body">
+                              <a href="<%= object.file %>" target="_blank" rel="nofollow"><%= object.title %></a>
+                              <p class="small"><%= object.types_2 %></p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <% } %>
+          </div>
           <% } %>
         </div>
     </div>
