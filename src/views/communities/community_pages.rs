@@ -164,7 +164,7 @@ pub async fn community_wall_page(session: Session, req: HttpRequest, param: web:
 
         } else {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/users/lenta/anon_list.stpl")]
+            #[template(path = "mobile/communities/lenta/anon_list.stpl")]
             struct Template {
                 list:         PostList,
                 is_user_can_see_post_list: bool,

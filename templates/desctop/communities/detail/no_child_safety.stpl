@@ -75,9 +75,6 @@
                 <a class="create_repost pointer">Поделиться</a>
               </div>
           </div>
-          <% if private_bools[1] == true { %>
-            <% include!("../detail_sections/membersheeps.stpl"); %>
-          <% } %>
 
         </div>
     </div>
