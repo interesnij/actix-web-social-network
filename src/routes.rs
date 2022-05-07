@@ -3,7 +3,7 @@ use actix_web::web;
 use crate::views::{
     pages,
     auth,
-    profile, user_settings,
+    user_routes,
     post_pages, post_progs,
     chats,
 };
@@ -14,7 +14,6 @@ pub fn routes(cfg: &mut web::ServiceConfig) {
 
     .configure(pages::pages_routes)
     .configure(profile::user_routes)
-    .configure(user_settings::user_settings_routes)
 
     .configure(post_pages::post_routes)
     .configure(post_progs::post_progs)

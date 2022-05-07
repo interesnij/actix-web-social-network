@@ -22,7 +22,7 @@ use sailfish::TemplateOnce;
 use crate::models::{User, Post};
 
 
-pub fn user_routes(config: &mut web::ServiceConfig) {
+pub fn profile_routes(config: &mut web::ServiceConfig) {
     config.route("/id{id}/", web::get().to(user_page));
     config.route("/users/{user_id}/wall/{list_id}/", web::get().to(user_wall_page));
 }
