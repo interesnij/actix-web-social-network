@@ -1,7 +1,7 @@
 <div class="row overflow-x-auto no-gutters pb-2">
   <div class="col-12">
   <ul class="date-list border-top" style="width:max-content">
-    <% for (i, object) in user.get_post_lists().iter().enumerate() { %>
+    <% for (i, object) in community.get_post_lists().iter().enumerate() { %>
         <% if object.community_id.is_some() { %>
         <% let community = object.get_community(); %>
         <div class="date community list u_list
@@ -17,11 +17,7 @@
             </a>
             <div class="media-body">
               <h6 class="my-0 mt-1 list_name"><%= object.name %>
-                <% if user.id == request_user.id { %>
-                  (<span class="handle"><%= object.count %></span>)
-                <% } else { %>
                   (<%= object.count %>)
-                <% } %>
               </h6>
             </div>
           </div>
