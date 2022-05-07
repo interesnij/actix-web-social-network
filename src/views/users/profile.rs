@@ -193,7 +193,7 @@ pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
         let _request_user = get_request_user_data(session);
         if &_user.id == &_request_user.id {
             if _user.types > 10 {
-                return my_bad_account(_type, _user, _request_user)
+                return my_bad_account(_type, _request_user)
             }
             else {
                 return my_user_account(_type, _user, _request_user)
@@ -340,18 +340,16 @@ pub fn self_block_account(folder: String, user: User, request_user: User) -> act
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
 }
-pub fn my_bad_account(folder: String, user: User, request_user: User) -> actix_web::Result<HttpResponse> {
+pub fn my_bad_account(folder: String, request_user: User) -> actix_web::Result<HttpResponse> {
     if folder == "desctop/".to_string() {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/my_bad_user.stpl")]
         struct UserPage {
             title: String,
-            user:  User,
             request_user: User,
         }
         let body = UserPage {
             title: user.get_full_name(),
-            user:  user,
             request_user: request_user,
         }
         .render_once()
@@ -363,12 +361,10 @@ pub fn my_bad_account(folder: String, user: User, request_user: User) -> actix_w
         #[template(path = "mobile/users/account/my_bad_user.stpl")]
         struct UserPage {
             title: String,
-            user:  User,
             request_user: User,
         }
         let body = UserPage {
             title: user.get_full_name(),
-            user:  user,
             request_user: request_user,
         }
         .render_once()

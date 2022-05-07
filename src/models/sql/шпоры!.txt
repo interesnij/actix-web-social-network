@@ -3,6 +3,8 @@ item[..1].parse().unwrap()
 use crate::utils::get_users_from_ids;
 return get_users_from_ids(vec!);
 ==============
+n.iter().any(|&i| i=="-i")
+==============
 let self_attach = self.attach.as_deref().unwrap().split(",").collect::<Vec<_>>();
 ===============
 let mut stack = Vec::new();
