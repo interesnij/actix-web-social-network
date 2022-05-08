@@ -83,7 +83,7 @@ pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result
         }
 
     } else {
-        if _type == "desctop/".to_string() {
+        if is_desctop {
             let body = DesctopAuthTemplate { title: "Трезвый.рус | Вход".to_string() }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

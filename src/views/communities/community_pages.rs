@@ -39,32 +39,13 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
 
     let community_id : i32 = *community_id;
     let is_desctop = get_list_variables(req);
-    let mut next_page_number = 0;
 
     let _community = get_community(community_id);
-    let _list = _community.get_photo_list(list_id);
-
-    let object_list: Vec<Post>;
-    if page > 1 {
-        let step = (page - 1) * 20;
-        object_list = _list.get_paginate_items(20, step.into());
-        if _list.count > (page * 20).try_into().unwrap() {
-            next_page_number = page + 1;
-        }
-    }
-    else {
-        object_list = _list.get_paginate_items(20, 0);
-        if _list.count > 20.try_into().unwrap() {
-            next_page_number = 2;
-        }
-    }
 
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
         let (is_open, text) = get_community_permission(&_community, &_request_user);
         let _request_user_id = &_request_user.id;
-        let is_user_can_see_post_list = _list.is_user_can_see_el(*_request_user_id);
-        let is_user_can_create_posts = _list.is_user_can_create_el(*_request_user_id);
 
         if is_open == false {
             use crate::views::close_item;
@@ -75,23 +56,13 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
             #[derive(TemplateOnce)]
             #[template(path = "desctop/communities/lenta/list.stpl")]
             struct Template {
-                list:         PostList,
                 request_user: User,
-                is_user_can_see_post_list: bool,
-                is_user_can_create_posts: bool,
-                object_list: Vec<Post>,
-                community: Community,
-                next_page_number: i32,
+                community:    Community,
             }
 
             let body = Template {
-                list:                      _list,
-                request_user:              _request_user,
-                is_user_can_see_post_list: is_user_can_see_post_list,
-                is_user_can_create_posts:  is_user_can_create_posts,
-                object_list: object_list,
-                community: _community,
-                next_page_number: next_page_number,
+                request_user: _request_user,
+                community:    _community,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -101,22 +72,13 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
             #[derive(TemplateOnce)]
             #[template(path = "desctop/communities/lenta/list.stpl")]
             struct Template {
-                list:         PostList,
                 request_user: User,
-                is_user_can_see_post_list: bool,
-                is_user_can_create_posts: bool,
-                object_list: Vec<Post>,
-                community: Community,
-                next_page_number: i32,
+                community:    Community,
             }
+
             let body = Template {
-                list:                      _list,
-                request_user:              _request_user,
-                is_user_can_see_post_list: is_user_can_see_post_list,
-                is_user_can_create_posts:  is_user_can_create_posts,
-                object_list: object_list,
-                community: _community,
-                next_page_number: next_page_number,
+                request_user: _request_user,
+                community:    _community,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -134,18 +96,10 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
             #[derive(TemplateOnce)]
             #[template(path = "desctop/communities/lenta/anon_list.stpl")]
             struct Template {
-                list:         PostList,
-                is_user_can_see_post_list: bool,
-                object_list: Vec<Post>,
                 community: Community,
-                next_page_number: i32,
             }
             let body = Template {
-                list:                      _list,
-                is_user_can_see_post_list: is_user_can_see_post_list,
-                object_list: object_list,
                 community: _community,
-                next_page_number: next_page_number,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -155,18 +109,10 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
             #[derive(TemplateOnce)]
             #[template(path = "mobile/communities/lenta/anon_list.stpl")]
             struct Template {
-                list:         PostList,
-                is_user_can_see_post_list: bool,
-                object_list: Vec<Post>,
                 community: Community,
-                next_page_number: i32,
             }
             let body = Template {
-                list:                      _list,
-                is_user_can_see_post_list: is_user_can_see_post_list,
-                object_list: object_list,
                 community: _community,
-                next_page_number: next_page_number,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
