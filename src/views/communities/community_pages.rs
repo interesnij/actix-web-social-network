@@ -15,6 +15,7 @@ use crate::utils::{
     get_post_list,
     get_community_permission,
     get_anon_community_permission,
+    get_list_variables,
 };
 
 use actix_session::Session;
@@ -25,33 +26,22 @@ use crate::models::{User, Post, Community};
 pub fn community_urls(config: &mut web::ServiceConfig) {
     config.route("/public{id}/", web::get().to(community_page));
     config.route("/communities/{community_id}/wall/{list_id}/", web::get().to(community_wall_page));
+
+    //config.route("/communities/{community_id}/photos/", web::get().to(community_photos_page));
+    //config.route("/communities/{community_id}/goods/", web::get().to(community_goods_page));
+    //config.route("/communities/{community_id}/music/", web::get().to(community_music_page));
+    //config.route("/communities/{community_id}/surveys/", web::get().to(community_surveys_page));
+    //config.route("/communities/{community_id}/video/", web::get().to(community_video_page));
 }
 
 
 pub async fn community_wall_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
-    use crate::utils::PaginationParams;
     use crate::models::PostList;
-
-    let params_some = web::Query::<PaginationParams>::from_query(&req.query_string());
-    let mut page: i32 = 0;
-    let mut next_page_number = 0;
-    if params_some.is_ok() {
-        let params = params_some.unwrap();
-        if params.page.is_some() {
-            page = params.page.unwrap();
-        }
-        else {
-            page = 1;
-        }
-    }
-    else {
-        page = 1;
-    }
 
     let community_id : i32 = param.0;
     let list_id : i32 = param.1;
-
-    let _type = get_folder(req);
+    let (_type, page) = get_list_variables(req);
+    let mut next_page_number = 0;
 
     let _community = get_community(community_id);
     let _list = get_post_list(list_id);

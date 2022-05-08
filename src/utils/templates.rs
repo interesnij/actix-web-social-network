@@ -21,6 +21,38 @@ pub fn get_folder(req: HttpRequest) -> String {
     };
     _type
 }
+pub fn get_list_variables(req: HttpRequest) -> (String, i32) {
+    use crate::utils::PaginationParams;
+
+    let params_some = web::Query::<PaginationParams>::from_query(&req.query_string());
+    let mut page: i32 = 0;
+
+    if params_some.is_ok() {
+        let params = params_some.unwrap();
+        if params.page.is_some() {
+            page = params.page.unwrap();
+        }
+        else {
+            page = 1;
+        }
+    }
+    else {
+        page = 1;
+    }
+
+    let mut _type = "".to_string();
+    for header in req.headers().into_iter() {
+        if header.0 == "user-agent" {
+            let _val = format!("{:?}", header.1);
+            if _val.contains("Mobile"){
+                _type = "mobile/".to_string();
+            } else {
+                _type = "desctop/".to_string();
+            };
+        }
+    };
+    (_type, page)
+}
 
 pub fn get_request_user_data(session: Session) -> User {
     use crate::models::SessionUser;
