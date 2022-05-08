@@ -19,7 +19,6 @@
           </a>
           <% } %>
 
-          <% include!("../../../generic/items/list_meta.stpl"); %>
         </h5>
         <span id="onload_info"></span>
         </form>
