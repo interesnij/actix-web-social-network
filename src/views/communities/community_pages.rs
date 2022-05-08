@@ -46,7 +46,6 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
         let (is_open, text) = get_community_permission(&_community, &_request_user);
-        let _request_user_id = &_request_user.id;
 
         if is_open == false {
             use crate::views::close_item;
@@ -102,9 +101,11 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
             #[template(path = "desctop/communities/photos/main_list/anon_list.stpl")]
             struct Template {
                 community: Community,
+                list:      PhotoList,
             }
             let body = Template {
                 community: _community,
+                list:      _list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -115,9 +116,11 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
             #[template(path = "mobile/communities/photos/main_list/anon_list.stpl")]
             struct Template {
                 community: Community,
+                list:      PhotoList,
             }
             let body = Template {
                 community: _community,
+                list:      _list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
