@@ -1,0 +1,59 @@
+
+  <div data-pk="<%= object.id %>" class="card mb-3 pb-1 border text-center position-relative box-shadow" style="border-radius: .3rem;">
+      <figure class="background-img">
+          <img src="<%- object.get_image() %>" alt="img">
+      </figure>
+
+      <div class="dropdown">
+          <a class="btn_default drop pointer" style="position:absolute;right:5px;top:5px;">
+              <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M0 0h24v24H0z" fill="none" />
+                  <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+              </svg>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" data-type="sur<% object.id %>" style="top:30px;right:-10px;">
+            <span class="dropdown-item copy_link">Копировать ссылку</span>
+          </div>
+      </div>
+
+      <div>
+      <div class="container answers_container">
+        <br>
+        <h4 class="m-0"><%= object.title %></h4>
+        <% let _community = object.get_community(); %>
+        <p class="position-relative">
+          <a href="<%= _community.get_link() %>" class="underline ajax">
+            <%= _community.name %>
+          </a>
+        </p>
+        <%- object.get_time_description() %>
+        <br>
+
+        <% for answer in object.get_answers().iter() { %>
+
+          <div class="lite_color answer_style">
+            <div class="progress2" style="width:<%= answer.get_procent() %>%;"></div>
+            <span class="progress_span_r"><%= answer.content %>
+              <span class="count text-muted"><%= answer.get_count() %></span>
+            </span>
+            <span class="progress_span_l" style="margin-left: auto;">
+              <span class="vote_svg"></span>
+              <span class="procent"><%= answer.get_procent() %>%</span>
+            </span>
+          </div>
+        <% } %>
+
+        <% if object.is_have_votes() { %>
+          <% if object.is_anonymous() { %>
+            Это анонимный опрос.
+          <% } else { %>
+          <a class="i_link survey_info pointer position-relative"><%= object.get_users_ru() %></a>
+
+          <%- object.get_6_users() %>
+          <% } %>
+        <% } else { %>
+          Пока никто не голосовал.
+        <% } %>
+      </div>
+      </div>
+  </div>

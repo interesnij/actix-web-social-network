@@ -41,6 +41,7 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
     let is_desctop = is_desctop(req);
 
     let _community = get_community(community_id);
+    let _list = get_photo_list(community.get_selected_photo_list_pk());
 
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
@@ -58,11 +59,13 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
             struct Template {
                 request_user: User,
                 community:    Community,
+                list:         Photolist,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
+                list:         _list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -74,11 +77,13 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
             struct Template {
                 request_user: User,
                 community:    Community,
+                list:         Photolist,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
+                list:         _list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

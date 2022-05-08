@@ -1,0 +1,74 @@
+<div class="card mb-3">
+    <div class="card-body">
+        <% include!("../../generic/community/card_meta.stpl"); %>
+    </div>
+</div>
+
+<a class="mb-2 box-shadow mr-2 btn btn-link menu_drop" type="button">
+    Общее
+</a>
+<div class="collapse">
+  <div class="card card-body" style="display: contents;">
+    <ul>
+      <li><a href="{% url '/community/<%= community.id %>/settings/" class="ajax">Информация</a></li>
+    </ul>
+  </div>
+</div>
+
+<a class="mb-2 box-shadow mr-2 btn btn-link menu_drop">
+    Подписчики
+</a>
+<div class="collapse">
+  <div class="card card-body" style="display: contents;">
+    <ul>
+      <li>
+        <a href="/community/<%= community.id %>/settings/members/" class="ajax">Подписчики</a>
+      </li>
+      {% if community.is_closed %}
+        <li style="margin-bottom:8px;">
+          <a href="/community/<%= community.id %>/settings/follows/" class="ajax">Заявки на вступление</a>
+        </li>
+      {% endif %}
+      <li><a href="/community/<%= community.id %>/settings/moderators/" class="ajax">Модераторы</a></li>
+      <li><a href="/community/<%= community.id %>/settings/editors/" class="ajax">Редакторы</a></li>
+      <li><a href="/community/<%= community.id %>/settings/advertisers/" class="ajax">Рекламодатели</a></li>
+      <li><a href="/community/<%= community.id %>/settings/administrators/" class="ajax">Администраторы</a></li>
+      <li><a href="/community/<%= community.id %>/settings/blacklist/" class="ajax">Черный список</a></li>
+    </ul>
+  </div>
+</div>
+
+<a class="box-shadow mr-2 btn btn-link ajax" href="/community/<%= community.id %>/settings/private/">
+    Приватность
+</a>
+<a class="mb-2 box-shadow mr-2 btn btn-link menu_drop">
+    Уведомления
+</a>
+<div class="collapse">
+  <div class="card card-body" style="display: contents;">
+    <ul>
+      <li><a href="/community/<%= community.id %>/settings/post-notifications/" class="ajax">Записи</a></li>
+      <li><a href="/community/<%= community.id %>/settings/photo-notifications/" class="ajax">Фотографии</a></li>
+      <li><a href="/community/<%= community.id %>/settings/good-notifications/" class="ajax">Товары</a></li>
+      <li><a href="/community/<%= community.id %>/settings/video-notifications/" class="ajax">Видеозаписи</a></li>
+      <li><a href="/community/<%= community.id %>/settings/music-notifications/" class="ajax">Аудиозаписи</a></li>
+      <li><a href="/community/<%= community.id %>/settings/survey-notifications/" class="ajax">Опросы</a></li>
+    </ul>
+  </div>
+</div>
+
+<a class="mb-2 box-shadow mr-2 btn btn-link menu_drop">
+    Статистика
+</a>
+<div class="collapse">
+  <div class="card card-body" style="display: contents;">
+    <ul style="list-style-type:none">
+      <li style="margin-bottom:8px;">
+        <a href="" class="ajax">Обший охват</a>
+      </li>
+      <li style="margin-bottom:8px;">
+        <a href="" class="ajax">Посещаемость</a>
+      </li>
+    </ul>
+  </div>
+</div>
