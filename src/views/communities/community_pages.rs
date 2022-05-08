@@ -38,7 +38,7 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
     use crate::utils::get_photo_list;
 
     let community_id : i32 = *community_id;
-    let is_desctop = get_list_variables(req);
+    let is_desctop = is_desctop(req);
 
     let _community = get_community(community_id);
 
@@ -54,7 +54,7 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
 
         else if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/communities/lenta/list.stpl")]
+            #[template(path = "desctop/communities/photos/main_list/list.stpl")]
             struct Template {
                 request_user: User,
                 community:    Community,
@@ -70,7 +70,7 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
 
         } else {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/communities/lenta/list.stpl")]
+            #[template(path = "mobile/communities/photos/main_list/list.stpl")]
             struct Template {
                 request_user: User,
                 community:    Community,
@@ -94,7 +94,7 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
         }
         else if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/communities/lenta/anon_list.stpl")]
+            #[template(path = "desctop/communities/photos/main_list/anon_list.stpl")]
             struct Template {
                 community: Community,
             }
@@ -107,7 +107,7 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
 
         } else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/communities/lenta/anon_list.stpl")]
+            #[template(path = "mobile/communities/photos/main_list/anon_list.stpl")]
             struct Template {
                 community: Community,
             }
