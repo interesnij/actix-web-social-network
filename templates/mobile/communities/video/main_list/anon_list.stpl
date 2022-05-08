@@ -19,9 +19,9 @@
           <div class="card mb-2">
               <div class="card-body">
                 <div class="video_playlist" id="movies_container">
-                  <div class="row is_paginate is_stat_list" data-pk="<%= list.id %>" data-type="<% if list.community_id.is_some() { %>community<% } else { %>user<% } %>_video_list" data-list="/communities/<%= community.id %>/video">
+                <div class="row is_block_paginate is_paginate drag_container is_stat_list" data-pk="<%= list.id %>" data-type="vid" data-community-id="<%= list.community_id.unwrap() %>" data-link="/video/load_list_video/<%= list.id %>/">
 
-                  </div>
+                </div>
                 </div>
               </div>
           </div>

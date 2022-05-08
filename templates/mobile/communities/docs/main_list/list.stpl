@@ -27,9 +27,9 @@
       </div>
     <div class="card mb-2">
         <div class="card-body">
-            <ul class="is_paginate is_stat_list" data-pk="<%= list.id %>" data-type="<% if list.community_id.is_some() { %>community<% } else { %>user<% } %>_doc_list">
+        <ul class="row is_block_paginate is_paginate drag_container is_stat_list" data-pk="<%= list.id %>" data-type="doc" data-community-id="<%= list.community_id.unwrap() %>" data-link="/docs/load_list_docs/<%= list.id %>/">
 
-            </ul>
+        </ul>
         </div>
     </div>
     </span>

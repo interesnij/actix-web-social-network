@@ -23,9 +23,9 @@
 
         <div class="card mb-2">
           <div class="card-body">
-            <div class="row is_paginate is_stat_list" data-pk="<%= list.id %>" data-type="<% if list.community_id.is_some() { %>community<% } else { %>user<% } %>_good_list">
+          <div class="row is_block_paginate is_paginate drag_container is_stat_list" data-pk="<%= list.id %>" data-type="goo" data-community-id="<%= list.community_id.unwrap() %>" data-link="/goods/load_list_goods/<%= list.id %>/">
 
-            </div>
+          </div>
           </div>
         </div>
     </span>
