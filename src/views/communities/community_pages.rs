@@ -258,7 +258,7 @@ pub fn admin_community(folder: String, community: Community, request_user: User)
             community:     Community,
         }
         let body = Template {
-            title:         community.name,
+            title:         community.name.clone(),
             private_bools: community.get_community_all_can_see(request_user.id),
             request_user:  request_user,
             community:     community,
@@ -276,7 +276,7 @@ pub fn admin_community(folder: String, community: Community, request_user: User)
             community:     Community,
         }
         let body = Template {
-            title:         community.name,
+            title:         community.name.clone(),
             private_bools: community.get_community_all_can_see(request_user.id),
             request_user:  request_user,
             community:     community,
@@ -297,7 +297,7 @@ pub fn anon_community(folder: String, community: Community) -> actix_web::Result
             community:     Community,
         }
         let body = Template {
-            title: community.name,
+            title: community.name.clone(),
             private_bools: community.get_anon_community_all_can_see(),
             community:  community,
         }
@@ -314,7 +314,7 @@ pub fn anon_community(folder: String, community: Community) -> actix_web::Result
             community:     Community,
         }
         let body = Template {
-            title: community.name,
+            title: community.name.clone(),
             private_bools: community.get_anon_community_all_can_see(),
             community:  community,
         }
@@ -334,7 +334,7 @@ pub fn close_community(folder: String, community: Community, request_user: User)
             request_user: User,
         }
         let body = Template {
-            title:        community.name,
+            title:        community.name.clone(),
             private_bools: community.get_community_all_can_see(request_user.id),
             community:    community,
             request_user: request_user,
@@ -353,7 +353,7 @@ pub fn close_community(folder: String, community: Community, request_user: User)
             request_user: User,
         }
         let body = Template {
-            title:        community.name,
+            title:        community.name.clone(),
             private_bools: community.get_community_all_can_see(request_user.id),
             community:    community,
             request_user: request_user,
@@ -373,7 +373,7 @@ pub fn private_community(folder: String, community: Community, request_user: Use
             request_user: User,
         }
         let body = Template {
-            title:        community.name,
+            title:        community.name.clone(),
             community:    community,
             request_user: request_user,
         }
@@ -390,7 +390,7 @@ pub fn private_community(folder: String, community: Community, request_user: Use
             request_user: User,
         }
         let body = Template {
-            title:        community.name,
+            title:        community.name.clone(),
             community:    community,
             request_user: request_user,
         }
@@ -409,7 +409,7 @@ pub fn no_child_safety_community(folder: String, community: Community, request_u
             request_user: User,
         }
         let body = Template {
-            title:        community.name,
+            title:        community.name.clone(),
             community:    community,
             request_user: request_user,
         }
@@ -426,7 +426,7 @@ pub fn no_child_safety_community(folder: String, community: Community, request_u
             request_user: User,
         }
         let body = Template {
-            title:        community.name,
+            title:        community.name.clone(),
             community:    community,
             request_user: request_user,
         }
@@ -446,7 +446,7 @@ pub fn follow_community(folder: String, community: Community, request_user: User
             request_user: User,
         }
         let body = Template {
-            title:        community.name,
+            title:        community.name.clone(),
             private_bools: community.get_community_all_can_see(request_user.id),
             community:    community,
             request_user: request_user,
@@ -465,7 +465,7 @@ pub fn follow_community(folder: String, community: Community, request_user: User
             request_user: User,
         }
         let body = Template {
-            title:        community.name,
+            title:        community.name.clone(),
             private_bools: community.get_community_all_can_see(request_user.id),
             community:    community,
             request_user: request_user,
@@ -485,7 +485,7 @@ pub fn admin_bad_community(folder: String, community: Community, request_user: U
             request_user: User,
         }
         let body = Template {
-            title:        community.name,
+            title:        community.name.clone(),
             community:    community,
             request_user: request_user,
         }
@@ -502,7 +502,7 @@ pub fn admin_bad_community(folder: String, community: Community, request_user: U
             request_user: User,
         }
         let body = Template {
-            title:        community.name,
+            title:        community.name.clone(),
             community:    community,
             request_user: request_user,
         }
@@ -521,7 +521,7 @@ pub fn bad_community(folder: String, community: Community, request_user: User) -
             request_user: User,
         }
         let body = Template {
-            title:        community.name,
+            title:        community.name.clone(),
             community:    community,
             request_user: request_user,
         }
@@ -538,7 +538,7 @@ pub fn bad_community(folder: String, community: Community, request_user: User) -
             request_user: User,
         }
         let body = Template {
-            title:        community.name,
+            title:        community.name.clone(),
             community:    community,
             request_user: request_user,
         }
@@ -558,7 +558,7 @@ pub fn public_community(folder: String, community: Community, request_user: User
             request_user: User,
         }
         let body = Template {
-            title:        community.name,
+            title:        community.name.clone(),
             private_bools: community.get_community_all_can_see(request_user.id),
             community:    community,
             request_user: request_user,
@@ -577,7 +577,7 @@ pub fn public_community(folder: String, community: Community, request_user: User
             request_user: User,
         }
         let body = Template {
-            title:        community.name,
+            title:        community.name.clone(),
             private_bools: community.get_community_all_can_see(request_user.id),
             community:    community,
             request_user: request_user,
@@ -597,7 +597,7 @@ pub fn anon_bad_community(folder: String, community: Community) -> actix_web::Re
             community:    Community,
         }
         let body = Template {
-            title:        community.name,
+            title:        community.name.clone(),
             community:    community,
         }
         .render_once()
@@ -612,7 +612,7 @@ pub fn anon_bad_community(folder: String, community: Community) -> actix_web::Re
             community:    Community,
         }
         let body = Template {
-            title:        community.name,
+            title:        community.name.clone(),
             community:    community,
         }
         .render_once()
@@ -631,7 +631,7 @@ pub fn anon_close_community(folder: String, community: Community) -> actix_web::
             community:     Community,
         }
         let body = Template {
-            title: community.name,
+            title: community.name.clone(),
             private_bools: community.get_anon_community_all_can_see(),
             community:  community,
         }
@@ -648,7 +648,7 @@ pub fn anon_close_community(folder: String, community: Community) -> actix_web::
             community:     Community,
         }
         let body = Template {
-            title: community.name,
+            title: community.name.clone(),
             private_bools: community.get_anon_community_all_can_see(),
             community:  community,
         }
@@ -667,7 +667,7 @@ pub fn anon_private_community(folder: String, community: Community) -> actix_web
             community:    Community,
         }
         let body = Template {
-            title:        community.name,
+            title:        community.name.clone(),
             community:    community,
         }
         .render_once()
@@ -682,7 +682,7 @@ pub fn anon_private_community(folder: String, community: Community) -> actix_web
             community:    Community,
         }
         let body = Template {
-            title:        community.name,
+            title:        community.name.clone(),
             community:    community,
         }
         .render_once()
