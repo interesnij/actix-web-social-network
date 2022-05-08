@@ -11,7 +11,7 @@
     <span class="load_block">
 
       <div class="media mt-3" style="padding-left: 7px;">
-        <h5 class="mt-1" class="uuid_saver" data-uuid="<% list.id %>" data-pk="<% list.id %>">
+        <h5 class="mt-1" class="uuid_saver" data-uuid="<%= list.id %>" data-pk="<%= list.id %>">
           <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %></span> (<%= list.count_items() %>)
           {% if is_user_can_create_surveys %}
           <a class="pointer add_survey" tooltip="Добавить опрос" flow="up">
@@ -23,7 +23,7 @@
       </div>
     <div class="card mb-2">
         <div class="card-body">
-            <ul class="is_paginate is_stat_list" data-pk="<% list.id %>" data-type="<% if list.community_id.is_some() { %>community<% } else { %>user<% } %>_survey_list">
+            <ul class="is_paginate is_stat_list" data-pk="<%= list.id %>" data-type="<% if list.community_id.is_some() { %>community<% } else { %>user<% } %>_survey_list">
 
               <% if object_list.len() > 0 { %>
                 <% for object in object_list.iter() { %>

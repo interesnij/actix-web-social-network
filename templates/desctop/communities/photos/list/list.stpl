@@ -1,8 +1,8 @@
 
-<div class="main-container mt-3" data-pk="<% list.id %>" data-type="community_photo_list">
+<div class="main-container mt-3" data-pk="<%= list.id %>" data-type="community_photo_list">
 <span class="load_block">
   <div class="media mt-3" style="padding-left: 7px;">
-    <form class="uuid_saver" data-uuid="<% list.id %>" data-pk="<% list.id %>">
+    <form class="uuid_saver" data-uuid="<%= list.id %>" data-pk="<%= list.id %>">
     <h5 class="mt-1">
       <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %></span> (<%= list.count_items() %>)
         <input type="file" accept="image/*" class="case_all_input add_photos_in_list" name="file" style="display:none" multiple="multiple">
