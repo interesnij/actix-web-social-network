@@ -26,12 +26,12 @@ pub fn community_urls(config: &mut web::ServiceConfig) {
     config.route("/public{id}/", web::get().to(community_page));
     config.route("/communities/{community_id}/wall/{list_id}/", web::get().to(community_wall_page));
 
-    config.route("/communities/{community_id}/photos/", web::get().to(community_photos_page));
-    config.route("/communities/{community_id}/goods/", web::get().to(community_goods_page));
-    config.route("/communities/{community_id}/music/", web::get().to(community_music_page));
-    config.route("/communities/{community_id}/surveys/", web::get().to(community_surveys_page));
-    config.route("/communities/{community_id}/video/", web::get().to(community_video_page));
-    config.route("/communities/{community_id}/docs/", web::get().to(community_docs_page));
+    //config.route("/communities/{community_id}/photos/", web::get().to(community_photos_page));
+    //config.route("/communities/{community_id}/goods/", web::get().to(community_goods_page));
+    //config.route("/communities/{community_id}/music/", web::get().to(community_music_page));
+    //config.route("/communities/{community_id}/surveys/", web::get().to(community_surveys_page));
+    //config.route("/communities/{community_id}/video/", web::get().to(community_video_page));
+    //config.route("/communities/{community_id}/docs/", web::get().to(community_docs_page));
 }
 
 pub async fn community_docs_page(session: Session, req: HttpRequest, community_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
