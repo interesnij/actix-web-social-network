@@ -161,12 +161,14 @@ pub async fn community_video_page(session: Session, req: HttpRequest, community_
             #[derive(TemplateOnce)]
             #[template(path = "desctop/communities/video/main_list/list.stpl")]
             struct Template {
+                title:        String,
                 request_user: User,
                 community:    Community,
                 list:         VideoList,
             }
 
             let body = Template {
+                title:        _community.name.clone() + &"- видеоальбомы".to_string(),
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
@@ -179,12 +181,14 @@ pub async fn community_video_page(session: Session, req: HttpRequest, community_
             #[derive(TemplateOnce)]
             #[template(path = "mobile/communities/video/main_list/list.stpl")]
             struct Template {
+                title:        String,
                 request_user: User,
                 community:    Community,
                 list:         VideoList,
             }
 
             let body = Template {
+                title:        _community.name.clone() + &"- видеоальбомы".to_string(),
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
@@ -205,10 +209,12 @@ pub async fn community_video_page(session: Session, req: HttpRequest, community_
             #[derive(TemplateOnce)]
             #[template(path = "desctop/communities/video/main_list/anon_list.stpl")]
             struct Template {
+                title:     String,
                 community: Community,
                 list:      VideoList,
             }
             let body = Template {
+                title:        _community.name.clone() + &"- видеоальбомы".to_string(),
                 community: _community,
                 list:      _list,
             }
@@ -220,10 +226,12 @@ pub async fn community_video_page(session: Session, req: HttpRequest, community_
             #[derive(TemplateOnce)]
             #[template(path = "mobile/communities/video/main_list/anon_list.stpl")]
             struct Template {
+                title:     String,
                 community: Community,
                 list:      VideoList,
             }
             let body = Template {
+                title:        _community.name.clone() + &"- видеоальбомы".to_string(),
                 community: _community,
                 list:      _list,
             }
@@ -257,12 +265,14 @@ pub async fn community_surveys_page(session: Session, req: HttpRequest, communit
             #[derive(TemplateOnce)]
             #[template(path = "desctop/communities/survey/main_list/list.stpl")]
             struct Template {
+                title:        String,
                 request_user: User,
                 community:    Community,
                 list:         SurveyList,
             }
 
             let body = Template {
+                title:        _community.name.clone() + &"- список опрсоов".to_string(),
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
@@ -275,12 +285,14 @@ pub async fn community_surveys_page(session: Session, req: HttpRequest, communit
             #[derive(TemplateOnce)]
             #[template(path = "mobile/communities/survey/main_list/list.stpl")]
             struct Template {
+                title:        String,
                 request_user: User,
                 community:    Community,
                 list:         SurveyList,
             }
 
             let body = Template {
+                title:        _community.name.clone() + &"- список опрсоов".to_string(),
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
@@ -301,10 +313,12 @@ pub async fn community_surveys_page(session: Session, req: HttpRequest, communit
             #[derive(TemplateOnce)]
             #[template(path = "desctop/communities/survey/main_list/anon_list.stpl")]
             struct Template {
+                title:     String,
                 community: Community,
                 list:      SurveyList,
             }
             let body = Template {
+                title:        _community.name.clone() + &"- список опрсоов".to_string(),
                 community: _community,
                 list:      _list,
             }
@@ -316,10 +330,12 @@ pub async fn community_surveys_page(session: Session, req: HttpRequest, communit
             #[derive(TemplateOnce)]
             #[template(path = "mobile/communities/survey/main_list/anon_list.stpl")]
             struct Template {
+                title:     String,
                 community: Community,
                 list:      SurveyList,
             }
             let body = Template {
+                title:        _community.name.clone() + &"- список опрсоов".to_string(),
                 community: _community,
                 list:      _list,
             }
@@ -353,12 +369,14 @@ pub async fn community_music_page(session: Session, req: HttpRequest, community_
             #[derive(TemplateOnce)]
             #[template(path = "desctop/communities/music/main_list/list.stpl")]
             struct Template {
+                title:        String,
                 request_user: User,
                 community:    Community,
                 list:         MusicList,
             }
 
             let body = Template {
+                title:        _community.name.clone() + &"- плейлисты".to_string(),
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
@@ -371,12 +389,14 @@ pub async fn community_music_page(session: Session, req: HttpRequest, community_
             #[derive(TemplateOnce)]
             #[template(path = "mobile/communities/music/main_list/list.stpl")]
             struct Template {
+                title:        String,
                 request_user: User,
                 community:    Community,
                 list:         MusicList,
             }
 
             let body = Template {
+                title:        _community.name.clone() + &"- плейлисты".to_string(),
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
@@ -397,10 +417,12 @@ pub async fn community_music_page(session: Session, req: HttpRequest, community_
             #[derive(TemplateOnce)]
             #[template(path = "desctop/communities/music/main_list/anon_list.stpl")]
             struct Template {
+                title:     String,
                 community: Community,
                 list:      MusicList,
             }
             let body = Template {
+                title:        _community.name.clone() + &"- плейлисты".to_string(),
                 community: _community,
                 list:      _list,
             }
@@ -412,10 +434,12 @@ pub async fn community_music_page(session: Session, req: HttpRequest, community_
             #[derive(TemplateOnce)]
             #[template(path = "mobile/communities/music/main_list/anon_list.stpl")]
             struct Template {
+                title:     String,
                 community: Community,
                 list:      MusicList,
             }
             let body = Template {
+                title:        _community.name.clone() + &"- плейлисты".to_string(),
                 community: _community,
                 list:      _list,
             }
@@ -449,12 +473,14 @@ pub async fn community_goods_page(session: Session, req: HttpRequest, community_
             #[derive(TemplateOnce)]
             #[template(path = "desctop/communities/goods/main_list/list.stpl")]
             struct Template {
+                title:        String,
                 request_user: User,
                 community:    Community,
                 list:         GoodList,
             }
 
             let body = Template {
+                title:        _community.name.clone() + &"- подборки товаров".to_string(),
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
@@ -467,12 +493,14 @@ pub async fn community_goods_page(session: Session, req: HttpRequest, community_
             #[derive(TemplateOnce)]
             #[template(path = "mobile/communities/goods/main_list/list.stpl")]
             struct Template {
+                title:        String,
                 request_user: User,
                 community:    Community,
                 list:         GoodList,
             }
 
             let body = Template {
+                title:        _community.name.clone() + &"- подборки товаров".to_string(),
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
@@ -493,10 +521,12 @@ pub async fn community_goods_page(session: Session, req: HttpRequest, community_
             #[derive(TemplateOnce)]
             #[template(path = "desctop/communities/goods/main_list/anon_list.stpl")]
             struct Template {
+                title:     String,
                 community: Community,
                 list:      GoodList,
             }
             let body = Template {
+                title:        _community.name.clone() + &"- подборки товаров".to_string(),
                 community: _community,
                 list:      _list,
             }
@@ -508,10 +538,12 @@ pub async fn community_goods_page(session: Session, req: HttpRequest, community_
             #[derive(TemplateOnce)]
             #[template(path = "mobile/communities/goods/main_list/anon_list.stpl")]
             struct Template {
+                title:     String,
                 community: Community,
                 list:      GoodList,
             }
             let body = Template {
+                title:        _community.name.clone() + &"- подборки товаров".to_string(),
                 community: _community,
                 list:      _list,
             }
@@ -545,12 +577,14 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
             #[derive(TemplateOnce)]
             #[template(path = "desctop/communities/photos/main_list/list.stpl")]
             struct Template {
+                title:        String,
                 request_user: User,
                 community:    Community,
                 list:         PhotoList,
             }
 
             let body = Template {
+                title:        _community.name.clone() + &"- фотоальбомы".to_string(),
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
@@ -563,12 +597,14 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
             #[derive(TemplateOnce)]
             #[template(path = "mobile/communities/photos/main_list/list.stpl")]
             struct Template {
+                title:        String,
                 request_user: User,
                 community:    Community,
                 list:         PhotoList,
             }
 
             let body = Template {
+                title:        _community.name.clone() + &"- фотоальбомы".to_string(),
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
@@ -589,10 +625,12 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
             #[derive(TemplateOnce)]
             #[template(path = "desctop/communities/photos/main_list/anon_list.stpl")]
             struct Template {
+                title:     String,
                 community: Community,
                 list:      PhotoList,
             }
             let body = Template {
+                title:        _community.name.clone() + &"- фотоальбомы".to_string(),
                 community: _community,
                 list:      _list,
             }
@@ -604,10 +642,12 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
             #[derive(TemplateOnce)]
             #[template(path = "mobile/communities/photos/main_list/anon_list.stpl")]
             struct Template {
+                title:     String,
                 community: Community,
                 list:      PhotoList,
             }
             let body = Template {
+                title:        _community.name.clone() + &"- фотоальбомы".to_string(),
                 community: _community,
                 list:      _list,
             }
