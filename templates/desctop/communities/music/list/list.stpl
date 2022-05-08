@@ -1,3 +1,4 @@
+<% include!("../../../base_block/base_header.stpl"); %>
 
 <div class="main-container mt-3" data-pk="<%= list.id %>" data-type="community_music_list">
           <div class="input-group mb-3">
@@ -11,4 +12,4 @@
         </span>
 </div>
 
-{% endblock %}
+<% include!("../../../base_block/base_footer.stpl"); %>

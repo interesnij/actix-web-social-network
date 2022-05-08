@@ -1,3 +1,4 @@
+<% include!("../../../base_block/anon_base_header.stpl"); %>
 
 <div class="main-container mt-3 pk_saver" data-pk="<%= community.id %>" data-type="community_photo">
 <div class="container">
@@ -8,3 +9,5 @@
 
 </span>
 </div>
+
+<% include!("../../../base_block/anon_base_footer.stpl"); %>
