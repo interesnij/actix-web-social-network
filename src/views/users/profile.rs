@@ -15,6 +15,7 @@ use crate::utils::{
     get_post_list,
     get_user_permission,
     get_anon_user_permission,
+    get_list_variables,
 };
 
 use actix_session::Session;
@@ -28,29 +29,13 @@ pub fn profile_urls(config: &mut web::ServiceConfig) {
 }
 
 pub async fn user_wall_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
-    use crate::utils::PaginationParams;
     use crate::models::PostList;
 
-    let params_some = web::Query::<PaginationParams>::from_query(&req.query_string());
-    let mut page: i32 = 0;
+    let (is_desctop, page) = get_list_variables(req);
     let mut next_page_number = 0;
-    if params_some.is_ok() {
-        let params = params_some.unwrap();
-        if params.page.is_some() {
-            page = params.page.unwrap();
-        }
-        else {
-            page = 1;
-        }
-    }
-    else {
-        page = 1;
-    }
 
     let user_id : i32 = param.0;
     let list_id : i32 = param.1;
-
-    let _type = get_folder(req);
 
     let _user = get_user(user_id);
     let _list = get_post_list(list_id);
@@ -82,7 +67,7 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, param: web::Path
             return close_item(text)
         }
 
-        else if _type == "desctop/".to_string() {
+        else if is_desctop {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/lenta/list.stpl")]
             struct Template {
@@ -140,7 +125,7 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, param: web::Path
             use crate::views::close_item;
             return close_item(text)
         }
-        else if _type == "desctop/".to_string() {
+        else if is_desctop {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/lenta/anon_list.stpl")]
             struct Template {

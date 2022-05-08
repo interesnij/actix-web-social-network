@@ -40,7 +40,7 @@ pub async fn community_wall_page(session: Session, req: HttpRequest, param: web:
 
     let community_id : i32 = param.0;
     let list_id : i32 = param.1;
-    let (_type, page) = get_list_variables(req);
+    let (is_desctop, page) = get_list_variables(req);
     let mut next_page_number = 0;
 
     let _community = get_community(community_id);
@@ -73,7 +73,7 @@ pub async fn community_wall_page(session: Session, req: HttpRequest, param: web:
             return close_item(text)
         }
 
-        else if _type == "desctop/".to_string() {
+        else if is_desctop {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/communities/lenta/list.stpl")]
             struct Template {
@@ -131,7 +131,7 @@ pub async fn community_wall_page(session: Session, req: HttpRequest, param: web:
             use crate::views::close_item;
             return close_item(text)
         }
-        else if _type == "desctop/".to_string() {
+        else if is_desctop {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/communities/lenta/anon_list.stpl")]
             struct Template {
