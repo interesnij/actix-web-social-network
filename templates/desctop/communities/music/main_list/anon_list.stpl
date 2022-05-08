@@ -17,23 +17,11 @@
             </h5>
           </div>
           <div class="card mb-2">
-              <div class="card-body">
-                <% if object_list.len() > 0 { %>
-                    <ul class="is_paginate is_stat_list" data-pk="<%= list.id %>" data-type="mus" data-community-id="<%= list.community_id.unwrap() %>">
-                      <% for object in object_list.iter() { %>
-                        <% include!("../anon_track.stpl"); %>
-                      {% endfor %}
-                      <% if next_page_number > 0 { %>
-                      <div class="load centered m-1 next_page_list" data-link="/community/<%= community.id %>/music_list/<%= list.id %>/?page=<%= next_page_number %>">
-                          <img src="/static/images/preloader.gif">
-                      </div>
-                      {% endif %}
-                    </ul>
+            <div class="card-body">
+              <ul class="is_paginate is_stat_list" data-pk="<%= list.id %>" data-type="mus" data-community-id="<%= list.community_id.unwrap() %>">
 
-                {% else %}
-                  <% include!("../no_tracks.stpl"); %>
-                {% endif %}
-              </div>
+              </ul>
+            </div>
           </div>
       </span>
       {% else %}

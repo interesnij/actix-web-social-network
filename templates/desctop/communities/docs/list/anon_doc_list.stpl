@@ -1,0 +1,13 @@
+<% if object_list.len() > 0 { %>
+  <% for object in object_list.iter() { %>
+    <% include!("../anon_doc.stpl"); %>
+  <% } %>
+  <% if next_page_number > 0 { %>
+  <div class="load centered m-1 next_page_list" data-link="/community/<%= community.id %>/docs_list/<%= list.id %>/?page=<%= next_page_number %>">
+      <img src="/static/images/preloader.gif">
+  </div>
+  <% } %>
+
+  <% } else { %>
+    <% include!("../no_docs.stpl"); %>
+  <% } %>

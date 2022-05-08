@@ -23,21 +23,8 @@
           <div class="card mb-2">
               <div class="card-body">
                 <div class="video_playlist" id="movies_container">
-                  <div class="row is_paginate is_stat_list" data-pk="<%= list.id %>" data-type="<% if list.community_id.is_some() { %>community<% } else { %>user<% } %>_video_list" data-list="/communities/<%= community.id %>/video">
+                  <div class="row is_paginate is_stat_list" data-pk="<%= list.id %>">
 
-                    <% if object_list.len() > 0 { %>
-                      <% for object in object_list.iter() { %>
-                        <% include!("../video.stpl"); %>
-                      {% endfor %}
-                      <% if next_page_number > 0 { %>
-                      <div class="load centered m-1 next_page_list" data-link="/community/<%= community.id %>/video_list/<%= list.id %>/?page=<%= next_page_number %>">
-                          <img src="/static/images/preloader.gif">
-                      </div>
-                      {% endif %}
-
-                    {% else %}
-                      <% include!("../no_videos.stpl"); %>
-                    {% endif %}
                   </div>
                 </div>
               </div>

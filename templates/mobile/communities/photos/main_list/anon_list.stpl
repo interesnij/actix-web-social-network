@@ -13,7 +13,7 @@
 </div>
 
 <div class="container" id="photos_container">
-  <div class="row is_block_paginate is_paginate drag_container is_stat_list" data-pk="<%= list.id %>" data-type="pho" data-community-id="<%= list.community_id.unwrap() %>" id="list_photos_container" data-link="/gallery/load_list_photos/<%= list.id %>/"></div>
+  <div class="row is_block_paginate is_paginate drag_container is_stat_list" data-pk="<%= list.id %>" data-type="pho" data-community-id="<%= list.community_id.unwrap() %>" data-link="/gallery/load_list_photos/<%= list.id %>/"></div>
 </div>
 </span>
 </div>
