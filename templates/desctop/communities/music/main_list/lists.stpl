@@ -29,7 +29,7 @@
                    <div class="card-body pt-0">
                        <div class="content-wrapper">
                            <p class="card-text file-name mb-0 list_name <% if index == 1 { %>active<% } else { %>pointer load_profile_music_list<% } %> list_toggle" style="text-align: left;" data-name="<%= object.name %>"><%= object.name %></p>
-                           <p class="card-text file-size mb-0">{{ object.count_items }}</p>
+                           <p class="handle card-text file-size mb-0">{{ object.count_items }}</p>
                        </div>
                        <small class="file-accessed">
                          <a class="ajax underline" href="<%= community.get_link() %>">
@@ -55,7 +55,7 @@
                    <div class="card-body pt-0">
                        <div class="content-wrapper">
                            <p class="card-text file-name mb-0 list_name <% if index == 1 { %>active<% } else { %>pointer load_profile_music_list<% } %> list_toggle" style="text-align: left;" data-name="<%= object.name %>"><%= object.name %></p>
-                           <p class="card-text file-size mb-0"><%= object.count_items() %></p>
+                           <p class="handle card-text file-size mb-0"><%= object.count_items() %></p>
                        </div>
                        <small class="file-accessed">
                          <a class="ajax underline" href="<%= creator.get_link() %>">

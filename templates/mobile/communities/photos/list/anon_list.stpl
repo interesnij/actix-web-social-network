@@ -1,14 +1,7 @@
 
 <div class="main-container mt-3" data-pk="<%= list.id %>" data-type="community_photo_list">
 
-  <span class="load_block">
-  <div class="media mt-3 uuid_saver" data-pk="<%= list.id %>" data-uuid="<%= list.id %>" style="padding-left: 7px;">
-    <h5 class="mt-1">
-      <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %></span> (<%= list.count_items() %>)
-      <span class="pointer badge badge-light-primary copy_link">Копировать ссылку</span>
-    </h5>
-  </div>
+  <span class="load_block" data-link="/photos/load_list_photos/<%= list.id %>/">
 
-  <div class="row is_block_paginate is_paginate drag_container is_stat_list" data-pk="<%= list.id %>" data-type="pho" data-community-id="<%= list.community_id.unwrap() %>" data-link="/photos/load_list_photos/<%= list.id %>/"></div>
   </span>
 </div>

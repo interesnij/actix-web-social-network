@@ -14,7 +14,7 @@
        <ul class="drag_list" data-type="ldo" style="width:max-content;list-style: none;">
            <% for (index, object) in lists.iter().enumerate() { %>
            <% if object.community_id.is_some() { %>
-             <% let community = object.get_community(); %>
+             <% let list_community = object.get_community(); %>
            <li class="list_item drag_item" data-pk="<%= object.id %>">
                <div class="card file-manager-item folder border community" data-pk="<%= object.community_id.unwrap() %>" data-uuid="<%= object.id %>">
                    <div class="card-img-top file-logo-wrapper">
@@ -27,11 +27,11 @@
                    <div class="card-body pt-0">
                        <div class="content-wrapper">
                            <p class="card-text file-name mb-0 list_name <% if index == 1 { %>active<% } else { %>pointer load_profile_doc_list<% } %> list_toggle" style="text-align: left;" data-name="<%= object.name %>"><%= object.name %></p>
-                           <p class="handle card-text file-size mb-0">{{ object.count_items }}</p>
+                           <p class="card-text file-size mb-0">{{ object.count_items }}</p>
                        </div>
                        <small class="file-accessed">
-                         <a class="ajax underline" href="<%= community.get_link() %>">
-                           <%= community.name %>
+                         <a class="ajax underline" href="<%= list_community.get_link() %>">
+                           <%= list_community.name %>
                          </a>
                        </small>
                    </div>
@@ -51,7 +51,7 @@
                    <div class="card-body pt-0">
                        <div class="content-wrapper">
                            <p class="card-text file-name mb-0 list_name <% if index == 1 { %>active<% } else { %>pointer load_profile_doc_list<% } %> list_toggle" style="text-align: left;" data-name="<%= object.name %>"><%= object.name %></p>
-                           <p class="handle card-text file-size mb-0"><%= object.count_items() %></p>
+                           <p class="card-text file-size mb-0"><%= object.count_items() %></p>
                        </div>
                        <small class="file-accessed">
                          <a class="ajax underline" href="<%= creator.get_link() %>">

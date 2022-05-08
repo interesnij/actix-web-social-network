@@ -6,21 +6,8 @@
                 <button class="btn btn-sm border" type="button">Искать</button>
             </div>
         </div>
-          <span class="load_block">
+      <span class="load_block" data-link="/goods/load_list_goods/<%= list.id %>/">
 
-          <div class="media mt-3 uuid_saver" data-pk="<%= list.id %>" data-uuid="<%= list.id %>" style="padding-left: 7px;">
-            <h5 class="mt-1">
-              <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %></span> (<%= list.count_items() %>)
-              <span class="pointer badge badge-light-primary copy_link">Копировать ссылку</span>
-            </h5>
-          </div>
-        <div class="card mb-2">
-          <div class="card-body">
-          <div class="row is_block_paginate is_paginate drag_container is_stat_list" data-pk="<%= list.id %>" data-type="goo" data-community-id="<%= list.community_id.unwrap() %>" data-link="/goods/load_list_goods/<%= list.id %>/">
-
-          </div>
-          </div>
-        </div>
       </span>
 </div>
 

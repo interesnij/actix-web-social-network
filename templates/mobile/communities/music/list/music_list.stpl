@@ -1,3 +1,23 @@
+<div class="media mt-3" style="padding-left: 7px">
+  <form class="uuid_saver" data-uuid="<%= list.id %>" data-type="lph<%= list.id %>" data-pk="<%= list.id %>">
+  <h5 class="mt-1">
+    <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %></span> (<%= list.count_items() %>)
+    <% if is_user_can_create_tracks { %>
+      <input type="file" accept="mp3/*" class="case_all_input add_tracks_in_list" name="file" style="display:none" multiple="multiple">
+      <a class="pointer previous_click hide_delete" tooltip="Добавить аудиозапись" flow="up">
+        <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+      </a>
+    <% } %>
+
+    <% include!("../../../generic/items/list_meta.stpl"); %>
+  </h5>
+  <span id="onload_info"></span>
+  </form>
+</div>
+<div class="card mb-2">
+<div class="card-body">
+<ul class="row is_block_paginate is_paginate drag_container is_stat_list" data-pk="<%= list.id %>" data-type="mus" data-community-id="<%= list.community_id.unwrap() %>" >
+
 <% if object_list.len() > 0 { %>
 
 <% for object in object_list.iter() { %>
@@ -12,3 +32,8 @@
 <% } else { %>
   <% include!("../no_tracks.stpl"); %>
 <% } %>
+
+
+</ul>
+</div>
+</div>

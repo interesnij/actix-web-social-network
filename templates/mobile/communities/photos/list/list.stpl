@@ -1,22 +1,6 @@
 
 <div class="main-container mt-3" data-pk="<%= list.id %>" data-type="community_photo_list">
-<span class="load_block">
-  <div class="media mt-3" style="padding-left: 7px;">
-    <form class="uuid_saver" data-uuid="<%= list.id %>" data-pk="<%= list.id %>">
-    <h5 class="mt-1">
-      <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %></span> (<%= list.count_items() %>)
-        <input type="file" accept="image/*" class="case_all_input add_photos_in_list" name="file" style="display:none" multiple="multiple">
-        {% if is_user_can_create_photos and list.is_have_add %}
-        <a class="pointer previous_click hide_delete" tooltip="Добавить фото" flow="up">
-          <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-        </a>
-        {% endif %}
-        <% include!("../../../generic/items/list_meta.stpl"); %>
-    </h5>
-    <span id="onload_info"></span>
-    </form>
-  </div>
+  <span class="load_block" data-link="/photos/load_list_photos/<%= list.id %>/">
 
-  <div class="row is_block_paginate is_paginate drag_container is_stat_list" data-pk="<%= list.id %>" data-type="pho" data-community-id="<%= list.community_id.unwrap() %>" data-link="/photos/load_list_photos/<%= list.id %>/"></div>
   </span>
 </div>
