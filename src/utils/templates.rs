@@ -1,4 +1,4 @@
-use actix_web::HttpRequest;
+use actix_web::{HttpRequest, web};
 use actix_session::Session;
 use crate::utils::establish_connection;
 use crate::schema;
