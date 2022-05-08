@@ -8,7 +8,7 @@ use actix_web::{
     web,
 };
 use serde::Deserialize;
-use crate::utils::{is_signed_in, establish_connection, get_folder, get_request_user_data, to_home,};
+use crate::utils::{is_signed_in, establish_connection, is_desctop, get_request_user_data, to_home,};
 use actix_session::Session;
 use sailfish::TemplateOnce;
 use crate::models::User;
@@ -21,11 +21,11 @@ pub fn profile_settings_urls(config: &mut web::ServiceConfig) {
 }
 
 pub async fn settings_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    let _type = get_folder(req);
+    let is_desctop = is_desctop(req);
 
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
-        if _type == "desctop/".to_string() {
+        if is_desctop {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/settings/settings.stpl")]
             struct Template {
@@ -60,7 +60,7 @@ pub async fn settings_page(session: Session, req: HttpRequest) -> actix_web::Res
 }
 
 pub async fn design_settings_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    let _type = get_folder(req);
+    let is_desctop = is_desctop(req);
 
     if is_signed_in(&session) {
         use crate::schema::design_settings::dsl::design_settings;
@@ -74,7 +74,7 @@ pub async fn design_settings_page(session: Session, req: HttpRequest) -> actix_w
             .load::<DesignSetting>(&_connection)
             .expect("E");
 
-        if _type == "desctop/".to_string() {
+        if is_desctop {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/settings/design_settings.stpl")]
             struct Template {

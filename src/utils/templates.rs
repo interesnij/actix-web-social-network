@@ -7,16 +7,14 @@ use crate::errors::AuthError;
 use crate::models::User;
 
 
-pub fn get_folder(req: HttpRequest) -> String {
-    let mut _type = "".to_string();
+pub fn is_desctop(req: HttpRequest) -> bool {
+    let mut _type = true;
     for header in req.headers().into_iter() {
         if header.0 == "user-agent" {
             let _val = format!("{:?}", header.1);
             if _val.contains("Mobile"){
-                _type = "mobile/".to_string();
-            } else {
-                _type = "desctop/".to_string();
-            };
+                _type = false;
+            }
         }
     };
     _type

@@ -11,7 +11,7 @@ use serde::Deserialize;
 use crate::utils::{
     is_signed_in,
     establish_connection,
-    get_folder,
+    is_desctop,
     get_request_user_data,
     to_home,
     get_list_variables,
@@ -54,12 +54,12 @@ pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result
     }
 
     let _connection = establish_connection();
-    let _type = get_folder(req);
+    let is_desctop = is_desctop(req);
     if is_signed_in(&session) {
 
         let _request_user = get_request_user_data(session);
 
-        if _type == "desctop/".to_string() {
+        if is_desctop {
             let body = DesctopNewsListTemplate {
                 title:        "Новости".to_string(),
                 request_user: _request_user,
@@ -117,11 +117,11 @@ pub async fn featured_list_page(session: Session, req: HttpRequest) -> actix_web
     }
 
     let _connection = establish_connection();
-    let _type = get_folder(req);
+    let is_desctop = is_desctop(req);
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
 
-        if _type == "desctop/".to_string() {
+        if is_desctop {
             let body = DesctopFeaturedListTemplate {
                 title:      "Рекомендации".to_string(),
                 request_user: _request_user,

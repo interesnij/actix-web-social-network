@@ -9,7 +9,7 @@ use actix_web::{
 use crate::utils::{
     is_signed_in,
     establish_connection,
-    get_folder,
+    is_desctop,
     get_request_user_data,
     get_user,
     get_chat,
@@ -30,7 +30,7 @@ pub async fn chats_list_page(session: Session, req: HttpRequest) -> actix_web::R
         use crate::utils::PaginationParams;
 
         let params_some = web::Query::<PaginationParams>::from_query(&req.query_string());
-        let _type = get_folder(req);
+        let is_desctop = is_desctop(req);
         let mut page: i32 = 0;
         if params_some.is_ok() {
             let params = params_some.unwrap();
@@ -64,7 +64,7 @@ pub async fn chats_list_page(session: Session, req: HttpRequest) -> actix_web::R
                 next_page_number = 2;
             }
         }
-        if _type == "desctop/".to_string() {
+        if is_desctop {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/chats/chat/list.stpl")]
             struct Template {
@@ -121,7 +121,7 @@ pub async fn chat_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
         let _chat = get_chat(*_id);
 
         let params_some = web::Query::<PaginationParams>::from_query(&req.query_string());
-        let _type = get_folder(req);
+        let is_desctop = is_desctop(req);
         let mut page: i32 = 0;
         if params_some.is_ok() {
             let params = params_some.unwrap();
@@ -155,7 +155,7 @@ pub async fn chat_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
                 next_page_number = 2;
             }
         }
-        if _type == "desctop/".to_string() {
+        if is_desctop {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/chats/chat/detail/chat.stpl")]
             struct Template {

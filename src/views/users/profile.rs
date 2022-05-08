@@ -9,7 +9,7 @@ use actix_web::{
 use crate::utils::{
     is_signed_in,
     establish_connection,
-    get_folder,
+    is_desctop,
     get_request_user_data,
     get_user,
     get_post_list,
@@ -171,46 +171,46 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, param: web::Path
 }
 
 pub async fn user_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    let _type = get_folder(req);
+    let is_desctop = is_desctop(req);
     let _user = get_user(*_id);
 
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
         if &_user.id == &_request_user.id {
             if _user.types > 10 {
-                return my_bad_account(_type, _request_user)
+                return my_bad_account(is_desctop, _request_user)
             }
             else {
-                return my_user_account(_type, _user, _request_user)
+                return my_user_account(is_desctop, _user, _request_user)
             }
         }
         else if _user.types > 10 {
-            return bad_account(_type, _user, _request_user)
+            return bad_account(is_desctop, _user, _request_user)
         }
         else if _request_user.is_self_user_in_block(_user.id) {
-            return self_block_account(_type, _user, _request_user)
+            return self_block_account(is_desctop, _user, _request_user)
         }
         else if !_user.is_user_can_see_all(_request_user.id) {
-            return close_account(_type, _user, _request_user, )
+            return close_account(is_desctop, _user, _request_user, )
         }
         else {
-            return account(_type, _user, _request_user)
+            return account(is_desctop, _user, _request_user)
         }
     } else {
         if !_user.is_anon_user_can_see_all() {
-            return anon_close_account(_type, _user)
+            return anon_close_account(is_desctop, _user)
         }
         else if _user.types > 10 {
-            return anon_bad_account(_type, _user)
+            return anon_bad_account(is_desctop, _user)
         }
         else {
-            return anon_user_account(_type, _user)
+            return anon_user_account(is_desctop, _user)
         }
     }
 }
 
-pub fn my_user_account(folder: String, user: User, request_user: User) -> actix_web::Result<HttpResponse> {
-    if folder == "desctop/".to_string() {
+pub fn my_user_account(is_desctop: bool, user: User, request_user: User) -> actix_web::Result<HttpResponse> {
+    if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/my_user.stpl")]
         struct UserPage {
@@ -253,8 +253,8 @@ pub fn my_user_account(folder: String, user: User, request_user: User) -> actix_
     }
 }
 
-pub fn anon_user_account(folder: String, user: User) -> actix_web::Result<HttpResponse> {
-    if folder == "desctop/".to_string() {
+pub fn anon_user_account(is_desctop: bool, user: User) -> actix_web::Result<HttpResponse> {
+    if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/anon_user.stpl")]
         struct UserPage {
@@ -289,8 +289,8 @@ pub fn anon_user_account(folder: String, user: User) -> actix_web::Result<HttpRe
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
 }
-pub fn self_block_account(folder: String, user: User, request_user: User) -> actix_web::Result<HttpResponse> {
-    if folder == "desctop/".to_string() {
+pub fn self_block_account(is_desctop: bool, user: User, request_user: User) -> actix_web::Result<HttpResponse> {
+    if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/self_block_user.stpl")]
         struct UserPage {
@@ -325,8 +325,8 @@ pub fn self_block_account(folder: String, user: User, request_user: User) -> act
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
 }
-pub fn my_bad_account(folder: String, request_user: User) -> actix_web::Result<HttpResponse> {
-    if folder == "desctop/".to_string() {
+pub fn my_bad_account(is_desctop: bool, request_user: User) -> actix_web::Result<HttpResponse> {
+    if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/my_bad_user.stpl")]
         struct UserPage {
@@ -357,8 +357,8 @@ pub fn my_bad_account(folder: String, request_user: User) -> actix_web::Result<H
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
 }
-pub fn bad_account(folder: String, user: User, request_user: User) -> actix_web::Result<HttpResponse> {
-    if folder == "desctop/".to_string() {
+pub fn bad_account(is_desctop: bool, user: User, request_user: User) -> actix_web::Result<HttpResponse> {
+    if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/bad_user.stpl")]
         struct UserPage {
@@ -393,8 +393,8 @@ pub fn bad_account(folder: String, user: User, request_user: User) -> actix_web:
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
 }
-pub fn close_account(folder: String, user: User, request_user: User) -> actix_web::Result<HttpResponse> {
-    if folder == "desctop/".to_string() {
+pub fn close_account(is_desctop: bool, user: User, request_user: User) -> actix_web::Result<HttpResponse> {
+    if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/close_user.stpl")]
         struct UserPage {
@@ -434,8 +434,8 @@ pub fn close_account(folder: String, user: User, request_user: User) -> actix_we
     }
 }
 
-pub fn anon_bad_account(folder: String, user: User) -> actix_web::Result<HttpResponse> {
-    if folder == "desctop/".to_string() {
+pub fn anon_bad_account(is_desctop: bool, user: User) -> actix_web::Result<HttpResponse> {
+    if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/anon_bad_user.stpl")]
         struct UserPage {
@@ -467,8 +467,8 @@ pub fn anon_bad_account(folder: String, user: User) -> actix_web::Result<HttpRes
     }
 }
 
-pub fn anon_close_account(folder: String, user: User) -> actix_web::Result<HttpResponse> {
-    if folder == "desctop/".to_string() {
+pub fn anon_close_account(is_desctop: bool, user: User) -> actix_web::Result<HttpResponse> {
+    if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/anon_close_user.stpl")]
         struct UserPage {
@@ -501,8 +501,8 @@ pub fn anon_close_account(folder: String, user: User) -> actix_web::Result<HttpR
 }
 
 
-pub fn account(folder: String, user: User, request_user: User) -> actix_web::Result<HttpResponse> {
-    if folder == "desctop/".to_string() {
+pub fn account(is_desctop: bool, user: User, request_user: User) -> actix_web::Result<HttpResponse> {
+    if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/user.stpl")]
         struct UserPage {
