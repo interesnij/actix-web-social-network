@@ -40,7 +40,7 @@ pub fn get_list_variables(req: HttpRequest) -> (bool, i32) {
         page = 1;
     }
 
-    let is_desctop: bool;
+    let mut is_desctop: bool;
     for header in req.headers().into_iter() {
         if header.0 == "user-agent" {
             let _val = format!("{:?}", header.1);
