@@ -5,7 +5,6 @@
 <form class="custom_color customize_form" style="position: sticky;bottom: 0;">
 <span class="user_typed_box small"></span>
 <canvas class="mic_visual_canvas"></canvas>
-    {% csrf_token %}
     <input class="type_hidden" type="hidden" name="text" />
     <div class="custom_color parent_message_block">
         {% if get_message_draft.parent %}
@@ -86,7 +85,6 @@
 <form class="customize_form custom_color" style="position: sticky;bottom: 0;">
   <span class="user_typed_box small"></span>
   <canvas class="mic_visual_canvas"></canvas>
-    {% csrf_token %}
     <input class="type_hidden" type="hidden" name="text" />
     <div class="custom_color parent_message_block"></div>
     <div class="row files_0 special_block no-gutters"></div>

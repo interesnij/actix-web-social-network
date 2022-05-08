@@ -13,7 +13,6 @@
 
           <div class="media mt-3" style="padding-left: 7px">
             <form class="uuid_saver" data-uuid="<%= list.id %>" data-type="lph<% list.id %>" data-pk="<% list.id %>">
-              {% csrf_token %}
             <h5 class="mt-1">
               <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %></span> (<%= list.count_items() %>)
               {% if is_user_can_create_tracks %}
