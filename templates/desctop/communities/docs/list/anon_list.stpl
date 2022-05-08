@@ -1,4 +1,3 @@
-<% include!("../../../base_block/anon_base_header.stpl"); %>
 
 <div class="main-container mt-3" data-pk="<%= list.id %>" data-type="community_docs_list">
     <div class="input-group mb-3">
@@ -11,5 +10,3 @@
 
     </span>
 </div>
-
-<% include!("../../../base_block/anon_base_footer.stpl"); %>
