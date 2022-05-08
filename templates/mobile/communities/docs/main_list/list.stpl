@@ -6,7 +6,7 @@
             <button class="btn btn-sm border" type="button">Искать</button>
         </div>
     </div>
-    <% include!("list.stpl"); %>
+    <% include!("lists.stpl"); %>
 
     <span class="load_block" data-link="/docs/load_list_docs/<%= list.id %>/">
 

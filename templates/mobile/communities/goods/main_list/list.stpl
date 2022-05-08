@@ -8,7 +8,7 @@
         </div>
         <% include!("lists.stpl"); %>
 
-    <span class="load_block">
+    <span class="load_block" data-link="/goods/load_list_goods/<%= list.id %>/">
 
     </span>
 </div>
