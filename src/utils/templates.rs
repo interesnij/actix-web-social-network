@@ -40,15 +40,13 @@ pub fn get_list_variables(req: HttpRequest) -> (bool, i32) {
         page = 1;
     }
 
-    let mut is_desctop: bool;
+    let mut is_desctop = true;
     for header in req.headers().into_iter() {
         if header.0 == "user-agent" {
             let _val = format!("{:?}", header.1);
             if _val.contains("Mobile"){
-                is_desctop = true;
-            } else {
                 is_desctop = false;
-            };
+            }
         }
     };
     (is_desctop, page)
