@@ -1,16 +1,18 @@
-{% if get_lists.len() > 1 %}
+<% let lists = community.get_photo_lists(); %>
+
+<% if lists.len() > 1 { %>
 <div class="media mt-3" style="padding-left: 7px;">
   <h5 class="mt-1" style="flex: 1;">
     <a class="underline ajax" href="<%= community.get_link() %>">
       <%= community.name %>
     </a> - фотоальбомы
-    (<%= get_lists.len() %>)
+    (<%= lists.len() %>)
   </h5>
 </div>
 <div class="row no-gutters" style="overflow-x: auto;">
    <div class="col-12">
        <ul class="drag_list" data-type="ldo" style="width:max-content;list-style: none;">
-           <% for (index, object) in get_lists.iter().enumerate() { %>
+           <% for (index, object) in lists.iter().enumerate() { %>
            <% if object.community_id.is_some() { %>
              <% let community = object.get_community(); %>
            <li class="list_item drag_item" data-pk="<%= object.id %>">
@@ -37,7 +39,7 @@
                    </div>
                </div>
            </li>
-           <% } else if { %>
+           <% } else { %>
              <% let creator = object.get_creator(); %>
            <li class="list_item drag_item" data-pk="<%= object.id %>">
                <div class="card file-manager-item folder border" data-pk="<%= object.user_id %>" data-uuid="<%= object.id %>">

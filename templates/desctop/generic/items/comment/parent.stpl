@@ -183,7 +183,7 @@
         <div class="comment">
             <p class="underline" style="display: flex;">Комментарий удален</p>
         </div>
-          <% } else if { %>
+          <% } else { %>
             <% include!("reply.stpl"); %>
           <% } %>
         <% } %>
