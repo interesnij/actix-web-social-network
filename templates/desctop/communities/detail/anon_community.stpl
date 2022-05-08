@@ -73,7 +73,7 @@
                                       </div>
                               </div>
                           </div>
-                          <p class="mb-1 header-color-primary text-center" style="overflow: hidden; white-space: nowrap;"><%= object.title %>/p>
+                          <p class="mb-1 header-color-primary text-center" style="overflow: hidden; white-space: nowrap;"><%= object.title %></p>
                           <div class="row bg-light-secondary text-center" style="margin-left: 0;margin-right: 0;">
                                 <div class="col py-3">
                                     <p class="content-color-primary mb-0">
@@ -112,7 +112,7 @@
             <% include!("../detail_sections/membersheeps.stpl"); %>
           <% } %>
 
-          <% if private_bools[6] == true && if community.is_have_photo() { %>
+          <% if private_bools[6] == true && community.is_have_photo() { %>
           <div class="card mb-3">
               <div class="p-1">
                 <a href="/community/<%=community.id %>/photos/" class="ajax">
@@ -136,7 +136,7 @@
           </div>
           <% } %>
 
-          <% if private_bools[3] == true && if community.is_have_music() { %>
+          <% if private_bools[3] == true && community.is_have_music() { %>
           <div class="card mb-3 music_playlist">
               <div class="p-1">
                 <a href="/community/<%=community.id %>/music/" class="ajax">
@@ -175,7 +175,7 @@
           </div>
           <% } %>
 
-          <% if private_bools[8] == true && if community.is_have_video() { %>
+          <% if private_bools[8] == true && community.is_have_video() { %>
           <div class="card mb-3">
               <div class="p-1">
                 <a href="/community/<%=community.id %>/video/" class="ajax">
@@ -199,7 +199,7 @@
           </div>
           <% } %>
 
-          <% if private_bools[2] == true && if community.is_have_doc() { %>
+          <% if private_bools[2] == true && community.is_have_doc() { %>
           <div class="card mb-3">
               <div class="p-1">
                 <a href="/community/<%=community.id %>/docs/" class="ajax">

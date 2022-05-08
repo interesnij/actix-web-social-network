@@ -131,7 +131,7 @@
               <% include!("../detail_sections/video.stpl"); %>
             <% } %>
             <% if private_bools[2] == true { %>
-              <% include!("../detail_sections/docs.stpl"); %>
+              <% include!("../detail_sections/doc.stpl"); %>
             <% } %>
         </div>
     </div>
