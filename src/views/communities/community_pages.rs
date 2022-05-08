@@ -57,12 +57,14 @@ pub async fn community_docs_page(session: Session, req: HttpRequest, community_i
             #[derive(TemplateOnce)]
             #[template(path = "desctop/communities/docs/main_list/list.stpl")]
             struct Template {
+                title:        String,
                 request_user: User,
                 community:    Community,
                 list:         DocList,
             }
 
             let body = Template {
+                title:        _community.name.clone() + &"- список документов".to_string(),
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
@@ -75,12 +77,14 @@ pub async fn community_docs_page(session: Session, req: HttpRequest, community_i
             #[derive(TemplateOnce)]
             #[template(path = "mobile/communities/docs/main_list/list.stpl")]
             struct Template {
+                title:        String,
                 request_user: User,
                 community:    Community,
                 list:         DocList,
             }
 
             let body = Template {
+                title:        _community.name.clone() + &"- список документов".to_string(),
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
@@ -101,10 +105,12 @@ pub async fn community_docs_page(session: Session, req: HttpRequest, community_i
             #[derive(TemplateOnce)]
             #[template(path = "desctop/communities/docs/main_list/anon_list.stpl")]
             struct Template {
+                title:     String,
                 community: Community,
                 list:      DocList,
             }
             let body = Template {
+                title:     _community.name.clone() + &"- список документов".to_string(),
                 community: _community,
                 list:      _list,
             }
@@ -116,10 +122,12 @@ pub async fn community_docs_page(session: Session, req: HttpRequest, community_i
             #[derive(TemplateOnce)]
             #[template(path = "mobile/communities/docs/main_list/anon_list.stpl")]
             struct Template {
+                title:     String,
                 community: Community,
                 list:      DocList,
             }
             let body = Template {
+                title:     _community.name.clone() + &"- список документов".to_string(),
                 community: _community,
                 list:      _list,
             }

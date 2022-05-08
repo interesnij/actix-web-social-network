@@ -1,4 +1,4 @@
-<% include!("../../../base_block/base_header.stpl"); %>
+<% include!("../../../../base_block/base_header.stpl"); %>
 
 <div class="main-container mt-3" data-pk="<%= list.id %>" data-type="community_photo_list">
 <span class="load_block" data-link="/photos/load_list_photos/<%= list.id %>/">
@@ -6,4 +6,4 @@
 </span>
 </div>
 
-<% include!("../../../base_block/base_footer.stpl"); %>
+<% include!("../../../../base_block/base_footer.stpl"); %>

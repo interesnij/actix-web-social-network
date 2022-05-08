@@ -1,4 +1,4 @@
-<% include!("../../../base_block/anon_base_mobile_header.stpl"); %>
+<% include!("../../../../base_block/anon_base_mobile_header.stpl"); %>
 
 <div class="main-container mt-3" data-pk="<%= list.id %>" data-type="community_music_list">
           <div class="input-group mb-3">
@@ -12,4 +12,4 @@
         </span>
 </div>
 
-<% include!("../../../base_block/anon_base_mobile_footer.stpl"); %>
+<% include!("../../../../base_block/anon_base_mobile_footer.stpl"); %>
