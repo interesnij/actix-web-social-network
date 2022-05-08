@@ -68,6 +68,16 @@ pub async fn community_wall_page(session: Session, req: HttpRequest, param: web:
         let is_user_can_see_post_list = _list.is_user_can_see_el(*_request_user_id);
         let is_user_can_create_posts = _list.is_user_can_create_el(*_request_user_id);
 
+        struct Template {
+            list:         PostList,
+            request_user: User,
+            is_user_can_see_post_list: bool,
+            is_user_can_create_posts: bool,
+            object_list: Vec<Post>,
+            community: Community,
+            next_page_number: i32,
+        }
+
         if is_open == false {
             use crate::views::close_item;
             return close_item(text)
@@ -76,15 +86,8 @@ pub async fn community_wall_page(session: Session, req: HttpRequest, param: web:
         else if is_desctop {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/communities/lenta/list.stpl")]
-            struct Template {
-                list:         PostList,
-                request_user: User,
-                is_user_can_see_post_list: bool,
-                is_user_can_create_posts: bool,
-                object_list: Vec<Post>,
-                community: Community,
-                next_page_number: i32,
-            }
+            Template;
+
             let body = Template {
                 list:                      _list,
                 request_user:              _request_user,
