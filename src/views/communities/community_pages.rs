@@ -59,7 +59,7 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
             struct Template {
                 request_user: User,
                 community:    Community,
-                list:         Photolist,
+                list:         PhotoList,
             }
 
             let body = Template {
@@ -77,7 +77,7 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
             struct Template {
                 request_user: User,
                 community:    Community,
-                list:         Photolist,
+                list:         PhotoList,
             }
 
             let body = Template {
