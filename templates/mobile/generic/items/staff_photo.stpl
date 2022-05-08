@@ -1,0 +1,8 @@
+<div class="row_item detail_photo pag" photo-pk="<%= object.id %>">
+<p data-pk="<%= object.id %>" class="handle drag_item" style="display:none; color:white !important">
+  ≡
+</p>
+  <div class="progressive replace" data-href="<%= object.file %>">
+      <img class="preview image_fit_200" src="<%= object.preview %>" alt="img">
+  </div>
+</div>

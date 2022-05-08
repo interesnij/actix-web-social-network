@@ -1,0 +1,31 @@
+<span class="stream_comments comments_block_container">
+  <% for comment in object_list.iter() { %>
+    <% if comment.is_deleted() == true %>
+      <div class="comment border-bottom">
+        <p class="underline" style="display: flex; padding-left:10px;margin: 0;">Комментарий удален</p>
+        <span style="cursor:pointer;" class="show_replies content-color-primary">
+            <% if comment.count_replies() > 0 { %>
+            ---- <%= comment.count_replies_ru() %> ----
+            <% } %>
+        </span>
+        <span class="stream_reply_comments">
+            <% for reply in comment.get_replies().iter() { %>
+              <% if reply.is_deleted() { %>
+                <div class="comment">
+                  <p class="underline" style="display: flex;">Комментарий удален</p>
+                </div>
+              <% } else { %>
+                <% include!("reply.stpl"); %>
+              <% } %>
+            <% } %>
+        </span>
+      </div>
+    <% } else { %>
+      <% include!("parent.stpl"); %>
+    <% } %>
+  <% } %>
+
+  <% if page_has_next == true { %>
+    <a class="pointer load_next_list_comments mt-1" data-link="comments/list/<%= item.id %>/?type=<%= type %>&page=<%= page + 1 %>">Показать еще комментарии</a>
+  <% } %>
+</span>
