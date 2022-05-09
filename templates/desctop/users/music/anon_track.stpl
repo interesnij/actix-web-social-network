@@ -1,0 +1,33 @@
+<li class="list-group-item" style="padding:5px">
+    <div class="media" music-counter="" style="align-items: unset;position: relative;">
+      <figure>
+        <a class="pointer music_list_item">
+          <%- object.get_image() %>
+        </a>
+      </figure>
+        <div class="media-body" style="line-height: 0.4;">
+            <h6 class="music_list_item pointer mb-1" style="width: 84%;overflow: hidden;"><a><%= object.title %></a></h6>
+            <% if object.album_id.is_some() { %>
+              <%- object.album_id.unwrap() %>
+            <% } else { %>
+              <% if object.community_id.is_some() { %>
+                <% let _community = object.get_community(); %>
+                <a class="small ajax" href="<%= _community.get_link() %>"> <%= _community.name %></a>
+              <% } else { %>
+              <% let _creator = object.get_creator(); %>
+                <a class="small ajax" href="<%= _creator.get_link() %>"><%= _creator.get_full_name() %></a>
+              <% } %>
+            <% } %>
+              <span class='span_btn' style="float:right;margin-top: -15px;display:flex" data-pk="<%= object.id %>">
+                <div class="dropdown" style="position: inherit;">
+                  <a class="btn_default drop pointer">
+                    <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                  </a>
+                    <div class="dropdown-menu dropdown-menu-right" style="top: 25px;">
+                        <span class="dropdown-item copy_link">Копировать ссылку</span>
+                    </div>
+                </div>
+              </span>
+        </div>
+    </div>
+</li>

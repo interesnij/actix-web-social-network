@@ -5,7 +5,7 @@
   <div class="media-body">
     <a class="mb-0"><%= object.title %></a>
     <p class="small">
-    <%= object.created.format("%d-%m-%Y в %H:%M").to_string() %>
+    <%= object.created.format("%d-%m-%Y в %H:%M").to_string() %> 
     | <%= object.view %></p>
   </div>
 </div>

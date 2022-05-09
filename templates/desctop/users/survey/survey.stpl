@@ -1,0 +1,97 @@
+{% load user %}
+
+<div data-pk="<%= object.id %>" class="card mb-3 pb-1 border text-center position-relative box-shadow" style="border-radius: .3rem;">
+    <figure class="background-img">
+        <img src="<%- object.get_image() %>" alt="img">
+    </figure>
+
+      <div class="dropdown">
+          <a class="btn_default drop pointer" style="position:absolute;right:5px;top:5px;">
+              <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M0 0h24v24H0z" fill="none" />
+                  <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+              </svg>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" data-type="sur<%= object.id %>" style="top:30px;right:-10px;">
+            <span class="dropdown-item create_repost">Добавить</span>
+            <% if !object.is_no_edited() && object.is_user_voted(request_user.id) { %>
+              <span class="dropdown-item survey_unvote">Удалить голос</span>
+            <% } %>
+            <% if object.is_user_can_edit_delete(request_user) { %>
+              <% if object.is_can_edit() { %>
+                <span class="dropdown-item survey_edit">Изменить</span>
+              <% } %>
+              <span class="dropdown-item survey_remove">Удалить</span>
+            <% } else if request_user.is_moderator() { %>
+              <span class="dropdown-item create_close">Закрыть</span>
+            <% } else { %>
+              <span class="dropdown-item create_claim">Пожаловаться</span>
+            <% } %>
+            <span class="dropdown-item copy_link">Копировать ссылку</span>
+          </div>
+      </div>
+
+      <form>
+      <div class="container answers_container <% if !object.is_multiple() { %>no_multiple<% } %>">
+        <br>
+        <h4 class="m-0"><%= object.title %></h4>
+        <% let _user = object.get_creator(); %>
+        <p class="position-relative">
+          <a href="<%= _user.get_link() %>" class="underline ajax">
+            <%= _user.get_full_name() %>
+          </a>
+        </p>
+        <%- object.get_time_description() %>
+        <br>
+
+        <% for answer in object.get_answers().iter() { %>
+
+          <% if object.is_user_voted(request_user.id) { %>
+          <div class="lite_color answer_style" data-pk="{{ answer.pk }}">
+            <div class="progress2" style="width:<%= answer.get_procent() %>%;"></div>
+            <span class="progress_span_r"><%= answer.content %>
+              <span class="count text-muted small"><%= answer.get_count() %></span>
+            </span>
+            <span class="progress_span_l" style="margin-left: auto;">
+
+              <span class="vote_svg">
+                {% if answer|is_user_voted:request.user.pk %}
+                  <svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>
+                {% endif %}
+              </span>
+              <span class="procent"><%= answer.get_procent() %>%</span>
+            </span>
+          </div>
+
+          {% else %}
+          <div class="lite_color answer_style {% if not object.is_time_end %}pointer survey_vote{% endif %}" data-pk="{{ answer.pk }}">
+            <div class="progress2" style="width:{{ answer.get_procent }}%;"></div>
+            <span class="progress_span_r">{{ answer.text }}
+              <span class="count text-muted">{{ answer.get_count }}</span>
+            </span>
+            <span class="progress_span_l" style="margin-left: auto;">
+              <span class="vote_svg"></span>
+              <span class="procent">{{ answer.get_procent }}%</span>
+            </span>
+          </div>
+
+          {% endif %}
+        {% endfor %}
+        {% if object.is_have_votes %}
+          {% if object.is_anonymous %}
+            Это анонимный опрос.
+          {% else %}
+          <a class="i_link survey_info pointer position-relative">{{ object.get_users_ru }}</a>
+
+          {{ object.get_6_users|safe }}
+          {% endif %}
+        {% else %}
+          Пока никто не голосовал.
+        {% endif %}
+      </div>
+      <div class="card-footer" style="position: relative;">
+          <button type="button" class="btn hidden btn-sm float-left border votes_remove">Отмена</button>
+          <button id="add_vote_survey_btn" type="button" class="btn hidden btn-sm btn-success float-right">Проголосовать</button>
+      </div>
+      </form>
+  </div>

@@ -1,0 +1,17 @@
+<% include!("../../../../base_block/anon_base_header.stpl"); %>
+
+<div class="main-container pk_saver mt-3" data-pk="<%= user.id %>" data-type="user_video">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control form-control-sm" placeholder="Поиск видео">
+            <div class="input-group-append">
+              <button class="btn btn-sm border" type="button">Искать</button>
+            </div>
+          </div>
+          <% include!("anon_lists.stpl"); %>
+
+      <span class="load_block" data-link="/video/load_list_video/<%= list.id %>/">
+
+      </span>
+</div>
+
+<% include!("../../../../base_block/anon_base_footer.stpl"); %>

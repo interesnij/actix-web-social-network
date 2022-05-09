@@ -1,0 +1,10 @@
+<% include!("../../../../base_block/anon_base_mobile_header.stpl"); %>
+
+<div class="main-container mt-3" data-pk="<%= list.id %>" data-type="user_photo_list">
+
+  <span class="load_block" data-link="/photos/load_list_photos/<%= list.id %>/">
+
+  </span>
+</div>
+
+<% include!("../../../../base_block/anon_base_mobile_footer.stpl"); %>
