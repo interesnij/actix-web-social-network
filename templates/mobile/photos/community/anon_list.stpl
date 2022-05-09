@@ -1,0 +1,39 @@
+{% load get_key %}
+
+<div class="container mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
+  <div class="row no-gutters">
+    <div class="col">
+      <a class="btn btn-sm border this_mob_fullscreen_hide" style="width: -webkit-fill-available;">
+        <svg fill="currentColor" class="svg_default" style="width: 17px;" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="media mt-3 uuid_saver" data-uuid="<%= list.id %>" data-pk="<%= list.id %>" style="padding-left: 7px;">
+    <div class="text_support">
+      <a href="<%= community.get_link() %>" class="ajax i_link font-weight">
+      <%= community.name %>
+    </a> - фотоальбом
+    </div>
+    <h5 class="mt-1">
+      <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %></span> (<%= list.count_items() %>)
+        <% include!("../../../generic/items/list_meta.stpl"); %>
+    </h5>
+  </div>
+
+  <% if object_list.len() > 0 { %>
+    <% for object in object_list.iter() { %>
+      <% include!("../../generic/items/photo.stpl"); %>
+    {% endfor %}
+    <% if next_page_number > 0 { %>
+    <div class="load centered m-1 next_page_list" data-link="/photos/load-list/<%= list.id %>/?page=<%= next_page_number %>">
+        <img src="/static/images/preloader.gif">
+    </div>
+    <% } %>
+
+  <% } else { %>
+    <% include!(../../communities/photos/no_photos.stpl"); %>
+  <% } %>
+  </div>
+
+  {% endif %}

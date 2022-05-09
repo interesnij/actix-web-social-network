@@ -1,0 +1,29 @@
+
+<div class="mb-3 data_display is_stat_list" data-type="user_photo" data-pk="<%= object.id %>" owner-pk="<%= object.user_id %>">
+  <div class="row">
+    <div class="col-lg-8 col-md-7 col-sm-12 order-1" data-type="pho<%= object.id %>">
+      <div class="card rounded-0 border-0 mb-3">
+        <% include!("../../image.stpl"); %>
+    </div>
+
+    <% include!("../../btn_console.stpl"); %>
+  </div>
+  <div class="col-lg-4 col-md-5 col-sm-12 order-2 ">
+      <div class="card-header">
+        <% include!("../../owner_meta.stpl"); %>
+      </div>
+      <% include!("../../form.stpl"); %>
+      <br><br>
+
+      {% else %}
+        {% if object.description %}
+          {{ object.description }}
+        {% else %}
+          <p>Нет описания</p>
+        {% endif %}
+      {% endif %}
+      <br><br>
+      <% include!("../info.stpl"); %>
+    </div>
+  </div>
+</div>

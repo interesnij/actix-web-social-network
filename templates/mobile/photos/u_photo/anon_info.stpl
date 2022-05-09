@@ -1,0 +1,7 @@
+
+<div class="border-top py-2">
+    <div class="col interaction" data-type="pho<%= object.id %>">
+      <% include!("../../../generic/items/anon_item_footer.stpl"); %>
+    </div>
+    <div class="load_comments" style="margin-right: -15px; margin-left: -15px"></div>
+</div>

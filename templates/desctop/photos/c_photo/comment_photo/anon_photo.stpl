@@ -1,0 +1,29 @@
+
+<div class="mb-3 data_display is_stat_list" data-type="community_photo" data-pk="<%= object.id %>" owner-pk="<%= object.community_id.unwrap() %>">
+  <div class="row">
+    <div class="col-lg-8 col-md-7 col-sm-12 order-1">
+      <div class="card rounded-0 border-0 mb-3">
+        <% include!("../../image.stpl"); %>
+    </div>
+  </div>
+  <div class="col-lg-4 col-md-5 col-sm-12 order-2 ">
+      <div class="card-header">
+        <% include!("../owner_meta.stpl"); %>
+      </div>
+        <% if object.description { %>
+          <%= object.description.as_deref().unwrap() %>
+        <% } else { %>
+          <p>Нет описания</p>
+        <% } %>
+      <br><br>
+
+      <div class="border-top py-2">
+          <div class="col interaction" data-type="pho<%= object.id %>" style="padding-left: 14px;">
+            <% include!("../../../generic/items/anon_item_footer.stpl"); %>
+          </div>
+          <div class="load_comments" style="max-height: 500px"></div>
+      </div>
+
+    </div>
+  </div>
+</div>

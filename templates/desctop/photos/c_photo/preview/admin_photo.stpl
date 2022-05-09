@@ -1,0 +1,27 @@
+
+
+<div class="mb-3 data_display is_stat_list" data-type="community_photo" data-pk="<%= object.id %>" owner-pk="<%= object.community_id.unwrap() %>">
+  <div class="row">
+    <div class="col-lg-8 col-md-7 col-sm-12 order-1">
+      <div class="card rounded-0 border-0 mb-3">
+        <% include!("../../image.stpl"); %>
+    </div>
+<span>
+<span class="btn_settings_photo">
+    <% include!("../../btn_console.stpl"); %>
+</span>
+</span>
+    </div>
+    <div class="col-lg-4 col-md-5 col-sm-12 order-2 ">
+
+      <div class="card-header">
+        <% include!("../owner_meta.stpl"); %>
+      </div>
+
+      <span>
+        <% include!("../../form.stpl"); %>
+        <br><br>
+      <% include!("../info.stpl"); %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="data_display" data-pk="<%= object.id %>" owner-pk="<%= object.community_id.unwrap() %>">
+  <div class="row is_stat_list" data-pk="<%= object.id %>" data-type="community_photo">
+    <div class="col" style="padding:5px;">
+      <button type="button" class="btn btn-sm border menu_drop" style="width: -webkit-fill-available;">
+          Опции
+      </button>
+      <div class="dropdown-menu" data-type="pho<%= object.id %>">
+          <% include!("../../btn_console.stpl"); %>
+      </div>
+    </div>
+    <div class="col" style="padding:5px;">
+      <a class="btn btn-sm border pointer this_mob_fullscreen_hide" style="width: -webkit-fill-available;">
+        <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="card-header">
+    <% include!("../owner_meta.stpl"); %>
+  </div>
+  <span class="content_block"><span>
+      <div class="card image_card rounded-0 border-0 mb-3">
+        <% include!("../../image.stpl"); %>
+    </div>
+      <% include!("../../form.stpl"); %>
+      <br><br>
+
+      <% include!("../info.stpl"); %>
+      </span></span>
+  </div>
+<br><br><br>

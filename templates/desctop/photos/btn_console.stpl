@@ -1,0 +1,37 @@
+<span>
+<% if list.is_user_can_create_el(request_user.id) { %>
+<span>
+  <span>
+    <a class="photo_remove">Удалить</a>
+  </span>
+</span>
+&nbsp;
+
+  <span class="btn_settings_photo" data-type="pho<%= object.id %>">
+    <span>
+      <a class="create_avatar">Сделать аватаром</a>
+    </span>
+      &nbsp;
+      <span>
+        <% if object.comments_enabled { %>
+          <a class="photo_off_comment">Выкл. комментарии</a>
+        <% } else { %>
+          <a class="photo_on_comment">Вкл. комментарии</a>
+        <% } %>
+      </span>
+      &nbsp;
+      <span>
+        <% if object.votes_on { %>
+          <a class="photo_off_votes">Выкл. реакции</a>
+        <% } else { %>
+          <a class="photo_on_votes">Вкл. реакции</a>
+        <% } %>
+      </span>
+  </span>
+  <% } elif request.user.is_moderator() { %>
+    <span class="create_close pointer">Закрыть</span>
+  <% } else { %>
+    <span class="create_claim pointer">Пожаловаться</span>
+  <% } %>
+  <span class="copy_link pointer">Скопировать ссылку</span>
+</span>

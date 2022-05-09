@@ -1,0 +1,30 @@
+<% if list.is_user_can_create_el(request_user.id) { %>
+
+<span>
+  <a class="dropdown-item mob_user_photo_remove pointer">Удалить</a>
+</span>
+<span>
+  <a class="dropdown-item mob_u_unset_avatar pointer">Убрать аватар</a>
+</span>
+<span>
+<% if object.comments_enabled { %>
+  <a class="dropdown-item mob_u_photo_off_comment pointer">Выкл. комментарии</a>
+<% } else { %>
+  <a class="dropdown-item mob_u_photo_on_comment pointer">Вкл. комментарии</a>
+<% } %>
+</span>
+<span>
+<% if object.votes_on { %>
+  <a class="dropdown-item mob_u_photo_off_votes pointer">Выкл. реакции</a>
+<% } else { %>
+  <a class="dropdown-item mob_u_photo_on_votes pointer">Вкл. реакции</a>
+<% } %>
+</span>
+
+<% } elif request.user.is_moderator() { %>
+
+<span class="dropdown-item create_close">Закрыть</span>
+<% } else { %>
+<span class="dropdown-item create_claim">Пожаловаться</span>
+<% } %>
+<span class="dropdown-item copy_link">Скопировать ссылку</span>

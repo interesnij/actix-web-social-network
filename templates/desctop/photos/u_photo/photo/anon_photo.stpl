@@ -1,0 +1,42 @@
+<span class="text-hide-xs">
+  <% if prev.is_some() { %>
+    <a class="prev_item" href="/photos/<%= list.id %>/<%= prev %>/">
+      <svg fill="currentColor" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
+    </a>
+  <% } %>
+  <% if next.is_some() { %>
+    <a class="next_item" href="/photos/<%= list.id %>/<%= next %>/">
+      <svg fill="currentColor" viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
+    </a>
+  <% } %>
+</span>
+
+<div class="mb-3 data_display is_stat_list" data-type="user_photo" data-pk="<%= object.id %>" owner-pk="<%= object.user_id %>">
+  <div class="row">
+    <div class="col-lg-8 col-md-7 col-sm-12 order-1">
+      <div class="card rounded-0 border-0 mb-3">
+        <% include!("../../image.stpl"); %>
+    </div>
+
+  </div>
+    <div class="col-lg-4 col-md-5 col-sm-12 order-2 ">
+      <div class="card-header">
+        <% include!("../owner_meta.stpl"); %>
+      </div>
+
+      <% if object.description { %>
+        <%= object.description.as_deref().unwrap() %>
+      <% } else { %>
+        <p>Нет описания</p>
+      <% } %>
+      <br><br>
+
+      <div class="border-top py-2">
+        <div class="col interaction" data-type="pho<%= object.id %>">
+          <% include!("../../../generic/items/anon_item_footer.stpl"); %>
+        </div>
+        <div class="load_comments" style="max-height: 500px"></div>
+      </div>
+    </div>
+  </div>
+</div>

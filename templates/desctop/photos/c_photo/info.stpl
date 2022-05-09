@@ -1,0 +1,7 @@
+
+<div class="border-top py-2">
+    <div class="col interaction" data-type="pho<%= object.id %>">
+      <% include!("../../../generic/items/item_footer.stpl"); %>
+    </div>
+    <div class="load_comments"style="max-height: 500px"></div>
+</div>

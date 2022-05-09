@@ -1,0 +1,38 @@
+<% if is_user_can_create_photos { %>
+<span>
+<% if object.description.is_some() { %>
+  <%= object.description.as_deref().unwrap() %>
+  <br><br>
+    <span style="cursor:pointer" class="photo_edit">Редактировать</span>
+  <% } else { %>
+    <span style="cursor:pointer" class="photo_edit">Добавить описание</span>
+  <% } %>
+</span>
+<span id="block_description_form" style="display:none">
+  <br>
+  <form class="photo_description_form">
+          <div class="">
+              <div class="input-group input-group-sm">
+                <% if object.description.is_some() { %>
+                  <%= object.description.as_deref().unwrap() %>
+                <% } else { %>
+                  Описание не добавлено.
+                <% } %>
+              </div>
+          </div>
+          <div class="text-right">
+              <button class="btn btn-sm create_photo_description border" type="button">
+                Добавить
+              </button>
+          </div>
+  </form>
+</span>
+<br><br>
+
+<% } else { %>
+  <% if object.description.is_some() { %>
+    <%= object.description.as_deref().unwrap() %>
+  <% } else { %>
+    <p>Нет описания</p>
+  <% } %>
+<% } %>

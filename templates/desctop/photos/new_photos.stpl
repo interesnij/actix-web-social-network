@@ -1,0 +1,7 @@
+<% for object in object_list.iter() { %>
+    <div class="detail_photo pag" photo-pk="<%= object.id %>" style="cursor:pointer;flex: 0 0 50%;max-width:50%;padding:5px">
+      <div class="progressive replace" data-href="<%= object.file %>">
+          <img class="preview image_fit_160" src="<%= object.preview %>" alt="img">
+      </div>
+    </div>
+<% } %>
