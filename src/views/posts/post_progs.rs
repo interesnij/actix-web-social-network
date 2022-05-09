@@ -419,7 +419,7 @@ pub async fn add_user_post(session: Session, mut payload: Multipart, _id: web::P
             );
 
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/posts/user/new_post.stpl")]
+            #[template(path = "desctop/posts/user/new_item.stpl")]
             struct Template {
                 object: Post,
                 request_user: User,
@@ -468,7 +468,7 @@ pub async fn add_community_post(session: Session, mut payload: Multipart, _id: w
             );
 
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/posts/community/new_post.stpl")]
+            #[template(path = "desctop/posts/community/new_item.stpl")]
             struct Template {
                 object: Post,
                 request_user: User,

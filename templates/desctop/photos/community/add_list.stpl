@@ -1,0 +1,24 @@
+
+    <form id="post_list_form" data-folder="/photos" class="is_stat_list case_create" community-pk="<%= community.id %>" data-pk="<%= community.id %>" data-type="create_community_photo_list">
+        <div class="card mb-3">
+            <div class="card-header border-bottom">
+                <h5 class="content-color-primary mb-0">Создание фотоальбома</h5>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>Название</label>
+                <input type="text" name="name" id="id_name" class="form-control">
+              </div>
+              <div class="form-group">
+                  <label>Описание</label>
+                  <input name="description" class="form-control">
+              </div>
+              <% include!("../../../base_block/perm/create_community_list_comment_perm.stpl"); %>
+
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-sm border item_fullscreen_hide">Отмена</button>
+                <button type="button" class="btn btn-sm btn-success float-right" id="create_list_btn">Создать</button>
+            </div>
+        </div>
+    </form>
