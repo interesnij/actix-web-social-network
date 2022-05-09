@@ -41,7 +41,7 @@ pub fn community_urls(config: &mut web::ServiceConfig) {
     config.route("/communities/{community_id}/docs_list/{list_id}/", web::get().to(community_docs_list_page));
 }
 
-pub async fn community_docs_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
+pub async fn community_docs_page(session: Session, req: HttpRequest, community_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     use crate::models::DocList;
     use crate::utils::get_doc_list;
 
@@ -144,7 +144,7 @@ pub async fn community_docs_list_page(session: Session, req: HttpRequest, param:
     }
 }
 
-pub async fn community_video_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
+pub async fn community_video_page(session: Session, req: HttpRequest, community_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     use crate::models::VideoList;
     use crate::utils::get_video_list;
 
@@ -247,7 +247,7 @@ pub async fn community_video_list_page(session: Session, req: HttpRequest, param
     }
 }
 
-pub async fn community_surveys_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
+pub async fn community_surveys_page(session: Session, req: HttpRequest, community_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     use crate::models::SurveyList;
     use crate::utils::get_survey_list;
 
@@ -350,7 +350,7 @@ pub async fn community_surveys_list_page(session: Session, req: HttpRequest, par
     }
 }
 
-pub async fn community_music_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
+pub async fn community_music_page(session: Session, req: HttpRequest, community_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     use crate::models::MusicList;
     use crate::utils::get_music_list;
 
@@ -453,7 +453,7 @@ pub async fn community_music_list_page(session: Session, req: HttpRequest, param
     }
 }
 
-pub async fn community_goods_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
+pub async fn community_goods_page(session: Session, req: HttpRequest, community_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     use crate::models::GoodList;
     use crate::utils::get_good_list;
 
@@ -556,7 +556,7 @@ pub async fn community_goods_list_page(session: Session, req: HttpRequest, param
     }
 }
 
-pub async fn community_photos_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
+pub async fn community_photos_page(session: Session, req: HttpRequest, community_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     use crate::models::PhotoList;
     use crate::utils::get_photo_list;
 
@@ -1179,7 +1179,7 @@ pub async fn community_goods_list_page(session: Session, req: HttpRequest, param
     }
 }
 
-pub async fn community_photos_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
+pub async fn community_photos_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
     use crate::models::PhotoList;
     use crate::utils::get_photo_list;
 
