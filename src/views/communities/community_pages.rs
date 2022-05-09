@@ -1179,7 +1179,7 @@ pub async fn community_goods_list_page(session: Session, req: HttpRequest, param
     }
 }
 
-pub async fn community_photos_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
+pub async fn community_photos_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
     use crate::models::PhotoList;
     use crate::utils::get_photo_list;
 
