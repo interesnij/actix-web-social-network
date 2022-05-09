@@ -32,9 +32,16 @@ pub fn community_urls(config: &mut web::ServiceConfig) {
     config.route("/communities/{community_id}/surveys/", web::get().to(community_surveys_page));
     config.route("/communities/{community_id}/video/", web::get().to(community_video_page));
     config.route("/communities/{community_id}/docs/", web::get().to(community_docs_page));
+
+    config.route("/communities/{community_id}/photos_list/{list_id}/", web::get().to(community_photos_list_page));
+    config.route("/communities/{community_id}/goods_list/{list_id}/", web::get().to(community_goods_list_page));
+    config.route("/communities/{community_id}/music_list/{list_id}/", web::get().to(community_music_list_page));
+    config.route("/communities/{community_id}/surveys_list/{list_id}/", web::get().to(community_surveys_list_page));
+    config.route("/communities/{community_id}/video_list/{list_id}/", web::get().to(community_video_list_page));
+    config.route("/communities/{community_id}/docs_list/{list_id}/", web::get().to(community_docs_list_page));
 }
 
-pub async fn community_docs_page(session: Session, req: HttpRequest, community_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn community_docs_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
     use crate::models::DocList;
     use crate::utils::get_doc_list;
 
@@ -96,7 +103,6 @@ pub async fn community_docs_page(session: Session, req: HttpRequest, community_i
         }
     } else {
         let (is_open, text) = get_anon_community_permission(&_community);
-        let is_user_can_see_post_list = _list.is_anon_user_can_see_el();
         if is_open == false {
             use crate::views::close_item;
             return close_item(text)
@@ -138,7 +144,7 @@ pub async fn community_docs_page(session: Session, req: HttpRequest, community_i
     }
 }
 
-pub async fn community_video_page(session: Session, req: HttpRequest, community_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn community_video_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
     use crate::models::VideoList;
     use crate::utils::get_video_list;
 
@@ -200,7 +206,6 @@ pub async fn community_video_page(session: Session, req: HttpRequest, community_
         }
     } else {
         let (is_open, text) = get_anon_community_permission(&_community);
-        let is_user_can_see_post_list = _list.is_anon_user_can_see_el();
         if is_open == false {
             use crate::views::close_item;
             return close_item(text)
@@ -242,7 +247,7 @@ pub async fn community_video_page(session: Session, req: HttpRequest, community_
     }
 }
 
-pub async fn community_surveys_page(session: Session, req: HttpRequest, community_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn community_surveys_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
     use crate::models::SurveyList;
     use crate::utils::get_survey_list;
 
@@ -304,7 +309,6 @@ pub async fn community_surveys_page(session: Session, req: HttpRequest, communit
         }
     } else {
         let (is_open, text) = get_anon_community_permission(&_community);
-        let is_user_can_see_post_list = _list.is_anon_user_can_see_el();
         if is_open == false {
             use crate::views::close_item;
             return close_item(text)
@@ -346,7 +350,7 @@ pub async fn community_surveys_page(session: Session, req: HttpRequest, communit
     }
 }
 
-pub async fn community_music_page(session: Session, req: HttpRequest, community_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn community_music_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
     use crate::models::MusicList;
     use crate::utils::get_music_list;
 
@@ -408,7 +412,6 @@ pub async fn community_music_page(session: Session, req: HttpRequest, community_
         }
     } else {
         let (is_open, text) = get_anon_community_permission(&_community);
-        let is_user_can_see_post_list = _list.is_anon_user_can_see_el();
         if is_open == false {
             use crate::views::close_item;
             return close_item(text)
@@ -450,7 +453,7 @@ pub async fn community_music_page(session: Session, req: HttpRequest, community_
     }
 }
 
-pub async fn community_goods_page(session: Session, req: HttpRequest, community_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn community_goods_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
     use crate::models::GoodList;
     use crate::utils::get_good_list;
 
@@ -512,7 +515,6 @@ pub async fn community_goods_page(session: Session, req: HttpRequest, community_
         }
     } else {
         let (is_open, text) = get_anon_community_permission(&_community);
-        let is_user_can_see_post_list = _list.is_anon_user_can_see_el();
         if is_open == false {
             use crate::views::close_item;
             return close_item(text)
@@ -554,7 +556,7 @@ pub async fn community_goods_page(session: Session, req: HttpRequest, community_
     }
 }
 
-pub async fn community_photos_page(session: Session, req: HttpRequest, community_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn community_photos_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
     use crate::models::PhotoList;
     use crate::utils::get_photo_list;
 
@@ -616,7 +618,6 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
         }
     } else {
         let (is_open, text) = get_anon_community_permission(&_community);
-        let is_user_can_see_post_list = _list.is_anon_user_can_see_el();
         if is_open == false {
             use crate::views::close_item;
             return close_item(text)
@@ -624,6 +625,630 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
         else if is_desctop {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/communities/photos/main_list/anon_list.stpl")]
+            struct Template {
+                title:     String,
+                community: Community,
+                list:      PhotoList,
+            }
+            let body = Template {
+                title:        _community.name.clone() + &"- фотоальбомы".to_string(),
+                community: _community,
+                list:      _list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/communities/photos/main_list/anon_list.stpl")]
+            struct Template {
+                title:     String,
+                community: Community,
+                list:      PhotoList,
+            }
+            let body = Template {
+                title:        _community.name.clone() + &"- фотоальбомы".to_string(),
+                community: _community,
+                list:      _list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+}
+
+pub async fn community_docs_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
+    use crate::models::DocList;
+    use crate::utils::get_doc_list;
+
+    let community_id : i32 = param.0;
+    let list_id : i32 = param.1;
+    let is_desctop = is_desctop(req);
+
+    let _community = get_community(community_id);
+    let _list = get_doc_list(list_id);
+
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let (is_open, text) = get_community_permission(&_community, &_request_user);
+
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/communities/docs/list/list.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+                community:    Community,
+                list:         DocList,
+            }
+
+            let body = Template {
+                title:        _community.name.clone() + &"- список документов".to_string(),
+                request_user: _request_user,
+                community:    _community,
+                list:         _list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/communities/docs/list/list.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+                community:    Community,
+                list:         DocList,
+            }
+
+            let body = Template {
+                title:        _community.name.clone() + &"- список документов".to_string(),
+                request_user: _request_user,
+                community:    _community,
+                list:         _list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        }
+    } else {
+        let (is_open, text) = get_anon_community_permission(&_community);
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/communities/docs/list/anon_list.stpl")]
+            struct Template {
+                title:     String,
+                community: Community,
+                list:      DocList,
+            }
+            let body = Template {
+                title:     _community.name.clone() + &"- список документов".to_string(),
+                community: _community,
+                list:      _list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/communities/docs/list/anon_list.stpl")]
+            struct Template {
+                title:     String,
+                community: Community,
+                list:      DocList,
+            }
+            let body = Template {
+                title:     _community.name.clone() + &"- список документов".to_string(),
+                community: _community,
+                list:      _list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+}
+
+pub async fn community_video_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
+    use crate::models::VideoList;
+    use crate::utils::get_video_list;
+
+    let community_id : i32 = param.0;
+    let list_id : i32 = param.1;
+    let is_desctop = is_desctop(req);
+
+    let _community = get_community(community_id);
+    let _list = get_video_list(list_id);
+
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let (is_open, text) = get_community_permission(&_community, &_request_user);
+
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/communities/video/list/list.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+                community:    Community,
+                list:         VideoList,
+            }
+
+            let body = Template {
+                title:        _community.name.clone() + &"- видеоальбомы".to_string(),
+                request_user: _request_user,
+                community:    _community,
+                list:         _list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/communities/video/list/list.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+                community:    Community,
+                list:         VideoList,
+            }
+
+            let body = Template {
+                title:        _community.name.clone() + &"- видеоальбомы".to_string(),
+                request_user: _request_user,
+                community:    _community,
+                list:         _list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        }
+    } else {
+        let (is_open, text) = get_anon_community_permission(&_community);
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/communities/video/list/anon_list.stpl")]
+            struct Template {
+                title:     String,
+                community: Community,
+                list:      VideoList,
+            }
+            let body = Template {
+                title:        _community.name.clone() + &"- видеоальбомы".to_string(),
+                community: _community,
+                list:      _list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/communities/video/list/anon_list.stpl")]
+            struct Template {
+                title:     String,
+                community: Community,
+                list:      VideoList,
+            }
+            let body = Template {
+                title:        _community.name.clone() + &"- видеоальбомы".to_string(),
+                community: _community,
+                list:      _list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+}
+
+pub async fn community_surveys_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
+    use crate::models::SurveyList;
+    use crate::utils::get_survey_list;
+
+    let community_id : i32 = param.0;
+    let list_id : i32 = param.1;
+    let is_desctop = is_desctop(req);
+
+    let _community = get_community(community_id);
+    let _list = get_survey_list(list_id);
+
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let (is_open, text) = get_community_permission(&_community, &_request_user);
+
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/communities/survey/list/list.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+                community:    Community,
+                list:         SurveyList,
+            }
+
+            let body = Template {
+                title:        _community.name.clone() + &"- список опрсоов".to_string(),
+                request_user: _request_user,
+                community:    _community,
+                list:         _list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/communities/survey/list/list.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+                community:    Community,
+                list:         SurveyList,
+            }
+
+            let body = Template {
+                title:        _community.name.clone() + &"- список опрсоов".to_string(),
+                request_user: _request_user,
+                community:    _community,
+                list:         _list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        }
+    } else {
+        let (is_open, text) = get_anon_community_permission(&_community);
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/communities/survey/list/anon_list.stpl")]
+            struct Template {
+                title:     String,
+                community: Community,
+                list:      SurveyList,
+            }
+            let body = Template {
+                title:        _community.name.clone() + &"- список опрсоов".to_string(),
+                community: _community,
+                list:      _list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/communities/survey/list/anon_list.stpl")]
+            struct Template {
+                title:     String,
+                community: Community,
+                list:      SurveyList,
+            }
+            let body = Template {
+                title:        _community.name.clone() + &"- список опрсоов".to_string(),
+                community: _community,
+                list:      _list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+}
+
+pub async fn community_music_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
+    use crate::models::MusicList;
+    use crate::utils::get_music_list;
+
+    let community_id : i32 = param.0;
+    let list_id : i32 = param.1;
+    let is_desctop = is_desctop(req);
+
+    let _community = get_community(community_id);
+    let _list = get_music_list(list_id);
+
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let (is_open, text) = get_community_permission(&_community, &_request_user);
+
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/communities/music/list/list.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+                community:    Community,
+                list:         MusicList,
+            }
+
+            let body = Template {
+                title:        _community.name.clone() + &"- плейлисты".to_string(),
+                request_user: _request_user,
+                community:    _community,
+                list:         _list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/communities/music/list/list.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+                community:    Community,
+                list:         MusicList,
+            }
+
+            let body = Template {
+                title:        _community.name.clone() + &"- плейлисты".to_string(),
+                request_user: _request_user,
+                community:    _community,
+                list:         _list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        }
+    } else {
+        let (is_open, text) = get_anon_community_permission(&_community);
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/communities/music/list/anon_list.stpl")]
+            struct Template {
+                title:     String,
+                community: Community,
+                list:      MusicList,
+            }
+            let body = Template {
+                title:        _community.name.clone() + &"- плейлисты".to_string(),
+                community: _community,
+                list:      _list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/communities/music/list/anon_list.stpl")]
+            struct Template {
+                title:     String,
+                community: Community,
+                list:      MusicList,
+            }
+            let body = Template {
+                title:        _community.name.clone() + &"- плейлисты".to_string(),
+                community: _community,
+                list:      _list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+}
+
+pub async fn community_goods_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
+    use crate::models::GoodList;
+    use crate::utils::get_good_list;
+
+    let community_id : i32 = param.0;
+    let list_id : i32 = param.1;
+    let is_desctop = is_desctop(req);
+
+    let _community = get_community(community_id);
+    let _list = get_good_list(list_id);
+
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let (is_open, text) = get_community_permission(&_community, &_request_user);
+
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/communities/goods/list/list.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+                community:    Community,
+                list:         GoodList,
+            }
+
+            let body = Template {
+                title:        _community.name.clone() + &"- подборки товаров".to_string(),
+                request_user: _request_user,
+                community:    _community,
+                list:         _list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/communities/goods/list/list.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+                community:    Community,
+                list:         GoodList,
+            }
+
+            let body = Template {
+                title:        _community.name.clone() + &"- подборки товаров".to_string(),
+                request_user: _request_user,
+                community:    _community,
+                list:         _list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        }
+    } else {
+        let (is_open, text) = get_anon_community_permission(&_community);
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/communities/goods/list/anon_list.stpl")]
+            struct Template {
+                title:     String,
+                community: Community,
+                list:      GoodList,
+            }
+            let body = Template {
+                title:        _community.name.clone() + &"- подборки товаров".to_string(),
+                community: _community,
+                list:      _list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/communities/goods/list/anon_list.stpl")]
+            struct Template {
+                title:     String,
+                community: Community,
+                list:      GoodList,
+            }
+            let body = Template {
+                title:        _community.name.clone() + &"- подборки товаров".to_string(),
+                community: _community,
+                list:      _list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+}
+
+pub async fn community_photos_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
+    use crate::models::PhotoList;
+    use crate::utils::get_photo_list;
+
+    let community_id : i32 = param.0;
+    let list_id : i32 = param.1;
+    let is_desctop = is_desctop(req);
+
+    let _community = get_community(community_id);
+    let _list = get_photo_list(list_id);
+
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let (is_open, text) = get_community_permission(&_community, &_request_user);
+
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/communities/photos/list/list.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+                community:    Community,
+                list:         PhotoList,
+            }
+
+            let body = Template {
+                title:        _community.name.clone() + &"- фотоальбомы".to_string(),
+                request_user: _request_user,
+                community:    _community,
+                list:         _list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/communities/photos/list/list.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+                community:    Community,
+                list:         PhotoList,
+            }
+
+            let body = Template {
+                title:        _community.name.clone() + &"- фотоальбомы".to_string(),
+                request_user: _request_user,
+                community:    _community,
+                list:         _list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        }
+    } else {
+        let (is_open, text) = get_anon_community_permission(&_community);
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/communities/photos/list/anon_list.stpl")]
             struct Template {
                 title:     String,
                 community: Community,
