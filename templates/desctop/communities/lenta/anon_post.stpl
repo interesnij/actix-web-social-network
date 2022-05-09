@@ -11,4 +11,4 @@
     </a>
   <% } %>
 </span>
-<% include!("../../posts/post_community/anon_post_detail.stpl"); %>
+<% include!("../../posts/community/anon_post_detail.stpl"); %>

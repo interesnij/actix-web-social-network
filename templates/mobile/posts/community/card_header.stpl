@@ -1,0 +1,56 @@
+<% let post_community = object.get_ommunity(); %>
+<div class="card-header">
+    <div class="media">
+    <a href="<%= post_community.get_link() %>" class="ajax">
+      <figure>
+        <%- post_community.get_50_avatar() %>
+      </figure>
+    </a>
+        <div class="media-body">
+            <h6 class="mb-0">
+              <a href="<%= post_community.get_link() %>" class="ajax">
+                <%= post_community.name %>
+              </a>
+            </h6>
+            <a class="mb-0 wall_fullscreen pointer"><%= object.created.format("%d-%m-%Y в %H:%M").to_string() %></a>
+        </div>
+
+        <div class="dropdown">
+            <a style="cursor:pointer" class="btn_default drop">
+              <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" data-type="pos<%= object.id %>">
+              <% if request_user.is_administrator_of_community(post_community.id) && object.is_fixed() { %>
+                <span class="dropdown-item post_unfixed">Открепить</span>
+              <% } else { %>
+                <span class="dropdown-item post_fixed">Закрепить</span>
+              <% } %>
+              <% if object.get_list().is_user_can_create_el(request_user.id) { %>
+                <span class="dropdown-item post_remove">Удалить запись</span>
+                <span class="dropdown-item post_edit">Редактировать</span>
+                <span>
+                  <% if object.comment_enabled { %>
+                    <span class="dropdown-item post_off_comment">Выкл. комментарии</span>
+                  <% } else { %>
+                    <span class="dropdown-item post_on_comment">Вкл. комментарии</span>
+                  <% } %>
+                </span>
+                <span>
+                  <% if object.votes_on { %>
+                    <span class="dropdown-item post_off_votes">Выкл. реакции</span>
+                  <% } else { %>
+                    <span class="dropdown-item post_on_votes">Вкл. реакции</span>
+                  <% } %>
+                </span>
+                <span class="dropdown-item item_stat_f">Статистика записи</span>
+
+              <% } else if request_user.is_moderator() { %>
+                <span class="dropdown-item post_close">Закрыть</span>
+              <% } else { %>
+                <span class="dropdown-item post_claim">Пожаловаться</span>
+              <% } %>
+              <span class="dropdown-item copy_link">Скопировать ссылку</span>
+            </div>
+        </div>
+    </div>
+</div>

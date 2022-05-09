@@ -60,9 +60,9 @@
 
             <% for object in object_list.iter() { %>
               <% if object.community_id.is_some() { %>
-                <% include!("../../posts/post_community/post.stpl"); %>
+                <% include!("../../posts/community/post.stpl"); %>
               <% } else { %>
-                <% include!("../../posts/post_user/post.stpl"); %>
+                <% include!("../../posts/user/post.stpl"); %>
               <% } %>
             <% } %>
             <% if next_page_number > 0 { %>

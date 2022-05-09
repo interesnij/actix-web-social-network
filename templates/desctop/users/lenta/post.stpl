@@ -11,4 +11,4 @@
     </a>
   <% } %>
 </span>
-<% include!("../../posts/post_user/post_detail.stpl"); %>
+<% include!("../../posts/user/post_detail.stpl"); %>

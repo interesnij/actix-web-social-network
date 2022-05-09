@@ -52,9 +52,9 @@
               </div>
           {% else %}
             {% if object.community %}
-              {% include 'desctop/posts/post_community/post.html' %}
+              {% include 'desctop/posts/community/post.html' %}
             {% else %}
-              {% include 'desctop/posts/post_user/post.html' %}
+              {% include 'desctop/posts/user/post.html' %}
             {% endif %}
           {% endif %}
         {% endfor %}

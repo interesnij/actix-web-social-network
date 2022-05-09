@@ -56,9 +56,9 @@
 
             <% for object in object_list.iter() { %>
               <% if object.community_id.is_some() { %>
-                <% include!("../../posts/post_community/anon_post.stpl"); %>
+                <% include!("../../posts/community/anon_post.stpl"); %>
               <% } else { %>
-                <% include!("../../posts/post_user/anon_post.stpl"); %>
+                <% include!("../../posts/user/anon_post.stpl"); %>
               <% } %>
             <% } %>
             <% if next_page_number > 0 { %>
