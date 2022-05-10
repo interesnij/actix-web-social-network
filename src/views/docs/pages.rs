@@ -77,7 +77,7 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
 
         else if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/docs/list.stpl")]
+            #[template(path = "desctop/docs/list/list.stpl")]
             struct Template {
                 list:         DocList,
                 request_user: User,
@@ -100,7 +100,7 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
 
         } else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/docs/list.stpl")]
+            #[template(path = "mobile/docs/list/list.stpl")]
             struct Template {
                 list:         DocList,
                 request_user: User,
@@ -140,7 +140,7 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
         }
         else if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/docs/anon_list.stpl")]
+            #[template(path = "desctop/docs/list/anon_list.stpl")]
             struct Template {
                 list:         DocList,
                 is_user_can_see_doc_list: bool,
@@ -159,7 +159,7 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
 
         } else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/docs/anon_list.stpl")]
+            #[template(path = "mobile/docs/list/anon_list.stpl")]
             struct Template {
                 list:         DocList,
                 is_user_can_see_doc_list: bool,
