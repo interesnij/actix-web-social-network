@@ -75,7 +75,7 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
             return close_item(text)
         }
 
-        else if is_desctop {
+         else if is_desctop {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/surveys/list/list.stpl")]
             struct Template {
