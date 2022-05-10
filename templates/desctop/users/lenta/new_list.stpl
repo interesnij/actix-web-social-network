@@ -1,5 +1,5 @@
 
-<span class="load_list">
+<span class="load_block">
   <span class="span_list_pk" list-pk="<%= list.id %>">
     <span class="list_pk" data-uuid="<%= list.id %>">
       <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %>: </span>

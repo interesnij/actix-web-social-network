@@ -1,4 +1,4 @@
-<span class="load_list">
+<span class="load_block">
   <% if community.count_fix_items() > 1 { %>
   <div class="csslider infinity slider_100 mt-2">
     <p>Особые записи</p>
