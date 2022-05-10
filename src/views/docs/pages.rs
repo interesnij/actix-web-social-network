@@ -120,12 +120,12 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
         }
     } else {
         if _list.community_id.is_some() {
-            (is_open, text) = get_anon_community_permission(&_list.get_community());
+            is_open, text = get_anon_community_permission(&_list.get_community());
         }
         else {
             (is_open, text) = get_anon_user_permission(&_user.get_creator());
         }
-        let is_user_can_see_post_list = _list.is_anon_user_can_see_el();
+        let is_user_can_see_doc_list = _list.is_anon_user_can_see_el();
         if is_open == false {
             use crate::views::close_item;
             return close_item(text)
