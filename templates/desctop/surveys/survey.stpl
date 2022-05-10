@@ -31,7 +31,7 @@
       </div>
 
       <form>
-      <div class="container answers_container <% if !object.is_multiple() { %>no_multiple<% } %>">
+      <div class="container answers_container <% if !object.is_multiple { %>no_multiple<% } %>"> 
         <br>
         <h4 class="m-0"><%= object.title %></h4>
 
