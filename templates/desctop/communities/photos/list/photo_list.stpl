@@ -19,9 +19,9 @@
 <% if object_list.len() > 0 { %>
   <% for object in object_list.iter() { %>
     <% include!("../../../generic/items/staff_photo.stpl"); %>
-  {% endfor %}
+  <% } %>
   <% if next_page_number > 0 { %>
-  <div class="load centered m-1 next_page_list" data-link="/community/<%= community.id %>/photos_list/<%= list.id %>/?page=<%= next_page_number %>">
+  <div class="load centered m-1 next_page_list" data-link="/photos/load_list/<%= list.id %>/?page=<%= next_page_number %>">
       <img src="/static/images/preloader.gif">
   </div>
   <% } %>

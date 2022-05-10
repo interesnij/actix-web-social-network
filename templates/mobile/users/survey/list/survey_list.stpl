@@ -12,7 +12,7 @@
       </div>
     <div class="card mb-2">
         <div class="card-body">
-        <div class="row is_block_paginate is_paginate drag_container is_stat_list" data-pk="<%= list.id %>" data-type="sur" data-community-id="" data-link="/survey/load_list_survey/<%= list.id %>/">
+        <div class="row is_block_paginate is_paginate drag_container is_stat_list" data-pk="<%= list.id %>" data-type="sur" data-community-id="">
 
 
 <% if object_list.len() > 0 { %>
@@ -20,7 +20,7 @@
     <% include!("../survey.stpl"); %>
   <% } %>
   <% if next_page_number > 0 { %>
-  <div class="load centered m-1 next_page_list" data-link="/user/<%= user.id %>/survey_list/<%= list.id %>/?page=<%= next_page_number %>">
+  <div class="load centered m-1 next_page_list" data-link="/survey/load_list/<%= list.id %>/?page=<%= next_page_number %>">
       <img src="/static/images/preloader.gif">
   </div>
   <% } %>

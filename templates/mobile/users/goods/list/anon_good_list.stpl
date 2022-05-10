@@ -13,7 +13,7 @@
     <% include!("../good.stpl"); %>
 <% } %>
 <% if next_page_number > 0 { %>
-<div class="load centered m-1 next_page_list" data-link="/user/<%= user.id %>/goods_list/<%= list.id %>/?page=<%= next_page_number %>">
+<div class="load centered m-1 next_page_list" data-link="/goods/load_list/<%= list.id %>/?page=<%= next_page_number %>">
     <img src="/static/images/preloader.gif">
 </div>
 <% } %>

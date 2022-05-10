@@ -8,7 +8,7 @@
             </div>
         </div>
 
-    <span class="load_block" data-link="/goods/load_list_goods/<%= list.id %>/">
+    <span class="load_block" data-link="/goods/load_list/<%= list.id %>/">
 
     </span>
 </div>

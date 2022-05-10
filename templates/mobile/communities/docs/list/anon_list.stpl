@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    <span class="load_block is_stat_list drag_container" data-community-id="<%= list.community_id.unwrap() %>" data-pk="<%= list.id %>" data-type="doc" data-link="/docs/load_list_docs/<%= list.id %>/">
+    <span class="load_block is_stat_list drag_container" data-community-id="<%= list.community_id.unwrap() %>" data-pk="<%= list.id %>" data-type="doc" data-link="/docs/load_list/<%= list.id %>/">
 
     </span>
 </div>

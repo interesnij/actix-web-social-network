@@ -7,7 +7,7 @@
           <button class="btn btn-sm border" type="button">Искать</button>
         </div>
     </div>
-    <span class="load_block" data-link="/goods/load_list_goods/<%= list.id %>/">
+    <span class="load_block" data-link="/goods/load_list/<%= list.id %>/">
 
     </span>
 </div>

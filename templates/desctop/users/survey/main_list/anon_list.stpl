@@ -9,7 +9,7 @@
     </div>
     <% include!("anon_lists.stpl"); %>
 
-    <span class="load_block" data-link="/survey/load_list_survey/<%= list.id %>/">
+    <span class="load_block" data-link="/survey/load_list/<%= list.id %>/">
 
     </span>
 </div>

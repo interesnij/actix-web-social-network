@@ -9,7 +9,7 @@
           </div>
           <% include!("lists.stpl"); %>
 
-      <span class="load_block" data-link="/video/load_list_video/<%= list.id %>/">
+      <span class="load_block" data-link="/video/load_list/<%= list.id %>//">
 
       </span>
 </div>
