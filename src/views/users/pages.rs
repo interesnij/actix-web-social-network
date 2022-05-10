@@ -50,7 +50,7 @@ pub async fn user_docs_page(session: Session, req: HttpRequest, user_id: web::Pa
         let _request_user = get_request_user_data(session);
         let (is_open, text) = get_user_permission(&_user, &_request_user);
 
-        if is_open {
+        if is_open == false {
             use crate::views::close_item;
             return close_item(text)
         }
