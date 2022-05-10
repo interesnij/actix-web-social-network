@@ -34,7 +34,7 @@
           <div class="lite_color answer_style">
             <div class="progress2" style="width:<%= answer.get_procent() %>%;"></div>
             <span class="progress_span_r"><%= answer.content %>
-              <span class="count text-muted"><%= answer.get_count() %></span>
+              <span class="count text-muted"><%= answer.get_count %></span>
             </span>
             <span class="progress_span_l" style="margin-left: auto;">
               <span class="vote_svg"></span>
