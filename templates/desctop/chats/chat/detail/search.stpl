@@ -8,7 +8,7 @@
       <% if object_list.len() > 0 { %>
       <% for object in object_list.iter() { %>
         <% let m_creator = object.get_creator(); %>
-      <div class="message media p-1" data-uuid="<% object.id %>" data-pk="<% object.id %>">
+      <div class="message media p-1" data-uuid="<%= object.id %>" data-pk="<%= object.id %>">
           <figure>
             <a href="<%= m_creator.get_link() %>" class="ajax no_select">
               <%- m_creator.get_40_avatar() %>
