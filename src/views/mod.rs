@@ -4,6 +4,7 @@ pub mod users;
 pub mod communities;
 pub mod posts;
 pub mod chats;
+pub mod docs;
 
 pub use self::{
     pages::*,
@@ -12,4 +13,5 @@ pub use self::{
     communities::*,
     posts::*,
     chats::*,
+    docs::*,
 };
