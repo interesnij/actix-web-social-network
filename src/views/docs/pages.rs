@@ -124,7 +124,7 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
         }
     } else {
         if _list.community_id.is_some() {
-            let _tuple = get_anon_community_permission(&_list.get_community())
+            let _tuple = get_anon_community_permission(&_list.get_community());
             is_open = _tuple.0;
             text = _tuple.1;
         }
