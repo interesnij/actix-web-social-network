@@ -1,3 +1,4 @@
+<span class="load_block">
 <div class="media mt-3 uuid_saver" data-pk="<%= list.id %>" data-uuid="<%= list.id %>" style="padding-left: 7px;">
   <h5 class="mt-1">
     <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %></span> (<%= list.count_items() %>)
@@ -26,3 +27,4 @@
 </ul>
 </div>
 </div>
+</span>

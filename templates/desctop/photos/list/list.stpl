@@ -1,3 +1,4 @@
+<span class="load_block">
 <div class="media mt-3" style="padding-left: 7px;">
   <form class="uuid_saver" data-uuid="<%= list.id %>" data-pk="<%= list.id %>">
   <h5 class="mt-1">
@@ -31,3 +32,4 @@
 <% } %>
 
 </div>
+</span>
