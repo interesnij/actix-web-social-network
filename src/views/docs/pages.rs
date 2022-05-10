@@ -59,7 +59,7 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
             (is_open, text) = get_community_permission(&_list.get_community(), &_request_user);
         }
         else {
-            is_open, text) = get_user_permission(&_user.get_creator(), &_request_user);
+            (is_open, text) = get_user_permission(&_user.get_creator(), &_request_user);
         }
 
         let _request_user_id = &_request_user.id;
