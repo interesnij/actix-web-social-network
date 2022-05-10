@@ -6,8 +6,8 @@ pub use self::{
     pages::*,
 };
 
-pub fn user_routes(cfg: &mut ServiceConfig) {
+pub fn docs_routes(cfg: &mut ServiceConfig) {
     cfg
-    .configure(pages)
+    .configure(docs_urls)
     ;
 }
