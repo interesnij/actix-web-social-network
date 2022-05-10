@@ -17,7 +17,7 @@
                       <% if object.is_user_can_edit_delete(request.user) { %>
                         <span class="dropdown-item doc_edit">Изменить</span>
                         <span class="dropdown-item doc_remove">Удалить</span>
-                      <% elif request_user.is_moderator() { %>
+                      <% } else if request_user.is_moderator() { %>
                         <span class="dropdown-item create_close">Закрыть</span>
                       <% } else { %>
                         <span class="dropdown-item create_claim">Пожаловаться</span>
