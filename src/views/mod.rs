@@ -5,6 +5,11 @@ pub mod communities;
 pub mod posts;
 pub mod chats;
 pub mod docs;
+pub mod goods;
+pub mod music;
+pub mod photos;
+pub mod survey;
+pub mod video;
 
 pub use self::{
     pages::*,
@@ -14,4 +19,9 @@ pub use self::{
     posts::*,
     chats::*,
     docs::*,
+    goods::*,
+    music::*,
+    photos::*,
+    survey::*,
+    video::*,
 };
