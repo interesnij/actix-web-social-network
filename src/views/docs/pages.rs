@@ -57,7 +57,7 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
 
         let _request_user_id = &_request_user.id;
         let is_user_can_see_doc_list = _list.is_user_can_see_el(_request_user_id);
-        let is_user_can_create_docs = _list.is_community_can_create_el(_request_user_id);
+        let is_user_can_create_docs = _list.is_user_can_create_el(_request_user_id);
 
         if is_open == false {
             use crate::views::close_item;
