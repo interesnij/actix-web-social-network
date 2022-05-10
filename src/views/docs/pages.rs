@@ -56,10 +56,14 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
         if _list.community_id.is_some() {
-            (is_open, text) = get_community_permission(&_list.get_community(), &_request_user);
+            let _tuple = get_community_permission(&_list.get_community(), &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
         }
         else {
-            (is_open, text) = get_user_permission(&_user.get_creator(), &_request_user);
+            let _tuple = get_user_permission(&_list.get_creator(), &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
         }
 
         let _request_user_id = &_request_user.id;
@@ -121,13 +125,13 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
     } else {
         if _list.community_id.is_some() {
             let _tuple = get_anon_community_permission(&_list.get_community())
-            is_open = _tuple[0];
-            text = _tuple[1];
+            is_open = _tuple.0;
+            text = _tuple.1;
         }
         else {
-            let _tuple = get_anon_user_permission(&_user.get_creator());
-            is_open = _tuple[0];
-            text = _tuple[1];
+            let _tuple = get_anon_user_permission(&_list.get_creator());
+            is_open = _tuple.0;
+            text = _tuple.1;
         }
         let is_user_can_see_doc_list = _list.is_anon_user_can_see_el();
         if is_open == false {
