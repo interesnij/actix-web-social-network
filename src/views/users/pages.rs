@@ -86,7 +86,7 @@ pub async fn user_docs_page(session: Session, req: HttpRequest, user_id: web::Pa
             }
 
             let body = Template {
-                title:        _user.get_doc_list() + &"- список документов".to_string(),
+                title:        _user.get_full_name() + &"- список документов".to_string(),
                 request_user: _request_user,
                 user:         _user,
                 list:         _list,
@@ -851,7 +851,7 @@ pub async fn user_video_list_page(session: Session, req: HttpRequest, param: web
                 list:  VideoList,
             }
             let body = Template {
-                title: _user.name.clone() + &"- видеоальбомы".to_string(),
+                title: _user.get_full_name() + &"- видеоальбомы".to_string(),
                 user:  _user,
                 list:  _list,
             }
@@ -1236,7 +1236,7 @@ pub async fn user_photos_list_page(session: Session, req: HttpRequest, param: we
 
         }
     } else {
-        let (is_open, text) = get_anon_community_permission(&_community);
+        let (is_open, text) = get_anon_user_permission(&_user);
         if is_open == false {
             use crate::views::close_item;
             return close_item(text)
