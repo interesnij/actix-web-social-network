@@ -21,12 +21,12 @@ use crate::models::User;
 
 
 pub fn user_pages_urls(config: &mut web::ServiceConfig) {
-    config.route("/users/{user_id}/photos/", web::get().to(user_photos_page));
-    config.route("/users/{user_id}/goods/", web::get().to(user_goods_page));
-    config.route("/users/{user_id}/music/", web::get().to(user_music_page));
-    config.route("/users/{user_id}/surveys/", web::get().to(user_surveys_page));
-    config.route("/users/{user_id}/video/", web::get().to(user_video_page));
-    config.route("/users/{user_id}/docs/", web::get().to(user_docs_page));
+    config.route("/id{user_id}/photos/", web::get().to(user_photos_page));
+    config.route("/id{user_id}/goods/", web::get().to(user_goods_page));
+    config.route("/id{user_id}/music/", web::get().to(user_music_page));
+    config.route("/id{user_id}/surveys/", web::get().to(user_surveys_page));
+    config.route("/id{user_id}/video/", web::get().to(user_video_page));
+    config.route("/id{user_id}/docs/", web::get().to(user_docs_page));
 
     config.route("/users/{user_id}/photos_list/{list_id}/", web::get().to(user_photos_list_page));
     config.route("/users/{user_id}/goods_list/{list_id}/", web::get().to(user_goods_list_page));
