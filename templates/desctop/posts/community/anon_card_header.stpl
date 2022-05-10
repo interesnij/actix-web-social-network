@@ -1,4 +1,4 @@
-<% let post_community = object.get_ommunity(); %>
+<% let post_community = object.get_community(); %>
 <div class="card-header">
     <div class="media">
     <a href="<%= post_community.get_link() %>" class="ajax">
