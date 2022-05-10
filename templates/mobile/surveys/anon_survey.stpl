@@ -44,7 +44,7 @@
         <% } %>
 
         <% if object.is_have_votes() { %>
-          <% if object.is_anonymous() { %>
+          <% if object.is_anonymous { %>
             Это анонимный опрос.
           <% } else { %>
           <a class="i_link survey_info pointer position-relative"><%= object.get_users_ru() %></a>
