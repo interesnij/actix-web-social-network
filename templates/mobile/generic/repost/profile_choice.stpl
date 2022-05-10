@@ -1,7 +1,7 @@
 <div class="form-group">
   <div class="row">
     <div class="col-md-6">
-      <% if object.is_user_list(request.user) { %>
+      <% if object.is_user_list(request_user) { %>
       <div class="" style="margin-bottom:10px">
         <label>Это Ваш список</label>
       </div>

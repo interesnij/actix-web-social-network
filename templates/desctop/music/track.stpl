@@ -30,7 +30,7 @@
                     <% if object.is_user_can_edit_delete_item(request_user.id) { %>
                       <span class="dropdown-item track_edit">Изменить</span>
                       <span class="dropdown-item track_remove">Удалить</span>
-                    <% } else if request.user.is_moderator() { %>
+                    <% } else if request_user.is_moderator() { %>
                       <span class="dropdown-item create_close">Закрыть</span>
                     <% } else { %>
                       <span class="dropdown-item create_claim">Пожаловаться</span>

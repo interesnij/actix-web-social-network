@@ -1,67 +1,74 @@
-{% load message %}
 
-{% if object.is_manager %}
+<% if object.is_manager() { %>
 <div class="media p-1 centered manager_message">
+  <%- object.get_manager_text() %>
   {{ object.get_manager_text|safe }}
 </div>
 
-{% else %}
+<% } else { %>
 
+<% let creator = object.get_creator(); %>
 <div class="
     message toggle_message t_f media p-1
-    {% if request.user.pk == object.creator.pk %}
-      {% if object.unread %}
+    <% if request_user.id == object.user_id { %>
+      <% if object.unread { %>
         bg-light-secondary
-      {% endif %}
+      <% } %>
       is_have_edited
-    {% endif %}" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}">
+    <% } %>" data-uuid="<%= object.id %>" data-pk="<%= object.id %>">
     <figure>
-      <a href="{{ object.creator.get_link }}" class="ajax no_select">
-        {{ object.creator.get_40_avatar|safe }}
+      <a href="<%= object.get_link() %>" class="ajax no_select">
+        <%- creator.get_40_avatar() %>
       </a>
     </figure>
     <div class="media-body t_f">
       <h5 class="time-title mb-0">
-        <a href="{{ object.creator.get_link }}" class="ajax creator_link">
-          <span class="creator_name">{{ object.creator.get_full_name }}</span>
+        <a href="<%= object.get_link() %>" class="ajax creator_link">
+          <span class="creator_name"><%= object.get_full_name() %></span>
         </a>
         <span class="favourite_icon">
-          {% if object|is_favourite:request.user.pk %}
+          <% if object.is_favourite(request_user.id) { %>
           <span class="delete_favourite_message pointer" flow="up" tooltip="Убрать из избранного">
             <svg width="18" height="18" fill="currentColor" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M12 7.13l.97 2.29.47 1.11 1.2.1 2.47.21-1.88 1.63-.91.79.27 1.18.56 2.41-2.12-1.28-1.03-.64-1.03.62-2.12 1.28.56-2.41.27-1.18-.91-.79-1.88-1.63 2.47-.21 1.2-.1.47-1.11.97-2.27M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/></svg>
           </span>
-          {% endif %}
+          <% } %>
         </span>
-        <small class="float-right small text-muted get_created t_f">{{ object.get_created }} {% if object.is_edited %}(ред.){% endif %}</small>
+        <small class="float-right small text-muted get_created t_f">
+          <%= object.created.format("%d-%m-%Y в %H:%M").to_string() %>
+          <% if object.is_edited() { %>(ред.)<% } %>
+        </small>
       </h5>
 
-      {% if object.parent %}
-        {{ object.get_parent_message|safe }}
-      {% endif %}
+      <% if object.parent_id.is_some() { %>
+        <%- object.get_parent_message() %>
+      <% } %>
 
-      {% if object.voice %}
-        <audio controls class="audio" src="{{ object.voice.url }}"></audio>
-      {% elif object.sticker %}
+      <% if object.voice.is_some() { %>
+        <audio class="audio" src="<%= object.voice.as_deref().unwrap() %>"></audio>
+      <% } else if object.sticker_id.is_some() { %>
+        <% let sticker = object.get_sticker(); %>
       <div class="message_sticker mt-1 t_f">
-        <img src="{{ object.sticker.image.url }}" style="width: 128px;" tooltip="{{ object.sticker.category.name }}" flow="up">
+        <img src="<%= sticker.image.as_deref().unwrap() %>" style="width: 128px;" tooltip="<%= sticker.name %>" flow="up">
       </div>
-      {% else %}
+      <% } else { %>
 
-      <span class="text text_support t_f">{{ object.text|safe }}</span>
+        <span class="text text_support t_f">
+          <%- object.content.as_deref().unwrap() %>
+        </span>
 
-      {% if object.attach %}
-        {{ object|get_attach:request.user|safe }}
-      {% endif %}
+        <% if object.attach.is_some() { %>
+          <%- object.get_attach() %>
+        <% } %>
 
-      {% if object.repost %}
-        {% include 'desctop/chat/message/repost.html' %}
+        <% if object.post_id.is_some() { %>
+          <% include!("repost.stpl"); %>
+        <% } %>
+        <% if object.is_have_transfer() { %>
+          <% include!("transfers.stpl"); %>
+        <% } %>
 
-      {% elif object.is_have_transfer %}
-        {% include 'desctop/chat/message/transfers.html' %}
-
-      {% endif %}
-      {% endif %}
+        <% } %>
     </div>
 </div>
 <span class="edit_form_box"></span>
-{% endif %}
+<% } %>

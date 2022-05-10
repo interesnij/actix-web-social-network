@@ -21,7 +21,7 @@
 <% } %>
 </span>
 
-<% } elif request.user.is_moderator() { %>
+<% } elif request_user.is_moderator() { %>
 
 <span class="dropdown-item create_close">Закрыть</span>
 <% } else { %>

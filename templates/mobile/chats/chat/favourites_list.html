@@ -1,77 +1,83 @@
-{% load message %}
-<div class="container mt-3 main-container" data-pk="{{ request.user.pk }}" data-type="user_favourite_messages">
+
+<div class="container mt-3 main-container" data-pk="<%= request_user.id %>" data-type="user_favourite_messages">
   <span class="load_block">
     <div class="media mt-3" style="padding-left: 7px;">
       <h5 class="mt-1">
         <p>
-          Избранных сообщений: {{ request.user.favourite_messages_count }}
+          Избранных сообщений: <%= request_user.favourite_messages_count() %>
         </p>
       </h5>
     </div>
   <div class="container-fluid pk_saver">
     <div class="list-group border-top border-bottom list-group-flush is_block_paginate">
-      {% if object_list %}
-      {% for object in object_list %}
-      <div class="
-          message media p-1" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}">
+      <% if object_list.len() > 0 { %>
+      <% for object in object_list { %>
+        <% let creator = object.get_creator(); %>
+      <div class="message media p-1" data-uuid="<%= object.id %>" data-pk="<%= object.id %>">
           <figure>
-            <a href="{{ object.creator.get_link }}" class="ajax no_select">
-              {{ object.creator.get_40_avatar|safe }}
+            <a href="<%= creator.get_link() %>" class="ajax no_select">
+              <%- creator.get_40_avatar() %>
             </a>
           </figure>
           <div class="media-body" style="overflow: visible;">
             <h5 class="time-title mb-0">
-              <a href="{{ object.creator.get_link }}" class="ajax creator_link">
-                <span class="creator_name">{{ object.creator.get_full_name }}</span>
+              <a href="<%= creator.get_link() %>" class="ajax creator_link">
+                <span class="creator_name"><%= creator.get_full_name() %></span>
               </a>
               <span class="favourite_icon">
                 <span class="delete_favourite_message pointer" flow="up" tooltip="Убрать из избранного">
                   <svg width="18" height="18" fill="currentColor" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M12 7.13l.97 2.29.47 1.11 1.2.1 2.47.21-1.88 1.63-.91.79.27 1.18.56 2.41-2.12-1.28-1.03-.64-1.03.62-2.12 1.28.56-2.41.27-1.18-.91-.79-1.88-1.63 2.47-.21 1.2-.1.47-1.11.97-2.27M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/></svg>
                 </span>
               </span>
-              <small class="float-right small text-muted get_created t_f">{{ object.get_created }} {% if object.is_edited %}(ред.){% endif %}</small>
+              <small class="float-right small text-muted get_created t_f">
+                <%= object.created.format("%d-%m-%Y в %H:%M").to_string() %>
+                <% if object.is_edited() { %>(ред.)<% } %>
+              </small>
             </h5>
 
-            {% if object.parent %}
-              {{ object.get_parent_message|safe }}
-            {% endif %}
+            <% if object.parent_id.is_some() { %>
+              <%- object.get_parent_message() %>
+            <% } %>
 
-            {% if object.voice %}
-              <audio class="audio" src="{{ object.voice.url }}"></audio>
-            {% elif object.sticker %}
+            <% if object.voice.is_some() { %>
+              <audio class="audio" src="<%= object.voice.as_deref().unwrap() %>"></audio>
+            <% } else if object.sticker_id.is_some() { %>
+              <% let sticker = object.get_sticker(); %>
             <div class="message_sticker mt-1 t_f">
-              <img src="{{ object.sticker.image.url }}" style="width: 128px;" tooltip="{{ object.sticker.category.name }}" flow="up">
+              <img src="<%= sticker.image.as_deref().unwrap() %>" style="width: 128px;" tooltip="<%= sticker.name %>" flow="up">
             </div>
-            {% else %}
+            <% } else { %>
 
-            <span class="text text_support t_f">{{ object.text|safe }}</span>
+            <span class="text text_support t_f">
+              <%- object.content.as_deref().unwrap() %>
+            </span>
 
-            {% if object.attach %}
-              {{ object|get_attach:request.user|safe }}
-            {% endif %}
+            <% if object.attach.is_some() { %>
+              <%- object.get_attach() %>
+            <% } %>
 
-            {% if object.repost %}
-              {% include 'desctop/chat/message/repost.html' %}
-            {% endif %}
-            {% if object.is_have_transfer %}
-              {% include 'desctop/chat/message/transfers.html' %}
-            {% endif %}
+            <% if object.post_id.is_some() { %>
+              <% include!("../../messages/repost.stpl"); %>
+            <% } %>
+            <% if object.is_have_transfer() { %>
+              <% include!("../../messages/transfers.stpl"); %>
+            <% } %>
 
-            {% endif %}
+            <% } %>
           </div>
       </div>
-      {% endfor %}
-        {% if page_obj.has_next %}
-        <div class="load centered m-1 next_page_list" data-link="/chat/favourites_messages/?page={{ page_obj.next_page_number }}">
+      <% } %>
+        <% if next_page_number > 0 { %>
+        <div class="load centered m-1 next_page_list" data-link="/chat/favourites_messages/?page=<%= next_page_number %>">
             <img src="/static/images/preloader.gif">
         </div>
-        {% endif %}
+        <% } %>
 
-      {% else %}
+      <% } else { %>
       <div class="card mb-3 centered items_empty">
         <h6 style="margin: 20px;text-align: center;"> Избранных сообщений нет...</h6>
       </div>
-      {% endif %}
+      <% } %>
     </div>
   </div>
   </span>

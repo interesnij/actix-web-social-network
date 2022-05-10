@@ -28,7 +28,7 @@
         <% } %>
       </span>
   </span>
-  <% } elif request.user.is_moderator() { %>
+  <% } else if request_user.is_moderator() { %>
     <span class="create_close pointer">Закрыть</span>
   <% } else { %>
     <span class="create_claim pointer">Пожаловаться</span>
