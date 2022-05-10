@@ -140,7 +140,7 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
         }
         else if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/musics/list/anon_list.stpl")]
+            #[template(path = "desctop/music/list/anon_list.stpl")]
             struct Template {
                 list:         MusicList,
                 is_user_can_see_music_list: bool,
