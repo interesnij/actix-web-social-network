@@ -812,21 +812,16 @@ function open_video_fullscreen(url) {
 };
 
 function if_list(block) {
-  if (block.querySelector('.load_post_list')) {
-      _block = block.querySelector('.load_post_list');
-      list_block_load(_block, ".load_list", _block.getAttribute("data-link"));
-      scrolled(_block.querySelector('.list_pk'));
-  } else if (block.querySelector('.is_block_post_paginate')) {
-        lenta = block.querySelector('.is_block_post_paginate');
-        link = lenta.getAttribute("data-link");
-        list_load(lenta, link);
-        scrolled(lenta.querySelector('.list_pk'))
-    } else if (block.querySelector('.is_block_paginate')) {
-        lenta = block.querySelector('.is_block_paginate');
-        link = lenta.getAttribute("data-link");
-        list_load(block.querySelector(".is_block_paginate"), link);
-        scrolled(lenta.querySelector('.list_pk'));
-    };
+  if (block.querySelector('.load_block') && block.querySelector('.load_block').getAttribute) {
+      _block = block.querySelector('.load_block');
+      list_block_load(_block, ".load_block", _block.getAttribute("data-link"));
+      scrolled(_block.querySelector('.is_paginate'));
+  } else if (block.querySelector('.is_block_paginate')) {
+      lenta = block.querySelector('.is_block_paginate');
+      link = lenta.getAttribute("data-link");
+      list_load(block.querySelector(".is_block_paginate"), link);
+      scrolled(lenta.querySelector('.list_pk'));
+  };
     params = window.location.search.replace( '?', '').split('&');
     if (params) {
       if (params[0].split("=")[1] == "wall") {
