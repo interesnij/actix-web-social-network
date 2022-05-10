@@ -8,7 +8,7 @@
                 </div>
             </div>
             <h5 class="card-title mb-1 header-color-primary text-center"><%= object.title %></h5>
-            <h6 class="card-subtitle mb-2 header-color-secondary text-center"><%= object.category_id %></h6>
+            <h6 class="card-subtitle mb-2 header-color-secondary text-center"><%= object.category_id.unwrap() %></h6>
             <div class="row bg-light-secondary text-center" style="margin-left: 0;margin-right: 0;">
                   <div class="col py-3">
                       <h5 class="content-color-primary mb-0">
