@@ -69,7 +69,7 @@
               <% } %>
             </span>
 
-            <div class="load_post_list mt-3 post_view_generator" community-pk="<%= community.id %>"></div>
+            <div class="load_list mt-3 post_view_generator" community-pk="<%= community.id %>"></div>
         </div>
         <div class="col-12 col-md-12 col-lg-4">
             <div class="card">

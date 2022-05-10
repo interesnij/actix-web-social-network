@@ -74,7 +74,7 @@
         <% include!("goods.stpl"); %>
       <% } %>
 
-      <div class="load_post_list post_view_generator" data-link="/users/<%= user.id %>/wall/<%= user.get_selected_post_list_pk() %>/"></div>
+      <div class="load_list post_view_generator" data-link="/users/<%= user.id %>/wall/<%= user.get_selected_post_list_pk() %>/"></div>
 
       </div>
 </div>
