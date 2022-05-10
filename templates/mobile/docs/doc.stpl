@@ -14,7 +14,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" data-type="doc<%= object.id %>" style="top: 25px;">
                       <span class="dropdown-item create_repost">Добавить</span>
-                      <% if object.is_user_can_edit_delete_item(request.user) { %>
+                      <% if object.is_user_can_edit_delete_item(request_user.id) { %>
                         <span class="dropdown-item doc_edit">Изменить</span>
                         <span class="dropdown-item doc_remove">Удалить</span>
                       <% } else if request_user.is_moderator() { %>
