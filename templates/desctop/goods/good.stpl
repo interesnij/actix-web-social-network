@@ -3,7 +3,7 @@
             <div class="row align-items-center no-gutters">
                 <div class="col">
                   <div class="text-center">
-                    <img class="image_fit_200" src="<%= object.get_image() %>" alt="img">
+                    <img class="image_fit_200" src="<%- object.get_image() %>" alt="img">
                   </div>
                 </div>
             </div>
@@ -12,7 +12,7 @@
             <div class="row bg-light-secondary text-center" style="margin-left: 0;margin-right: 0;">
                   <div class="col py-3">
                       <h5 class="content-color-primary mb-0">
-                        <% if object.price.is_some() %>
+                        <% if object.price.is_some() { %>
                         <%= object.price.unwrap() %> ₽
                         <% } else { %>
                         Без цены
