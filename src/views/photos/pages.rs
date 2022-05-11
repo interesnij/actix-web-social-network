@@ -14,6 +14,7 @@ use crate::utils::{
     get_user,
     get_community,
     get_photo_list,
+    get_photo,
     get_user_permission,
     get_anon_user_permission,
     get_community_permission,
@@ -356,7 +357,7 @@ pub async fn load_photo_page(session: Session, req: HttpRequest, photo_id: web::
 
         else if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/photos/load/photo.stpl")]
+            #[template(path = "desctop/photos/photo.stpl")]
             struct Template {
                 list:                        PhotoList,
                 object:                      Photo,
@@ -387,7 +388,7 @@ pub async fn load_photo_page(session: Session, req: HttpRequest, photo_id: web::
 
         } else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/photos/load/photo.stpl")]
+            #[template(path = "mobile/photos/photo.stpl")]
             struct Template {
                 list:                        PhotoList,
                 object:                      Photo,
@@ -436,7 +437,7 @@ pub async fn load_photo_page(session: Session, req: HttpRequest, photo_id: web::
         }
         else if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/photos/load/anon_photo.stpl")]
+            #[template(path = "desctop/photos/anon_photo.stpl")]
             struct Template {
                 list:                      PhotoList,
                 object:                    Photo,
@@ -463,7 +464,7 @@ pub async fn load_photo_page(session: Session, req: HttpRequest, photo_id: web::
 
         } else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/photos/load/anon_photo.stpl")]
+            #[template(path = "mobile/photos/anon_photo.stpl")]
             struct Template {
                 list:                      PhotoList,
                 object:                    Photo,

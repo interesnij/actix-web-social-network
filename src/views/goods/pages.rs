@@ -392,7 +392,7 @@ pub async fn load_good_page(session: Session, req: HttpRequest, good_id: web::Pa
             #[derive(TemplateOnce)]
             #[template(path = "mobile/goods/load/good.stpl")]
             struct Template {
-                list:                        PostList,
+                list:                        GoodList,
                 object:                      Good,
                 request_user:                User,
                 is_user_can_see_good_list:   bool,
