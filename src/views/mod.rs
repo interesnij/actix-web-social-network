@@ -8,7 +8,7 @@ pub mod docs;
 pub mod goods;
 pub mod music;
 pub mod photos;
-//pub mod survey;
+pub mod survey;
 pub mod video;
 
 pub use self::{
@@ -22,6 +22,6 @@ pub use self::{
     goods::*,
     music::*,
     photos::*,
-    //survey::*,
+    survey::*,
     video::*,
 };
