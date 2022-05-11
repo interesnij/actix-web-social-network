@@ -150,7 +150,7 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
     let mut text = "".to_string();
 
     let _post = get_post(*post_id);
-    let _list = get_post(_post.post_list_id);
+    let _list = get_post_list(_post.post_list_id);
 
     let object_list: Vec<PostComment>;
     if page > 1 {
