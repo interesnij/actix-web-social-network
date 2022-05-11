@@ -2,7 +2,7 @@
 <div class="media mt-3" style="padding-left: 7px">
   <form class="uuid_saver" data-uuid="<%= list.id %>" data-type="lph<%= list.id %>" data-pk="<%= list.id %>">
   <h5 class="mt-1">
-    <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %></span> (<%= list.count_items() %>)
+    <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %></span> (<%= list.count %>)
     <% if is_user_can_create_tracks { %>
       <input type="file" accept="mp3/*" class="case_all_input add_tracks_in_list" name="file" style="display:none" multiple="multiple">
       <a class="pointer previous_click hide_delete" tooltip="Добавить аудиозапись" flow="up">

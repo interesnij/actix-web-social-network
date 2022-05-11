@@ -16,7 +16,7 @@
       </a> - фотоальбом
       </div>
       <h5 class="mt-1">
-        <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %></span> (<%= list.count_items() %>)
+        <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %></span> (<%= list.count %>)
           <% include!("../../../generic/items/list_meta.stpl"); %>
       </h5>
     </div>

@@ -10,7 +10,7 @@
         </a> - фотоальбом
         </div>
       <h5 class="mt-1">
-        <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %></span> (<%= list.count_items() %>)
+        <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %></span> (<%= list.count %>)
           <input type="file" accept="image/*" class="case_all_input add_photos_in_list" name="file" style="display:none" multiple="multiple">
           <% if is_user_can_create_photos && list.types == 2 { %>
           <a class="pointer previous_click hide_delete" tooltip="Добавить фото" flow="up">
