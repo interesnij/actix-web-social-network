@@ -27,7 +27,7 @@ use crate::models::{User, SurveyList, Survey};
 
 
 pub fn surveys_urls(config: &mut web::ServiceConfig) {
-    config.route("/surveys/load_list/{list_id}/", web::get().to(load_list_page));
+    config.route("/survey/load_list/{list_id}/", web::get().to(load_list_page));
 }
 
 pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
