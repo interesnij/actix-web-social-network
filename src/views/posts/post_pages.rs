@@ -155,10 +155,9 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
     let _list = get_post_list(_post.post_list_id);
 
     let _posts = _list.get_items();
-    let _posts_len = _list.count;
     for (i, item) in _posts.iter().enumerate().rev() {
         if item.id == _post.id {
-            if (i + 1) != _posts_len {
+            if (i + 1) != _list.count {
                 _prev = Some(&_posts[i + 1].id);
             };
             if i != 0 {
