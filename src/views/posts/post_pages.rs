@@ -157,7 +157,7 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
     let _posts = _list.get_items();
     for (i, item) in _posts.iter().enumerate().rev() {
         if item.id == _post.id {
-            if (i + 1) != _list.count {
+            if (i + 1) != _posts.len() {
                 _prev = Some(&_posts[i + 1].id);
             };
             if i != 0 {
@@ -249,11 +249,11 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
                 list:                       _list,
                 object:                     _post,
                 request_user:               _request_user,
-                is_user_can_see_post_list:   is_user_can_see_post_list,
-                is_user_can_see_comments:    is_user_can_see_comments,
-                is_user_can_create_comments: is_user_can_create_comments,
-                object_list:                 object_list,
-                next_page_number:            next_page_number,
+                is_user_can_see_post_list:  is_user_can_see_post_list,
+                is_user_can_see_comments:   is_user_can_see_comments,
+                is_user_can_create_comment: is_user_can_create_comments,
+                object_list:                object_list,
+                next_page_number:           next_page_number,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -272,7 +272,7 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
             text = _tuple.1;
         }
         let is_user_can_see_post_list = _list.is_anon_user_can_see_el();
-        let is_user_can_see_comment = _list.is_anon_user_can_see_comment();
+        let is_user_can_see_comments = _list.is_anon_user_can_see_comment();
         if is_open == false {
             use crate::views::close_item;
             return close_item(text)
@@ -281,20 +281,20 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
             #[derive(TemplateOnce)]
             #[template(path = "desctop/posts/load/anon_post.stpl")]
             struct Template {
-                list:                        PostList,
-                object:                      Post,
-                is_user_can_see_post_list:   bool,
-                is_user_can_see_comments:    bool,
-                object_list:                 Vec<PostComment>,
-                next_page_number:            i32,
+                list:                      PostList,
+                object:                    Post,
+                is_user_can_see_post_list: bool,
+                is_user_can_see_comments:  bool,
+                object_list:               Vec<PostComment>,
+                next_page_number:          i32,
             }
             let body = Template {
-                list:                       _list,
-                object:                     _post,
-                is_user_can_see_post_list:   is_user_can_see_post_list,
-                is_user_can_see_comments:    is_user_can_see_comments,
-                object_list:                 object_list,
-                next_page_number:            next_page_number,
+                list:                      _list,
+                object:                    _post,
+                is_user_can_see_post_list: is_user_can_see_post_list,
+                is_user_can_see_comments:  is_user_can_see_comments,
+                object_list:               object_list,
+                next_page_number:          next_page_number,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -304,20 +304,20 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
             #[derive(TemplateOnce)]
             #[template(path = "mobile/posts/load/anon_post.stpl")]
             struct Template {
-                list:                        PostList,
-                object:                      Post,
-                is_user_can_see_post_list:   bool,
-                is_user_can_see_comments:    bool,
-                object_list:                 Vec<PostComment>,
-                next_page_number:            i32,
+                list:                      PostList,
+                object:                    Post,
+                is_user_can_see_post_list: bool,
+                is_user_can_see_comments:  bool,
+                object_list:               Vec<PostComment>,
+                next_page_number:          i32,
             }
             let body = Template {
-                list:                       _list,
-                object:                     _post,
-                is_user_can_see_post_list:   is_user_can_see_post_list,
-                is_user_can_see_comments:    is_user_can_see_comments,
-                object_list:                 object_list,
-                next_page_number:            next_page_number,
+                list:                      _list,
+                object:                    _post,
+                is_user_can_see_post_list: is_user_can_see_post_list,
+                is_user_can_see_comments:  is_user_can_see_comments,
+                object_list:               object_list,
+                next_page_number:          next_page_number,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
