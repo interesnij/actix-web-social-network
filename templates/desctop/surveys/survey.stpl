@@ -51,7 +51,42 @@
         <%- object.get_time_description() %>
         <br>
 
-        
+        <% for answer in object.get_answers().iter() { %>
+          <% let get_procent = answer.get_procent(); %>
+
+          <% if object.is_user_voted(request_user.id) { %>
+          <div class="lite_color answer_style" data-pk="<%= answer.id %>">
+            <div class="progress2" style="width:<%= get_procent %> %;"></div>
+            <span class="progress_span_r"><%= answer.content %>
+              <span class="count text-muted small"><%= answer.get_count() %></span>
+            </span>
+            <span class="progress_span_l" style="margin-left: auto;">
+
+              <span class="vote_svg">
+                <% if answer.is_user_voted(request_user.id) { %>
+                  <svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>
+                <% } %>
+              </span>
+              <span class="procent"><%= get_procent %> %</span>
+            </span>
+          </div>
+
+          <% } else { %>
+
+          <div class="lite_color answer_style <% if not object.is_time_end() { %>pointer survey_vote<% } %>" data-pk="<%= answer.id %>">
+            <div class="progress2" style="width:<%= get_procent %> %;"></div>
+            <span class="progress_span_r"><%= answer.content %>
+              <span class="count text-muted"><%= answer.vote %></span>
+            </span>
+            <span class="progress_span_l" style="margin-left: auto;">
+              <span class="vote_svg"></span>
+              <span class="procent"><%= get_procent %> %</span>
+            </span>
+          </div>
+          <% } %>
+
+        <% } %>
+
         <% if object.is_have_votes() { %>
           <% if object.is_anonymous { %>
             Это анонимный опрос.
