@@ -619,7 +619,7 @@ function load_item_window() {
       console.log(params[3]);
       // если есть параметр wall, значит открыт элемент стены: пост, прикрепленный элемент, и т.д.
       if (params[2].split("=")[0] == "post_pk") {
-        setTimeout(create_fullscreen("/posts/post/" + params[2].split("=")[1] + "/", "worker_fullscreen"), 3000)
+        setTimeout(create_fullscreen("/posts/load_post/" + params[2].split("=")[1] + "/", "worker_fullscreen"), 3000)
       } else if (params[2].split("=")[0] == "photo_pk") {
         setTimeout(create_fullscreen("/gallery/post_photo/" + params[3].split("=")[1] + "/" + params[2].split("=")[1] + "/", "photo_fullscreen"), 3000)
       } else if (params[2].split("=")[0] == "doclist") {
@@ -653,7 +653,7 @@ function if_list(block) {
     if (block.querySelector('.load_block') && block.querySelector('.load_block').getAttribute) {
         _block = block.querySelector('.load_block');
         list_block_load(_block, ".load_block", _block.getAttribute("data-link"));
-        scrolled(_block.querySelector('.is_paginate'));  
+        scrolled(_block.querySelector('.is_paginate'));
     } else if (block.querySelector('.is_block_paginate')) {
         lenta = block.querySelector('.is_block_paginate');
         link = lenta.getAttribute("data-link");

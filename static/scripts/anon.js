@@ -826,7 +826,7 @@ function if_list(block) {
     if (params) {
       if (params[0].split("=")[1] == "wall") {
         // если есть параметр wall, значит открыт элемент стены: пост, прикрепленный элемент, и т.д.
-        create_fullscreen("/posts/post/" + params[2].split("=")[1] + "/", "worker_fullscreen");
+        create_fullscreen("/posts/load_post/" + params[2].split("=")[1] + "/", "worker_fullscreen");
       }
     }
 };
