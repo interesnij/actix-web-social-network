@@ -238,7 +238,7 @@ on('#ajax', 'click', '.wall_fullscreen', function(e) {
   e.preventDefault();
   card = this.parentElement.parentElement.parentElement.parentElement;
   pk = card.getAttribute('data-pk');
-  create_fullscreen("/posts/post/" + pk + "/", "worker_fullscreen");
+  create_fullscreen("/posts/load_post/" + pk + "/", "worker_fullscreen");
   window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&post_pk=" + pk);
 });
 
@@ -256,7 +256,7 @@ on('#ajax', 'click', '.fullscreen', function(e) {
   else if (e.target.classList.contains("action")) {null}
   else {
     pk = card.getAttribute('data-pk');
-    create_fullscreen("/posts/post/" + pk + "/", "worker_fullscreen");
+    create_fullscreen("/posts/load_post/" + pk + "/", "worker_fullscreen");
     window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&post_pk=" + pk);
   }
 });
@@ -275,7 +275,7 @@ on('#ajax', 'click', '.fix_fullscreen', function(e) {
   else if (e.target.classList.contains("action")) {null}
   else {
     pk = card.getAttribute('data-pk');
-    create_fullscreen("/posts/fix_post/" + pk + "/", "worker_fullscreen");
+    create_fullscreen("/posts/load_fix_post/" + pk + "/", "worker_fullscreen");
     window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&post_pk=" + pk);
   }
 });
