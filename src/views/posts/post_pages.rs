@@ -158,10 +158,10 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
     for (i, item) in _posts.iter().enumerate().rev() {
         if item.id == _post.id {
             if (i + 1) != _posts.len() {
-                _prev = Some(&_posts[i + 1].id);
+                prev = Some(&_posts[i + 1].id);
             };
             if i != 0 {
-                _next = Some(&_posts[i - 1].id);
+                next = Some(&_posts[i - 1].id);
             };
             break;
         }
@@ -217,6 +217,8 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
                 is_user_can_create_comments: bool,
                 object_list:                 Vec<PostComment>,
                 next_page_number:            i32,
+                prev:                        Option<i32>,
+                next:                        Option<i32>,
             }
             let body = Template {
                 list:                       _list,
@@ -227,6 +229,8 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
                 is_user_can_create_comments: is_user_can_create_comments,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
+                prev:                        prev,
+                next:                        next,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -244,16 +248,20 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
                 is_user_can_create_comments: bool,
                 object_list:                 Vec<PostComment>,
                 next_page_number:            i32,
+                prev:                        Option<i32>,
+                next:                        Option<i32>,
             }
             let body = Template {
-                list:                       _list,
-                object:                     _post,
-                request_user:               _request_user,
-                is_user_can_see_post_list:  is_user_can_see_post_list,
-                is_user_can_see_comments:   is_user_can_see_comments,
-                is_user_can_create_comment: is_user_can_create_comments,
-                object_list:                object_list,
-                next_page_number:           next_page_number,
+                list:                        _list,
+                object:                      _post,
+                request_user:                _request_user,
+                is_user_can_see_post_list:   is_user_can_see_post_list,
+                is_user_can_see_comments:    is_user_can_see_comments,
+                is_user_can_create_comments: is_user_can_create_comments,
+                object_list:                 object_list,
+                next_page_number:            next_page_number,
+                prev:                        prev,
+                next:                        next,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -287,6 +295,8 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
                 is_user_can_see_comments:  bool,
                 object_list:               Vec<PostComment>,
                 next_page_number:          i32,
+                prev:                      Option<i32>,
+                next:                      Option<i32>,
             }
             let body = Template {
                 list:                      _list,
@@ -295,6 +305,8 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
                 is_user_can_see_comments:  is_user_can_see_comments,
                 object_list:               object_list,
                 next_page_number:          next_page_number,
+                prev:                      prev,
+                next:                      next,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -310,6 +322,8 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
                 is_user_can_see_comments:  bool,
                 object_list:               Vec<PostComment>,
                 next_page_number:          i32,
+                prev:                      Option<i32>,
+                next:                      Option<i32>,
             }
             let body = Template {
                 list:                      _list,
@@ -318,6 +332,8 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
                 is_user_can_see_comments:  is_user_can_see_comments,
                 object_list:               object_list,
                 next_page_number:          next_page_number,
+                prev:                      prev,
+                next:                      next,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
