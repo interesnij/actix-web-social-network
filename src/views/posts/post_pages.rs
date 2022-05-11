@@ -158,10 +158,10 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
     for (i, item) in _posts.iter().enumerate().rev() {
         if item.id == _post.id {
             if (i + 1) != _posts.len() {
-                prev = Some(&_posts[i + 1].id);
+                prev = Some(_posts[i + 1].id);
             };
             if i != 0 {
-                next = Some(&_posts[i - 1].id);
+                next = Some(_posts[i - 1].id);
             };
             break;
         }
