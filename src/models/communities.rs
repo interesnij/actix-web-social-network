@@ -784,8 +784,8 @@ impl Community {
 
         let _connection = establish_connection();
         let new_community_form = NewCommunity{
-                name:                    name,
-                status:                  None,
+                name:                     name,
+                status:                   None,
                 types:                    types,
                 perm:                     "a".to_string(),
                 level:                    100,
