@@ -23,7 +23,7 @@ use crate::utils::{
 
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::{User, VideoList, Video};
+use crate::models::{User, VideoList, Video, VideoComment, Community};
 
 
 pub fn videos_urls(config: &mut web::ServiceConfig) {

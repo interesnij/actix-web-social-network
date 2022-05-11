@@ -25,7 +25,7 @@ use crate::utils::{
 
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::{User, GoodList, Good, GoodComment};
+use crate::models::{User, GoodList, Good, GoodComment, Community};
 
 
 pub fn goods_urls(config: &mut web::ServiceConfig) {

@@ -23,7 +23,7 @@ use crate::utils::{
 
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::{User, PhotoList, Photo, PhotoComment};
+use crate::models::{User, PhotoList, Photo, PhotoComment, Community};
 
 
 pub fn photos_urls(config: &mut web::ServiceConfig) {
