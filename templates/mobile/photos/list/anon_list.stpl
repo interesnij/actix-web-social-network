@@ -6,7 +6,7 @@
   </h5>
 </div>
 
-<div class="row is_paginate drag_container is_stat_list" data-pk="<%= list.id %>" data-type="pho">
+<div class="row no-gutters is_paginate drag_container is_stat_list" data-pk="<%= list.id %>" data-type="pho">
 
 
 <% if object_list.len() > 0 { %>
