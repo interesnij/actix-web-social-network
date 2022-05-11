@@ -357,7 +357,7 @@ pub async fn load_photo_page(session: Session, req: HttpRequest, photo_id: web::
 
         else if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/photos/photo.stpl")]
+            #[template(path = "desctop/photos/load/photo.stpl")]
             struct Template {
                 list:                        PhotoList,
                 object:                      Photo,
@@ -388,7 +388,7 @@ pub async fn load_photo_page(session: Session, req: HttpRequest, photo_id: web::
 
         } else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/photos/photo.stpl")]
+            #[template(path = "mobile/photos/load/photo.stpl")]
             struct Template {
                 list:                        PhotoList,
                 object:                      Photo,
@@ -437,7 +437,7 @@ pub async fn load_photo_page(session: Session, req: HttpRequest, photo_id: web::
         }
         else if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/photos/anon_photo.stpl")]
+            #[template(path = "desctop/photos/load/anon_photo.stpl")]
             struct Template {
                 list:                      PhotoList,
                 object:                    Photo,
@@ -464,7 +464,7 @@ pub async fn load_photo_page(session: Session, req: HttpRequest, photo_id: web::
 
         } else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/photos/anon_photo.stpl")]
+            #[template(path = "mobile/photos/load/anon_photo.stpl")]
             struct Template {
                 list:                      PhotoList,
                 object:                    Photo,
