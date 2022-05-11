@@ -35,22 +35,7 @@
         <br>
         <h4 class="m-0"><%= object.title %></h4>
 
-
-        <p class="position-relative">
-          <% if object.community_id.is_some() { %>
-            <% let _community = object.get_community(); %>
-            <a href="<%= _community.get_link() %>" class="underline ajax">
-              <%= _community.name %>
-            </a>
-          <% } else { %>
-          <% let _creator = object.get_creator(); %>
-          <a href="<%= _creator.get_link() %>" class="underline ajax">
-            <%= _creator.get_full_name() %>
-          </a>
-          <% } %>
-        </p>
-        <%- object.get_time_description() %>
-        <br>
+        
 
         <% for answer in object.get_answers().iter() { %>
 
