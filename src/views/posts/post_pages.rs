@@ -148,8 +148,8 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
     let mut next_page_number = 0;
     let mut is_open = false;
     let mut text = "".to_string();
-    let mut prev: Option<i32>;
-    let mut next: Option<i32>;
+    let mut prev: Option<i32> = None;
+    let mut next: Option<i32> = None;
 
     let _post = get_post(*post_id);
     let _list = get_post_list(_post.post_list_id);
