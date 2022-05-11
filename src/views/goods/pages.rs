@@ -209,7 +209,7 @@ pub async fn add_user_list_page(session: Session, req: HttpRequest) -> actix_web
         .body(body))
     }
 }
-pub async fn edit_list_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn edit_user_list_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if !is_signed_in(&session) {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
