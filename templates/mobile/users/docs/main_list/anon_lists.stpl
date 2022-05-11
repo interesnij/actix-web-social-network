@@ -66,4 +66,12 @@
        </ul>
    </div>
 </div>
+<% } else { %>
+<div class="media mt-3" style="padding-left: 7px;">
+  <h5 class="mt-1" style="flex: 1;">
+    <a class="underline ajax" href="<%= user.get_link() %>">
+      <%= user.get_full_name() %>
+    </a> - документы
+  </h5>
+</div>
 <% } %>

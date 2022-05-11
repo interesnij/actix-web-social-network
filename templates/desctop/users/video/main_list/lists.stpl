@@ -74,8 +74,7 @@
   <h5 class="mt-1" style="flex: 1;">
     <a class="underline ajax" href="<%= user.get_link() %>">
       <%= user.get_full_name() %>
-    </a> - видеоальбомы
-    (<%= lists.len() %>)
+    </a> - видеозаписи
   </h5>
 </div>
 <% } %>

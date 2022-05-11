@@ -68,4 +68,12 @@
        </ul>
    </div>
 </div>
+<% } else { %>
+<div class="media mt-3" style="padding-left: 7px;">
+  <h5 class="mt-1" style="flex: 1;">
+    <a class="underline ajax" href="<%= community.get_link() %>">
+      <%= community.name %>
+    </a> - видеозаписи
+  </h5>
+</div>
 <% } %>
