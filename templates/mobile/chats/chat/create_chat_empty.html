@@ -1,5 +1,5 @@
 
-    <form id="add_chat_form" class="is_stat_list" data-pk="{{ user.pk }}" data-type="create_user_chat">
+    <form id="add_chat_form" class="is_stat_list" data-pk="<%= user.id %>" data-type="create_user_chat">
         <div class="card mb-3">
             <div class="card-header">
             </div>
@@ -33,7 +33,7 @@
             </div>
             <div class="card-footer">
                 <button class="btn border this_fullscreen_hide">Отмена</button>
-                <button type="button" class="btn btn-success float-right" data-pk="{{ user.pk }}" id="add_chat_btn">Создать</button>
+                <button type="button" class="btn btn-success float-right" data-pk="<%= user.id %>" id="add_chat_btn">Создать</button>
             </div>
         </div>
     </form>

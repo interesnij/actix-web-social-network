@@ -31,7 +31,7 @@
       </div>
 
       <form>
-      <div class="container answers_container <% if !object.is_multiple { %>no_multiple<% } %>"> 
+      <div class="container answers_container <% if !object.is_multiple { %>no_multiple<% } %>">
         <br>
         <h4 class="m-0"><%= object.title %></h4>
 
@@ -63,7 +63,7 @@
             <span class="progress_span_l" style="margin-left: auto;">
 
               <span class="vote_svg">
-                <% if answer.is_user_voted(request_user.pk) { %>
+                <% if answer.is_user_voted(request_user.id) { %>
                   <svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>
                 <% } %>
               </span>

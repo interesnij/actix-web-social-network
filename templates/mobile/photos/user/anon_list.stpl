@@ -1,6 +1,6 @@
 {% load get_key %}
 
-<div class="container mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
+<div class="container mt-3 pk_saver" data-pk="<%= user.id %>" data-uuid="{{ list.uuid }}">
   <div class="row no-gutters">
     <div class="col">
       <a class="btn btn-sm border this_mob_fullscreen_hide" style="width: -webkit-fill-available;">

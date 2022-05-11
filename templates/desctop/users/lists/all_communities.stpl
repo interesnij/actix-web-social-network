@@ -62,7 +62,7 @@
 </div>
 
 <div class="col-md-4 mt-3">
-    <button class="btn btn-sm border user_community_create_window" style="margin-bottom:15px;width:100%;" data-pk="{{ user.pk }}">
+    <button class="btn btn-sm border user_community_create_window" style="margin-bottom:15px;width:100%;">
         Создать сообщество
     </button>
 
