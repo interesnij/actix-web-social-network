@@ -73,7 +73,7 @@
 
           <% } else { %>
 
-          <div class="lite_color answer_style <% if not object.is_time_end() { %>pointer survey_vote<% } %>" data-pk="<%= answer.id %>">
+          <div class="lite_color answer_style <% if !object.is_time_end() { %>pointer survey_vote<% } %>" data-pk="<%= answer.id %>">
             <div class="progress2" style="width:<%= get_procent %> %;"></div>
             <span class="progress_span_r"><%= answer.content %>
               <span class="count text-muted"><%= answer.vote %></span>
