@@ -1,0 +1,32 @@
+
+<div data-pk="<%= object.id %>" class="card mb-3 pb-1 border text-center position-relative box-shadow" style="border-radius: .3rem;">
+    <figure class="background-img">
+        <img src="<%- object.get_image() %>" alt="img">
+    </figure>
+
+      <div class="dropdown">
+          <a class="btn_default drop pointer" style="position:absolute;right:5px;top:5px;">
+              <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M0 0h24v24H0z" fill="none" />
+                  <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+              </svg>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" data-type="sur<%= object.id %>" style="top:30px;right:-10px;">
+            <span class="dropdown-item create_repost">Добавить</span>
+            <% if !object.is_no_edited() && object.is_user_voted(request_user.id) { %>
+              <span class="dropdown-item survey_unvote">Удалить голос</span>
+            <% } %>
+            <% if object.is_user_can_edit_delete_item(request_user.id) { %>
+              <% if object.is_can_edit() { %>
+                <span class="dropdown-item survey_edit">Изменить</span>
+              <% } %>
+              <span class="dropdown-item survey_remove">Удалить</span>
+            <% } else if request_user.is_moderator() { %>
+              <span class="dropdown-item create_close">Закрыть</span>
+            <% } else { %>
+              <span class="dropdown-item create_claim">Пожаловаться</span>
+            <% } %>
+            <span class="dropdown-item copy_link">Копировать ссылку</span>
+          </div>
+      </div>
+  </div>
