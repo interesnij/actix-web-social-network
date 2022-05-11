@@ -9,7 +9,7 @@
 <div class="card mb-2">
   <div class="card-body">
     <div class="video_playlist" id="movies_container">
-    <div class="row is_block_paginate is_paginate drag_container is_stat_list" data-pk="<%= list.id %>" data-type="vid" data-community-id="<%= list.community_id.unwrap() %>" data-link="/video/load_list_video/<%= list.id %>/">
+    <div class="row is_paginate drag_container is_stat_list" data-pk="<%= list.id %>" data-type="vid">
 
 
 <% if object_list.len() > 0 { %>

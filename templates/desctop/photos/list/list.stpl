@@ -15,7 +15,7 @@
   </form>
 </div>
 
-<div class="row is_block_paginate is_paginate drag_container is_stat_list" data-pk="<%= list.id %>" data-type="pho" data-community-id="<%= list.community_id.unwrap() %>">
+<div class="row is_paginate drag_container is_stat_list" data-pk="<%= list.id %>" data-type="pho">
 
 <% if object_list.len() > 0 { %>
   <% for object in object_list.iter() { %>

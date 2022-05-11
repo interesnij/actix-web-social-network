@@ -7,7 +7,8 @@
 </div>
 <div class="card mb-2">
 <div class="card-body">
-  <div class="row is_block_paginate is_paginate drag_container is_stat_list" data-pk="<%= list.id %>" data-type="goo" data-community-id="<%= list.community_id.unwrap() %>">
+  <div class="row is_paginate drag_container is_stat_list" data-pk="<%= list.id %>" data-type="goo">
+  >
 
 <% if object_list.len() > 0 { %>
   <% for object in object_list.iter() { %>
