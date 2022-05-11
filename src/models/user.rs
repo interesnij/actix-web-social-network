@@ -572,7 +572,7 @@ impl User {
         return self.perm > 9 || self.types == 7;
     }
     pub fn is_online(&self) -> bool {
-        use chrono::{NaiveDateTime, NaiveDate, NaiveTime, Duration};
+        use chrono::Duration;
         return (self.last_activity + Duration::seconds(300)) > chrono::Local::now().naive_utc();
     }
     pub fn get_online_display(&self) -> String {

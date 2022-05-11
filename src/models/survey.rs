@@ -1655,6 +1655,10 @@ impl Survey {
         }
         return true;
     }
+    pub fn is_can_edit(&self) -> bool {
+        use chrono::Duration;
+        return (self.created + Duration::hours(3)) > chrono::Local::now().naive_utc();
+    }
 }
 
 /////// UserSurveyListCollection //////
