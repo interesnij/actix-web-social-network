@@ -1,0 +1,35 @@
+<span class="load_block">
+      <div class="media mt-3" style="padding-left: 7px;">
+        <h5 class="mt-1" class="uuid_saver" data-uuid="<%= list.id %>" data-pk="<%= list.id %>">
+          <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %></span> (<%= list.count_items() %>)
+          <% if is_user_can_create_surveys { %>
+          <a class="pointer add_survey" tooltip="Добавить опрос" flow="up">
+            <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+          </a>
+          <% } %>
+          <% include!("../../generic/items/list_meta.stpl"); %>
+        </h5>
+      </div>
+    <div class="card mb-2">
+        <div class="card-body">
+        <div class="row is_paginate drag_container is_stat_list" data-pk="<%= list.id %>" data-type="sur">
+
+
+<% if object_list.len() > 0 { %>
+  <% for object in object_list.iter() { %>
+    
+  <% } %>
+  <% if next_page_number > 0 { %>
+  <div class="load centered m-1 next_page_list" data-link="/survey/load_list/<%= list.id %>/?page=<%= next_page_number %>">
+      <img src="/static/images/preloader.gif">
+  </div>
+  <% } %>
+
+  <% } else { %>
+    <% include!("../no_items.stpl"); %>
+  <% } %>
+
+  </div>
+  </div>
+  </div>
+</span>
