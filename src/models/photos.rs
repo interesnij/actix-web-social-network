@@ -164,55 +164,55 @@ impl PhotoList {
             return "Предупреждение за нарушение правил соцсети трезвый.рус".to_string();
         }
     }
-    pub fn create_photo(&self, community_id: Option<i32>, user_id: i32,
-        preview: String, file: String) -> Photo {
+    //pub fn create_photo(&self, community_id: Option<i32>, user_id: i32,
+    //    preview: String, file: String) -> Photo {
 
-        let _connection = establish_connection();
+    //    let _connection = establish_connection();
 
-        diesel::update(&*self)
-          .set(schema::photo_lists::count.eq(self.count + 1))
-          .get_result::<PhotoList>(&_connection)
-          .expect("Error.");
+    //    diesel::update(&*self)
+    //      .set(schema::photo_lists::count.eq(self.count + 1))
+    //      .get_result::<PhotoList>(&_connection)
+    //      .expect("Error.");
 
-        let new_photo_form = NewPhoto {
-          community_id: community_id,
-          user_id: user_id,
-          photo_list_id: self.id,
-          types: "a".to_string(),
-          preview: preview,
-          file: file,
-          description: None,
-          comment_enabled: true,
-          votes_on: true,
+    //    let new_photo_form = NewPhoto {
+    //      community_id: community_id,
+    //      user_id: user_id,
+    //      photo_list_id: self.id,
+    //      types: "a".to_string(),
+    //      preview: preview,
+    //      file: file,
+    //      description: None,
+    //      comment_enabled: true,
+    //      votes_on: true,
 
-          created: chrono::Local::now().naive_utc(),
-          comment: 0,
-          view: 0,
-          liked: 0,
-          disliked: 0,
-          repost: 0,
-          copy: 0,
-          position: (self.count).try_into().unwrap(),
-        };
-        let new_photo = diesel::insert_into(schema::photos::table)
-            .values(&new_photo_form)
-            .get_result::<Photo>(&_connection)
-            .expect("Error.");
+    //      created: chrono::Local::now().naive_utc(),
+    //      comment: 0,
+    //      view: 0,
+    //      liked: 0,
+    //      disliked: 0,
+    //      repost: 0,
+    //      copy: 0,
+    //      position: (self.count).try_into().unwrap(),
+    //    };
+    //    let new_photo = diesel::insert_into(schema::photos::table)
+    //        .values(&new_photo_form)
+    //        .get_result::<Photo>(&_connection)
+    //        .expect("Error.");
 
-        if community_id.is_some() {
-            use crate::utils::get_community;
-            let community = self.get_community();
-            community.plus_photos(1);
-            return new_photo;
-        }
-        else {
-            use crate::utils::get_user;
+    //    if community_id.is_some() {
+    //        use crate::utils::get_community;
+    //        let community = self.get_community();
+    //        community.plus_photos(1);
+    //        return new_photo;
+    //    }
+    //    else {
+    //        use crate::utils::get_user;
 
-            let creator = get_user(user_id);
-            creator.plus_photos(1);
-            return new_photo;
-        }
-    }
+    //        let creator = get_user(user_id);
+    //        creator.plus_photos(1);
+    //        return new_photo;
+    //    }
+    //}
     pub fn get_description(&self) -> String {
         return "<a data-photolist='".to_string() + &self.get_str_id() + &"' class='ajax'>".to_string() + &self.name + &"</a>".to_string();
     }
