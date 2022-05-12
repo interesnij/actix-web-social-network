@@ -26,7 +26,7 @@ pub fn routes(cfg: &mut web::ServiceConfig) {
     .configure(docs_routes)
     .configure(goods_routes)
     .configure(music_routes)
-    .configure(photos_routes)
+    //.configure(photos_routes)
     .configure(survey_routes)
     .configure(video_routes)
     ;
