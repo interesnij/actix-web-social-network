@@ -67,7 +67,7 @@ pub async fn images_form (
 
         let _new_path = Uuid::new_v4().to_string() + &".jpg".to_string();
         let file = UploadedFiles::new (
-            owner_path,
+            owner_path.clone(),
             owner_id.to_string(),
             "photos".to_string(),
             _new_path.to_string(),
@@ -128,7 +128,7 @@ pub async fn add_photos_in_list(session: Session, mut payload: Multipart, _id: w
             let mut image_list = Vec::new();
             for image in form.images.iter() {
                 let new_photo = Photo::create_photo (
-                    _list.community_id.clone(),
+                    &_list.community_id,
                     _request_user.id,
                     _list,
                     image.to_string(),
