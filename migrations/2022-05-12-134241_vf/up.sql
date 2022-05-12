@@ -1,4 +1,4 @@
 -- Your SQL goes here
 
 ALTER TABLE posts ALTER COLUMN parent_id
-SET NOT NULL;
+DROP NOT NULL;
