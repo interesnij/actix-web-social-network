@@ -18,16 +18,16 @@ use crate::views::{
 pub fn routes(cfg: &mut web::ServiceConfig) {
     cfg
     .configure(pages::pages_routes)
-    .configure(auth::auth_routes)
-    .configure(user_routes)
-    .configure(community_routes)
-    .configure(post_routes)
-    .configure(chat_routes)
-    .configure(docs_routes)
-    .configure(goods_routes)
-    .configure(music_routes)
+    //.configure(auth::auth_routes)
+    //.configure(user_routes)
+    //.configure(community_routes)
+    //.configure(post_routes)
+    //.configure(chat_routes)
+    //.configure(docs_routes)
+    //.configure(goods_routes)
+    //.configure(music_routes)
     //.configure(photos_routes)
-    .configure(survey_routes)
-    .configure(video_routes)
+    //.configure(survey_routes)
+    //.configure(video_routes)
     ;
 }
