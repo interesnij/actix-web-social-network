@@ -169,7 +169,7 @@ impl PhotoList {
 
         let _connection = establish_connection();
 
-        diesel::update(&self)
+        diesel::update(&*self)
           .set(schema::photo_lists::count.eq(self.count + 1))
           .get_result::<PhotoList>(&_connection)
           .expect("Error.");
