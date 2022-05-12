@@ -36,7 +36,7 @@ impl UploadedFiles {
         create_dir_all(format_path).unwrap();
         UploadedFiles {
             name: filename.to_string(),
-            path: format_path,
+            path: format_path.clone(),
         }
     }
 }
