@@ -1,8 +1,45 @@
 use serde::{Deserialize, Serialize};
-use std::str;
+use std::{
+    str,
+    io::Write,
+    std::fs::create_dir_all,
+};
 use actix_multipart::{Field, Multipart};
 use futures::StreamExt;
 
+
+#[derive(Debug, Clone)]
+pub struct UploadedFiles {
+    pub name: String,
+    pub path: String,
+}
+impl UploadedFiles {
+    fn new (
+        owner_path: String, // "users"
+        owner_id:   i32,    // user_id / community_id
+        folder:     String, // "photos"
+        year:       i32,    // year
+        month:      i32,    // month
+        day:        i32,    // "photos"
+        filename:   String  // uuid
+    ) -> UploadedFiles {
+        let format_path = format!(
+            "./media/{}/{}/{}/{}/{}/{}/{}/",
+            owner_path.to_string(),
+            owner_id.to_string(),
+            folder.to_string(),
+            year.to_string(),
+            month.to_string(),
+            day.to_string(),
+            filename.to_string(),
+        );
+        create_dir_all(format_path).unwrap();
+        UploadedFiles {
+            name: filename.to_string(),
+            path: format_path,
+        }
+    }
+}
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct PostListForm {
