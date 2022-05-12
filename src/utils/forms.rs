@@ -14,7 +14,7 @@ pub struct UploadedFiles {
     pub path: String,
 }
 impl UploadedFiles {
-    fn new (
+    pub fn new (
         owner_path: String, // "users"
         owner_id:   i32,    // user_id / community_id
         folder:     String, // "photos"

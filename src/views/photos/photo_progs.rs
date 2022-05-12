@@ -25,6 +25,7 @@ use crate::models::{User, PhotoList, Photo, PhotoComment, Community};
 use serde::{Deserialize, Serialize};
 
 use std;
+use std::borrow::BorrowMut;
 use actix_multipart::{Field, Multipart};
 use futures::StreamExt;
 
@@ -67,8 +68,8 @@ pub async fn images_form (
         let _new_path = Uuid::new_v4().to_string() + &".jpg".to_string();
         let file = UploadedFiles::new (
             owner_path,
-            owner_id,
-            "photos",
+            owner_id.to_string(),
+            "photos".to_string(),
             _new_path.to_string(),
         );
         let file_path = file.path.clone();
@@ -93,8 +94,10 @@ pub async fn add_photos_in_list(session: Session, mut payload: Multipart, _id: w
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
         let _list = get_photo_list(*_id);
-        let mut owner_path: String = "".to_string();
-        let mut owner_id: i32 = 0;
+        let mut owner_path = "".to_string();
+        let mut owner_id = 0;
+        let mut is_open = false;
+        let mut text = "".to_string();
 
         if _list.community_id.is_some() {
             let _tuple = get_community_permission(&_list.get_community(), &_request_user);
@@ -122,7 +125,7 @@ pub async fn add_photos_in_list(session: Session, mut payload: Multipart, _id: w
                 owner_id
             ).await;
 
-            let mut image_list: Vec<Image>;
+            let mut image_list: Vec<Photo>;
             for image in form.images.iter() {
                 let new_photo = Photo::create_photo (
                     _list.community_id,
@@ -137,10 +140,10 @@ pub async fn add_photos_in_list(session: Session, mut payload: Multipart, _id: w
             #[derive(TemplateOnce)]
             #[template(path = "desctop/photos/new_photos.stpl")]
             struct Template {
-                object_list: Vec<Image>,
+                object_list: Vec<Photo>,
             }
             let body = Template {
-                object: image_list,
+                object_list: image_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
