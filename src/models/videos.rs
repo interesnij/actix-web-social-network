@@ -10,6 +10,7 @@ use crate::schema::{
     video_votes,
     video_comment_votes,
 };
+
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
 use crate::utils::{establish_connection, JsonReactions, JsonPosition};
