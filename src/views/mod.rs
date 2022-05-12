@@ -1,27 +1,27 @@
 pub mod pages;
-pub mod auth;
-pub mod users;
-pub mod communities;
-pub mod posts;
-pub mod chats;
-pub mod docs;
-pub mod goods;
-pub mod music;
+//pub mod auth;
+//pub mod users;
+//pub mod communities;
+//pub mod posts;
+//pub mod chats;
+//pub mod docs;
+//pub mod goods;
+//pub mod music;
 //pub mod photos;
-pub mod survey;
-pub mod video;
+//pub mod survey;
+//pub mod video;
 
 pub use self::{
     pages::*,
-    auth::*,
-    users::*,
-    communities::*,
-    posts::*,
-    chats::*,
-    docs::*,
-    goods::*,
-    music::*,
+    //auth::*,
+    //users::*,
+    //communities::*,
+    //posts::*,
+    //chats::*,
+    //docs::*,
+    //goods::*,
+    //music::*,
     //photos::*,
-    survey::*,
-    video::*,
+    //survey::*,
+    //video::*,
 };

@@ -2,17 +2,17 @@ use actix_web::web;
 
 use crate::views::{
     pages,
-    auth,
-    user_routes,
-    community_routes,
-    post_routes,
-    chat_routes,
-    docs_routes,
-    goods_routes,
-    music_routes,
+    //auth,
+    //user_routes,
+    //community_routes,
+    //post_routes,
+    //chat_routes,
+    //docs_routes,
+    //goods_routes,
+    //music_routes,
     //photos_routes,
-    survey_routes,
-    video_routes,
+    //survey_routes,
+    //video_routes,
 };
 
 pub fn routes(cfg: &mut web::ServiceConfig) {
