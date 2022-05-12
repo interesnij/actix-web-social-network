@@ -52,9 +52,9 @@ CREATE TABLE posts (
     disliked        INT NOT NULL,
     repost          INT NOT NULL,
     copy            INT NOT NULL,
-    position        SMALLINT NOT NULL, 
+    position        SMALLINT NOT NULL,
     is_signature    BOOLEAN NOT NULL DEFAULT false,
-    parent_id       INT NOT NULL,
+    parent_id       INT,
 
     CONSTRAINT fk_posts_parent
         FOREIGN KEY(parent_id)
