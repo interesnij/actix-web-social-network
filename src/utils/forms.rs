@@ -20,6 +20,8 @@ impl UploadedFiles {
         folder:     String, // "photos"
         filename:   String  // uuid
     ) -> UploadedFiles {
+        use chrono::Datelike;
+
         let now = chrono::Local::now().naive_utc();
         let format_path = format!(
             "./media/{}/{}/{}/{}/{}/{}/{}/",

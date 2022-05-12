@@ -125,7 +125,7 @@ pub async fn add_photos_in_list(session: Session, mut payload: Multipart, _id: w
                 owner_id.to_string()
             ).await;
 
-            let mut image_list: Vec<Photo>::new(); 
+            let mut image_list: Vec<Photo>::new();
             for image in form.images.iter() {
                 let new_photo = Photo::create_photo (
                     _list.community_id.clone(),
@@ -247,7 +247,7 @@ pub async fn edit_user_photo_list(session: Session, mut payload: Multipart, _id:
     }
 }
 
-pub async fn add_community_photolist(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn add_community_photo_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         use crate::utils::post_list_form;
 
