@@ -33,10 +33,10 @@ impl UploadedFiles {
             now.day().to_string(),
             filename.to_string(),
         );
-        create_dir_all(format_path).unwrap();
+        create_dir_all(format_path.clone()).unwrap();
         UploadedFiles {
             name: filename.to_string(),
-            path: format_path.clone(),
+            path: format_path,
         }
     }
 }
