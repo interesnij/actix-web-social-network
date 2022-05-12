@@ -1,5 +1,3 @@
--- Your SQL goes here
-
 CREATE TABLE friends_visible_perms (
     id                      SERIAL PRIMARY KEY,
     user_id                 INT NOT NULL,
@@ -167,3 +165,4 @@ CREATE TABLE community_work_perms (
          FOREIGN KEY(user_id)
              REFERENCES users(id)
 );
+-- Your SQL goes here

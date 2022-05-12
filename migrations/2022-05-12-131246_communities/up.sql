@@ -25,7 +25,7 @@ CREATE TABLE communitys (
     id            SERIAL PRIMARY KEY,     -- id объекта
     name          VARCHAR(100) NOT NULL,  -- название
     description   VARCHAR(500),           -- описание
-    status        "char" NOT NULL,          -- статус
+    status        VARCHAR(100),           -- статус
     types         SMALLINT NOT NULL,      -- тип
     perm          "char" NOT NULL,          -- приватность
     level         SMALLINT NOT NULL DEFAULT 100,   -- уровень доверия
