@@ -10,7 +10,7 @@ use crate::views::{
     docs_routes,
     goods_routes,
     music_routes,
-    //photos_routes,
+    photos_routes,
     survey_routes,
     video_routes,
 };
@@ -26,7 +26,7 @@ pub fn routes(cfg: &mut web::ServiceConfig) {
     .configure(docs_routes)
     .configure(goods_routes)
     .configure(music_routes)
-    //.configure(photos_routes)
+    .configure(photos_routes)
     .configure(survey_routes)
     .configure(video_routes)
     ;
