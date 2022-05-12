@@ -16,7 +16,7 @@ pub struct UploadedFiles {
 impl UploadedFiles {
     pub fn new (
         owner_path: String, // "users"
-        owner_id:   i32,    // user_id / community_id
+        owner_id:   String,    // user_id / community_id
         folder:     String, // "photos"
         filename:   String  // uuid
     ) -> UploadedFiles {

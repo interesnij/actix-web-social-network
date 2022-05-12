@@ -131,8 +131,8 @@ pub async fn add_photos_in_list(session: Session, mut payload: Multipart, _id: w
                     _list.community_id,
                     _request_user.id,
                     _list,
-                    image.1.to_string(),
-                    image.1.to_string()
+                    image.to_string(),
+                    image.to_string()
                 );
                 image_list.push(new_photo);
             };
