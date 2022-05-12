@@ -11,6 +11,6 @@ pub use self::{
 pub fn photos_routes(cfg: &mut ServiceConfig) {
     cfg
     .configure(photos_urls)
-    .configure(photo_urls)
+    .configure(photo_progs_urls)
     ;
 }
