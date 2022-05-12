@@ -6,7 +6,7 @@ pub mod posts;
 pub mod chats;
 pub mod docs;
 pub mod goods;
-//pub mod music;
+pub mod music;
 //pub mod photos;
 //pub mod survey;
 //pub mod video;
@@ -20,7 +20,7 @@ pub use self::{
     chats::*,
     docs::*,
     goods::*,
-    //music::*,
+    music::*,
     //photos::*,
     //survey::*,
     //video::*,
