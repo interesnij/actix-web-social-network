@@ -1902,7 +1902,7 @@ impl Photo {
                 list.user_id,
                 list,
                 item.preview.clone(),
-                item.file.clone(),
+                item.file.clone()
             );
         }
         diesel::update(&item)
