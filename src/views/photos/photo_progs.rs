@@ -98,20 +98,21 @@ pub async fn add_photos_in_list(session: Session, mut payload: Multipart, _id: w
         let mut owner_id = 0;
         let mut is_open = false;
         let mut text = "".to_string();
+        let community_id = _list.community_id;
 
-        if _list.community_id.is_some() {
+        if community_id.is_some() {
             let _tuple = get_community_permission(&_list.get_community(), &_request_user);
             is_open = _tuple.0;
             text = _tuple.1;
             owner_path = "communities".to_string();
-            owner_id = _list.community_id.unwrap();
+            owner_id = community_id.unwrap();
         }
         else {
             let _tuple = get_user_permission(&_list.get_creator(), &_request_user);
             is_open = _tuple.0;
             text = _tuple.1;
             owner_path = "users".to_string();
-            owner_id = _list.community_id.unwrap();
+            owner_id = community_id.unwrap();
         }
         if is_open == false {
             use crate::views::close_item;
@@ -128,7 +129,7 @@ pub async fn add_photos_in_list(session: Session, mut payload: Multipart, _id: w
             let mut image_list = Vec::new();
             for image in form.images.iter() {
                 let new_photo = Photo::create_photo (
-                    &_list.community_id,
+                    community_id,
                     _request_user.id,
                     _list,
                     image.to_string(),
