@@ -23,17 +23,17 @@ impl UploadedFiles {
         use chrono::Datelike;
 
         let now = chrono::Local::now().naive_utc();
-        let format_path = "./media/".to_string();
-        //let format_path = format!(
-        //    "./media/{}/{}/{}/{}/{}/{}/{}/",
-        //    owner_path.to_string(),
-        //    owner_id.to_string(),
-        //    folder.to_string(),
-        //    now.year().to_string(),
-        //    now.month().to_string(),
-        //    now.day().to_string(),
-        //    filename.to_string(),
-        //);
+
+        let format_path = format!(
+            "./media/{}/{}/{}/{}/{}/{}/{}/",
+            owner_path.to_string(),
+            owner_id.to_string(),
+            folder.to_string(),
+            now.year().to_string(),
+            now.month().to_string(),
+            now.day().to_string(),
+            filename.to_string(),
+        );
         create_dir_all(format_path.clone()).unwrap();
         UploadedFiles {
             name: filename.to_string(),
