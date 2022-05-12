@@ -2,7 +2,7 @@ pub mod pages;
 pub mod auth;
 pub mod users;
 pub mod communities;
-//pub mod posts;
+pub mod posts;
 pub mod chats;
 //pub mod docs;
 //pub mod goods;
@@ -16,7 +16,7 @@ pub use self::{
     auth::*,
     users::*,
     communities::*,
-    //posts::*,
+    posts::*,
     chats::*,
     //docs::*,
     //goods::*,
