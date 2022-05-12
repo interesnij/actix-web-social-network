@@ -128,7 +128,7 @@ pub async fn add_photos_in_list(session: Session, mut payload: Multipart, _id: w
             let mut image_list: Vec<Photo>;
             for image in form.images.iter() {
                 let new_photo = Photo::create_photo (
-                    _list.community_id,
+                    _list.community_id.clone(),
                     _request_user.id,
                     _list,
                     image.to_string(),
