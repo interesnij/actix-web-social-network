@@ -131,7 +131,7 @@ pub async fn add_photos_in_list(session: Session, mut payload: Multipart, _id: w
                 let new_photo = Photo::create_photo (
                     community_id,
                     _request_user.id,
-                    _list,
+                    _list.clone(),
                     image.to_string(),
                     image.to_string()
                 );
