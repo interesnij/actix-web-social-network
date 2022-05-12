@@ -2,13 +2,13 @@ pub mod pages;
 pub mod auth;
 pub mod users;
 pub mod communities;
-pub mod posts;
+//pub mod posts;
 pub mod chats;
-pub mod docs;
-pub mod goods;
-pub mod music;
+//pub mod docs;
+//pub mod goods;
+//pub mod music;
 //pub mod photos;
-pub mod survey;
+//pub mod survey;
 //pub mod video;
 
 pub use self::{
@@ -16,12 +16,12 @@ pub use self::{
     auth::*,
     users::*,
     communities::*,
-    posts::*,
+    //posts::*,
     chats::*,
-    docs::*,
-    goods::*,
-    music::*,
+    //docs::*,
+    //goods::*,
+    //music::*,
     //photos::*,
-    survey::*,
+    //survey::*,
     //video::*,
 };
