@@ -5,7 +5,7 @@ use crate::views::{
     //auth,
     //user_routes,
     //community_routes,
-    //post_routes,
+    post_routes,
     //chat_routes,
     //docs_routes,
     //goods_routes,
@@ -21,7 +21,7 @@ pub fn routes(cfg: &mut web::ServiceConfig) {
     //.configure(auth::auth_routes)
     //.configure(user_routes)
     //.configure(community_routes)
-    //.configure(post_routes)
+    .configure(post_routes)
     //.configure(chat_routes)
     //.configure(docs_routes)
     //.configure(goods_routes)
