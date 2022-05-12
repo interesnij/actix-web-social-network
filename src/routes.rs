@@ -10,7 +10,7 @@ use crate::views::{
     docs_routes,
     goods_routes,
     music_routes,
-    photos_routes,
+    //photos_routes,
     survey_routes,
     video_routes,
 };
