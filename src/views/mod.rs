@@ -4,7 +4,7 @@ pub mod users;
 pub mod communities;
 pub mod posts;
 pub mod chats;
-//pub mod docs;
+pub mod docs;
 //pub mod goods;
 //pub mod music;
 //pub mod photos;
@@ -18,7 +18,7 @@ pub use self::{
     communities::*,
     posts::*,
     chats::*,
-    //docs::*,
+    docs::*,
     //goods::*,
     //music::*,
     //photos::*,
