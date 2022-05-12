@@ -8,8 +8,8 @@ pub mod docs;
 pub mod goods;
 pub mod music;
 //pub mod photos;
-//pub mod survey;
-//pub mod video;
+pub mod survey;
+pub mod video;
 
 pub use self::{
     pages::*,
@@ -22,6 +22,6 @@ pub use self::{
     goods::*,
     music::*,
     //photos::*,
-    //survey::*,
-    //video::*,
+    survey::*,
+    video::*,
 };
