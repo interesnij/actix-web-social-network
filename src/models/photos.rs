@@ -1854,9 +1854,6 @@ impl Photo {
                 list,
                 item.preview.clone(),
                 item.file.clone(),
-                None,
-                true,
-                true,
             );
         }
         diesel::update(&item)
