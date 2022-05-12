@@ -23,7 +23,7 @@ impl UploadedFiles {
         use chrono::Datelike;
 
         let now = chrono::Local::now().naive_utc();
-        let format_path = "./media/";
+        let format_path = "./media/".to_string();
         //let format_path = format!(
         //    "./media/{}/{}/{}/{}/{}/{}/{}/",
         //    owner_path.to_string(),
