@@ -1775,8 +1775,7 @@ impl Photo {
         }
     }
     pub fn create_photo(community_id: Option<i32>, user_id: i32,
-        list: PhotoList, preview: String, file: String,
-        description: Option<String>, comment_enabled: bool, votes_on: bool) -> Photo {
+        list: PhotoList, preview: String, file: String) -> Photo {
 
         let _connection = establish_connection();
 
@@ -1792,9 +1791,9 @@ impl Photo {
           types: "a".to_string(),
           preview: preview,
           file: file,
-          description: description,
-          comment_enabled: comment_enabled,
-          votes_on: votes_on,
+          description: None,
+          comment_enabled: true,
+          votes_on: true,
 
           created: chrono::Local::now().naive_utc(),
           comment: 0,
