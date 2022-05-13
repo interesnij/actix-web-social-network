@@ -10,6 +10,7 @@
                 <button class="btn btn-sm border" type="button">Искать</button>
             </div>
         </div>
+        <% if is_user_can_see_communities { %>
           <div class="card mb-2">
                 <div class="col-12 col-md-12">
                         <div class="card">
@@ -66,6 +67,9 @@
                         </div>
                 </div>
             </div>
+            <% } else { %>
+              <% include!("../../generic/centered/private_communities.stpl"); %>
+            <% } %>
     </div>
 
     <div class="col-12 col-md-4">

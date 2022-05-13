@@ -24,8 +24,8 @@ use crate::models::User;
 pub fn user_pages_urls(config: &mut web::ServiceConfig) {
     config.route("/id{user_id}/communities/", web::get().to(user_communities_page));
     config.route("/id{user_id}/staff-communities/", web::get().to(user_staff_communities_page));
-    //config.route("/id{user_id}/friends/", web::get().to(user_friends_page));
-    //config.route("/id{user_id}/friends-online/", web::get().to(user_friends_online_page));
+    config.route("/id{user_id}/friends/", web::get().to(user_friends_page));
+    config.route("/id{user_id}/friends-online/", web::get().to(user_friends_online_page));
     //config.route("/id{user_id}/follows/", web::get().to(user_follows_page));
 
     config.route("/id{user_id}/photos/", web::get().to(user_photos_page));
@@ -92,7 +92,7 @@ pub async fn user_communities_page(session: Session, req: HttpRequest, user_id: 
             }
 
             let body = Template {
-                title:                       _user.get_full_name() + &"- сообщества".to_string(),
+                title:                       _user.get_full_name() + &" - сообщества".to_string(),
                 request_user:                _request_user,
                 user:                        _user,
                 object_list:                 object_list,
@@ -118,7 +118,7 @@ pub async fn user_communities_page(session: Session, req: HttpRequest, user_id: 
             }
 
             let body = Template {
-                title:                       _user.get_full_name() + &"- сообщества".to_string(),
+                title:                       _user.get_full_name() + &" - сообщества".to_string(),
                 request_user:                _request_user,
                 user:                        _user,
                 object_list:                 object_list,
@@ -150,7 +150,7 @@ pub async fn user_communities_page(session: Session, req: HttpRequest, user_id: 
                 count:                       i32,
             }
             let body = Template {
-                title:                       _user.get_full_name() + &"- сообщества".to_string(),
+                title:                       _user.get_full_name() + &" - сообщества".to_string(),
                 user:                        _user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
@@ -173,7 +173,7 @@ pub async fn user_communities_page(session: Session, req: HttpRequest, user_id: 
                 count:                       i32,
             }
             let body = Template {
-                title:                       _user.get_full_name() + &"- сообщества".to_string(),
+                title:                       _user.get_full_name() + &" - сообщества".to_string(),
                 user:                        _user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
@@ -224,7 +224,7 @@ pub async fn user_staff_communities_page(session: Session, req: HttpRequest) -> 
             }
 
             let body = Template {
-                title:                       _request_user.get_full_name() + &"- управляемые сообщества".to_string(),
+                title:                       _request_user.get_full_name() + &" - управляемые сообщества".to_string(),
                 request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
@@ -246,7 +246,7 @@ pub async fn user_staff_communities_page(session: Session, req: HttpRequest) -> 
             }
 
             let body = Template {
-                title:                        _request_user.get_full_name() + &"- управляемые сообщества".to_string(),
+                title:                        _request_user.get_full_name() + &" - управляемые сообщества".to_string(),
                 request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
@@ -391,6 +391,148 @@ pub async fn user_friends_page(session: Session, req: HttpRequest, user_id: web:
             }
             let body = Template {
                 title:                   _user.get_full_name() + &" - друзья".to_string(),
+                user:                    _user,
+                object_list:             object_list,
+                next_page_number:        next_page_number,
+                is_user_can_see_friends: is_user_can_see_friends,
+                count:                   count,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+}
+
+pub async fn user_friends_online_page(session: Session, req: HttpRequest, user_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let user_id : i32 = *user_id;
+    let (is_desctop, page) = get_list_variables(req);
+    let mut next_page_number = 0;
+
+    let _user = get_user(user_id);
+    let object_list: Vec<User>;
+    let count = _user.get_online_friends_count();
+    if page > 1 {
+        let step = (page - 1) * 20;
+        object_list = _user.get_online_friends(20, step.into());
+        if count > (page * 20).try_into().unwrap() {
+            next_page_number = page + 1;
+        }
+    }
+    else {
+        object_list = _user.get_online_friends(20, 0);
+        if count > 20.try_into().unwrap() {
+            next_page_number = 2;
+        }
+    }
+
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let _request_user_id = &_request_user.id;
+        let (is_open, text) = get_user_permission(&_user, &_request_user);
+        let is_user_can_see_friends = _user.is_user_can_see_friend(*_request_user_id);
+
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/users/friends/online_list.stpl")]
+            struct Template {
+                title:                   String,
+                request_user:            User,
+                user:                    User,
+                object_list:             Vec<User>,
+                next_page_number:        i32,
+                is_user_can_see_friends: bool,
+                count:                   usize,
+            }
+
+            let body = Template {
+                title:                   _user.get_full_name() + &" - друзья онлайн".to_string(),
+                request_user:            _request_user,
+                user:                    _user,
+                object_list:             object_list,
+                next_page_number:        next_page_number,
+                is_user_can_see_friends: is_user_can_see_friends,
+                count:                   count,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/users/friends/online_list.stpl")]
+            struct Template {
+                title:                   String,
+                request_user:            User,
+                user:                    User,
+                object_list:             Vec<User>,
+                next_page_number:        i32,
+                is_user_can_see_friends: bool,
+                count:                   usize,
+            }
+
+            let body = Template {
+                title:                   _user.get_full_name() + &" - друзья онлайн".to_string(),
+                request_user:            _request_user,
+                user:                    _user,
+                object_list:             object_list,
+                next_page_number:        next_page_number,
+                is_user_can_see_friends: is_user_can_see_friends,
+                count:                   count,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        }
+    } else {
+        let (is_open, text) = get_anon_user_permission(&_user);
+        let is_user_can_see_friends = _user.is_anon_user_can_see_friend();
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/users/friends/online_list.stpl")]
+            struct Template {
+                title:                   String,
+                user:                    User,
+                object_list:             Vec<User>,
+                next_page_number:        i32,
+                is_user_can_see_friends: bool,
+                count:                   usize,
+            }
+            let body = Template {
+                title:                   _user.get_full_name() + &" - друзья онлайн".to_string(),
+                user:                    _user,
+                object_list:             object_list,
+                next_page_number:        next_page_number,
+                is_user_can_see_friends: is_user_can_see_friends,
+                count:                   count,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/users/friends/online_list.stpl")]
+            struct Template {
+                title:                   String,
+                user:                    User,
+                object_list:             Vec<User>,
+                next_page_number:        i32,
+                is_user_can_see_friends: bool,
+                count:                   usize,
+            }
+            let body = Template {
+                title:                   _user.get_full_name() + &" - друзья онлайн".to_string(),
                 user:                    _user,
                 object_list:             object_list,
                 next_page_number:        next_page_number,

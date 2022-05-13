@@ -1546,11 +1546,9 @@ impl User {
     }
     pub fn get_6_online_friends(&self) -> Vec<User> {
         use crate::schema::users::dsl::users;
-        use chrono::{NaiveDateTime, NaiveDate, NaiveTime, Duration};
+        use chrono::Duration;
 
         let _connection = establish_connection();
-        let d = NaiveDate::from_ymd(2015, 6, 3);
-        let t = NaiveTime::from_hms_milli(12, 34, 56, 789) - Duration::seconds(300);
 
         return users
             .filter(schema::users::id.eq_any(self.get_friends_ids()))
