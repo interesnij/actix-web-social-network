@@ -10,22 +10,30 @@
                 <button class="btn btn-sm border" type="button">Искать</button>
             </div>
         </div>
-
+        <% if is_user_can_see_friends { %>
           <div class="card-header p-0">
               <ul class="nav nav-tabs justify-content-center">
+                <li class="nav-item">
+                  <a class="ajax" href="/id<%= user.id %>/friends/">
+                    Все друзья
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active show">
+                    Друзья в сети
+                  </a>
+                </li>
+                <% if user.id != request_user.id && user.get_common_friends_of_user().len() > 0 { %>
                   <li class="nav-item">
-                    <a class="ajax" href="/id<%= user.id %>/friends/">
-                      Друзья
+                    <a class="ajax" href="/id<%= user.id %>/friends-common/">
+                      Общие друзья
                     </a>
                   </li>
-
-                  <li class="nav-item">
-                      Друзья в сети
-                  </li>
+                <% } %>
               </ul>
           </div>
 
-          <% if is_user_can_see_friends { %>
+
           <div class="card mb-2">
                 <div class="col-12 col-md-12">
                         <div class="card">

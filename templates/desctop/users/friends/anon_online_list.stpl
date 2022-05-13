@@ -15,12 +15,13 @@
               <ul class="nav nav-tabs justify-content-center">
                 <li class="nav-item">
                   <a class="ajax" href="/id<%= user.id %>/friends/">
-                    Друзья
+                    Все друзья
                   </a>
                 </li>
-
-                <li class="nav-item active">
+                <li class="nav-item">
+                  <a class="nav-link active show">
                     Друзья в сети
+                  </a>
                 </li>
               </ul>
           </div>
