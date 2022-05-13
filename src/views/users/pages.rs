@@ -268,14 +268,12 @@ pub async fn user_staff_communities_page(session: Session, req: HttpRequest) -> 
 }
 
 pub async fn user_friends_page(session: Session, req: HttpRequest, user_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    use crate::models::Friend;
-
     let user_id : i32 = *user_id;
     let (is_desctop, page) = get_list_variables(req);
     let mut next_page_number = 0;
 
     let _user = get_user(user_id);
-    let object_list: Vec<Friend>;
+    let object_list: Vec<User>;
     let count = _user.count_friends();
     if page > 1 {
         let step = (page - 1) * 20;
@@ -309,7 +307,7 @@ pub async fn user_friends_page(session: Session, req: HttpRequest, user_id: web:
                 title:                   String,
                 request_user:            User,
                 user:                    User,
-                object_list:             Vec<Friend>,
+                object_list:             Vec<User>,
                 next_page_number:        i32,
                 is_user_can_see_friends: bool,
                 count:                   i32,
@@ -335,7 +333,7 @@ pub async fn user_friends_page(session: Session, req: HttpRequest, user_id: web:
                 title:                   String,
                 request_user:            User,
                 user:                    User,
-                object_list:             Vec<Friend>,
+                object_list:             Vec<User>,
                 next_page_number:        i32,
                 is_user_can_see_friends: bool,
                 count:                   i32,
@@ -368,7 +366,7 @@ pub async fn user_friends_page(session: Session, req: HttpRequest, user_id: web:
             struct Template {
                 title:                   String,
                 user:                    User,
-                object_list:             Vec<Friend>,
+                object_list:             Vec<User>,
                 next_page_number:        i32,
                 is_user_can_see_friends: bool,
                 count:                   i32,
@@ -391,7 +389,7 @@ pub async fn user_friends_page(session: Session, req: HttpRequest, user_id: web:
             struct Template {
                 title:                   String,
                 user:                    User,
-                object_list:             Vec<Friend>,
+                object_list:             Vec<User>,
                 next_page_number:        i32,
                 is_user_can_see_friends: bool,
                 count:                   i32,

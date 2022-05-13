@@ -1433,7 +1433,7 @@ impl User {
         for _item in user_friends.iter() {
             stack.push(_item.target_user_id);
         };
-        for friend in self.get_friends().iter() {
+        for friend in self.get_friends(500, 0).iter() {
             let user_friend_friends = friends
                 .filter(schema::friends::user_id.eq(friend.id))
                 .load::<Friend>(&_connection)
@@ -1542,7 +1542,7 @@ impl User {
             .expect("E.");
     }
     pub fn get_online_friends_count(&self) -> usize {
-        return self.get_online_friends().len();
+        return self.get_online_friends().len(500, 0);
     }
     pub fn get_6_online_friends(&self) -> Vec<User> {
         use crate::schema::users::dsl::users;
