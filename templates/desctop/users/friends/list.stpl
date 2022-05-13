@@ -21,7 +21,7 @@
                           Друзья в сети
                       </a>
                   </li>
-                  <% if user.id != request_user.id && user.get_common_friends_of_user(request_user).len() > 0 { %>
+                  <% if user.id != request_user.id && user.is_have_common_friends_of_user(request_user).len() > 0 { %>
                     <li class="nav-item">
                       <a class="ajax" href="/id<%= user.id %>/friends-common/">
                         Общие друзья
