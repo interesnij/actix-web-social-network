@@ -2509,7 +2509,7 @@ impl User {
             .expect("E.")
             .len();
     }
-    pub fn get_followings(&self) -> Vec<User> {
+    pub fn get_followings(&self, limit: i64, offset: i64) -> Vec<User> {
         use crate::schema::follows::dsl::follows;
         use crate::schema::users::dsl::users;
 
@@ -2517,6 +2517,8 @@ impl User {
         let followers =  follows
             .filter(schema::follows::user_id.eq(self.id))
             .order(schema::follows::visited.desc())
+            .limit(limit)
+            .offset(offset)
             .load::<Follow>(&_connection)
             .expect("E.");
 
@@ -2530,7 +2532,8 @@ impl User {
             .load::<User>(&_connection)
             .expect("E.");
     }
-    pub fn get_common_friends_of_user(&self, user: User) -> Vec<User> {
+
+    pub fn get_common_friends_of_user(&self, user: User, limit: i64, offset: i64) -> Vec<User> {
         use crate::schema::users::dsl::users;
 
         let _connection = establish_connection();
@@ -2545,8 +2548,24 @@ impl User {
         return users
             .filter(schema::users::id.eq_any(stack))
             .filter(schema::users::types.lt(11))
+            .limit(limit)
+            .offset(offset)
             .load::<User>(&_connection)
             .expect("E.");
+    }
+    pub fn count_common_friends_of_user(&self, user: User) -> usize {
+        use crate::schema::users::dsl::users;
+
+        let _connection = establish_connection();
+        let self_friends = self.get_friends_ids();
+        let user_friends = user.get_friends_ids();
+        let mut stack = Vec::new();
+        for int in self_friends.iter() {
+            if user_friends.iter().any(|i| i==int) {
+                stack.push(int);
+            }
+        }
+        return stack.len();
     }
 
     pub fn is_have_common_friends_of_user(&self, user: &User) -> bool {
@@ -2579,7 +2598,7 @@ impl User {
             .load::<User>(&_connection)
             .expect("E.");
     }
-    pub fn get_common_friends_of_community(&self, community_id: i32) -> Vec<User> {
+    pub fn get_common_friends_of_community(&self, community_id: i32, limit: i64, offset: i64) -> Vec<User> {
         use crate::schema::users::dsl::users;
         use crate::schema::communities_memberships::dsl::communities_memberships;
         use crate::models::CommunitiesMembership;
@@ -2588,6 +2607,8 @@ impl User {
         let self_friends = self.get_friends_ids();
         let members_of_community = communities_memberships
             .filter(schema::communities_memberships::community_id.eq(community_id))
+            .limit(limit)
+            .offset(offset)
             .load::<CommunitiesMembership>(&_connection)
             .expect("E.");
         let mut stack = Vec::new();
