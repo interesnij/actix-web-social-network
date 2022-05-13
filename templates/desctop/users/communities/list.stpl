@@ -15,7 +15,7 @@
                   <li class="nav-item">
                     Сообщества
                   </li>
-                  <% if user.id == request.user.id && user.is_staffed_user() { %>
+                  <% if user.id == request_user.id && user.is_staffed_user() { %>
                   <li class="nav-item">
                       <a class="nav-link ajax" href="/id<%= user.id %>/staff-communities/">
                           Управление
