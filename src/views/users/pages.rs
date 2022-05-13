@@ -225,11 +225,11 @@ pub async fn user_staff_communities_page(session: Session, req: HttpRequest) -> 
                 request_user:                User,
                 object_list:                 Vec<Community>,
                 next_page_number:            i32,
-                count:                       i32,
+                count:                       usize,
             }
 
             let body = Template {
-                title:                       _user.get_full_name() + &"- управляемые сообщества".to_string(),
+                title:                       _request_user.get_full_name() + &"- управляемые сообщества".to_string(),
                 request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
@@ -247,11 +247,11 @@ pub async fn user_staff_communities_page(session: Session, req: HttpRequest) -> 
                 request_user:                User,
                 object_list:                 Vec<Community>,
                 next_page_number:            i32,
-                count:                       i32,
+                count:                       usize,
             }
 
             let body = Template {
-                title:                       _user.get_full_name() + &"- управляемые сообщества".to_string(),
+                title:                       _request_user.get_full_name() + &"- управляемые сообщества".to_string(),
                 request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,

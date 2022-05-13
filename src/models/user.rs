@@ -1542,7 +1542,7 @@ impl User {
             .expect("E.");
     }
     pub fn get_online_friends_count(&self) -> usize {
-        return self.get_online_friends().len(500, 0);
+        return self.get_online_friends(500, 0).len();
     }
     pub fn get_6_online_friends(&self) -> Vec<User> {
         use crate::schema::users::dsl::users;
@@ -2870,7 +2870,7 @@ impl User {
     pub fn unread_notify_count(&self) -> String {
         let mut count = self.count_user_notifications();
         if self.is_staffed_user() {
-            for _community in self.get_staffed_communities().iter() {
+            for _community in self.get_staffed_communities(50, 0).iter() {
                 count += 1;
             }
         }
