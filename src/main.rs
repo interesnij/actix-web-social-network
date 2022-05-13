@@ -41,7 +41,7 @@ async fn main() -> std::io::Result<()> {
                 CookieSession::signed(&[0; 32])
                     .domain("http://134.0.112.253:9000")
                     .name("auth")
-                    //.path("/")
+                    .path("/")
                     .secure(false)
             )
             .service(static_files)
