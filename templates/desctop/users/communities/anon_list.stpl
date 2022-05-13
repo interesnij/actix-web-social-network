@@ -1,0 +1,91 @@
+<% include!("../../../base_block/base_header.stpl"); %>
+
+<div class="main-container" data-pk="<%= user.id %>" data-type="user_communities">
+
+<div class="row">
+        <div class="col-md-8 mt-3">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control form-control-sm" placeholder="Поиск по сообществам">
+            <div class="input-group-append">
+                <button class="btn btn-sm border" type="button">Искать</button>
+            </div>
+        </div>
+          <div class="card mb-2">
+                <div class="col-12 col-md-12">
+                        <div class="card">
+                            <div class="card-body px-0 py-0">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade active show">
+                                      <div class="media-body">
+                                        <a class="underline ajax" href="<%= user.get_link() %>">
+                                          <%= user.get_full_name() %>
+                                        </a>
+                                        <span style="vertical-align: middle;">
+                                          - сообщества
+                                        </span>
+                                        <small class="content-color-secondary float-right mr-2 mt-1">Всего <%= count %></small>
+
+                                      </div>
+
+                                      <% if object_list.len() > 0 { %>
+
+                                      <ul class="list-group is_paginate">
+                                          <% for community in object_list.iter() { %>
+                                          <li class="list-group-item">
+                                              <div class="media">
+                                              <a href="<%= community.get_link() %>" class="ajax">
+                                                <figure style="width:30px;">
+                                                <% if community.s_avatar.is_some() { %>
+                                                    <img src="<%= community.s_avatar.as_deref().unwrap() %>" style="border-radius:30px;" alt="image">
+                                                <% } else { %>
+                                                    <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                                                <% } %>
+                                                </figure>
+                                              </a>
+                                                  <div class="media-body">
+                                                      <h6 class="mb-0" style="padding-top: 2px;">
+                                                        <a href="<%= community.get_link() %>" class="ajax"><%= community.name %></a>
+                                                      </h6>
+                                                  </div>
+                                              </div>
+                                          </li>
+                                          <% } %>
+                                          <% if next_page_number > 0 { %>
+                                          <div class="load centered m-1 next_page_list" data-link="/id<%= user.id %>/communities/?page=<%= next_page_number %>">
+                                              <img src="/static/images/preloader.gif">
+                                          </div>
+                                          <% } %>
+                                      </ul>
+
+                                      <% } else { %>
+                                        <% include!("no_communities.stpl"); %>
+                                      <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+      <div class="card mb-3 mt-3">
+          <div class="p-1">
+            <% include!("../../generic/user/card_go_user.stpl"); %>
+          </div>
+      </div>
+          <div class="card mb-2">
+                <div class="media">
+                    <div class="media-body">
+                      <h5 class="p-1">
+                        <a href="/all-communities/" class="ajax">Все сообщества</a>
+                      </h5>
+                    </div>
+                </div>
+          </div>
+
+    </div>
+</div>
+</div>
+
+<% include!("../../../base_block/anon_base_footer.stpl"); %>
