@@ -1,4 +1,4 @@
-<% include!("../../../../base_block/base_header.stpl"); %>
+<% include!("../../../base_block/base_header.stpl"); %>
 
 <div class="main-container" data-pk="<%= user.id %>" data-type="user_communities">
 <div class="media mt-3" style="padding-left: 7px;">
@@ -108,4 +108,4 @@
 </div>
 </div>
 
-<% include!("../../../../base_block/base_footer.stpl"); %>
+<% include!("../../../base_block/base_footer.stpl"); %>
