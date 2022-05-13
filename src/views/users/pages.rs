@@ -558,7 +558,7 @@ pub async fn user_friends_common_page(session: Session, req: HttpRequest, user_i
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
         let (is_open, text) = get_user_permission(&_user, &_request_user);
-        let count = _user.count_common_friends_of_user(_request_user);
+        let count = _user.count_common_friends_of_user(&_request_user);
 
         if page > 1 {
             let step = (page - 1) * 20;

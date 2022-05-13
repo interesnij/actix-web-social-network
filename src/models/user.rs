@@ -2553,7 +2553,7 @@ impl User {
             .load::<User>(&_connection)
             .expect("E.");
     }
-    pub fn count_common_friends_of_user(&self, user: User) -> usize {
+    pub fn count_common_friends_of_user(&self, user: &User) -> usize {
         use crate::schema::users::dsl::users;
 
         let _connection = establish_connection();
