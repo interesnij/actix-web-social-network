@@ -794,7 +794,7 @@ pub async fn followings_page(session: Session, req: HttpRequest) -> actix_web::R
 
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/users/friends/following_list.stpl")]
+            #[template(path = "desctop/users/follows/following_list.stpl")]
             struct Template {
                 title:                   String,
                 request_user:            User,
@@ -804,7 +804,7 @@ pub async fn followings_page(session: Session, req: HttpRequest) -> actix_web::R
             }
 
             let body = Template {
-                title:                   _user.get_full_name() + &" - заявки в друзья".to_string(),
+                title:                   _request_user.get_full_name() + &" - заявки в друзья".to_string(),
                 request_user:            _request_user,
                 object_list:             object_list,
                 next_page_number:        next_page_number,
@@ -816,7 +816,7 @@ pub async fn followings_page(session: Session, req: HttpRequest) -> actix_web::R
 
         } else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/users/friends/following_list.stpl")]
+            #[template(path = "mobile/users/follows/following_list.stpl")]
             struct Template {
                 title:                   String,
                 request_user:            User,
@@ -826,7 +826,7 @@ pub async fn followings_page(session: Session, req: HttpRequest) -> actix_web::R
             }
 
             let body = Template {
-                title:                   _user.get_full_name() + &" - заявки в друзья".to_string(),
+                title:                   _request_user.get_full_name() + &" - заявки в друзья".to_string(),
                 request_user:            _request_user,
                 object_list:             object_list,
                 next_page_number:        next_page_number,
