@@ -1,6 +1,6 @@
 <% include!("../../../base_block/base_header.stpl"); %>
 
-<div class="main-container" data-pk="<%= user.id %>" data-type="user_communities">
+<div class="main-container" data-pk="<%= request_user.id %>" data-type="user_communities">
 
 <div class="row">
         <div class="col-md-8 mt-3">
@@ -14,7 +14,7 @@
           <div class="card-header p-0">
               <ul class="nav nav-tabs justify-content-center">
                   <li class="nav-item">
-                    <a class="nav-link ajax" href="/id<%= user.id %>/communities/">
+                    <a class="nav-link ajax" href="/id<%= request_user.id %>/communities/">
                       Сообщества
                     </a>
                   </li>
@@ -32,8 +32,8 @@
                                 <div class="tab-content">
                                     <div class="tab-pane fade active show">
                                       <div class="media-body">
-                                        <a class="underline ajax" href="<%= user.get_link() %>">
-                                          <%= user.get_full_name() %>
+                                        <a class="underline ajax" href="<%= request_user.get_link() %>">
+                                          <%= request_user.get_full_name() %>
                                         </a>
                                         <span style="vertical-align: middle;">
                                           - сообщества
@@ -66,7 +66,7 @@
                                           </li>
                                           <% } %>
                                           <% if next_page_number > 0 { %>
-                                          <div class="load centered m-1 next_page_list" data-link="/id<%= user.id %>/staff-communities/?page=<%= next_page_number %>">
+                                          <div class="load centered m-1 next_page_list" data-link="/id<%= request_user.id %>/staff-communities/?page=<%= next_page_number %>">
                                               <img src="/static/images/preloader.gif">
                                           </div>
                                           <% } %>
