@@ -555,23 +555,24 @@ pub async fn user_friends_common_page(session: Session, req: HttpRequest, user_i
     let _user = get_user(user_id);
     let object_list: Vec<User>;
     let count = _user.count_common_friends_of_user();
-    if page > 1 {
-        let step = (page - 1) * 20;
-        object_list = _user.get_common_friends_of_user(20, step.into());
-        if count > (page * 20).try_into().unwrap() {
-            next_page_number = page + 1;
-        }
-    }
-    else {
-        object_list = _user.get_common_friends_of_user(20, 0);
-        if count > 20.try_into().unwrap() {
-            next_page_number = 2;
-        }
-    }
 
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
         let (is_open, text) = get_user_permission(&_user, &_request_user);
+
+        if page > 1 {
+            let step = (page - 1) * 20;
+            object_list = _user.get_common_friends_of_user(_request_user, 20, step.into());
+            if count > (page * 20).try_into().unwrap() {
+                next_page_number = page + 1;
+            }
+        }
+        else {
+            object_list = _user.get_common_friends_of_user(_request_user, 20, 0);
+            if count > 20.try_into().unwrap() {
+                next_page_number = 2;
+            }
+        }
 
         if is_open == false {
             use crate::views::close_item;

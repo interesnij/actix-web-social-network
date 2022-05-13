@@ -113,7 +113,7 @@
                 <% } %>
               </div>
               </div>
-            <% if request_user.get_common_friends_of_community(community.id).len() > 0 { %>
+            <% if request_user.get_common_friends_of_community(community.id, 1, 0).len() > 0 { %>
               <% include!("../detail_sections/frends_member.stpl"); %>
             <% } %>
 
