@@ -10,20 +10,21 @@
 </div>
 <div class="row">
         <div class="col-md-8 mt-3">
+        <% if user.id == request_user.id && user.is_staffed_user() { %>
           <div class="card-header p-0">
               <ul class="nav nav-tabs justify-content-center">
                   <li class="nav-item">
                     Сообщества
                   </li>
-                  <% if user.id == request_user.id && user.is_staffed_user() { %>
+
                   <li class="nav-item">
                       <a class="nav-link ajax" href="/id<%= user.id %>/staff-communities/">
                           Управление
                       </a>
                   </li>
-                  <% } %>
               </ul>
           </div>
+          <% } %>
           <div class="card mb-2">
                 <div class="col-12 col-md-12">
                         <div class="card">
