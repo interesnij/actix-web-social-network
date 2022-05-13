@@ -649,12 +649,14 @@ impl User {
         };
         return community_ids;
     }
-    pub fn get_staffed_communities(&self) -> Vec<Community> {
+    pub fn get_staffed_communities(&self, limit: i64, offset: i64) -> Vec<Community> {
         use crate::schema::communitys::dsl::communitys;
 
         let _connection = establish_connection();
         return communitys
             .filter(schema::communitys::id.eq_any(self.get_staffed_communities_ids()))
+            .limit(limit)
+            .offset(offset)
             .load::<Community>(&_connection)
             .expect("E.");
     }

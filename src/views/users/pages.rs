@@ -23,9 +23,10 @@ use crate::models::User;
 
 pub fn user_pages_urls(config: &mut web::ServiceConfig) {
     config.route("/id{user_id}/communities/", web::get().to(user_communities_page));
-    config.route("/id{user_id}/friends/", web::get().to(user_friends_page));
-    config.route("/id{user_id}/friends-online/", web::get().to(user_friends_online_page));
-    config.route("/id{user_id}/follows/", web::get().to(user_follows_page));
+    config.route("/id{user_id}/staff-communities/", web::get().to(user_staff_communities_page));
+    //config.route("/id{user_id}/friends/", web::get().to(user_friends_page));
+    //config.route("/id{user_id}/friends-online/", web::get().to(user_friends_online_page));
+    //config.route("/id{user_id}/follows/", web::get().to(user_follows_page));
 
     config.route("/id{user_id}/photos/", web::get().to(user_photos_page));
     config.route("/id{user_id}/goods/", web::get().to(user_goods_page));
@@ -183,6 +184,86 @@ pub async fn user_communities_page(session: Session, req: HttpRequest, user_id: 
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
+    }
+}
+pub async fn user_staff_communities_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    use crate::models::Community;
+
+    let (is_desctop, page) = get_list_variables(req);
+    let mut next_page_number = 0;
+
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let _request_user_id = &_request_user.id;
+
+        let object_list: Vec<Community>;
+        let count = _request_user.get_staffed_communities_ids().len();
+        if page > 1 {
+            let step = (page - 1) * 20;
+            object_list = _request_user.get_staffed_communities(20, step.into());
+            if count > (page * 20).try_into().unwrap() {
+                next_page_number = page + 1;
+            }
+        }
+        else {
+            object_list = _request_user.get_staffed_communities(20, 0);
+            if count > 20.try_into().unwrap() {
+                next_page_number = 2;
+            }
+        }
+
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/users/communities/staff_list.stpl")]
+            struct Template {
+                title:                       String,
+                request_user:                User,
+                object_list:                 Vec<Community>,
+                next_page_number:            i32,
+                count:                       i32,
+            }
+
+            let body = Template {
+                title:                       _user.get_full_name() + &"- управляемые сообщества".to_string(),
+                request_user:                _request_user,
+                object_list:                 object_list,
+                next_page_number:            next_page_number,
+                count:                       count,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/users/communities/staff_list.stpl")]
+            struct Template {
+                title:                       String,
+                request_user:                User,
+                object_list:                 Vec<Community>,
+                next_page_number:            i32,
+                count:                       i32,
+            }
+
+            let body = Template {
+                title:                       _user.get_full_name() + &"- управляемые сообщества".to_string(),
+                request_user:                _request_user,
+                object_list:                 object_list,
+                next_page_number:            next_page_number,
+                count:                       count,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
 }
 
