@@ -1,4 +1,4 @@
-<% include!("../../../base_block/base_header.stpl"); %>
+<% include!("../../../base_block/anon_base_header.stpl"); %>
 
 <div class="main-container" data-pk="<%= user.id %>" data-type="user_communities">
 
