@@ -1,6 +1,6 @@
 <% include!("../../../base_block/base_header.stpl"); %>
 
-<div class="main-container" data-pk="<%= user.id %>" data-type="user_friends">
+<div class="main-container" data-pk="<%= request_user.id %>" data-type="user_friends">
 
 <div class="row">
         <div class="col-md-8 mt-3">
@@ -10,29 +10,6 @@
                 <button class="btn btn-sm border" type="button">Искать</button>
             </div>
         </div>
-        <% if is_user_can_see_friends { %>
-          <div class="card-header p-0">
-              <ul class="nav nav-tabs justify-content-center">
-                <li class="nav-item">
-                  <a class="nav-link ajax" href="/id<%= user.id %>/friends/">
-                    Все друзья
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link active show">
-                    Друзья в сети
-                  </a>
-                </li>
-                <% if user.id != request_user.id && user.is_have_common_friends_of_user(&request_user) { %>
-                  <li class="nav-item">
-                    <a class="nav-link ajax" href="/id<%= user.id %>/friends-common/">
-                      Общие друзья
-                    </a>
-                  </li>
-                <% } %>
-              </ul>
-          </div>
-
 
           <div class="card mb-2">
                 <div class="col-12 col-md-12">
@@ -41,11 +18,8 @@
                                 <div class="tab-content">
                                     <div class="tab-pane fade active show">
                                       <div class="media-body">
-                                        <a class="underline ajax" href="<%= user.get_link() %>">
-                                          <%= user.get_full_name() %>
-                                        </a>
                                         <span style="vertical-align: middle;">
-                                          - друзья в сети
+                                          Ваши заявки в друзья
                                         </span>
                                         <small class="content-color-secondary float-right mr-2 mt-1">Всего <%= count %></small>
 
@@ -60,7 +34,7 @@
                                           </li>
                                           <% } %>
                                           <% if next_page_number > 0 { %>
-                                          <div class="load centered m-1 next_page_list" data-link="/id<%= user.id %>/friends-online/?page=<%= next_page_number %>">
+                                          <div class="load centered m-1 next_page_list" data-link="/followings/?page=<%= next_page_number %>">
                                               <img src="/static/images/preloader.gif">
                                           </div>
                                           <% } %>
@@ -75,9 +49,6 @@
                         </div>
                 </div>
             </div>
-          <% } else { %>
-            <% include!("../../generic/centered/private_friends.stpl"); %>
-          <% } %>
     </div>
 
     <div class="col-12 col-md-4">

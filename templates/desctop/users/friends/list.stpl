@@ -23,7 +23,7 @@
                   </li>
                   <% if user.id != request_user.id && user.is_have_common_friends_of_user(&request_user) { %>
                     <li class="nav-item">
-                      <a class="ajax" href="/id<%= user.id %>/friends-common/">
+                      <a class="nav-link ajax" href="/id<%= user.id %>/friends-common/">
                         Общие друзья
                       </a>
                     </li>

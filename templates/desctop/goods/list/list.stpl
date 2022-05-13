@@ -2,11 +2,11 @@
 <div class="media mt-3 uuid_saver" data-pk="<%= list.id %>" data-uuid="<%= list.id %>" style="padding-left: 7px">
   <h5 class="mt-1">
     <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %></span> (<%= list.count %>)
-    {% if is_user_can_create_goods %}
-    <a class="pointer c_good_add hide_delete" tooltip="Добавить товар" flow="up">
-      <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-    </a>
-    {% endif %}
+    <% if is_user_can_create_goods { %>
+      <a class="pointer c_good_add hide_delete" tooltip="Добавить товар" flow="up">
+        <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+      </a>
+    <% } %>
     <% include!("../../generic/items/list_meta.stpl"); %>
   </h5>
 </div>

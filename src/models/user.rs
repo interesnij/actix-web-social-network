@@ -2385,7 +2385,7 @@ impl User {
             .load::<Good>(&_connection)
             .expect("E.");
     }
-    pub fn get_followers(&self) -> Vec<User> {
+    pub fn get_followers(&self, limit: i64, offset: i64) -> Vec<User> {
         use crate::schema::follows::dsl::follows;
         use crate::schema::users::dsl::users;
 
@@ -2393,6 +2393,8 @@ impl User {
         let followers =  follows
             .filter(schema::follows::followed_user.eq(self.id))
             .order(schema::follows::visited.desc())
+            .limit(limit)
+            .offset(offset)
             .load::<Follow>(&_connection)
             .expect("E.");
 
@@ -2471,8 +2473,6 @@ impl User {
         else {
             return users
                 .filter(schema::users::types.lt(10))
-                .limit(limit)
-                .offset(offset)
                 .load::<User>(&_connection)
                 .expect("E.");
         }
