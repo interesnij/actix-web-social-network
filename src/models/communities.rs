@@ -3166,7 +3166,7 @@ impl Community {
         return bool_stack;
     }
 
-    pub fn get_follows_users(&self) -> Vec<User> {
+    pub fn get_follows_users(&self, limit: i64, offset: i64) -> Vec<User> {
         use crate::schema::community_follows::dsl::community_follows;
         use crate::models::CommunityFollow;
         use crate::utils::get_users_from_ids;
@@ -3174,6 +3174,8 @@ impl Community {
         let _connection = establish_connection();
         let follows = community_follows
             .filter(schema::community_follows::community_id.eq(self.id))
+            .limit(limit)
+            .offset(offset)
             .load::<CommunityFollow>(&_connection)
             .expect("E.");
 

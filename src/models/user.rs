@@ -1445,12 +1445,14 @@ impl User {
         return stack;
     }
 
-    pub fn get_friends(&self) -> Vec<User> {
+    pub fn get_friends(&self, limit: i64, offset: i64) -> Vec<User> {
         use crate::schema::users::dsl::users;
 
         let _connection = establish_connection();
         return users
             .filter(schema::users::id.eq_any(self.get_friends_ids()))
+            .limit(limit)
+            .offset(offset)
             .load::<User>(&_connection)
             .expect("E.");
     }
@@ -1523,7 +1525,7 @@ impl User {
             .load::<Community>(&_connection)
             .expect("E.");
     }
-    pub fn get_online_friends(&self) -> Vec<User> {
+    pub fn get_online_friends(&self, limit: i64, offset: i64) -> Vec<User> {
         use crate::schema::users::dsl::users;
         use chrono::{NaiveDateTime, Duration};
 
@@ -1532,6 +1534,8 @@ impl User {
         return users
             .filter(schema::users::id.eq_any(self.get_friends_ids()))
             .filter(schema::users::last_activity.gt(chrono::Local::now().naive_utc() - Duration::seconds(300)))
+            .limit(limit)
+            .offset(offset)
             .load::<User>(&_connection)
             .expect("E.");
     }
