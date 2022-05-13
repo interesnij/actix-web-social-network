@@ -554,7 +554,6 @@ pub async fn user_friends_common_page(session: Session, req: HttpRequest, user_i
 
     let _user = get_user(user_id);
     let object_list: Vec<User>;
-    let count = _user.count_common_friends_of_user();
 
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
@@ -562,6 +561,7 @@ pub async fn user_friends_common_page(session: Session, req: HttpRequest, user_i
 
         if page > 1 {
             let step = (page - 1) * 20;
+            let count = _user.count_common_friends_of_user(_request_user);
             object_list = _user.get_common_friends_of_user(_request_user, 20, step.into());
             if count > (page * 20).try_into().unwrap() {
                 next_page_number = page + 1;

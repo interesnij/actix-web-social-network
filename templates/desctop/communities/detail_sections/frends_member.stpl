@@ -1,4 +1,4 @@
-<% if request_user.get_common_friends_of_community(community.id).len() > 0 { %>
+<% if request_user.get_common_friends_of_community(community.id, 1, 0).len() > 0 { %>
 <div class="card mb-3">
     <div class="p-1">
         <div class="media">
@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <% for object in request_user.get_common_friends_of_community(community.id).iter() { %>
+    <% for object in request_user.get_common_friends_of_community(community.id, 1, 0).iter() { %>
     <div class="card border-top">
         <div class="p-1">
             <div class="media">
