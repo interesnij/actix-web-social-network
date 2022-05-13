@@ -499,7 +499,7 @@ pub async fn user_friends_online_page(session: Session, req: HttpRequest, user_i
         }
         else if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/users/friends/online_list.stpl")]
+            #[template(path = "desctop/users/friends/anon_online_list.stpl")]
             struct Template {
                 title:                   String,
                 user:                    User,
@@ -522,7 +522,7 @@ pub async fn user_friends_online_page(session: Session, req: HttpRequest, user_i
 
         } else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/users/friends/online_list.stpl")]
+            #[template(path = "mobile/users/friends/anon_online_list.stpl")]
             struct Template {
                 title:                   String,
                 user:                    User,
