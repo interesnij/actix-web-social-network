@@ -2533,7 +2533,7 @@ impl User {
             .expect("E.");
     }
 
-    pub fn get_common_friends_of_user(&self, user: User, limit: i64, offset: i64) -> Vec<User> {
+    pub fn get_common_friends_of_user(&self, user: &User, limit: i64, offset: i64) -> Vec<User> {
         use crate::schema::users::dsl::users;
 
         let _connection = establish_connection();
