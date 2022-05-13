@@ -89,7 +89,7 @@
             <% include!("../../generic/user/card_go_user.stpl"); %>
           </div>
       </div>
-          <button class="btn btn-sm border user_community_create_window" style="margin-bottom:15px;width:100%;" data-pk="<%= user.id %>">
+          <button class="btn btn-sm border user_community_create_window" style="margin-bottom:15px;width:100%;" data-pk="<%= request_user.id %>">
             Создать сообщество
           </button>
           <div class="card mb-2">
