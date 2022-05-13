@@ -1,6 +1,4 @@
 <div class="row align-items-center no-gutters">
-  <a class="col">
-
 <%
   let staff = request_user.is_manager();
   let request_user_id = request_user.id;
@@ -25,6 +23,7 @@
       <% } else { %>
         <a class="dropdown-item create_claim pointer">Пожаловаться</a>
       <% } %>
+    </div>
   </span>
   <% } else if user.is_connected_with_user_with_id(request_user_id) { %>
     <div class="row align-items-center no-gutters">
@@ -47,6 +46,7 @@
       <% } else { %>
         <a class="dropdown-item create_claim pointer">Пожаловаться</a>
       <% } %>
+    </div>
   </span>
   <% } else if user.is_followers_user_view(request_user_id) { %>
     <div class="row align-items-center no-gutters">
@@ -69,6 +69,7 @@
       <% } else { %>
         <a class="dropdown-item create_claim pointer">Пожаловаться</a>
       <% } %>
+    </div>
   </span>
   <% } else if user.is_following_user_with_id(request_user_id) { %>
     <div class="row align-items-center no-gutters">
@@ -91,6 +92,7 @@
       <% } else { %>
         <a class="dropdown-item create_claim pointer">Пожаловаться</a>
       <% } %>
+    </div>
   </span>
   <% } else if user.is_followers_user_with_id(request_user_id) { %>
     <div class="row align-items-center no-gutters">
@@ -114,6 +116,7 @@
       <% } else { %>
         <a class="dropdown-item create_claim pointer">Пожаловаться</a>
       <% } %>
+    </div>
   </span>
 
   <% } else { %>
@@ -139,6 +142,7 @@
       <% } else { %>
         <a class="dropdown-item create_claim pointer">Пожаловаться</a>
       <% } %>
+      </div>
   </span>
   <% } %>
 
@@ -147,3 +151,5 @@
     <span class="btn btn-sm border user_send_page_message" style="width: -webkit-fill-available" data-pk="<%= user.id %>">Написать сообщение</span>
   </span>
 <% } %>
+
+</div>
