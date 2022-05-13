@@ -86,7 +86,7 @@
     <div class="col-12 col-md-4">
       <div class="card mb-3 mt-3">
           <div class="p-1">
-            <% include!("../../../generic/user/card_go_user.stpl"); %>
+            <% include!("../../generic/user/card_go_user.stpl"); %>
           </div>
       </div>
           <button class="btn btn-sm border user_community_create_window" style="margin-bottom:15px;width:100%;" data-pk="<%= user.id %>">
