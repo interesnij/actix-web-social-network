@@ -212,12 +212,7 @@ pub async fn user_staff_communities_page(session: Session, req: HttpRequest) -> 
             }
         }
 
-        if is_open == false {
-            use crate::views::close_item;
-            return close_item(text)
-        }
-
-        else if is_desctop {
+        if is_desctop {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/communities/staff_list.stpl")]
             struct Template {
@@ -251,7 +246,7 @@ pub async fn user_staff_communities_page(session: Session, req: HttpRequest) -> 
             }
 
             let body = Template {
-                title:                       _request_user.get_full_name() + &"- управляемые сообщества".to_string(),
+                title:                        _request_user.get_full_name() + &"- управляемые сообщества".to_string(),
                 request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,

@@ -102,8 +102,6 @@
                 </div>
           </div>
 
-          <% include!("featured_communities.stpl"); %>
-
     </div>
 </div>
 </div>
