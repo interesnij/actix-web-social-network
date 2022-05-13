@@ -99,7 +99,7 @@ pub async fn user_communities_page(session: Session, req: HttpRequest, user_id: 
 
         } else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/users/docs/main_list/list.stpl")]
+            #[template(path = "mobile/users/communities/list.stpl")]
             struct Template {
                 title:                       String,
                 request_user:                User,
@@ -131,7 +131,7 @@ pub async fn user_communities_page(session: Session, req: HttpRequest, user_id: 
         }
         else if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/users/docs/main_list/anon_list.stpl")]
+            #[template(path = "desctop/users/communities/anon_list.stpl")]
             struct Template {
                 title: String,
                 user:  User,
@@ -152,7 +152,7 @@ pub async fn user_communities_page(session: Session, req: HttpRequest, user_id: 
 
         } else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/users/docs/main_list/anon_list.stpl")]
+            #[template(path = "mobile/users/communities/anon_list.stpl")]
             struct Template {
                 title: String,
                 user:  User,
