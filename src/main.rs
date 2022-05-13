@@ -21,6 +21,7 @@ async fn main() -> std::io::Result<()> {
     use crate::routes::routes;
     use actix_redis::RedisSession;
     use actix_web::{App, HttpServer};
+    use actix_session::CookieSession;
 
     HttpServer::new(|| {
         let static_files = Files::new("/static", "static/").show_files_listing();
@@ -34,13 +35,20 @@ async fn main() -> std::io::Result<()> {
         //    .max_age(3600);
 
         App::new()
-            .wrap(RedisSession::new("127.0.0.1:6379", private_key.master()))
+            //.wrap(RedisSession::new("127.0.0.1:6379", private_key.master()))
             //.wrap(cors)
+            .wrap (
+                CookieSession::signed(&[0; 32])
+                    .domain("http://134.0.112.253:9000")
+                    .name("auth")
+                    //.path("/")
+                    .secure(false)
+            )
             .service(static_files)
             .service(media_files)
             .configure(routes)
     })
-    .bind("134.0.112.253:9000")? 
+    .bind("134.0.112.253:9000")?
     .run()
     .await
 }
