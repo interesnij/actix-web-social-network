@@ -35,7 +35,10 @@
                                       <h6>
                                         <a class="underline ajax" href="<%= user.get_link() %>">
                                           <%= user.get_full_name() %>
-                                        </a> - сообщества
+                                        </a>
+                                        <span>
+                                        - сообщества
+                                        </span>
                                         <small class="content-color-secondary float-right mr-2 mt-1">Всего <%= count %></small>
                                       </h6>
 
