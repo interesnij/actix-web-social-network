@@ -13,14 +13,14 @@
 
           <div class="card-header p-0">
               <ul class="nav nav-tabs justify-content-center">
-                  <li class="nav-item ajax" href="/id<%= user.id %>/friends/">
-                    Друзья
+                  <li class="nav-item">
+                    <a class="ajax" href="/id<%= user.id %>/friends/">
+                      Друзья
+                    </a>
                   </li>
 
                   <li class="nav-item">
-                      <a class="nav-link active">
-                          Друзья в сети
-                      </a>
+                      Друзья в сети
                   </li>
               </ul>
           </div>

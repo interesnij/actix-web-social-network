@@ -13,7 +13,7 @@
         <% if user.get_friends_ids().len() > 0 { %>
           <div class="card-header p-0">
               <ul class="nav nav-tabs justify-content-center">
-                  <li class="nav-item">
+                  <li class="nav-item active">
                     Друзья
                   </li>
 
