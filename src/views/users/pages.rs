@@ -13,6 +13,7 @@ use crate::utils::{
     get_user,
     get_user_permission,
     get_anon_user_permission,
+    get_list_variables,
 };
 
 use actix_session::Session;
@@ -63,6 +64,7 @@ pub async fn user_communities_page(session: Session, req: HttpRequest, user_id: 
 
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
+        let _request_user_id = &_request_user.id;
         let (is_open, text) = get_user_permission(&_user, &_request_user);
         let is_user_can_see_communities = _user.is_user_can_see_community(*_request_user_id);
 
