@@ -21,6 +21,7 @@ use crate::models::User;
 
 
 pub fn user_pages_urls(config: &mut web::ServiceConfig) {
+    config.route("/id{user_id}/communities/", web::get().to(user_communities_page));
     config.route("/id{user_id}/photos/", web::get().to(user_photos_page));
     config.route("/id{user_id}/goods/", web::get().to(user_goods_page));
     config.route("/id{user_id}/music/", web::get().to(user_music_page));
@@ -34,6 +35,141 @@ pub fn user_pages_urls(config: &mut web::ServiceConfig) {
     config.route("/users/{user_id}/surveys_list/{list_id}/", web::get().to(user_surveys_list_page));
     config.route("/users/{user_id}/video_list/{list_id}/", web::get().to(user_video_list_page));
     config.route("/users/{user_id}/docs_list/{list_id}/", web::get().to(user_docs_list_page));
+}
+
+pub async fn user_communities_page(session: Session, req: HttpRequest, user_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    use crate::models::Community;
+
+    let user_id : i32 = *user_id;
+    let (is_desctop, page) = get_list_variables(req);
+    let mut next_page_number = 0;
+
+    let _user = get_user(user_id);
+    let object_list: Vec<Community>;
+    let count = _user.count_communities();
+    if page > 1 {
+        let step = (page - 1) * 20;
+        object_list = _user.get_communities(20, step.into());
+        if count > (page * 20).try_into().unwrap() {
+            next_page_number = page + 1;
+        }
+    }
+    else {
+        object_list = _user.get_communities(20, 0);
+        if count > 20.try_into().unwrap() {
+            next_page_number = 2;
+        }
+    }
+
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let (is_open, text) = get_user_permission(&_user, &_request_user);
+        let is_user_can_see_communities = _user.is_user_can_see_community(*_request_user_id);
+
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/users/communities/list.stpl")]
+            struct Template {
+                title:                       String,
+                request_user:                User,
+                user:                        User,
+                object_list:                 Vec<Community>,
+                next_page_number:            i32,
+                is_user_can_see_communities: bool,
+            }
+
+            let body = Template {
+                title:                       _user.get_full_name() + &"- сообщества".to_string(),
+                request_user:                _request_user,
+                user:                        _user,
+                object_list:                 object_list,
+                next_page_number:            next_page_number,
+                is_user_can_see_communities: is_user_can_see_communities,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/users/docs/main_list/list.stpl")]
+            struct Template {
+                title:                       String,
+                request_user:                User,
+                user:                        User,
+                object_list:                 Vec<Community>,
+                next_page_number:            i32,
+                is_user_can_see_communities: bool,
+            }
+
+            let body = Template {
+                title:                       _user.get_full_name() + &"- сообщества".to_string(),
+                request_user:                _request_user,
+                user:                        _user,
+                object_list:                 object_list,
+                next_page_number:            next_page_number,
+                is_user_can_see_communities: is_user_can_see_communities,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        }
+    } else {
+        let (is_open, text) = get_anon_user_permission(&_user);
+        let is_user_can_see_communities = _user.is_anon_user_can_see_community();
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/users/docs/main_list/anon_list.stpl")]
+            struct Template {
+                title: String,
+                user:  User,
+                object_list:                 Vec<Community>,
+                next_page_number:            i32,
+                is_user_can_see_communities: bool,
+            }
+            let body = Template {
+                title:  _user.get_full_name() + &"- сообщества".to_string(),
+                user:   _user,
+                object_list:                 object_list,
+                next_page_number:            next_page_number,
+                is_user_can_see_communities: is_user_can_see_communities,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/users/docs/main_list/anon_list.stpl")]
+            struct Template {
+                title: String,
+                user:  User,
+                object_list:                 Vec<Community>,
+                next_page_number:            i32,
+                is_user_can_see_communities: bool,
+            }
+            let body = Template {
+                title: _user.get_full_name() + &"- сообщества".to_string(),
+                user:  _user,
+                object_list:                 object_list,
+                next_page_number:            next_page_number,
+                is_user_can_see_communities: is_user_can_see_communities,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
 }
 
 pub async fn user_docs_page(session: Session, req: HttpRequest, user_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {

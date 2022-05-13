@@ -33,7 +33,7 @@
 
 				<span class="row no-gutters">
           <div class="col-md-1 col-lg-2 col-xl-2 clean_panel"></div>
-            <div class="col-auto sidebar-inner position-relative ">
+            <div class="col-auto sidebar-inner position-relative mt-1">
                 <br>
                 <% include!("./anon_desctop_nav.stpl"); %>
             </div>

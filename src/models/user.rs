@@ -1480,7 +1480,7 @@ impl User {
         };
         return stack;
     }
-    pub fn get_communities(&self) -> Vec<Community> {
+    pub fn get_communities(&self, limit: i64, offset: i64) -> Vec<Community> {
         use crate::schema::communities_memberships::dsl::communities_memberships;
         use crate::schema::communitys::dsl::communitys;
         use crate::models::CommunitiesMembership;
@@ -1489,6 +1489,8 @@ impl User {
         let _user_communities = communities_memberships
             .filter(schema::communities_memberships::user_id.eq(self.id))
             .order(schema::communities_memberships::visited.desc())
+            .limit(limit)
+            .offset(offset)
             .load::<CommunitiesMembership>(&_connection)
             .expect("E.");
         let mut stack = Vec::new();

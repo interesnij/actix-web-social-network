@@ -20,5 +20,5 @@
 
            <% include!("./desctop_nav.stpl"); %>
 
-          <div class="col-md-8 col-lg-7 col-xl-6 desctop_version" id="ajax">
+          <div class="col-md-8 col-lg-7 col-xl-6 desctop_version mt-1" id="ajax">
             <span id="reload_block">
