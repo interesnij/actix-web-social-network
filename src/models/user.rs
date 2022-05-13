@@ -1523,15 +1523,13 @@ impl User {
     }
     pub fn get_online_friends(&self) -> Vec<User> {
         use crate::schema::users::dsl::users;
-        use chrono::{NaiveDateTime, NaiveDate, NaiveTime, Duration};
+        use chrono::{NaiveDateTime, Duration};
 
         let _connection = establish_connection();
-        let d = NaiveDate::from_ymd(2015, 6, 3);
-        let t = NaiveTime::from_hms_milli(12, 34, 56, 789) - Duration::seconds(300);
 
         return users
             .filter(schema::users::id.eq_any(self.get_friends_ids()))
-            .filter(schema::users::last_activity.gt(NaiveDateTime::new(d, t)))
+            .filter(schema::users::last_activity.gt(chrono::Local::now().naive_utc() - Duration::seconds(300)))
             .load::<User>(&_connection)
             .expect("E.");
     }
@@ -1548,7 +1546,7 @@ impl User {
 
         return users
             .filter(schema::users::id.eq_any(self.get_friends_ids()))
-            .filter(schema::users::last_activity.gt(NaiveDateTime::new(d, t)))
+            .filter(schema::users::last_activity.gt(chrono::Local::now().naive_utc() - Duration::seconds(300)))
             .limit(6)
             .load::<User>(&_connection)
             .expect("E.");
@@ -2614,17 +2612,15 @@ impl User {
     pub fn get_users_ids_for_main_news(&self) -> Vec<i32> {
         use crate::schema::news_user_communities::dsl::news_user_communities;
         use crate::models::NewsUserCommunitie;
-        use chrono::{NaiveDateTime, NaiveDate, NaiveTime, Duration};
+        use chrono::Duration;
 
         let _connection = establish_connection();
 
-        let d = NaiveDate::from_ymd(2015, 6, 3);
-        let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
         let news_users = news_user_communities
             .filter(schema::news_user_communities::owner.eq(self.id))
             .filter(schema::news_user_communities::community_id.is_null())
             .filter(schema::news_user_communities::mute.eq(false))
-            .filter(schema::news_user_communities::sleep.lt(NaiveDateTime::new(d, t).checked_add_signed(Duration::seconds(1))))
+            .filter(schema::news_user_communities::sleep.lt(chrono::Local::now().naive_utc()))
             .load::<NewsUserCommunitie>(&_connection)
             .expect("E.");
         let mut stack = Vec::new();
@@ -2637,17 +2633,15 @@ impl User {
         //use crate::schema::users::dsl::users;
         use crate::schema::news_user_communities::dsl::news_user_communities;
         use crate::models::NewsUserCommunitie;
-        use chrono::{NaiveDateTime, NaiveDate, NaiveTime, Duration};
+        use chrono::Duration;
 
         let _connection = establish_connection();
 
-        let d = NaiveDate::from_ymd(2015, 6, 3);
-        let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
         let news_users = news_user_communities
             .filter(schema::news_user_communities::owner.eq(self.id))
             .filter(schema::news_user_communities::user_id.is_null())
             .filter(schema::news_user_communities::mute.eq(false))
-            .filter(schema::news_user_communities::sleep.lt(NaiveDateTime::new(d, t).checked_add_signed(Duration::seconds(1))))
+            .filter(schema::news_user_communities::sleep.lt(chrono::Local::now().naive_utc()))
             .load::<NewsUserCommunitie>(&_connection)
             .expect("E.");
         let mut stack = Vec::new();
@@ -2659,17 +2653,15 @@ impl User {
     pub fn get_users_ids_for_main_notifications(&self) -> Vec<i32> {
         use crate::schema::notify_user_communities::dsl::notify_user_communities;
         use crate::models::NotifyUserCommunitie;
-        use chrono::{NaiveDateTime, NaiveDate, NaiveTime, Duration};
+        use chrono::Duration;
 
         let _connection = establish_connection();
 
-        let d = NaiveDate::from_ymd(2015, 6, 3);
-        let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
         let news_users = notify_user_communities
             .filter(schema::notify_user_communities::owner.eq(self.id))
             .filter(schema::notify_user_communities::community_id.is_null())
             .filter(schema::notify_user_communities::mute.eq(false))
-            .filter(schema::notify_user_communities::sleep.lt(NaiveDateTime::new(d, t).checked_add_signed(Duration::seconds(1))))
+            .filter(schema::notify_user_communities::sleep.lt(chrono::Local::now().naive_utc()))
             .load::<NotifyUserCommunitie>(&_connection)
             .expect("E.");
         let mut stack = Vec::new();
@@ -2681,17 +2673,15 @@ impl User {
     pub fn get_communities_ids_for_main_notifications(&self) -> Vec<i32> {
         use crate::schema::notify_user_communities::dsl::notify_user_communities;
         use crate::models::NotifyUserCommunitie;
-        use chrono::{NaiveDateTime, NaiveDate, NaiveTime, Duration};
+        use chrono::Duration;
 
         let _connection = establish_connection();
 
-        let d = NaiveDate::from_ymd(2015, 6, 3);
-        let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
         let news_users = notify_user_communities
             .filter(schema::notify_user_communities::owner.eq(self.id))
             .filter(schema::notify_user_communities::user_id.is_null())
             .filter(schema::notify_user_communities::mute.eq(false))
-            .filter(schema::notify_user_communities::sleep.lt(NaiveDateTime::new(d, t).checked_add_signed(Duration::seconds(1))))
+            .filter(schema::notify_user_communities::sleep.lt(chrono::Local::now().naive_utc()))
             .load::<NotifyUserCommunitie>(&_connection)
             .expect("E.");
         let mut stack = Vec::new();

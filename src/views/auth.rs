@@ -180,7 +180,7 @@ pub struct CountryLoc {
 
 pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responder {
     use crate::utils::{hash_password, set_current_user};
-    use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
+    use chrono::NaiveDate;
     use crate::models::{
         UserLocation, NewUserLocation,
         UserProfile, NewUserProfile,
@@ -235,8 +235,6 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             get_gender = "b";
         }
 
-        let d = NaiveDate::from_ymd(2015, 6, 3);
-        let t = NaiveTime::from_hms_milli(12, 34, 56, 789);
         let form_user = NewUser {
             first_name: params_2.first_name.clone(),
             last_name: params_2.last_name.clone(),
@@ -249,7 +247,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             level: 100,
             password: hash_password(&params_2.password.clone()),
             birthday: NaiveDate::parse_from_str(&params_2.birthday.clone(), "%Y-%m-%d").unwrap(),
-            last_activity: NaiveDateTime::new(d, t),
+            last_activity: chrono::Local::now().naive_utc(),
         };
 
         let _new_user = diesel::insert_into(schema::users::table)
