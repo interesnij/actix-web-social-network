@@ -3185,7 +3185,7 @@ impl Community {
         };
         return get_users_from_ids(stack);
     }
-    pub fn get_banned_user(&self) -> Vec<User> {
+    pub fn get_banned_user(&self, limit: i64, offset: i64) -> Vec<User> {
         use crate::schema::community_banner_users::dsl::community_banner_users;
         use crate::utils::get_users_from_ids;
 
@@ -3193,6 +3193,8 @@ impl Community {
 
         let banner_users = community_banner_users
             .filter(schema::community_banner_users::community_id.eq(self.id))
+            .limit(limit)
+            .offset(offset)
             .load::<CommunityBannerUser>(&_connection)
             .expect("E");
 
