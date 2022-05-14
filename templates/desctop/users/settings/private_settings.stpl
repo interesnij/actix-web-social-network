@@ -33,15 +33,15 @@
                     <% } %>
                   </a>
                   <span class="collector">
-                    <% if private.can_see_all == "e" && private.get_can_see_all_exclude_users().len() > 0 { %>:
-                    <% for object in private.get_can_see_all_exclude_users().iter() { %>
+                    <% if private.can_see_all == "e" && request_user.get_can_see_all_exclude_users().len() > 0 { %>:
+                    <% for object in request_user.get_can_see_all_exclude_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_see_all == "f" && private.get_can_see_all_include_users.len() > 0 { %>:
-                    <% for object in private.get_can_see_all_include_users().iter() { %>
+                    <% } else if private.can_see_all == "f" && request_user.get_can_see_all_include_users.len() > 0 { %>:
+                    <% for object in request_user.get_can_see_all_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
@@ -74,15 +74,15 @@
                     <% } %>
                   </a>
                   <span class="collector">
-                    <% if private.can_see_community == "e" && private.get_can_see_community_exclude_users().len() > 0 { %>:
-                    <% for object in private.get_can_see_community_exclude_users().iter() { %>
+                    <% if private.can_see_community == "e" && request_user.get_can_see_community_exclude_users().len() > 0 { %>:
+                    <% for object in request_user.get_can_see_community_exclude_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_see_community == "f" && private.get_can_see_community_include_users.len() > 0 { %>:
-                    <% for object in private.get_can_see_community_include_users().iter() { %>
+                    <% } else if private.can_see_community == "f" && request_user.get_can_see_community_include_users.len() > 0 { %>:
+                    <% for object in request_user.get_can_see_community_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
@@ -115,15 +115,15 @@
                     <% } %>
                   </a>
                   <span class="collector">
-                    <% if private.can_see_info == "e" && private.get_can_see_info_exclude_users().len() > 0 { %>:
-                    <% for object in private.get_can_see_info_exclude_users().iter() { %>
+                    <% if private.can_see_info == "e" && request_user.get_can_see_info_exclude_users().len() > 0 { %>:
+                    <% for object in request_user.get_can_see_info_exclude_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_see_info == "f" && private.get_can_see_info_include_users.len() > 0 { %>:
-                    <% for object in private.get_can_see_info_include_users().iter() { %>
+                    <% } else if private.can_see_info == "f" && request_user.get_can_see_info_include_users.len() > 0 { %>:
+                    <% for object in request_user.get_can_see_info_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
@@ -156,15 +156,15 @@
                     <% } %>
                   </a>
                   <span class="collector">
-                    <% if private.can_see_friend == "e" && private.get_can_see_friend_exclude_users().len() > 0 { %>:
-                    <% for object in private.get_can_see_friend_exclude_users().iter() { %>
+                    <% if private.can_see_friend == "e" && request_user.get_can_see_friend_exclude_users().len() > 0 { %>:
+                    <% for object in request_user.get_can_see_friend_exclude_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_see_friend == "f" && private.get_can_see_friend_include_users.len() > 0 { %>:
-                    <% for object in private.get_can_see_friend_include_users().iter() { %>
+                    <% } else if private.can_see_friend == "f" && request_user.get_can_see_friend_include_users.len() > 0 { %>:
+                    <% for object in request_user.get_can_see_friend_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
@@ -197,15 +197,15 @@
                     <% } %>
                   </a>
                   <span class="collector">
-                    <% if private.can_send_message == "e" && private.get_can_send_message_exclude_users().len() > 0 { %>:
-                    <% for object in private.get_can_send_message_exclude_users().iter() { %>
+                    <% if private.can_send_message == "e" && request_user.get_can_send_message_exclude_users().len() > 0 { %>:
+                    <% for object in request_user.get_can_send_message_exclude_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_send_message == "f" && private.get_can_send_message_include_users.len() > 0 { %>:
-                    <% for object in private.get_can_send_message_include_users().iter() { %>
+                    <% } else if private.can_send_message == "f" && request_user.get_can_send_message_include_users.len() > 0 { %>:
+                    <% for object in request_user.get_can_send_message_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
@@ -238,15 +238,15 @@
                     <% } %>
                   </a>
                   <span class="collector">
-                    <% if private.can_add_in_chat == "e" && private.get_can_add_in_chat_exclude_users().len() > 0 { %>:
-                    <% for object in private.get_can_add_in_chat_exclude_users().iter() { %>
+                    <% if private.can_add_in_chat == "e" && request_user.get_can_add_in_chat_exclude_users().len() > 0 { %>:
+                    <% for object in request_user.get_can_add_in_chat_exclude_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_add_in_chat == "f" && private.get_can_add_in_chat_include_users.len() > 0 { %>:
-                    <% for object in private.get_can_add_in_chat_include_users().iter() { %>
+                    <% } else if private.can_add_in_chat == "f" && request_user.get_can_add_in_chat_include_users.len() > 0 { %>:
+                    <% for object in request_user.get_can_add_in_chat_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
@@ -279,15 +279,15 @@
                     <% } %>
                   </a>
                   <span class="collector">
-                    <% if private.can_see_post == "e" && private.get_can_see_post_exclude_users().len() > 0 { %>:
-                    <% for object in private.get_can_see_post_exclude_users().iter() { %>
+                    <% if private.can_see_post == "e" && request_user.get_can_see_post_exclude_users().len() > 0 { %>:
+                    <% for object in request_user.get_can_see_post_exclude_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_see_post == "f" && private.get_can_see_post_include_users.len() > 0 { %>:
-                    <% for object in private.get_can_see_post_include_users().iter() { %>
+                    <% } else if private.can_see_post == "f" && request_user.get_can_see_post_include_users.len() > 0 { %>:
+                    <% for object in request_user.get_can_see_post_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
@@ -320,15 +320,15 @@
                     <% } %>
                   </a>
                   <span class="collector">
-                    <% if private.can_see_photo == "e" && private.get_can_see_photo_exclude_users().len() > 0 { %>:
-                    <% for object in private.get_can_see_photo_exclude_users().iter() { %>
+                    <% if private.can_see_photo == "e" && request_user.get_can_see_photo_exclude_users().len() > 0 { %>:
+                    <% for object in request_user.get_can_see_photo_exclude_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_see_photo == "f" && private.get_can_see_photo_include_users.len() > 0 { %>:
-                    <% for object in private.get_can_see_photo_include_users().iter() { %>
+                    <% } else if private.can_see_photo == "f" && request_user.get_can_see_photo_include_users.len() > 0 { %>:
+                    <% for object in request_user.get_can_see_photo_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
@@ -361,15 +361,15 @@
                     <% } %>
                   </a>
                   <span class="collector">
-                    <% if private.can_see_good == "e" && private.get_can_see_good_exclude_users().len() > 0 { %>:
-                    <% for object in private.get_can_see_good_exclude_users().iter() { %>
+                    <% if private.can_see_good == "e" && request_user.get_can_see_good_exclude_users().len() > 0 { %>:
+                    <% for object in request_user.get_can_see_good_exclude_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_see_good == "f" && private.get_can_see_good_include_users.len() > 0 { %>:
-                    <% for object in private.get_can_see_good_include_users().iter() { %>
+                    <% } else if private.can_see_good == "f" && request_user.get_can_see_good_include_users.len() > 0 { %>:
+                    <% for object in request_user.get_can_see_good_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
@@ -402,15 +402,15 @@
                     <% } %>
                   </a>
                   <span class="collector">
-                    <% if private.can_see_video == "e" && private.get_can_see_video_exclude_users().len() > 0 { %>:
-                    <% for object in private.get_can_see_video_exclude_users().iter() { %>
+                    <% if private.can_see_video == "e" && request_user.get_can_see_video_exclude_users().len() > 0 { %>:
+                    <% for object in request_user.get_can_see_video_exclude_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_see_video == "f" && private.get_can_see_video_include_users.len() > 0 { %>:
-                    <% for object in private.get_can_see_video_include_users().iter() { %>
+                    <% } else if private.can_see_video == "f" && request_user.get_can_see_video_include_users.len() > 0 { %>:
+                    <% for object in request_user.get_can_see_video_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
@@ -443,15 +443,15 @@
                     <% } %>
                   </a>
                   <span class="collector">
-                    <% if private.can_see_music == "e" && private.get_can_see_music_exclude_users().len() > 0 { %>:
-                    <% for object in private.get_can_see_music_exclude_users().iter() { %>
+                    <% if private.can_see_music == "e" && request_user.get_can_see_music_exclude_users().len() > 0 { %>:
+                    <% for object in request_user.get_can_see_music_exclude_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_see_music == "f" && private.get_can_see_music_include_users.len() > 0 { %>:
-                    <% for object in private.get_can_see_music_include_users().iter() { %>
+                    <% } else if private.can_see_music == "f" && request_user.get_can_see_music_include_users.len() > 0 { %>:
+                    <% for object in request_user.get_can_see_music_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
@@ -484,15 +484,15 @@
                     <% } %>
                   </a>
                   <span class="collector">
-                    <% if private.can_see_planner == "e" && private.get_can_see_planner_exclude_users().len() > 0 { %>:
-                    <% for object in private.get_can_see_planner_exclude_users().iter() { %>
+                    <% if private.can_see_planner == "e" && request_user.get_can_see_planner_exclude_users().len() > 0 { %>:
+                    <% for object in request_user.get_can_see_planner_exclude_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_see_planner == "f" && private.get_can_see_planner_include_users.len() > 0 { %>:
-                    <% for object in private.get_can_see_planner_include_users().iter() { %>
+                    <% } else if private.can_see_planner == "f" && request_user.get_can_see_planner_include_users.len() > 0 { %>:
+                    <% for object in request_user.get_can_see_planner_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
@@ -525,15 +525,15 @@
                     <% } %>
                   </a>
                   <span class="collector">
-                    <% if private.can_see_doc == "e" && private.get_can_see_doc_exclude_users().len() > 0 { %>:
-                    <% for object in private.get_can_see_doc_exclude_users().iter() { %>
+                    <% if private.can_see_doc == "e" && request_user.get_can_see_doc_exclude_users().len() > 0 { %>:
+                    <% for object in request_user.get_can_see_doc_exclude_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_see_doc == "f" && private.get_can_see_doc_include_users.len() > 0 { %>:
-                    <% for object in private.get_can_see_doc_include_users().iter() { %>
+                    <% } else if private.can_see_doc == "f" && request_user.get_can_see_doc_include_users.len() > 0 { %>:
+                    <% for object in request_user.get_can_see_doc_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
@@ -566,15 +566,15 @@
                     <% } %>
                   </a>
                   <span class="collector">
-                    <% if private.can_see_survey == "e" && private.get_can_see_survey_exclude_users().len() > 0 { %>:
-                    <% for object in private.get_can_see_survey_exclude_users().iter() { %>
+                    <% if private.can_see_survey == "e" && request_user.get_can_see_survey_exclude_users().len() > 0 { %>:
+                    <% for object in request_user.get_can_see_survey_exclude_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_see_survey == "f" && private.get_can_see_survey_include_users.len() > 0 { %>:
-                    <% for object in private.get_can_see_survey_include_users().iter() { %>
+                    <% } else if private.can_see_survey == "f" && request_user.get_can_see_survey_include_users.len() > 0 { %>:
+                    <% for object in request_user.get_can_see_survey_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
                     </a>
