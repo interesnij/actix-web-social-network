@@ -1,584 +1,583 @@
-
 <div class="mt-4 main-container">
-    <div class="row">
-        <div class="col-md-9 order-1">
-          <form class="case_edit type_community" data-pk="<%= community.id %>">
-                <div class="card mb-3">
-                    <div class="card-header border-bottom">
-                        <h5 class="content-color-primary mb-0">Приватность -
-                          <a class="underline ajax" href="<%= community.get_link() %>">
-                            <%= community.name %>
-                          </a>
-                        </h5>
-                    </div>
-                    <div class="card-body hot_perm_post">
-                      <div class="row mb-1 form_group_flex">
-                          <label class="col-md-6">Кто видит информацию</label>
-                          <span class="col-md-6">
-                            <a class="menu_drop_2 pointer">
-                              <% if private.can_see_info == "a" { %>
-                                Все пользователи
-                              <% } else if private.can_see_info == "b" { %>
-                                Подписчики
-                              <% } else if private.can_see_info == "c" { %>
-                                Персонал
-                              <% } else if private.can_see_info == "d" { %>
-                                Администраторы
-                              <% } else if private.can_see_info == "e" { %>
-                                Владелец сообщества
-                              <% } else if private.can_see_info == "f" { %>
-                                Подписчики, кроме
-                              <% } else if private.can_see_info == "g" { %>
-                                Некоторые подписчики
-                              <% } %>
-                            </a>
-                            <span class="collector">
-                              <% if private.can_see_info == "f" && private.get_can_see_info_exclude_users().len() > 0 { %>:
-                              <% for object in private.get_can_see_info_exclude_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } else if private.can_see_info == "g" && private.get_can_see_info_include_users.len() > 0 { %>:
-                              <% for object in private.get_can_see_info_include_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } %>
-                            </span>
-                            <div class="dropdown-menu border" data-action="can_see_info" style="top: 30px;">
-                              <% include!("perm/community_perm_drop.html"); %>
-                            </div>
-                          </span>
-                      </div>
-
-                      <div class="row mb-1 form_group_flex">
-                          <label class="col-md-6">Кто видит подписчиков</label>
-                          <span class="col-md-6">
-                            <a class="menu_drop_2 pointer">
-                              <% if private.can_see_member == "a" { %>
-                                Все пользователи
-                              <% } else if private.can_see_member == "b" { %>
-                                Подписчики
-                              <% } else if private.can_see_member == "c" { %>
-                                Персонал
-                              <% } else if private.can_see_member == "d" { %>
-                                Администраторы
-                              <% } else if private.can_see_member == "e" { %>
-                                Владелец сообщества
-                              <% } else if private.can_see_member == "f" { %>
-                                Подписчики, кроме
-                              <% } else if private.can_see_member == "g" { %>
-                                Некоторые подписчики
-                              <% } %>
-                            </a>
-                            <span class="collector">
-                              <% if private.can_see_member == "f" && private.get_can_see_member_exclude_users().len() > 0 { %>:
-                              <% for object in private.get_can_see_member_exclude_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } else if private.can_see_member == "g" && private.get_can_see_member_include_users.len() > 0 { %>:
-                              <% for object in private.get_can_see_member_include_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } %>
-                            </span>
-                            <div class="dropdown-menu border" data-action="can_see_member" style="top: 30px;">
-                              <% include!("perm/community_perm_drop.stpl"); %>
-                            </div>
-                          </span>
-                      </div>
-
-                      <div class="row mb-1 form_group_flex">
-                          <label class="col-md-6">Кто пишет сообщения</label>
-                          <span class="col-md-6">
-                            <a class="menu_drop_2 pointer">
-                              <% if private.can_send_message == "a" { %>
-                                Все пользователи
-                              <% } else if private.can_send_message == "b" { %>
-                                Подписчики
-                              <% } else if private.can_send_message == "c" { %>
-                                Персонал
-                              <% } else if private.can_send_message == "d" { %>
-                                Администраторы
-                              <% } else if private.can_send_message == "e" { %>
-                                Владелец сообщества
-                              <% } else if private.can_send_message == "f" { %>
-                                Подписчики, кроме
-                              <% } else if private.can_send_message == "g" { %>
-                                Некоторые подписчики
-                              <% } %>
-                            </a>
-                            <span class="collector">
-                              <% if private.can_send_message == "f" && private.get_can_send_message_exclude_users().len() > 0 { %>:
-                              <% for object in private.get_can_send_message_exclude_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } else if private.can_send_message == "g" && private.get_can_send_message_include_users.len() > 0 { %>:
-                              <% for object in private.get_can_send_message_include_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } %>
-                            </span>
-                            <div class="dropdown-menu border" data-action="can_send_message" style="top: 30px;">
-                              <% include!("perm/community_perm_drop.stpl"); %>
-                            </div>
-                          </span>
-                      </div>
-
-                      <div class="row mb-1 form_group_flex">
-                          <label class="col-md-6">Кто видит записи</label>
-                          <span class="col-md-6">
-                            <a class="menu_drop_2 pointer">
-                              <% if private.can_see_post == "a" { %>
-                                Все пользователи
-                              <% } else if private.can_see_post == "b" { %>
-                                Подписчики
-                              <% } else if private.can_see_post == "c" { %>
-                                Персонал
-                              <% } else if private.can_see_post == "d" { %>
-                                Администраторы
-                              <% } else if private.can_see_post == "e" { %>
-                                Владелец сообщества
-                              <% } else if private.can_see_post == "f" { %>
-                                Подписчики, кроме
-                              <% } else if private.can_see_post == "g" { %>
-                                Некоторые подписчики
-                              <% } %>
-                            </a>
-                            <span class="collector">
-                              <% if private.can_see_post == "f" && private.get_can_see_post_exclude_users().len() > 0 { %>:
-                              <% for object in private.get_can_see_post_exclude_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } else if private.can_see_post == "g" && private.get_can_see_post_include_users.len() > 0 { %>:
-                              <% for object in private.get_can_see_post_include_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } %>
-                            </span>
-                            <div class="dropdown-menu border" data-action="can_see_post" style="top: 30px;">
-                              <% include!("perm/community_perm_drop.stpl"); %>
-                            </div>
-                          </span>
-                      </div>
-
-                      <div class="row mb-1 form_group_flex">
-                          <label class="col-md-6">Кто видит фотографии</label>
-                          <span class="col-md-6">
-                            <a class="menu_drop_2 pointer">
-                              <% if private.can_see_photo == "a" { %>
-                                Все пользователи
-                              <% } else if private.can_see_photo == "b" { %>
-                                Подписчики
-                              <% } else if private.can_see_photo == "c" { %>
-                                Персонал
-                              <% } else if private.can_see_photo == "d" { %>
-                                Администраторы
-                              <% } else if private.can_see_photo == "e" { %>
-                                Владелец сообщества
-                              <% } else if private.can_see_photo == "f" { %>
-                                Подписчики, кроме
-                              <% } else if private.can_see_photo == "g" { %>
-                                Некоторые подписчики
-                              <% } %>
-                            </a>
-                            <span class="collector">
-                              <% if private.can_see_photo == "f" && private.get_can_see_photo_exclude_users().len() > 0 { %>:
-                              <% for object in private.get_can_see_photo_exclude_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } else if private.can_see_photo == "g" && private.get_can_see_photo_include_users.len() > 0 { %>:
-                              <% for object in private.get_can_see_photo_include_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } %>
-                            </span>
-                            <div class="dropdown-menu border" data-action="can_see_photo" style="top: 30px;">
-                              <% include!("perm/community_perm_drop.stpl"); %>
-                            </div>
-                          </span>
-                      </div>
-
-                      <div class="row mb-1 form_group_flex">
-                          <label class="col-md-6">Кто видит товары</label>
-                          <span class="col-md-6">
-                            <a class="menu_drop_2 pointer">
-                              <% if private.can_see_good == "a" { %>
-                                Все пользователи
-                              <% } else if private.can_see_good == "b" { %>
-                                Подписчики
-                              <% } else if private.can_see_good == "c" { %>
-                                Персонал
-                              <% } else if private.can_see_good == "d" { %>
-                                Администраторы
-                              <% } else if private.can_see_good == "e" { %>
-                                Владелец сообщества
-                              <% } else if private.can_see_good == "f" { %>
-                                Подписчики, кроме
-                              <% } else if private.can_see_good == "g" { %>
-                                Некоторые подписчики
-                              <% } %>
-                            </a>
-                            <span class="collector">
-                              <% if private.can_see_good == "f" && private.get_can_see_good_exclude_users().len() > 0 { %>:
-                              <% for object in private.get_can_see_good_exclude_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } else if private.can_see_good == "g" && private.get_can_see_good_include_users.len() > 0 { %>:
-                              <% for object in private.get_can_see_good_include_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } %>
-                            </span>
-                            <div class="dropdown-menu border" data-action="can_see_good" style="top: 30px;">
-                              <% include!("perm/community_perm_drop.stpl"); %>
-                            </div>
-                          </span>
-                      </div>
-
-                      <div class="row mb-1 form_group_flex">
-                          <label class="col-md-6">Кто видит видеозаписи</label>
-                          <span class="col-md-6">
-                            <a class="menu_drop_2 pointer">
-                              <% if private.can_see_video == "a" { %>
-                                Все пользователи
-                              <% } else if private.can_see_video == "b" { %>
-                                Подписчики
-                              <% } else if private.can_see_video == "c" { %>
-                                Персонал
-                              <% } else if private.can_see_video == "d" { %>
-                                Администраторы
-                              <% } else if private.can_see_video == "e" { %>
-                                Владелец сообщества
-                              <% } else if private.can_see_video == "f" { %>
-                                Подписчики, кроме
-                              <% } else if private.can_see_video == "g" { %>
-                                Некоторые подписчики
-                              <% } %>
-                            </a>
-                            <span class="collector">
-                              <% if private.can_see_video == "f" && private.get_can_see_video_exclude_users().len() > 0 { %>:
-                              <% for object in private.get_can_see_video_exclude_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } else if private.can_see_video == "g" && private.get_can_see_video_include_users.len() > 0 { %>:
-                              <% for object in private.get_can_see_video_include_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } %>
-                            </span>
-                            <div class="dropdown-menu border" data-action="can_see_video" style="top: 30px;">
-                              <% include!("perm/community_perm_drop.stpl"); %>
-                            </div>
-                          </span>
-                      </div>
-
-                      <div class="row mb-1 form_group_flex">
-                          <label class="col-md-6">Кто видит аудиозаписи</label>
-                          <span class="col-md-6">
-                            <a class="menu_drop_2 pointer">
-                              <% if private.can_see_music == "a" { %>
-                                Все пользователи
-                              <% } else if private.can_see_music == "b" { %>
-                                Подписчики
-                              <% } else if private.can_see_music == "c" { %>
-                                Персонал
-                              <% } else if private.can_see_music == "d" { %>
-                                Администраторы
-                              <% } else if private.can_see_music == "e" { %>
-                                Владелец сообщества
-                              <% } else if private.can_see_music == "f" { %>
-                                Подписчики, кроме
-                              <% } else if private.can_see_music == "g" { %>
-                                Некоторые подписчики
-                              <% } %>
-                            </a>
-                            <span class="collector">
-                              <% if private.can_see_music == "f" && private.get_can_see_music_exclude_users().len() > 0 { %>:
-                              <% for object in private.get_can_see_music_exclude_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } else if private.can_see_music == "g" && private.get_can_see_music_include_users.len() > 0 { %>:
-                              <% for object in private.get_can_see_music_include_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } %>
-                            </span>
-                            <div class="dropdown-menu border" data-action="can_see_music" style="top: 30px;">
-                              <% include!("perm/community_perm_drop.stpl"); %>
-                            </div>
-                          </span>
-                      </div>
-
-                      <div class="row mb-1 form_group_flex">
-                          <label class="col-md-6">Кто видит раздел планирования</label>
-                          <span class="col-md-6">
-                            <a class="menu_drop_2 pointer">
-                              <% if private.can_see_planner == "a" { %>
-                                Все пользователи
-                              <% } else if private.can_see_planner == "b" { %>
-                                Подписчики
-                              <% } else if private.can_see_planner == "c" { %>
-                                Персонал
-                              <% } else if private.can_see_planner == "d" { %>
-                                Администраторы
-                              <% } else if private.can_see_planner == "e" { %>
-                                Владелец сообщества
-                              <% } else if private.can_see_planner == "f" { %>
-                                Подписчики, кроме
-                              <% } else if private.can_see_planner == "g" { %>
-                                Некоторые подписчики
-                              <% } %>
-                            </a>
-                            <span class="collector">
-                              <% if private.can_see_planner == "f" && private.get_can_see_planner_exclude_users().len() > 0 { %>:
-                              <% for object in private.get_can_see_planner_exclude_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } else if private.can_see_planner == "g" && private.get_can_see_planner_include_users.len() > 0 { %>:
-                              <% for object in private.get_can_see_planner_include_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } %>
-                            </span>
-                            <div class="dropdown-menu border" data-action="can_see_planner" style="top: 30px;">
-                              <% include!("perm/community_perm_drop.stpl"); %>
-                            </div>
-                          </span>
-                      </div>
-
-                      <div class="row mb-1 form_group_flex">
-                          <label class="col-md-6">Кто видит документы</label>
-                          <span class="col-md-6">
-                            <a class="menu_drop_2 pointer">
-                              <% if private.can_see_doc == "a" { %>
-                                Все пользователи
-                              <% } else if private.can_see_doc == "b" { %>
-                                Подписчики
-                              <% } else if private.can_see_doc == "c" { %>
-                                Персонал
-                              <% } else if private.can_see_doc == "d" { %>
-                                Администраторы
-                              <% } else if private.can_see_doc == "e" { %>
-                                Владелец сообщества
-                              <% } else if private.can_see_doc == "f" { %>
-                                Подписчики, кроме
-                              <% } else if private.can_see_doc == "g" { %>
-                                Некоторые подписчики
-                              <% } %>
-                            </a>
-                            <span class="collector">
-                              <% if private.can_see_doc == "f" && private.get_can_see_doc_exclude_users().len() > 0 { %>:
-                              <% for object in private.get_can_see_doc_exclude_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } else if private.can_see_doc == "g" && private.get_can_see_doc_include_users.len() > 0 { %>:
-                              <% for object in private.get_can_see_doc_include_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } %>
-                            </span>
-                            <div class="dropdown-menu border" data-action="can_see_doc" style="top: 30px;">
-                              <% include!("perm/community_perm_drop.stpl"); %>
-                            </div>
-                          </span>
-                      </div>
-
-                      <div class="row mb-1 form_group_flex">
-                          <label class="col-md-6">Кто видит статистику</label>
-                          <span class="col-md-6">
-                            <a class="menu_drop_2 pointer">
-                              <% if private.can_see_stat == "a" { %>
-                                Все пользователи
-                              <% } else if private.can_see_stat == "b" { %>
-                                Подписчики
-                              <% } else if private.can_see_stat == "c" { %>
-                                Персонал
-                              <% } else if private.can_see_stat == "d" { %>
-                                Администраторы
-                              <% } else if private.can_see_stat == "e" { %>
-                                Владелец сообщества
-                              <% } else if private.can_see_stat == "f" { %>
-                                Подписчики, кроме
-                              <% } else if private.can_see_stat == "g" { %>
-                                Некоторые подписчики
-                              <% } %>
-                            </a>
-                            <span class="collector">
-                              <% if private.can_see_stat == "f" && private.get_can_see_stat_exclude_users().len() > 0 { %>:
-                              <% for object in private.get_can_see_stat_exclude_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } else if private.can_see_stat == "g" && private.get_can_see_stat_include_users.len() > 0 { %>:
-                              <% for object in private.get_can_see_stat_include_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } %>
-                            </span>
-                            <div class="dropdown-menu border" data-action="can_see_stat" style="top: 30px;">
-                              <% include!("perm/community_perm_drop.stpl"); %>
-                            </div>
-                          </span>
-                      </div>
-
-                      <div class="row mb-1 form_group_flex">
-                          <label class="col-md-6">Кто видит настройки</label>
-                          <span class="col-md-6">
-                            <a class="menu_drop_2 pointer">
-                              <% if private.can_see_settings == "a" { %>
-                                Все пользователи
-                              <% } else if private.can_see_settings == "b" { %>
-                                Подписчики
-                              <% } else if private.can_see_settings == "c" { %>
-                                Персонал
-                              <% } else if private.can_see_settings == "d" { %>
-                                Администраторы
-                              <% } else if private.can_see_settings == "e" { %>
-                                Владелец сообщества
-                              <% } else if private.can_see_settings == "f" { %>
-                                Подписчики, кроме
-                              <% } else if private.can_see_settings == "g" { %>
-                                Некоторые подписчики
-                              <% } %>
-                            </a>
-                            <span class="collector">
-                              <% if private.can_see_settings == "f" && private.get_can_see_settings_exclude_users().len() > 0 { %>:
-                              <% for object in private.get_can_see_settings_exclude_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } else if private.can_see_settings == "g" && private.get_can_see_settings_include_users.len() > 0 { %>:
-                              <% for object in private.get_can_see_settings_include_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } %>
-                            </span>
-                            <div class="dropdown-menu border" data-action="can_see_settings" style="top: 30px;">
-                              <% include!("perm/admins_perm_drop.stpl"); %>
-                            </div>
-                          </span>
-                      </div>
-
-                      <div class="row mb-1 form_group_flex">
-                          <label class="col-md-6">Кто видит журнал действий</label>
-                          <span class="col-md-6">
-                            <a class="menu_drop_2 pointer">
-                              <% if private.can_see_log == "a" { %>
-                                Все пользователи
-                              <% } else if private.can_see_log == "b" { %>
-                                Подписчики
-                              <% } else if private.can_see_log == "c" { %>
-                                Персонал
-                              <% } else if private.can_see_log == "d" { %>
-                                Администраторы
-                              <% } else if private.can_see_log == "e" { %>
-                                Владелец сообщества
-                              <% } else if private.can_see_log == "f" { %>
-                                Подписчики, кроме
-                              <% } else if private.can_see_log == "g" { %>
-                                Некоторые подписчики
-                              <% } %>
-                            </a>
-                            <span class="collector">
-                              <% if private.can_see_log == "f" && private.get_can_see_log_exclude_users().len() > 0 { %>:
-                              <% for object in private.get_can_see_log_exclude_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } else if private.can_see_log == "g" && private.get_can_see_log_include_users.len() > 0 { %>:
-                              <% for object in private.get_can_see_log_include_users().iter() { %>
-                                <a href="<%= object.get_link() %>" target="_blank">
-                                  <%= object.get_full_name() %>
-                                </a>
-                                &nbsp;
-                              <% } %>
-                              <% } %>
-                            </span>
-                            <div class="dropdown-menu border" data-action="can_see_log" style="top: 30px;">
-                              <% include!("perm/admins_perm_drop.stpl"); %>
-                            </div>
-                          </span>
-                      </div>
-
-                    </div>
+  <div class="row">
+    <div class="col-md-9 order-1">
+      <form class="case_edit type_community" data-pk="<%= community.id %>">
+        <div class="card mb-3">
+          <div class="card-header border-bottom">
+            <h5 class="content-color-primary mb-0">Приватность -
+              <a class="underline ajax" href="<%= community.get_link() %>">
+                <%= community.name %>
+              </a>
+            </h5>
+          </div>
+          <div class="card-body hot_perm_post">
+            <div class="row mb-1 form_group_flex">
+              <label class="col-md-6">Кто видит информацию</label>
+              <span class="col-md-6">
+                <a class="i_link menu_drop_2 pointer">
+                  <% if private.can_see_info == "a" { %>
+                  Все пользователи
+                  <% } else if private.can_see_info == "b" { %>
+                  Подписчики
+                  <% } else if private.can_see_info == "c" { %>
+                  Персонал
+                  <% } else if private.can_see_info == "d" { %>
+                  Администраторы
+                  <% } else if private.can_see_info == "e" { %>
+                  Владелец сообщества
+                  <% } else if private.can_see_info == "f" { %>
+                  Подписчики, кроме
+                  <% } else if private.can_see_info == "g" { %>
+                  Некоторые подписчики
+                  <% } %>
+                </a>
+                <span class="collector">
+                  <% if private.can_see_info == "f" && private.get_can_see_info_exclude_users().len() > 0 { %>:
+                  <% for object in private.get_can_see_info_exclude_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } else if private.can_see_info == "g" && private.get_can_see_info_include_users.len() > 0 { %>:
+                  <% for object in private.get_can_see_info_include_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } %>
+                </span>
+                <div class="dropdown-menu border" data-action="can_see_info" style="top: 30px;">
+                  <% include!("perm/community_perm_drop.html"); %>
                 </div>
-              </form>
-        </div>
+              </span>
+            </div>
 
-        <div class="col-md-3 order-2 left_menu">
-            <% include!("menu.stpl"); %>
-        </div>
+            <div class="row mb-1 form_group_flex">
+              <label class="col-md-6">Кто видит подписчиков</label>
+              <span class="col-md-6">
+                <a class="i_link menu_drop_2 pointer">
+                  <% if private.can_see_member == "a" { %>
+                  Все пользователи
+                  <% } else if private.can_see_member == "b" { %>
+                  Подписчики
+                  <% } else if private.can_see_member == "c" { %>
+                  Персонал
+                  <% } else if private.can_see_member == "d" { %>
+                  Администраторы
+                  <% } else if private.can_see_member == "e" { %>
+                  Владелец сообщества
+                  <% } else if private.can_see_member == "f" { %>
+                  Подписчики, кроме
+                  <% } else if private.can_see_member == "g" { %>
+                  Некоторые подписчики
+                  <% } %>
+                </a>
+                <span class="collector">
+                  <% if private.can_see_member == "f" && private.get_can_see_member_exclude_users().len() > 0 { %>:
+                  <% for object in private.get_can_see_member_exclude_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } else if private.can_see_member == "g" && private.get_can_see_member_include_users.len() > 0 { %>:
+                  <% for object in private.get_can_see_member_include_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } %>
+                </span>
+                <div class="dropdown-menu border" data-action="can_see_member" style="top: 30px;">
+                  <% include!("perm/community_perm_drop.stpl"); %>
+                </div>
+              </span>
+            </div>
 
+            <div class="row mb-1 form_group_flex">
+              <label class="col-md-6">Кто пишет сообщения</label>
+              <span class="col-md-6">
+                <a class="i_link menu_drop_2 pointer">
+                  <% if private.can_send_message == "a" { %>
+                  Все пользователи
+                  <% } else if private.can_send_message == "b" { %>
+                  Подписчики
+                  <% } else if private.can_send_message == "c" { %>
+                  Персонал
+                  <% } else if private.can_send_message == "d" { %>
+                  Администраторы
+                  <% } else if private.can_send_message == "e" { %>
+                  Владелец сообщества
+                  <% } else if private.can_send_message == "f" { %>
+                  Подписчики, кроме
+                  <% } else if private.can_send_message == "g" { %>
+                  Некоторые подписчики
+                  <% } %>
+                </a>
+                <span class="collector">
+                  <% if private.can_send_message == "f" && private.get_can_send_message_exclude_users().len() > 0 { %>:
+                  <% for object in private.get_can_send_message_exclude_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } else if private.can_send_message == "g" && private.get_can_send_message_include_users.len() > 0 { %>:
+                  <% for object in private.get_can_send_message_include_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } %>
+                </span>
+                <div class="dropdown-menu border" data-action="can_send_message" style="top: 30px;">
+                  <% include!("perm/community_perm_drop.stpl"); %>
+                </div>
+              </span>
+            </div>
+
+            <div class="row mb-1 form_group_flex">
+              <label class="col-md-6">Кто видит записи</label>
+              <span class="col-md-6">
+                <a class="i_link menu_drop_2 pointer">
+                  <% if private.can_see_post == "a" { %>
+                  Все пользователи
+                  <% } else if private.can_see_post == "b" { %>
+                  Подписчики
+                  <% } else if private.can_see_post == "c" { %>
+                  Персонал
+                  <% } else if private.can_see_post == "d" { %>
+                  Администраторы
+                  <% } else if private.can_see_post == "e" { %>
+                  Владелец сообщества
+                  <% } else if private.can_see_post == "f" { %>
+                  Подписчики, кроме
+                  <% } else if private.can_see_post == "g" { %>
+                  Некоторые подписчики
+                  <% } %>
+                </a>
+                <span class="collector">
+                  <% if private.can_see_post == "f" && private.get_can_see_post_exclude_users().len() > 0 { %>:
+                  <% for object in private.get_can_see_post_exclude_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } else if private.can_see_post == "g" && private.get_can_see_post_include_users.len() > 0 { %>:
+                  <% for object in private.get_can_see_post_include_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } %>
+                </span>
+                <div class="dropdown-menu border" data-action="can_see_post" style="top: 30px;">
+                  <% include!("perm/community_perm_drop.stpl"); %>
+                </div>
+              </span>
+            </div>
+
+            <div class="row mb-1 form_group_flex">
+              <label class="col-md-6">Кто видит фотографии</label>
+              <span class="col-md-6">
+                <a class="i_link menu_drop_2 pointer">
+                  <% if private.can_see_photo == "a" { %>
+                  Все пользователи
+                  <% } else if private.can_see_photo == "b" { %>
+                  Подписчики
+                  <% } else if private.can_see_photo == "c" { %>
+                  Персонал
+                  <% } else if private.can_see_photo == "d" { %>
+                  Администраторы
+                  <% } else if private.can_see_photo == "e" { %>
+                  Владелец сообщества
+                  <% } else if private.can_see_photo == "f" { %>
+                  Подписчики, кроме
+                  <% } else if private.can_see_photo == "g" { %>
+                  Некоторые подписчики
+                  <% } %>
+                </a>
+                <span class="collector">
+                  <% if private.can_see_photo == "f" && private.get_can_see_photo_exclude_users().len() > 0 { %>:
+                  <% for object in private.get_can_see_photo_exclude_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } else if private.can_see_photo == "g" && private.get_can_see_photo_include_users.len() > 0 { %>:
+                  <% for object in private.get_can_see_photo_include_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } %>
+                </span>
+                <div class="dropdown-menu border" data-action="can_see_photo" style="top: 30px;">
+                  <% include!("perm/community_perm_drop.stpl"); %>
+                </div>
+              </span>
+            </div>
+
+            <div class="row mb-1 form_group_flex">
+              <label class="col-md-6">Кто видит товары</label>
+              <span class="col-md-6">
+                <a class="i_link menu_drop_2 pointer">
+                  <% if private.can_see_good == "a" { %>
+                  Все пользователи
+                  <% } else if private.can_see_good == "b" { %>
+                  Подписчики
+                  <% } else if private.can_see_good == "c" { %>
+                  Персонал
+                  <% } else if private.can_see_good == "d" { %>
+                  Администраторы
+                  <% } else if private.can_see_good == "e" { %>
+                  Владелец сообщества
+                  <% } else if private.can_see_good == "f" { %>
+                  Подписчики, кроме
+                  <% } else if private.can_see_good == "g" { %>
+                  Некоторые подписчики
+                  <% } %>
+                </a>
+                <span class="collector">
+                  <% if private.can_see_good == "f" && private.get_can_see_good_exclude_users().len() > 0 { %>:
+                  <% for object in private.get_can_see_good_exclude_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } else if private.can_see_good == "g" && private.get_can_see_good_include_users.len() > 0 { %>:
+                  <% for object in private.get_can_see_good_include_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } %>
+                </span>
+                <div class="dropdown-menu border" data-action="can_see_good" style="top: 30px;">
+                  <% include!("perm/community_perm_drop.stpl"); %>
+                </div>
+              </span>
+            </div>
+
+            <div class="row mb-1 form_group_flex">
+              <label class="col-md-6">Кто видит видеозаписи</label>
+              <span class="col-md-6">
+                <a class="i_link menu_drop_2 pointer">
+                  <% if private.can_see_video == "a" { %>
+                  Все пользователи
+                  <% } else if private.can_see_video == "b" { %>
+                  Подписчики
+                  <% } else if private.can_see_video == "c" { %>
+                  Персонал
+                  <% } else if private.can_see_video == "d" { %>
+                  Администраторы
+                  <% } else if private.can_see_video == "e" { %>
+                  Владелец сообщества
+                  <% } else if private.can_see_video == "f" { %>
+                  Подписчики, кроме
+                  <% } else if private.can_see_video == "g" { %>
+                  Некоторые подписчики
+                  <% } %>
+                </a>
+                <span class="collector">
+                  <% if private.can_see_video == "f" && private.get_can_see_video_exclude_users().len() > 0 { %>:
+                  <% for object in private.get_can_see_video_exclude_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } else if private.can_see_video == "g" && private.get_can_see_video_include_users.len() > 0 { %>:
+                  <% for object in private.get_can_see_video_include_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } %>
+                </span>
+                <div class="dropdown-menu border" data-action="can_see_video" style="top: 30px;">
+                  <% include!("perm/community_perm_drop.stpl"); %>
+                </div>
+              </span>
+            </div>
+
+            <div class="row mb-1 form_group_flex">
+              <label class="col-md-6">Кто видит аудиозаписи</label>
+              <span class="col-md-6">
+                <a class="i_link menu_drop_2 pointer">
+                  <% if private.can_see_music == "a" { %>
+                  Все пользователи
+                  <% } else if private.can_see_music == "b" { %>
+                  Подписчики
+                  <% } else if private.can_see_music == "c" { %>
+                  Персонал
+                  <% } else if private.can_see_music == "d" { %>
+                  Администраторы
+                  <% } else if private.can_see_music == "e" { %>
+                  Владелец сообщества
+                  <% } else if private.can_see_music == "f" { %>
+                  Подписчики, кроме
+                  <% } else if private.can_see_music == "g" { %>
+                  Некоторые подписчики
+                  <% } %>
+                </a>
+                <span class="collector">
+                  <% if private.can_see_music == "f" && private.get_can_see_music_exclude_users().len() > 0 { %>:
+                  <% for object in private.get_can_see_music_exclude_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } else if private.can_see_music == "g" && private.get_can_see_music_include_users.len() > 0 { %>:
+                  <% for object in private.get_can_see_music_include_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } %>
+                </span>
+                <div class="dropdown-menu border" data-action="can_see_music" style="top: 30px;">
+                  <% include!("perm/community_perm_drop.stpl"); %>
+                </div>
+              </span>
+            </div>
+
+            <div class="row mb-1 form_group_flex">
+              <label class="col-md-6">Кто видит раздел планирования</label>
+              <span class="col-md-6">
+                <a class="i_link menu_drop_2 pointer">
+                  <% if private.can_see_planner == "a" { %>
+                  Все пользователи
+                  <% } else if private.can_see_planner == "b" { %>
+                  Подписчики
+                  <% } else if private.can_see_planner == "c" { %>
+                  Персонал
+                  <% } else if private.can_see_planner == "d" { %>
+                  Администраторы
+                  <% } else if private.can_see_planner == "e" { %>
+                  Владелец сообщества
+                  <% } else if private.can_see_planner == "f" { %>
+                  Подписчики, кроме
+                  <% } else if private.can_see_planner == "g" { %>
+                  Некоторые подписчики
+                  <% } %>
+                </a>
+                <span class="collector">
+                  <% if private.can_see_planner == "f" && private.get_can_see_planner_exclude_users().len() > 0 { %>:
+                  <% for object in private.get_can_see_planner_exclude_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } else if private.can_see_planner == "g" && private.get_can_see_planner_include_users.len() > 0 { %>:
+                  <% for object in private.get_can_see_planner_include_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } %>
+                </span>
+                <div class="dropdown-menu border" data-action="can_see_planner" style="top: 30px;">
+                  <% include!("perm/community_perm_drop.stpl"); %>
+                </div>
+              </span>
+            </div>
+
+            <div class="row mb-1 form_group_flex">
+              <label class="col-md-6">Кто видит документы</label>
+              <span class="col-md-6">
+                <a class="i_link menu_drop_2 pointer">
+                  <% if private.can_see_doc == "a" { %>
+                  Все пользователи
+                  <% } else if private.can_see_doc == "b" { %>
+                  Подписчики
+                  <% } else if private.can_see_doc == "c" { %>
+                  Персонал
+                  <% } else if private.can_see_doc == "d" { %>
+                  Администраторы
+                  <% } else if private.can_see_doc == "e" { %>
+                  Владелец сообщества
+                  <% } else if private.can_see_doc == "f" { %>
+                  Подписчики, кроме
+                  <% } else if private.can_see_doc == "g" { %>
+                  Некоторые подписчики
+                  <% } %>
+                </a>
+                <span class="collector">
+                  <% if private.can_see_doc == "f" && private.get_can_see_doc_exclude_users().len() > 0 { %>:
+                  <% for object in private.get_can_see_doc_exclude_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } else if private.can_see_doc == "g" && private.get_can_see_doc_include_users.len() > 0 { %>:
+                  <% for object in private.get_can_see_doc_include_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } %>
+                </span>
+                <div class="dropdown-menu border" data-action="can_see_doc" style="top: 30px;">
+                  <% include!("perm/community_perm_drop.stpl"); %>
+                </div>
+              </span>
+            </div>
+
+            <div class="row mb-1 form_group_flex">
+              <label class="col-md-6">Кто видит статистику</label>
+              <span class="col-md-6">
+                <a class="i_link menu_drop_2 pointer">
+                  <% if private.can_see_stat == "a" { %>
+                  Все пользователи
+                  <% } else if private.can_see_stat == "b" { %>
+                  Подписчики
+                  <% } else if private.can_see_stat == "c" { %>
+                  Персонал
+                  <% } else if private.can_see_stat == "d" { %>
+                  Администраторы
+                  <% } else if private.can_see_stat == "e" { %>
+                  Владелец сообщества
+                  <% } else if private.can_see_stat == "f" { %>
+                  Подписчики, кроме
+                  <% } else if private.can_see_stat == "g" { %>
+                  Некоторые подписчики
+                  <% } %>
+                </a>
+                <span class="collector">
+                  <% if private.can_see_stat == "f" && private.get_can_see_stat_exclude_users().len() > 0 { %>:
+                  <% for object in private.get_can_see_stat_exclude_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } else if private.can_see_stat == "g" && private.get_can_see_stat_include_users.len() > 0 { %>:
+                  <% for object in private.get_can_see_stat_include_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } %>
+                </span>
+                <div class="dropdown-menu border" data-action="can_see_stat" style="top: 30px;">
+                  <% include!("perm/community_perm_drop.stpl"); %>
+                </div>
+              </span>
+            </div>
+
+            <div class="row mb-1 form_group_flex">
+              <label class="col-md-6">Кто видит настройки</label>
+              <span class="col-md-6">
+                <a class="i_link menu_drop_2 pointer">
+                  <% if private.can_see_settings == "a" { %>
+                  Все пользователи
+                  <% } else if private.can_see_settings == "b" { %>
+                  Подписчики
+                  <% } else if private.can_see_settings == "c" { %>
+                  Персонал
+                  <% } else if private.can_see_settings == "d" { %>
+                  Администраторы
+                  <% } else if private.can_see_settings == "e" { %>
+                  Владелец сообщества
+                  <% } else if private.can_see_settings == "f" { %>
+                  Подписчики, кроме
+                  <% } else if private.can_see_settings == "g" { %>
+                  Некоторые подписчики
+                  <% } %>
+                </a>
+                <span class="collector">
+                  <% if private.can_see_settings == "f" && private.get_can_see_settings_exclude_users().len() > 0 { %>:
+                  <% for object in private.get_can_see_settings_exclude_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } else if private.can_see_settings == "g" && private.get_can_see_settings_include_users.len() > 0 { %>:
+                  <% for object in private.get_can_see_settings_include_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } %>
+                </span>
+                <div class="dropdown-menu border" data-action="can_see_settings" style="top: 30px;">
+                  <% include!("perm/admins_perm_drop.stpl"); %>
+                </div>
+              </span>
+            </div>
+
+            <div class="row mb-1 form_group_flex">
+              <label class="col-md-6">Кто видит журнал действий</label>
+              <span class="col-md-6">
+                <a class="i_link menu_drop_2 pointer">
+                  <% if private.can_see_log == "a" { %>
+                  Все пользователи
+                  <% } else if private.can_see_log == "b" { %>
+                  Подписчики
+                  <% } else if private.can_see_log == "c" { %>
+                  Персонал
+                  <% } else if private.can_see_log == "d" { %>
+                  Администраторы
+                  <% } else if private.can_see_log == "e" { %>
+                  Владелец сообщества
+                  <% } else if private.can_see_log == "f" { %>
+                  Подписчики, кроме
+                  <% } else if private.can_see_log == "g" { %>
+                  Некоторые подписчики
+                  <% } %>
+                </a>
+                <span class="collector">
+                  <% if private.can_see_log == "f" && private.get_can_see_log_exclude_users().len() > 0 { %>:
+                  <% for object in private.get_can_see_log_exclude_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } else if private.can_see_log == "g" && private.get_can_see_log_include_users.len() > 0 { %>:
+                  <% for object in private.get_can_see_log_include_users().iter() { %>
+                  <a href="<%= object.get_link() %>" target="_blank">
+                    <%= object.get_full_name() %>
+                  </a>
+                  &nbsp;
+                  <% } %>
+                  <% } %>
+                </span>
+                <div class="dropdown-menu border" data-action="can_see_log" style="top: 30px;">
+                  <% include!("perm/admins_perm_drop.stpl"); %>
+                </div>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </form>
     </div>
+
+    <div class="col-md-3 order-2 left_menu">
+      <% include!("menu.stpl"); %>
+    </div>
+
+  </div>
 </div>

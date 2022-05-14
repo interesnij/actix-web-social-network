@@ -3,27 +3,27 @@
     <span class="col-md-6">
       <% if list.can_see_el == "a" { %>
       <input class="input" name="can_see_el" type="hidden" value="a" />
-      <a class="menu_drop_2 pointer">Все пользователи</a>
+      <a class="i_link menu_drop_2 pointer">Все пользователи</a>
       <span class="collector"></span>
 
       <% } else if list.can_see_el == "f" { %>
       <input class="input" name="can_see_el" type="hidden" value="f" />
-      <a class="menu_drop_2 pointer">Подписчики</a>
+      <a class="i_link menu_drop_2 pointer">Подписчики</a>
       <span class="collector"></span>
 
       <% } else if list.can_see_el == "h" { %>
       <input class="input" name="can_see_el" type="hidden" value="h" />
-      <a class="menu_drop_2 pointer">Администраторы</a>
+      <a class="i_link menu_drop_2 pointer">Администраторы</a>
       <span class="collector"></span>
 
       <% } else if list.can_see_el == "g" { %>
       <input class="input" name="can_see_el" type="hidden" value="g" />
-      <a class="menu_drop_2 pointer">Владелец сообщества</a>
+      <a class="i_link menu_drop_2 pointer">Владелец сообщества</a>
       <span class="collector"></span>
 
       <% } else if list.can_see_el == "i" { %>
       <input class="input" name="can_see_el" type="hidden" value="i" />
-      <a class="menu_drop_2 pointer underline">Подписчики, кроме</a>
+      <a class="i_link menu_drop_2 pointer underline">Подписчики, кроме</a>
       <span class="collector">:
         <% for object in list.get_can_see_el_exclude_users().iter() { %>
           <a href="<%= object.get_link() %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
@@ -32,7 +32,7 @@
 
       <% } else if list.can_see_el == "j" { %>
       <input class="input" name="can_see_el" type="hidden" value="j" />
-      <a class="menu_drop_2 pointer underline">Некоторые подписчики</a>
+      <a class="i_link menu_drop_2 pointer underline">Некоторые подписчики</a>
       <span class="collector">:
         <% for object in list.get_can_see_el_include_users().iter() {  %>
           <a href="<%= object.get_link() %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
@@ -50,27 +50,27 @@
     <span class="col-md-6">
       <% if list.create_el == "a" { %>
       <input class="input" name="create_el" type="hidden" value="a" />
-      <a class="menu_drop_2 pointer">Все пользователи</a>
+      <a class="i_link menu_drop_2 pointer">Все пользователи</a>
       <span class="collector"></span>
 
       <% } else if list.create_el == "f" { %>
       <input class="input" name="create_el" type="hidden" value="f" />
-      <a class="menu_drop_2 pointer">Подписчики</a>
+      <a class="i_link menu_drop_2 pointer">Подписчики</a>
       <span class="collector"></span>
 
       <% } else if list.create_el == "h" { %>
       <input class="input" name="create_el" type="hidden" value="h" />
-      <a class="menu_drop_2 pointer">Администраторы</a>
+      <a class="i_link menu_drop_2 pointer">Администраторы</a>
       <span class="collector"></span>
 
       <% } else if list.create_el == "g" { %>
       <input class="input" name="create_el" type="hidden" value="g" />
-      <a class="menu_drop_2 pointer">Владелец сообщества</a>
+      <a class="i_link menu_drop_2 pointer">Владелец сообщества</a>
       <span class="collector"></span>
 
       <% } else if list.create_el == "i" { %>
       <input class="input" name="create_el" type="hidden" value="i" />
-      <a class="menu_drop_2 pointer underline">Подписчики, кроме</a>
+      <a class="i_link menu_drop_2 pointer underline">Подписчики, кроме</a>
       <span class="collector">:
         <% for object in list.get_create_el_exclude_users().iter() { %>
           <a href="<%= object.get_link() %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
@@ -79,7 +79,7 @@
 
       <% } else if list.create_el == "j" { %>
       <input class="input" name="create_el" type="hidden" value="j" />
-      <a class="menu_drop_2 pointer underline">Некоторые подписчики</a>
+      <a class="i_link menu_drop_2 pointer underline">Некоторые подписчики</a>
       <span class="collector">:
         <% for object in list.get_create_el_include_users().iter() {  %>
           <a href="<%= object.get_link() %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
@@ -97,27 +97,27 @@
         <span class="col-md-6">
           <% if list.copy_el == "a" { %>
           <input class="input" name="copy_el" type="hidden" value="a" />
-          <a class="menu_drop_2 pointer">Все пользователи</a>
+          <a class="i_link menu_drop_2 pointer">Все пользователи</a>
           <span class="collector"></span>
 
           <% } else if list.copy_el == "f" { %>
           <input class="input" name="copy_el" type="hidden" value="f" />
-          <a class="menu_drop_2 pointer">Подписчики</a>
+          <a class="i_link menu_drop_2 pointer">Подписчики</a>
           <span class="collector"></span>
 
           <% } else if list.copy_el == "h" { %>
           <input class="input" name="copy_el" type="hidden" value="h" />
-          <a class="menu_drop_2 pointer">Администраторы</a>
+          <a class="i_link menu_drop_2 pointer">Администраторы</a>
           <span class="collector"></span>
 
           <% } else if list.list.copy_el == "g" { %>
           <input class="input" name="copy_el" type="hidden" value="g" />
-          <a class="menu_drop_2 pointer">Владелец сообщества</a>
+          <a class="i_link menu_drop_2 pointer">Владелец сообщества</a>
           <span class="collector"></span>
 
           <% } else if list.copy_el == "i" { %>
           <input class="input" name="copy_el" type="hidden" value="i" />
-          <a class="menu_drop_2 pointer underline">Подписчики, кроме</a>
+          <a class="i_link menu_drop_2 pointer underline">Подписчики, кроме</a>
           <span class="collector">:
             <% for object in list.get_copy_el_exclude_users().iter() { %>
               <a href="<%= object.get_link() %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
@@ -126,7 +126,7 @@
 
           <% } else if list.copy_el == "j" { %>
           <input class="input" name="copy_el" type="hidden" value="j" />
-          <a class="menu_drop_2 pointer underline">Некоторые подписчики</a>
+          <a class="i_link menu_drop_2 pointer underline">Некоторые подписчики</a>
           <span class="collector">:
             <% for object in list.get_copy_el_include_users().iter() {  %>
               <a href="<%= object.get_link() %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;

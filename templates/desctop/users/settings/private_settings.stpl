@@ -17,7 +17,7 @@
               <div class="row mt-1 mb-1 form_group_flex">
                 <label class="col-md-6">Кто видит Ваши страницы</label>
                 <span class="col-md-6">
-                  <a class="menu_drop_2 pointer">
+                  <a class="i_link menu_drop_2 pointer">
                     <% if private.can_see_all == "a" { %>
                     Все пользователи
                     <% } else if private.can_see_all == "b" { %>
@@ -58,7 +58,7 @@
               <div class="row mb-1 form_group_flex">
                 <label class="col-md-6">Кто видит сообщества</label>
                 <span class="col-md-6">
-                  <a class="menu_drop_2 pointer">
+                  <a class="i_link menu_drop_2 pointer">
                     <% if private.can_see_community == "a" { %>
                     Все пользователи
                     <% } else if private.can_see_community == "b" { %>
@@ -99,7 +99,7 @@
               <div class="row mb-1 form_group_flex">
                 <label class="col-md-6">Кто видит информацию</label>
                 <span class="col-md-6">
-                  <a class="menu_drop_2 pointer">
+                  <a class="i_link menu_drop_2 pointer">
                     <% if private.can_see_info == "a" { %>
                     Все пользователи
                     <% } else if private.can_see_info == "b" { %>
@@ -140,7 +140,7 @@
               <div class="row mb-1 form_group_flex">
                 <label class="col-md-6">Кто видит друзей</label>
                 <span class="col-md-6">
-                  <a class="menu_drop_2 pointer">
+                  <a class="i_link menu_drop_2 pointer">
                     <% if private.can_see_friend == "a" { %>
                     Все пользователи
                     <% } else if private.can_see_friend == "b" { %>
@@ -181,7 +181,7 @@
               <div class="row mb-1 form_group_flex">
                 <label class="col-md-6">Кто пишет сообщения</label>
                 <span class="col-md-6">
-                  <a class="menu_drop_2 pointer">
+                  <a class="i_link menu_drop_2 pointer">
                     <% if private.can_send_message == "a" { %>
                     Все пользователи
                     <% } else if private.can_send_message == "b" { %>
@@ -222,7 +222,7 @@
               <div class="row mb-1 form_group_flex">
                 <label class="col-md-6">Кто добавляет в чаты</label>
                 <span class="col-md-6">
-                  <a class="menu_drop_2 pointer">
+                  <a class="i_link menu_drop_2 pointer">
                     <% if private.can_add_in_chat == "a" { %>
                     Все пользователи
                     <% } else if private.can_add_in_chat == "b" { %>
@@ -263,7 +263,7 @@
               <div class="row mb-1 form_group_flex">
                 <label class="col-md-6">Кто видит записи</label>
                 <span class="col-md-6">
-                  <a class="menu_drop_2 pointer">
+                  <a class="i_link menu_drop_2 pointer">
                     <% if private.can_see_post == "a" { %>
                     Все пользователи
                     <% } else if private.can_see_post == "b" { %>
@@ -304,7 +304,7 @@
               <div class="row mb-1 form_group_flex">
                 <label class="col-md-6">Кто видит фотографии</label>
                 <span class="col-md-6">
-                  <a class="menu_drop_2 pointer">
+                  <a class="i_link menu_drop_2 pointer">
                     <% if private.can_see_photo == "a" { %>
                     Все пользователи
                     <% } else if private.can_see_photo == "b" { %>
@@ -345,7 +345,7 @@
               <div class="row mb-1 form_group_flex">
                 <label class="col-md-6">Кто видит товары</label>
                 <span class="col-md-6">
-                  <a class="menu_drop_2 pointer">
+                  <a class="i_link menu_drop_2 pointer">
                     <% if private.can_see_good == "a" { %>
                     Все пользователи
                     <% } else if private.can_see_good == "b" { %>
@@ -386,7 +386,7 @@
               <div class="row mb-1 form_group_flex">
                 <label class="col-md-6">Кто видит видеозаписи</label>
                 <span class="col-md-6">
-                  <a class="menu_drop_2 pointer">
+                  <a class="i_link menu_drop_2 pointer">
                     <% if private.can_see_video == "a" { %>
                     Все пользователи
                     <% } else if private.can_see_video == "b" { %>
@@ -427,7 +427,7 @@
               <div class="row mb-1 form_group_flex">
                 <label class="col-md-6">Кто видит аудиозаписи</label>
                 <span class="col-md-6">
-                  <a class="menu_drop_2 pointer">
+                  <a class="i_link menu_drop_2 pointer">
                     <% if private.can_see_music == "a" { %>
                     Все пользователи
                     <% } else if private.can_see_music == "b" { %>
@@ -468,7 +468,7 @@
               <div class="row mb-1 form_group_flex">
                 <label class="col-md-6">Кто видит планировщик</label>
                 <span class="col-md-6">
-                  <a class="menu_drop_2 pointer">
+                  <a class="i_link menu_drop_2 pointer">
                     <% if private.can_see_planner == "a" { %>
                     Все пользователи
                     <% } else if private.can_see_planner == "b" { %>
@@ -509,7 +509,7 @@
               <div class="row mb-1 form_group_flex">
                 <label class="col-md-6">Кто видит документы</label>
                 <span class="col-md-6">
-                  <a class="menu_drop_2 pointer">
+                  <a class="i_link menu_drop_2 pointer">
                     <% if private.can_see_doc == "a" { %>
                     Все пользователи
                     <% } else if private.can_see_doc == "b" { %>
@@ -550,7 +550,7 @@
               <div class="row mb-1 form_group_flex">
                 <label class="col-md-6">Кто видит опросы</label>
                 <span class="col-md-6">
-                  <a class="menu_drop_2 pointer">
+                  <a class="i_link menu_drop_2 pointer">
                     <% if private.can_see_survey == "a" { %>
                     Все пользователи
                     <% } else if private.can_see_survey == "b" { %>

@@ -1,5 +1,5 @@
 <% include!("../../../base_block/base_header.stpl"); %>
-<div class="main-container" data-pk="<%= request_user.id %>" data-type="user_design_settings">
+<div class="main-container" data-pk="<%= request_user.id %>" data-type="user_settings">
 
   <div class="row">
     <div class="col-md-9 mt-3">
@@ -22,8 +22,8 @@
 
           <div class="row mt-1 mb-1 form_group_flex">
             <label class="col-md-6">Пароль</label>
-            <span class="i_link col-md-6">
-              <a class="pointer edit_user_password">
+            <span class=" col-md-6">
+              <a class="i_link pointer edit_user_password">
                 ****************
               </a>
             </span>

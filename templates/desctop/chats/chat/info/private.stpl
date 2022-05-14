@@ -7,7 +7,7 @@
        <div class="row mb-1 form_group_flex">
            <label class="col-md-6">Кто приглашает участников</label>
            <span class="col-md-6">
-             <a class="menu_drop_2 pointer">
+             <a class="i_link menu_drop_2 pointer">
                <% if chat.can_add_members == "a" { %>
                  Все участники
                <% } else if chat.can_add_members == "b" { %>
@@ -46,7 +46,7 @@
        <div class="row mb-1 form_group_flex">
            <label class="col-md-6">Кто закрепляет сообщения</label>
            <span class="col-md-6">
-             <a class="menu_drop_2 pointer">
+             <a class="i_link menu_drop_2 pointer">
                <% if chat.can_fix_item == "a" { %>
                  Все участники
                <% } else if chat.can_fix_item == "b" { %>
@@ -85,7 +85,7 @@
        <div class="row mb-1 form_group_flex">
            <label class="col-md-6">Кто назначает админов</label>
            <span class="col-md-6">
-             <a class="menu_drop_2 pointer">
+             <a class="i_link menu_drop_2 pointer">
                <% if chat.can_add_admin == "a" { %>
                  Все участники
                <% } else if chat.can_add_admin == "b" { %>
@@ -124,7 +124,7 @@
        <div class="row mb-1 form_group_flex">
            <label class="col-md-6">Кто упоминает о чате</label>
            <span class="col-md-6">
-             <a class="menu_drop_2 pointer">
+             <a class="i_link menu_drop_2 pointer">
                <% if chat.can_mention == "a" { %>
                  Все участники
                <% } else if chat.can_mention == "b" { %>
@@ -163,7 +163,7 @@
        <div class="row mb-1 form_group_flex">
            <label class="col-md-6">Кто меняет дизайн</label>
            <span class="col-md-6">
-             <a class="menu_drop_2 pointer">
+             <a class="i_link menu_drop_2 pointer">
                <% if chat.can_add_design == "a" { %>
                  Все участники
                <% } else if chat.can_add_design == "b" { %>
@@ -202,7 +202,7 @@
        <div class="row mb-1 form_group_flex">
            <label class="col-md-6">Кто видит настройки</label>
            <span class="col-md-6">
-             <a class="menu_drop_2 pointer">
+             <a class="i_link menu_drop_2 pointer">
                <% if chat.can_see_settings == "a" { %>
                  Все участники
                <% } else if chat.can_see_settings == "b" { %>
@@ -241,7 +241,7 @@
        <div class="row mb-1 form_group_flex">
            <label class="col-md-6">Кто видит журнал действий</label>
            <span class="col-md-6">
-             <a class="menu_drop_2 pointer">
+             <a class="i_link menu_drop_2 pointer">
                <% if chat.can_see_log == "a" { %>
                  Все участники
                <% } else if chat.can_see_log == "b" { %>
