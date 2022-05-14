@@ -39,7 +39,7 @@ pub fn settings_urls(config: &mut web::ServiceConfig) {
 
     config.route("/users/settings/change_phone_send/{phone}/", web::get().to(change_phone_send));
     config.route("/users/settings/change_phone_verify/{phone}/{code}/", web::get().to(change_phone_verify));
-    config.route("/users/settings/get_background/{color}/", web::get().to(change_phone_verify));
+    config.route("/users/settings/get_background/{color}/", web::get().to(get_background));
 
     config.route("/users/settings/edit_link/", web::post().to(edit_link));
     config.route("/users/settings/edit_name/", web::post().to(edit_name));
