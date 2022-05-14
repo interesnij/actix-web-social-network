@@ -12,7 +12,12 @@ function format_text(text) {
   }
   return text
 };
-
+function phone_check() {
+    if (document.getElementById('phone').value.length > 9)
+        document.getElementById("phone_send").removeAttribute('disabled');
+    else
+        document.getElementById("phone_send").setAttribute("disabled", "true");
+};
 function post_include_exclude_users(form, url) {
   form.querySelector(".form_btn").disabled = true;
   form_data = new FormData(form);

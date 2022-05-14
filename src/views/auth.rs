@@ -468,11 +468,8 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
     HttpResponse::Ok().body(format!("ok"))
 }
 
-#[derive(Deserialize, Debug)]
-struct PhoneJson {
-    code: String,
-}
 pub async fn phone_send(_phone: web::Path<String>) -> impl Responder {
+    use crate::utils::PhoneJson;
     let req_phone = _phone.to_string();
     if req_phone.len() > 8 {
         use crate::models::{PhoneCode, NewPhoneCode};

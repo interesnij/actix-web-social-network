@@ -36,6 +36,9 @@ pub fn settings_urls(config: &mut web::ServiceConfig) {
     config.route("/users/settings/edit_phone/", web::get().to(edit_phone_page));
     config.route("/users/settings/remove_profile/", web::get().to(remove_profile_page));
 
+    config.route("/change_phone_send/{phone}/", web::get().to(change_phone_send));
+    config.route("/change_phone_verify/{phone}/{code}/", web::get().to(change_phone_verify));
+
     config.route("/users/settings/edit_link/", web::post().to(edit_link));
     config.route("/users/settings/edit_name/", web::post().to(edit_name));
     config.route("/users/settings/edit_password/", web::post().to(edit_password));
@@ -754,4 +757,106 @@ pub async fn remove_profile(session: Session, mut payload: Multipart) -> actix_w
         } else {
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
         }
+}
+
+pub async fn change_phone_send(session: Session, _phone: web::Path<String>) -> impl Responder {
+    use crate::utils::PhoneJson;
+
+    if is_signed_in(&session) {
+        let req_phone = _phone.to_string();
+        if req_phone.len() > 8 {
+            use crate::models::{PhoneCode, NewPhoneCode};
+            use crate::schema::users::dsl::users;
+
+            let _connection = establish_connection();
+            let _some_user = users
+                .filter(schema::users::phone.eq(&req_phone))
+                .load::<User>(&_connection)
+                .expect("E");
+            if _some_user.len() > 0 {
+                let rendered = "Пользователь с таким номером уже зарегистрирован. Используйте другой номер или напишите в службу поддержки, если этот номер Вы не использовали ранее.";
+                HttpResponse::Ok().body(rendered)
+            } else {
+
+                let _url = "https://api.ucaller.ru/v1.0/initCall?service_id=12203&key=GhfrKn0XKAmA1oVnyEzOnMI5uBnFN4ck&phone=".to_owned() + &req_phone;
+                let __request = reqwest::get(_url).await.expect("E.");
+                let new_request = __request.text().await.unwrap();
+                println!("{:?}", new_request);
+
+                let phone200: PhoneJson = serde_json::from_str(&new_request).unwrap();
+                let code_i32: i32 = phone200.code.parse().unwrap();
+                let new_phone_code = NewPhoneCode {
+                    phone: _phone.to_string(),
+                    code:  code_i32,
+                };
+                diesel::insert_into(schema::phone_codes::table)
+                    .values(&new_phone_code)
+                    .get_result::<PhoneCode>(&_connection)
+                    .expect("E.");
+
+                let rendered = "Мы Вам звоним. Последние 4 цифры нашего номера - код подтверждения,
+                который нужно ввести в поле 'Последние 4 цифры' и нажать 'Подтвердить'
+                <div class='row block_verify mt-5'>
+                    <div class='col-md-2'></div>
+                    <div class='col-md-4'>
+                        <input type='number' id='code' onkeyup='code_check();' class='form-control border-0' placeholder='Последние 4 цифры'>
+                        <hr class='my-0'>
+                    </div>
+                    <div class='mb-3 col-md-4'>
+                        <button type='button' disabled='disabled' id='change_code_send' class='btn btn-primary pink-gradient'>Подтвердить</button>
+                    </div>
+                    <div class='col-md-2'></div>
+                </div>";
+            HttpResponse::Ok().body(rendered)
+            }
+        }
+        else {
+            let rendered = "Введите, пожалуйста, корректное количество цифр Вашего телефона";
+            HttpResponse::Ok().body(rendered)
+        }
+
+    } else {
+        HttpResponse::Ok().body("")
+    }
+}
+
+pub async fn change_phone_verify(session: Session, param: web::Path<(String,i32)>) -> impl Responder {
+    use crate::schema::phone_codes::dsl::phone_codes;
+    use crate::models::{PhoneCode, EditPhoneUser};
+
+    if is_signed_in(&session) {
+        let _connection = establish_connection();
+        let _request_user = get_request_user_data(session);
+        let _phone = param.0.to_string();
+        let _code = param.1;
+        let response_text : String;
+
+        let _phone_codes = phone_codes
+            .filter(schema::phone_codes::phone.eq(&_phone))
+            .filter(schema::phone_codes::code.eq(&_code))
+            .load::<PhoneCode>(&_connection)
+            .expect("E");
+        if _phone_codes.len() > 0 {
+            diesel::delete(phone_codes
+                .filter(schema::phone_codes::phone.eq(&_phone))
+                .filter(schema::phone_codes::code.eq(&_code))
+            ).execute(&_connection)
+            .expect("E");
+            response_text = "ok".to_string();
+            let new_phone = EditPhoneUser {
+                phone: _phone,
+            };
+            diesel::update(&_request_user)
+              .set(new_phone)
+              .get_result::<User>(&_connection)
+              .expect("Error.");
+        } else {
+            response_text = "Код подтверждения неверный. Проверьте, пожалуйста, номер, с которого мы Вам звонили. Последние 4 цифры этого номера и есть код подтверждения, который нужно ввести с поле 'Последние 4 цифры'. Если не можете найти номер, нажмите на кнопку 'Перезвонить повторно.'".to_string();
+        }
+    }
+    else {
+        response_text = "";
+    }
+
+    HttpResponse::Ok().body(response_text)
 }

@@ -28,6 +28,10 @@ use crate::models::User;
 pub struct SParams {
     pub q: String,
 }
+#[derive(Deserialize, Debug)]
+struct PhoneJson {
+    code: String,
+}
 #[derive(Deserialize)]
 pub struct JsonPosition {
     pub key:   i32,
