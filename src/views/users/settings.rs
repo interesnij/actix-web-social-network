@@ -646,6 +646,7 @@ pub async fn edit_password(session: Session, mut payload: Multipart) -> actix_we
     if is_signed_in(&session) {
         use crate::schema::users::dsl::users;
         use crate::models::EditPasswordUser;
+        use crate::utils::hash_password;
 
         let _request_user = get_request_user_data(session);
         let _connection = establish_connection();
@@ -661,7 +662,7 @@ pub async fn edit_password(session: Session, mut payload: Multipart) -> actix_we
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
                     let data_string = s.to_string();
-                    form.password = data_string;
+                    form.password = hash_password(data_string.clone());
                 }
             }
         }
