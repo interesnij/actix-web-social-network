@@ -12,9 +12,9 @@
         <div class="card card-body">
 
           <div class="row mt-1 mb-1 form_group_flex">
-            <label class="col-md-6">Имя / фамилию</label>
-            <span class="col-md-6">
-              <a class="pointer underline edit_user_name">
+            <label class="col-md-6">Имя / фамилия</label>
+            <span class="underline col-md-6">
+              <a class="pointer edit_user_name">
                 <%= request_user.get_full_name() %>
               </a>
             </span>
@@ -22,8 +22,8 @@
 
           <div class="row mt-1 mb-1 form_group_flex">
             <label class="col-md-6">Пароль</label>
-            <span class="col-md-6">
-              <a class="pointer underline edit_user_password">
+            <span class="underline col-md-6">
+              <a class="pointer edit_user_password">
                 ****************
               </a>
             </span>
@@ -31,8 +31,8 @@
 
           <div class="row mt-1 mb-1 form_group_flex">
             <label class="col-md-6">Электронная почта</label>
-            <span class="col-md-6">
-              <a class="pointer underline edit_user_password">
+            <span class="underline col-md-6">
+              <a class="pointer edit_user_password">
                 <%= request_user.get_email_status() %>
               </a>
             </span>
@@ -40,8 +40,8 @@
 
           <div class="row mt-1 mb-1 form_group_flex">
             <label class="col-md-6">Телефон</label>
-            <span class="col-md-6">
-              <a class="pointer underline edit_user_password">
+            <span class="underline col-md-6">
+              <a class="pointer edit_user_password">
                 <%= request_user.phone %>
               </a>
             </span>
@@ -49,8 +49,8 @@
 
           <div class="row mt-1 mb-1 form_group_flex">
             <label class="col-md-6">Адрес страницы</label>
-            <span class="col-md-6">
-              <a class="pointer underline edit_user_password">
+            <span class="underline col-md-6">
+              <a class="pointer edit_user_password">
                 <%= request_user.get_slug() %>
               </a>
             </span>
@@ -61,7 +61,7 @@
             <span class="col-md-6">
               <% if request_user.is_identified() { %>
               <span>
-                Проыиль подтвержден.
+                Профиль подтвержден.
               </span>
 
               <% } else if request_user.is_identified_send() { %>
@@ -70,17 +70,19 @@
               </span>
 
               <% } else { %>
-              <a class="pointer underline user_identified_send">
+              <span class="underline">
+              <a class="pointer user_identified_send">
                 Отправить запрос.
               </a>
+              <span>
               <% } %>
             </span>
           </div>
 
           <div class="row mt-1 mb-1 form_group_flex">
             <label class="col-md-6"></label>
-            <span class="col-md-6">
-              <a class="pointer underline remove_user_profile">
+            <span class="underline col-md-6">
+              <a class="pointer remove_user_profile">
                 Удалить аккаунт
               </a>
             </span>
