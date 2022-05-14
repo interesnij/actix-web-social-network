@@ -124,14 +124,7 @@ impl User {
             return "/static/images/no_img/list.jpg".to_string();
         }
     }
-    pub fn get_email_status(&self) -> String {
-        if self.email.is_some() {
-            return self.email.as_deref().unwrap().to_string();
-        }
-        else {
-            return "Почта не указана".to_string();
-        }
-    }
+
     pub fn get_b_avatar(&self) -> String {
         let avatar_pk = self.get_avatar_pk();
         if avatar_pk != 0 {
