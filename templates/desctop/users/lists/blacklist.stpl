@@ -3,7 +3,7 @@
 <div class="main-container" data-pk="<%= request_user.id %>" data-type="user_friends">
 
   <div class="row">
-    <div class="col-md-8 mt-3">
+    <div class="col-md-9 mt-3">
       <div class="input-group mb-3">
         <input type="text" class="form-control form-control-sm" placeholder="Поиск пользователей">
         <div class="input-group-append">
@@ -60,7 +60,7 @@
       </div>
     </div>
 
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-3">
       <% include!("../settings/menu.stpl"); %>
     </div>
   </div>
