@@ -40,7 +40,7 @@
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_see_all == "f" && request_user.get_can_see_all_include_users.len() > 0 { %>:
+                    <% } else if private.can_see_all == "f" && request_user.get_can_see_all_include_users().len() > 0 { %>:
                     <% for object in request_user.get_can_see_all_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
@@ -81,7 +81,7 @@
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_see_community == "f" && request_user.get_can_see_community_include_users.len() > 0 { %>:
+                    <% } else if private.can_see_community == "f" && request_user.get_can_see_community_include_users().len() > 0 { %>:
                     <% for object in request_user.get_can_see_community_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
@@ -122,7 +122,7 @@
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_see_info == "f" && request_user.get_can_see_info_include_users.len() > 0 { %>:
+                    <% } else if private.can_see_info == "f" && request_user.get_can_see_info_include_users().len() > 0 { %>:
                     <% for object in request_user.get_can_see_info_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
@@ -163,7 +163,7 @@
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_see_friend == "f" && request_user.get_can_see_friend_include_users.len() > 0 { %>:
+                    <% } else if private.can_see_friend == "f" && request_user.get_can_see_friend_include_users().len() > 0 { %>:
                     <% for object in request_user.get_can_see_friend_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
@@ -204,7 +204,7 @@
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_send_message == "f" && request_user.get_can_send_message_include_users.len() > 0 { %>:
+                    <% } else if private.can_send_message == "f" && request_user.get_can_send_message_include_users().len() > 0 { %>:
                     <% for object in request_user.get_can_send_message_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
@@ -245,7 +245,7 @@
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_add_in_chat == "f" && request_user.get_can_add_in_chat_include_users.len() > 0 { %>:
+                    <% } else if private.can_add_in_chat == "f" && request_user.get_can_add_in_chat_include_users().len() > 0 { %>:
                     <% for object in request_user.get_can_add_in_chat_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
@@ -286,7 +286,7 @@
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_see_post == "f" && request_user.get_can_see_post_include_users.len() > 0 { %>:
+                    <% } else if private.can_see_post == "f" && request_user.get_can_see_post_include_users().len() > 0 { %>:
                     <% for object in request_user.get_can_see_post_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
@@ -327,7 +327,7 @@
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_see_photo == "f" && request_user.get_can_see_photo_include_users.len() > 0 { %>:
+                    <% } else if private.can_see_photo == "f" && request_user.get_can_see_photo_include_users().len() > 0 { %>:
                     <% for object in request_user.get_can_see_photo_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
@@ -368,7 +368,7 @@
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_see_good == "f" && request_user.get_can_see_good_include_users.len() > 0 { %>:
+                    <% } else if private.can_see_good == "f" && request_user.get_can_see_good_include_users().len() > 0 { %>:
                     <% for object in request_user.get_can_see_good_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
@@ -409,7 +409,7 @@
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_see_video == "f" && request_user.get_can_see_video_include_users.len() > 0 { %>:
+                    <% } else if private.can_see_video == "f" && request_user.get_can_see_video_include_users().len() > 0 { %>:
                     <% for object in request_user.get_can_see_video_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
@@ -450,7 +450,7 @@
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_see_music == "f" && request_user.get_can_see_music_include_users.len() > 0 { %>:
+                    <% } else if private.can_see_music == "f" && request_user.get_can_see_music_include_users().len() > 0 { %>:
                     <% for object in request_user.get_can_see_music_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
@@ -491,7 +491,7 @@
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_see_planner == "f" && request_user.get_can_see_planner_include_users.len() > 0 { %>:
+                    <% } else if private.can_see_planner == "f" && request_user.get_can_see_planner_include_users().len() > 0 { %>:
                     <% for object in request_user.get_can_see_planner_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
@@ -532,7 +532,7 @@
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_see_doc == "f" && request_user.get_can_see_doc_include_users.len() > 0 { %>:
+                    <% } else if private.can_see_doc == "f" && request_user.get_can_see_doc_include_users().len() > 0 { %>:
                     <% for object in request_user.get_can_see_doc_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
@@ -573,7 +573,7 @@
                     </a>
                     &nbsp;
                     <% } %>
-                    <% } else if private.can_see_survey == "f" && request_user.get_can_see_survey_include_users.len() > 0 { %>:
+                    <% } else if private.can_see_survey == "f" && request_user.get_can_see_survey_include_users().len() > 0 { %>:
                     <% for object in request_user.get_can_see_survey_include_users().iter() { %>
                     <a href="<%= object.get_link() %>" target="_blank">
                       <%= object.get_full_name() %>
