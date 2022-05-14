@@ -13,7 +13,7 @@
 
           <div class="row mt-1 mb-1 form_group_flex">
             <label class="col-md-6">Имя / фамилия</label>
-            <span class="underline col-md-6">
+            <span class="col-md-6">
               <a class="pointer edit_user_name">
                 <%= request_user.get_full_name() %>
               </a>
@@ -22,7 +22,7 @@
 
           <div class="row mt-1 mb-1 form_group_flex">
             <label class="col-md-6">Пароль</label>
-            <span class="underline col-md-6">
+            <span class="col-md-6">
               <a class="pointer edit_user_password">
                 ****************
               </a>
@@ -31,7 +31,7 @@
 
           <div class="row mt-1 mb-1 form_group_flex">
             <label class="col-md-6">Электронная почта</label>
-            <span class="underline col-md-6">
+            <span class="col-md-6">
               <a class="pointer edit_user_password">
                 <%= request_user.get_email_status() %>
               </a>
@@ -40,7 +40,7 @@
 
           <div class="row mt-1 mb-1 form_group_flex">
             <label class="col-md-6">Телефон</label>
-            <span class="underline col-md-6">
+            <span class="col-md-6">
               <a class="pointer edit_user_password">
                 <%= request_user.phone %>
               </a>
@@ -49,7 +49,7 @@
 
           <div class="row mt-1 mb-1 form_group_flex">
             <label class="col-md-6">Адрес страницы</label>
-            <span class="underline col-md-6">
+            <span class="col-md-6">
               <a class="pointer edit_user_password">
                 <%= request_user.get_slug() %>
               </a>
@@ -70,7 +70,7 @@
               </span>
 
               <% } else { %>
-              <span class="underline">
+              <span class="">
               <a class="pointer user_identified_send">
                 Отправить запрос.
               </a>
@@ -81,7 +81,7 @@
 
           <div class="row mt-1 mb-1 form_group_flex">
             <label class="col-md-6"></label>
-            <span class="underline col-md-6">
+            <span class="col-md-6">
               <a class="pointer remove_user_profile">
                 Удалить аккаунт
               </a>
