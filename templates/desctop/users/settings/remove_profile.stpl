@@ -1,0 +1,29 @@
+
+<form id="u_remove_user_form">
+        <div class="card mb-3">
+            <div class="card-header border-bottom">
+                <h5 class="content-color-primary mb-0">Удаление профиля</h5>
+            </div>
+            <div class="card-body">
+                        <div class="form-group">
+                            <label>Причина удаления профиля</label>
+                            <select class="form-control" name="answer">
+                                <option value="Pa">У меня есть другая страница</option>
+                                <option value="Ti">Соцсеть отнимает много времени</option>
+                                <option value="Fr">Мало свободы самовыражения</option>
+                                <option value="Sa">Соцсеть плохо защищает данные</option>
+                                <option value="Ch">Соцсеть плохо защищает детей</option>
+                                <option value="Ot">Другая причина</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="display:none">
+                          <label>Свой вариант</label>
+                          <textarea id="settings_reason_text" name="other" class="form-control"></textarea>
+                        </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-sm border this_mob_fullscreen_hide">Отмена</button>
+                <button type="button" class="btn btn-sm btn-danger float-right" id="u_remove_user_btn">Удалить</button>
+            </div>
+        </div>
+    </form>

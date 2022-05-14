@@ -20,13 +20,19 @@ use sailfish::TemplateOnce;
 use crate::models::User;
 
 
-pub fn profile_settings_urls(config: &mut web::ServiceConfig) {
+pub fn settings_urls(config: &mut web::ServiceConfig) {
     config.route("/followings/", web::get().to(followings_page));
     config.route("/blacklist/", web::get().to(blacklist_page));
     config.route("/users/settings/", web::get().to(settings_page));
     config.route("/users/settings/design/", web::get().to(design_settings_page));
     config.route("/users/settings/private/", web::get().to(private_settings_page));
     config.route("/users/settings/get_background/{color}/", web::get().to(get_background));
+
+    config.route("/edit_link/", web::get().to(edit_link_page));
+    config.route("/edit_name/", web::get().to(edit_name_page));
+    config.route("/edit_password/", web::get().to(edit_password_page));
+    config.route("/edit_phone/", web::get().to(edit_phone_page));
+    config.route("/remove_profile/", web::get().to(remove_profile_page));
 }
 
 pub async fn followings_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
@@ -316,6 +322,202 @@ pub async fn private_settings_page(session: Session, req: HttpRequest) -> actix_
                 title:        "Настройки приватности".to_string(),
                 request_user: _request_user,
                 private:      _private,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn edit_link_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let is_desctop = is_desctop(req);
+
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/users/settings/edit_link.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+            }
+            let body = Template {
+                title:        "Изменение ссылки профиля".to_string(),
+                request_user: _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/users/settings/edit_link.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+            }
+            let body = Template {
+                title:        "Изменение ссылки профиля".to_string(),
+                request_user: _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+pub async fn edit_name_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let is_desctop = is_desctop(req);
+
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/users/settings/edit_name.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+            }
+            let body = Template {
+                title:        "Изменение имени / фамилии".to_string(),
+                request_user: _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/users/settings/edit_name.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+            }
+            let body = Template {
+                title:        "Изменение имени / фамилии".to_string(),
+                request_user: _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+pub async fn edit_password_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let is_desctop = is_desctop(req);
+
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/users/settings/edit_password.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+            }
+            let body = Template {
+                title:        "Изменение пароля".to_string(),
+                request_user: _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/users/settings/edit_password.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+            }
+            let body = Template {
+                title:        "Изменение пароля".to_string(),
+                request_user: _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+pub async fn edit_phone_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let is_desctop = is_desctop(req);
+
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/users/settings/edit_phone.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+            }
+            let body = Template {
+                title:        "Изменение телефона".to_string(),
+                request_user: _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/users/settings/edit_phone.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+            }
+            let body = Template {
+                title:        "Изменение телефона".to_string(),
+                request_user: _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+pub async fn remove_profile_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let is_desctop = is_desctop(req);
+
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/users/settings/remove_profile.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+            }
+            let body = Template {
+                title:        "Удаление аккаунта".to_string(),
+                request_user: _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/users/settings/remove_profile.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+            }
+            let body = Template {
+                title:        "Удаление аккаунта".to_string(),
+                request_user: _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

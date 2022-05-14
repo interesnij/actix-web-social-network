@@ -21,7 +21,7 @@ use sailfish::TemplateOnce;
 use crate::models::User;
 
 
-pub fn user_pages_urls(config: &mut web::ServiceConfig) {
+pub fn pages_urls(config: &mut web::ServiceConfig) {
     config.route("/id{user_id}/communities/", web::get().to(user_communities_page));
     config.route("/id{user_id}/staff-communities/", web::get().to(user_staff_communities_page));
     config.route("/id{user_id}/friends/", web::get().to(user_friends_page));

@@ -3,7 +3,7 @@
 <div class="main-container" data-pk="<%= request_user.id %>" data-type="user_private_settings">
 
   <div class="row">
-    <div class="col-md-8 mt-3">
+    <div class="col-md-9 mt-3">
       <div class="media" style="padding-left: 7px;">
         <h5 style="flex: 1;">
           Настройки приватности
@@ -594,7 +594,7 @@
       </div>
     </div>
 
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-3">
       <% include!("../settings/menu.stpl"); %>
     </div>
   </div>
