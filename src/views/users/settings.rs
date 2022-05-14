@@ -662,7 +662,7 @@ pub async fn edit_password(session: Session, mut payload: Multipart) -> actix_we
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
                     let data_string = s.to_string();
-                    form.password = hash_password(data_string.clone());
+                    form.password = hash_password(&data_string.clone());
                 }
             }
         }
