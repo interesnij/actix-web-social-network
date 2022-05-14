@@ -14,7 +14,6 @@ use crate::utils::{
     get_post_list,
     get_post,
     get_post_comment,
-    to_home,
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;

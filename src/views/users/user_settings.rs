@@ -8,7 +8,13 @@ use actix_web::{
     web,
 };
 use serde::Deserialize;
-use crate::utils::{is_signed_in, establish_connection, is_desctop, get_request_user_data, to_home,};
+use crate::utils::{
+    is_signed_in,
+    establish_connection,
+    is_desctop,
+    get_request_user_data,
+    get_list_variables,
+};
 use actix_session::Session;
 use sailfish::TemplateOnce;
 use crate::models::User;
