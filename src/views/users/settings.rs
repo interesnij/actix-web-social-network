@@ -28,11 +28,11 @@ pub fn settings_urls(config: &mut web::ServiceConfig) {
     config.route("/users/settings/private/", web::get().to(private_settings_page));
     config.route("/users/settings/get_background/{color}/", web::get().to(get_background));
 
-    config.route("/edit_link/", web::get().to(edit_link_page));
-    config.route("/edit_name/", web::get().to(edit_name_page));
-    config.route("/edit_password/", web::get().to(edit_password_page));
-    config.route("/edit_phone/", web::get().to(edit_phone_page));
-    config.route("/remove_profile/", web::get().to(remove_profile_page));
+    config.route("/users/settings/edit_link/", web::get().to(edit_link_page));
+    config.route("/users/settings/edit_name/", web::get().to(edit_name_page));
+    config.route("/users/settings/edit_password/", web::get().to(edit_password_page));
+    config.route("/users/settings/edit_phone/", web::get().to(edit_phone_page));
+    config.route("/users/settings/remove_profile/", web::get().to(remove_profile_page));
 }
 
 pub async fn followings_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {

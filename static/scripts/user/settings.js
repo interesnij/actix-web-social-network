@@ -98,9 +98,6 @@ on('#ajax', 'click', '.edit_user_custom_link', function() {
 on('#ajax', 'click', '.user_identified_send', function() {
   create_fullscreen("/users/settings/identify_send/", "worker_fullscreen");
 });
-on('#ajax', 'click', '.user_verified_send', function() {
-  create_fullscreen("/users/settings/verify_send/", "worker_fullscreen");
-});
 on('#ajax', 'click', '.remove_user_profile', function() {
   create_fullscreen("/users/settings/remove_profile/", "worker_fullscreen");
 });
