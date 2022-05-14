@@ -6,6 +6,7 @@ use actix_web::{
     error::InternalError,
     http::StatusCode,
     web,
+    Responder,
 };
 use crate::utils::{
     is_signed_in,
@@ -855,7 +856,7 @@ pub async fn change_phone_verify(session: Session, param: web::Path<(String,i32)
         }
     }
     else {
-        response_text = "";
+        response_text = "".to_string();
     }
 
     HttpResponse::Ok().body(response_text)

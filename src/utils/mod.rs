@@ -29,7 +29,7 @@ pub struct SParams {
     pub q: String,
 }
 #[derive(Deserialize, Debug)]
-struct PhoneJson {
+pub struct PhoneJson {
     code: String,
 }
 #[derive(Deserialize)]
