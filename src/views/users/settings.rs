@@ -7,7 +7,6 @@ use actix_web::{
     http::StatusCode,
     web,
 };
-use serde::Deserialize;
 use crate::utils::{
     is_signed_in,
     establish_connection,
@@ -19,6 +18,10 @@ use actix_session::Session;
 use sailfish::TemplateOnce;
 use crate::models::User;
 
+use std::{str, borrow::BorrowMut};
+use actix_multipart::{Field, Multipart};
+use futures::StreamExt;
+
 
 pub fn settings_urls(config: &mut web::ServiceConfig) {
     config.route("/followings/", web::get().to(followings_page));
@@ -26,13 +29,18 @@ pub fn settings_urls(config: &mut web::ServiceConfig) {
     config.route("/users/settings/", web::get().to(settings_page));
     config.route("/users/settings/design/", web::get().to(design_settings_page));
     config.route("/users/settings/private/", web::get().to(private_settings_page));
-    config.route("/users/settings/get_background/{color}/", web::get().to(get_background));
 
     config.route("/users/settings/edit_link/", web::get().to(edit_link_page));
     config.route("/users/settings/edit_name/", web::get().to(edit_name_page));
     config.route("/users/settings/edit_password/", web::get().to(edit_password_page));
     config.route("/users/settings/edit_phone/", web::get().to(edit_phone_page));
     config.route("/users/settings/remove_profile/", web::get().to(remove_profile_page));
+
+    config.route("/users/settings/edit_link/", web::post().to(edit_link));
+    config.route("/users/settings/edit_name/", web::post().to(edit_name));
+    config.route("/users/settings/edit_password/", web::post().to(edit_password));
+    config.route("/users/settings/edit_phone/", web::post().to(edit_phone));
+    config.route("/users/settings/remove_profile/", web::post().to(remove_profile));
 }
 
 pub async fn followings_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
@@ -528,6 +536,7 @@ pub async fn remove_profile_page(session: Session, req: HttpRequest) -> actix_we
     }
 }
 
+
 pub async fn get_background(session: Session, color: web::Path<String>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         use crate::schema::design_settings::dsl::design_settings;
@@ -555,5 +564,193 @@ pub async fn get_background(session: Session, color: web::Path<String>) -> actix
             Ok(HttpResponse::Ok()
                 .content_type("text/html; charset=utf-8")
                 .body(""))
+        }
+}
+
+pub async fn edit_link(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        use crate::schema::users::dsl::users;
+        use crate::models::EditLinkUser;
+
+        let _request_user = get_request_user_data(session);
+        let _connection = establish_connection();
+
+        let mut form: EditLinkUser = EditLinkUser {
+            have_link: None,
+        };
+
+        while let Some(item) = payload.next().await {
+            let mut field: Field = item.expect("split_payload err");
+
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let data_string = s.to_string();
+                    form.have_link = Some(data_string);
+                }
+            }
+        }
+
+        diesel::update(&_request_user)
+          .set(form)
+             .get_result::<User>(&_connection)
+             .expect("Error.");
+
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+}
+pub async fn edit_name(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        use crate::schema::users::dsl::users;
+        use crate::models::EditNameUser;
+
+        let _request_user = get_request_user_data(session);
+        let _connection = establish_connection();
+
+        let mut form: EditNameUser = EditNameUser {
+            first_name: "".to_string(),
+            last_name: "".to_string(),
+        };
+
+        while let Some(item) = payload.next().await {
+            let mut field: Field = item.expect("split_payload err");
+
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let data_string = s.to_string();
+                    if field.name() == "first_name" {
+                        form.first_name = data_string;
+                    }
+                    else if field.name() == "last_name" {
+                        form.last_name = data_string;
+                    }
+                }
+            }
+        }
+
+        diesel::update(&_request_user)
+          .set(form)
+             .get_result::<User>(&_connection)
+             .expect("Error.");
+
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+}
+
+pub async fn edit_password(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        use crate::schema::users::dsl::users;
+        use crate::models::EditPasswordUser;
+
+        let _request_user = get_request_user_data(session);
+        let _connection = establish_connection();
+
+        let mut form: EditPasswordUser = EditPasswordUser {
+            password: "".to_string(),
+        };
+
+        while let Some(item) = payload.next().await {
+            let mut field: Field = item.expect("split_payload err");
+
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let data_string = s.to_string();
+                    form.password = data_string;
+                }
+            }
+        }
+
+        diesel::update(&_request_user)
+          .set(form)
+             .get_result::<User>(&_connection)
+             .expect("Error.");
+
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+}
+pub async fn edit_phone(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        use crate::schema::users::dsl::users;
+        use crate::models::EditPhoneUser;
+
+        let _request_user = get_request_user_data(session);
+        let _connection = establish_connection();
+
+        let mut form: EditPhoneUser = EditPhoneUser {
+            phone: "".to_string(),
+        };
+
+        while let Some(item) = payload.next().await {
+            let mut field: Field = item.expect("split_payload err");
+
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let data_string = s.to_string();
+                    form.phone = data_string;
+                }
+            }
+        }
+
+        diesel::update(&_request_user)
+          .set(form)
+             .get_result::<User>(&_connection)
+             .expect("Error.");
+
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+}
+
+pub async fn remove_profile(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        use crate::schema::users::dsl::users;
+        use crate::models::{UserDeleteAnketa, NewUserDeleteAnketa};
+
+        let _request_user = get_request_user_data(session);
+        let _connection = establish_connection();
+
+        let mut form: NewUserDeleteAnketa = NewUserDeleteAnketa {
+            user_id: _request_user.id,
+            answer: "".to_string(),
+            other: None,
+            created: chrono::Local::now().naive_utc(),
+        };
+
+        while let Some(item) = payload.next().await {
+            let mut field: Field = item.expect("split_payload err");
+
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let data_string = s.to_string();
+                    if field.name() == "answer" {
+                        form.answer = data_string;
+                    }
+                    else if field.name() == "other" {
+                        form.other = Some(data_string);
+                    }
+                }
+            }
+        }
+
+        diesel::insert_into(schema::user_delete_anketas::table)
+            .values(&form)
+            .get_result::<UserDeleteAnketa>(&_connection)
+            .expect("Error.");
+        _request_user.delete_item();
+
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
         }
 }

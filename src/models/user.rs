@@ -109,6 +109,38 @@ pub struct LoginUser {
     pub password: String,
 }
 
+#[derive(Serialize, Deserialize, AsChangeset)]
+#[table_name="users"]
+pub struct EditLinkUser {
+    have_link: Option<String>,
+}
+#[derive(Serialize, Deserialize, AsChangeset)]
+#[table_name="users"]
+pub struct EditNameUser {
+    pub first_name:  String,
+    pub last_name:   String,
+}
+#[derive(Serialize, Deserialize, AsChangeset)]
+#[table_name="users"]
+pub struct EditPhoneUser {
+    pub phone:  String,
+}
+#[derive(Serialize, Deserialize, AsChangeset)]
+#[table_name="users"]
+pub struct EditEmailUser {
+    pub email:  String,
+}
+#[derive(Serialize, Deserialize, AsChangeset)]
+#[table_name="users"]
+pub struct EditPasswordUser {
+    pub password: String,
+}
+#[derive(Serialize, Deserialize, AsChangeset)]
+#[table_name="users"]
+pub struct EditTypesUser {
+    pub types: i16,
+}
+
 impl User {
     pub fn get_full_name(&self) -> String {
         self.first_name.clone() + &" ".to_string() + &self.last_name.clone()
@@ -256,6 +288,39 @@ impl User {
             .expect("E");
        return true;
     }
+    pub fn delete_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = self.types;
+        let close_case = match user_types {
+            1 => 11,
+            3 => 13,
+            7 => 17,
+            6 => 16,
+            _ => self.types,
+        };
+        diesel::update(self)
+            .set(schema::users::types.eq(close_case))
+            .get_result::<User>(&_connection)
+            .expect("E");
+       return true;
+    }
+    pub fn restore_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = self.types;
+        let close_case = match user_types {
+            11 => 1,
+            13 => 3,
+            17 => 7,
+            16 => 6,
+            _ => self.types,
+        };
+        diesel::update(self)
+            .set(schema::users::types.eq(close_case))
+            .get_result::<User>(&_connection)
+            .expect("E");
+       return true;
+    }
+
     pub fn get_or_create_manager_chat_pk(&self) -> i32 {
         use crate::schema::chats::dsl::chats;
 
