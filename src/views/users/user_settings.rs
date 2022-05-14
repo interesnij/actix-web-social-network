@@ -24,7 +24,8 @@ pub fn profile_settings_urls(config: &mut web::ServiceConfig) {
     config.route("/followings/", web::get().to(followings_page));
     config.route("/blacklist/", web::get().to(blacklist_page));
     config.route("/users/settings/", web::get().to(settings_page));
-    config.route("/users/settings/design_settings/", web::get().to(design_settings_page));
+    config.route("/users/settings/design/", web::get().to(design_settings_page));
+    config.route("/users/settings/private/", web::get().to(private_settings_page));
     config.route("/users/settings/get_background/{color}/", web::get().to(get_background));
 }
 
@@ -260,6 +261,61 @@ pub async fn design_settings_page(session: Session, req: HttpRequest) -> actix_w
                 title:        "Настройки профиля".to_string(),
                 request_user: _request_user,
                 color:        _designs[0].background.clone(),
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+pub async fn private_settings_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let is_desctop = is_desctop(req);
+
+    if is_signed_in(&session) {
+        use crate::schema::user_privates::dsl::user_privates;
+        use crate::models::UserPrivate;
+
+        let _request_user = get_request_user_data(session);
+
+        let _connection = establish_connection();
+        let _private = user_privates
+            .filter(schema::user_privates::user_id.eq(_request_user.id))
+            .load::<UserPrivate>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/users/settings/private_settings.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+                private:      UserPrivate,
+            }
+            let body = Template {
+                title:        "Настройки приватности".to_string(),
+                request_user: _request_user,
+                private:      _private,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/users/settings/design_settings.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+                private:      UserPrivate,
+            }
+            let body = Template {
+                title:        "Настройки приватности".to_string(),
+                request_user: _request_user,
+                private:      _private,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

@@ -52,21 +52,7 @@
     </div>
 
     <div class="col-12 col-md-4">
-      <div class="card mb-3 mt-3">
-          <div class="p-1">
-            <% include!("../../generic/user/card_go_user.stpl"); %>
-          </div>
-      </div>
-          <div class="card mb-2">
-                <div class="media">
-                    <div class="media-body">
-                      <h5 class="p-1">
-                        <a href="/all-users/" class="ajax">Найти друзей</a>
-                      </h5>
-                    </div>
-                </div>
-          </div>
-
+      <% include!("../settings/menu.stpl"); %>
     </div>
 </div>
 </div>

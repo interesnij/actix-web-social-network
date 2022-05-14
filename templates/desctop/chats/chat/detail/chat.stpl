@@ -1,51 +1,51 @@
 <% include!("../../../../base_block/base_header.stpl"); %>
 
 <div class="container mt-3 main-container pk_saver chat_container" data-pk="<%= chat.id %>" chat-pk="<%= chat.id %>" user-pk="<%= request_user.id %>" data-type="page_chat">
-<div class="row">
+  <div class="row">
     <div class="col-md-8 main_chat_block">
       <div class="custom_color fixed_header_chat">
-          <div class="chat_header ml-1 media w-100">
-            <%- chat.get_header_chat(request_user.id) %>
-          </div>
-          <% include!("../search.stpl"); %>
-          <div class="fixed_messages">
-            <% if chat.get_first_fix_message().is_some() { %>
-              <% include!("fixed_message.stpl"); %>
-            <% } else if chat.is_support() { %>
-              <% include!("support_block.stpl"); %>
-            <% } %>
-          </div>
-      </div>
-        <div class="px-0 card no-shadow chatview" chat-pk="<%= chat.id %>">
-          <ul class="mt-2 chatlist app is_paginate">
-            <% if next_page_number > 0 { %>
-            <div class="load centered m-1 next_page_list" data-link="/chat/<%= chat.id %>/?page=<%= next_page_number %>">
-                <img src="/static/images/preloader.gif">
-            </div>
-            <% } %>
-
-            <% if object_list.len() > 0 { %>
-              <% for object in object_list.iter().rev() { %>
-                 include!("../../messages/message.stpl");
-              <% } %>
-            <% } else { %>
-              <div class="items_empty mb-3">
-                <div class="card-body"></div>
-                <h6 style="margin: 20px;text-align: center;">
-                  Пока сообщений нет.
-                </h6>
-              </div>
-              <% } %>
-            </ul>
+        <div class="chat_header ml-1 media w-100">
+          <%- chat.get_header_chat(request_user.id) %>
         </div>
+        <% include!("../search.stpl"); %>
+        <div class="fixed_messages">
+          <% if chat.get_first_fix_message().is_some() { %>
+          <% include!("fixed_message.stpl"); %>
+          <% } else if chat.is_support() { %>
+          <% include!("support_block.stpl"); %>
+          <% } %>
+        </div>
+      </div>
+      <div class="px-0 card no-shadow chatview" chat-pk="<%= chat.id %>">
+        <ul class="mt-2 chatlist app is_paginate">
+          <% if next_page_number > 0 { %>
+          <div class="load centered m-1 next_page_list" data-link="/chat/<%= chat.id %>/?page=<%= next_page_number %>">
+            <img src="/static/images/preloader.gif">
+          </div>
+          <% } %>
+
+          <% if object_list.len() > 0 { %>
+          <% for object in object_list.iter().rev() { %>
+          include!("../../messages/message.stpl");
+          <% } %>
+          <% } else { %>
+          <div class="items_empty mb-3">
+            <div class="card-body"></div>
+            <h6 style="margin: 20px;text-align: center;">
+              Пока сообщений нет.
+            </h6>
+          </div>
+          <% } %>
+        </ul>
+      </div>
       <% if chat.is_manager() == false { %>
-        <% include!("../form.stpl"); %>
+      <% include!("../form.stpl"); %>
       <% } %>
+    </div>
+
+    <% include!("right_panel.stpl"); %>
+
   </div>
-
-<% include!("right_panel.stpl"); %>
-
-</div>
 </div>
 
 <% include!("../../../../base_block/base_footer.stpl"); %>
