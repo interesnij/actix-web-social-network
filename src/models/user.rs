@@ -611,25 +611,7 @@ impl User {
             }
         }
     }
-    pub fn get_blocked_users(&self) -> Vec<User> {
-        use crate::schema::user_blocks::dsl::user_blocks;
-        use crate::schema::users::dsl::users;
 
-        let _connection = establish_connection();
-        let all_user_blocks = user_blocks
-            .filter(schema::user_blocks::user_block_i.eq(self.id))
-            .order(schema::user_blocks::id.desc())
-            .load::<UserBlock>(&_connection)
-            .expect("E");
-        let mut stack = Vec::new();
-        for _item in all_user_blocks.iter() {
-            stack.push(_item.blocked_user_id);
-        };
-        return users
-            .filter(schema::users::id.eq_any(stack))
-            .load::<User>(&_connection)
-            .expect("E.");
-    }
     pub fn get_staffed_communities_ids(&self) -> Vec<i32> {
         use crate::schema::communities_memberships::dsl::communities_memberships;
         use crate::models::CommunitiesMembership;
@@ -1185,6 +1167,28 @@ impl User {
             " ролика".to_string(),
             " роликов".to_string(),
         );
+    }
+
+    pub fn get_blocked_users(&self, limit: i64, offset: i64) -> Vec<User> {
+        use crate::schema::user_blocks::dsl::user_blocks;
+        use crate::schema::users::dsl::users;
+
+        let _connection = establish_connection();
+        let all_user_blocks = user_blocks
+            .filter(schema::user_blocks::user_block_i.eq(self.id))
+            .order(schema::user_blocks::id.desc())
+            .limit(limit)
+            .offset(offset)
+            .load::<UserBlock>(&_connection)
+            .expect("E");
+        let mut stack = Vec::new();
+        for _item in all_user_blocks.iter() {
+            stack.push(_item.blocked_user_id);
+        };
+        return users
+            .filter(schema::users::id.eq_any(stack))
+            .load::<User>(&_connection)
+            .expect("E.");
     }
 
     pub fn count_friends(&self) -> i32 {

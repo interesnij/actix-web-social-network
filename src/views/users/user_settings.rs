@@ -110,13 +110,13 @@ pub async fn blacklist_page(session: Session, req: HttpRequest) -> actix_web::Re
         if page > 1 {
             let step = (page - 1) * 20;
 
-            object_list = _request_user.get_banned_user(20, step.into());
+            object_list = _request_user.get_blocked_users(20, step.into());
             if count > (page * 20).try_into().unwrap() {
                 next_page_number = page + 1;
             }
         }
         else {
-            object_list = _request_user.get_banned_user(20, 0);
+            object_list = _request_user.get_blocked_users(20, 0);
             if count > 20.try_into().unwrap() {
                 next_page_number = 2;
             }
@@ -130,7 +130,7 @@ pub async fn blacklist_page(session: Session, req: HttpRequest) -> actix_web::Re
                 request_user:            User,
                 object_list:             Vec<User>,
                 next_page_number:        i32,
-                count:                   i32,
+                count:                   usize,
             }
 
             let body = Template {
@@ -152,7 +152,7 @@ pub async fn blacklist_page(session: Session, req: HttpRequest) -> actix_web::Re
                 request_user:            User,
                 object_list:             Vec<User>,
                 next_page_number:        i32,
-                count:                   i32,
+                count:                   usize,
             }
 
             let body = Template {

@@ -3205,6 +3205,7 @@ impl Community {
         return get_users_from_ids(stack);
 
     }
+
     pub fn get_fixed_posts(&self) -> Vec<Post> {
         use crate::schema::posts::dsl::posts;
 
