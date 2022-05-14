@@ -825,12 +825,13 @@ pub async fn change_phone_verify(session: Session, param: web::Path<(String,i32)
     use crate::schema::phone_codes::dsl::phone_codes;
     use crate::models::{PhoneCode, EditPhoneUser};
 
+    let response_text : String;
+
     if is_signed_in(&session) {
         let _connection = establish_connection();
         let _request_user = get_request_user_data(session);
         let _phone = param.0.to_string();
         let _code = param.1;
-        let response_text : String;
 
         let _phone_codes = phone_codes
             .filter(schema::phone_codes::phone.eq(&_phone))
