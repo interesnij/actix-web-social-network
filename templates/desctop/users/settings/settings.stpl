@@ -32,7 +32,7 @@
           <div class="row mt-1 mb-1 form_group_flex">
             <label class="col-md-6">Электронная почта</label>
             <span class="col-md-6">
-              <a class="i_link pointer edit_user_password">
+              <a class="i_link pointer edit_user_email">
                 <%= request_user.get_email_status() %>
               </a>
             </span>
@@ -41,7 +41,7 @@
           <div class="row mt-1 mb-1 form_group_flex">
             <label class="col-md-6">Телефон</label>
             <span class="col-md-6">
-              <a class="i_link pointer edit_user_password">
+              <a class="i_link pointer edit_user_phone">
                 <%= request_user.phone %>
               </a>
             </span>
@@ -50,7 +50,7 @@
           <div class="row mt-1 mb-1 form_group_flex">
             <label class="col-md-6">Адрес страницы</label>
             <span class="col-md-6">
-              <a class="i_link pointer edit_user_password">
+              <a class="i_link pointer edit_user_custom_link">
                 <%= request_user.get_slug() %>
               </a>
             </span>
@@ -72,7 +72,7 @@
               <% } else { %>
               <span class="">
               <a class="i_link pointer user_identified_send">
-                Отправить запрос.
+                Отправить запрос. 
               </a>
               <span>
               <% } %>

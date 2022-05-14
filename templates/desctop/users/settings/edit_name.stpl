@@ -10,7 +10,7 @@
             </div>
             <div class="form-group">
                 <label>Фамилия</label>
-                <input type="text" id="last_name" value="<%= request_user.last_name %>
+                <input type="text" id="last_name" value="<%= request_user.last_name %> name="last_name" class="form-control">
         </div>
         <div class="card-footer">
             <button class="btn btn-sm border this_mob_fullscreen_hide">Отмена</button>
