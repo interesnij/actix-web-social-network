@@ -816,6 +816,7 @@ impl Community {
             articles:     0,
             survey:       0,
             planners:     0,
+            avatar_id:    None,
         };
         diesel::insert_into(schema::community_infos::table)
             .values(&_community_info)

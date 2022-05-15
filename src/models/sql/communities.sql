@@ -80,6 +80,7 @@ CREATE TABLE community_infos (
     articles     INT NOT NULL,
     survey       INT NOT NULL,
     planners     INT NOT NULL,
+    avatar_id    INT,
 
     CONSTRAINT fk_community_info
         FOREIGN KEY(community_id)
