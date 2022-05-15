@@ -613,7 +613,7 @@ pub async fn edit_link(session: Session, mut payload: Multipart) -> actix_web::R
 
         if link_some {
             let new_link = NewCustomLink {
-                link: &form.link,
+                link: form.link,
                 owner: 1,
             };
             diesel::insert_into(schema::custom_links::table)
