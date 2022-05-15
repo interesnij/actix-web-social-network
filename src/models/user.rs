@@ -113,7 +113,8 @@ pub struct LoginUser {
 #[derive(Serialize, Deserialize, AsChangeset)]
 #[table_name="users"]
 pub struct EditLinkUser {
-    pub link: String,
+    pub link:  String,
+    pub owner: i16,
 }
 #[derive(Serialize, Deserialize, AsChangeset)]
 #[table_name="users"]
