@@ -31,16 +31,16 @@ pub fn pages_routes(config: &mut web::ServiceConfig) {
 
 pub async fn link_page(session: Session, req: HttpRequest, slug: web::Path<String>) -> actix_web::Result<HttpResponse> {
     let link = slug.clone();
-    if link[..3] == "/id".to_string() {
+    if &link[..3] == "/id".to_string() {
         use crate::views::users::profile::user_page;
 
-        let pk: i32 = link[3..].parse().unwrap();
+        let pk: i32 = link[3..link.len() - 1].parse().unwrap();
         return user_page(session, req, pk).await
     }
-    else if link[..7] == "/public".to_string() {
+    else if &link[..7] == "/public".to_string() {
         use crate::views::communities::community_pages::community_page;
 
-        let pk: i32 = link[7..].parse().unwrap();
+        let pk: i32 = link[7..link.len() - 1].parse().unwrap();
         return community_page(session, req, pk).await
     }
     else {
