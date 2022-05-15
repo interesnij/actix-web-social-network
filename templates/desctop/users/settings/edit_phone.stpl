@@ -1,5 +1,4 @@
 <form id="u_edit_phone_form" class="contact-form">
-    {% csrf_token %}
     <div class="card mb-3">
         <div class="card-header border-bottom">
             <h5 class="content-color-primary mb-0">Изменение телефона</h5>

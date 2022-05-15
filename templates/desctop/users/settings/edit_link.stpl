@@ -6,7 +6,13 @@
         <div class="card-body">
             <div class="form-group">
                 <label>Ссылка</label>
-                <input type="text" value="<%= request_user.get_slug() %>" name="link" class="form-control">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">@</span>
+                  </div>
+                  <input type="text" value="<%= request_user.link %>" name="link" class="form-control">
+                </div>
+
             </div>
             <div class="user_link_response mb-2 mt-2"></div>
         </div>
