@@ -110,7 +110,7 @@ pub struct LoginUser {
     pub password: String,
 }
 
-#[derive(Serialize, Deserialize, AsChangeset)]
+#[derive(Serialize, Deserialize)]
 #[table_name="users"]
 pub struct EditLinkUser {
     pub link:  String,
