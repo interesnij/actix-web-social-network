@@ -30,13 +30,15 @@ pub struct NewPhoneCode {
 /////// CustomLink //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 pub struct CustomLink {
-    pub id:   i32,
-    pub link: String,
+    pub id:    i32,
+    pub link:  String,
+    pub owner: String,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="custom_links"]
 pub struct NewCustomLink {
     pub link: String,
+    pub owner: String,
 }
 
 /////// StickerCategories //////

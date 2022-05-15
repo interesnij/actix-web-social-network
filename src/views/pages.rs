@@ -32,18 +32,20 @@ pub fn pages_routes(config: &mut web::ServiceConfig) {
 pub async fn link_page(session: Session, req: HttpRequest, slug: web::Path<String>) -> actix_web::Result<HttpResponse> {
     let link = slug.clone();
     if &link[..2] == "id".to_string() {
-        use crate::views::users::profile::user_page;
+        use crate::views::users::user_page;
 
         let pk: i32 = link[2..].parse().unwrap();
         return user_page(session, req, pk).await
     }
     else if &link.len() > &5 && &link[..6] == "public".to_string() {
-        use crate::views::communities::community_pages::community_page;
+        use crate::views::communities::community_page;
 
         let pk: i32 = link[6..].parse().unwrap();
         return community_page(session, req, pk).await
     }
     else {
+        use crate::schema::messages::dsl::messages;
+        
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
 }
