@@ -602,8 +602,10 @@ pub async fn edit_link(session: Session, mut payload: Multipart) -> actix_web::R
              .get_result::<User>(&_connection)
              .expect("Error.");
 
+        let link = &form.link;
+
         let link_some = custom_links
-            .filter(schema::custom_links::link.eq(form.link))
+            .filter(schema::custom_links::link.eq(link))
             .limit(1)
             .load::<CustomLink>(&_connection)
             .expect("E.")
@@ -611,7 +613,7 @@ pub async fn edit_link(session: Session, mut payload: Multipart) -> actix_web::R
 
         if link_some {
             let new_link = NewCustomLink {
-                link: form.link,
+                link: &form.link,
                 owner: 1,
             };
             diesel::insert_into(schema::custom_links::table)
