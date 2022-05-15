@@ -575,7 +575,7 @@ pub async fn get_background(session: Session, color: web::Path<String>) -> actix
 pub async fn edit_link(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         use crate::schema::users::dsl::users;
-        use crate::models::EditLink;
+        use crate::models::EditLinkUser;
 
         let _request_user = get_request_user_data(session);
         let _connection = establish_connection();
