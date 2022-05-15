@@ -14,13 +14,13 @@
           <div class="message media pb-0 pt-1 border-bottom" data-uuid="<%= object.id %>" data-pk="<%= object.id %>" style="display:block">
             <div class="media">
               <figure>
-                <a href="<%= creator.get_link() %>" class="ajax no_select">
+                <a href="<%= creator.link %>" class="ajax no_select">
                   <%- creator.get_40_avatar() %>
                 </a>
               </figure>
               <div class="media-body">
                 <h5 class="time-title mb-0">
-                  <a href="<%= creator.get_link() %>" class="ajax creator_link">
+                  <a href="<%= creator.link %>" class="ajax creator_link">
                     <span class="creator_name"><%= creator.get_full_name() %></span>
                   </a>
                   <small class="float-right text-muted">

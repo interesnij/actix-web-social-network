@@ -35,7 +35,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane fade active show">
                                       <div class="media-body">
-                                        <a class="underline ajax" href="<%= user.get_link() %>">
+                                        <a class="underline ajax" href="<%= user.link %>">
                                           <%= user.get_full_name() %>
                                         </a>
                                         <span style="vertical-align: middle;">

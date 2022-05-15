@@ -15,7 +15,7 @@
     <div class="card border-top">
         <div class="p-1">
             <div class="media">
-              <a href="<%= community.get_link() %>" class="ajax">
+              <a href="<%= community.link %>" class="ajax">
                 <figure style="width:30px;">
                 <% if community.s_avatar.is_some() { %>
                     <img src="<%= community.s_avatar.as_deref().unwrap() %>" style="border-radius:30px;" alt="image">
@@ -26,7 +26,7 @@
               </a>
               <div class="media-body">
                 <h6 class="mb-0" style="padding-top: 2px;">
-                  <a href="<%= community.get_link() %>" class="ajax"><%= community.name %></a>
+                  <a href="<%= community.link %>" class="ajax"><%= community.name %></a>
                 </h6>
               </div>
             </div>

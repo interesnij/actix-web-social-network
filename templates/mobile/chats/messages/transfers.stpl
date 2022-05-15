@@ -1,29 +1,16 @@
 
-<% if object.is_manager() { %>
-<div class="media p-1 centered manager_message">
-  <%- object.get_manager_text() %>
-  {{ object.get_manager_text|safe }}
-</div>
-
-<% } else { %>
-
-<% let creator = object.get_creator(); %>
-<div class="
-    message toggle_message t_f media p-1
-    <% if request_user.id == object.user_id { %>
-      <% if object.unread { %>
-        bg-light-secondary
-      <% } %>
-      is_have_edited
-    <% } %>" data-uuid="<%= object.id %>" data-pk="<%= object.id %>">
+<div class="transfers_container border-left">
+  <% for message in object.get_transfers().iter() { %>
+    <% let transfer_creator = message.get_creator(); %>
+<div class="media p-1">
     <figure>
-      <a href="<%= object.get_link() %>" class="ajax no_select">
-        <%- creator.get_40_avatar() %>
+      <a href="<%= transfer_creator.link %>" class="ajax">
+        <%- transfer_creator.get_s_avatar() %>
       </a>
     </figure>
-    <div class="media-body t_f">
+    <div class="media-body">
       <h5 class="time-title mb-0">
-        <a href="<%= object.get_link() %>" class="ajax creator_link">
+        <a href="<%= object.link %>" class="ajax creator_link">
           <span class="creator_name"><%= object.get_full_name() %></span>
         </a>
         <span class="favourite_icon">
@@ -70,5 +57,5 @@
         <% } %>
     </div>
 </div>
-<span class="edit_form_box"></span>
 <% } %>
+</div>

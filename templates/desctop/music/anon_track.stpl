@@ -12,10 +12,10 @@
             <% } else { %>
               <% if object.community_id.is_some() { %>
                 <% let _community = object.get_community(); %>
-                <a class="small ajax" href="<%= _community.get_link() %>"> <%= _community.name %></a>
+                <a class="small ajax" href="<%= _community.link %>"> <%= _community.name %></a>
               <% } else { %>
               <% let _creator = object.get_creator(); %>
-                <a class="small ajax" href="<%= _creator.get_link() %>"><%= _creator.get_full_name() %></a>
+                <a class="small ajax" href="<%= _creator.link %>"><%= _creator.get_full_name() %></a>
               <% } %>
             <% } %>
               <span class='span_btn' style="float:right;margin-top: -15px;display:flex" data-pk="<%= object.id %>">

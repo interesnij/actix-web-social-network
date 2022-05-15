@@ -1527,11 +1527,11 @@ impl Music {
     pub fn get_description(&self) -> String {
         if self.community_id.is_some() {
             let community = self.get_community();
-            return "аудиозапись сообщества <a href='".to_owned() + &community.get_link() + &"' target='_blank'>" + &community.name + &"</a>"
+            return "аудиозапись сообщества <a href='".to_owned() + &community.link.to_string() + &"' target='_blank'>" + &community.name + &"</a>"
         }
         else {
             let creator = self.get_creator();
-            return "<a href='".to_owned() + &creator.get_link() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": аудиозапись"
+            return "<a href='".to_owned() + &creator.link.to_string() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": аудиозапись"
         }
     }
     pub fn create_track(title: String, community_id: Option<i32>, user_id: i32, list: MusicList,

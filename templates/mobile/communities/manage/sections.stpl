@@ -5,7 +5,7 @@
         <div class="card mb-3">
           <div class="card-header border-bottom">
             <h5 class="content-color-primary mb-0">Приватность -
-              <a class="underline ajax" href="<%= community.get_link() %>">
+              <a class="underline ajax" href="<%= community.link %>">
                 <%= community.name %>
               </a>
             </h5>
@@ -34,14 +34,14 @@
                 <span class="collector">
                   <% if private.can_see_info == "f" && private.get_can_see_info_exclude_users().len() > 0 { %>:
                   <% for object in private.get_can_see_info_exclude_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;
                   <% } %>
                   <% } else if private.can_see_info == "g" && private.get_can_see_info_include_users.len() > 0 { %>:
                   <% for object in private.get_can_see_info_include_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;
@@ -77,14 +77,14 @@
                 <span class="collector">
                   <% if private.can_see_member == "f" && private.get_can_see_member_exclude_users().len() > 0 { %>:
                   <% for object in private.get_can_see_member_exclude_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;
                   <% } %>
                   <% } else if private.can_see_member == "g" && private.get_can_see_member_include_users.len() > 0 { %>:
                   <% for object in private.get_can_see_member_include_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;
@@ -120,14 +120,14 @@
                 <span class="collector">
                   <% if private.can_send_message == "f" && private.get_can_send_message_exclude_users().len() > 0 { %>:
                   <% for object in private.get_can_send_message_exclude_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;
                   <% } %>
                   <% } else if private.can_send_message == "g" && private.get_can_send_message_include_users.len() > 0 { %>:
                   <% for object in private.get_can_send_message_include_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;
@@ -163,14 +163,14 @@
                 <span class="collector">
                   <% if private.can_see_post == "f" && private.get_can_see_post_exclude_users().len() > 0 { %>:
                   <% for object in private.get_can_see_post_exclude_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;
                   <% } %>
                   <% } else if private.can_see_post == "g" && private.get_can_see_post_include_users.len() > 0 { %>:
                   <% for object in private.get_can_see_post_include_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;
@@ -206,14 +206,14 @@
                 <span class="collector">
                   <% if private.can_see_photo == "f" && private.get_can_see_photo_exclude_users().len() > 0 { %>:
                   <% for object in private.get_can_see_photo_exclude_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;
                   <% } %>
                   <% } else if private.can_see_photo == "g" && private.get_can_see_photo_include_users.len() > 0 { %>:
                   <% for object in private.get_can_see_photo_include_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;
@@ -249,14 +249,14 @@
                 <span class="collector">
                   <% if private.can_see_good == "f" && private.get_can_see_good_exclude_users().len() > 0 { %>:
                   <% for object in private.get_can_see_good_exclude_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;
                   <% } %>
                   <% } else if private.can_see_good == "g" && private.get_can_see_good_include_users.len() > 0 { %>:
                   <% for object in private.get_can_see_good_include_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;
@@ -292,14 +292,14 @@
                 <span class="collector">
                   <% if private.can_see_video == "f" && private.get_can_see_video_exclude_users().len() > 0 { %>:
                   <% for object in private.get_can_see_video_exclude_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;
                   <% } %>
                   <% } else if private.can_see_video == "g" && private.get_can_see_video_include_users.len() > 0 { %>:
                   <% for object in private.get_can_see_video_include_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;
@@ -335,14 +335,14 @@
                 <span class="collector">
                   <% if private.can_see_music == "f" && private.get_can_see_music_exclude_users().len() > 0 { %>:
                   <% for object in private.get_can_see_music_exclude_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;
                   <% } %>
                   <% } else if private.can_see_music == "g" && private.get_can_see_music_include_users.len() > 0 { %>:
                   <% for object in private.get_can_see_music_include_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;
@@ -378,14 +378,14 @@
                 <span class="collector">
                   <% if private.can_see_planner == "f" && private.get_can_see_planner_exclude_users().len() > 0 { %>:
                   <% for object in private.get_can_see_planner_exclude_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;
                   <% } %>
                   <% } else if private.can_see_planner == "g" && private.get_can_see_planner_include_users.len() > 0 { %>:
                   <% for object in private.get_can_see_planner_include_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;
@@ -421,14 +421,14 @@
                 <span class="collector">
                   <% if private.can_see_doc == "f" && private.get_can_see_doc_exclude_users().len() > 0 { %>:
                   <% for object in private.get_can_see_doc_exclude_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;
                   <% } %>
                   <% } else if private.can_see_doc == "g" && private.get_can_see_doc_include_users.len() > 0 { %>:
                   <% for object in private.get_can_see_doc_include_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;
@@ -464,14 +464,14 @@
                 <span class="collector">
                   <% if private.can_see_stat == "f" && private.get_can_see_stat_exclude_users().len() > 0 { %>:
                   <% for object in private.get_can_see_stat_exclude_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;
                   <% } %>
                   <% } else if private.can_see_stat == "g" && private.get_can_see_stat_include_users.len() > 0 { %>:
                   <% for object in private.get_can_see_stat_include_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;
@@ -507,14 +507,14 @@
                 <span class="collector">
                   <% if private.can_see_settings == "f" && private.get_can_see_settings_exclude_users().len() > 0 { %>:
                   <% for object in private.get_can_see_settings_exclude_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;
                   <% } %>
                   <% } else if private.can_see_settings == "g" && private.get_can_see_settings_include_users.len() > 0 { %>:
                   <% for object in private.get_can_see_settings_include_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;
@@ -550,14 +550,14 @@
                 <span class="collector">
                   <% if private.can_see_log == "f" && private.get_can_see_log_exclude_users().len() > 0 { %>:
                   <% for object in private.get_can_see_log_exclude_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;
                   <% } %>
                   <% } else if private.can_see_log == "g" && private.get_can_see_log_include_users.len() > 0 { %>:
                   <% for object in private.get_can_see_log_include_users().iter() { %>
-                  <a href="<%= object.get_link() %>" target="_blank">
+                  <a href="<%= object.link %>" target="_blank">
                     <%= object.get_full_name() %>
                   </a>
                   &nbsp;

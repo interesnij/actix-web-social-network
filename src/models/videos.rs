@@ -1768,11 +1768,11 @@ impl Video {
     pub fn get_description(&self) -> String {
         if self.community_id.is_some() {
             let community = self.get_community();
-            return "видеозапись сообщества <a href='".to_owned() + &community.get_link() + &"' target='_blank'>" + &community.name + &"</a>"
+            return "видеозапись сообщества <a href='".to_owned() + &community.link.to_string() + &"' target='_blank'>" + &community.name + &"</a>"
         }
         else {
             let creator = self.get_creator();
-            return "<a href='".to_owned() + &creator.get_link() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": видеозапись"
+            return "<a href='".to_owned() + &creator.link.to_string() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": видеозапись"
         }
     }
 
@@ -2677,11 +2677,11 @@ impl VideoComment {
     pub fn get_description(&self) -> String {
         if self.get_item().community_id.is_some() {
             let community = self.get_community();
-            return "запись сообщества <a href='".to_owned() + &community.get_link() + &"' target='_blank'>" + &community.name + &"</a>"
+            return "запись сообщества <a href='".to_owned() + &community.link.to_string() + &"' target='_blank'>" + &community.name + &"</a>"
         }
         else {
             let creator = self.get_creator();
-            return "<a href='".to_owned() + &creator.get_link() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": запись"
+            return "<a href='".to_owned() + &creator.link.to_string() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": запись"
         }
     }
 

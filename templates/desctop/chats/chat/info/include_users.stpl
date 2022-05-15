@@ -6,7 +6,7 @@
         <span class="header_title" style="display:none">Выберите тех, кому нельзя <%= text %></span>
           <% for object in users.iter() { %>
             <span data-pk="<%= object.id %>" class="btn btn-sm custom_color" style="margin: 2px;">
-              <a href="<%= object.get_link() %>" target="_blank">
+              <a href="<%= object.link %>" target="_blank">
                 <%= object.get_full_name() %>
               </a>
              <span class="remove_user_input pointer">x<span></span></span>
@@ -20,7 +20,7 @@
       <div class="card-body">
         <div class="is_block_paginate">
           <% for object in object_list.iter() { %>
-          <div class="media pointer add_member_chat_toggle border-bottom" data-link="<%= object.get_link() %>" data-pk="<%= object.id %>" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
+          <div class="media pointer add_member_chat_toggle border-bottom" data-link="<%= object.link %>" data-pk="<%= object.id %>" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
             <figure style="width:30px;">
               <% if object.s_avatar.is_some() { %>
               <img src="<%= object.s_avatar.as_deref().unwrap() %>" style="border-radius:50px;width:50px;" alt="image">

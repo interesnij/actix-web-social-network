@@ -22,7 +22,7 @@
         <h4 class="m-0"><%= object.title %></h4>
         <% let _community = object.get_community(); %>
         <p class="position-relative">
-          <a href="<%= _community.get_link() %>" class="underline ajax">
+          <a href="<%= _community.link %>" class="underline ajax">
             <%= _community.name %>
           </a>
         </p>

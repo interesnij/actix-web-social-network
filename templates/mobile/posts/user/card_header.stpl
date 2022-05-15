@@ -1,14 +1,14 @@
 <% let post_creator = object.get_creator(); %>
 <div class="card-header">
     <div class="media">
-    <a href="<%= post_creator.get_link() %>" class="ajax">
+    <a href="<%= post_creator.link %>" class="ajax">
       <figure>
         <%- post_creator.get_50_avatar() %>
       </figure>
     </a>
         <div class="media-body">
             <h6 class="mb-0">
-              <a href="<%= post_creator.get_link() %>" class="ajax">
+              <a href="<%= post_creator.link %>" class="ajax">
                 <%= post_creator.get_full_name() %>
               </a>
             </h6>

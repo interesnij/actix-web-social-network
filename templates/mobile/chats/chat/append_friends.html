@@ -7,7 +7,7 @@
         <div class="is_block_paginate">
           {% if object_list %}
           {% for object in object_list %}
-          <div class="media pointer add_member_chat_toggle border-bottom" data-link="{{ object.get_link }}" data-pk="{{ object.pk }}" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
+          <div class="media pointer add_member_chat_toggle border-bottom" data-link="<%= object.link %>" data-pk="<%= object.link %>" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
             <figure style="width:30px;">
               {% if object.s_avatar %}
                 <img src="{{ object.s_avatar.url }}" style="width:40px;border-radius:40px;" alt="image">

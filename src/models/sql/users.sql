@@ -12,7 +12,7 @@ CREATE TABLE users (
     perm          SMALLINT NOT NULL,
     level         SMALLINT NOT NULL DEFAULT 100,
     password      VARCHAR(500) NOT NULL,
-    have_link     VARCHAR(100),
+    link          VARCHAR(100) NOT NULL,
     city          VARCHAR(100),
     status        VARCHAR(100),
     b_avatar      VARCHAR(500),

@@ -754,7 +754,7 @@ impl Chat {
         }
         else if self.is_private() {
             let member = self.get_chat_member(user_id);
-            chat_name = "<a href='".to_owned() + &member.get_link() + &"' target='_blank'>".to_string() + &member.get_full_name() + &"</a>".to_string();
+            chat_name = "<a href='".to_owned() + &member.link.to_string() + &"' target='_blank'>".to_string() + &member.get_full_name() + &"</a>".to_string();
             target_display = "<span class='u_chat_info pointer type_display small' style='position:absolute;top: 21px;'>".to_owned() + &self.get_members_count_ru() + &"</span>".to_string();
             dop_drops = "<a class='dropdown-item add_member_in_chat pointer'>Добавить в чат</a>".to_string();
         }
@@ -1814,7 +1814,7 @@ impl Message {
             let message = self.get_parent();
             let text = message.get_type_text();
             let creator = self.get_creator();
-            return "<i><a target='_blank' href='".to_owned() + &creator.get_link() + &"</a><span>".to_string() + &self.content.as_deref().unwrap() + &"</span><a class='pointer show_selected_fix_message underline'>".to_string() + &text + &"</a></i>".to_string();
+            return "<i><a target='_blank' href='".to_owned() + &creator.link.to_string() + &"</a><span>".to_string() + &self.content.as_deref().unwrap() + &"</span><a class='pointer show_selected_fix_message underline'>".to_string() + &text + &"</a></i>".to_string();
         } else{
             return (&self.content.as_deref().unwrap()).to_string();
         }
@@ -1939,7 +1939,7 @@ impl Message {
         return "<div class='media p-1' data-pk=".to_owned() +
             &parent.id.to_string() +
             &"style='border-left: 1px solid rgba(0, 0, 0, 0.7)'><span style='padding-top: 6px;'><a href='" +
-            &creator.get_link() +
+            &creator.link.to_string() +
             &"' class='ajax'>" +
             &"' class='ajax'>";
     }

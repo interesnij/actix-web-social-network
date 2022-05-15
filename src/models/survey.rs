@@ -1387,7 +1387,7 @@ impl Survey {
         let users = get_users_from_ids(stack);
         let mut list = "<hr class='m-1'>".to_string();
         for voter in users.iter() {
-            list = list + &"<a class='pr-1' href='".to_string() + &voter.get_link() + &"' target='_blank' tooltip='".to_string() + &voter.get_full_name() + &"' flow='up'>".to_string() + &voter.get_s_avatar() + &"</a>".to_string();
+            list = list + &"<a class='pr-1' href='".to_string() + &voter.link.to_string() + &"' target='_blank' tooltip='".to_string() + &voter.get_full_name() + &"' flow='up'>".to_string() + &voter.get_s_avatar() + &"</a>".to_string();
         }
         return list;
     }
@@ -1492,11 +1492,11 @@ impl Survey {
     pub fn get_description(&self) -> String {
         if self.community_id.is_some() {
             let community = self.get_community();
-            return "опрос сообщества <a href='".to_owned() + &community.get_link() + &"' target='_blank'>" + &community.name + &"</a>"
+            return "опрос сообщества <a href='".to_owned() + &community.link.to_string() + &"' target='_blank'>" + &community.name + &"</a>"
         }
         else {
             let creator = self.get_creator();
-            return "<a href='".to_owned() + &creator.get_link() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": опрос"
+            return "<a href='".to_owned() + &creator.link.to_string() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": опрос"
         }
     }
     pub fn create_survey(title: String, community_id: Option<i32>, user_id: i32,

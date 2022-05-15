@@ -10,13 +10,13 @@
         <% let m_creator = object.get_creator(); %>
       <div class="message media p-1" data-uuid="<%= object.id %>" data-pk="<%= object.id %>">
           <figure>
-            <a href="<%= m_creator.get_link() %>" class="ajax no_select">
+            <a href="<%= m_creator.link %>" class="ajax no_select">
               <%- m_creator.get_40_avatar() %>
             </a>
           </figure>
           <div class="media-body" style="overflow: visible;">
             <h5 class="time-title mb-0">
-              <a href="<%= m_creator.get_link() %>" class="ajax creator_link">
+              <a href="<%= m_creator.link %>" class="ajax creator_link">
                 <span class="creator_name"><%= m_creator.get_full_name() %></span>
               </a>
               <small class="float-right small text-muted get_created t_f"><%= object.created.format("%d-%m-%Y в %H:%M").to_string() %></small>

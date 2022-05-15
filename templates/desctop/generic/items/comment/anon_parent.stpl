@@ -1,7 +1,7 @@
 <% let creator = comment.get_commenter(); %>
 <div class="comment">
     <div class="media">
-      <a href="<%= creator.get_link() %>" class="ajax">
+      <a href="<%= creator.link %>" class="ajax">
         <figure>
           <%- creator.get_40_avatar() %>
         </figure>
@@ -9,7 +9,7 @@
 
         <div class="media-body" style="overflow: inherit;">
             <h5 class="mt-0">
-                <a href="<%= creator.get_link() %>" class="ajax">
+                <a href="<%= creator.link %>" class="ajax">
                     <span class="commenter_first_name"><%= creator.first_name %></span> <%= creator.last_name %>
                 </a>
                 <small class="text-muted float-right"><%= commentcreated.format("%d-%m-%Y в %H:%M").to_string() %></small>

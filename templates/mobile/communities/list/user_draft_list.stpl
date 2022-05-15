@@ -13,7 +13,7 @@
                 <div class="media">
                     <div class="media-body">
                         <h5 class="mt-1">
-                          <a class="underline ajax" href="<%= community.get_link() %>">
+                          <a class="underline ajax" href="<%= community.link %>">
                             <%= community.name %>
                           </a>
                           - Мои предложенные записи

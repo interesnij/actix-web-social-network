@@ -25,10 +25,10 @@
                     <p class="track_item music_list_item pointer" style="font-size: 17px;"><a><%= object.title %></a></p>
                       <% if object.community_id.is_some() { %>
                         <% let community = object.get_community(); %>
-                        <a class="small ajax" href="<%= community.get_link() %>"><%= community.name %></a>
+                        <a class="small ajax" href="<%= community.link %>"><%= community.name %></a>
                       <% } else { %>
                         <% let creator = object.get_creator(); %>
-                        <a class="small ajax" href="<%= creator.get_link() %>"><%= creator.get_full_name() %></a>
+                        <a class="small ajax" href="<%= creator.link %>"><%= creator.get_full_name() %></a>
                       <% } %>
                 </div>
             </div>

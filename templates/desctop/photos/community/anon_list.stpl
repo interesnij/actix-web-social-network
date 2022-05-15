@@ -3,7 +3,7 @@
 <span class="load_block pk_saver">
   <div class="media mt-3 uuid_saver" data-uuid="<%= list.id %>" data-pk="<%= list.id %>" style="padding-left: 7px;">
     <div class="text_support">
-      <a href="<%= community.get_link() %>" class="ajax i_link font-weight">
+      <a href="<%= community.link %>" class="ajax i_link font-weight">
       <%= community.name %>
     </a> - фотоальбом
     </div>

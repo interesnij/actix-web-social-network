@@ -1407,11 +1407,11 @@ impl Doc {
     pub fn get_description(&self) -> String {
         if self.community_id.is_some() {
             let community = self.get_community();
-            return "документ сообщества <a href='".to_owned() + &community.get_link() + &"' target='_blank'>" + &community.name + &"</a>"
+            return "документ сообщества <a href='".to_owned() + &community.link.to_string() + &"' target='_blank'>" + &community.name + &"</a>"
         }
         else {
             let creator = self.get_creator();
-            return "<a href='".to_owned() + &creator.get_link() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": документ"
+            return "<a href='".to_owned() + &creator.link.to_string() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": документ"
         }
     }
     pub fn create_doc(title: String, community_id: Option<i32>, user_id: i32,

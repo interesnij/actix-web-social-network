@@ -6,7 +6,7 @@
                 <div class="card mb-3">
                     <div class="card-header border-bottom">
                         <h5 class="content-color-primary mb-0">Уведомления записей -
-                          <a class="underline ajax" href="<%= community.get_link() %>">
+                          <a class="underline ajax" href="<%= community.link %>">
                             <%= community.name %>
                           </a>
                         </h5>

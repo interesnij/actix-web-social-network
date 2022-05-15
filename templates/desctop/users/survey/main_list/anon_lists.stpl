@@ -3,7 +3,7 @@
 <% if lists.len() > 1 { %>
 <div class="media mt-3" style="padding-left: 7px;">
   <h5 class="mt-1" style="flex: 1;">
-    <a class="underline ajax" href="<%= user.get_link() %>">
+    <a class="underline ajax" href="<%= user.link %>">
       <%= user.get_full_name() %>
     </a> - списки опросов
     (<%= lists.len() %>)
@@ -31,7 +31,7 @@
                            <p class="card-text file-size mb-0">{{ object.count_items }}</p>
                        </div>
                        <small class="file-accessed">
-                         <a class="ajax underline" href="<%= community.get_link() %>">
+                         <a class="ajax underline" href="<%= community.link %>">
                            <%= community.name %>
                          </a>
                        </small>
@@ -56,7 +56,7 @@
                            <p class="card-text file-size mb-0"><%= object.count_items() %></p>
                        </div>
                        <small class="file-accessed">
-                         <a class="ajax underline" href="<%= creator.get_link() %>">
+                         <a class="ajax underline" href="<%= creator.link %>">
                            <%= creator.get_full_name() %>
                          </a>
                        </small>
@@ -71,7 +71,7 @@
 <% } else { %>
 <div class="media mt-3" style="padding-left: 7px;">
   <h5 class="mt-1" style="flex: 1;">
-    <a class="underline ajax" href="<%= user.get_link() %>">
+    <a class="underline ajax" href="<%= user.link %>">
       <%= user.get_full_name() %>
     </a> - опросы
   </h5>

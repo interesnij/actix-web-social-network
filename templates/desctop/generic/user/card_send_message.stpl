@@ -1,6 +1,6 @@
 
 <div class="media">
-    <a href="<%= object.get_link() %>" class="ajax">
+    <a href="<%= object.link %>" class="ajax">
         <figure>
             <% if object.s_avatar.is_some() { %>
             <img src="<%= object.s_avatar.as_deref().unwrap() %>" style="border-radius:50px;width:50px;" alt="image">
@@ -12,13 +12,13 @@
         </figure>
     </a>
     <div class="media-body">
-        <a href="<%= object.get_link() %>" class="ajax">
+        <a href="<%= object.link %>" class="ajax">
             <h6 class="my-0 mt-1"><%= object.get_full_name() %></h6>
         </a>
         <% if object.is_user_can_send_message(request_user.id) { %>
           <a class="small user_send_page_message">Написать сообщение</a>
         <% } else { %>
-          <a href="<%= object.get_link() %>" class="small ajax">Перейти</a>
+          <a href="<%= object.link %>" class="small ajax">Перейти</a>
         <% } %>
     </div>
 </div>

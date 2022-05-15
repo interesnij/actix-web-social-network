@@ -76,7 +76,7 @@ pub struct User {
     pub perm:          i16,
     pub level:         i16,
     pub password:      String,
-    pub have_link:     Option<String>,
+    pub link:          String,
     pub city:          Option<String>,
     pub status:        Option<String>,
     pub b_avatar:      Option<String>,
@@ -99,6 +99,7 @@ pub struct NewUser {
     pub perm:          i16,
     pub level:         i16,
     pub password:      String,
+    pub link:          String,
     pub birthday:      chrono::NaiveDate,
     pub last_activity: chrono::NaiveDateTime,
 }
@@ -112,7 +113,7 @@ pub struct LoginUser {
 #[derive(Serialize, Deserialize, AsChangeset)]
 #[table_name="users"]
 pub struct EditLinkUser {
-    pub have_link: Option<String>,
+    pub link: String,
 }
 #[derive(Serialize, Deserialize, AsChangeset)]
 #[table_name="users"]
@@ -157,6 +158,16 @@ impl User {
         }
     }
 
+    pub fn count_users(&self) -> usize {
+        use crate::schema::users::dsl::users;
+
+        let _connection = establish_connection();
+        return users
+            .load::<User>(&_connection)
+            .expect("E")
+            .len();
+    }
+
     pub fn get_b_avatar(&self) -> String {
         let avatar_pk = self.get_avatar_pk();
         if avatar_pk != 0 {
@@ -199,24 +210,11 @@ impl User {
         }
     }
 
-    pub fn get_link(&self) -> String {
-        if self.have_link.is_some() {
-            return self.have_link.as_deref().unwrap().to_string();
-        }
-        else {
-            return "/id".to_string() + &self.get_str_id() + &"/".to_string();
-        }
-    }
     pub fn get_slug(&self) -> String {
-        if self.have_link.is_some() {
-            return "@".to_string() + &self.have_link.as_deref().unwrap().to_string();
-        }
-        else {
-            return "@id".to_string() + &self.get_str_id();
-        }
+        return "@".to_string() + &self.link.to_string();
     }
     pub fn get_description(&self) -> String {
-        return "<a href='".to_string() + &self.get_link() + &"' target='_blank'>".to_string() + &self.get_full_name() + &"</a>".to_string();
+        return "<a href='".to_string() + &self.link.to_string() + &"' target='_blank'>".to_string() + &self.get_full_name() + &"</a>".to_string();
     }
     pub fn is_user(&self) -> bool {
         return true;

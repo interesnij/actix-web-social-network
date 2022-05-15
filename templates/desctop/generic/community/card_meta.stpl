@@ -1,4 +1,4 @@
-<a href="<%= community.get_link() %>" class="ajax">
+<a href="<%= community.link %>" class="ajax">
     <div class="media">
     <figure>
       <% if community.s_avatar.is_some() { %>

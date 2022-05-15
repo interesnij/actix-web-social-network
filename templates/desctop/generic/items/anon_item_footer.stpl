@@ -56,7 +56,7 @@
 
     <% if post.community_id.is_some() { %>
     <% let community = post.get_community(); %>
-    <a href="<%= community.get_link() %>" target="_blank" style="padding-right:5px" community-pk="<%= community.id %>">
+    <a href="<%= community.link %>" target="_blank" style="padding-right:5px" community-pk="<%= community.id %>">
       <figure style="margin: 0;" tooltip="<%= community.name %>" flow="up">
         <% if community.s_avatar.is_some() { %>
           <img src="<%= community.s_avatar.as_deref().unwrap() %>" style="border-radius:40px;width:40px;height:40px;" alt="image">
@@ -68,7 +68,7 @@
 
     <% } else { %>
     <% let creator = post.get_creator(); %>
-    <a href="<%= creator.get_link() %>" target="_blank" style="padding-right:5px" user-pk="<%= creator.id %>">
+    <a href="<%= creator.link %>" target="_blank" style="padding-right:5px" user-pk="<%= creator.id %>">
       <figure style="margin: 0;" tooltip="<%= creator.get_full_name() %>" flow="up">
         <% if creator.s_avatar.is_some() { %>
           <img src="<%= creator.s_avatar.as_deref().unwrap() %>" style="border-radius:40px;width:40px;height:40px;" alt="image">

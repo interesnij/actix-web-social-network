@@ -28,14 +28,14 @@ pub fn add_post_list(pk: i32) -> String {
     if list.community_id.is_some() {
         let community = list.get_community();
         name = community.name.clone();
-        link = community.get_link().clone();
+        link = community.link.clone();
         image = community.get_bb_avatar();
         owner = community.id.to_string();
     }
     else {
         let creator = list.get_creator();
         name = creator.get_full_name().clone();
-        link = creator.get_link().clone();
+        link = creator.link.clone();
         image = creator.get_bb_avatar();
         owner = creator.id.to_string();
     }
@@ -119,13 +119,13 @@ pub fn add_music_list(pk: i32) -> String {
     if list.community_id.is_some() {
         let community = list.get_community();
         name = community.name.clone();
-        link = community.get_link().clone();
+        link = community.link.clone();
         owner = community.id.to_string();
     }
     else {
         let creator = list.get_creator();
         name = creator.get_full_name().clone();
-        link = creator.get_link().clone();
+        link = creator.link.clone();
         owner = creator.id.to_string();
     }
 
@@ -211,13 +211,13 @@ pub fn add_doc_list(pk: i32) -> String {
     if list.community_id.is_some() {
         let community = list.get_community();
         name = community.name.clone();
-        link = community.get_link().clone();
+        link = community.link.clone();
         owner = community.id.to_string();
     }
     else {
         let creator = list.get_creator();
         name = creator.get_full_name().clone();
-        link = creator.get_link().clone();
+        link = creator.link.clone();
         owner = creator.id.to_string();
     }
 
@@ -293,13 +293,13 @@ pub fn add_video_list(pk: i32) -> String {
     if list.community_id.is_some() {
         let community = list.get_community();
         name = community.name.clone();
-        link = community.get_link().clone();
+        link = community.link.clone();
         owner = community.id.to_string();
     }
     else {
         let creator = list.get_creator();
         name = creator.get_full_name().clone();
-        link = creator.get_link().clone();
+        link = creator.link.clone();
         owner = creator.id.to_string();
     }
 
@@ -375,13 +375,13 @@ pub fn add_photo_list(pk: i32) -> String {
     if list.community_id.is_some() {
         let community = list.get_community();
         name = community.name.clone();
-        link = community.get_link().clone();
+        link = community.link.clone();
         owner = community.id.to_string();
     }
     else {
         let creator = list.get_creator();
         name = creator.get_full_name().clone();
-        link = creator.get_link().clone();
+        link = creator.link.clone();
         owner = creator.id.to_string();
     }
 
@@ -460,13 +460,13 @@ pub fn add_good_list(pk: i32) -> String {
     if list.community_id.is_some() {
         let community = list.get_community();
         name = community.name.clone();
-        link = community.get_link().clone();
+        link = community.link.clone();
         image = community.get_bb_avatar()
     }
     else {
         let creator = list.get_creator();
         name = creator.get_full_name().clone();
-        link = creator.get_link().clone();
+        link = creator.link.clone();
         image = creator.get_bb_avatar()
     }
 
@@ -816,9 +816,9 @@ pub fn add_user(pk: i32) -> String {
 
     return "<div style='flex-basis: 100%;' class='card'><div class='card-body'
     style='padding: 5px'><div style='display:flex'><figure><a class='ajax'
-    href='".to_string() + &user.get_link() + &"' >".to_string() +
+    href='".to_string() + &user.link.to_string() + &"' >".to_string() +
     &user.get_bb_avatar() + &"</a></figure><div class='media-body' style='margin-left: 10px;'>
-    <a href='".to_string() + &user.get_link() +
+    <a href='".to_string() + &user.link.to_string() +
     &"' class='my-0 mt-1 ajax'>".to_string() + &user.get_full_name() +
     &"</a><p>".to_string() + &user.get_online_status() + &"<br>Друзей: ".to_string() +
     &user.get_profile().friends.to_string() + &"</p></div></div></div></div>".to_string();
@@ -845,9 +845,9 @@ pub fn add_edited_user(pk: i32) -> String {
     <input type='hidden' name='attach_items' value='use".to_string() + &user.id.to_string() +
     &"'></span>
     <div style='display:flex'><figure><a class='ajax'
-    href='".to_string() + &user.get_link() + &"' >".to_string() +
+    href='".to_string() + &user.link.to_string() + &"' >".to_string() +
     &user.get_bb_avatar() + &"</a></figure><div class='media-body' style='margin-left: 10px;'>
-    <a href='".to_string() + &user.get_link() +
+    <a href='".to_string() + &user.link.to_string() +
     &"' class='my-0 mt-1 ajax'>".to_string() + &user.get_full_name() +
     &"</a><p>".to_string() + &user.get_online_status() + &"<br>Друзей: ".to_string() +
     &user.get_profile().friends.to_string() + &"</p></div></div></div></div>".to_string();
@@ -869,9 +869,9 @@ pub fn add_community(pk: i32) -> String {
 
     return "<div style='flex-basis: 100%;' class='card'><div class='card-body'
     style='padding: 5px'><div style='display:flex'><figure><a class='ajax'
-    href='".to_string() + &community.get_link() + &"' >".to_string() +
+    href='".to_string() + &community.link.to_string() + &"' >".to_string() +
     &community.get_bb_avatar() + &"</a></figure><div class='media-body' style='margin-left: 10px;'>
-    <a href='".to_string() + &community.get_link() +
+    <a href='".to_string() + &community.link.to_string() +
     &"' class='my-0 mt-1 ajax'>".to_string() + &community.name +
     &"</a><p>".to_string() + &community.description.as_ref().unwrap() + &"<br>Подписчиков: ".to_string() +
     &community.get_info_model().members.to_string() + &"</p></div></div></div></div>".to_string();
@@ -899,9 +899,9 @@ pub fn add_edited_community(pk: i32) -> String {
     <input type='hidden' name='attach_items' value='com".to_string() + &community.id.to_string() +
     &"'></span>
     <div style='display:flex'><figure><a class='ajax'
-    href='".to_string() + &community.get_link() + &"' >".to_string() +
+    href='".to_string() + &community.link.to_string() + &"' >".to_string() +
     &community.get_bb_avatar() + &"</a></figure><div class='media-body' style='margin-left: 10px;'>
-    <a href='".to_string() + &community.get_link() +
+    <a href='".to_string() + &community.link.to_string() +
     &"' class='my-0 mt-1 ajax'>".to_string() + &community.name +
     &"</a><p>".to_string() + &community.description.as_ref().unwrap() + &"<br>Подписчиков: ".to_string() +
     &community.get_info_model().members.to_string() + &"</p></div></div></div></div>".to_string();
@@ -930,12 +930,12 @@ pub fn add_anon_survey(pk: i32) -> String {
     if survey.community_id.is_some() {
         let community = survey.get_community();
         name = community.name.clone();
-        link = community.get_link().clone();
+        link = community.link.clone();
     }
     else {
         let creator = survey.get_creator();
         name = creator.get_full_name().clone();
-        link = creator.get_link().clone();
+        link = creator.link.clone();
     }
 
     if survey.is_have_votes() {
@@ -996,12 +996,12 @@ pub fn add_survey(pk: i32, is_staff: bool, user_id: i32) -> String {
     if survey.community_id.is_some() {
         let community = survey.get_community();
         name = community.name.clone();
-        link = community.get_link().clone();
+        link = community.link.clone();
     }
     else {
         let creator = survey.get_creator();
         name = creator.get_full_name().clone();
-        link = creator.get_link().clone();
+        link = creator.link.clone();
     }
 
     if survey.is_multiple == false {
@@ -1079,12 +1079,12 @@ pub fn add_edited_survey(pk: i32) -> String {
     if survey.community_id.is_some() {
         let community = survey.get_community();
         name = community.name.clone();
-        link = community.get_link().clone();
+        link = community.link.clone();
     }
     else {
         let creator = survey.get_creator();
         name = creator.get_full_name().clone();
-        link = creator.get_link().clone();
+        link = creator.link.clone();
     }
 
     if survey.is_have_votes() {

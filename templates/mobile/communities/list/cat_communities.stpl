@@ -22,7 +22,7 @@
                   <% for community in object_list.iter() { %>
                   <li class="list-group-item">
                       <div class="media">
-                        <a href="<%= community.get_link() %>" class="ajax">
+                        <a href="<%= community.link %>" class="ajax">
                           <figure>
                             <% if community.s_avatar.is_some() { %>
                               <img src="<%= community.s_avatar.as_deref().unwrap() %>" style="border-radius:50px;width:50px;" alt="image">
@@ -33,7 +33,7 @@
                         </a>
                         <div class="media-body">
                             <h6 class="my-0 mt-1">
-                              <a href="<%= community.get_link() %>" class="ajax">
+                              <a href="<%= community.link %>" class="ajax">
                                 <%= community.name %> &nbsp;
                               </a>
                             </h6>

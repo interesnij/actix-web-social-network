@@ -6,7 +6,7 @@
       <div class="media mt-3" style="padding-left: 7px;">
         <form class="uuid_saver" data-uuid="<%= list.id %>" data-pk="<%= list.id %>">
           <div class="text_support">
-            <a href="<%= community.get_link() %>" class="ajax i_link font-weight">
+            <a href="<%= community.link %>" class="ajax i_link font-weight">
             <%= community.name %>
           </a> - фотоальбом
           </div>

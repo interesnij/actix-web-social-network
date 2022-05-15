@@ -64,7 +64,7 @@
 <% for object in object_list { %>
 <li class="list-group-item border-top pag" data-pk="{{ object.pk }}">
   <div class="media">
-      <a href="{{ object.get_link }}" target="_blank">
+      <a href="<%= object.link %>" target="_blank">
           <figure>
               <% if object.s_avatar.is_some() { %>
               <img src="<%= object.s_avatar.as_deref().unwrap() %>" style="border-radius:50px;width:50px;" alt="image">
@@ -76,7 +76,7 @@
           </figure>
       </a>
       <div class="media-body" style="overflow:visible">
-          <a href="<%= object.get_link() %>" target="_blank">
+          <a href="<%= object.link %>" target="_blank">
               <h6 class="my-0 mt-1"><%= object.get_full_name() %></h6>
           </a>
           <div class="dropdown">

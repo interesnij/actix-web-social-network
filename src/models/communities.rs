@@ -107,7 +107,7 @@ pub struct Community {
     pub types:       i16,
     pub perm:        String,
     pub level:       i16,
-    pub have_link:   Option<String>,
+    pub link:        String,
     pub b_avatar:    Option<String>,
     pub s_avatar:    Option<String>,
     pub cover:       Option<String>,
@@ -121,6 +121,7 @@ pub struct NewCommunity {
     pub name:        String,
     pub status:      Option<String>,
     pub types:       i16,
+    pub link:        String,
     pub perm:        String,
     pub level:       i16,
     pub community_subcategory_id: i32,
@@ -139,7 +140,7 @@ impl Community {
         return self.perm == "c";
     }
     pub fn get_description(&self) -> String {
-        return "<a href='".to_string() + &self.get_link() + &"' target='_blank'>".to_string() + &self.name + &"</a>".to_string();
+        return "<a href='".to_string() + &self.link.to_string() + &"' target='_blank'>".to_string() + &self.name + &"</a>".to_string();
     }
     pub fn get_bb_avatar(&self) -> String {
         if self.b_avatar.is_some() {
@@ -148,6 +149,15 @@ impl Community {
         else {
             return "/static/images/no_img/list.jpg".to_string();
         }
+    }
+    pub fn count_communities(&self) -> usize {
+        use crate::schema::communitys::dsl::communitys;
+
+        let _connection = establish_connection();
+        return communitys
+            .load::<Community>(&_connection)
+            .expect("E")
+            .len();
     }
     pub fn get_b_avatar(&self) -> String {
         let avatar_pk = self.get_avatar_pk();
@@ -233,21 +243,9 @@ impl Community {
             return "Предупреждение за нарушение правил соцсети трезвый.рус".to_string();
         }
     }
-    pub fn get_link(&self) -> String {
-        if self.have_link.is_some() {
-            return self.have_link.as_deref().unwrap().to_string();
-        }
-        else {
-            return "/public".to_string() + &self.get_str_id() + &"/".to_string();
-        }
-    }
+
     pub fn get_slug(&self) -> String {
-        if self.have_link.is_some() {
-            return "@".to_string() + &self.have_link.as_deref().unwrap().to_string();
-        }
-        else {
-            return "@public".to_string() + &self.get_str_id();
-        }
+        return "@".to_string() + &self.link.to_string();
     }
     pub fn is_have_music(&self) -> bool {
         return self.get_info_model().tracks > 0;
@@ -783,10 +781,13 @@ impl Community {
         let user_id = user.id;
 
         let _connection = establish_connection();
+        let count = User::count_users() + 1;
+        let link = "public".to_string() + &count.to_string();
         let new_community_form = NewCommunity{
                 name:                     name,
                 status:                   None,
                 types:                    types,
+                link:                     link,
                 perm:                     "a".to_string(),
                 level:                    100,
                 community_subcategory_id: category,

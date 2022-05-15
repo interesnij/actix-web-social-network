@@ -234,19 +234,21 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
         if params_2.gender.clone() == "Fem".to_string() {
             get_gender = "b";
         }
-
+        let count = User::count_users() + 1;
+        let link = "id".to_string() + &count.to_string();
         let form_user = NewUser {
-            first_name: params_2.first_name.clone(),
-            last_name: params_2.last_name.clone(),
-            phone: params_2.phone.clone(),
-            types: 1,
-            gender: get_gender.to_string(),
-            device: get_device.to_string(),
-            language: get_language.to_string(),
-            perm: get_perm,
-            level: 100,
-            password: hash_password(&params_2.password.clone()),
-            birthday: NaiveDate::parse_from_str(&params_2.birthday.clone(), "%Y-%m-%d").unwrap(),
+            first_name:    params_2.first_name.clone(),
+            last_name:     params_2.last_name.clone(),
+            phone:         params_2.phone.clone(),
+            types:         1,
+            gender:        get_gender.to_string(),
+            device:        get_device.to_string(),
+            language:      get_language.to_string(),
+            perm:          get_perm,
+            level:         100,
+            password:      hash_password(&params_2.password.clone()),
+            link:          link,
+            birthday:      NaiveDate::parse_from_str(&params_2.birthday.clone(), "%Y-%m-%d").unwrap(),
             last_activity: chrono::Local::now().naive_utc(),
         };
 

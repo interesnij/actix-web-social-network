@@ -3,7 +3,7 @@
         <div class="card mb-3">
             <div class="card-header">
               <div id="chat_members">
-                <div data-pk="<%= member.id %>" tooltip="<%= member.get_link() %>" flow="up" style="display: inline-block; margin: 5px;">
+                <div data-pk="<%= member.id %>" tooltip="<%= member.link %>" flow="up" style="display: inline-block; margin: 5px;">
                   <input type="hidden" class="chat" name="chat_items" value="<%= member.id %>">
                     <figure>
                       <% if member.s_avatar.is_some() { %>

@@ -1785,11 +1785,11 @@ impl Post {
     pub fn get_description(&self) -> String {
         if self.community_id.is_some() {
             let community = self.get_community();
-            return "запись сообщества <a href='".to_owned() + &community.get_link() + &"' target='_blank'>" + &community.name + &"</a>"
+            return "запись сообщества <a href='".to_owned() + &community.link.to_string() + &"' target='_blank'>" + &community.name + &"</a>"
         }
         else {
             let creator = self.get_creator();
-            return "<a href='".to_owned() + &creator.get_link() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": запись"
+            return "<a href='".to_owned() + &creator.link.to_string() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": запись"
         }
     }
     pub fn is_user_can_edit_delete_item(&self, user_id: i32) -> bool {
@@ -2922,11 +2922,11 @@ impl PostComment {
     pub fn get_description(&self) -> String {
         if self.get_item().community_id.is_some() {
             let community = self.get_community();
-            return "запись сообщества <a href='".to_owned() + &community.get_link() + &"' target='_blank'>" + &community.name + &"</a>"
+            return "запись сообщества <a href='".to_owned() + &community.link.to_string() + &"' target='_blank'>" + &community.name + &"</a>"
         }
         else {
             let creator = self.get_creator();
-            return "<a href='".to_owned() + &creator.get_link() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": запись"
+            return "<a href='".to_owned() + &creator.link.to_string() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": запись"
         }
     }
 

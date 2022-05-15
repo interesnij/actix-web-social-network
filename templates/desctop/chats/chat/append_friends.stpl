@@ -7,7 +7,7 @@
         <div class="is_block_paginate">
           <% if object_list.len() > 0 { %>
           <% for object in object_list.iter() { %>
-          <div class="media pointer add_member_chat_toggle border-bottom" data-link="<%= object.get_link() %>" data-pk="<%= object.id %>" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
+          <div class="media pointer add_member_chat_toggle border-bottom" data-link="<%= object.link %>" data-pk="<%= object.id %>" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
             <figure>
                 <% if object.s_avatar.is_some() { %>
                 <img src="<%= object.s_avatar.as_deref().unwrap() %>" style="border-radius:50px;width:50px;" alt="image">

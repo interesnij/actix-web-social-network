@@ -10,7 +10,7 @@
 </figure>
     <div class="media-body">
       <h5 class="time-title mb-0">
-        <a href="<%= creator.get_link() %>" class="ajax creator_link"><span class="creator_name">
+        <a href="<%= creator.link %>" class="ajax creator_link"><span class="creator_name">
           <%= creator.get_full_name() %>
         </span></a>
         <span class="favourite_icon">

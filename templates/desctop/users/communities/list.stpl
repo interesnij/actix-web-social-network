@@ -34,7 +34,7 @@
               <div class="tab-content">
                 <div class="tab-pane fade active show">
                   <div class="media-body">
-                    <a class="underline ajax" href="<%= user.get_link() %>">
+                    <a class="underline ajax" href="<%= user.link %>">
                       <%= user.get_full_name() %>
                     </a>
                     <span style="vertical-align: middle;">
@@ -50,7 +50,7 @@
                     <% for community in object_list.iter() { %>
                     <li class="list-group-item">
                       <div class="media">
-                        <a href="<%= community.get_link() %>" class="ajax">
+                        <a href="<%= community.link %>" class="ajax">
                           <figure style="width:30px;">
                             <% if community.s_avatar.is_some() { %>
                             <img src="<%= community.s_avatar.as_deref().unwrap() %>" style="border-radius:30px;" alt="image">
@@ -64,7 +64,7 @@
                         </a>
                         <div class="media-body">
                           <h6 class="mb-0" style="padding-top: 2px;">
-                            <a href="<%= community.get_link() %>" class="ajax"><%= community.name %></a>
+                            <a href="<%= community.link %>" class="ajax"><%= community.name %></a>
                           </h6>
                         </div>
                       </div>

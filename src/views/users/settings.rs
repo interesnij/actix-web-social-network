@@ -581,7 +581,7 @@ pub async fn edit_link(session: Session, mut payload: Multipart) -> actix_web::R
         let _connection = establish_connection();
 
         let mut form: EditLinkUser = EditLinkUser {
-            have_link: None,
+            link: "".to_string(),
         };
 
         while let Some(item) = payload.next().await {
@@ -591,7 +591,7 @@ pub async fn edit_link(session: Session, mut payload: Multipart) -> actix_web::R
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
                     let data_string = s.to_string();
-                    form.have_link = Some(data_string);
+                    form.link = data_string;
                 }
             }
         }

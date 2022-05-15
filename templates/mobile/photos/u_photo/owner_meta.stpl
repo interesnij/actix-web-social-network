@@ -1,13 +1,13 @@
 <div class="media">
   <% let photo_creator = object.get_creator(); %>
-  <a href="<%= photo_creator.get_link() %>" class="ajax">
+  <a href="<%= photo_creator.link %>" class="ajax">
     <figure>
       <%- photo_creator.get_50_avatar() %>
     </figure>
   </a>
     <div class="media-body">
         <h6 class="mb-0">
-          <a href="<%= photo_creator.get_link() %>" class="ajax">
+          <a href="<%= photo_creator.link %>" class="ajax">
             <%= photo_creator.get_full_name() %>
           </a>
         </h6>

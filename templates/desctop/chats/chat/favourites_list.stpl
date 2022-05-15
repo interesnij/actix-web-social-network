@@ -15,13 +15,13 @@
         <% let creator = object.get_creator(); %>
       <div class="message media p-1" data-uuid="<%= object.id %>" data-pk="<%= object.id %>">
           <figure>
-            <a href="<%= creator.get_link() %>" class="ajax no_select">
+            <a href="<%= creator.link %>" class="ajax no_select">
               <%- creator.get_40_avatar() %>
             </a>
           </figure>
           <div class="media-body" style="overflow: visible;">
             <h5 class="time-title mb-0">
-              <a href="<%= creator.get_link() %>" class="ajax creator_link">
+              <a href="<%= creator.link %>" class="ajax creator_link">
                 <span class="creator_name"><%= creator.get_full_name() %></span>
               </a>
               <span class="favourite_icon">

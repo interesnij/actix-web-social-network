@@ -1,18 +1,18 @@
-
-<div class="transfers_container border-left">
-  <% for message in object.get_transfers().iter() { %>
-    <% let transfer_creator = message.get_creator(); %>
-<div class="media p-1">
-    <figure>
-      <a href="<%= transfer_creator.get_link() %>" class="ajax">
-        <%- transfer_creator.get_s_avatar() %>
-      </a>
-    </figure>
+<% let creator = object.get_creator(); %>
+<figure>
+    <% if creator.s_avatar.is_some() { %>
+    <img src="<%= creator.s_avatar.as_deref().unwrap() %>" style="border-radius:50px;width:50px;" alt="image">
+    <% } else { %>
+    <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24">
+        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+        <path d="M0 0h24v24H0z" fill="none" /></svg>
+    <% } %>
+</figure>
     <div class="media-body">
       <h5 class="time-title mb-0">
-        <a href="<%= object.get_link() %>" class="ajax creator_link">
-          <span class="creator_name"><%= object.get_full_name() %></span>
-        </a>
+        <a href="<%= creator.link %>" class="ajax creator_link"><span class="creator_name">
+          <%= creator.get_full_name() %>
+        </span></a>
         <span class="favourite_icon">
           <% if object.is_favourite(request_user.id) { %>
           <span class="delete_favourite_message pointer" flow="up" tooltip="Убрать из избранного">
@@ -20,9 +20,8 @@
           </span>
           <% } %>
         </span>
-        <small class="float-right small text-muted get_created t_f">
+        <small class="float-right text-muted">
           <%= object.created.format("%d-%m-%Y в %H:%M").to_string() %>
-          <% if object.is_edited() { %>(ред.)<% } %>
         </small>
       </h5>
 
@@ -39,9 +38,9 @@
       </div>
       <% } else { %>
 
-        <span class="text text_support t_f">
-          <%- object.content.as_deref().unwrap() %>
-        </span>
+        <div class="pointer toggle_message">
+          <span class="text"><%- object.content.as_deref().unwrap() %></span>
+        </div>
 
         <% if object.attach.is_some() { %>
           <%- object.get_attach() %>
@@ -56,6 +55,3 @@
 
         <% } %>
     </div>
-</div>
-<% } %>
-</div>

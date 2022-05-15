@@ -1,5 +1,5 @@
 <div class="media">
-    <a href="<%= request_user.get_link() %>" class="ajax">
+    <a href="<%= request_user.link %>" class="ajax">
         <figure>
             <% if request_user.s_avatar.is_some() { %>
             <img src="<%= request_user.s_avatar.as_deref().unwrap() %>" style="border-radius:30px;width:30px;" alt="image">
@@ -11,7 +11,7 @@
         </figure>
     </a>
     <div class="media-body">
-        <a href="<%= request_user.get_link() %>" class="ajax">
+        <a href="<%= request_user.link %>" class="ajax">
             <h6 class="my-0 mt-1"><%= request_user.get_full_name() %></h6>
         </a>
     </div>

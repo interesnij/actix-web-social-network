@@ -26,7 +26,7 @@
       <a class="i_link menu_drop_2 pointer">Друзья, кроме</a>
       <span class="collector">:
         <% for object in list.get_can_see_el_exclude_users().iter() { %>
-          <a href="<%= object.get_link() %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
+          <a href="<%= object.link %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
         <% } %>
       </span>
 
@@ -35,7 +35,7 @@
       <a class="i_link menu_drop_2 pointer">Некоторые друзья</a>
       <span class="collector">:
         <% for object in list.get_can_see_el_include_users().iter() {  %>
-          <a href="<%= object.get_link() %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
+          <a href="<%= object.link %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
           <% } %>
       </span>
       <% } else { %>
@@ -77,7 +77,7 @@
     <a class="i_link menu_drop_2 pointer">Друзья, кроме</a>
     <span class="collector">:
       <% for object in list.get_can_see_comment_exclude_users().iter() { %>
-        <a href="<%= object.get_link() %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
+        <a href="<%= object.link %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
       <% } %>
     </span>
 
@@ -86,7 +86,7 @@
     <a class="i_link menu_drop_2 pointer">Некоторые друзья</a>
     <span class="collector">:
       <% for object in list.get_can_see_comment_include_users().iter() {  %>
-        <a href="<%= object.get_link() %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
+        <a href="<%= object.link %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
         <% } %>
     </span>
     <% } else { %>
@@ -128,7 +128,7 @@
     <a class="i_link menu_drop_2 pointer">Друзья, кроме</a>
     <span class="collector">:
       <% for object in list.get_create_el_exclude_users().iter() { %>
-        <a href="<%= object.get_link() %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
+        <a href="<%= object.link %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
       <% } %>
     </span>
 
@@ -137,7 +137,7 @@
     <a class="i_link menu_drop_2 pointer">Некоторые друзья</a>
     <span class="collector">:
       <% for object in list.get_create_el_include_users().iter() {  %>
-        <a href="<%= object.get_link() %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
+        <a href="<%= object.link %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
         <% } %>
     </span>
     <% } else { %>
@@ -179,7 +179,7 @@
     <a class="i_link menu_drop_2 pointer">Друзья, кроме</a>
     <span class="collector">:
       <% for object in list.get_create_comment_exclude_users().iter() { %>
-        <a href="<%= object.get_link() %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
+        <a href="<%= object.link %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
       <% } %>
     </span>
 
@@ -188,7 +188,7 @@
     <a class="i_link menu_drop_2 pointer">Некоторые друзья</a>
     <span class="collector">:
       <% for object in list.get_create_comment_include_users().iter() {  %>
-        <a href="<%= object.get_link() %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
+        <a href="<%= object.link %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
         <% } %>
     </span>
     <% } else { %>
@@ -230,7 +230,7 @@
         <a class="i_link menu_drop_2 pointer">Друзья, кроме</a>
         <span class="collector">:
           <% for object in list.get_copy_el_exclude_users().iter() { %>
-            <a href="<%= object.get_link() %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
+            <a href="<%= object.link %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
           <% } %>
         </span>
 
@@ -239,7 +239,7 @@
         <a class="i_link menu_drop_2 pointer">Некоторые друзья</a>
         <span class="collector">:
           <% for object in list.get_copy_el_include_users().iter() {  %>
-            <a href="<%= object.get_link() %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
+            <a href="<%= object.link %>" target="_blank"><%= object.get_full_name() %></a>&nbsp;
             <% } %>
         </span>
         <% } else { %>

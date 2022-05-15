@@ -1,13 +1,13 @@
 <div class="media">
   <% let photo_community = object.get_community(); %>
-  <a href="<%= photo_community.get_link() %>" class="ajax">
+  <a href="<%= photo_community.link %>" class="ajax">
     <figure>
       <%- photo_community.get_50_avatar() %>
     </figure>
   </a>
     <div class="media-body">
         <h6 class="mb-0">
-          <a href="<%= photo_community.get_link() %>" class="ajax">
+          <a href="<%= photo_community.link %>" class="ajax">
             <%= photo_community.name %>
           </a>
         </h6>

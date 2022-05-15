@@ -13,7 +13,7 @@
                 <div class="media">
                     <div class="media-body">
                         <h5 class="mt-1">Подписчики сообщества -
-                          <a class="underline ajax" href="<%= community.get_link() %>">
+                          <a class="underline ajax" href="<%= community.link %>">
                             <%= community.name %>
                           </a>
                         </h5>
@@ -27,7 +27,7 @@
 
                     <li class="list-group-item" data-pk="<%= object.id %>">
                         <div class="media">
-                          <a href="<%= object.get_link() %>" class="ajax">
+                          <a href="<%= object.link %>" class="ajax">
                               <figure>
                                   <% if object.s_avatar.is_some() { %>
                                   <img src="<%= object.s_avatar.as_deref().unwrap() %>" style="border-radius:50px;width:50px;" alt="image">
@@ -39,7 +39,7 @@
                               </figure>
                           </a>
                           <div class="media-body">
-                            <a href="<%= object.get_link() %>" class="ajax">
+                            <a href="<%= object.link %>" class="ajax">
                                 <h6 class="my-0 mt-1"><%= object.get_full_name() %></h6>
                             </a>
                             <% if community.get_staff_users_ids().iter().any(|&i| i==object.id) { %>

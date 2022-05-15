@@ -4,13 +4,13 @@
     <% let transfer_creator = message.get_creator(); %>
 <div class="media p-1">
     <figure>
-      <a href="<%= transfer_creator.get_link() %>" class="ajax">
+      <a href="<%= transfer_creator.link %>" class="ajax">
         <%- transfer_creator.get_s_avatar() %>
       </a>
     </figure>
     <div class="media-body">
       <h5 class="time-title mb-0">
-        <a href="<%= object.get_link() %>" class="ajax creator_link">
+        <a href="<%= object.link %>" class="ajax creator_link">
           <span class="creator_name"><%= object.get_full_name() %></span>
         </a>
         <span class="favourite_icon">

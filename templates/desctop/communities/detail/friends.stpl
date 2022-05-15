@@ -13,7 +13,7 @@
                 <div class="media">
                     <div class="media-body">
                       <h5 class="mt-1">Друзья в сообществе
-                        <a href="<%= community.get_link() %>" class="ajax">
+                        <a href="<%= community.link %>" class="ajax">
                           <%= community.name %>
                         </a>
                       </h5>

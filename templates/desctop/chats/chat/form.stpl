@@ -12,7 +12,7 @@
           <% let parent_creator = parent.get_creator(); %>
         <div>
           <p>
-            <a class="underline" target="_blank" href="<%= parent_creator.get_link() %>">
+            <a class="underline" target="_blank" href="<%= parent_creator.link %>">
               <%= parent_creator.get_full_name() %>
             </a>
           </p>

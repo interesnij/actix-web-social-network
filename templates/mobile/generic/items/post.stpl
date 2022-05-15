@@ -14,14 +14,14 @@
   <% let community = parent.get_community(); %>
   <div class="card-header">
       <div class="media">
-      <a href="<%= community.get_link() %>" class="ajax">
+      <a href="<%= community.link %>" class="ajax">
         <figure>
           <img src="<%= community.get_bb_avatar() %>" style="border-radius: 50px;width:50px;" alt="image">
         </figure>
       </a>
       <div class="media-body">
         <h6 class="mb-0">
-          <a href="<%= community.get_link() %>" class="ajax">
+          <a href="<%= community.link %>" class="ajax">
             <%= community.name %> &nbsp;
           </a>
         </h6>
@@ -33,14 +33,14 @@
   <% let creator = parent.get_creator(); %>
   <div class="card-header">
       <div class="media">
-      <a href="<%= creator.get_link() %>" class="ajax">
+      <a href="<%= creator.link %>" class="ajax">
         <figure>
           <img src="<%= creator.get_bb_avatar() %>" style="border-radius: 50px;width:50px;" alt="image">
         </figure>
       </a>
       <div class="media-body">
         <h6 class="mb-0">
-          <a href="<%= creator.get_link() %>" class="ajax">
+          <a href="<%= creator.link %>" class="ajax">
             <%= creator.get_full_name() %> &nbsp;
           </a>
         </h6>

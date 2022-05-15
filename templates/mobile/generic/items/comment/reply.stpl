@@ -1,14 +1,14 @@
  <% let reply_creator = reply.get_commenter(); %>
 
  <div class="media reply">
-    <a href="<%= reply_creator.get_link() %>" class="ajax">
+    <a href="<%= reply_creator.link %>" class="ajax">
       <figure>
         <%- reply_creator.get_s_avatar() %>
       </figure>
     </a>
      <div class="media-body" style="overflow: inherit;">
      <h5 class="mt-0">
-         <a href="<%= reply_creator.get_link() %>" class="ajax">
+         <a href="<%= reply_creator.link %>" class="ajax">
              <span class="commenter_first_name"><%= reply_creator.first_name %></span> <%= reply_creator.last_name %>
          </a>
          <small class="text-muted float-right"><%= reply.created.format("%d-%m-%Y в %H:%M").to_string() %></small>

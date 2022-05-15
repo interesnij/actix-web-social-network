@@ -27,7 +27,7 @@ CREATE TABLE communitys (
     types         SMALLINT NOT NULL,      -- тип
     perm          "char" NOT NULL,          -- приватность
     level         SMALLINT NOT NULL DEFAULT 100,   -- уровень доверия
-    have_link     VARCHAR(100),           -- красивая ссылка
+    link          VARCHAR(100) NOT NULL,           -- красивая ссылка
     b_avatar      VARCHAR(500),           -- большой аватар
     s_avatar      VARCHAR(500),           -- маленький аватар
     cover         VARCHAR(500),           -- баннер

@@ -12,7 +12,7 @@
           <% } %>"
           data-pk="<%= community.id %>" list-pk="<%= object.id %>" data-type="community_post_list">
           <div class="media">
-            <a href="<%= community.get_link() %>" class="ajax">
+            <a href="<%= community.link %>" class="ajax">
               <figure><%- community.get_s_avatar() %></figure>
             </a>
             <div class="media-body">
@@ -36,7 +36,7 @@
           <% } %>"
           data-pk="<%= user.id %>" data-type="user_post_list" list-pk="<%= object.id %>">
             <div class="media">
-              <a href="<%= creator.get_link() %>" class="ajax">
+              <a href="<%= creator.link %>" class="ajax">
                 <figure><%- creator.get_s_avatar() %></figure>
               </a>
               <div class="media-body">
