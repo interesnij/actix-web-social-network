@@ -158,7 +158,7 @@ impl User {
         }
     }
 
-    pub fn count_users(&self) -> usize {
+    pub fn count_users() -> usize {
         use crate::schema::users::dsl::users;
 
         let _connection = establish_connection();

@@ -150,7 +150,7 @@ impl Community {
             return "/static/images/no_img/list.jpg".to_string();
         }
     }
-    pub fn count_communities(&self) -> usize {
+    pub fn count_communities() -> usize {
         use crate::schema::communitys::dsl::communitys;
 
         let _connection = establish_connection();
