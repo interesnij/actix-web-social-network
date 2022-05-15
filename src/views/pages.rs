@@ -35,13 +35,13 @@ pub async fn link_page(session: Session, req: HttpRequest, slug: web::Path<Strin
         use crate::views::users::profile::user_page;
 
         let pk: i32 = link[3..].parse().unwrap();
-        return user_page(session, req, pk)
+        return user_page(session, req, pk).await
     }
     else if ink[..7] == "/public".to_string() {
         use crate::views::communities::community_pages::community_page;
 
         let pk: i32 = link[7..].parse().unwrap();
-        return community_page(session, req, pk)
+        return community_page(session, req, pk).await
     }
     else {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
