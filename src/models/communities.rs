@@ -782,7 +782,7 @@ impl Community {
 
         let _connection = establish_connection();
         let count = User::count_users() + 1;
-        let link = "public".to_string() + &count.to_string() + &"/".to_string();
+        let link = "/public".to_string() + &count.to_string() + &"/".to_string();
         let new_community_form = NewCommunity{
                 name:                     name,
                 status:                   None,

@@ -235,7 +235,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             get_gender = "b";
         }
         let count = User::count_users() + 1;
-        let link = "id".to_string() + &count.to_string() + &"/".to_string();
+        let link = "/id".to_string() + &count.to_string() + &"/".to_string();
         let form_user = NewUser {
             first_name:    params_2.first_name.clone(),
             last_name:     params_2.last_name.clone(),
