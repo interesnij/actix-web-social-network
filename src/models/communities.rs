@@ -3512,6 +3512,7 @@ pub struct CommunityInfo {
     pub articles:     i32,
     pub survey:       i32,
     pub planners:     i32,
+    pub avatar_id:    Option<i32>,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_infos"]
@@ -3527,6 +3528,7 @@ pub struct NewCommunityInfo {
     pub articles:     i32,
     pub survey:       i32,
     pub planners:     i32,
+    pub avatar_id:    Option<i32>,
 }
 
 /////// CommunityPrivate //////
