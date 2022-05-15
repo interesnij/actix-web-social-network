@@ -26,6 +26,26 @@ pub fn pages_routes(config: &mut web::ServiceConfig) {
     config.route("/featured/", web::get().to(featured_list_page));
     config.route("/all-users/", web::get().to(all_users_page));
     config.route("/all-communities/", web::get().to(all_communities_page));
+    config.route("/{slug}/", web::get().to(link_page));
+}
+
+pub async fn link_page(session: Session, req: HttpRequest, slug: web::Path<String>) -> actix_web::Result<HttpResponse> {
+    let link = slug.clone();
+    if link[..3] == "/id" {
+        use crate::users::user_page;
+
+        let pk: i32 = link[3..].parse().unwrap();
+        return user_page(session, req, pk)
+    }
+    else if ink[..7] == "/public" {
+        use crate::community_pages::community_page;
+
+        let pk: i32 = link[7..].parse().unwrap();
+        return community_page(session, req, pk)
+    }
+    else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
 }
 
 pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
