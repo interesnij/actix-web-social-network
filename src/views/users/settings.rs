@@ -575,14 +575,14 @@ pub async fn get_background(session: Session, color: web::Path<String>) -> actix
 pub async fn edit_link(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         use crate::schema::users::dsl::users;
-        use crate::models::EditLinkUser;
+        use crate::schema::custom_links::dsl::custom_links;
+        use crate::models::{EditLinkUser, CustomLink, NewCustomLink};
 
         let _request_user = get_request_user_data(session);
         let _connection = establish_connection();
 
         let mut form: EditLinkUser = EditLinkUser {
             link:  "".to_string(),
-            owner: 1,
         };
 
         while let Some(item) = payload.next().await {
@@ -601,6 +601,24 @@ pub async fn edit_link(session: Session, mut payload: Multipart) -> actix_web::R
           .set(&form)
              .get_result::<User>(&_connection)
              .expect("Error.");
+
+        let link_some = custom_links
+            .filter(schema::custom_links::link.eq(form.link))
+            .limit(1)
+            .load::<CustomLink>(&_connection)
+            .expect("E.")
+            .len() == 0;
+
+        if link_some {
+            let new_link = NewCustomLink {
+                link: form.link,
+                owner: 1,
+            };
+            diesel::insert_into(schema::custom_links::table)
+                .values(&new_link)
+                .get_result::<CustomLink>(&_connection)
+                .expect("Error.");
+        }
 
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
         } else {
