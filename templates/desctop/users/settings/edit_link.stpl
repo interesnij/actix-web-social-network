@@ -10,11 +10,25 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">@</span>
                   </div>
-                  <input type="text" value="<%= request_user.link %>" name="link" class="form-control">
+                  <input type="text"
+                  <% if request_user.link.iter().any(|&i| i=="/") { %>
+                    value=""
+                  <% } else { %>
+                    value="<%= request_user.link.replace("/", "") %>"
+                  <% } %>
+                    name="link"
+                    class="form-control custom_link_input"
+                  >
                 </div>
-
             </div>
-            <div class="user_link_response mb-2 mt-2"></div>
+            <div class="user_link_response mb-2 mt-2">
+              Номер страницы - <%= request_user.id %>.
+              Как правильно выбрать адрес и можно ли
+              использовать уже занятый, читайте
+              <a class="i_link" href="" target="_blank" rel="nofollow">
+                здесь.
+              </a>
+            </div>
         </div>
         <div class="card-footer">
             <button class="btn btn-sm border this_mob_fullscreen_hide">Отмена</button>
