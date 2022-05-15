@@ -598,7 +598,7 @@ pub async fn edit_link(session: Session, mut payload: Multipart) -> actix_web::R
         }
 
         diesel::update(&_request_user)
-          .set(form)
+          .set(&form)
              .get_result::<User>(&_connection)
              .expect("Error.");
 
