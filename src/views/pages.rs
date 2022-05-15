@@ -37,7 +37,7 @@ pub async fn link_page(session: Session, req: HttpRequest, slug: web::Path<Strin
         let pk: i32 = link[3..link.len() - 1].parse().unwrap();
         return user_page(session, req, pk).await
     }
-    else if &link[..7] == "/public".to_string() {
+    else if &link.len() > 6 && &link[..7] == "/public".to_string() {
         use crate::views::communities::community_pages::community_page;
 
         let pk: i32 = link[7..link.len() - 1].parse().unwrap();
