@@ -16,7 +16,7 @@ on('#ajax', 'click', '.photo_edit', function() {
 on('#ajax', 'click', '.detail_photo', function() {
   photo_pk = this.getAttribute('photo-pk');
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = card.getAttribute('data-pk');
-  create_fullscreen("/photos/photo/" + photo_pk + "/", "photo_fullscreen");
+  create_fullscreen("/photos/load_photo/" + photo_pk + "/", "photo_fullscreen");
   window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=big_page&owner_id=" + pk + "&photo_pk=" + photo_pk);
 });
 
