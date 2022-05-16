@@ -1,3 +1,6 @@
+#[macro_use] extern crate lazy_static;
+extern crate regex;
+
 use crate::utils::establish_connection;
 
 use crate::schema;
@@ -657,4 +660,46 @@ pub fn get_anon_community_permission(community: &Community) -> (bool, String) {
     else {
         return (true, "".to_string())
     }
+}
+
+pub fn custom_link_check(value: &str) -> (bool, String) {
+    use regex::Regex;
+
+    let words_list = [
+        "chat", "chats_list", "chat_list",
+        "community", "communities",
+        "doc", "docs", "doc_lists", "docs_list",
+        "friends", "friend", "follows", "follow", "followings",
+        "good", "goods", "goods_list", "good_comments", "good_comment",
+        "music", "track", "playlist", "playlists", "music_list", "music_lists", "music_album", "music_albums", "genre",
+        "notify", "notification", "notifications_list", "notifications",
+        "manager", "managers", "managers_list", "penalties_list", "penaltie_list", "penalties", "penaltie", "claims", "claims_list", "claim",
+        "photo", "photos", "photo_list", "photo_comments", "photo_comment",
+        "post", "posts", "post_list", "post_comments", "post_comment",
+        "survey", "surveys", "survey_list",
+        "video", "videos", "video_list", "video_comments", "video_comment",
+        "user", "users", "user_list", "users_list",
+        "admin", "staff", "staffed", "static", "media",
+    ]
+    if &value.len() < &5 {
+        return (false, "Слишком короткая ссылка")
+    }
+    else if &value.len() > &32 {
+        return (false, "Слишком длинная ссылка")
+    }
+    else if &value[..2] == "id".to_string()
+        || &value[..6] == "public".to_string()
+        || words_list.iter().any(|&i| i==&value) {
+            return (false, "Недопустимый формат")
+        }
+
+    use crate::schema::communitys::dsl::communitys;
+    let _connection = establish_connection();
+    return communitys
+        .filter(schema::communitys::id.eq(pk))
+        .load::<Community>(&_connection)
+        .expect("E.")
+        .into_iter()
+        .nth(0)
+        .unwrap();
 }

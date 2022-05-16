@@ -11,12 +11,13 @@
                     <span class="input-group-text">@</span>
                   </div>
                   <input type="text"
-                  <% if request_user.link[0] == "/".to_string() { %>
-                    value=""
-                  <% } else { %>
-                    value="<%= request_user.link.replace("/", "") %>"
-                  <% } %>
+                    <% if request_user.link[..1] == "/".to_string() { %>
+                      value=""
+                    <% } else { %>
+                      value="<%= request_user.link.replace("/", "") %>"
+                    <% } %>
                     name="link"
+                    placeholder="Введите новый адрес"
                     class="form-control custom_link_input"
                   >
                 </div>
