@@ -63,7 +63,6 @@ pub async fn images_form (
 
     while let Some(item) = payload.next().await {
         let mut field: Field = item.expect("split_payload err");
-        let name = field.name();
 
         let _new_path = Uuid::new_v4().to_string() + &".jpg".to_string();
         let file = UploadedFiles::new (

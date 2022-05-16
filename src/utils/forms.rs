@@ -26,7 +26,7 @@ impl UploadedFiles {
         let now = chrono::Local::now().naive_utc();
 
         let format_path = format!(
-            "./media/{}/{}/{}/{}/{}/{}/{}/",
+            "./media/{}/{}/{}/{}/{}/{}/{}",
             owner_path.to_string(),
             owner_id.to_string(),
             folder.to_string(),
