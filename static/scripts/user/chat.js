@@ -847,6 +847,7 @@ on('#ajax', 'input', '.custom_link_input', function() {
   if (value == "") {
     btn.setAttribute("disabled", true);
     btn.innerHTML = "Изменить";
+    _this.value = "";
   }
   else if (value.length < 5) {
     btn.setAttribute("disabled", true);
