@@ -16,7 +16,7 @@ on('#ajax', 'click', '#u_edit_link_btn', function() {
     document.body.querySelector(".userpic").setAttribute("data-pk", d_value);
     old_links = document.body.querySelectorAll(".request_link");
     for (var i = 0; i < old_links.length; i++) {
-      old_links[i].setAttribute("href", url.old_links[i].host + d_value);
+      old_links[i].setAttribute("href", window.location.host + d_value);
     };
   }};
 
