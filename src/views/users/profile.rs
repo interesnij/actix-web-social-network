@@ -12,6 +12,7 @@ use crate::utils::{
     is_desctop,
     get_request_user_data,
     get_user,
+    get_user_with_link,
     get_post_list,
     get_user_permission,
     get_anon_user_permission,
@@ -24,7 +25,6 @@ use crate::models::{User, Post};
 
 
 pub fn profile_urls(config: &mut web::ServiceConfig) {
-    //config.route("/id{id}/", web::get().to(user_page));
     config.route("/users/{user_id}/wall/{list_id}/", web::get().to(user_wall_page));
 }
 
@@ -170,9 +170,9 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, param: web::Path
     }
 }
 
-pub async fn user_page(session: Session, req: HttpRequest, _id: i32) -> actix_web::Result<HttpResponse> {
+pub async fn user_page(session: Session, req: HttpRequest, link: String) -> actix_web::Result<HttpResponse> {
     let is_desctop = is_desctop(req);
-    let _user = get_user(_id);
+    let _user = get_user_with_link(link);
 
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);

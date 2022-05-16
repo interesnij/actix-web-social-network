@@ -12,6 +12,7 @@ use crate::utils::{
     is_desctop,
     get_request_user_data,
     get_community,
+    get_community_with_link,
     get_community_permission,
     get_anon_community_permission,
     get_list_variables,
@@ -23,7 +24,6 @@ use crate::models::{User, Post, Community};
 
 
 pub fn community_urls(config: &mut web::ServiceConfig) {
-    //config.route("/public{id}/", web::get().to(community_page));
     config.route("/communities/{community_id}/wall/{list_id}/", web::get().to(community_wall_page));
 
     config.route("/communities/{community_id}/photos/", web::get().to(community_photos_page));
@@ -1426,9 +1426,9 @@ pub async fn community_wall_page(session: Session, req: HttpRequest, param: web:
     }
 }
 
-pub async fn community_page(session: Session, req: HttpRequest, _id: i32) -> actix_web::Result<HttpResponse> {
+pub async fn community_page(session: Session, req: HttpRequest, link: String) -> actix_web::Result<HttpResponse> {
     let is_desctop = is_desctop(req);
-    let _community = get_community(_id);
+    let _community = get_community_with_link(link);
 
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);

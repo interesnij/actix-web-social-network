@@ -35,19 +35,36 @@ pub async fn link_page(session: Session, req: HttpRequest, slug: web::Path<Strin
     if &link[..2] == "id".to_string() {
         use crate::views::users::user_page;
 
-        let pk: i32 = link[2..].parse().unwrap();
-        return user_page(session, req, pk).await
+        let pk = link[2..].parse().unwrap();
+        return user_page(session, req, link).await
     }
     else if &link.len() > &5 && &link[..6] == "public".to_string() {
         use crate::views::communities::community_page;
 
-        let pk: i32 = link[6..].parse().unwrap();
-        return community_page(session, req, pk).await
+        return community_page(session, req, link).await
     }
     else {
-        use crate::schema::messages::dsl::messages;
+        use crate::schema::custom_links::dsl::custom_links;
+        use crate::models::CustomLink;
 
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        link_some = custom_links
+            .filter(schema::custom_links::link.eq(&link))
+            .limit(1)
+            .load::<CustomLink>(&_connection)
+            .expect("E.");
+
+        if link_some.len() == 0 {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+        if link_some[0].owner == 1 {
+            return user_page(session, req, link).await
+        }
+        else if link_some[0].owner == 1 {
+            return community_page(session, req, link).await
+        }
+        else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
     }
 }
 

@@ -13,29 +13,50 @@ use crate::models::{
 };
 
 
-pub fn get_user(pk: i32) -> User {
+pub fn get_user(id: i32) -> User {
     use crate::schema::users::dsl::users;
     let _connection = establish_connection();
     return users
-        .filter(schema::users::id.eq(pk))
+        .filter(schema::users::link.id(id))
         .load::<User>(&_connection)
         .expect("E.")
         .into_iter()
         .nth(0)
         .unwrap();
 }
-pub fn get_community(pk: i32) -> Community {
+pub fn get_user_with_link(link: String) -> User {
+    use crate::schema::users::dsl::users;
+    let _connection = establish_connection();
+    return users
+        .filter(schema::users::link.eq("/".to_owned() + &link + &"/".to_string()))
+        .load::<User>(&_connection)
+        .expect("E.")
+        .into_iter()
+        .nth(0)
+        .unwrap();
+}
+pub fn get_community(id: i32) -> Community {
     use crate::schema::communitys::dsl::communitys;
     let _connection = establish_connection();
     return communitys
-        .filter(schema::communitys::id.eq(pk))
+        .filter(schema::communitys::id.eq(id))
         .load::<Community>(&_connection)
         .expect("E.")
         .into_iter()
         .nth(0)
         .unwrap();
 }
-
+pub fn get_community_with_link(link: String) -> Community {
+    use crate::schema::communitys::dsl::communitys;
+    let _connection = establish_connection();
+    return communitys
+        .filter(schema::communitys::link.eq("/".to_owned() + &link + &"/".to_string()))
+        .load::<Community>(&_connection)
+        .expect("E.")
+        .into_iter()
+        .nth(0)
+        .unwrap();
+}
 pub fn get_post_list(pk: i32) -> PostList {
     use crate::schema::post_lists::dsl::post_lists;
     let _connection = establish_connection();
