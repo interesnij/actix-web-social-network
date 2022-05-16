@@ -4,7 +4,7 @@ use std::{
     str,
     io::Write,
     fs::create_dir_all,
-}
+};
 
 use actix_multipart::{Field, Multipart};
 use futures::StreamExt;
