@@ -28,7 +28,7 @@ pub async fn check_custom_link(session: Session, req: HttpRequest, slug: web::Pa
     let answer = "
     <div>
         <span id='bool'>".to_owned() + &_bool.to_string() + &"</span>
-        <span id='string'>".to_string() +  + &"</span>
+        <span id='string'>".to_string() + &"</span>
     </div>".to_string();
     Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(answer))
 }
