@@ -26,6 +26,7 @@ pub fn pages_routes(config: &mut web::ServiceConfig) {
     config.route("/featured/", web::get().to(featured_list_page));
     config.route("/all-users/", web::get().to(all_users_page));
     config.route("/all-communities/", web::get().to(all_communities_page));
+    config.route("/check_custom_link/{slug}/", web::get().to(check_custom_link));
     config.route("/{slug}/", web::get().to(link_page));
 }
 
@@ -45,7 +46,7 @@ pub async fn link_page(session: Session, req: HttpRequest, slug: web::Path<Strin
     }
     else {
         use crate::schema::messages::dsl::messages;
-        
+
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
 }
@@ -439,4 +440,17 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
                 .body(body))
         }
     }
+}
+
+pub async fn check_custom_link(session: Session, req: HttpRequest, slug: web::Path<String>) -> actix_web::Result<HttpResponse> {
+    use crate::utils::custom_link_check;
+
+    let link = slug.clone();
+    let (_bool, _string) = custom_link_check(&link);
+    let answer = "
+    <div>
+        <span id='bool'>".to_owned() + &_bool.to_string() + &"</span>
+        <span id='string'>".to_string() + &"</span>
+    </div>".to_string();
+    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(answer))
 }

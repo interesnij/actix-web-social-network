@@ -10,7 +10,6 @@ pub mod music;
 pub mod photos;
 pub mod survey;
 pub mod video;
-pub mod progs;
 
 pub use self::{
     pages::*,
@@ -25,5 +24,4 @@ pub use self::{
     photos::*,
     survey::*,
     video::*,
-    progs::*,
 };
