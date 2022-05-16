@@ -692,12 +692,12 @@ pub fn custom_link_check(value: &str) -> (bool, String) {
 
     else if &value[..2] == "id".to_string()
         || &value[..6] == "public".to_string()
-        || words_list.iter().any(|&i| i==&value) {
+        || words_list.iter().any(|&i| i==value) {
             return (false, "Недопустимый формат".to_string());
         }
 
     for i in exclude_chars.iter() {
-        if &value.contains(i) {
+        if value.contains(i) {
             return (false, "Недопустимый формат".to_string());
         }
     }
