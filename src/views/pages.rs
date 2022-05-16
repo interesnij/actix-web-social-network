@@ -46,7 +46,7 @@ pub async fn link_page(session: Session, req: HttpRequest, slug: web::Path<Strin
         use crate::schema::custom_links::dsl::custom_links;
         use crate::models::CustomLink;
 
-        link_some = custom_links
+        let link_some = custom_links
             .filter(schema::custom_links::link.eq(&link))
             .limit(1)
             .load::<CustomLink>(&_connection)
