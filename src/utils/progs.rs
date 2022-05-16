@@ -684,21 +684,21 @@ pub fn custom_link_check(value: &str) -> (bool, String) {
         "admin", "staff", "staffed", "static", "media",
     ];
     if &value.len() < &5 {
-        return (false, "Слишком короткая ссылка");
+        return (false, "Слишком короткая ссылка".to_string());
     }
     else if &value.len() > &32 {
-        return (false, "Слишком длинная ссылка");
+        return (false, "Слишком длинная ссылка".to_string());
     }
 
     else if &value[..2] == "id".to_string()
         || &value[..6] == "public".to_string()
         || words_list.iter().any(|&i| i==&value) {
-            return (false, "Недопустимый формат");
+            return (false, "Недопустимый формат".to_string());
         }
 
     for i in exclude_chars.iter() {
         if &value.iter().any(|&i| i==&i) {
-            return (false, "Недопустимый формат");
+            return (false, "Недопустимый формат".to_string());
         }
     }
 
@@ -710,7 +710,7 @@ pub fn custom_link_check(value: &str) -> (bool, String) {
         .expect("E.");
 
     if _links.len() > 0 {
-        return (false, "Адрес занят");
+        return (false, "Адрес занят".to_string());
     }
     else {
         return (true, "Занять адрес".to_owned() + value);
