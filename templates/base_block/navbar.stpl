@@ -35,7 +35,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right profile-dropdown">
 
-                        <a class="dropdown-item ajax" href="<%= request_user.link %>">
+                        <a class="dropdown-item ajax request_link" href="<%= request_user.link %>">
                             <div class="row align-items-center">
                                 <div class="col">Моя страница</div>
                                 <div class="col-auto">

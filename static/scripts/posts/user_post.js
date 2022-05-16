@@ -10,7 +10,14 @@ on('#ajax', 'click', '#u_edit_link_btn', function() {
   link.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     close_work_fullscreen();
-    toast_info("Ссылка изменена!")
+    toast_info("Ссылка изменена!");
+    d_value = "/" + value + "/";
+    document.body.querySelector(".edit_user_custom_link").innerHTML = "@" + value;
+    document.body.querySelector(".userpic").setAttribute("data-pk", d_value);
+    old_links = document.body.querySelectorAll(".request_link");
+    for (var i = 0; i < old_links.length; i++) {
+      old_links[i].setAttribute("href", url.old_links[i].host + d_value);
+    };
   }};
 
   link.send(form_data);
