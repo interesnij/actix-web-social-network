@@ -839,6 +839,48 @@ on('#ajax', 'input', '.smile_supported', function() {
   };
 });
 
+on('#ajax', 'input', '.custom_link_input', function() {
+  _this = this;
+  value = _this.value.replace(/<(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim();
+
+  btn = _this.parentElement.parentElement.parentElement.parentElement.querySelector(".btn");
+  if (value == "") {
+    btn.setAttribute("disabled", true);
+    btn.innerHTML = "Изменить";
+  }
+  else if (value.length < 5) {
+    btn.setAttribute("disabled", true);
+    btn.innerHTML = "Слишком короткая ссылка";
+  }
+  else if (value.length > 32) {
+    btn.setAttribute("disabled", true);
+    btn.innerHTML = "Слишком длинная ссылка";
+  }
+  else {
+    link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    link.open('GET', "/check_custom_link/" + value + "/", true);
+    link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    link.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          span = document.createElement("span");
+          elem = link.responseText;
+          span.innerHTML = elem;
+          bool = span.querySelector("#bool");
+          string = span.querySelector("#string");
+
+          btn.innerHTML = string;
+          if (bool == 0) {
+            btn.setAttribute("disabled", true);
+          }
+          else {
+            btn.setAttribute("disabled", false);
+          }
+        }
+      }
+      link.send();
+  }
+});
+
 on('#ajax', 'click', '.show_chat_fixed_messages', function() {
   pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('chat-pk');
   create_fullscreen("/chat/" + pk + "/fixed_messages/", "item_fullscreen");
