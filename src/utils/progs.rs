@@ -713,6 +713,6 @@ pub fn custom_link_check(value: &str) -> (bool, String) {
         return (false, "Адрес занят");
     }
     else {
-        return (true, value);
+        return (true, "Занять адрес".to_owned() + value);
     }
 }
