@@ -36,7 +36,6 @@ pub async fn link_page(session: Session, req: HttpRequest, slug: web::Path<Strin
 
     let link = slug.clone();
     if &link[..2] == "id".to_string() {
-        let pk = link[2..].parse().unwrap();
         return user_page(session, req, link).await
     }
     else if &link.len() > &5 && &link[..6] == "public".to_string() {
