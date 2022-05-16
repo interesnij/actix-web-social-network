@@ -119,6 +119,8 @@ pub async fn add_photos_in_list(session: Session, mut payload: Multipart, _id: w
         }
 
         else if _list.is_user_can_create_el(_request_user.id) {
+            //println!("{:?}", owner_path);
+            //println!("{:?}", owner_id);
             let form = images_form (
                 payload.borrow_mut(),
                 owner_path,
