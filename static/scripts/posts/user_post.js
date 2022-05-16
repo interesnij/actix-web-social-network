@@ -83,7 +83,7 @@ on('#ajax', 'change', '.create_video_hide_file', function() {
 on('body', 'change', '.case_all_input', function() {
   _this = this, case_video = false, id_video_upload_start = false, is_video_edit_window_loaded = true;
   if (this.classList.contains("add_photos_in_list")) {
-    url = "/gallery/add_photos_in_list/"
+    url = "/photos/add_photos_in_list/"
   } else if (this.classList.contains("add_tracks_in_list")) {
     url = "/music/add_tracks_in_list/"
   } else if (this.classList.contains("add_docs_in_list")) {
@@ -583,7 +583,7 @@ on('#ajax', 'change', '#u_photo_post_attach', function() {
       return;
   }
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/user_progs/add_attach_photo/", true );
+  link_.open( 'POST', "/photos/user_progs/add_attach_photo/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -614,7 +614,7 @@ on('#ajax', 'change', '#u_photo_post_comment_attach', function() {
       return;
   }
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/user_progs/add_attach_photo/", true );
+  link_.open( 'POST', "/photos/user_progs/add_attach_photo/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {

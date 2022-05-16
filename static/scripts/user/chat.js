@@ -918,8 +918,8 @@ function send_comment_sticker(form_post,value) {
     else if (form_post.classList.contains("c_post_comment")) {url = '/posts/community_progs/add_comment/'}
     else if (form_post.classList.contains("u_video_comment")) {url = '/video/user_progs/add_comment/'}
     else if (form_post.classList.contains("c_video_comment")) {url = '/video/community_progs/add_comment/'}
-    else if (form_post.classList.contains("u_photo_comment")) {url = '/gallery/user_progs/add_comment/'}
-    else if (form_post.classList.contains("c_photo_comment")) {url = '/gallery/community_progs/add_comment/'}
+    else if (form_post.classList.contains("u_photo_comment")) {url = '/photos/user_progs/add_comment/'}
+    else if (form_post.classList.contains("c_photo_comment")) {url = '/photos/community_progs/add_comment/'}
     else if (form_post.classList.contains("u_good_comment")) {url = '/goods/user_progs/add_comment/'}
     else if (form_post.classList.contains("c_good_comment")) {url = '/goods/community_progs/add_comment/'};
     comment_form = true
@@ -929,8 +929,8 @@ function send_comment_sticker(form_post,value) {
     else if (form_post.classList.contains("c_post_comment")) {url = '/posts/community_progs/reply_comment/'}
     else if (form_post.classList.contains("u_video_comment")) {url = '/video/user_progs/reply_comment/'}
     else if (form_post.classList.contains("c_video_comment")) {url = '/video/community_progs/reply_comment/'}
-    else if (form_post.classList.contains("u_photo_comment")) {url = '/gallery/user_progs/reply_comment/'}
-    else if (form_post.classList.contains("c_photo_comment")) {url = '/gallery/community_progs/reply_comment/'}
+    else if (form_post.classList.contains("u_photo_comment")) {url = '/photos/user_progs/reply_comment/'}
+    else if (form_post.classList.contains("c_photo_comment")) {url = '/photos/community_progs/reply_comment/'}
     else if (form_post.classList.contains("u_good_comment")) {url = '/goods/user_progs/reply_comment/'}
     else if (form_post.classList.contains("c_good_comment")) {url = '/goods/community_progs/reply_comment/'}
   };
@@ -1038,12 +1038,12 @@ on('#ajax', 'click', '.user_send_page_message', function() {
 on('#ajax', 'click', '.u_chat_photo', function() {
   photo_pk = this.getAttribute('photo-pk');
   pk = document.body.querySelector(".pk_saver").getAttribute('chat-pk')
-  create_fullscreen("/gallery/user/chat_photo/" + pk + "/" + photo_pk + "/", "photo_fullscreen");
+  create_fullscreen("/photos/user/chat_photo/" + pk + "/" + photo_pk + "/", "photo_fullscreen");
 });
 on('#ajax', 'click', '.c_chat_photo', function() {
   photo_pk = this.getAttribute('photo-pk');
   pk = document.body.querySelector(".pk_saver").getAttribute('chat-pk')
-  create_fullscreen("/gallery/community/chat_photo/" + pk + "/" + photo_pk + "/", "photo_fullscreen");
+  create_fullscreen("/photos/community/chat_photo/" + pk + "/" + photo_pk + "/", "photo_fullscreen");
 });
 
 on('#ajax', 'click', '.user_add_members', function() {

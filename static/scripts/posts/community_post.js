@@ -133,7 +133,7 @@ on('#ajax', 'click', '#c_add_offer_post', function() {
 
 on('#ajax', 'change', '#community_avatar_upload', function() {
   parent = this.parentElement;
-  post_with_pk_and_reload(parent, "/gallery/community_progs/add_avatar/")
+  post_with_pk_and_reload(parent, "/photos/community_progs/add_avatar/")
 })
 
 on('#ajax', 'click', '.c_post_fixed', function() {
@@ -215,7 +215,7 @@ on('#ajax', 'change', '#c_photo_post_comment_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_data = new FormData(document.body.querySelector("#add_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/community_progs/add_comment_photo/" + pk + "/", true );
+  link_.open( 'POST', "/photos/community_progs/add_comment_photo/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
