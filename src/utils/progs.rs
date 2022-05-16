@@ -1,6 +1,3 @@
-#[macro_use] extern crate lazy_static;
-extern crate regex;
-
 use crate::utils::establish_connection;
 
 use crate::schema;
@@ -663,8 +660,13 @@ pub fn get_anon_community_permission(community: &Community) -> (bool, String) {
 }
 
 pub fn custom_link_check(value: &str) -> (bool, String) {
-    use regex::Regex;
-
+    let exclude_chars = [
+        ",", ":", ";", ">", "@", "$",
+        "*", "/", "!", "?", "-", "+",
+        "{", "}", "(", ")", "%", "&",
+        "¤", "#", "^", "~", "[", "]",
+        "<",
+    ];
     let words_list = [
         "chat", "chats_list", "chat_list",
         "community", "communities",
@@ -680,26 +682,37 @@ pub fn custom_link_check(value: &str) -> (bool, String) {
         "video", "videos", "video_list", "video_comments", "video_comment",
         "user", "users", "user_list", "users_list",
         "admin", "staff", "staffed", "static", "media",
-    ]
+    ];
     if &value.len() < &5 {
-        return (false, "Слишком короткая ссылка")
+        return (false, "Слишком короткая ссылка");
     }
     else if &value.len() > &32 {
-        return (false, "Слишком длинная ссылка")
+        return (false, "Слишком длинная ссылка");
     }
+
     else if &value[..2] == "id".to_string()
         || &value[..6] == "public".to_string()
         || words_list.iter().any(|&i| i==&value) {
-            return (false, "Недопустимый формат")
+            return (false, "Недопустимый формат");
         }
 
-    use crate::schema::communitys::dsl::communitys;
+    for i in exclude_chars.iter() {
+        if &value.iter().any(|&i| i==&i) {
+            return (false, "Недопустимый формат");
+        }
+    }
+
+    use crate::schema::custom_links::dsl::custom_links;
     let _connection = establish_connection();
-    return communitys
-        .filter(schema::communitys::id.eq(pk))
-        .load::<Community>(&_connection)
-        .expect("E.")
-        .into_iter()
-        .nth(0)
-        .unwrap();
+    let _links = custom_links
+        .filter(schema::custom_links::link.eq(value))
+        .load::<CustomLink>(&_connection)
+        .expect("E.");
+
+    if _links.len() > 0 {
+        return (false, "Адрес занят");
+    }
+    else {
+        return (true, value);
+    }
 }
