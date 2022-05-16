@@ -703,6 +703,8 @@ pub fn custom_link_check(value: &str) -> (bool, String) {
     }
 
     use crate::schema::custom_links::dsl::custom_links;
+    use crate::models::CustomLink;
+    
     let _connection = establish_connection();
     let _links = custom_links
         .filter(schema::custom_links::link.eq(value))
