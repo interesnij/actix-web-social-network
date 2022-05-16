@@ -211,7 +211,7 @@ impl User {
     }
 
     pub fn get_slug(&self) -> String {
-        return "@".to_string() + &self.link.to_string();
+        return "@".to_string() + &self.link.replace("/", "").to_string();
     }
     pub fn get_description(&self) -> String {
         return "<a href='".to_string() + &self.link.to_string() + &"' target='_blank'>".to_string() + &self.get_full_name() + &"</a>".to_string();

@@ -245,7 +245,7 @@ impl Community {
     }
 
     pub fn get_slug(&self) -> String {
-        return "@".to_string() + &self.link.to_string();
+        return "@".to_string() + &self.link.replace("/", "").to_string();
     }
     pub fn is_have_music(&self) -> bool {
         return self.get_info_model().tracks > 0;

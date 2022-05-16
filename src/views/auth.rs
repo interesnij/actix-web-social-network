@@ -54,7 +54,7 @@ pub async fn mobile_signup(session: Session) -> actix_web::Result<HttpResponse> 
 
 pub async fn logout(session: Session) -> HttpResponse {
     session.clear();
-    HttpResponse::Ok().body(format!("ok"))
+    HttpResponse::Ok().body("ok")
 }
 
 #[derive(Deserialize)]
