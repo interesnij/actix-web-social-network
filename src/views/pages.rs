@@ -62,6 +62,7 @@ pub async fn link_page(session: Session, req: HttpRequest, slug: web::Path<Strin
             else if link_some[0].owner == 1 {
                 return community_page(session, req, link).await
             }
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
         }
     }
 }
