@@ -842,7 +842,7 @@ on('#ajax', 'input', '.smile_supported', function() {
 on('#ajax', 'input', '.custom_link_input', function() {
   _this = this;
   value = _this.value.replace(/[^a-zA-Z0-9_]/g, "").trim();
-
+  _this.value = value;
   btn = _this.parentElement.parentElement.parentElement.parentElement.querySelector("#u_edit_link_btn");
   if (value == "" || value[0] == "_") {
     btn.setAttribute("disabled", true);
