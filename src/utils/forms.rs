@@ -33,9 +33,10 @@ impl UploadedFiles {
             now.month().to_string(),
             now.day().to_string(),
         );
+        println!("folder {:?}", &format_folder);
         let format_path = format_folder + &filename.to_string();
-        println!("folder {:?}", format_folder);
-        println!("path {:?}", format_path);
+        println!("path {:?}", &format_path);
+
         create_dir_all(format_folder).unwrap();
         UploadedFiles {
             name: filename.to_string(),
