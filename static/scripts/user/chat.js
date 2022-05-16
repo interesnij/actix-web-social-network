@@ -844,11 +844,16 @@ on('#ajax', 'input', '.custom_link_input', function() {
   value = _this.value.replace(/[^a-zA-Z0-9_]/g, "").trim();
 
   btn = _this.parentElement.parentElement.parentElement.parentElement.querySelector("#u_edit_link_btn");
-  if (value == "") {
+  if (value == "" || value[0] == "_") {
     btn.setAttribute("disabled", true);
     btn.innerHTML = "Изменить";
     _this.value = "";
   }
+  else if (value[-1] == "_") {
+    btn.setAttribute("disabled", true);
+    value.slice(-1);
+  }
+
   else if (value.length < 5) {
     btn.setAttribute("disabled", true);
     btn.innerHTML = "Слишком короткая ссылка";
