@@ -1,7 +1,7 @@
 <% if user.is_have_video() { %>
 <div class="card mb-3">
     <div class="p-1">
-      <a href="/<%= user.id %>/video/" class="ajax">
+      <a href="/id<%= user.id %>/video/" class="ajax">
         <div class="media">
             <div class="media-body">
                 <h6 class="content-color-primary mb-0">Видео </h6>
