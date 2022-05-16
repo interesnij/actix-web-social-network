@@ -60,7 +60,7 @@ on('#ajax', 'click', '#u_edit_name_btn', function() {
     toast_error("Введите фамилию!"); return
   };
   send_form_and_toast('/users/settings/edit_name/', form, "Имя / фамилия изменены!");
-  document.body.querySelector(".user_full_name").innerHTML = field1.value + " " + field2.value;
+  document.body.querySelector(".edit_user_name").innerHTML = field1.value + " " + field2.value;
   close_work_fullscreen()
 });
 on('#ajax', 'click', '#u_edit_password_btn', function() {
