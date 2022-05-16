@@ -697,7 +697,7 @@ pub fn custom_link_check(value: &str) -> (bool, String) {
         }
 
     for i in exclude_chars.iter() {
-        if &value.iter().any(|&i| i==&i) {
+        if &value.contains(i) {
             return (false, "Недопустимый формат".to_string());
         }
     }
