@@ -16,7 +16,7 @@
   <% if object.community_id.is_some() { %>
     data-type="community_photo"
     owner-pk="<%= object.community_id.unwrap() %>"
-  <% } else %>
+  <% } else { %>
     data-type="user_photo"
     owner-pk="<%= object.user_id %>"
   <% } %>
@@ -31,7 +31,7 @@
   </div>
   <div class="col-lg-4 col-md-5 col-sm-12 order-2 ">
       <div class="card-header">
-        <% include!("../owner_meta.stpl"); %>
+        <% include!("../../owner_meta.stpl"); %>
       </div>
       <% include!("../../form.stpl"); %>
       <br><br>
