@@ -56,14 +56,13 @@ pub async fn link_page(session: Session, req: HttpRequest, slug: web::Path<Strin
         if link_some.len() == 0 {
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
         }
-        if link_some[0].owner == 1 {
-            return user_page(session, req, link).await
-        }
-        else if link_some[0].owner == 1 {
-            return community_page(session, req, link).await
-        }
         else {
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+            if link_some[0].owner == 1 {
+                return user_page(session, req, link).await
+            }
+            else if link_some[0].owner == 1 {
+                return community_page(session, req, link).await
+            }
         }
     }
 }
