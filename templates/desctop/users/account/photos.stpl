@@ -1,7 +1,7 @@
 <% if user.is_have_photo() { %>
 <div class="card mb-3">
     <div class="p-1">
-      <a href="/<%= user.id %>/gallery/" class="ajax">
+      <a href="/<%= user.id %>/photos/" class="ajax">
         <div class="media">
             <div class="media-body">
                 <h6 class="content-color-primary mb-0">Фото </h6>
