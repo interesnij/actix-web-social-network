@@ -45,6 +45,7 @@ pub fn settings_urls(config: &mut web::ServiceConfig) {
     config.route("/users/settings/edit_name/", web::post().to(edit_name));
     config.route("/users/settings/edit_password/", web::post().to(edit_password));
     config.route("/users/settings/edit_phone/", web::post().to(edit_phone));
+
     config.route("/users/settings/remove_profile/", web::post().to(remove_profile));
 }
 
@@ -598,7 +599,7 @@ pub async fn edit_link(session: Session, mut payload: Multipart) -> actix_web::R
         }
 
         diesel::update(&_request_user)
-          .set(&form)
+          .set(schema::users::link.eq("/".to_owned() + &form.link + &"/".to_string())) 
              .get_result::<User>(&_connection)
              .expect("Error.");
 

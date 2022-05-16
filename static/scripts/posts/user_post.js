@@ -1,3 +1,21 @@
+on('#ajax', 'click', '#u_edit_link_btn', function() {
+  form = this.parentElement.parentElement.parentElement;
+  value = form.querySelector(".custom_link_input").value;
+  form_data = new FormData(form);
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+
+  link.open( 'POST', "/users/settings/edit_link/" + value + "/", true )
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    close_work_fullscreen();
+    toast_info("Ссылка изменена!")
+  }};
+
+  link.send(form_data);
+});
+
 on('body', 'click', '.comment_delete', function() {
   saver = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   type = this.parentElement.getAttribute("data-type");
