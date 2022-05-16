@@ -711,7 +711,7 @@ pub fn custom_link_check(value: &str) -> (i8, String) {
         return (0, "Слишком длинная ссылка".to_string());
     }
 
-    else if (&value[..2] == "id".to_string() && &value.chars()[2].is_numeric())
+    else if (&value[..2] == "id".to_string() && &value.chars().nth(2).is_numeric())
         || (&value.len() > &5 && &value[..6] == "public".to_string())
         || words_list.iter().any(|&i| i==value) {
             return (0, "Адрес '".to_owned() + value + &"' занят".to_string());
