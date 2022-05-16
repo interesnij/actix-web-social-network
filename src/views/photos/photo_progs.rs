@@ -112,7 +112,7 @@ pub async fn add_photos_in_list(session: Session, mut payload: Multipart, _id: w
             is_open = _tuple.0;
             text = _tuple.1;
             owner_path = "users".to_string();
-            owner_id = user_id;
+            owner_id = _request_user.id;
         }
         if is_open == false {
             use crate::views::close_item;
