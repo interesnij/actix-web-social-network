@@ -869,7 +869,7 @@ on('#ajax', 'input', '.custom_link_input', function() {
           string = span.querySelector("#string").innerHTML;
 
           btn.innerHTML = string;
-          if (bool == 0) {
+          if (bool == "0") {
             btn.removeAttribute("disabled");
           }
           else {
