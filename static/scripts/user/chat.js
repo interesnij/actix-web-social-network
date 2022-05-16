@@ -851,7 +851,7 @@ on('#ajax', 'input', '.custom_link_input', function() {
   }
   else if (value.slice(-1) == "_") {
     btn.setAttribute("disabled", true);
-    value.slice(0, -1);
+    _this.value.slice(0, -1);
   }
 
   else if (value.length < 5) {
