@@ -17,7 +17,7 @@ pub fn get_user(id: i32) -> User {
     use crate::schema::users::dsl::users;
     let _connection = establish_connection();
     return users
-        .filter(schema::users::link.id(id))
+        .filter(schema::users::id.eq(id))
         .load::<User>(&_connection)
         .expect("E.")
         .into_iter()
