@@ -19,7 +19,7 @@
     </div>
 </div>
 
-<% } else %>
+<% } else { %>
 
   <% let photo_creator = object.get_creator(); %>
   <a href="<%= photo_creator.link %>" class="ajax">
