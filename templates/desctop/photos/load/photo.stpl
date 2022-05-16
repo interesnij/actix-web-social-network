@@ -24,18 +24,24 @@
   <div class="row">
     <div class="col-lg-8 col-md-7 col-sm-12 order-1" data-type="pho<%= object.id %>">
       <div class="card rounded-0 border-0 mb-3">
-        <% include!("../../image.stpl"); %>
+        <% include!("../image.stpl"); %>
     </div>
 
-    <% include!("../../btn_console.stpl"); %>
+    <% include!("../btn_console.stpl"); %>
   </div>
   <div class="col-lg-4 col-md-5 col-sm-12 order-2 ">
       <div class="card-header">
-        <% include!("../../owner_meta.stpl"); %>
+        <% include!("../owner_meta.stpl"); %>
       </div>
-      <% include!("../../form.stpl"); %>
+      <% include!("../form.stpl"); %>
       <br><br>
-      <% include!("../info.stpl"); %>
+
+      <div class="border-top py-2">
+          <div class="col interaction" data-type="pho<%= object.id %>">
+            <% include!("../../generic/items/item_footer.stpl"); %>
+          </div>
+          <div class="load_comments" style="max-height: 500px"></div>
+      </div>
     </div>
   </div>
 </div>
