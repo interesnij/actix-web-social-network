@@ -865,8 +865,8 @@ on('#ajax', 'input', '.custom_link_input', function() {
           span = document.createElement("span");
           elem = link.responseText;
           span.innerHTML = elem;
-          bool = span.querySelector("#bool");
-          string = span.querySelector("#string");
+          bool = span.querySelector("#bool").innerHTML;
+          string = span.querySelector("#string").innerHTML;
 
           btn.innerHTML = string;
           if (bool == 0) {
