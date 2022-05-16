@@ -843,7 +843,7 @@ on('#ajax', 'input', '.custom_link_input', function() {
   _this = this;
   value = _this.value.replace(/<(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim();
 
-  btn = _this.parentElement.parentElement.parentElement.parentElement.querySelector(".btn");
+  btn = _this.parentElement.parentElement.parentElement.parentElement.querySelector("#u_edit_link_btn");
   if (value == "") {
     btn.setAttribute("disabled", true);
     btn.innerHTML = "Изменить";
