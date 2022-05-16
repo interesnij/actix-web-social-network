@@ -691,7 +691,7 @@ pub fn custom_link_check(value: &str) -> (i8, String) {
     }
 
     else if &value[..2] == "id".to_string()
-        || (&value.len() => &6 && &value[..6] == "public".to_string())
+        || (&value.len() > &5 && &value[..6] == "public".to_string())
         || words_list.iter().any(|&i| i==value) {
             return (0, "Адрес занят".to_string());
         }
