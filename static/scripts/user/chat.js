@@ -873,7 +873,7 @@ on('#ajax', 'input', '.custom_link_input', function() {
             btn.removeAttribute("disabled");
           }
           else {
-            btn.setAttribute("disabled", false);
+            btn.setAttribute("disabled", true);
           }
         }
       }
