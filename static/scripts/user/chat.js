@@ -870,7 +870,7 @@ on('#ajax', 'input', '.custom_link_input', function() {
 
           btn.innerHTML = string;
           if (bool == 0) {
-            btn.setAttribute("disabled", true);
+            btn.removeAttribute("disabled");
           }
           else {
             btn.setAttribute("disabled", false);

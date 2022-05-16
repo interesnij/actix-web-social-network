@@ -61,18 +61,18 @@
             <span class="col-md-6">
               <% if request_user.is_identified() { %>
               <span>
-                Профиль подтвержден.
+                Профиль подтвержден
               </span>
 
               <% } else if request_user.is_identified_send() { %>
               <span>
-                Запрос отправлен.
+                Запрос отправлен
               </span>
 
               <% } else { %>
               <span class="">
               <a class="i_link pointer user_identified_send">
-                Отправить запрос. 
+                Отправить запрос
               </a>
               <span>
               <% } %>
