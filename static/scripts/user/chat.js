@@ -849,9 +849,9 @@ on('#ajax', 'input', '.custom_link_input', function() {
     btn.innerHTML = "Изменить";
     _this.value = "";
   }
-  else if (value[-1] == "_") {
+  else if (value.slice(-1) == "_") {
     btn.setAttribute("disabled", true);
-    value.slice(-1);
+    value.slice(0, -1);
   }
 
   else if (value.length < 5) {
