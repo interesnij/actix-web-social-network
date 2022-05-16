@@ -4,7 +4,7 @@ on('#ajax', 'click', '#u_edit_link_btn', function() {
   form_data = new FormData(form);
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
 
-  link.open( 'POST', "/users/settings/edit_link/" + value + "/", true )
+  link.open( 'POST', "/users/settings/edit_link/", true )
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
