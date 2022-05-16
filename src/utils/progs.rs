@@ -659,7 +659,7 @@ pub fn get_anon_community_permission(community: &Community) -> (bool, String) {
     }
 }
 
-pub fn custom_link_check(value: &str) -> (bool, String) {
+pub fn custom_link_check(value: &str) -> (i8, String) {
     let exclude_chars = [
         ",", ":", ";", ">", "@", "$",
         "*", "/", "!", "?", "-", "+",
@@ -684,21 +684,21 @@ pub fn custom_link_check(value: &str) -> (bool, String) {
         "admin", "staff", "staffed", "static", "media",
     ];
     if &value.len() < &5 {
-        return (false, "Слишком короткая ссылка".to_string());
+        return (0, "Слишком короткая ссылка".to_string());
     }
     else if &value.len() > &32 {
-        return (false, "Слишком длинная ссылка".to_string());
+        return (0, "Слишком длинная ссылка".to_string());
     }
 
     else if &value[..2] == "id".to_string()
         || &value[..6] == "public".to_string()
         || words_list.iter().any(|&i| i==value) {
-            return (false, "Адрес занят".to_string());
+            return (0, "Адрес занят".to_string());
         }
 
     for i in exclude_chars.iter() {
         if value.contains(i) {
-            return (false, "Недопустимый формат".to_string());
+            return (0, "Недопустимый формат".to_string());
         }
     }
 
@@ -712,9 +712,9 @@ pub fn custom_link_check(value: &str) -> (bool, String) {
         .expect("E.");
 
     if _links.len() > 0 {
-        return (false, "Адрес занят".to_string());
+        return (0, "Адрес занят".to_string());
     }
     else {
-        return (true, "Занять адрес".to_owned() + value);
+        return (1, "Занять адрес".to_owned() + value);
     }
 }
