@@ -158,6 +158,70 @@ impl User {
         }
     }
 
+    pub fn message_reposts_count(&self) -> String {
+        use crate::schema::user_reposts::dsl::user_reposts;
+        use crate::models::UserRepost;
+
+        let _connection = establish_connection();
+
+        let count = user_reposts
+            .filter(schema::user_reposts::user_id.eq(self.id))
+            .filter(schema::user_reposts::message_id.is_not_null())
+            .load::<UserRepost>(&_connection)
+            .expect("E.")
+            .len();
+
+        if count == 0 {
+            return "".to_string();
+        }
+        else {
+            return ", из них в сообщениях - ".to_string() + &count.to_string();
+        }
+    }
+    pub fn reposts(&self) -> Vec<Post> {
+        use crate::schema::user_reposts::dsl::user_reposts;
+        use crate::models::UserRepost;
+
+        let _connection = establish_connection();
+        let item_reposts = user_reposts
+            .filter(schema::user_reposts::user_id.eq(self.id))
+            .filter(schema::user_reposts::post_id.is_not_null())
+            .load::<UserRepost>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in item_reposts.iter() {
+            stack.push(_item.post_id);
+        };
+        return posts
+            .filter(schema::posts::types.eq_any(stack))
+            .limit(6)
+            .load::<Post>(&_connection)
+            .expect("E");
+    }
+    pub fn window_reposts(&self) -> Vec<Post> {
+        use crate::schema::user_reposts::dsl::user_reposts;
+        use crate::models::UserRepost;
+
+        let _connection = establish_connection();
+        let item_reposts = user_reposts
+            .filter(schema::user_reposts::user_id.eq(self.id))
+            .filter(schema::user_reposts::post_id.is_not_null())
+            .limit(6)
+            .load::<UserRepost>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in item_reposts.iter() {
+            stack.push(_item.post_id);
+        };
+        return posts
+            .filter(schema::posts::types.eq_any(stack))
+            .limit(6)
+            .load::<Post>(&_connection)
+            .expect("E");
+    }
+
     pub fn count_users() -> usize {
         use crate::schema::users::dsl::users;
 

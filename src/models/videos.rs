@@ -168,6 +168,79 @@ impl VideoList {
             return "Предупреждение за нарушение правил соцсети трезвый.рус".to_string();
         }
     }
+
+    pub fn count_copy(&self) -> String {
+        if self.copy == 0 {
+            return "".to_string();
+        }
+        else {
+            return ", копировали - ".to_string() + &self.copy.to_string();
+        }
+    }
+    pub fn message_reposts_count(&self) -> String {
+        use crate::schema::video_list_reposts::dsl::video_list_reposts;
+        use crate::models::VideoListRepost;
+
+        let _connection = establish_connection();
+
+        let count = video_list_reposts
+            .filter(schema::video_list_reposts::video_list_id.eq(self.id))
+            .filter(schema::video_list_reposts::message_id.is_not_null())
+            .load::<VideoListRepost>(&_connection)
+            .expect("E.")
+            .len();
+
+        if count == 0 {
+            return "".to_string();
+        }
+        else {
+            return ", из них в сообщениях - ".to_string() + &count.to_string();
+        }
+    }
+    pub fn reposts(&self) -> Vec<Post> {
+        use crate::schema::video_list_reposts::dsl::video_list_reposts;
+        use crate::models::VideoListRepost;
+
+        let _connection = establish_connection();
+        let item_reposts = video_list_reposts
+            .filter(schema::video_list_reposts::video_list_id.eq(self.id))
+            .filter(schema::video_list_reposts::post_id.is_not_null())
+            .load::<VideoListRepost>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in item_reposts.iter() {
+            stack.push(_item.post_id);
+        };
+        return posts
+            .filter(schema::posts::types.eq_any(stack))
+            .limit(6)
+            .load::<Post>(&_connection)
+            .expect("E");
+    }
+    pub fn window_reposts(&self) -> Vec<Post> {
+        use crate::schema::video_list_reposts::dsl::video_list_reposts;
+        use crate::models::VideoListRepost;
+
+        let _connection = establish_connection();
+        let item_reposts = video_list_reposts
+            .filter(schema::video_list_reposts::video_list_id.eq(self.id))
+            .filter(schema::video_list_reposts::post_id.is_not_null())
+            .limit(6)
+            .load::<VideoListRepost>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in item_reposts.iter() {
+            stack.push(_item.post_id);
+        };
+        return posts
+            .filter(schema::posts::types.eq_any(stack))
+            .limit(6)
+            .load::<Post>(&_connection)
+            .expect("E");
+    }
+
     pub fn get_description(&self) -> String {
         return "<a data-videolist='".to_string() + &self.get_str_id() + &"' class='ajax'>".to_string() + &self.name + &"</a>".to_string();
     }
@@ -2468,6 +2541,78 @@ impl Video {
             .offset(offset)
             .load::<VideoComment>(&_connection)
             .expect("E.");
+    }
+
+    pub fn count_copy(&self) -> String {
+        if self.copy == 0 {
+            return "".to_string();
+        }
+        else {
+            return ", копировали - ".to_string() + &self.copy.to_string();
+        }
+    }
+    pub fn message_reposts_count(&self) -> String {
+        use crate::schema::video_reposts::dsl::video_reposts;
+        use crate::models::VideoRepost;
+
+        let _connection = establish_connection();
+
+        let count = video_reposts
+            .filter(schema::video_reposts::video_id.eq(self.id))
+            .filter(schema::video_reposts::message_id.is_not_null())
+            .load::<VideoRepost>(&_connection)
+            .expect("E.")
+            .len();
+
+        if count == 0 {
+            return "".to_string();
+        }
+        else {
+            return ", из них в сообщениях - ".to_string() + &count.to_string();
+        }
+    }
+    pub fn reposts(&self) -> Vec<Post> {
+        use crate::schema::video_reposts::dsl::video_reposts;
+        use crate::models::VideoRepost;
+
+        let _connection = establish_connection();
+        let item_reposts = video_reposts
+            .filter(schema::video_reposts::video_id.eq(self.id))
+            .filter(schema::video_reposts::post_id.is_not_null())
+            .load::<VideoRepost>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in item_reposts.iter() {
+            stack.push(_item.post_id);
+        };
+        return posts
+            .filter(schema::posts::types.eq_any(stack))
+            .limit(6)
+            .load::<Post>(&_connection)
+            .expect("E");
+    }
+    pub fn window_reposts(&self) -> Vec<Post> {
+        use crate::schema::video_reposts::dsl::video_reposts;
+        use crate::models::VideoRepost;
+
+        let _connection = establish_connection();
+        let item_reposts = video_reposts
+            .filter(schema::video_reposts::video_id.eq(self.id))
+            .filter(schema::video_reposts::post_id.is_not_null())
+            .limit(6)
+            .load::<VideoRepost>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in item_reposts.iter() {
+            stack.push(_item.post_id);
+        };
+        return posts
+            .filter(schema::posts::types.eq_any(stack))
+            .limit(6)
+            .load::<Post>(&_connection)
+            .expect("E");
     }
 }
 /////// VideoComment //////

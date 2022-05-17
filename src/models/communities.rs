@@ -23,7 +23,7 @@ use crate::schema::{
     community_visible_perms,
     community_work_perms,
     community_banner_users,
-    community_reposts, 
+    community_reposts,
 };
 
 use diesel::prelude::*;
@@ -177,6 +177,71 @@ impl Community {
             return "/static/images/no_img/list.jpg".to_string();
         }
     }
+
+    pub fn message_reposts_count(&self) -> String {
+        use crate::schema::community_reposts::dsl::community_reposts;
+        use crate::models::CommunityRepost;
+
+        let _connection = establish_connection();
+
+        let count = community_reposts
+            .filter(schema::community_reposts::community_id.eq(self.id))
+            .filter(schema::community_reposts::message_id.is_not_null())
+            .load::<CommunityRepost>(&_connection)
+            .expect("E.")
+            .len();
+
+        if count == 0 {
+            return "".to_string();
+        }
+        else {
+            return ", из них в сообщениях - ".to_string() + &count.to_string();
+        }
+    }
+    pub fn reposts(&self) -> Vec<Post> {
+        use crate::schema::community_reposts::dsl::community_reposts;
+        use crate::models::CommunityRepost;
+
+        let _connection = establish_connection();
+        let item_reposts = community_reposts
+            .filter(schema::community_reposts::community_id.eq(self.id))
+            .filter(schema::community_reposts::post_id.is_not_null())
+            .load::<CommunityRepost>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in item_reposts.iter() {
+            stack.push(_item.post_id);
+        };
+        return posts
+            .filter(schema::posts::types.eq_any(stack))
+            .limit(6)
+            .load::<Post>(&_connection)
+            .expect("E");
+    }
+    pub fn window_reposts(&self) -> Vec<Post> {
+        use crate::schema::community_reposts::dsl::community_reposts;
+        use crate::models::CommunityRepost;
+
+        let _connection = establish_connection();
+        let item_reposts = community_reposts
+            .filter(schema::community_reposts::community_id.eq(self.id))
+            .filter(schema::community_reposts::post_id.is_not_null())
+            .limit(6)
+            .load::<CommunityRepost>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in item_reposts.iter() {
+            stack.push(_item.post_id);
+        };
+        return posts
+            .filter(schema::posts::types.eq_any(stack))
+            .limit(6)
+            .load::<Post>(&_connection)
+            .expect("E");
+    }
+
     pub fn get_s_avatar(&self) -> String {
         if self.s_avatar.is_some() {
             return "<img style='border-radius:30px;width:30px;' alt='image' src='".to_owned() + &self.s_avatar.as_deref().unwrap().to_string() +  &"' />".to_string();

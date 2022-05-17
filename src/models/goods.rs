@@ -168,6 +168,79 @@ impl GoodList {
             return "Предупреждение за нарушение правил соцсети трезвый.рус".to_string();
         }
     }
+
+    pub fn count_copy(&self) -> String {
+        if self.copy == 0 {
+            return "".to_string();
+        }
+        else {
+            return ", копировали - ".to_string() + &self.copy.to_string();
+        }
+    }
+    pub fn message_reposts_count(&self) -> String {
+        use crate::schema::good_list_reposts::dsl::good_list_reposts;
+        use crate::models::GoodListRepost;
+
+        let _connection = establish_connection();
+
+        let count = good_list_reposts
+            .filter(schema::good_list_reposts::good_list_id.eq(self.id))
+            .filter(schema::good_list_reposts::message_id.is_not_null())
+            .load::<GoodListRepost>(&_connection)
+            .expect("E.")
+            .len();
+
+        if count == 0 {
+            return "".to_string();
+        }
+        else {
+            return ", из них в сообщениях - ".to_string() + &count.to_string();
+        }
+    }
+    pub fn reposts(&self) -> Vec<Post> {
+        use crate::schema::good_list_reposts::dsl::good_list_reposts;
+        use crate::models::GoodListRepost;
+
+        let _connection = establish_connection();
+        let item_reposts = good_list_reposts
+            .filter(schema::good_list_reposts::good_list_id.eq(self.id))
+            .filter(schema::good_list_reposts::post_id.is_not_null())
+            .load::<GoodListRepost>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in item_reposts.iter() {
+            stack.push(_item.post_id);
+        };
+        return posts
+            .filter(schema::posts::types.eq_any(stack))
+            .limit(6)
+            .load::<Post>(&_connection)
+            .expect("E");
+    }
+    pub fn window_reposts(&self) -> Vec<Post> {
+        use crate::schema::good_list_reposts::dsl::good_list_reposts;
+        use crate::models::GoodListRepost;
+
+        let _connection = establish_connection();
+        let item_reposts = good_list_reposts
+            .filter(schema::good_list_reposts::good_list_id.eq(self.id))
+            .filter(schema::good_list_reposts::post_id.is_not_null())
+            .limit(6)
+            .load::<GoodListRepost>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in item_reposts.iter() {
+            stack.push(_item.post_id);
+        };
+        return posts
+            .filter(schema::posts::types.eq_any(stack))
+            .limit(6)
+            .load::<Post>(&_connection)
+            .expect("E");
+    }
+
     pub fn get_description(&self) -> String {
         return "<a data-goodlist='".to_string() + &self.get_str_id() + &"' class='ajax'>".to_string() + &self.name + &"</a>".to_string();
     }
@@ -1790,6 +1863,87 @@ impl Good {
             return "<a href='".to_owned() + &creator.link.to_string() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": товар"
         }
     }
+    pub fn count_reposts(&self) -> String {
+        if self.repost > 0 {
+            return self.repost.to_string()
+        }
+        else {
+            return "".to_string()
+        }
+    }
+
+    pub fn count_copy(&self) -> String {
+        if self.copy == 0 {
+            return "".to_string();
+        }
+        else {
+            return ", копировали - ".to_string() + &self.copy.to_string();
+        }
+    }
+    pub fn message_reposts_count(&self) -> String {
+        use crate::schema::good_reposts::dsl::good_reposts;
+        use crate::models::GoodRepost;
+
+        let _connection = establish_connection();
+
+        let count = good_reposts
+            .filter(schema::good_reposts::good_id.eq(self.id))
+            .filter(schema::good_reposts::message_id.is_not_null())
+            .load::<GoodRepost>(&_connection)
+            .expect("E.")
+            .len();
+
+        if count == 0 {
+            return "".to_string();
+        }
+        else {
+            return ", из них в сообщениях - ".to_string() + &count.to_string();
+        }
+    }
+    pub fn reposts(&self) -> Vec<Post> {
+        use crate::schema::good_reposts::dsl::good_reposts;
+        use crate::models::GoodRepost;
+
+        let _connection = establish_connection();
+        let item_reposts = good_reposts
+            .filter(schema::good_reposts::good_id.eq(self.id))
+            .filter(schema::good_reposts::post_id.is_not_null())
+            .load::<GoodRepost>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in item_reposts.iter() {
+            stack.push(_item.post_id);
+        };
+        return posts
+            .filter(schema::posts::types.eq_any(stack))
+            .limit(6)
+            .load::<Post>(&_connection)
+            .expect("E");
+    }
+    pub fn window_reposts(&self) -> Vec<Post> {
+        use crate::schema::good_reposts::dsl::good_reposts;
+        use crate::models::GoodRepost;
+
+        let _connection = establish_connection();
+        let item_reposts = good_reposts
+            .filter(schema::good_reposts::good_id.eq(self.id))
+            .filter(schema::good_reposts::post_id.is_not_null())
+            .limit(6)
+            .load::<GoodRepost>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in item_reposts.iter() {
+            stack.push(_item.post_id);
+        };
+        return posts
+            .filter(schema::posts::types.eq_any(stack))
+            .limit(6)
+            .load::<Post>(&_connection)
+            .expect("E");
+    }
+
     pub fn get_comments(&self, limit: i64, offset: i64) -> Vec<GoodComment> {
         use crate::schema::good_comments::dsl::good_comments;
 

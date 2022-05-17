@@ -168,6 +168,79 @@ impl PhotoList {
             return "Предупреждение за нарушение правил соцсети трезвый.рус".to_string();
         }
     }
+
+    pub fn count_copy(&self) -> String {
+        if self.copy == 0 {
+            return "".to_string();
+        }
+        else {
+            return ", копировали - ".to_string() + &self.copy.to_string();
+        }
+    }
+    pub fn message_reposts_count(&self) -> String {
+        use crate::schema::photo_list_reposts::dsl::photo_list_reposts;
+        use crate::models::PhotoListRepost;
+
+        let _connection = establish_connection();
+
+        let count = photo_list_reposts
+            .filter(schema::photo_list_reposts::photo_list_id.eq(self.id))
+            .filter(schema::photo_list_reposts::message_id.is_not_null())
+            .load::<PhotoListRepost>(&_connection)
+            .expect("E.")
+            .len();
+
+        if count == 0 {
+            return "".to_string();
+        }
+        else {
+            return ", из них в сообщениях - ".to_string() + &count.to_string();
+        }
+    }
+    pub fn reposts(&self) -> Vec<Post> {
+        use crate::schema::photo_list_reposts::dsl::photo_list_reposts;
+        use crate::models::PhotoListRepost;
+
+        let _connection = establish_connection();
+        let item_reposts = photo_list_reposts
+            .filter(schema::photo_list_reposts::photo_list_id.eq(self.id))
+            .filter(schema::photo_list_reposts::post_id.is_not_null())
+            .load::<PhotoListRepost>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in item_reposts.iter() {
+            stack.push(_item.post_id);
+        };
+        return posts
+            .filter(schema::posts::types.eq_any(stack))
+            .limit(6)
+            .load::<Post>(&_connection)
+            .expect("E");
+    }
+    pub fn window_reposts(&self) -> Vec<Post> {
+        use crate::schema::photo_list_reposts::dsl::photo_list_reposts;
+        use crate::models::PhotoListRepost;
+
+        let _connection = establish_connection();
+        let item_reposts = photo_list_reposts
+            .filter(schema::photo_list_reposts::photo_list_id.eq(self.id))
+            .filter(schema::photo_list_reposts::post_id.is_not_null())
+            .limit(6)
+            .load::<PhotoListRepost>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in item_reposts.iter() {
+            stack.push(_item.post_id);
+        };
+        return posts
+            .filter(schema::posts::types.eq_any(stack))
+            .limit(6)
+            .load::<Post>(&_connection)
+            .expect("E");
+    }
+
     pub fn create_photo(&self, community_id: Option<i32>, user_id: i32,
         preview: String, file: String) -> Photo {
 
@@ -1808,6 +1881,79 @@ impl Photo {
             .nth(0)
             .unwrap();
     }
+
+    pub fn count_copy(&self) -> String {
+        if self.copy == 0 {
+            return "".to_string();
+        }
+        else {
+            return ", копировали - ".to_string() + &self.copy.to_string();
+        }
+    }
+    pub fn message_reposts_count(&self) -> String {
+        use crate::schema::photo_reposts::dsl::photo_reposts;
+        use crate::models::PhotoRepost;
+
+        let _connection = establish_connection();
+
+        let count = photo_reposts
+            .filter(schema::photo_reposts::photo_id.eq(self.id))
+            .filter(schema::photo_reposts::message_id.is_not_null())
+            .load::<PhotoRepost>(&_connection)
+            .expect("E.")
+            .len();
+
+        if count == 0 {
+            return "".to_string();
+        }
+        else {
+            return ", из них в сообщениях - ".to_string() + &count.to_string();
+        }
+    }
+    pub fn reposts(&self) -> Vec<Post> {
+        use crate::schema::photo_reposts::dsl::photo_reposts;
+        use crate::models::PhotoRepost;
+
+        let _connection = establish_connection();
+        let item_reposts = photo_reposts
+            .filter(schema::photo_reposts::photo_id.eq(self.id))
+            .filter(schema::photo_reposts::post_id.is_not_null())
+            .load::<PhotoRepost>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in item_reposts.iter() {
+            stack.push(_item.post_id);
+        };
+        return posts
+            .filter(schema::posts::types.eq_any(stack))
+            .limit(6)
+            .load::<Post>(&_connection)
+            .expect("E");
+    }
+    pub fn window_reposts(&self) -> Vec<Post> {
+        use crate::schema::photo_reposts::dsl::photo_reposts;
+        use crate::models::PhotoRepost;
+
+        let _connection = establish_connection();
+        let item_reposts = photo_reposts
+            .filter(schema::photo_reposts::photo_id.eq(self.id))
+            .filter(schema::photo_reposts::post_id.is_not_null())
+            .limit(6)
+            .load::<PhotoRepost>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in item_reposts.iter() {
+            stack.push(_item.post_id);
+        };
+        return posts
+            .filter(schema::posts::types.eq_any(stack))
+            .limit(6)
+            .load::<Post>(&_connection)
+            .expect("E");
+    }
+
     pub fn get_description(&self) -> String {
         if self.community_id.is_some() {
             let community = self.get_community();
