@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="col" data-type="<%= comment.get_code() %>" data-subtype="comment">
                         <span class="like like2
-                        <% if comment.likes().iter().any(|i.id| i==request_user.id) { %>
+                        <% if comment.likes().iter().any(|i| i.id==request_user.id) { %>
                           btn_success
                         <% } else { %>
                           btn_default
@@ -125,7 +125,7 @@
                             </svg>
                         </span>
                         <% } %>
-                        
+
                         <div style="display:none">
                             <form>
                                 <input type="hidden" name="comment" value="<%= comment.get_code() %>">
