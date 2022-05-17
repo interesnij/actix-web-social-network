@@ -197,7 +197,6 @@ impl PostList {
     }
     pub fn message_reposts_count(&self) -> String {
         use crate::schema::post_list_reposts::dsl::post_list_reposts;
-        use crate::models::PostListRepost;
 
         let _connection = establish_connection();
 
@@ -217,7 +216,6 @@ impl PostList {
     }
     pub fn reposts(&self) -> Vec<Post> {
         use crate::schema::post_list_reposts::dsl::post_list_reposts;
-        use crate::models::PostListRepost;
 
         let _connection = establish_connection();
         let item_reposts = post_list_reposts
@@ -238,7 +236,6 @@ impl PostList {
     }
     pub fn window_reposts(&self) -> Vec<Post> {
         use crate::schema::post_list_reposts::dsl::post_list_reposts;
-        use crate::models::PostListRepost;
 
         let _connection = establish_connection();
         let item_reposts = post_list_reposts

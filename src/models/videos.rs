@@ -179,7 +179,6 @@ impl VideoList {
     }
     pub fn message_reposts_count(&self) -> String {
         use crate::schema::video_list_reposts::dsl::video_list_reposts;
-        use crate::models::VideoListRepost;
 
         let _connection = establish_connection();
 
@@ -199,7 +198,6 @@ impl VideoList {
     }
     pub fn reposts(&self) -> Vec<Post> {
         use crate::schema::video_list_reposts::dsl::video_list_reposts;
-        use crate::models::VideoListRepost;
 
         let _connection = establish_connection();
         let item_reposts = video_list_reposts
@@ -220,7 +218,6 @@ impl VideoList {
     }
     pub fn window_reposts(&self) -> Vec<Post> {
         use crate::schema::video_list_reposts::dsl::video_list_reposts;
-        use crate::models::VideoListRepost;
 
         let _connection = establish_connection();
         let item_reposts = video_list_reposts
@@ -2553,7 +2550,6 @@ impl Video {
     }
     pub fn message_reposts_count(&self) -> String {
         use crate::schema::video_reposts::dsl::video_reposts;
-        use crate::models::VideoRepost;
 
         let _connection = establish_connection();
 
@@ -2573,7 +2569,6 @@ impl Video {
     }
     pub fn reposts(&self) -> Vec<Post> {
         use crate::schema::video_reposts::dsl::video_reposts;
-        use crate::models::VideoRepost;
 
         let _connection = establish_connection();
         let item_reposts = video_reposts
@@ -2594,7 +2589,6 @@ impl Video {
     }
     pub fn window_reposts(&self) -> Vec<Post> {
         use crate::schema::video_reposts::dsl::video_reposts;
-        use crate::models::VideoRepost;
 
         let _connection = establish_connection();
         let item_reposts = video_reposts
