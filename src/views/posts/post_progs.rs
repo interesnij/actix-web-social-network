@@ -38,6 +38,7 @@ pub fn post_progs_urls(config: &mut web::ServiceConfig) {
 
     config.route("/posts/add_user_post/{id}/", web::post().to(add_user_post));
     config.route("/posts/add_community_post/{id}/", web::post().to(add_community_post));
+    config.route("/posts/add_comment/{id}/", web::post().to(add_comment));
 }
 
 pub async fn add_user_post_list(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
@@ -490,5 +491,60 @@ pub async fn add_community_post(session: Session, mut payload: Multipart, _id: w
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
             .body(""))
+    }
+}
+
+pub async fn add_comment(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let _request_user_id = &_request_user.id;
+        let item = get_post(*_id);
+        let list = item.get_list();
+        let mut is_open = false;
+        let mut text = "".to_string();
+
+        if item.community_id.is_some() {
+            let _tuple = get_community_permission(&item.get_community(), &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
+        }
+        else {
+            let _tuple = get_user_permission(&item.get_creator(), &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
+        }
+
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+        else if !list.is_user_can_create_comment(*_request_user_id) {
+            use crate::views::close_list;
+            return close_list()
+        }
+
+        use crate::utils::comment_form;
+        let form = comment_form(payload.borrow_mut()).await;
+        let new_comment = item.create_comment(
+            _request_user,
+            form.attach,
+            form.parent_id,
+            form.content,
+            form.sticker_id,
+        );
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/generic/items/comment/parent.stpl")]
+        struct Template {
+            comment: PostComment,
+        }
+        let body = Template {
+            comment: new_comment,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
 }

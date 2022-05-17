@@ -140,3 +140,44 @@ pub async fn post_list_form(payload: &mut Multipart) -> PostListForm {
     }
     form
 }
+
+#[derive(Deserialize, Serialize, Debug)]
+pub struct CommentForm {
+    pub content:    Option<String>,
+    pub attach:     Option<String>,
+    pub parent_id:  Option<i32>,
+    pub sticker_id: Option<i32>,
+}
+pub async fn comment_form(payload: &mut Multipart) -> CommentForm {
+    let mut form: CommentForm = CommentForm {
+        content:    None,
+        attach:     None,
+        parent_id:  None,
+        sticker_id: None,
+    };
+
+    while let Some(item) = payload.next().await {
+        let mut field: Field = item.expect("split_payload err");
+        while let Some(chunk) = field.next().await {
+            let data = chunk.expect("split_payload err chunk");
+            if let Ok(s) = str::from_utf8(&data) {
+                let data_string = s.to_string();
+                if field.name() == "parent_id" {
+                    let _int: i32 = data_string.parse().unwrap();
+                    form.parent_id = Some(_int);
+                }
+                else if field.name() == "sticker_id" {
+                    let _int: i32 = data_string.parse().unwrap();
+                    form.sticker_id = Some(_int);
+                }
+                else if field.name() == "content" {
+                    form.content = Some(data_string);
+                }
+                else if field.name() == "attach" {
+                    form.attach = Some(data_string);
+                }
+            }
+        }
+    }
+    form
+}

@@ -1,4 +1,4 @@
-
+<% let creator = reply.get_commenter(); %>
 <div class="media reply">
    <a href="<%= creator.link %>" class="ajax">
      <figure>
