@@ -9,6 +9,8 @@ use crate::schema::{
     video_list_perms,
     video_votes,
     video_comment_votes,
+    video_list_reposts,
+    video_reposts,
 };
 
 use diesel::{Queryable, Insertable};
@@ -21,6 +23,8 @@ use crate::models::{
     CommunityVideoListPosition,
     Sticker,
     Photo,
+    Post,
+    Message,
 };
 use actix_web::web::Json;
 
@@ -3186,4 +3190,42 @@ pub struct NewVideoCommentVote {
     pub vote:            i16,
     pub user_id:         i32,
     pub video_comment_id: i32,
+}
+
+/////// VideoListRepost //////
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(VideoList)]
+#[belongs_to(Post)]
+#[belongs_to(Message)]
+pub struct VideoListRepost {
+    pub id:            i32,
+    pub video_list_id: i32,
+    pub post_id:       i32,
+    pub message_id:    i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="video_list_reposts"]
+pub struct NewVideoListRepost {
+    pub video_list_id: i32,
+    pub post_id:       i32,
+    pub message_id:    i32,
+}
+
+/////// VideoRepost //////
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(Video)]
+#[belongs_to(Post)]
+#[belongs_to(Message)]
+pub struct VideoRepost {
+    pub id:         i32,
+    pub video_id:   i32,
+    pub post_id:    i32,
+    pub message_id: i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="video_reposts"]
+pub struct NewVideoRepost {
+    pub video_id:   i32,
+    pub post_id:    i32,
+    pub message_id: i32,
 }

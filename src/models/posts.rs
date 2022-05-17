@@ -9,6 +9,7 @@ use crate::schema::{
     post_list_perms,
     post_votes,
     post_comment_votes,
+    post_list_reposts,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
@@ -22,6 +23,8 @@ use crate::models::{
     CommunityPostListPosition,
     Photo,
     Video,
+    Post,
+    Message,
 };
 use actix_web::web::Json;
 
@@ -3434,4 +3437,23 @@ pub struct NewPostCommentVote {
     pub vote:            i16,
     pub user_id:         i32,
     pub post_comment_id: i32,
+}
+
+/////// PostListRepost //////
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(PostList)]
+#[belongs_to(Post)]
+#[belongs_to(Message)]
+pub struct PostListRepost {
+    pub id:            i32,
+    pub post_list_id: i32,
+    pub post_id:       i32,
+    pub message_id:    i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="post_list_reposts"]
+pub struct NewPostListRepost {
+    pub post_list_id: i32,
+    pub post_id:       i32,
+    pub message_id:    i32,
 }

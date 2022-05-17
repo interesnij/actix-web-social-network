@@ -23,6 +23,7 @@ use crate::schema::{
     community_visible_perms,
     community_work_perms,
     community_banner_users,
+    community_reposts, 
 };
 
 use diesel::prelude::*;
@@ -4317,4 +4318,23 @@ pub struct CommunityBannerUser {
 pub struct NewCommunityBannerUser {
     pub community_id: i32,
     pub user_id:      i32,
+}
+
+/////// CommunityRepost //////
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(Community)]
+#[belongs_to(Post)]
+#[belongs_to(Message)]
+pub struct CommunityRepost {
+    pub id:           i32,
+    pub community_id: i32,
+    pub post_id:      i32,
+    pub message_id:   i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="community_reposts"]
+pub struct NewCommunityRepost {
+    pub community_id: i32,
+    pub post_id:      i32,
+    pub message_id:   i32,
 }

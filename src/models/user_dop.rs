@@ -38,6 +38,7 @@ use crate::schema::{
     user_survey_notifications,
     user_populate_smiles,
     user_populate_stickers,
+    user_reposts, 
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
@@ -851,4 +852,23 @@ pub struct NewDesignSetting {
 #[table_name="design_settings"]
 pub struct EditDesignSetting {
     pub background: String,
+}
+
+/////// UserRepost //////
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(User)]
+#[belongs_to(Post)]
+#[belongs_to(Message)]
+pub struct UserRepost {
+    pub id:         i32,
+    pub user_id:    i32,
+    pub post_id:    i32,
+    pub message_id: i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="user_reposts"]
+pub struct NewUserRepost {
+    pub user_id:    i32,
+    pub post_id:    i32,
+    pub message_id: i32,
 }

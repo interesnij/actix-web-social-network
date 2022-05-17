@@ -9,6 +9,8 @@ use crate::schema::{
     photo_list_perms,
     photo_votes,
     photo_comment_votes,
+    photo_list_reposts,
+    photo_reposts,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
@@ -20,6 +22,8 @@ use crate::models::{
     UserPhotoListPosition,
     CommunityPhotoListPosition,
     Video,
+    Post,
+    Message,
 };
 use actix_web::web::Json;
 
@@ -3206,4 +3210,42 @@ pub struct NewPhotoCommentVote {
     pub vote:            i16,
     pub user_id:         i32,
     pub photo_comment_id: i32,
+}
+
+/////// PhotoListRepost //////
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(PhotoList)]
+#[belongs_to(Post)]
+#[belongs_to(Message)]
+pub struct PhotoListRepost {
+    pub id:            i32,
+    pub photo_list_id: i32,
+    pub post_id:       i32,
+    pub message_id:    i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="photo_list_reposts"]
+pub struct NewPhotoListRepost {
+    pub photo_list_id: i32,
+    pub post_id:       i32,
+    pub message_id:    i32,
+}
+
+/////// PhotoRepost //////
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(Photo)]
+#[belongs_to(Post)]
+#[belongs_to(Message)]
+pub struct PhotoRepost {
+    pub id:         i32,
+    pub photo_id:   i32,
+    pub post_id:    i32,
+    pub message_id: i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="photo_reposts"]
+pub struct NewPhotoRepost {
+    pub photo_id:   i32,
+    pub post_id:    i32,
+    pub message_id: i32,
 }

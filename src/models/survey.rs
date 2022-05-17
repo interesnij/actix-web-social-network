@@ -8,6 +8,8 @@ use crate::schema::{
     survey_list_perms,
     survey_answers,
     survey_votes,
+    survey_list_reposts,
+    survey_reposts,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
@@ -1794,4 +1796,42 @@ impl SurveyVote {
             .expect("E.")
             .len() > 0;
     }
+}
+
+/////// SurveyListRepost //////
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(SurveyList)]
+#[belongs_to(Post)]
+#[belongs_to(Message)]
+pub struct SurveyListRepost {
+    pub id:            i32,
+    pub survey_list_id: i32,
+    pub post_id:       i32,
+    pub message_id:    i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="survey_list_reposts"]
+pub struct NewSurveyListRepost {
+    pub survey_list_id: i32,
+    pub post_id:       i32,
+    pub message_id:    i32,
+}
+
+/////// SurveyRepost //////
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(Survey)]
+#[belongs_to(Post)]
+#[belongs_to(Message)]
+pub struct SurveyRepost {
+    pub id:         i32,
+    pub survey_id:   i32,
+    pub post_id:    i32,
+    pub message_id: i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="survey_reposts"]
+pub struct NewSurveyRepost {
+    pub survey_id:  i32,
+    pub post_id:    i32,
+    pub message_id: i32,
 }
