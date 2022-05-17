@@ -195,7 +195,7 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
         }
 
         let _request_user_id = &_request_user.id;
-        let is_user_can_see_comments = _list.is_user_can_see_comment(*_request_user_id)
+        let is_user_can_see_comments = _list.is_user_can_see_comment(*_request_user_id);
         let is_user_can_create_comments = _list.is_user_can_create_comment(*_request_user_id);
 
         if is_open == false {
