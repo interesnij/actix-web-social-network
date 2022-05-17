@@ -179,7 +179,7 @@
     </span>
     <span class="stream_reply_comments">
         <% for reply in comment.get_replies().iter() { %>
-        <% if reply.is_deleted() == true { %>
+        <% if reply.is_deleted() { %>
         <div class="comment">
             <p class="underline" style="display: flex;">Комментарий удален</p>
         </div>
@@ -187,8 +187,8 @@
             <% include!("reply.stpl"); %>
           <% } %>
         <% } %>
-        <% if page_has_next == true { %>
-          <a class="pointer load_next_list_comments mt-1" data-link="reply/<%= comment.id %>/?page=<%= page + 1 %>">Показать еще ответы</a>
+        <% if page_has_next > 0 { %>
+          <a class="pointer load_next_list_comments mt-1" data-link="posts/load_replies/<%= comment.id %>/?page=<%= page_has_next %>">Показать еще ответы</a>
         <% } %>
     </span>
 </div>

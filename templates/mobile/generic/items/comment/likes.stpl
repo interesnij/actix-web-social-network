@@ -1,4 +1,4 @@
-<% if object_list.len() > 0 %>
+<% if object_list.len() > 0 { %>
 <div class="like_pop" style="margin:15px">
   <span><%= text %> <%= item.liked %> <%= item.count_likes_ru() %></span>
   <br><br>

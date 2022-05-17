@@ -1,6 +1,6 @@
 <span class="stream_comments comments_block_container">
   <% for comment in object_list.iter() { %>
-    <% if comment.is_deleted() == true %>
+    <% if comment.is_deleted() { %>
       <div class="comment border-bottom">
         <p class="underline" style="display: flex; padding-left:10px;margin: 0;">Комментарий удален</p>
         <span style="cursor:pointer;" class="show_replies content-color-primary">
@@ -32,7 +32,7 @@
 
 <div>
   <form>
-      <input type="hidden" name="item" value="<%= prefix %><%= item.id %>">
+      <input type="hidden" name="item" value="<%= item.get_code() %>">
       <div class="row img_block comment_form check_mesage_form" style="margin:5px"></div>
 
       <div class="input-group input-group-sm">
