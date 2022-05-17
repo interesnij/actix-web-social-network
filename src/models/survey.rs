@@ -19,6 +19,8 @@ use crate::models::{
     Community,
     UserSurveyListPosition,
     CommunitySurveyListPosition,
+    Message,
+    Post,
 };
 use actix_web::web::Json;
 use chrono::NaiveDateTime;

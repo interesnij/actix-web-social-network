@@ -38,7 +38,7 @@ use crate::schema::{
     user_survey_notifications,
     user_populate_smiles,
     user_populate_stickers,
-    user_reposts, 
+    user_reposts,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
@@ -47,6 +47,8 @@ use crate::models::{
     User,
     Sticker,
     Smile,
+    Message,
+    Post,
 };
 
 
