@@ -171,7 +171,7 @@ impl DocList {
             stack.push(_item.post_id);
         };
         return posts
-            .filter(schema::posts::types.eq_any(stack))
+            .filter(schema::posts::id.eq_any(stack))
             .limit(6)
             .load::<Post>(&_connection)
             .expect("E");
@@ -193,7 +193,7 @@ impl DocList {
             stack.push(_item.post_id);
         };
         return posts
-            .filter(schema::posts::types.eq_any(stack))
+            .filter(schema::posts::id.eq_any(stack))
             .limit(6)
             .load::<Post>(&_connection)
             .expect("E");
@@ -1456,7 +1456,7 @@ impl Doc {
             stack.push(_item.post_id);
         };
         return posts
-            .filter(schema::posts::types.eq_any(stack))
+            .filter(schema::posts::id.eq_any(stack))
             .limit(6)
             .load::<Post>(&_connection)
             .expect("E");
@@ -1478,7 +1478,7 @@ impl Doc {
             stack.push(_item.post_id);
         };
         return posts
-            .filter(schema::posts::types.eq_any(stack))
+            .filter(schema::posts::id.eq_any(stack))
             .limit(6)
             .load::<Post>(&_connection)
             .expect("E");

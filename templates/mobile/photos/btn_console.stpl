@@ -7,7 +7,7 @@
   <a class="dropdown-item mob_u_unset_avatar pointer">Убрать аватар</a>
 </span>
 <span>
-<% if object.comments_enabled { %>
+<% if object.comment_enabled { %>
   <a class="dropdown-item mob_u_photo_off_comment pointer">Выкл. комментарии</a>
 <% } else { %>
   <a class="dropdown-item mob_u_photo_on_comment pointer">Вкл. комментарии</a>

@@ -13,7 +13,7 @@
     </span>
       &nbsp;
       <span>
-        <% if object.comments_enable { %>
+        <% if object.comment_enabled { %>
           <a class="photo_off_comment">Выкл. комментарии</a>
         <% } else { %>
           <a class="photo_on_comment">Вкл. комментарии</a>

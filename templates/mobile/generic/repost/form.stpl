@@ -34,7 +34,7 @@
               </span>
               <span data-pk="2">
                 <a class="dropdown-item cat_list_select" style="padding-left: 30px;">Красота</a>
-              </span> 
+              </span>
             </div>
           </div>
 
@@ -44,8 +44,8 @@
             <div class="dropdown-menu" style="left: -126px;">
                 <a class="dropdown-item">
                   <div class="custom-control custom-checkbox">
-                    <input type="checkbox" name="comments_enabled" class="custom-control-input" checked id="www_comments_enabled">
-                    <label class="custom-control-label" for="www_comments_enabled" style="padding-top: 5px;">Комментарии включены</label>
+                    <input type="checkbox" name="comment_enabled" class="custom-control-input" checked id="www_comment_enabled">
+                    <label class="custom-control-label" for="www_comment_enabled" style="padding-top: 5px;">Комментарии включены</label>
                   </div>
                 </a>
                 <a class="dropdown-item">
