@@ -30,7 +30,7 @@
 
          <div class="">
              <div class="row">
-                 <div class="col" data-type="<%= prefix %><%= reply.id %>" data-subtype="comment">
+                 <div class="col" data-type="<%= reply.get_code() %>" data-subtype="comment">
                      <span class="like like2
                      <% if reply.likes().iter().any(|i| i==request_user) { %>
                        btn_success

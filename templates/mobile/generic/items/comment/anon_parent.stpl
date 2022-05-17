@@ -31,7 +31,7 @@
 
             <div class="card_footer">
                 <div class="row">
-                    <div class="col" data-type="<%= prefix %><%= comment.id %>" data-subtype="comment">
+                    <div class="col" data-type="<%= comment.get_code() %>" data-subtype="comment">
                         <span class="like btn_default"
                         title="Нравится">
                             <svg class="svg_s_info" viewBox="0 0 24 24" fill="currentColor">

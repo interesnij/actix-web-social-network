@@ -31,7 +31,7 @@
 
             <div class="card_footer">
                 <div class="row">
-                    <div class="col" data-type="<%= prefix %><%= comment.id %>" data-subtype="comment">
+                    <div class="col" data-type="<%= comment.get_code() %>" data-subtype="comment">
                         <span class="like like2
                         <% if comment.likes().iter().any(|i.id| i==request_user.id) { %>
                           btn_success
