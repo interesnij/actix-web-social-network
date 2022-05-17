@@ -2700,6 +2700,12 @@ impl PhotoComment {
             return "".to_string();
         }
     }
+    pub fn is_deleted(&self) -> bool {
+        return self.types == "c" && self.types == "d";
+    }
+    pub fn is_closed(&self) -> bool {
+        return self.types == "e" && self.types == "f";
+    }
     pub fn get_anon_attach(&self) -> String {
         if self.attach.is_some() {
             use crate::utils::anon_comment_elements;

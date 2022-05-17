@@ -79,7 +79,7 @@
         </div>
     </div>
     <span class="show_replies content-color-primary centered">
-        <% if comment.count_replies().len() > 0 { %>
+        <% if comment.count_replies() > 0 { %>
         ---- <%= comment.count_replies_ru() %> ----
         <% } %>
     </span>

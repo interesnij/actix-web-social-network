@@ -2548,6 +2548,12 @@ impl GoodComment {
             .expect("E");
        return true;
     }
+    pub fn is_deleted(&self) -> bool {
+        return self.types == "c" && self.types == "d";
+    }
+    pub fn is_closed(&self) -> bool {
+        return self.types == "e" && self.types == "f";
+    }
     pub fn get_count_attach(&self) -> String {
         if self.attach.is_some() {
             let length = self.attach.as_deref().unwrap().split(",").collect::<Vec<_>>().len();
