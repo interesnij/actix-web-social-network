@@ -195,13 +195,16 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
         }
 
         let _request_user_id = &_request_user.id;
-        let is_user_can_see_post_list = _list.is_user_can_see_el(*_request_user_id);
-        let is_user_can_see_comments = _list.is_user_can_see_comment(*_request_user_id);
+        let is_user_can_see_comments = _list.is_user_can_see_comment(*_request_user_id)
         let is_user_can_create_comments = _list.is_user_can_create_comment(*_request_user_id);
 
         if is_open == false {
             use crate::views::close_item;
             return close_item(text)
+        }
+        else if !_list.is_user_can_see_el(*_request_user_id) {
+            use crate::views::close_list;
+            return close_list()
         }
 
         else if is_desctop {
@@ -211,7 +214,6 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
                 list:                        PostList,
                 object:                      Post,
                 request_user:                User,
-                is_user_can_see_post_list:   bool,
                 is_user_can_see_comments:    bool,
                 is_user_can_create_comments: bool,
                 object_list:                 Vec<PostComment>,
@@ -223,7 +225,6 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
                 list:                       _list,
                 object:                     _post,
                 request_user:               _request_user,
-                is_user_can_see_post_list:   is_user_can_see_post_list,
                 is_user_can_see_comments:    is_user_can_see_comments,
                 is_user_can_create_comments: is_user_can_create_comments,
                 object_list:                 object_list,
@@ -242,7 +243,6 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
                 list:                        PostList,
                 object:                      Post,
                 request_user:                User,
-                is_user_can_see_post_list:   bool,
                 is_user_can_see_comments:    bool,
                 is_user_can_create_comments: bool,
                 object_list:                 Vec<PostComment>,
@@ -254,7 +254,6 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
                 list:                        _list,
                 object:                      _post,
                 request_user:                _request_user,
-                is_user_can_see_post_list:   is_user_can_see_post_list,
                 is_user_can_see_comments:    is_user_can_see_comments,
                 is_user_can_create_comments: is_user_can_create_comments,
                 object_list:                 object_list,
@@ -278,11 +277,15 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
             is_open = _tuple.0;
             text = _tuple.1;
         }
-        let is_user_can_see_post_list = _list.is_anon_user_can_see_el();
+
         let is_user_can_see_comments = _list.is_anon_user_can_see_comment();
         if is_open == false {
             use crate::views::close_item;
             return close_item(text)
+        }
+        else if !_list.is_anon_user_can_see_el() {
+            use crate::views::close_list;
+            return close_list()
         }
         else if is_desctop {
             #[derive(TemplateOnce)]
@@ -290,7 +293,6 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
             struct Template {
                 list:                      PostList,
                 object:                    Post,
-                is_user_can_see_post_list: bool,
                 is_user_can_see_comments:  bool,
                 object_list:               Vec<PostComment>,
                 next_page_number:          i32,
@@ -300,7 +302,6 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
             let body = Template {
                 list:                      _list,
                 object:                    _post,
-                is_user_can_see_post_list: is_user_can_see_post_list,
                 is_user_can_see_comments:  is_user_can_see_comments,
                 object_list:               object_list,
                 next_page_number:          next_page_number,
@@ -317,7 +318,6 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
             struct Template {
                 list:                      PostList,
                 object:                    Post,
-                is_user_can_see_post_list: bool,
                 is_user_can_see_comments:  bool,
                 object_list:               Vec<PostComment>,
                 next_page_number:          i32,
@@ -327,7 +327,6 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
             let body = Template {
                 list:                      _list,
                 object:                    _post,
-                is_user_can_see_post_list: is_user_can_see_post_list,
                 is_user_can_see_comments:  is_user_can_see_comments,
                 object_list:               object_list,
                 next_page_number:          next_page_number,
