@@ -30,6 +30,7 @@ use crate::models::{User, VideoList, Video, VideoComment, Community};
 pub fn videos_urls(config: &mut web::ServiceConfig) {
     config.route("/video/load_list/{list_id}/", web::get().to(load_list_page));
     config.route("/video/load_video/{id}/", web::get().to(load_video_page));
+    config.route("/video/load_comments/{id}/", web::get().to(load_comments_page));
 
     config.route("/video/add_user_list/", web::get().to(add_user_list_page));
     config.route("/video/edit_user_list/{id}/", web::get().to(edit_user_list_page));
@@ -485,6 +486,165 @@ pub async fn load_video_page(session: Session, req: HttpRequest, video_id: web::
                 next_page_number:           next_page_number,
                 prev:                       prev,
                 next:                       next,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+}
+
+
+pub async fn load_comments_page(session: Session, req: HttpRequest, video_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let (is_desctop, page) = get_list_variables(req);
+    let mut next_page_number = 0;
+    let mut is_open = false;
+    let mut text = "".to_string();
+
+    let _video = get_video(*video_id);
+    let _list = get_video_list(_video.video_list_id);
+
+    let object_list: Vec<VideoComment>;
+    if page > 1 {
+        let step = (page - 1) * 20;
+        object_list = _video.get_comments(20, step.into());
+        if _video.comment > (page * 20).try_into().unwrap() {
+            next_page_number = page + 1;
+        }
+    }
+    else {
+        object_list = _video.get_comments(20, 0);
+        if _video.comment > 20.try_into().unwrap() {
+            next_page_number = 2;
+        }
+    }
+
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _video.community_id.is_some() {
+            let _tuple = get_community_permission(&_video.get_community(), &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
+        }
+        else {
+            let _tuple = get_user_permission(&_video.get_creator(), &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
+        }
+
+        let _request_user_id = &_request_user.id;
+        let is_user_can_create_comments = _list.is_user_can_create_comment(*_request_user_id);
+
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+        else if !_list.is_user_can_see_el(*_request_user_id) && !_list.is_user_can_see_comment(*_request_user_id) {
+            use crate::views::close_list;
+            return close_list()
+        }
+
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/generic/items/comment/comments.stpl")]
+            struct Template {
+                list:                        VideoList,
+                item:                        Video,
+                request_user:                User,
+                is_user_can_create_comments: bool,
+                object_list:                 Vec<VideoComment>,
+                next_page_number:            i32,
+            }
+            let body = Template {
+                list:                        _list,
+                item:                        _video,
+                request_user:                _request_user,
+                is_user_can_create_comments: is_user_can_create_comments,
+                object_list:                 object_list,
+                next_page_number:            next_page_number,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/generic/items/comment/comments.stpl")]
+            struct Template {
+                list:                        VideoList,
+                item:                        Video,
+                request_user:                User,
+                is_user_can_create_comments: bool,
+                object_list:                 Vec<VideoComment>,
+                next_page_number:            i32,
+            }
+            let body = Template {
+                list:                        _list,
+                item:                        _video,
+                request_user:                _request_user,
+                is_user_can_create_comments: is_user_can_create_comments,
+                object_list:                 object_list,
+                next_page_number:            next_page_number,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        }
+    } else {
+        if _video.community_id.is_some() {
+            let _tuple = get_anon_community_permission(&_video.get_community());
+            is_open = _tuple.0;
+            text = _tuple.1;
+        }
+        else {
+            let _tuple = get_anon_user_permission(&_video.get_creator());
+            is_open = _tuple.0;
+            text = _tuple.1;
+        }
+
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+        else if !_list.is_anon_user_can_see_el() && !_list.is_anon_user_can_see_comment() {
+            use crate::views::close_list;
+            return close_list()
+        }
+
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/generic/items/comment/anon_comments.stpl")]
+            struct Template {
+                list:                      VideoList,
+                item:                      Video,
+                object_list:               Vec<VideoComment>,
+                next_page_number:          i32,
+            }
+            let body = Template {
+                list:                      _list,
+                item:                      _video,
+                object_list:               object_list,
+                next_page_number:          next_page_number,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/generic/items/comment/anon_comments.stpl")]
+            struct Template {
+                list:                      VideoList,
+                item:                      Video,
+                object_list:               Vec<VideoComment>,
+                next_page_number:          i32,
+            }
+            let body = Template {
+                list:                      _list,
+                item:                      _video,
+                object_list:               object_list,
+                next_page_number:          next_page_number,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

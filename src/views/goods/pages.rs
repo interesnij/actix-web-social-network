@@ -31,7 +31,7 @@ use crate::models::{User, GoodList, Good, GoodComment, Community};
 pub fn goods_urls(config: &mut web::ServiceConfig) {
     config.route("/goods/load_list/{list_id}/", web::get().to(load_list_page));
     config.route("/goods/load_good/{id}/", web::get().to(load_good_page));
-    //config.route("/goods/load_comments/{id}/", web::get().to(load_good_page));
+    config.route("/goods/load_comments/{id}/", web::get().to(load_comments_page));
 
     config.route("/goods/add_user_list/", web::get().to(add_user_list_page));
     config.route("/goods/edit_user_list/{id}/", web::get().to(edit_user_list_page));
@@ -487,6 +487,164 @@ pub async fn load_good_page(session: Session, req: HttpRequest, good_id: web::Pa
                 next_page_number:          next_page_number,
                 prev:                      prev,
                 next:                      next,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+}
+
+pub async fn load_comments_page(session: Session, req: HttpRequest, good_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let (is_desctop, page) = get_list_variables(req);
+    let mut next_page_number = 0;
+    let mut is_open = false;
+    let mut text = "".to_string();
+
+    let _good = get_good(*good_id);
+    let _list = get_good_list(_good.good_list_id);
+
+    let object_list: Vec<GoodComment>;
+    if page > 1 {
+        let step = (page - 1) * 20;
+        object_list = _good.get_comments(20, step.into());
+        if _good.comment > (page * 20).try_into().unwrap() {
+            next_page_number = page + 1;
+        }
+    }
+    else {
+        object_list = _good.get_comments(20, 0);
+        if _good.comment > 20.try_into().unwrap() {
+            next_page_number = 2;
+        }
+    }
+
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _good.community_id.is_some() {
+            let _tuple = get_community_permission(&_good.get_community(), &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
+        }
+        else {
+            let _tuple = get_user_permission(&_good.get_creator(), &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
+        }
+
+        let _request_user_id = &_request_user.id;
+        let is_user_can_create_comments = _list.is_user_can_create_comment(*_request_user_id);
+
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+        else if !_list.is_user_can_see_el(*_request_user_id) && !_list.is_user_can_see_comment(*_request_user_id) {
+            use crate::views::close_list;
+            return close_list()
+        }
+
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/generic/items/comment/comments.stpl")]
+            struct Template {
+                list:                        GoodList,
+                item:                        Good,
+                request_user:                User,
+                is_user_can_create_comments: bool,
+                object_list:                 Vec<GoodComment>,
+                next_page_number:            i32,
+            }
+            let body = Template {
+                list:                        _list,
+                item:                        _good,
+                request_user:                _request_user,
+                is_user_can_create_comments: is_user_can_create_comments,
+                object_list:                 object_list,
+                next_page_number:            next_page_number,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/generic/items/comment/comments.stpl")]
+            struct Template {
+                list:                        GoodList,
+                item:                        Good,
+                request_user:                User,
+                is_user_can_create_comments: bool,
+                object_list:                 Vec<GoodComment>,
+                next_page_number:            i32,
+            }
+            let body = Template {
+                list:                        _list,
+                item:                        _good,
+                request_user:                _request_user,
+                is_user_can_create_comments: is_user_can_create_comments,
+                object_list:                 object_list,
+                next_page_number:            next_page_number,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        }
+    } else {
+        if _good.community_id.is_some() {
+            let _tuple = get_anon_community_permission(&_good.get_community());
+            is_open = _tuple.0;
+            text = _tuple.1;
+        }
+        else {
+            let _tuple = get_anon_user_permission(&_good.get_creator());
+            is_open = _tuple.0;
+            text = _tuple.1;
+        }
+
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+        else if !_list.is_anon_user_can_see_el() && !_list.is_anon_user_can_see_comment() {
+            use crate::views::close_list;
+            return close_list()
+        }
+
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/generic/items/comment/anon_comments.stpl")]
+            struct Template {
+                list:                      GoodList,
+                item:                      Good,
+                object_list:               Vec<GoodComment>,
+                next_page_number:          i32,
+            }
+            let body = Template {
+                list:                      _list,
+                item:                      _good,
+                object_list:               object_list,
+                next_page_number:          next_page_number,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/generic/items/comment/anon_comments.stpl")]
+            struct Template {
+                list:                      GoodList,
+                item:                      Good,
+                object_list:               Vec<GoodComment>,
+                next_page_number:          i32,
+            }
+            let body = Template {
+                list:                      _list,
+                item:                      _good,
+                object_list:               object_list,
+                next_page_number:          next_page_number,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

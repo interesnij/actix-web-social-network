@@ -30,6 +30,7 @@ use crate::models::{User, PhotoList, Photo, PhotoComment, Community};
 pub fn photos_urls(config: &mut web::ServiceConfig) {
     config.route("/photos/load_list/{list_id}/", web::get().to(load_list_page));
     config.route("/photos/load_photo/{id}/", web::get().to(load_photo_page));
+    config.route("/photos/load_comments/{id}/", web::get().to(load_comments_page));
 
     config.route("/photos/add_user_list/", web::get().to(add_user_list_page));
     config.route("/photos/edit_user_list/{id}/", web::get().to(edit_user_list_page));
@@ -484,6 +485,165 @@ pub async fn load_photo_page(session: Session, req: HttpRequest, photo_id: web::
                 next_page_number:           next_page_number,
                 prev:                       prev,
                 next:                       next,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+}
+
+
+pub async fn load_comments_page(session: Session, req: HttpRequest, photo_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let (is_desctop, page) = get_list_variables(req);
+    let mut next_page_number = 0;
+    let mut is_open = false;
+    let mut text = "".to_string();
+
+    let _photo = get_photo(*photo_id);
+    let _list = get_photo_list(_photo.photo_list_id);
+
+    let object_list: Vec<PhotoComment>;
+    if page > 1 {
+        let step = (page - 1) * 20;
+        object_list = _photo.get_comments(20, step.into());
+        if _photo.comment > (page * 20).try_into().unwrap() {
+            next_page_number = page + 1;
+        }
+    }
+    else {
+        object_list = _photo.get_comments(20, 0);
+        if _photo.comment > 20.try_into().unwrap() {
+            next_page_number = 2;
+        }
+    }
+
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _photo.community_id.is_some() {
+            let _tuple = get_community_permission(&_photo.get_community(), &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
+        }
+        else {
+            let _tuple = get_user_permission(&_photo.get_creator(), &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
+        }
+
+        let _request_user_id = &_request_user.id;
+        let is_user_can_create_comments = _list.is_user_can_create_comment(*_request_user_id);
+
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+        else if !_list.is_user_can_see_el(*_request_user_id) && !_list.is_user_can_see_comment(*_request_user_id) {
+            use crate::views::close_list;
+            return close_list()
+        }
+
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/generic/items/comment/comments.stpl")]
+            struct Template {
+                list:                        PhotoList,
+                item:                        Photo,
+                request_user:                User,
+                is_user_can_create_comments: bool,
+                object_list:                 Vec<PhotoComment>,
+                next_page_number:            i32,
+            }
+            let body = Template {
+                list:                        _list,
+                item:                        _photo,
+                request_user:                _request_user,
+                is_user_can_create_comments: is_user_can_create_comments,
+                object_list:                 object_list,
+                next_page_number:            next_page_number,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/generic/items/comment/comments.stpl")]
+            struct Template {
+                list:                        PhotoList,
+                item:                        Photo,
+                request_user:                User,
+                is_user_can_create_comments: bool,
+                object_list:                 Vec<PhotoComment>,
+                next_page_number:            i32,
+            }
+            let body = Template {
+                list:                        _list,
+                item:                        _photo,
+                request_user:                _request_user,
+                is_user_can_create_comments: is_user_can_create_comments,
+                object_list:                 object_list,
+                next_page_number:            next_page_number,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        }
+    } else {
+        if _photo.community_id.is_some() {
+            let _tuple = get_anon_community_permission(&_photo.get_community());
+            is_open = _tuple.0;
+            text = _tuple.1;
+        }
+        else {
+            let _tuple = get_anon_user_permission(&_photo.get_creator());
+            is_open = _tuple.0;
+            text = _tuple.1;
+        }
+
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+        else if !_list.is_anon_user_can_see_el() && !_list.is_anon_user_can_see_comment() {
+            use crate::views::close_list;
+            return close_list()
+        }
+
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/generic/items/comment/anon_comments.stpl")]
+            struct Template {
+                list:                      PhotoList,
+                item:                      Photo,
+                object_list:               Vec<PhotoComment>,
+                next_page_number:          i32,
+            }
+            let body = Template {
+                list:                      _list,
+                item:                      _photo,
+                object_list:               object_list,
+                next_page_number:          next_page_number,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/generic/items/comment/anon_comments.stpl")]
+            struct Template {
+                list:                      PhotoList,
+                item:                      Photo,
+                object_list:               Vec<PhotoComment>,
+                next_page_number:          i32,
+            }
+            let body = Template {
+                list:                      _list,
+                item:                      _photo,
+                object_list:               object_list,
+                next_page_number:          next_page_number,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

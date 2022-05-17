@@ -116,6 +116,7 @@
                         </span>
                         <% } %>
 
+                        <% is_user_can_create_comments { %>
                         <span class="commenter_first_name" style="display:none"><%= creator.first_name %></span>
                         <span flow="up" tooltip="Ответить" class="content-color-secondary reply_comment" style="font-size:15px;cursor:pointer">
                             <svg class="svg_s_info" viewBox="0 0 24 24" fill="currentColor">
@@ -123,10 +124,11 @@
                                 <path d="M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z" />
                             </svg>
                         </span>
-
+                        <% } %>
+                        
                         <div style="display:none">
                             <form>
-                                <input type="hidden" name="comment" value="<%= prefix %><%= comment.id %>">
+                                <input type="hidden" name="comment" value="<%= comment.get_code() %>">
                                 <div class="row img_block reply_form check_mesage_form" style="margin:5px"></div>
 
                                 <div class="input-group input-group-sm">
