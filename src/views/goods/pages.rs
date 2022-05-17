@@ -31,6 +31,7 @@ use crate::models::{User, GoodList, Good, GoodComment, Community};
 pub fn goods_urls(config: &mut web::ServiceConfig) {
     config.route("/goods/load_list/{list_id}/", web::get().to(load_list_page));
     config.route("/goods/load_good/{id}/", web::get().to(load_good_page));
+    //config.route("/goods/load_comments/{id}/", web::get().to(load_good_page));
 
     config.route("/goods/add_user_list/", web::get().to(add_user_list_page));
     config.route("/goods/edit_user_list/{id}/", web::get().to(edit_user_list_page));

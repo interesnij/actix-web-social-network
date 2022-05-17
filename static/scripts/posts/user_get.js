@@ -1,5 +1,11 @@
 on('body', 'click', '.load_comments_list', function() {
   clear_comment_dropdown();
+
+  parent = this.parentElement;
+  type = parent.getAttribute('data-type');
+  if (type.indexOf('lpo') !== -1) {
+      url = "/posts/load_comments/" + type.slice(3) + "/";
+  }
   block = this.parentElement.parentElement.parentElement.parentElement;
   block_comments = block.querySelector(".load_comments");
   if (block_comments.classList.contains("show")){
@@ -7,7 +13,7 @@ on('body', 'click', '.load_comments_list', function() {
   } else {
     block_comments.firstChild
         ? null
-        : list_load(block_comments, "/comments/list/?type=" + this.parentElement.getAttribute("data-type"));
+        : list_load(block_comments, url);
     block_comments.classList.add("show")
   }
 });
