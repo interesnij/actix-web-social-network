@@ -314,6 +314,15 @@ table! {
 }
 
 table! {
+    community_reposts (id) {
+        id -> Int4,
+        community_id -> Int4,
+        post_id -> Nullable<Int4>,
+        message_id -> Nullable<Int4>,
+    }
+}
+
+table! {
     community_subcategorys (id) {
         id -> Int4,
         name -> Varchar,
@@ -482,6 +491,15 @@ table! {
 }
 
 table! {
+    doc_list_reposts (id) {
+        id -> Int4,
+        doc_list_id -> Int4,
+        post_id -> Nullable<Int4>,
+        message_id -> Nullable<Int4>,
+    }
+}
+
+table! {
     doc_lists (id) {
         id -> Int4,
         name -> Varchar,
@@ -497,6 +515,15 @@ table! {
         can_see_el -> Char,
         create_el -> Char,
         copy_el -> Char,
+    }
+}
+
+table! {
+    doc_reposts (id) {
+        id -> Int4,
+        doc_id -> Int4,
+        post_id -> Nullable<Int4>,
+        message_id -> Nullable<Int4>,
     }
 }
 
@@ -695,6 +722,15 @@ table! {
 }
 
 table! {
+    good_list_reposts (id) {
+        id -> Int4,
+        good_list_id -> Int4,
+        post_id -> Nullable<Int4>,
+        message_id -> Nullable<Int4>,
+    }
+}
+
+table! {
     good_lists (id) {
         id -> Int4,
         name -> Varchar,
@@ -712,6 +748,15 @@ table! {
         create_el -> Char,
         create_comment -> Char,
         copy_el -> Char,
+    }
+}
+
+table! {
+    good_reposts (id) {
+        id -> Int4,
+        good_id -> Int4,
+        post_id -> Nullable<Int4>,
+        message_id -> Nullable<Int4>,
     }
 }
 
@@ -905,6 +950,15 @@ table! {
 }
 
 table! {
+    music_list_reposts (id) {
+        id -> Int4,
+        music_list_id -> Int4,
+        post_id -> Nullable<Int4>,
+        message_id -> Nullable<Int4>,
+    }
+}
+
+table! {
     music_lists (id) {
         id -> Int4,
         name -> Varchar,
@@ -921,6 +975,15 @@ table! {
         can_see_el -> Char,
         create_el -> Char,
         copy_el -> Char,
+    }
+}
+
+table! {
+    music_reposts (id) {
+        id -> Int4,
+        music_id -> Int4,
+        post_id -> Nullable<Int4>,
+        message_id -> Nullable<Int4>,
     }
 }
 
@@ -1033,6 +1096,15 @@ table! {
 }
 
 table! {
+    photo_list_reposts (id) {
+        id -> Int4,
+        photo_list_id -> Int4,
+        post_id -> Nullable<Int4>,
+        message_id -> Nullable<Int4>,
+    }
+}
+
+table! {
     photo_lists (id) {
         id -> Int4,
         name -> Varchar,
@@ -1051,6 +1123,15 @@ table! {
         create_el -> Char,
         create_comment -> Char,
         copy_el -> Char,
+    }
+}
+
+table! {
+    photo_reposts (id) {
+        id -> Int4,
+        photo_id -> Int4,
+        post_id -> Nullable<Int4>,
+        message_id -> Nullable<Int4>,
     }
 }
 
@@ -1130,6 +1211,15 @@ table! {
         create_item -> Nullable<Char>,
         create_comment -> Nullable<Char>,
         can_copy -> Nullable<Char>,
+    }
+}
+
+table! {
+    post_list_reposts (id) {
+        id -> Int4,
+        post_list_id -> Int4,
+        post_id -> Nullable<Int4>,
+        message_id -> Nullable<Int4>,
     }
 }
 
@@ -1289,6 +1379,15 @@ table! {
 }
 
 table! {
+    survey_list_reposts (id) {
+        id -> Int4,
+        survey_list_id -> Int4,
+        post_id -> Nullable<Int4>,
+        message_id -> Nullable<Int4>,
+    }
+}
+
+table! {
     survey_lists (id) {
         id -> Int4,
         name -> Varchar,
@@ -1304,6 +1403,15 @@ table! {
         can_see_el -> Char,
         create_el -> Char,
         copy_el -> Char,
+    }
+}
+
+table! {
+    survey_reposts (id) {
+        id -> Int4,
+        survey_id -> Int4,
+        post_id -> Nullable<Int4>,
+        message_id -> Nullable<Int4>,
     }
 }
 
@@ -1688,6 +1796,15 @@ table! {
 }
 
 table! {
+    user_reposts (id) {
+        id -> Int4,
+        user_id -> Int4,
+        post_id -> Nullable<Int4>,
+        message_id -> Nullable<Int4>,
+    }
+}
+
+table! {
     user_survey_list_collections (id) {
         id -> Int4,
         user_id -> Int4,
@@ -1822,6 +1939,15 @@ table! {
 }
 
 table! {
+    video_list_reposts (id) {
+        id -> Int4,
+        video_list_id -> Int4,
+        post_id -> Nullable<Int4>,
+        message_id -> Nullable<Int4>,
+    }
+}
+
+table! {
     video_lists (id) {
         id -> Int4,
         name -> Varchar,
@@ -1839,6 +1965,15 @@ table! {
         create_el -> Char,
         create_comment -> Char,
         copy_el -> Char,
+    }
+}
+
+table! {
+    video_reposts (id) {
+        id -> Int4,
+        video_id -> Int4,
+        post_id -> Nullable<Int4>,
+        message_id -> Nullable<Int4>,
     }
 }
 
@@ -1921,6 +2056,9 @@ joinable!(community_post_list_collections -> communitys (community_id));
 joinable!(community_post_list_collections -> post_lists (post_list_id));
 joinable!(community_post_notifications -> communitys (community_id));
 joinable!(community_privates -> communitys (community_id));
+joinable!(community_reposts -> communitys (community_id));
+joinable!(community_reposts -> messages (message_id));
+joinable!(community_reposts -> posts (post_id));
 joinable!(community_subcategorys -> community_categorys (category_id));
 joinable!(community_survey_list_collections -> communitys (community_id));
 joinable!(community_survey_list_collections -> survey_lists (survey_list_id));
@@ -1935,8 +2073,14 @@ joinable!(communitys -> users (user_id));
 joinable!(design_settings -> users (user_id));
 joinable!(doc_list_perms -> doc_lists (doc_list_id));
 joinable!(doc_list_perms -> users (user_id));
+joinable!(doc_list_reposts -> doc_lists (doc_list_id));
+joinable!(doc_list_reposts -> messages (message_id));
+joinable!(doc_list_reposts -> posts (post_id));
 joinable!(doc_lists -> communitys (community_id));
 joinable!(doc_lists -> users (user_id));
+joinable!(doc_reposts -> docs (doc_id));
+joinable!(doc_reposts -> messages (message_id));
+joinable!(doc_reposts -> posts (post_id));
 joinable!(docs -> communitys (community_id));
 joinable!(docs -> doc_lists (doc_list_id));
 joinable!(docs -> users (user_id));
@@ -1951,8 +2095,14 @@ joinable!(good_comments -> stickers (sticker_id));
 joinable!(good_comments -> users (user_id));
 joinable!(good_list_perms -> good_lists (good_list_id));
 joinable!(good_list_perms -> users (user_id));
+joinable!(good_list_reposts -> good_lists (good_list_id));
+joinable!(good_list_reposts -> messages (message_id));
+joinable!(good_list_reposts -> posts (post_id));
 joinable!(good_lists -> communitys (community_id));
 joinable!(good_lists -> users (user_id));
+joinable!(good_reposts -> goods (good_id));
+joinable!(good_reposts -> messages (message_id));
+joinable!(good_reposts -> posts (post_id));
 joinable!(good_subcategories -> good_categories (category_id));
 joinable!(good_votes -> goods (good_id));
 joinable!(good_votes -> users (user_id));
@@ -1977,8 +2127,14 @@ joinable!(music_albums -> artists (artist_id));
 joinable!(music_albums -> users (user_id));
 joinable!(music_list_perms -> music_lists (music_list_id));
 joinable!(music_list_perms -> users (user_id));
+joinable!(music_list_reposts -> messages (message_id));
+joinable!(music_list_reposts -> music_lists (music_list_id));
+joinable!(music_list_reposts -> posts (post_id));
 joinable!(music_lists -> communitys (community_id));
 joinable!(music_lists -> users (user_id));
+joinable!(music_reposts -> messages (message_id));
+joinable!(music_reposts -> musics (music_id));
+joinable!(music_reposts -> posts (post_id));
 joinable!(musics -> communitys (community_id));
 joinable!(musics -> music_lists (music_list_id));
 joinable!(musics -> users (user_id));
@@ -1989,8 +2145,14 @@ joinable!(photo_comments -> stickers (sticker_id));
 joinable!(photo_comments -> users (user_id));
 joinable!(photo_list_perms -> photo_lists (photo_list_id));
 joinable!(photo_list_perms -> users (user_id));
+joinable!(photo_list_reposts -> messages (message_id));
+joinable!(photo_list_reposts -> photo_lists (photo_list_id));
+joinable!(photo_list_reposts -> posts (post_id));
 joinable!(photo_lists -> communitys (community_id));
 joinable!(photo_lists -> users (user_id));
+joinable!(photo_reposts -> messages (message_id));
+joinable!(photo_reposts -> photos (photo_id));
+joinable!(photo_reposts -> posts (post_id));
 joinable!(photo_votes -> photos (photo_id));
 joinable!(photo_votes -> users (user_id));
 joinable!(photos -> communitys (community_id));
@@ -2003,6 +2165,9 @@ joinable!(post_comments -> stickers (sticker_id));
 joinable!(post_comments -> users (user_id));
 joinable!(post_list_perms -> post_lists (post_list_id));
 joinable!(post_list_perms -> users (user_id));
+joinable!(post_list_reposts -> messages (message_id));
+joinable!(post_list_reposts -> post_lists (post_list_id));
+joinable!(post_list_reposts -> posts (post_id));
 joinable!(post_lists -> communitys (community_id));
 joinable!(post_lists -> users (user_id));
 joinable!(post_votes -> posts (post_id));
@@ -2018,8 +2183,14 @@ joinable!(support_user_votes -> users (manager_id));
 joinable!(survey_answers -> surveys (survey_id));
 joinable!(survey_list_perms -> survey_lists (survey_list_id));
 joinable!(survey_list_perms -> users (user_id));
+joinable!(survey_list_reposts -> messages (message_id));
+joinable!(survey_list_reposts -> posts (post_id));
+joinable!(survey_list_reposts -> survey_lists (survey_list_id));
 joinable!(survey_lists -> communitys (community_id));
 joinable!(survey_lists -> users (user_id));
+joinable!(survey_reposts -> messages (message_id));
+joinable!(survey_reposts -> posts (post_id));
+joinable!(survey_reposts -> surveys (survey_id));
 joinable!(survey_votes -> survey_answers (survey_answer_id));
 joinable!(survey_votes -> users (user_id));
 joinable!(surveys -> communitys (community_id));
@@ -2051,6 +2222,9 @@ joinable!(user_post_notifications -> users (user_id));
 joinable!(user_privates -> users (user_id));
 joinable!(user_profile_notifications -> users (user_id));
 joinable!(user_profiles -> users (user_id));
+joinable!(user_reposts -> messages (message_id));
+joinable!(user_reposts -> posts (post_id));
+joinable!(user_reposts -> users (user_id));
 joinable!(user_survey_list_collections -> survey_lists (survey_list_id));
 joinable!(user_survey_list_collections -> users (user_id));
 joinable!(user_survey_notifications -> users (user_id));
@@ -2063,8 +2237,14 @@ joinable!(video_comments -> users (user_id));
 joinable!(video_comments -> videos (video_id));
 joinable!(video_list_perms -> users (user_id));
 joinable!(video_list_perms -> video_lists (video_list_id));
+joinable!(video_list_reposts -> messages (message_id));
+joinable!(video_list_reposts -> posts (post_id));
+joinable!(video_list_reposts -> video_lists (video_list_id));
 joinable!(video_lists -> communitys (community_id));
 joinable!(video_lists -> users (user_id));
+joinable!(video_reposts -> messages (message_id));
+joinable!(video_reposts -> posts (post_id));
+joinable!(video_reposts -> videos (video_id));
 joinable!(video_votes -> users (user_id));
 joinable!(video_votes -> videos (video_id));
 joinable!(videos -> communitys (community_id));
@@ -2099,6 +2279,7 @@ allow_tables_to_appear_in_same_query!(
     community_post_list_positions,
     community_post_notifications,
     community_privates,
+    community_reposts,
     community_subcategorys,
     community_survey_list_collections,
     community_survey_list_positions,
@@ -2112,7 +2293,9 @@ allow_tables_to_appear_in_same_query!(
     custom_links,
     design_settings,
     doc_list_perms,
+    doc_list_reposts,
     doc_lists,
+    doc_reposts,
     docs,
     featured_user_communities,
     follows,
@@ -2125,7 +2308,9 @@ allow_tables_to_appear_in_same_query!(
     good_comment_votes,
     good_comments,
     good_list_perms,
+    good_list_reposts,
     good_lists,
+    good_reposts,
     good_subcategories,
     good_votes,
     goods,
@@ -2141,7 +2326,9 @@ allow_tables_to_appear_in_same_query!(
     moderateds,
     music_albums,
     music_list_perms,
+    music_list_reposts,
     music_lists,
+    music_reposts,
     musics,
     news_user_communities,
     notifications,
@@ -2150,13 +2337,16 @@ allow_tables_to_appear_in_same_query!(
     photo_comment_votes,
     photo_comments,
     photo_list_perms,
+    photo_list_reposts,
     photo_lists,
+    photo_reposts,
     photo_votes,
     photos,
     post_categories,
     post_comment_votes,
     post_comments,
     post_list_perms,
+    post_list_reposts,
     post_lists,
     post_votes,
     posts,
@@ -2170,7 +2360,9 @@ allow_tables_to_appear_in_same_query!(
     support_users,
     survey_answers,
     survey_list_perms,
+    survey_list_reposts,
     survey_lists,
+    survey_reposts,
     survey_votes,
     surveys,
     user_anketas,
@@ -2199,4 +2391,28 @@ allow_tables_to_appear_in_same_query!(
     user_photo_notifications,
     user_populate_smiles,
     user_populate_stickers,
+    user_post_list_collections,
+    user_post_list_positions,
+    user_post_notifications,
+    user_privates,
+    user_profile_notifications,
+    user_profiles,
+    user_reposts,
+    user_survey_list_collections,
+    user_survey_list_positions,
+    user_survey_notifications,
+    user_video_list_collections,
+    user_video_list_positions,
+    user_video_notifications,
+    users,
+    video_categories,
+    video_comment_votes,
+    video_comments,
+    video_list_perms,
+    video_list_reposts,
+    video_lists,
+    video_reposts,
+    video_votes,
+    videos,
+    wall_objects,
 );
