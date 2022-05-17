@@ -3343,15 +3343,15 @@ pub struct NewVideoCommentVote {
 pub struct VideoListRepost {
     pub id:            i32,
     pub video_list_id: i32,
-    pub post_id:       i32,
-    pub message_id:    i32,
+    pub post_id:       Option<i32>,
+    pub message_id:    Option<i32>,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="video_list_reposts"]
 pub struct NewVideoListRepost {
     pub video_list_id: i32,
-    pub post_id:       i32,
-    pub message_id:    i32,
+    pub post_id:       Option<i32>,
+    pub message_id:    Option<i32>,
 }
 
 /////// VideoRepost //////
@@ -3362,13 +3362,13 @@ pub struct NewVideoListRepost {
 pub struct VideoRepost {
     pub id:         i32,
     pub video_id:   i32,
-    pub post_id:    i32,
-    pub message_id: i32,
+    pub post_id:    Option<i32>,
+    pub message_id: Option<i32>,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="video_reposts"]
 pub struct NewVideoRepost {
     pub video_id:   i32,
-    pub post_id:    i32,
-    pub message_id: i32,
+    pub post_id:    Option<i32>,
+    pub message_id: Option<i32>,
 }

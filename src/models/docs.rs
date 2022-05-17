@@ -1832,15 +1832,15 @@ pub struct NewDocListPerm {
 pub struct DocListRepost {
     pub id:            i32,
     pub doc_list_id:   i32,
-    pub post_id:       i32,
-    pub message_id:    i32,
+    pub post_id:       Option<i32>,
+    pub message_id:    Option<i32>,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="doc_list_reposts"]
 pub struct NewDocListRepost {
     pub doc_list_id:  i32,
-    pub post_id:      i32,
-    pub message_id:   i32,
+    pub post_id:      Option<i32>,
+    pub message_id:   Option<i32>,
 }
 
 /////// DocRepost //////
@@ -1851,13 +1851,13 @@ pub struct NewDocListRepost {
 pub struct DocRepost {
     pub id:         i32,
     pub doc_id:     i32,
-    pub post_id:    i32,
-    pub message_id: i32,
+    pub post_id:    Option<i32>,
+    pub message_id: Option<i32>,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="doc_reposts"]
 pub struct NewDocRepost {
     pub doc_id:     i32,
-    pub post_id:    i32,
-    pub message_id: i32,
+    pub post_id:    Option<i32>,
+    pub message_id: Option<i32>,
 }

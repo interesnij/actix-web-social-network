@@ -3364,15 +3364,15 @@ pub struct NewPhotoCommentVote {
 pub struct PhotoListRepost {
     pub id:            i32,
     pub photo_list_id: i32,
-    pub post_id:       i32,
-    pub message_id:    i32,
+    pub post_id:       Option<i32>,
+    pub message_id:    Option<i32>,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="photo_list_reposts"]
 pub struct NewPhotoListRepost {
     pub photo_list_id: i32,
-    pub post_id:       i32,
-    pub message_id:    i32,
+    pub post_id:       Option<i32>,
+    pub message_id:    Option<i32>,
 }
 
 /////// PhotoRepost //////
@@ -3383,13 +3383,13 @@ pub struct NewPhotoListRepost {
 pub struct PhotoRepost {
     pub id:         i32,
     pub photo_id:   i32,
-    pub post_id:    i32,
-    pub message_id: i32,
+    pub post_id:    Option<i32>,
+    pub message_id: Option<i32>,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="photo_reposts"]
 pub struct NewPhotoRepost {
     pub photo_id:   i32,
-    pub post_id:    i32,
-    pub message_id: i32,
+    pub post_id:    Option<i32>,
+    pub message_id: Option<i32>,
 }

@@ -2686,15 +2686,15 @@ pub struct NewGoodCommentVote {
 pub struct GoodListRepost {
     pub id:            i32,
     pub good_list_id:  i32,
-    pub post_id:       i32,
-    pub message_id:    i32,
+    pub post_id:       Option<i32>,
+    pub message_id:    Option<i32>,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="good_list_reposts"]
 pub struct NewGoodListRepost {
     pub good_list_id: i32,
-    pub post_id:      i32,
-    pub message_id:   i32,
+    pub post_id:      Option<i32>,
+    pub message_id:   Option<i32>,
 }
 
 /////// GoodRepost //////
@@ -2705,13 +2705,13 @@ pub struct NewGoodListRepost {
 pub struct GoodRepost {
     pub id:         i32,
     pub good_id:    i32,
-    pub post_id:    i32,
-    pub message_id: i32,
+    pub post_id:    Option<i32>,
+    pub message_id: Option<i32>,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="good_reposts"]
 pub struct NewGoodRepost {
     pub good_id:   i32,
-    pub post_id:    i32,
-    pub message_id: i32,
+    pub post_id:    Option<i32>,
+    pub message_id: Option<i32>,
 }

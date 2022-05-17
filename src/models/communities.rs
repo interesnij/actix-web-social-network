@@ -4392,13 +4392,13 @@ pub struct NewCommunityBannerUser {
 pub struct CommunityRepost {
     pub id:           i32,
     pub community_id: i32,
-    pub post_id:      i32,
-    pub message_id:   i32,
+    pub post_id:      Option<i32>,
+    pub message_id:   Option<i32>,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_reposts"]
 pub struct NewCommunityRepost {
     pub community_id: i32,
-    pub post_id:      i32,
-    pub message_id:   i32,
+    pub post_id:      Option<i32>,
+    pub message_id:   Option<i32>,
 }

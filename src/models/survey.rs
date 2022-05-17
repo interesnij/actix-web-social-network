@@ -1952,15 +1952,15 @@ impl SurveyVote {
 pub struct SurveyListRepost {
     pub id:            i32,
     pub survey_list_id: i32,
-    pub post_id:       i32,
-    pub message_id:    i32,
+    pub post_id:       Option<i32>,
+    pub message_id:    Option<i32>,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="survey_list_reposts"]
 pub struct NewSurveyListRepost {
     pub survey_list_id: i32,
-    pub post_id:       i32,
-    pub message_id:    i32,
+    pub post_id:       Option<i32>,
+    pub message_id:    Option<i32>,
 }
 
 /////// SurveyRepost //////
@@ -1971,13 +1971,13 @@ pub struct NewSurveyListRepost {
 pub struct SurveyRepost {
     pub id:         i32,
     pub survey_id:   i32,
-    pub post_id:    i32,
-    pub message_id: i32,
+    pub post_id:    Option<i32>,
+    pub message_id: Option<i32>,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="survey_reposts"]
 pub struct NewSurveyRepost {
     pub survey_id:  i32,
-    pub post_id:    i32,
-    pub message_id: i32,
+    pub post_id:    Option<i32>,
+    pub message_id: Option<i32>,
 }

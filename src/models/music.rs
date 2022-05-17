@@ -1958,15 +1958,15 @@ pub struct NewMusicListPerm {
 pub struct MusicListRepost {
     pub id:            i32,
     pub music_list_id: i32,
-    pub post_id:       i32,
-    pub message_id:    i32,
+    pub post_id:       Option<i32>,
+    pub message_id:    Option<i32>,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="music_list_reposts"]
 pub struct NewMusicListRepost {
     pub music_list_id: i32,
-    pub post_id:       i32,
-    pub message_id:    i32,
+    pub post_id:       Option<i32>,
+    pub message_id:    Option<i32>,
 }
 
 /////// MusicRepost //////
@@ -1977,13 +1977,13 @@ pub struct NewMusicListRepost {
 pub struct MusicRepost {
     pub id:         i32,
     pub music_id:   i32,
-    pub post_id:    i32,
-    pub message_id: i32,
+    pub post_id:    Option<i32>,
+    pub message_id: Option<i32>,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="music_reposts"]
 pub struct NewMusicRepost {
     pub music_id:   i32,
-    pub post_id:    i32,
-    pub message_id: i32,
+    pub post_id:    Option<i32>,
+    pub message_id: Option<i32>,
 }

@@ -864,13 +864,13 @@ pub struct EditDesignSetting {
 pub struct UserRepost {
     pub id:         i32,
     pub user_id:    i32,
-    pub post_id:    i32,
-    pub message_id: i32,
+    pub post_id:    Option<i32>,
+    pub message_id: Option<i32>,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_reposts"]
 pub struct NewUserRepost {
     pub user_id:    i32,
-    pub post_id:    i32,
-    pub message_id: i32,
+    pub post_id:    Option<i32>,
+    pub message_id: Option<i32>,
 }

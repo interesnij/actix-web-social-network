@@ -3519,13 +3519,13 @@ pub struct NewPostCommentVote {
 pub struct PostListRepost {
     pub id:            i32,
     pub post_list_id: i32,
-    pub post_id:       i32,
-    pub message_id:    i32,
+    pub post_id:       Option<i32>,
+    pub message_id:    Option<i32>,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="post_list_reposts"]
 pub struct NewPostListRepost {
     pub post_list_id: i32,
-    pub post_id:       i32,
-    pub message_id:    i32,
+    pub post_id:       Option<i32>,
+    pub message_id:    Option<i32>,
 }
