@@ -160,6 +160,7 @@ impl User {
 
     pub fn message_reposts_count(&self) -> String {
         use crate::schema::user_reposts::dsl::user_reposts;
+        use crate::models::UserRepost;
 
         let _connection = establish_connection();
 
