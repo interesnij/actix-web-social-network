@@ -9,6 +9,8 @@ use crate::schema::{
     user_music_list_collections,
     community_music_list_collections,
     music_list_perms,
+    music_list_reposts,
+    music_reposts,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
@@ -18,6 +20,8 @@ use crate::models::{
     Community,
     UserMusicListPosition,
     CommunityMusicListPosition,
+    Post,
+    Message,
 };
 use actix_web::web::Json;
 
@@ -1792,4 +1796,42 @@ pub struct NewMusicListPerm {
     pub can_see_item:    Option<String>,
     pub create_item:     Option<String>,
     pub can_copy:        Option<String>,
+}
+
+/////// MusicListRepost //////
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(MusicList)]
+#[belongs_to(Post)]
+#[belongs_to(Message)]
+pub struct MusicListRepost {
+    pub id:            i32,
+    pub music_list_id: i32,
+    pub post_id:       i32,
+    pub message_id:    i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="music_list_reposts"]
+pub struct NewMusicListRepost {
+    pub music_list_id: i32,
+    pub post_id:       i32,
+    pub message_id:    i32,
+}
+
+/////// MusicRepost //////
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(Music)]
+#[belongs_to(Post)]
+#[belongs_to(Message)]
+pub struct MusicRepost {
+    pub id:         i32,
+    pub music_id:   i32,
+    pub post_id:    i32,
+    pub message_id: i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="music_reposts"]
+pub struct NewMusicRepost {
+    pub music_id:   i32,
+    pub post_id:    i32,
+    pub message_id: i32,
 }

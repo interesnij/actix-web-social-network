@@ -9,6 +9,8 @@ use crate::schema::{
     good_list_perms,
     good_votes,
     good_comment_votes,
+    good_list_reposts,
+    good_reposts,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
@@ -21,6 +23,8 @@ use crate::models::{
     Sticker,
     Photo,
     Video,
+    Post,
+    Message,
 };
 use actix_web::web::Json;
 
@@ -2519,4 +2523,43 @@ pub struct NewGoodCommentVote {
     pub vote:            i16,
     pub user_id:         i32,
     pub good_comment_id: i32,
+}
+
+
+/////// GoodListRepost //////
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(GoodList)]
+#[belongs_to(Post)]
+#[belongs_to(Message)]
+pub struct GoodListRepost {
+    pub id:            i32,
+    pub good_list_id:  i32,
+    pub post_id:       i32,
+    pub message_id:    i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="good_list_reposts"]
+pub struct NewGoodListRepost {
+    pub good_list_id: i32,
+    pub post_id:      i32,
+    pub message_id:   i32,
+}
+
+/////// GoodRepost //////
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(Good)]
+#[belongs_to(Post)]
+#[belongs_to(Message)]
+pub struct GoodRepost {
+    pub id:         i32,
+    pub good_id:    i32,
+    pub post_id:    i32,
+    pub message_id: i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="good_reposts"]
+pub struct NewGoodRepost {
+    pub good_id:   i32,
+    pub post_id:    i32,
+    pub message_id: i32,
 }

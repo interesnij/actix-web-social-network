@@ -6,6 +6,8 @@ use crate::schema::{
     user_doc_list_collections,
     community_doc_list_collections,
     doc_list_perms,
+    doc_list_reposts,
+    doc_reposts,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
@@ -15,6 +17,8 @@ use crate::models::{
     Community,
     UserDocListPosition,
     CommunityDocListPosition,
+    Post,
+    Message,
 };
 use actix_web::web::Json;
 
@@ -1665,4 +1669,43 @@ pub struct NewDocListPerm {
     pub can_see_item:    Option<String>,
     pub create_item:     Option<String>,
     pub can_copy:        Option<String>,
+}
+
+
+/////// DocListRepost //////
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(DocList)]
+#[belongs_to(Post)]
+#[belongs_to(Message)]
+pub struct DocListRepost {
+    pub id:            i32,
+    pub doc_list_id:   i32,
+    pub post_id:       i32,
+    pub message_id:    i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="doc_list_reposts"]
+pub struct NewDocListRepost {
+    pub doc_list_id:  i32,
+    pub post_id:      i32,
+    pub message_id:   i32,
+}
+
+/////// DocRepost //////
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(Doc)]
+#[belongs_to(Post)]
+#[belongs_to(Message)]
+pub struct DocRepost {
+    pub id:         i32,
+    pub doc_id:     i32,
+    pub post_id:    i32,
+    pub message_id: i32,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="doc_reposts"]
+pub struct NewDocRepost {
+    pub doc_id:     i32,
+    pub post_id:    i32,
+    pub message_id: i32,
 }
