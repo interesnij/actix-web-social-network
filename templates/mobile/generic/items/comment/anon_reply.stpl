@@ -24,7 +24,7 @@
     <span class="comment_text text_support"><%- reply.get_format_text() %></span>
 
       <% if reply.attach.is_some() { %>
-        <%- reply.get_attach(request_user.id) %>
+        <%- reply.get_anon_attach() %>
       <% } %>
     <% } %>
 
