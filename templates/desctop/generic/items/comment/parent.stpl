@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="col" data-type="<%= comment.get_code() %>" data-subtype="comment">
                         <span class="like like2
-                        <% if comment.likes().iter().any(|i| i.id==request_user.id) { %>
+                        <% if comment.likes().iter().any(|i| i.user_id==request_user.id) { %>
                           btn_success
                         <% } else { %>
                           btn_default
@@ -59,7 +59,7 @@
                         <% } %>
                         </span>
                         <span class="dislike dislike2
-                        <% if comment.dislikes().iter().any(|i| i.id==request_user.id) { %>
+                        <% if comment.dislikes().iter().any(|i| i.user_id==request_user.id) { %>
                           btn_danger
                         <% } else { %>
                           btn_default
@@ -73,7 +73,7 @@
                         </span>
 
                         <span class="comment_dislike_window">
-                        <% if comment.is_have_dislikes() == true { %>
+                        <% if comment.is_have_dislikes() { %>
                         <div class="comment_dislike_pop">
                         <span class="item_dislikes pointer">Не оценили: <span data-count="dislike"><%= comment.dislikes_count() %></span> <%= comment.dislikes_count_ru() %></span>
                         <span style="display: flex;margin-top: 10px;">
@@ -165,7 +165,6 @@
                                         </button>
                                     </div>
                                 </div>
-
                             </form>
                         </div>
                     </div>
@@ -189,7 +188,7 @@
           <% } %>
         <% } %>
         <% if next_page_number > 0 { %>
-          <a class="pointer load_next_list_comments mt-1" data-link="posts/load_replies/<%= comment.id %>/?page=<%= next_page_number %>">Показать еще ответы</a>
+          <a class="pointer load_next_list_comments mt-1" data-link="/posts/load_replies/<%= comment.id %>/?page=<%= next_page_number %>">Показать еще ответы</a>
         <% } %>
     </span>
 </div>

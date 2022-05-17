@@ -32,7 +32,7 @@
              <div class="row">
                  <div class="col" data-type="<%= reply.get_code() %>" data-subtype="comment">
                      <span class="like like2
-                     <% if reply.likes().iter().any(|i| i.id==request_user.id) { %>
+                     <% if reply.likes().iter().any(|i| i.user_id==request_user.id) { %>
                        btn_success
                      <% } else { %>
                        btn_default
@@ -59,7 +59,7 @@
                      </span>
 
                      <span class="dislike dislike2
-                     <% if reply.dislikes().iter().any(|i| i.id==request_user.id) { %>
+                     <% if reply.dislikes().iter().any(|i| i.user_id==request_user.id) { %>
                        btn_danger
                      <% } else { %>
                        btn_default
@@ -85,7 +85,7 @@
                        <% } %>
                      </span>
 
-                     <% if request_user.id == creator.id { %>
+                     <% if request_user.id == reply_creator.id { %>
                        <% if reply.sticker_id.is_none() { %>
                      <span class="comment_edit btn_default pointer" style="margin-right:7px" flow="up" tooltip="Редактировать">
                          <svg class="svg_s_info" fill="currentColor" viewBox="0 0 24 24">
