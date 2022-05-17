@@ -227,7 +227,7 @@ impl PostList {
 
         let mut stack = Vec::new();
         for _item in item_reposts.iter() {
-            stack.push(_item.post_id);
+            stack.push(_item.post_id.unwrap());
         };
         return posts
             .filter(schema::posts::id.eq_any(stack))
@@ -249,7 +249,7 @@ impl PostList {
 
         let mut stack = Vec::new();
         for _item in item_reposts.iter() {
-            stack.push(_item.post_id);
+            stack.push(_item.post_id.unwrap());
         };
         return posts
             .filter(schema::posts::id.eq_any(stack))
