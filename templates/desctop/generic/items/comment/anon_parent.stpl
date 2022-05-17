@@ -12,7 +12,7 @@
                 <a href="<%= creator.link %>" class="ajax">
                     <span class="commenter_first_name"><%= creator.first_name %></span> <%= creator.last_name %>
                 </a>
-                <small class="text-muted float-right"><%= commentcreated.format("%d-%m-%Y в %H:%M").to_string() %></small>
+                <small class="text-muted float-right"><%= comment.created.format("%d-%m-%Y в %H:%M").to_string() %></small>
             </h5>
 
             <% if comment.sticker_id.is_some() { %>
