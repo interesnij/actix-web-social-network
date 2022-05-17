@@ -93,8 +93,8 @@
             <% include!("anon_reply.stpl"); %>
           <% } %>
         <% } %>
-        <% if page_has_next > 0 { %>
-          <a class="pointer load_next_list_comments mt-1" data-link="posts/load_replies/<%= comment.id %>/?page=<%= page_has_next %>">Показать еще ответы</a>
+        <% if next_page_number > 0 { %>
+          <a class="pointer load_next_list_comments mt-1" data-link="posts/load_replies/<%= comment.id %>/?page=<%= next_page_number %>">Показать еще ответы</a>
         <% } %>
     </span>
 </div>

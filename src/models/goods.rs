@@ -2480,7 +2480,7 @@ impl GoodComment {
     pub fn count_replies(&self) -> usize {
         return self.get_replies().len();
     }
-    pub fn get_replies_ru(&self) -> String {
+    pub fn count_replies_ru(&self) -> String {
         use crate::utils::get_count_for_ru;
 
         let count_usize: usize = self.count_replies() as usize;

@@ -25,8 +25,8 @@
     <% } %>
   <% } %>
 
-  <% if page_has_next > 0 { %>
-    <a class="pointer load_next_list_comments mt-1" data-link="/<%= item.get_folder() %>/load_comments/<%= item.id %>/?page=<%= page_has_next %>">Показать еще комментарии</a>
+  <% if next_page_number > 0 { %>
+    <a class="pointer load_next_list_comments mt-1" data-link="/<%= item.get_folder() %>/load_comments/<%= item.id %>/?page=<%= next_page_number %>">Показать еще комментарии</a>
   <% } %>
 </span>
 
