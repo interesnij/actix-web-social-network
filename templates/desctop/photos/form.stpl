@@ -1,4 +1,4 @@
-<% if is_user_can_create_photos { %>
+<% if object.get_list().is_user_can_create_el(request_user.id) { %>
 <span>
 <% if object.description.is_some() { %>
   <%= object.description.as_deref().unwrap() %>

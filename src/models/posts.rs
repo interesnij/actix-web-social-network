@@ -23,7 +23,6 @@ use crate::models::{
     CommunityPostListPosition,
     Photo,
     Video,
-    Post,
     Message,
 };
 use actix_web::web::Json;

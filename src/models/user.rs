@@ -180,6 +180,7 @@ impl User {
     pub fn reposts(&self) -> Vec<Post> {
         use crate::schema::user_reposts::dsl::user_reposts;
         use crate::schema::posts::dsl::posts;
+        use crate::models::UserRepost;
 
         let _connection = establish_connection();
         let item_reposts = user_reposts
@@ -201,6 +202,7 @@ impl User {
     pub fn window_reposts(&self) -> Vec<Post> {
         use crate::schema::user_reposts::dsl::user_reposts;
         use crate::schema::posts::dsl::posts;
+        use crate::models::UserRepost;
 
         let _connection = establish_connection();
         let item_reposts = user_reposts
