@@ -24,10 +24,10 @@ pub fn routes(cfg: &mut web::ServiceConfig) {
     .configure(post_routes)
     .configure(chat_routes)
     .configure(docs_routes)
-    //.configure(goods_routes)
+    .configure(goods_routes)
     .configure(music_routes)
     .configure(photos_routes)
     .configure(survey_routes)
-    //.configure(video_routes)
+    .configure(video_routes)
     ;
 }
