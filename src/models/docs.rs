@@ -126,7 +126,7 @@ impl DocList {
     }
     pub fn get_code(&self) -> String {
         return "ldo".to_string() + &self.get_str_id();
-    }
+    } 
 
     pub fn count_copy(&self) -> String {
         if self.copy == 0 {

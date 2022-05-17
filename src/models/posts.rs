@@ -1780,6 +1780,9 @@ impl Post {
     pub fn get_code(&self) -> String {
         return "pos".to_string() + &self.get_str_id();
     }
+    pub fn get_folder(&self) -> String {
+        return "posts".to_string();
+    }
     pub fn get_longest_penalties(&self) -> String {
         use crate::schema::moderated_penalties::dsl::moderated_penalties;
         use crate::models::ModeratedPenaltie;

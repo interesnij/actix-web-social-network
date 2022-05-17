@@ -1773,6 +1773,9 @@ impl Good {
     pub fn get_code(&self) -> String {
         return "goo".to_string() + &self.get_str_id();
     }
+    pub fn get_folder(&self) -> String {
+        return "goods".to_string();
+    }
     pub fn get_image(&self) -> String {
         if self.image.is_some() {
             return "<img class='image_fit opacity-100' src='".to_string() +  &self.image.as_deref().unwrap().to_string() + &"' alt='img' />".to_string();

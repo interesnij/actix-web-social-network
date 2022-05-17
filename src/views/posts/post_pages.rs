@@ -393,7 +393,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, post_id: web
             #[template(path = "desctop/generic/items/comment/comments.stpl")]
             struct Template {
                 list:                        PostList,
-                object:                      Post,
+                item:                        Post,
                 request_user:                User,
                 is_user_can_see_post_list:   bool,
                 is_user_can_see_comments:    bool,
@@ -403,7 +403,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, post_id: web
             }
             let body = Template {
                 list:                       _list,
-                object:                     _post,
+                item:                       _post,
                 request_user:               _request_user,
                 is_user_can_see_post_list:   is_user_can_see_post_list,
                 is_user_can_see_comments:    is_user_can_see_comments,
@@ -420,7 +420,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, post_id: web
             #[template(path = "mobile/generic/items/comment/comments.stpl")]
             struct Template {
                 list:                        PostList,
-                object:                      Post,
+                item:                        Post,
                 request_user:                User,
                 is_user_can_see_post_list:   bool,
                 is_user_can_see_comments:    bool,
@@ -430,7 +430,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, post_id: web
             }
             let body = Template {
                 list:                        _list,
-                object:                      _post,
+                item:                        _post,
                 request_user:                _request_user,
                 is_user_can_see_post_list:   is_user_can_see_post_list,
                 is_user_can_see_comments:    is_user_can_see_comments,
@@ -465,7 +465,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, post_id: web
             #[template(path = "desctop/generic/items/comment/anon_comments.stpl")]
             struct Template {
                 list:                      PostList,
-                object:                    Post,
+                item:                      Post,
                 is_user_can_see_post_list: bool,
                 is_user_can_see_comments:  bool,
                 object_list:               Vec<PostComment>,
@@ -473,7 +473,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, post_id: web
             }
             let body = Template {
                 list:                      _list,
-                object:                    _post,
+                item:                      _post,
                 is_user_can_see_post_list: is_user_can_see_post_list,
                 is_user_can_see_comments:  is_user_can_see_comments,
                 object_list:               object_list,
@@ -488,7 +488,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, post_id: web
             #[template(path = "mobile/generic/items/comment/anon_comments.stpl")]
             struct Template {
                 list:                      PostList,
-                object:                    Post,
+                item:                      Post,
                 is_user_can_see_post_list: bool,
                 is_user_can_see_comments:  bool,
                 object_list:               Vec<PostComment>,
@@ -496,7 +496,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, post_id: web
             }
             let body = Template {
                 list:                      _list,
-                object:                     _post,
+                item:                      _post,
                 is_user_can_see_post_list: is_user_can_see_post_list,
                 is_user_can_see_comments:  is_user_can_see_comments,
                 object_list:               object_list,

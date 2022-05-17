@@ -30,7 +30,7 @@
 
         <div class="">
             <div class="row">
-                <div class="col" data-type="<%= prefix %><%= reply.id %>" data-subtype="comment">
+                <div class="col" data-type="<%= reply.get_code() %>" data-subtype="comment">
                     <span class="like btn_default" title="Нравится">
                         <svg class="svg_s_info" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M0 0h24v24H0V0zm0 0h24v24H0V0z" fill="none"></path>

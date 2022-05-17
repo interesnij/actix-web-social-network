@@ -3,10 +3,20 @@ on('body', 'click', '.load_comments_list', function() {
 
   parent = this.parentElement;
   type = parent.getAttribute('data-type');
-  if (type.indexOf('lpo') !== -1) {
+  if (type.indexOf('pos') !== -1) {
       url = "/posts/load_comments/" + type.slice(3) + "/";
   }
-  block = this.parentElement.parentElement.parentElement.parentElement;
+  else if (type.indexOf('goo') !== -1) {
+      url = "/goods/load_comments/" + type.slice(3) + "/";
+  }
+  else if (type.indexOf('vid') !== -1) {
+      url = "/goods/load_comments/" + type.slice(3) + "/";
+  }
+  else if (type.indexOf('pho') !== -1) {
+      url = "/photos/load_comments/" + type.slice(3) + "/";
+  }
+
+  block = parent.parentElement.parentElement.parentElement;
   block_comments = block.querySelector(".load_comments");
   if (block_comments.classList.contains("show")){
     block_comments.classList.remove("show")
