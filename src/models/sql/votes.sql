@@ -140,3 +140,125 @@ CREATE TABLE support_user_votes (
       FOREIGN KEY(manager_id)
           REFERENCES users(id)
 );
+
+-----Reposts----
+-------------------------
+CREATE TABLE photo_reposts (
+  id           SERIAL PRIMARY KEY,
+  photo_id     INT NOT NULL,
+  user_id      INT,
+  community_id INT,
+  message      BOOLEAN NOT NULL DEFAULT FALSE,
+
+  CONSTRAINT fk_photo_reposts_user
+      FOREIGN KEY(photo_id)
+          REFERENCES photos(id),
+
+  CONSTRAINT fk_photo_reposts_user
+      FOREIGN KEY(user_id)
+          REFERENCES users(id),
+
+  CONSTRAINT fk_photo_reposts_community
+      FOREIGN KEY(community_id)
+          REFERENCES communitys(id)
+);
+
+CREATE TABLE good_reposts (
+  id           SERIAL PRIMARY KEY,
+  good_id      INT NOT NULL,
+  user_id      INT,
+  community_id INT,
+  message      BOOLEAN NOT NULL DEFAULT FALSE,
+
+  CONSTRAINT fk_good_reposts_user
+      FOREIGN KEY(good_id)
+          REFERENCES goods(id),
+
+  CONSTRAINT fk_good_reposts_user
+      FOREIGN KEY(user_id)
+          REFERENCES users(id),
+
+  CONSTRAINT fk_good_reposts_community
+      FOREIGN KEY(community_id)
+          REFERENCES communitys(id)
+);
+
+CREATE TABLE video_reposts (
+  id           SERIAL PRIMARY KEY,
+  video_id      INT NOT NULL,
+  user_id      INT,
+  community_id INT,
+  message      BOOLEAN NOT NULL DEFAULT FALSE,
+
+  CONSTRAINT fk_video_reposts_user
+      FOREIGN KEY(video_id)
+          REFERENCES videos(id),
+
+  CONSTRAINT fk_video_reposts_user
+      FOREIGN KEY(user_id)
+          REFERENCES users(id),
+
+  CONSTRAINT fk_video_reposts_community
+      FOREIGN KEY(community_id)
+          REFERENCES communitys(id)
+);
+
+CREATE TABLE doc_reposts (
+  id           SERIAL PRIMARY KEY,
+  doc_id       INT NOT NULL,
+  user_id      INT,
+  community_id INT,
+  message      BOOLEAN NOT NULL DEFAULT FALSE,
+
+  CONSTRAINT fk_doc_reposts_user
+      FOREIGN KEY(doc_id)
+          REFERENCES docs(id),
+
+  CONSTRAINT fk_doc_reposts_user
+      FOREIGN KEY(user_id)
+          REFERENCES users(id),
+
+  CONSTRAINT fk_doc_reposts_community
+      FOREIGN KEY(community_id)
+          REFERENCES communitys(id)
+);
+
+CREATE TABLE music_reposts (
+  id           SERIAL PRIMARY KEY,
+  music_id     INT NOT NULL,
+  user_id      INT,
+  community_id INT,
+  message      BOOLEAN NOT NULL DEFAULT FALSE,
+
+  CONSTRAINT fk_music_reposts_user
+      FOREIGN KEY(music_id)
+          REFERENCES musics(id),
+
+  CONSTRAINT fk_music_reposts_user
+      FOREIGN KEY(user_id)
+          REFERENCES users(id),
+
+  CONSTRAINT fk_music_reposts_community
+      FOREIGN KEY(community_id)
+          REFERENCES communitys(id)
+);
+
+CREATE TABLE survey_reposts (
+  id           SERIAL PRIMARY KEY,
+  survey_id    INT NOT NULL,
+  user_id      INT,
+  community_id INT,
+  message      BOOLEAN NOT NULL DEFAULT FALSE,
+
+  CONSTRAINT fk_survey_reposts_user
+      FOREIGN KEY(survey_id)
+          REFERENCES surveys(id),
+
+  CONSTRAINT fk_survey_reposts_user
+      FOREIGN KEY(user_id)
+          REFERENCES users(id),
+
+  CONSTRAINT fk_survey_reposts_community
+      FOREIGN KEY(community_id)
+          REFERENCES communitys(id)
+);
