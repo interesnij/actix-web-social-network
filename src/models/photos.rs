@@ -198,6 +198,7 @@ impl PhotoList {
     }
     pub fn reposts(&self) -> Vec<Post> {
         use crate::schema::photo_list_reposts::dsl::photo_list_reposts;
+        use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
         let item_reposts = photo_list_reposts
@@ -218,6 +219,7 @@ impl PhotoList {
     }
     pub fn window_reposts(&self) -> Vec<Post> {
         use crate::schema::photo_list_reposts::dsl::photo_list_reposts;
+        use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
         let item_reposts = photo_list_reposts
@@ -1908,6 +1910,7 @@ impl Photo {
     }
     pub fn reposts(&self) -> Vec<Post> {
         use crate::schema::photo_reposts::dsl::photo_reposts;
+        use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
         let item_reposts = photo_reposts
@@ -1928,6 +1931,7 @@ impl Photo {
     }
     pub fn window_reposts(&self) -> Vec<Post> {
         use crate::schema::photo_reposts::dsl::photo_reposts;
+        use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
         let item_reposts = photo_reposts

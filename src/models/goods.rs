@@ -198,6 +198,7 @@ impl GoodList {
     }
     pub fn reposts(&self) -> Vec<Post> {
         use crate::schema::good_list_reposts::dsl::good_list_reposts;
+        use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
         let item_reposts = good_list_reposts
@@ -218,6 +219,7 @@ impl GoodList {
     }
     pub fn window_reposts(&self) -> Vec<Post> {
         use crate::schema::good_list_reposts::dsl::good_list_reposts;
+        use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
         let item_reposts = good_list_reposts
@@ -1898,6 +1900,7 @@ impl Good {
     }
     pub fn reposts(&self) -> Vec<Post> {
         use crate::schema::good_reposts::dsl::good_reposts;
+        use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
         let item_reposts = good_reposts
@@ -1918,6 +1921,7 @@ impl Good {
     }
     pub fn window_reposts(&self) -> Vec<Post> {
         use crate::schema::good_reposts::dsl::good_reposts;
+        use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
         let item_reposts = good_reposts

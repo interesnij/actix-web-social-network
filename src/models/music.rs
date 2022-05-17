@@ -283,6 +283,7 @@ impl MusicList {
     }
     pub fn reposts(&self) -> Vec<Post> {
         use crate::schema::music_list_reposts::dsl::music_list_reposts;
+        use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
         let item_reposts = music_list_reposts
@@ -303,6 +304,7 @@ impl MusicList {
     }
     pub fn window_reposts(&self) -> Vec<Post> {
         use crate::schema::music_list_reposts::dsl::music_list_reposts;
+        use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
         let item_reposts = music_list_reposts
@@ -1636,6 +1638,7 @@ impl Music {
     }
     pub fn reposts(&self) -> Vec<Post> {
         use crate::schema::music_reposts::dsl::music_reposts;
+        use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
         let item_reposts = music_reposts
@@ -1656,6 +1659,7 @@ impl Music {
     }
     pub fn window_reposts(&self) -> Vec<Post> {
         use crate::schema::music_reposts::dsl::music_reposts;
+        use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
         let item_reposts = music_reposts

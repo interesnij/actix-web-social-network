@@ -216,6 +216,7 @@ impl PostList {
     }
     pub fn reposts(&self) -> Vec<Post> {
         use crate::schema::post_list_reposts::dsl::post_list_reposts;
+        use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
         let item_reposts = post_list_reposts
@@ -236,6 +237,7 @@ impl PostList {
     }
     pub fn window_reposts(&self) -> Vec<Post> {
         use crate::schema::post_list_reposts::dsl::post_list_reposts;
+        use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
         let item_reposts = post_list_reposts

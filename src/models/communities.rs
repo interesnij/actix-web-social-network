@@ -180,7 +180,6 @@ impl Community {
 
     pub fn message_reposts_count(&self) -> String {
         use crate::schema::community_reposts::dsl::community_reposts;
-        use crate::models::CommunityRepost;
 
         let _connection = establish_connection();
 
@@ -200,7 +199,7 @@ impl Community {
     }
     pub fn reposts(&self) -> Vec<Post> {
         use crate::schema::community_reposts::dsl::community_reposts;
-        use crate::models::CommunityRepost;
+        use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
         let item_reposts = community_reposts
@@ -221,7 +220,7 @@ impl Community {
     }
     pub fn window_reposts(&self) -> Vec<Post> {
         use crate::schema::community_reposts::dsl::community_reposts;
-        use crate::models::CommunityRepost;
+        use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
         let item_reposts = community_reposts

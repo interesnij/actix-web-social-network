@@ -179,6 +179,7 @@ impl SurveyList {
     }
     pub fn reposts(&self) -> Vec<Post> {
         use crate::schema::survey_list_reposts::dsl::survey_list_reposts;
+        use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
         let item_reposts = survey_list_reposts
@@ -199,6 +200,7 @@ impl SurveyList {
     }
     pub fn window_reposts(&self) -> Vec<Post> {
         use crate::schema::survey_list_reposts::dsl::survey_list_reposts;
+        use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
         let item_reposts = survey_list_reposts
@@ -1436,6 +1438,7 @@ impl Survey {
     }
     pub fn reposts(&self) -> Vec<Post> {
         use crate::schema::survey_reposts::dsl::survey_reposts;
+        use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
         let item_reposts = survey_reposts
@@ -1456,6 +1459,7 @@ impl Survey {
     }
     pub fn window_reposts(&self) -> Vec<Post> {
         use crate::schema::survey_reposts::dsl::survey_reposts;
+        use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
         let item_reposts = survey_reposts

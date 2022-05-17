@@ -157,6 +157,7 @@ impl DocList {
     }
     pub fn reposts(&self) -> Vec<Post> {
         use crate::schema::doc_list_reposts::dsl::doc_list_reposts;
+        use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
         let item_reposts = doc_list_reposts
@@ -177,6 +178,7 @@ impl DocList {
     }
     pub fn window_reposts(&self) -> Vec<Post> {
         use crate::schema::doc_list_reposts::dsl::doc_list_reposts;
+        use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
         let item_reposts = doc_list_reposts
@@ -1440,6 +1442,7 @@ impl Doc {
     }
     pub fn reposts(&self) -> Vec<Post> {
         use crate::schema::doc_reposts::dsl::doc_reposts;
+        use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
         let item_reposts = doc_reposts
@@ -1460,6 +1463,7 @@ impl Doc {
     }
     pub fn window_reposts(&self) -> Vec<Post> {
         use crate::schema::doc_reposts::dsl::doc_reposts;
+        use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
         let item_reposts = doc_reposts
