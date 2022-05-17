@@ -14,10 +14,12 @@ use crate::utils::{
     get_post_list,
     get_post,
     get_post_comment,
+    get_community_permission,
+    get_user_permission,
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::{User, PostList, Post, Community};
+use crate::models::{User, PostList, Post, PostComment, Community};
 use serde::{Deserialize, Serialize};
 
 use std::str;
