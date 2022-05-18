@@ -589,7 +589,7 @@ pub async fn add_reply(session: Session, mut payload: Multipart, _id: web::Path<
         let new_comment = item.create_comment(
             &_request_user,
             form.attach,
-            comment.id,
+            Some(comment.id),
             form.content,
             form.sticker_id,
         );
