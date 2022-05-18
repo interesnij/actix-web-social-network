@@ -66,7 +66,10 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
 
         let (type_exists, comment_id, types) = get_type(req);
         if type_exists == false {
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+            return Json(JsonCommentResponse {
+                content: None,
+                attach:  None,
+            })
         }
         else {
             if types == "pos".to_string() {
@@ -86,7 +89,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                 return Json(JsonCommentResponse {
                     content: edited_comment.content,
                     attach:  edited_comment.attach,
-                });
+                })
             }
             else if types == "goo".to_string() {
                 use crate::utils::get_good_comment;
@@ -106,7 +109,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                 return Json(JsonCommentResponse {
                     content: edited_comment.content,
                     attach:  edited_comment.attach,
-                });
+                })
             }
             else if types == "pho".to_string() {
                 use crate::utils::get_photo_comment;
@@ -126,7 +129,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                 return Json(JsonCommentResponse {
                     content: edited_comment.content,
                     attach:  edited_comment.attach,
-                });
+                })
             }
             else if types == "vid".to_string() {
                 use crate::utils::get_video_comment;
@@ -146,19 +149,19 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                 return Json(JsonCommentResponse {
                     content: edited_comment.content,
                     attach:  edited_comment.attach,
-                });
+                })
             }
             else {
                 return Json(JsonCommentResponse {
                     content: None,
                     attach:  None,
-                });
+                })
             }
         }
     } else {
         return Json(JsonCommentResponse {
             content: None,
             attach:  None,
-        });
+        })
     }
 }
