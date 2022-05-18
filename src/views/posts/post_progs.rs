@@ -41,7 +41,7 @@ pub fn post_progs_urls(config: &mut web::ServiceConfig) {
     config.route("/posts/add_user_post/{id}/", web::post().to(add_user_post));
     config.route("/posts/add_community_post/{id}/", web::post().to(add_community_post));
     config.route("/posts/add_comment/{id}/", web::post().to(add_comment));
-    config.route("/posts/reply_comment/{id}/", web::post().to(reply_comment));
+    config.route("/posts/add_reply/{id}/", web::post().to(add_reply));
 }
 
 pub async fn add_user_post_list(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
