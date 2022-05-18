@@ -25,7 +25,7 @@ pub fn progs_routes(config: &mut web::ServiceConfig) {
     config.route("/users/progs/delete_comment/", web::get().to(delete_comment));
     config.route("/users/progs/recover_comment/", web::get().to(recover_comment));
 
-    config.route("/users/progs/edit_comment/", web::post().to(recover_comment));
+    config.route("/users/progs/edit_comment/", web::post().to(edit_comment));
 }
 
 pub fn get_type(req: HttpRequest) -> (bool, i32, String) {
@@ -62,7 +62,6 @@ pub struct JsonResponse {
     pub info: String,
 }
 
-//#[post("/users/progs/edit_comment/")]
 pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multipart) -> web::Json<JsonCommentResponse> {
 
     if is_signed_in(&session) {

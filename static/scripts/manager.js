@@ -27,7 +27,7 @@ on('#ajax', 'click', '#send_manager_messages_btn', function() {
     this.disabled = true;
   };
   $input = document.createElement("input");
-  $input.setAttribute("name", "text");
+  $input.setAttribute("name", "content");
   $input.setAttribute("type", "hidden");
   $input.classList.add("input_text");
   $input.value = _text;

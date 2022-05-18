@@ -606,7 +606,7 @@ function send_comment(form, block, link) {
   };
 
   $input = document.createElement("input");
-  $input.setAttribute("name", "text");
+  $input.setAttribute("name", "content");
   $input.setAttribute("type", "hidden");
   $input.classList.add("type_hidden");
   $input.value = _text;

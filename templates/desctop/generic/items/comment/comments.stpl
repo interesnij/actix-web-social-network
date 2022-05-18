@@ -32,7 +32,6 @@
 
 <div>
   <form>
-      <input type="hidden" name="item">
       <div class="row img_block comment_form check_mesage_form" style="margin:5px"></div>
 
       <div class="input-group input-group-sm">

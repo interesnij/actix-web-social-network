@@ -127,7 +127,6 @@
 
                     <div style="display:none;margin-left:-50px;">
                         <form>
-                            <input type="hidden" name="comment" value="<%= reply.get_code() %>">
                             <div class="row img_block parent_form check_mesage_form" style="margin:5px"></div>
 
                             <div class="input-group input-group-sm">
@@ -157,7 +156,7 @@
                                     <div class="hide_block_menu dropdown-menu smile_dropdown_menu" style="left: -200px;"></div>
                                 </div>
                                 <div class="input-group-prepend">
-                                    <button class="input-group-text px-1 pointer reply_parent_btn" type="button">
+                                    <button data-types="<%= comment.get_code() %>" class="input-group-text px-1 pointer reply_parent_btn" type="button">
                                         <svg class="svg_info svg_default" viewBox="0 0 24 24" fill="currentColor">
                                             <path d="M0 0h24v24H0V0z" fill="none" />
                                             <path d="M4.01 6.03l7.51 3.22-7.52-1 .01-2.22m7.5 8.72L4 17.97v-2.22l7.51-1M2.01 3L2 10l15 2-15 2 .01 7L23 12 2.01 3z" />
