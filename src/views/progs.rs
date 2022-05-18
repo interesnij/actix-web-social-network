@@ -11,7 +11,7 @@ use actix_web::{
 };
 use std::borrow::BorrowMut;
 use actix_multipart::Multipart;
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 use crate::utils::{
     is_signed_in,
     establish_connection,
