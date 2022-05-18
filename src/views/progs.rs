@@ -34,7 +34,7 @@ pub fn get_type(req: HttpRequest) -> (bool, i32, String) {
             let pk: i32 = item[3..].parse().unwrap();
             let code = &item[..3].to_string();
 
-            return (true, pk, code);
+            return (true, pk, code.to_string());
         }
         else {
             return (false, 0, "".to_string());
