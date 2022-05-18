@@ -559,7 +559,7 @@ pub async fn add_reply(session: Session, mut payload: Multipart, _id: web::Path<
         let _request_user = get_request_user_data(session);
         let _request_user_id = &_request_user.id;
         let comment = get_post_comment(*_id);
-        let item = get_item(comment.post_id);
+        let item = get_post(comment.post_id);
         let list = item.get_list();
         let mut is_open = false;
         let mut text = "".to_string();
