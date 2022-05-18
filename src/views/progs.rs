@@ -85,7 +85,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                 let item = get_post_comment(comment_id);
 
                 diesel::update(&item)
-                    .set(edited_comment)
+                    .set(&edited_comment)
                     .get_result::<PostComment>(&_connection)
                     .expect("Error.");
                 return Json(JsonCommentResponse {
@@ -105,7 +105,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                 };
 
                 diesel::update(&item)
-                    .set(edited_comment)
+                    .set(&edited_comment)
                     .get_result::<GoodComment>(&_connection)
                     .expect("Error.");
                 return Json(JsonCommentResponse {
@@ -125,7 +125,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                 };
 
                 diesel::update(&item)
-                    .set(edited_comment)
+                    .set(&edited_comment)
                     .get_result::<PhotoComment>(&_connection)
                     .expect("Error.");
                 return Json(JsonCommentResponse {
@@ -145,7 +145,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                 };
 
                 diesel::update(&item)
-                    .set(edited_comment)
+                    .set(&edited_comment)
                     .get_result::<VideoComment>(&_connection)
                     .expect("Error.");
                 return Json(JsonCommentResponse {
