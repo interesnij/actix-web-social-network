@@ -1946,7 +1946,7 @@ impl Good {
     }
 
     pub fn create_comment(&self, user: &User, attach: Option<String>,
-        parent_id: Option<i32>, content: Option<String>, sticker_id: Option<i32>) -> VideoComment {
+        parent_id: Option<i32>, content: Option<String>, sticker_id: Option<i32>) -> GoodComment {
 
         use crate::schema::good_comments::dsl::good_comments;
         use crate::schema::goods::dsl::goods;
