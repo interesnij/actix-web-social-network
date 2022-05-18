@@ -1662,6 +1662,59 @@ impl GoodList {
             return self.user_id == user_id;
         }
     }
+    pub fn create_good(&self, title: String, community_id: Option<i32>, category_id: i32,
+        user_id: i32, price: Option<i32>, description: Option<String>,
+        image: Option<String>, comment_enabled: bool, votes_on: bool) -> Good {
+
+        let _connection = establish_connection();
+
+        diesel::update(&*self)
+          .set(schema::good_lists::count.eq(self.count + 1))
+          .get_result::<GoodList>(&_connection)
+          .expect("Error.");
+
+        let new_good_form = NewGood {
+            title: title,
+            community_id: community_id,
+            category_id: category_id,
+            user_id: user_id,
+            good_list_id: self.id,
+            price: price,
+            types: "a".to_string(),
+            description: description,
+            image: image,
+            comment_enabled: comment_enabled,
+            votes_on: votes_on,
+            votes_on: true,
+
+            created: chrono::Local::now().naive_utc(),
+            comment: 0,
+            view: 0,
+            liked: 0,
+            disliked: 0,
+            repost: 0,
+            copy: 0,
+            position: (self.count).try_into().unwrap(),
+        };
+        let new_good = diesel::insert_into(schema::goods::table)
+            .values(&new_good_form)
+            .get_result::<Good>(&_connection)
+            .expect("Error.");
+
+        if community_id.is_some() {
+            use crate::utils::get_community;
+            let community = self.get_community();
+            community.plus_goods(1);
+            return new_good;
+        }
+        else {
+            use crate::utils::get_user;
+
+            let creator = get_user(user_id);
+            creator.plus_goods(1);
+            return new_good;
+        }
+    }
 }
 /////// Good //////
 
@@ -1760,60 +1813,6 @@ impl Good {
     }
     pub fn is_good(&self) -> bool {
         return true;
-    }
-
-    pub fn create_good(&self, title: String, community_id: Option<i32>, category_id: i32,
-        user_id: i32, price: Option<i32>, description: Option<String>,
-        image: Option<String>, comment_enabled: bool, votes_on: bool) -> Good {
-
-        let _connection = establish_connection();
-
-        diesel::update(&*self)
-          .set(schema::good_lists::count.eq(self.count + 1))
-          .get_result::<GoodList>(&_connection)
-          .expect("Error.");
-
-        let new_good_form = NewGood {
-            title: title,
-            community_id: community_id,
-            category_id: category_id,
-            user_id: user_id,
-            good_list_id: self.id,
-            price: price,
-            types: "a".to_string(),
-            description: description,
-            image: image,
-            comment_enabled: comment_enabled,
-            votes_on: votes_on,
-            votes_on: true,
-
-            created: chrono::Local::now().naive_utc(),
-            comment: 0,
-            view: 0,
-            liked: 0,
-            disliked: 0,
-            repost: 0,
-            copy: 0,
-            position: (self.count).try_into().unwrap(),
-        };
-        let new_good = diesel::insert_into(schema::goods::table)
-            .values(&new_good_form)
-            .get_result::<Good>(&_connection)
-            .expect("Error.");
-
-        if community_id.is_some() {
-            use crate::utils::get_community;
-            let community = self.get_community();
-            community.plus_goods(1);
-            return new_good;
-        }
-        else {
-            use crate::utils::get_user;
-
-            let creator = get_user(user_id);
-            creator.plus_goods(1);
-            return new_good;
-        }
     }
 
     pub fn edit_good(&self, title: String, price: Option<i32>,
