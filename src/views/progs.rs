@@ -1,12 +1,10 @@
-use diesel::prelude::*;
 use crate::schema;
 use actix_web::{
     HttpRequest,
     HttpResponse,
-    error::InternalError,
-    http::StatusCode,
     web,
     post,
+    get,
     web::Json,
 };
 use std::borrow::BorrowMut;
@@ -18,8 +16,6 @@ use crate::utils::{
     get_request_user_data,
 };
 use actix_session::Session;
-use sailfish::TemplateOnce;
-use crate::models::User;
 
 
 pub fn progs_routes(config: &mut web::ServiceConfig) {
@@ -54,6 +50,10 @@ pub fn get_type(req: HttpRequest) -> (bool, i32, String) {
 pub struct JsonCommentResponse {
     pub content: Option<String>,
     pub attach:  Option<String>,
+}
+#[derive(Deserialize, Serialize)]
+pub struct JsonResponse {
+    pub info: String,
 }
 
 #[post("/edit_comment/")]
@@ -166,5 +166,67 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
             content: None,
             attach:  None,
         })
+    }
+}
+
+#[get("/delete_comment/")]
+pub async fn delete_comment(session: Session, req: HttpRequest) -> web::Json<JsonResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let (type_exists, comment_id, types) = get_type(req);
+        if type_exists == false {
+            return Json(JsonResponse {info: "Ошибка доступа"})
+        }
+        else {
+            if types == "pos".to_string() {
+                use crate::utils::get_post_comment;
+
+                let item = get_post_comment(comment_id);
+                if item.delete_item() {
+                    return Json(JsonResponse {info: "ок".to_string()})
+                }
+                else {
+                    return Json(JsonResponse {info: "Ошибка доступа"})
+                }
+            }
+            else if types == "goo".to_string() {
+                use crate::utils::get_good_comment;
+
+                let item = get_good_comment(comment_id);
+                if item.delete_item() {
+                    return Json(JsonResponse {info: "ок".to_string()})
+                }
+                else {
+                    return Json(JsonResponse {info: "Ошибка доступа"})
+                }
+            }
+            else if types == "pho".to_string() {
+                use crate::utils::get_photo_comment;
+
+                let item = get_photo_comment(comment_id);
+                if item.delete_item() {
+                    return Json(JsonResponse {info: "ок".to_string()})
+                }
+                else {
+                    return Json(JsonResponse {info: "Ошибка доступа"})
+                }
+            }
+            else if types == "vid".to_string() {
+                use crate::utils::get_video_comment;
+
+                let item = get_video_comment(comment_id);
+                if item.delete_item() {
+                    return Json(JsonResponse {info: "ок".to_string()})
+                }
+                else {
+                    return Json(JsonResponse {info: "Ошибка доступа"})
+                }
+            }
+            else {
+                return Json(JsonResponse {info: "Ошибка доступа"})
+            }
+        }
+    } else {
+        return Json(JsonResponse {info: "Ошибка доступа"})
     }
 }
