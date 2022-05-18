@@ -11,6 +11,7 @@ use serde::Deserialize;
 use crate::utils::{
     is_signed_in,
     establish_connection,
+    get_request_user_data,
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
