@@ -56,6 +56,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
     if is_signed_in(&session) {
         use crate::utils::comment_form;
         use crate::models::EditGoodComment;
+        let _connection = establish_connection();
 
         let _request_user = get_request_user_data(session);
         let form = comment_form(payload.borrow_mut()).await;
