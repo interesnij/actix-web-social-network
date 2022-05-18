@@ -1662,7 +1662,7 @@ impl GoodList {
             return self.user_id == user_id;
         }
     }
-    pub fn create_good(&self, title: String, community_id: Option<i32>, category_id: i32,
+    pub fn create_good(&self, title: String, community_id: Option<i32>, category_id: Option<i32>,
         user_id: i32, price: Option<i32>, description: Option<String>,
         image: Option<String>, comment_enabled: bool, votes_on: bool) -> Good {
 
