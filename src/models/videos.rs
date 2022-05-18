@@ -2817,6 +2817,9 @@ impl VideoComment {
             .nth(0)
             .unwrap();
     }
+    pub fn get_list(&self) -> VideoList {
+        return self.get_item().get_list();
+    }
     pub fn get_parent(&self) -> VideoComment {
         use crate::schema::video_comments::dsl::video_comments;
 

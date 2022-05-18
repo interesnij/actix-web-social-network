@@ -2834,6 +2834,9 @@ impl PhotoComment {
             .nth(0)
             .unwrap();
     }
+    pub fn get_list(&self) -> PhotoList {
+        return self.get_item().get_list();
+    }
     pub fn get_parent(&self) -> PhotoComment {
         use crate::schema::photo_comments::dsl::photo_comments;
 

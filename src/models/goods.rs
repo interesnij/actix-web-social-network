@@ -2188,6 +2188,9 @@ impl GoodComment {
             .nth(0)
             .unwrap();
     }
+    pub fn get_list(&self) -> GoodList {
+        return self.get_item().get_list();
+    }
     pub fn get_parent(&self) -> GoodComment {
         use crate::schema::good_comments::dsl::good_comments;
 

@@ -2989,6 +2989,9 @@ impl PostComment {
             .nth(0)
             .unwrap();
     }
+    pub fn get_list(&self) -> PostList {
+        return self.get_item().get_list();
+    }
     pub fn get_parent(&self) -> PostComment {
         use crate::schema::post_comments::dsl::post_comments;
 
