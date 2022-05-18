@@ -1,52 +1,174 @@
-<span class="like like2
-<% if reply.likes().iter().any(|i| i.id==request_user.id) { %>
-  btn_success
-<% } else { %>
-  btn_default
-<% } %>"
-title="Нравится">
-    <svg class="svg_s_info" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M0 0h24v24H0V0zm0 0h24v24H0V0z" fill="none" />
-        <path d="M9 21h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.58 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2zM9 9l4.34-4.34L12 10h9v2l-3 7H9V9zM1 9h4v12H1z" />
-    </svg>
-    <span class="likes_count"><%= reply.likes_count() %></span>
-</span>
+<% let reply_creator = reply.get_commenter(); %>
 
-<span class="comment_like_window">
-  <% if reply.is_have_likes() == true { %>
-<div class="comment_like_pop">
-  <span class="item_likes pointer">Оценили: <span data-count="like"><%= reply.likes_count() %></span> <%= reply.likes_count_ru() %></span>
-  <span style="display: flex;margin-top: 10px;">
-    <% for user in reply.window_likes().iter() { %>
-      <% include!("../../user/voter.stpl"); %>
+<div class="media reply">
+   <a href="<%= reply_creator.link %>" class="ajax">
+     <figure>
+       <%- reply_creator.get_s_avatar() %>
+     </figure>
+   </a>
+    <div class="media-body" style="overflow: inherit;">
+    <h5 class="mt-0">
+        <a href="<%= reply_creator.link %>" class="ajax">
+            <span class="commenter_first_name"><%= reply_creator.first_name %></span> <%= reply_creator.last_name %>
+        </a>
+        <small class="text-muted float-right"><%= reply.created.format("%d-%m-%Y в %H:%M").to_string() %></small>
+    </h5>
+
+    <% if reply.sticker_id.is_some() { %>
+    <% let reply_sticker = reply.get_sticker(); %>
+    <div data-id="<%= reply_sticker.id %>" class="comment_sticker mt-1 pointer show_cticker_info">
+        <img src="<%= reply_sticker.image %>" style="width: 128px;">
+    </div>
+    <% } else { %>
+
+    <span class="comment_text text_support"><%- reply.get_format_text() %></span>
+
+      <% if reply.attach.is_some() { %>
+        <%- reply.get_attach(request_user.id) %>
+      <% } %>
     <% } %>
-  </span>
-</div>
-<% } %>
-</span>
-<span class="dislike dislike2
-<% if reply.dislikes().iter().any(|i| i.id==request_user.id) { %>
-  btn_danger
-<% } else { %>
-  btn_default
-<% } %>"
-  title="Не нравится">
-    <svg viewBox="0 0 24 24" class="svg_s_info" fill="currentColor">
-        <path d="M0 0h24v24H0V0zm0 0h24v24H0V0z" fill="none" />
-        <path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm0 12l-4.34 4.34L12 14H3v-2l3-7h9v10zm4-12h4v12h-4z" />
-    </svg>
-    <span class="dislikes_count"><%= reply.dislikes_count() %></span>
-</span>
 
-<span class="comment_dislike_window">
-<% if reply.is_have_dislikes() { %>
-<div class="comment_dislike_pop">
-<span class="item_dislikes pointer">Не оценили: <span data-count="dislike"><%= reply.dislikes_count() %></span> <%= reply.dislikes_count_ru() %></span>
-<span style="display: flex;margin-top: 10px;">
-  <% for user in reply.window_dislikes().iter() { %>
-    <% include!("../../user/voter.stpl"); %>
-  <% } %>
-  </span>
+        <div class="">
+            <div class="row">
+                <div class="col" data-type="<%= reply.get_code() %>" data-subtype="comment">
+                <span class="like like2
+                <% if reply.likes().iter().any(|i| i.id==request_user.id) { %>
+                  btn_success
+                <% } else { %>
+                  btn_default
+                <% } %>"
+                title="Нравится">
+                    <svg class="svg_s_info" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M0 0h24v24H0V0zm0 0h24v24H0V0z" fill="none" />
+                        <path d="M9 21h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.58 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2zM9 9l4.34-4.34L12 10h9v2l-3 7H9V9zM1 9h4v12H1z" />
+                    </svg>
+                    <span class="likes_count"><%= reply.likes_count() %></span>
+                </span>
+
+                <span class="comment_like_window">
+                  <% if reply.is_have_likes() == true { %>
+                <div class="comment_like_pop">
+                  <span class="item_likes pointer">Оценили: <span data-count="like"><%= reply.likes_count() %></span> <%= reply.likes_count_ru() %></span>
+                  <span style="display: flex;margin-top: 10px;">
+                    <% for user in reply.window_likes().iter() { %>
+                      <% include!("../../user/voter.stpl"); %>
+                    <% } %>
+                  </span>
+                </div>
+                <% } %>
+                </span>
+                <span class="dislike dislike2
+                <% if reply.dislikes().iter().any(|i| i.id==request_user.id) { %>
+                  btn_danger
+                <% } else { %>
+                  btn_default
+                <% } %>"
+                  title="Не нравится">
+                    <svg viewBox="0 0 24 24" class="svg_s_info" fill="currentColor">
+                        <path d="M0 0h24v24H0V0zm0 0h24v24H0V0z" fill="none" />
+                        <path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm0 12l-4.34 4.34L12 14H3v-2l3-7h9v10zm4-12h4v12h-4z" />
+                    </svg>
+                    <span class="dislikes_count"><%= reply.dislikes_count() %></span>
+                </span>
+
+                <span class="comment_dislike_window">
+                <% if reply.is_have_dislikes() { %>
+                <div class="comment_dislike_pop">
+                <span class="item_dislikes pointer">Не оценили: <span data-count="dislike"><%= reply.dislikes_count() %></span> <%= reply.dislikes_count_ru() %></span>
+                <span style="display: flex;margin-top: 10px;">
+                  <% for user in reply.window_dislikes().iter() { %>
+                    <% include!("../../user/voter.stpl"); %>
+                  <% } %>
+                  </span>
+                </div>
+                <% } %>
+                </span>
+
+
+                    <% if request_user.id == reply_creator.id { %>
+                      <% if reply.sticker_id.is_none() { %>
+                    <span class="comment_edit btn_default pointer" style="margin-right:7px" flow="up" tooltip="Редактировать">
+                        <svg class="svg_s_info" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M0 0h24v24H0z" fill="none" />
+                            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+                        </svg>
+                    </span>
+                   <% } %>
+                    <span class="comment_delete btn_default pointer" style="margin-right:7px" flow="up" tooltip="Удалить">
+                        <svg class="svg_s_info" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4h-3.5z" />
+                        </svg>
+                    </span>
+                   <% } else if request_user.perm > 10 { %>
+                    <span class="create_close btn_default pointer" style="margin-right:7px" flow="up" tooltip="Закрыть">
+                        <svg class="svg_s_info" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M0 0h24v24H0z" fill="none" />
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM4 12c0-4.42 3.58-8 8-8 1.85 0 3.55.63 4.9 1.69L5.69 16.9C4.63 15.55 4 13.85 4 12zm8 8c-1.85 0-3.55-.63-4.9-1.69L18.31 7.1C19.37 8.45 20 10.15 20 12c0 4.42-3.58 8-8 8z" />
+                        </svg>
+                    </span>
+                    <% } else { %>
+                    <span class="create_claim btn_default pointer" style="margin-right:7px" flow="up" tooltip="Пожаловаться">
+                        <svg class="svg_s_info" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M11 15h2v2h-2v-2zm0-8h2v6h-2V7zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />
+                        </svg>
+                    </span>
+                    <% } %>
+
+                    <% if is_user_can_create_comments { %>
+                    <span class="commenter_first_name" style="display:none"><%= reply_creator.first_name %></span>
+                    <span flow="up" tooltip="Ответить" class="content-color-secondary reply_comment" style="font-size:15px;cursor:pointer">
+                        <svg class="svg_s_info" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path d="M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z" />
+                        </svg>
+                    </span>
+                    <% } %>
+
+                    <div style="display:none;margin-left:-50px;">
+                        <form>
+                            <input type="hidden" name="comment" value="<%= reply.get_code() %>">
+                            <div class="row img_block parent_form check_mesage_form" style="margin:5px"></div>
+
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend dropdown files_null">
+                                    <span style="position:relative;height: fit-content;">
+                                        <svg fill="currentColor" style="width: 28px;" class="svg_default pointer input-group-text px-1 rounded-0" viewBox="0 0 24 24">
+                                            <path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z" />
+                                            <path d="M0 0h24v24H0z" fill="none" />
+                                        </svg>
+                                        <div class="dropdown-menu" style="margin-top:-172px;">
+                                            <a class="dropdown-item u_load_comment_photo">Добавить изображение</a>
+                                            <a class="dropdown-item u_load_comment_video">Добавить видеоролик</a>
+                                            <a class="dropdown-item u_load_comment_music">Добавить аудиозапись</a>
+                                            <a class="dropdown-item u_load_comment_doc">Добавить документ</a>
+                                            <a class="dropdown-item u_load_comment_good">Добавить товар</a>
+                                        </div>
+                                    </span>
+                                </div>
+                                <div contenteditable="true" class="form-control text smile_supported comment_text" placeholder="Напишите комментарий"></div>
+                                <div class="input-group-prepend" style="position:relative;height: fit-content;">
+                                    <svg viewBox="0 0 24 24" class="svg_default pointer input-group-text px-1 rounded-0 smile_sticker_dropdown" fill="currentColor">
+                                        <path d="M0 0h24v24H0V0z" fill="none" />
+                                        <circle cx="15.5" cy="9.5" r="1.5" />
+                                        <circle cx="8.5" cy="9.5" r="1.5" />
+                                        <path d="M12 16c-1.48 0-2.75-.81-3.45-2H6.88c.8 2.05 2.79 3.5 5.12 3.5s4.32-1.45 5.12-3.5h-1.67c-.7 1.19-1.97 2-3.45 2zm-.01-14C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />
+                                    </svg>
+                                    <div class="hide_block_menu dropdown-menu smile_dropdown_menu" style="left: -200px;"></div>
+                                </div>
+                                <div class="input-group-prepend">
+                                    <button class="input-group-text px-1 pointer reply_parent_btn" type="button">
+                                        <svg class="svg_info svg_default" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M0 0h24v24H0V0z" fill="none" />
+                                            <path d="M4.01 6.03l7.51 3.22-7.52-1 .01-2.22m7.5 8.72L4 17.97v-2.22l7.51-1M2.01 3L2 10l15 2-15 2 .01 7L23 12 2.01 3z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<% } %>
-</span>
