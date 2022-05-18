@@ -4,7 +4,7 @@ use actix_web::{
     HttpResponse,
     web,
     post,
-    get,
+    //get,
     web::Json,
 };
 use std::borrow::BorrowMut;
@@ -24,6 +24,10 @@ pub fn progs_routes(config: &mut web::ServiceConfig) {
     config.route("/users/progs/dislike_item/", web::get().to(dislike_item));
     config.route("/users/progs/like_comment/", web::get().to(like_comment));
     config.route("/users/progs/dislike_comment/", web::get().to(dislike_comment));
+    config.route("/users/progs/delete_comment/", web::get().to(delete_comment));
+    config.route("/users/progs/recover_comment/", web::get().to(recover_comment));
+
+    config.route("/users/progs/edit_comment/", web::post().to(recover_comment));
 }
 
 pub fn get_type(req: HttpRequest) -> (bool, i32, String) {
@@ -60,7 +64,7 @@ pub struct JsonResponse {
     pub info: String,
 }
 
-#[post("/users/progs/edit_comment/")]
+//#[post("/users/progs/edit_comment/")]
 pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multipart) -> web::Json<JsonCommentResponse> {
 
     if is_signed_in(&session) {
@@ -178,7 +182,6 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
     }
 }
 
-#[get("/users/progs/delete_comment/")]
 pub async fn delete_comment(session: Session, req: HttpRequest) -> web::Json<JsonResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
@@ -240,7 +243,6 @@ pub async fn delete_comment(session: Session, req: HttpRequest) -> web::Json<Jso
     }
 }
 
-#[get("/users/progs/recover_comment/")]
 pub async fn recover_comment(session: Session, req: HttpRequest) -> web::Json<JsonResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
