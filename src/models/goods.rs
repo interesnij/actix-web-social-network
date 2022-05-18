@@ -3097,6 +3097,12 @@ impl GoodComment {
             "b" => "f".to_string(),
             _ => "e".to_string(),
         };
+        let item = self.get_item();
+        diesel::update(&item)
+            .set(schema::goods::comment.eq(item.comment - 1))
+            .get_result::<Good>(&_connection)
+            .expect("E");
+
         diesel::update(self)
             .set(schema::good_comments::types.eq(close_case))
             .get_result::<GoodComment>(&_connection)
@@ -3111,6 +3117,12 @@ impl GoodComment {
             "f" => "b".to_string(),
             _ => "a".to_string(),
         };
+        let item = self.get_item();
+        diesel::update(&item)
+            .set(schema::goods::comment.eq(item.comment + 1))
+            .get_result::<Good>(&_connection)
+            .expect("E");
+
         diesel::update(self)
             .set(schema::good_comments::types.eq(close_case))
             .get_result::<GoodComment>(&_connection)
@@ -3126,6 +3138,12 @@ impl GoodComment {
             "b" => "d".to_string(),
             _ => "c".to_string(),
         };
+        let item = self.get_item();
+        diesel::update(&item)
+            .set(schema::goods::comment.eq(item.comment - 1))
+            .get_result::<Good>(&_connection)
+            .expect("E");
+
         diesel::update(self)
             .set(schema::good_comments::types.eq(close_case))
             .get_result::<GoodComment>(&_connection)
@@ -3140,6 +3158,12 @@ impl GoodComment {
             "d" => "b".to_string(),
             _ => "a".to_string(),
         };
+        let item = self.get_item();
+        diesel::update(&item)
+            .set(schema::goods::comment.eq(item.comment + 1))
+            .get_result::<Good>(&_connection)
+            .expect("E");
+            
         diesel::update(self)
             .set(schema::good_comments::types.eq(close_case))
             .get_result::<GoodComment>(&_connection)

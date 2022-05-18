@@ -3172,6 +3172,12 @@ impl VideoComment {
             "b" => "f".to_string(),
             _ => "e".to_string(),
         };
+        let item = self.get_item();
+        diesel::update(&item)
+            .set(schema::videos::comment.eq(item.comment - 1))
+            .get_result::<Video>(&_connection)
+            .expect("E");
+
         diesel::update(self)
             .set(schema::video_comments::types.eq(close_case))
             .get_result::<VideoComment>(&_connection)
@@ -3186,6 +3192,12 @@ impl VideoComment {
             "f" => "b".to_string(),
             _ => "a".to_string(),
         };
+        let item = self.get_item();
+        diesel::update(&item)
+            .set(schema::videos::comment.eq(item.comment + 1))
+            .get_result::<Video>(&_connection)
+            .expect("E");
+
         diesel::update(self)
             .set(schema::video_comments::types.eq(close_case))
             .get_result::<VideoComment>(&_connection)
@@ -3201,6 +3213,12 @@ impl VideoComment {
             "b" => "d".to_string(),
             _ => "c".to_string(),
         };
+        let item = self.get_item();
+        diesel::update(&item)
+            .set(schema::videos::comment.eq(item.comment - 1))
+            .get_result::<Video>(&_connection)
+            .expect("E");
+
         diesel::update(self)
             .set(schema::video_comments::types.eq(close_case))
             .get_result::<VideoComment>(&_connection)
@@ -3215,6 +3233,12 @@ impl VideoComment {
             "d" => "b".to_string(),
             _ => "a".to_string(),
         };
+        let item = self.get_item();
+        diesel::update(&item)
+            .set(schema::videos::comment.eq(item.comment + 1))
+            .get_result::<Video>(&_connection)
+            .expect("E");
+
         diesel::update(self)
             .set(schema::video_comments::types.eq(close_case))
             .get_result::<VideoComment>(&_connection)

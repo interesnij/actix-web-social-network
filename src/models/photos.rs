@@ -3186,6 +3186,12 @@ impl PhotoComment {
             "b" => "f".to_string(),
             _ => "e".to_string(),
         };
+        let item = self.get_item();
+        diesel::update(&item)
+            .set(schema::photos::comment.eq(item.comment - 1))
+            .get_result::<Photo>(&_connection)
+            .expect("E");
+
         diesel::update(self)
             .set(schema::photo_comments::types.eq(close_case))
             .get_result::<PhotoComment>(&_connection)
@@ -3200,6 +3206,12 @@ impl PhotoComment {
             "f" => "b".to_string(),
             _ => "a".to_string(),
         };
+        let item = self.get_item();
+        diesel::update(&item)
+            .set(schema::photos::comment.eq(item.comment - 1))
+            .get_result::<Photo>(&_connection)
+            .expect("E");
+
         diesel::update(self)
             .set(schema::photo_comments::types.eq(close_case))
             .get_result::<PhotoComment>(&_connection)
@@ -3215,6 +3227,12 @@ impl PhotoComment {
             "b" => "d".to_string(),
             _ => "c".to_string(),
         };
+        let item = self.get_item();
+        diesel::update(&item)
+            .set(schema::photos::comment.eq(item.comment - 1))
+            .get_result::<Photo>(&_connection)
+            .expect("E");
+
         diesel::update(self)
             .set(schema::photo_comments::types.eq(close_case))
             .get_result::<PhotoComment>(&_connection)
@@ -3229,6 +3247,12 @@ impl PhotoComment {
             "d" => "b".to_string(),
             _ => "a".to_string(),
         };
+        let item = self.get_item();
+        diesel::update(&item)
+            .set(schema::photos::comment.eq(item.comment + 1))
+            .get_result::<Photo>(&_connection)
+            .expect("E");
+
         diesel::update(self)
             .set(schema::photo_comments::types.eq(close_case))
             .get_result::<PhotoComment>(&_connection)

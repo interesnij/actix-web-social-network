@@ -3341,6 +3341,12 @@ impl PostComment {
             "b" => "f".to_string(),
             _ => "e".to_string(),
         };
+        let item = self.get_item();
+        diesel::update(&item)
+            .set(schema::posts::comment.eq(item.comment - 1))
+            .get_result::<Post>(&_connection)
+            .expect("E");
+
         diesel::update(self)
             .set(schema::post_comments::types.eq(close_case))
             .get_result::<PostComment>(&_connection)
@@ -3355,6 +3361,12 @@ impl PostComment {
             "f" => "b".to_string(),
             _ => "a".to_string(),
         };
+        let item = self.get_item();
+        diesel::update(&item)
+            .set(schema::posts::comment.eq(item.comment + 1))
+            .get_result::<Post>(&_connection)
+            .expect("E");
+
         diesel::update(self)
             .set(schema::post_comments::types.eq(close_case))
             .get_result::<PostComment>(&_connection)

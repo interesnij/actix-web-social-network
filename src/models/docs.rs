@@ -126,7 +126,7 @@ impl DocList {
     }
     pub fn get_code(&self) -> String {
         return "ldo".to_string() + &self.get_str_id();
-    } 
+    }
 
     pub fn count_copy(&self) -> String {
         if self.copy == 0 {
@@ -1718,6 +1718,63 @@ impl Doc {
         let close_case = match user_types.as_str() {
             "h" => "a",
             "n" => "b",
+            _ => "a",
+        };
+        diesel::update(self)
+            .set(schema::docs::types.eq(close_case))
+            .get_result::<Doc>(&_connection)
+            .expect("E");
+        let list = self.get_list();
+        diesel::update(&list)
+            .set(schema::doc_lists::count.eq(list.count + 1))
+            .get_result::<DocList>(&_connection)
+            .expect("E");
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            community.plus_docs(1);
+        }
+        else {
+            let creator = self.get_creator();
+            creator.plus_docs(1);
+         }
+       return true;
+    }
+
+    pub fn delete_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let delete_case = match user_types.as_str() {
+            "a" => "c",
+            "b" => "m",
+            _ => "c",
+        };
+        diesel::update(self)
+            .set(schema::docs::types.eq(delete_case))
+            .get_result::<Doc>(&_connection)
+            .expect("E");
+        let list = self.get_list();
+        diesel::update(&list)
+            .set(schema::doc_lists::count.eq(list.count - 1))
+            .get_result::<DocList>(&_connection)
+            .expect("E");
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            community.minus_docs(1);
+        }
+        else {
+            let creator = self.get_creator();
+            creator.minus_docs(1);
+        }
+       return true;
+    }
+    pub fn restore_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "c" => "a",
+            "m" => "b",
             _ => "a",
         };
         diesel::update(self)
