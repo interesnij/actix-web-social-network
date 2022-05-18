@@ -1886,15 +1886,6 @@ impl Good {
         return true;
     }
 
-    pub fn is_user_can_edit_delete_item(&self, user_id: i32) -> bool {
-        if self.community_id.is_some() {
-            let community = self.get_community();
-            return community.get_staff_users_ids().iter().any(|&i| i==user_id);
-        }
-        else {
-            return self.user_id == user_id;
-        }
-    }
     pub fn get_code(&self) -> String {
         return "goo".to_string() + &self.get_str_id();
     }
@@ -2429,14 +2420,6 @@ impl Good {
         }
         else {
             return self.disliked.to_string();
-        }
-    }
-    pub fn count_reposts(&self) -> String {
-        if self.repost == 0 {
-            return "".to_string();
-        }
-        else {
-            return self.repost.to_string();
         }
     }
 
