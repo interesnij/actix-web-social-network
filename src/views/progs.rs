@@ -57,7 +57,7 @@ pub struct JsonResponse {
     pub info: String,
 }
 
-#[post("/edit_comment/")]
+#[post("/users/progs/edit_comment/")]
 pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multipart) -> web::Json<JsonCommentResponse> {
 
     if is_signed_in(&session) {
@@ -175,7 +175,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
     }
 }
 
-#[get("/delete_comment/")]
+#[get("/users/progs/delete_comment/")]
 pub async fn delete_comment(session: Session, req: HttpRequest) -> web::Json<JsonResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
@@ -237,7 +237,7 @@ pub async fn delete_comment(session: Session, req: HttpRequest) -> web::Json<Jso
     }
 }
 
-#[get("/recover_comment/")]
+#[get("/users/progs/recover_comment/")]
 pub async fn recover_comment(session: Session, req: HttpRequest) -> web::Json<JsonResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
@@ -299,7 +299,7 @@ pub async fn recover_comment(session: Session, req: HttpRequest) -> web::Json<Js
     }
 }
 
-#[get("/like_comment/")]
+#[get("/users/progs/like_comment/")]
 pub async fn like_comment(session: Session, req: HttpRequest) -> web::Json<JsonReactions> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
@@ -350,7 +350,7 @@ pub async fn like_comment(session: Session, req: HttpRequest) -> web::Json<JsonR
     }
 }
 
-#[get("/dislike_comment/")]
+#[get("/users/progs/dislike_comment/")]
 pub async fn dislike_comment(session: Session, req: HttpRequest) -> web::Json<JsonReactions> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
@@ -402,7 +402,7 @@ pub async fn dislike_comment(session: Session, req: HttpRequest) -> web::Json<Js
 }
 
 
-#[get("/like_item/")]
+#[get("/users/progs/like_item/")]
 pub async fn like_item(session: Session, req: HttpRequest) -> web::Json<JsonReactions> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
@@ -453,7 +453,7 @@ pub async fn like_item(session: Session, req: HttpRequest) -> web::Json<JsonReac
     }
 }
 
-#[get("/dislike_item/")]
+#[get("/users/progs/dislike_item/")]
 pub async fn dislike_item(session: Session, req: HttpRequest) -> web::Json<JsonReactions> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
