@@ -400,3 +400,106 @@ pub async fn dislike_comment(session: Session, req: HttpRequest) -> web::Json<Js
         })
     }
 }
+
+
+#[get("/like_item/")]
+pub async fn like_item(session: Session, req: HttpRequest) -> web::Json<JsonReactions> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let (type_exists, item_id, types) = get_type(req);
+        if type_exists == false {
+            return Json(JsonReactions {
+                like_count: 0,
+                dislike_count: 0,
+            })
+        }
+        else {
+            if types == "pos".to_string() {
+                use crate::utils::get_post;
+
+                let item = get_post(item_id);
+                item.send_like(_request_user.id)
+            }
+            else if types == "goo".to_string() {
+                use crate::utils::get_good;
+
+                let item = get_good(item_id);
+                item.send_like(_request_user.id)
+            }
+            else if types == "pho".to_string() {
+                use crate::utils::get_photo;
+
+                let item = get_photo(item_id);
+                item.send_like(_request_user.id)
+            }
+            else if types == "vid".to_string() {
+                use crate::utils::get_video;
+
+                let item = get_video(video_id);
+                item.send_like(_request_user.id)
+            }
+            else {
+                return Json(JsonReactions {
+                    like_count: 0,
+                    dislike_count: 0,
+                })
+            }
+        }
+    } else {
+        return Json(JsonReactions {
+            like_count: 0,
+            dislike_count: 0,
+        })
+    }
+}
+
+#[get("/dislike_item/")]
+pub async fn dislike_item(session: Session, req: HttpRequest) -> web::Json<JsonReactions> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let (type_exists, item_id, types) = get_type(req);
+        if type_exists == false {
+            return Json(JsonReactions {
+                like_count: 0,
+                dislike_count: 0,
+            })
+        }
+        else {
+            if types == "pos".to_string() {
+                use crate::utils::get_post;
+
+                let item = get_post(item_id);
+                item.send_dislike(_request_user.id)
+            }
+            else if types == "goo".to_string() {
+                use crate::utils::get_good;
+
+                let item = get_good(item_id);
+                item.send_dislike(_request_user.id)
+            }
+            else if types == "pho".to_string() {
+                use crate::utils::get_photo;
+
+                let item = get_photo(item_id);
+                item.send_dislike(_request_user.id)
+            }
+            else if types == "vid".to_string() {
+                use crate::utils::get_video;
+
+                let item = get_video(item_id);
+                item.send_dislike(_request_user.id)
+            }
+            else {
+                return Json(JsonReactions {
+                    like_count: 0,
+                    dislike_count: 0,
+                })
+            }
+        }
+    } else {
+        return Json(JsonReactions {
+            like_count: 0,
+            dislike_count: 0,
+        })
+    }
+}
