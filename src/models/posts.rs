@@ -3373,7 +3373,7 @@ impl PostComment {
         let item = self.get_item();
         diesel::update(item)
             .set(schema::posts::comment.eq(item.comment - 1))
-            .get_result::<PostComment>(&_connection)
+            .get_result::<Post>(&_connection)
             .expect("E");
 
         diesel::update(self)
@@ -3393,7 +3393,7 @@ impl PostComment {
         let item = self.get_item();
         diesel::update(item)
             .set(schema::posts::comment.eq(item.comment + 1))
-            .get_result::<PostComment>(&_connection)
+            .get_result::<Post>(&_connection)
             .expect("E");
 
         diesel::update(self)
