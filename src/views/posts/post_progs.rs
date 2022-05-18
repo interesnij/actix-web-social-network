@@ -539,9 +539,11 @@ pub async fn add_comment(session: Session, mut payload: Multipart, _id: web::Pat
         #[template(path = "desctop/generic/items/comment/new_parent.stpl")]
         struct Template {
             comment: PostComment,
+            request_user_id: i32,
         }
         let body = Template {
             comment: new_comment,
+            request_user_id: _request_user_id,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
