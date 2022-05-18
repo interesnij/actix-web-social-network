@@ -96,13 +96,28 @@ on('body', 'click', '.comment_btn', function() {
   else if (type.indexOf('vid') !== -1) {
     url = "/video/add_comment/" + pk + "/";
   }
-  send_comment(form, form.parentElement.previousElementSibling, url)
+  send_comment(form, form.parentElement.previousElementSibling, url);
 });
 
 on('body', 'click', '.reply_comment_btn', function() {
   form = this.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
-  send_comment(form, block, '/users/progs/reply_comment/')
+  type = this.getAttribute('data-types');
+  pk = type.slice(3);
+  if (type.indexOf('pos') !== -1) {
+    url = "/posts/add_reply/" + pk + "/";
+  }
+  else if (type.indexOf('goo') !== -1) {
+    url = "/goods/add_reply/" + pk + "/";
+  }
+  else if (type.indexOf('pho') !== -1) {
+    url = "/photos/add_reply/" + pk + "/";
+  }
+  else if (type.indexOf('vid') !== -1) {
+    url = "/video/add_reply/" + pk + "/";
+  }
+
+  send_comment(form, block, url);
 
   form.parentElement.style.display = "none";
   block.classList.add("replies_open")

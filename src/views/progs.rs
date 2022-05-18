@@ -80,7 +80,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
             })
         }
         else {
-            if types == "pos".to_string() {
+            if types == "cpo".to_string() {
                 use crate::utils::get_post_comment;
                 use crate::models::{PostComment, EditPostComment};
 
@@ -100,7 +100,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                     attach:  edited_comment.attach,
                 })
             }
-            else if types == "goo".to_string() {
+            else if types == "cgo".to_string() {
                 use crate::utils::get_good_comment;
                 use crate::models::{GoodComment, EditGoodComment};
 
@@ -121,7 +121,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                     attach:  edited_comment.attach,
                 })
             }
-            else if types == "pho".to_string() {
+            else if types == "cph".to_string() {
                 use crate::utils::get_photo_comment;
                 use crate::models::{PhotoComment, EditPhotoComment};
 
@@ -142,7 +142,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                     attach:  edited_comment.attach,
                 })
             }
-            else if types == "vid".to_string() {
+            else if types == "cvi".to_string() {
                 use crate::utils::get_video_comment;
                 use crate::models::{VideoComment, EditVideoComment};
 
@@ -187,7 +187,7 @@ pub async fn delete_comment(session: Session, req: HttpRequest) -> web::Json<Jso
             return Json(JsonResponse {info: "Ошибка доступа".to_string()})
         }
         else {
-            if types == "pos".to_string() {
+            if types == "cpo".to_string() {
                 use crate::utils::get_post_comment;
 
                 let item = get_post_comment(comment_id);
@@ -198,7 +198,7 @@ pub async fn delete_comment(session: Session, req: HttpRequest) -> web::Json<Jso
                     return Json(JsonResponse {info: "Ошибка доступа".to_string()})
                 }
             }
-            else if types == "goo".to_string() {
+            else if types == "cgo".to_string() {
                 use crate::utils::get_good_comment;
 
                 let item = get_good_comment(comment_id);
@@ -209,7 +209,7 @@ pub async fn delete_comment(session: Session, req: HttpRequest) -> web::Json<Jso
                     return Json(JsonResponse {info: "Ошибка доступа".to_string()})
                 }
             }
-            else if types == "pho".to_string() {
+            else if types == "cph".to_string() {
                 use crate::utils::get_photo_comment;
 
                 let item = get_photo_comment(comment_id);
@@ -220,7 +220,7 @@ pub async fn delete_comment(session: Session, req: HttpRequest) -> web::Json<Jso
                     return Json(JsonResponse {info: "Ошибка доступа".to_string()})
                 }
             }
-            else if types == "vid".to_string() {
+            else if types == "cvi".to_string() {
                 use crate::utils::get_video_comment;
 
                 let item = get_video_comment(comment_id);
@@ -248,7 +248,7 @@ pub async fn recover_comment(session: Session, req: HttpRequest) -> web::Json<Js
             return Json(JsonResponse {info: "Ошибка доступа".to_string()})
         }
         else {
-            if types == "pos".to_string() {
+            if types == "cpo".to_string() {
                 use crate::utils::get_post_comment;
 
                 let item = get_post_comment(comment_id);
@@ -259,7 +259,7 @@ pub async fn recover_comment(session: Session, req: HttpRequest) -> web::Json<Js
                     return Json(JsonResponse {info: "Ошибка доступа".to_string()})
                 }
             }
-            else if types == "goo".to_string() {
+            else if types == "cgo".to_string() {
                 use crate::utils::get_good_comment;
 
                 let item = get_good_comment(comment_id);
@@ -270,7 +270,7 @@ pub async fn recover_comment(session: Session, req: HttpRequest) -> web::Json<Js
                     return Json(JsonResponse {info: "Ошибка доступа".to_string()})
                 }
             }
-            else if types == "pho".to_string() {
+            else if types == "cph".to_string() {
                 use crate::utils::get_photo_comment;
 
                 let item = get_photo_comment(comment_id);
@@ -281,7 +281,7 @@ pub async fn recover_comment(session: Session, req: HttpRequest) -> web::Json<Js
                     return Json(JsonResponse {info: "Ошибка доступа".to_string()})
                 }
             }
-            else if types == "vid".to_string() {
+            else if types == "cvi".to_string() {
                 use crate::utils::get_video_comment;
 
                 let item = get_video_comment(comment_id);
@@ -312,25 +312,25 @@ pub async fn like_comment(session: Session, req: HttpRequest) -> web::Json<JsonR
             })
         }
         else {
-            if types == "pos".to_string() {
+            if types == "cpo".to_string() {
                 use crate::utils::get_post_comment;
 
                 let item = get_post_comment(comment_id);
                 item.send_like(_request_user.id)
             }
-            else if types == "goo".to_string() {
+            else if types == "cgo".to_string() {
                 use crate::utils::get_good_comment;
 
                 let item = get_good_comment(comment_id);
                 item.send_like(_request_user.id)
             }
-            else if types == "pho".to_string() {
+            else if types == "cph".to_string() {
                 use crate::utils::get_photo_comment;
 
                 let item = get_photo_comment(comment_id);
                 item.send_like(_request_user.id)
             }
-            else if types == "vid".to_string() {
+            else if types == "cvi".to_string() {
                 use crate::utils::get_video_comment;
 
                 let item = get_video_comment(comment_id);
@@ -362,25 +362,25 @@ pub async fn dislike_comment(session: Session, req: HttpRequest) -> web::Json<Js
             })
         }
         else {
-            if types == "pos".to_string() {
+            if types == "cpo".to_string() {
                 use crate::utils::get_post_comment;
 
                 let item = get_post_comment(comment_id);
                 item.send_dislike(_request_user.id)
             }
-            else if types == "goo".to_string() {
+            else if types == "cgo".to_string() {
                 use crate::utils::get_good_comment;
 
                 let item = get_good_comment(comment_id);
                 item.send_dislike(_request_user.id)
             }
-            else if types == "pho".to_string() {
+            else if types == "cph".to_string() {
                 use crate::utils::get_photo_comment;
 
                 let item = get_photo_comment(comment_id);
                 item.send_dislike(_request_user.id)
             }
-            else if types == "vid".to_string() {
+            else if types == "cvi".to_string() {
                 use crate::utils::get_video_comment;
 
                 let item = get_video_comment(comment_id);
