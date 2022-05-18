@@ -21,7 +21,7 @@ pub fn progs_routes(config: &mut web::ServiceConfig) {
     config.route("/edit_comment/", web::get().to(edit_comment));
 }
 
-pub async fn get_type(req: HttpRequest) -> (bool, i32, String) {
+pub fn get_type(req: HttpRequest) -> (bool, i32, String) {
     #[derive(Debug, Deserialize)]
     pub struct TypesParams {
         pub types: String,
@@ -63,7 +63,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
             attach:  form.attach,
         };
 
-        let (type_exists, comment_id, type) = get_type(&req);
+        let (type_exists, comment_id, types) = get_type(&req);
         if type_exists == false {
             return Json(JsonCommentResponse {
                 content: None,
@@ -71,7 +71,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
             });
         }
         else {
-            if type == "pos".to_string() {
+            if types == "pos".to_string() {
                 use crate::utils::get_post_comment;
                 use crate::models::{PostComment, EditPostComment};
 
@@ -86,7 +86,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                     attach:  edited_comment.attach,
                 });
             }
-            else if type == "goo".to_string() {
+            else if types == "goo".to_string() {
                 use crate::utils::get_good_comment;
                 use crate::models::{GoodComment, EditGoodComment};
 
@@ -101,7 +101,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                     attach:  edited_comment.attach,
                 });
             }
-            else if type == "pho".to_string() {
+            else if types == "pho".to_string() {
                 use crate::utils::get_photo_comment;
                 use crate::models::{PhotoComment, EditPhotoComment};
 
@@ -116,7 +116,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                     attach:  edited_comment.attach,
                 });
             }
-            else if type == "vid".to_string() {
+            else if types == "vid".to_string() {
                 use crate::utils::get_video_comment;
                 use crate::models::{VideoComment, EditVideoComment};
 
