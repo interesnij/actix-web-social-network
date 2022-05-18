@@ -59,11 +59,6 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
         let _request_user = get_request_user_data(session);
         let form = comment_form(payload.borrow_mut()).await;
 
-        let edited_comment = EditGoodComment {
-            content: form.content,
-            attach:  form.attach,
-        };
-
         let (type_exists, comment_id, types) = get_type(req);
         if type_exists == false {
             return Json(JsonCommentResponse {
@@ -76,6 +71,10 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                 use crate::utils::get_post_comment;
                 use crate::models::{PostComment, EditPostComment};
 
+                let edited_comment = EditPostComment {
+                    content: form.content,
+                    attach:  form.attach,
+                };
                 let item = get_post_comment(comment_id);
 
                 diesel::update(&item)
@@ -89,9 +88,14 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
             }
             else if types == "goo".to_string() {
                 use crate::utils::get_good_comment;
-                use crate::models::EditGoodComment;
+                use crate::models::{GoodComment, EditGoodComment};
 
                 let item = get_good_comment(comment_id);
+
+                let edited_comment = EditGoodComment {
+                    content: form.content,
+                    attach:  form.attach,
+                };
 
                 diesel::update(&item)
                     .set(edited_comment)
@@ -108,6 +112,11 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
 
                 let item = get_photo_comment(comment_id);
 
+                let edited_comment = EditPhotoComment {
+                    content: form.content,
+                    attach:  form.attach,
+                };
+
                 diesel::update(&item)
                     .set(edited_comment)
                     .get_result::<PhotoComment>(&_connection)
@@ -122,6 +131,11 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                 use crate::models::{VideoComment, EditVideoComment};
 
                 let item = get_video_comment(comment_id);
+
+                let edited_comment = EditVideoComment {
+                    content: form.content,
+                    attach:  form.attach,
+                };
 
                 diesel::update(&item)
                     .set(edited_comment)
