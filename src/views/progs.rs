@@ -20,7 +20,7 @@ use actix_session::Session;
 use crate::diesel::RunQueryDsl;
 
 pub fn progs_routes(config: &mut web::ServiceConfig) {
-    //config.route("/edit_comment/", web::get().to(edit_comment));
+    config.route("/users/progs/dislike_item/", web::get().to(dislike_item));
 }
 
 pub fn get_type(req: HttpRequest) -> (bool, i32, String) {
@@ -453,7 +453,7 @@ pub async fn like_item(session: Session, req: HttpRequest) -> web::Json<JsonReac
     }
 }
 
-#[get("/users/progs/dislike_item/")]
+//#[get("/users/progs/dislike_item/")]
 pub async fn dislike_item(session: Session, req: HttpRequest) -> web::Json<JsonReactions> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
