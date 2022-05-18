@@ -435,7 +435,7 @@ pub async fn like_item(session: Session, req: HttpRequest) -> web::Json<JsonReac
             else if types == "vid".to_string() {
                 use crate::utils::get_video;
 
-                let item = get_video(video_id);
+                let item = get_video(item_id);
                 item.send_like(_request_user.id)
             }
             else {
