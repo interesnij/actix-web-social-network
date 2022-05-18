@@ -1,4 +1,5 @@
 pub mod pages;
+pub mod progs;
 pub mod auth;
 pub mod users;
 pub mod communities;
@@ -24,4 +25,5 @@ pub use self::{
     photos::*,
     survey::*,
     video::*,
+    progs::*,
 };
