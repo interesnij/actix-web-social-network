@@ -14,6 +14,7 @@ use crate::utils::{
     is_signed_in,
     establish_connection,
     get_request_user_data,
+    JsonReactions,
 };
 use actix_session::Session;
 use crate::diesel::RunQueryDsl;
@@ -236,8 +237,8 @@ pub async fn delete_comment(session: Session, req: HttpRequest) -> web::Json<Jso
     }
 }
 
-#[get("/restore_comment/")]
-pub async fn restore_comment(session: Session, req: HttpRequest) -> web::Json<JsonResponse> {
+#[get("/recover_comment/")]
+pub async fn recover_comment(session: Session, req: HttpRequest) -> web::Json<JsonResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
         let (type_exists, comment_id, types) = get_type(req);
@@ -295,5 +296,107 @@ pub async fn restore_comment(session: Session, req: HttpRequest) -> web::Json<Js
         }
     } else {
         return Json(JsonResponse {info: "Ошибка доступа".to_string()})
+    }
+}
+
+#[get("/like_comment/")]
+pub async fn like_comment(session: Session, req: HttpRequest) -> web::Json<JsonReactions> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let (type_exists, comment_id, types) = get_type(req);
+        if type_exists == false {
+            return Json(JsonReactions {
+                like_count: 0,
+                dislike_count: 0,
+            })
+        }
+        else {
+            if types == "pos".to_string() {
+                use crate::utils::get_post_comment;
+
+                let item = get_post_comment(comment_id);
+                item.send_like()
+            }
+            else if types == "goo".to_string() {
+                use crate::utils::get_good_comment;
+
+                let item = get_good_comment(comment_id);
+                item.send_like()
+            }
+            else if types == "pho".to_string() {
+                use crate::utils::get_photo_comment;
+
+                let item = get_photo_comment(comment_id);
+                item.send_like()
+            }
+            else if types == "vid".to_string() {
+                use crate::utils::get_video_comment;
+
+                let item = get_video_comment(comment_id);
+                item.send_like()
+            }
+            else {
+                return Json(JsonReactions {
+                    like_count: 0,
+                    dislike_count: 0,
+                })
+            }
+        }
+    } else {
+        return Json(JsonReactions {
+            like_count: 0,
+            dislike_count: 0,
+        })
+    }
+}
+
+#[get("/dislike_comment/")]
+pub async fn dislike_comment(session: Session, req: HttpRequest) -> web::Json<JsonReactions> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let (type_exists, comment_id, types) = get_type(req);
+        if type_exists == false {
+            return Json(JsonReactions {
+                like_count: 0,
+                dislike_count: 0,
+            })
+        }
+        else {
+            if types == "pos".to_string() {
+                use crate::utils::get_post_comment;
+
+                let item = get_post_comment(comment_id);
+                item.send_dislike()
+            }
+            else if types == "goo".to_string() {
+                use crate::utils::get_good_comment;
+
+                let item = get_good_comment(comment_id);
+                item.send_dislike()
+            }
+            else if types == "pho".to_string() {
+                use crate::utils::get_photo_comment;
+
+                let item = get_photo_comment(comment_id);
+                item.send_dislike()
+            }
+            else if types == "vid".to_string() {
+                use crate::utils::get_video_comment;
+
+                let item = get_video_comment(comment_id);
+                item.send_dislike()
+            }
+            else {
+                return Json(JsonReactions {
+                    like_count: 0,
+                    dislike_count: 0,
+                })
+            }
+        }
+    } else {
+        return Json(JsonReactions {
+            like_count: 0,
+            dislike_count: 0,
+        })
     }
 }
