@@ -82,7 +82,21 @@ on('#ajax', 'click', '.smile_dropdown', function() {
 
 on('body', 'click', '.comment_btn', function() {
   form = this.parentElement.parentElement.parentElement;
-  send_comment(form, form.parentElement.previousElementSibling, '/users/progs/add_comment/')
+  type = this.getAttribute('data-types');
+  pk = type.slice(3);
+  if (type.indexOf('pos') !== -1) {
+    url = "/posts/add_comment/" + pk + "/";
+  }
+  else if (type.indexOf('goo') !== -1) {
+    url = "/goods/add_comment/" + pk + "/";
+  }
+  else if (type.indexOf('pho') !== -1) {
+    url = "/photos/add_comment/" + pk + "/";
+  }
+  else if (type.indexOf('vid') !== -1) {
+    url = "/video/add_comment/" + pk + "/";
+  }
+  send_comment(form, form.parentElement.previousElementSibling, url)
 });
 
 on('body', 'click', '.reply_comment_btn', function() {
