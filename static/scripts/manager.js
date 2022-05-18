@@ -8,7 +8,7 @@ on('body', 'click', '.create_close', function() {
   if (parent.getAttribute('data-subtype')) {
     subtype = parent.getAttribute('data-subtype')
   } else { subtype = null};
-  create_fullscreen("/managers/create_sanction/?type=" + type + "&subtype=" + subtype, "worker_fullscreen");
+  create_fullscreen("/managers/create_sanction/?types=" + type + "&subtype=" + subtype, "worker_fullscreen");
 });
 
 on('body', 'click', '.submit_case_sanction', function() {

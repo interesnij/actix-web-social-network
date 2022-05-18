@@ -835,7 +835,7 @@ function change_position(el) {
     post_array.push({key:array[i].getAttribute("data-pk"),value: count});
   };
   var xmlhttp = new XMLHttpRequest();
-  xmlhttp.open("POST", "/users/progs/change_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/?type=" + parent.getAttribute("data-type") + "&community_id=" + parent.getAttribute("data-community-id"));
+  xmlhttp.open("POST", "/users/progs/change_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/?types=" + parent.getAttribute("data-type") + "&community_id=" + parent.getAttribute("data-community-id"));
   xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   xmlhttp.setRequestHeader('X-CSRFToken', token);
   xmlhttp.send(JSON.stringify(post_array));

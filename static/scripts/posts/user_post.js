@@ -27,7 +27,7 @@ on('body', 'click', '.comment_delete', function() {
   saver = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   type = this.parentElement.getAttribute("data-type");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/users/progs/delete_comment/?type=" + type, true );
+  link.open( 'GET', "/users/progs/delete_comment/?types=" + type, true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
@@ -45,7 +45,7 @@ on('body', 'click', '.comment_recover', function() {
   type = this.getAttribute("data-type");
   block = this.parentElement; next = block.nextElementSibling;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/users/progs/recover_comment/?type=" + type, true );
+  link.open( 'GET', "/users/progs/recover_comment/?types=" + type, true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
@@ -233,7 +233,7 @@ on('body', 'click', '.comment_edit', function() {
   type = _this.parentElement.getAttribute("data-type");
   _this.parentElement.style.display = "none";
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/users/progs/edit_comment/?type=" + type, true );
+  link.open( 'GET', "/users/progs/edit_comment/?types=" + type, true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
@@ -385,7 +385,7 @@ on('#ajax', 'click', '.u_post_on_votes', function() {
 on('body', 'click', '.like_item', function() {
   _this = this;
   item = _this.parentElement;
-  send_like(item, "/users/progs/like_item/?type=" + item.getAttribute("data-type"));
+  send_like(item, "/users/progs/like_item/?types=" + item.getAttribute("data-type"));
   like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "item_likes")
   main_container = document.body.querySelector(".main-container");
   //add_list_in_all_stat("dislike_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
@@ -393,7 +393,7 @@ on('body', 'click', '.like_item', function() {
 on('body', 'click', '.dislike_item', function() {
   _this = this;
   item = _this.parentElement;
-  send_dislike(item, "/users/progs/dislike_item/?type=" + item.getAttribute("data-type"));
+  send_dislike(item, "/users/progs/dislike_item/?types=" + item.getAttribute("data-type"));
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "item_dislikes");
 
   //main_container = document.body.querySelector(".main-container");
@@ -559,7 +559,7 @@ on('body', 'click', '.recover_list', function() {
 on('body', 'click', '.like2', function() {
   _this = this;
   item = _this.parentElement;
-  send_like(item, "/users/progs/like_comment/?type=" + item.getAttribute("data-type"));
+  send_like(item, "/users/progs/like_comment/?types=" + item.getAttribute("data-type"));
   like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "comment_likes")
   main_container = document.body.querySelector(".main-container");
   //add_list_in_all_stat("dislike_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
@@ -567,7 +567,7 @@ on('body', 'click', '.like2', function() {
 on('body', 'click', '.dislike2', function() {
   _this = this;
   item = _this.parentElement;
-  send_dislike(item, "/users/progs/dislike_comment/?type=" + item.getAttribute("data-type"));
+  send_dislike(item, "/users/progs/dislike_comment/?types=" + item.getAttribute("data-type"));
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "comment_dislikes");
 
   main_container = document.body.querySelector(".main-container");
@@ -909,7 +909,7 @@ on('#ajax', 'click', '.remove_list_in_user_collections', function() {
   form = _this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   input = form.querySelector(".item_type").value
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/users/progs/uncopy_user_list/?type=" + form.querySelector(".item_type").value, true );
+  link_.open( 'GET', "/users/progs/uncopy_user_list/?types=" + form.querySelector(".item_type").value, true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -925,7 +925,7 @@ on('#ajax', 'click', '.remove_list_in_community_collections', function() {
   type = _this.getAttribute("data-type");
   block = _this.parentElement.parentElement.parentElement;
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/users/progs/uncopy_community_list/" + pk + "/?type=" + type, true );
+  link_.open( 'GET', "/users/progs/uncopy_community_list/" + pk + "/?types=" + type, true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {

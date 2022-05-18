@@ -596,7 +596,7 @@ on('#ajax', 'click', '.show_attach_files', function() {
 on('#ajax', 'click', '.select_chat_collections', function() {
   _this = this;
   ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  ajax_link.open( 'GET', "/chat/" + this.parentElement.getAttribute("chat-pk") + "/collections/?type=" + this.getAttribute("data-type"), true );
+  ajax_link.open( 'GET', "/chat/" + this.parentElement.getAttribute("chat-pk") + "/collections/?types=" + this.getAttribute("data-type"), true );
 	ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   ajax_link.onreadystatechange = function () {
     if ( this.readyState == 4 && this.status == 200 ) {

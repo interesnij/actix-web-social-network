@@ -50,7 +50,7 @@ on('body', 'click', '.create_repost', function() {
   if (parent.getAttribute('data-subtype')) {
     subtype = parent.getAttribute('data-subtype')
   } else { subtype = null};
-  create_fullscreen("/users/progs/create_repost/?type=" + type, "worker_fullscreen");
+  create_fullscreen("/users/progs/create_repost/?types=" + type, "worker_fullscreen");
   clear_attach_block();
 });
 
@@ -61,7 +61,7 @@ on('body', 'click', '.create_claim', function() {
   for (var i = 0; i < dropdowns.length; i++) {
     dropdowns[i].classList.remove("show")
   };
-  create_fullscreen("/users/progs/create_claim/?type=" + type, "worker_fullscreen");
+  create_fullscreen("/users/progs/create_claim/?types=" + type, "worker_fullscreen");
 });
 
 on('body', 'click', '.create_list', function() {
@@ -177,17 +177,17 @@ on('body', 'click', '.edit_list', function() {
 });
 
 on('body', 'click', '.comment_likes', function() {
-  create_fullscreen("/comments/likes/?type=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
+  create_fullscreen("/comments/likes/?types=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
 });
 on('#ajax', 'click', '.comment_dislikes', function() {
-  create_fullscreen("/comments/dislikes/?type=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
+  create_fullscreen("/comments/dislikes/?types=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
 });
 
 on('body', 'click', '.item_likes', function() {
-  create_fullscreen("/items/likes/?type=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
+  create_fullscreen("/items/likes/?types=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
 });
 on('body', 'click', '.item_dislikes', function() {
-  create_fullscreen("/items/dislikes/?type=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
+  create_fullscreen("/items/dislikes/?types=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
 });
 
 on('#ajax', 'click', '.input_new_post_in_list', function() {
@@ -342,7 +342,7 @@ on('#ajax', 'click', '#copy_for_communities', function() {
   current_block = parent.nextElementSibling;
   current_block.querySelector(".collector").innerHTML = "";
 
-  create_fullscreen("/users/load/communities/?type=" + this.getAttribute("data-type"), "worker_fullscreen")
+  create_fullscreen("/users/load/communities/?types=" + this.getAttribute("data-type"), "worker_fullscreen")
 });
 
 on('#ajax', 'click', '#repost_for_wall', function() {
@@ -356,7 +356,7 @@ on('#ajax', 'click', '#repost_for_wall', function() {
   form = parent.parentElement.parentElement.parentElement.parentElement.parentElement;
   copy_case = form.querySelector("#toggle_case_item_copy");
   if (copy_case && copy_case.classList.contains("underline")) {
-    url = "/users/load/post_lists/?type=" + form.querySelector(".item_type").value
+    url = "/users/load/post_lists/?types=" + form.querySelector(".item_type").value
   } else {
     url = "/users/load/post_lists/"
   };
@@ -373,7 +373,7 @@ on('#ajax', 'click', '#u_repost_for_community', function() {
   form = parent.parentElement.parentElement.parentElement.parentElement.parentElement;
   copy_case = form.querySelector("#toggle_case_item_copy");
   if (copy_case && copy_case.classList.contains("underline")) {
-    url = "/users/load/communities_post_lists/?type=" + form.querySelector(".item_type").value
+    url = "/users/load/communities_post_lists/?types=" + form.querySelector(".item_type").value
   } else {
     url = "/users/load/communities_post_lists/"
   };
