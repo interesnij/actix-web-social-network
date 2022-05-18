@@ -536,7 +536,7 @@ pub async fn add_comment(session: Session, mut payload: Multipart, _id: web::Pat
         );
 
         #[derive(TemplateOnce)]
-        #[template(path = "desctop/generic/items/comment/parent.stpl")]
+        #[template(path = "desctop/generic/items/comment/new_parent.stpl")]
         struct Template {
             comment: PostComment,
         }
