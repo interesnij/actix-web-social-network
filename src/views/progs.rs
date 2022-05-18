@@ -54,6 +54,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
     if is_signed_in(&session) {
         use crate::utils::comment_form;
         use actix_web::web::Json;
+        use crate::models::EditGoodComment;
 
         let _request_user = get_request_user_data(session);
         let form = comment_form(payload.borrow_mut()).await;
@@ -63,7 +64,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
             attach:  form.attach,
         };
 
-        let (type_exists, comment_id, types) = get_type(&req);
+        let (type_exists, comment_id, types) = get_type(req);
         if type_exists == false {
             return Json(JsonCommentResponse {
                 content: None,
@@ -88,7 +89,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
             }
             else if types == "goo".to_string() {
                 use crate::utils::get_good_comment;
-                use crate::models::{GoodComment, EditGoodComment};
+                use crate::models::EditGoodComment;
 
                 let item = get_good_comment(comment_id);
 
