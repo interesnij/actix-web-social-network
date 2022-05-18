@@ -1829,6 +1829,19 @@ impl Good {
             return "Предупреждение за нарушение правил соцсети трезвый.рус".to_string();
         }
     }
+    pub fn get_list(&self) -> GoodList {
+        use crate::schema::good_lists::dsl::good_lists;
+
+        let _connection = establish_connection();
+        return good_lists
+            .filter(schema::good_lists::id.eq(self.good_list_id))
+            .filter(schema::good_lists::types.lt(10))
+            .load::<GoodList>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
     pub fn get_community(&self) -> Community {
         use crate::schema::communitys::dsl::communitys;
 
