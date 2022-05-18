@@ -175,7 +175,7 @@ pub async fn delete_comment(session: Session, req: HttpRequest) -> web::Json<Jso
         let _request_user = get_request_user_data(session);
         let (type_exists, comment_id, types) = get_type(req);
         if type_exists == false {
-            return Json(JsonResponse {info: "Ошибка доступа"})
+            return Json(JsonResponse {info: "Ошибка доступа".to_string()})
         }
         else {
             if types == "pos".to_string() {
@@ -186,7 +186,7 @@ pub async fn delete_comment(session: Session, req: HttpRequest) -> web::Json<Jso
                     return Json(JsonResponse {info: "ок".to_string()})
                 }
                 else {
-                    return Json(JsonResponse {info: "Ошибка доступа"})
+                    return Json(JsonResponse {info: "Ошибка доступа".to_string()})
                 }
             }
             else if types == "goo".to_string() {
@@ -197,7 +197,7 @@ pub async fn delete_comment(session: Session, req: HttpRequest) -> web::Json<Jso
                     return Json(JsonResponse {info: "ок".to_string()})
                 }
                 else {
-                    return Json(JsonResponse {info: "Ошибка доступа"})
+                    return Json(JsonResponse {info: "Ошибка доступа".to_string()})
                 }
             }
             else if types == "pho".to_string() {
@@ -208,7 +208,7 @@ pub async fn delete_comment(session: Session, req: HttpRequest) -> web::Json<Jso
                     return Json(JsonResponse {info: "ок".to_string()})
                 }
                 else {
-                    return Json(JsonResponse {info: "Ошибка доступа"})
+                    return Json(JsonResponse {info: "Ошибка доступа".to_string()})
                 }
             }
             else if types == "vid".to_string() {
@@ -219,14 +219,14 @@ pub async fn delete_comment(session: Session, req: HttpRequest) -> web::Json<Jso
                     return Json(JsonResponse {info: "ок".to_string()})
                 }
                 else {
-                    return Json(JsonResponse {info: "Ошибка доступа"})
+                    return Json(JsonResponse {info: "Ошибка доступа".to_string()})
                 }
             }
             else {
-                return Json(JsonResponse {info: "Ошибка доступа"})
+                return Json(JsonResponse {info: "Ошибка доступа".to_string()})
             }
         }
     } else {
-        return Json(JsonResponse {info: "Ошибка доступа"})
+        return Json(JsonResponse {info: "Ошибка доступа".to_string()})
     }
 }
