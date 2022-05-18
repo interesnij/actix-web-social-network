@@ -37,7 +37,7 @@ pub struct JsonPosition {
     pub key:   i32,
     pub value: i16,
 }
-#[derive(Deserialize)]
+#[derive(Deserialize,Serialize)]
 pub struct JsonReactions {
     pub like_count:    i32,
     pub dislike_count: i32,
