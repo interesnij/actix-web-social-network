@@ -115,7 +115,7 @@
                      </span>
                      <% } %>
 
-                     <% is_user_can_create_comments { %>
+                     <% if is_user_can_create_comments { %>
                      <span class="commenter_first_name" style="display:none"><%= reply_creator.first_name %></span>
                      <span flow="up" tooltip="Ответить" class="content-color-secondary reply_comment" style="font-size:15px;cursor:pointer">
                          <svg class="svg_s_info" viewBox="0 0 24 24" fill="currentColor">
