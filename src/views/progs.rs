@@ -22,7 +22,7 @@ use crate::models::User;
 
 
 pub fn progs_routes(config: &mut web::ServiceConfig) {
-    config.route("/edit_comment/", web::get().to(edit_comment));
+    //config.route("/edit_comment/", web::get().to(edit_comment));
 }
 
 pub fn get_type(req: HttpRequest) -> (bool, i32, String) {
@@ -54,6 +54,8 @@ pub struct JsonCommentResponse {
     pub content: Option<String>,
     pub attach:  Option<String>,
 }
+
+#[post("/edit_comment/")]
 pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multipart) -> web::Json<JsonCommentResponse> {
 
     if is_signed_in(&session) {
