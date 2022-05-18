@@ -528,7 +528,7 @@ pub async fn add_comment(session: Session, mut payload: Multipart, _id: web::Pat
         use crate::utils::comment_form;
         let form = comment_form(payload.borrow_mut()).await;
         let new_comment = item.create_comment(
-            _request_user,
+            &_request_user,
             form.attach,
             form.parent_id,
             form.content,

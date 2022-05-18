@@ -1945,6 +1945,47 @@ impl Good {
             .expect("E");
     }
 
+    pub fn create_comment(&self, user: &User, attach: Option<String>,
+        parent_id: Option<i32>, content: Option<String>, sticker_id: Option<i32>) -> VideoComment {
+
+        use crate::schema::good_comments::dsl::good_comments;
+        use crate::schema::goods::dsl::goods;
+
+        let _connection = establish_connection();
+        let mut new_attach: Option<String> = None;
+        if attach.is_some() {
+            new_attach = Some(attach.unwrap()
+                .replace("'", "")
+                .replace("[", "")
+                .replace("]", "")
+                .replace(" ", ""));
+        }
+        diesel::update(self)
+          .set(schema::goods::comment.eq(self.comment + 1))
+          .get_result::<Good>(&_connection)
+          .expect("Error.");
+
+        let new_comment_form = NewGoodComment {
+            good_id:    self.id,
+            user_id:    user.id,
+            sticker_id: sticker_id,
+            parent_id:  parent_id,
+            content:    content,
+            attach:     new_attach,
+            types:      "a".to_string(),
+            created:    chrono::Local::now().naive_utc(),
+            liked:      0,
+            disliked:   0,
+            repost:     0,
+        };
+        let new_comment = diesel::insert_into(schema::good_comments::table)
+            .values(&new_comment_form)
+            .get_result::<GoodComment>(&_connection)
+            .expect("Error.");
+
+        return new_comment;
+    }
+
     pub fn get_comments(&self, limit: i64, offset: i64) -> Vec<GoodComment> {
         use crate::schema::good_comments::dsl::good_comments;
 

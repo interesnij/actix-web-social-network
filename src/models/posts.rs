@@ -2725,7 +2725,7 @@ impl Post {
         return true;
     }
 
-    pub fn create_comment(&self, user: User, attach: Option<String>,
+    pub fn create_comment(&self, user: &User, attach: Option<String>,
         parent_id: Option<i32>, content: Option<String>, sticker_id: Option<i32>) -> PostComment {
 
         use crate::schema::post_comments::dsl::post_comments;

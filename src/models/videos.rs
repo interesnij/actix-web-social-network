@@ -2491,7 +2491,7 @@ impl Video {
         return true;
     }
 
-    pub fn create_comment(&self, user: User, attach: Option<String>,
+    pub fn create_comment(&self, user: &User, attach: Option<String>,
         parent_id: Option<i32>, content: Option<String>, sticker_id: Option<i32>) -> VideoComment {
 
         use crate::schema::video_comments::dsl::video_comments;
