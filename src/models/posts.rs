@@ -2135,9 +2135,9 @@ impl Post {
     pub fn is_repost(&self) -> bool {
         return self.types == "r";
     }
-    pub fn send_like(&self, user: User) -> Json<JsonReactions> {
+    pub fn send_like(&self, user_id: i32) -> Json<JsonReactions> {
         let list = self.get_list();
-        if self.votes_on == false && !list.is_user_can_see_el(user.id) {
+        if self.votes_on == false && !list.is_user_can_see_el(user_id) {
             return Json(JsonReactions {
                 like_count:    self.liked,
                 dislike_count: self.disliked,
@@ -2148,7 +2148,7 @@ impl Post {
         let _connection = establish_connection();
 
         let votes = post_votes
-            .filter(schema::post_votes::user_id.eq(user.id))
+            .filter(schema::post_votes::user_id.eq(user_id))
             .filter(schema::post_votes::post_id.eq(self.id))
             .load::<PostVote>(&_connection)
             .expect("E.");
@@ -2171,7 +2171,7 @@ impl Post {
             }
             else {
                 diesel::delete(post_votes
-                    .filter(schema::post_votes::user_id.eq(user.id))
+                    .filter(schema::post_votes::user_id.eq(user_id))
                     .filter(schema::post_votes::post_id.eq(self.id))
                     )
                     .execute(&_connection)
@@ -2186,7 +2186,7 @@ impl Post {
         else {
             let new_vote = NewPostVote {
                 vote: 1,
-                user_id: user.id,
+                user_id: user_id,
                 post_id: self.id,
             };
             diesel::insert_into(schema::post_votes::table)
@@ -2206,9 +2206,9 @@ impl Post {
         return Json(reactions);
     }
 
-    pub fn send_dislike(&self, user: User) -> Json<JsonReactions> {
+    pub fn send_dislike(&self, user_id: i32) -> Json<JsonReactions> {
         let list = self.get_list();
-        if self.votes_on == false && !list.is_user_can_see_el(user.id) {
+        if self.votes_on == false && !list.is_user_can_see_el(user_id) {
             return Json(JsonReactions {
                 like_count:    self.liked,
                 dislike_count: self.disliked,
@@ -2219,7 +2219,7 @@ impl Post {
         let _connection = establish_connection();
 
         let votes = post_votes
-            .filter(schema::post_votes::user_id.eq(user.id))
+            .filter(schema::post_votes::user_id.eq(user_id))
             .filter(schema::post_votes::post_id.eq(self.id))
             .load::<PostVote>(&_connection)
             .expect("E.");
@@ -2242,7 +2242,7 @@ impl Post {
             }
             else {
                 diesel::delete(post_votes
-                    .filter(schema::post_votes::user_id.eq(user.id))
+                    .filter(schema::post_votes::user_id.eq(user_id))
                     .filter(schema::post_votes::post_id.eq(self.id))
                     )
                     .execute(&_connection)
@@ -2257,7 +2257,7 @@ impl Post {
         else {
             let new_vote = NewPostVote {
                 vote: 1,
-                user_id: user.id,
+                user_id: user_id,
                 post_id: self.id,
             };
             diesel::insert_into(schema::post_votes::table)
@@ -3016,7 +3016,7 @@ impl PostComment {
         }
     }
 
-    pub fn send_like(&self, user: User) -> Json<JsonReactions> {
+    pub fn send_like(&self, user_id: i32) -> Json<JsonReactions> {
         if self.get_item().votes_on == false {
             return Json(JsonReactions {
                 like_count:    self.liked,
@@ -3028,7 +3028,7 @@ impl PostComment {
         let _connection = establish_connection();
 
         let votes = post_comment_votes
-            .filter(schema::post_comment_votes::user_id.eq(user.id))
+            .filter(schema::post_comment_votes::user_id.eq(user_id))
             .filter(schema::post_comment_votes::post_comment_id.eq(self.id))
             .load::<PostCommentVote>(&_connection)
             .expect("E.");
@@ -3051,7 +3051,7 @@ impl PostComment {
             }
             else {
                 diesel::delete(post_comment_votes
-                    .filter(schema::post_comment_votes::user_id.eq(user.id))
+                    .filter(schema::post_comment_votes::user_id.eq(user_id))
                     .filter(schema::post_comment_votes::post_comment_id.eq(self.id))
                     )
                     .execute(&_connection)
@@ -3066,7 +3066,7 @@ impl PostComment {
         else {
             let new_vote = NewPostCommentVote {
                 vote:            1,
-                user_id:         user.id,
+                user_id:         user_id,
                 post_comment_id: self.id,
             };
             diesel::insert_into(schema::post_comment_votes::table)
@@ -3086,7 +3086,7 @@ impl PostComment {
         return Json(reactions);
     }
 
-    pub fn send_dislike(&self, user: User) -> Json<JsonReactions> {
+    pub fn send_dislike(&self, user_id: i32) -> Json<JsonReactions> {
         if self.get_item().votes_on == false {
             return Json(JsonReactions {
                 like_count:    self.liked,
@@ -3098,7 +3098,7 @@ impl PostComment {
         let _connection = establish_connection();
 
         let votes = post_comment_votes
-            .filter(schema::post_comment_votes::user_id.eq(user.id))
+            .filter(schema::post_comment_votes::user_id.eq(user_id))
             .filter(schema::post_comment_votes::post_comment_id.eq(self.id))
             .load::<PostCommentVote>(&_connection)
             .expect("E.");
@@ -3121,7 +3121,7 @@ impl PostComment {
             }
             else {
                 diesel::delete(post_comment_votes
-                    .filter(schema::post_comment_votes::user_id.eq(user.id))
+                    .filter(schema::post_comment_votes::user_id.eq(user_id))
                     .filter(schema::post_comment_votes::post_comment_id.eq(self.id))
                     )
                     .execute(&_connection)
@@ -3136,7 +3136,7 @@ impl PostComment {
         else {
             let new_vote = NewPostCommentVote {
                 vote: 1,
-                user_id: user.id,
+                user_id: user_id,
                 post_comment_id: self.id,
             };
             diesel::insert_into(schema::post_comment_votes::table)

@@ -2147,9 +2147,9 @@ impl Photo {
         return self.types == "h";
     }
 
-    pub fn send_like(&self, user: User) -> Json<JsonReactions> {
+    pub fn send_like(&self, user_id: i32) -> Json<JsonReactions> {
         let list = self.get_list();
-        if self.votes_on == false && !list.is_user_can_see_el(user.id) {
+        if self.votes_on == false && !list.is_user_can_see_el(user_id) {
             return Json(JsonReactions {
                 like_count:    self.liked,
                 dislike_count: self.disliked,
@@ -2160,7 +2160,7 @@ impl Photo {
         let _connection = establish_connection();
 
         let votes = photo_votes
-            .filter(schema::photo_votes::user_id.eq(user.id))
+            .filter(schema::photo_votes::user_id.eq(user_id))
             .filter(schema::photo_votes::photo_id.eq(self.id))
             .load::<PhotoVote>(&_connection)
             .expect("E.");
@@ -2183,7 +2183,7 @@ impl Photo {
             }
             else {
                 diesel::delete(photo_votes
-                    .filter(schema::photo_votes::user_id.eq(user.id))
+                    .filter(schema::photo_votes::user_id.eq(user_id))
                     .filter(schema::photo_votes::photo_id.eq(self.id))
                     )
                     .execute(&_connection)
@@ -2198,7 +2198,7 @@ impl Photo {
         else {
             let new_vote = NewPhotoVote {
                 vote: 1,
-                user_id: user.id,
+                user_id: user_id,
                 photo_id: self.id,
             };
             diesel::insert_into(schema::photo_votes::table)
@@ -2218,9 +2218,9 @@ impl Photo {
         return Json(reactions);
     }
 
-    pub fn send_dislike(&self, user: User) -> Json<JsonReactions> {
+    pub fn send_dislike(&self, user_id: i32) -> Json<JsonReactions> {
         let list = self.get_list();
-        if self.votes_on == false && !list.is_user_can_see_el(user.id) {
+        if self.votes_on == false && !list.is_user_can_see_el(user_id) {
             return Json(JsonReactions {
                 like_count:    self.liked,
                 dislike_count: self.disliked,
@@ -2231,7 +2231,7 @@ impl Photo {
         let _connection = establish_connection();
 
         let votes = photo_votes
-            .filter(schema::photo_votes::user_id.eq(user.id))
+            .filter(schema::photo_votes::user_id.eq(user_id))
             .filter(schema::photo_votes::photo_id.eq(self.id))
             .load::<PhotoVote>(&_connection)
             .expect("E.");
@@ -2254,7 +2254,7 @@ impl Photo {
             }
             else {
                 diesel::delete(photo_votes
-                    .filter(schema::photo_votes::user_id.eq(user.id))
+                    .filter(schema::photo_votes::user_id.eq(user_id))
                     .filter(schema::photo_votes::photo_id.eq(self.id))
                     )
                     .execute(&_connection)
@@ -2269,7 +2269,7 @@ impl Photo {
         else {
             let new_vote = NewPhotoVote {
                 vote: 1,
-                user_id: user.id,
+                user_id: user_id,
                 photo_id: self.id,
             };
             diesel::insert_into(schema::photo_votes::table)
@@ -2861,7 +2861,7 @@ impl PhotoComment {
         }
     }
 
-    pub fn send_like(&self, user: User) -> Json<JsonReactions> {
+    pub fn send_like(&self, user_id: i32) -> Json<JsonReactions> {
         if self.get_item().votes_on == false {
             return Json(JsonReactions {
                 like_count:    self.liked,
@@ -2873,7 +2873,7 @@ impl PhotoComment {
         let _connection = establish_connection();
 
         let votes = photo_comment_votes
-            .filter(schema::photo_comment_votes::user_id.eq(user.id))
+            .filter(schema::photo_comment_votes::user_id.eq(user_id))
             .filter(schema::photo_comment_votes::photo_comment_id.eq(self.id))
             .load::<PhotoCommentVote>(&_connection)
             .expect("E.");
@@ -2896,7 +2896,7 @@ impl PhotoComment {
             }
             else {
                 diesel::delete(photo_comment_votes
-                    .filter(schema::photo_comment_votes::user_id.eq(user.id))
+                    .filter(schema::photo_comment_votes::user_id.eq(user_id))
                     .filter(schema::photo_comment_votes::photo_comment_id.eq(self.id))
                     )
                     .execute(&_connection)
@@ -2911,7 +2911,7 @@ impl PhotoComment {
         else {
             let new_vote = NewPhotoCommentVote {
                 vote:            1,
-                user_id:         user.id,
+                user_id:         user_id,
                 photo_comment_id: self.id,
             };
             diesel::insert_into(schema::photo_comment_votes::table)
@@ -2931,7 +2931,7 @@ impl PhotoComment {
         return Json(reactions);
     }
 
-    pub fn send_dislike(&self, user: User) -> Json<JsonReactions> {
+    pub fn send_dislike(&self, user_id: i32) -> Json<JsonReactions> {
         if self.get_item().votes_on == false {
             return Json(JsonReactions {
                 like_count:    self.liked,
@@ -2943,7 +2943,7 @@ impl PhotoComment {
         let _connection = establish_connection();
 
         let votes = photo_comment_votes
-            .filter(schema::photo_comment_votes::user_id.eq(user.id))
+            .filter(schema::photo_comment_votes::user_id.eq(user_id))
             .filter(schema::photo_comment_votes::photo_comment_id.eq(self.id))
             .load::<PhotoCommentVote>(&_connection)
             .expect("E.");
@@ -2966,7 +2966,7 @@ impl PhotoComment {
             }
             else {
                 diesel::delete(photo_comment_votes
-                    .filter(schema::photo_comment_votes::user_id.eq(user.id))
+                    .filter(schema::photo_comment_votes::user_id.eq(user_id))
                     .filter(schema::photo_comment_votes::photo_comment_id.eq(self.id))
                     )
                     .execute(&_connection)
@@ -2981,7 +2981,7 @@ impl PhotoComment {
         else {
             let new_vote = NewPhotoCommentVote {
                 vote: 1,
-                user_id: user.id,
+                user_id: user_id,
                 photo_comment_id: self.id,
             };
             diesel::insert_into(schema::photo_comment_votes::table)

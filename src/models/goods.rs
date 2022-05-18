@@ -1761,6 +1761,131 @@ impl Good {
     pub fn is_good(&self) -> bool {
         return true;
     }
+
+    pub fn create_good(&self, title: String, community_id: Option<i32>, category_id: i32,
+        user_id: i32, price: Option<i32>, description: Option<String>,
+        image: Option<String>, comment_enabled: bool, votes_on: bool) -> Good {
+
+        let _connection = establish_connection();
+
+        diesel::update(&*self)
+          .set(schema::good_lists::count.eq(self.count + 1))
+          .get_result::<GoodList>(&_connection)
+          .expect("Error.");
+
+        let new_good_form = NewGood {
+            title: title,
+            community_id: community_id,
+            category_id: category_id,
+            user_id: user_id,
+            good_list_id: self.id,
+            price: price,
+            types: "a".to_string(),
+            description: description,
+            image: image,
+            comment_enabled: comment_enabled,
+            votes_on: votes_on,
+            votes_on: true,
+
+            created: chrono::Local::now().naive_utc(),
+            comment: 0,
+            view: 0,
+            liked: 0,
+            disliked: 0,
+            repost: 0,
+            copy: 0,
+            position: (self.count).try_into().unwrap(),
+        };
+        let new_good = diesel::insert_into(schema::goods::table)
+            .values(&new_good_form)
+            .get_result::<Good>(&_connection)
+            .expect("Error.");
+
+        if community_id.is_some() {
+            use crate::utils::get_community;
+            let community = self.get_community();
+            community.plus_goods(1);
+            return new_good;
+        }
+        else {
+            use crate::utils::get_user;
+
+            let creator = get_user(user_id);
+            creator.plus_goods(1);
+            return new_good;
+        }
+    }
+
+    pub fn edit_good(&self, title: String, price: Option<i32>,
+        description: Option<String>, image: Option<String>, comment_enabled: bool,
+        votes_on: bool) -> &Good {
+
+        let _connection = establish_connection();
+
+        let edit_good = EditGood {
+            title: title,
+            price: price,
+            description: description,
+            image: image,
+            comment_enabled: comment_enabled,
+            votes_on: votes_on,
+        };
+        diesel::update(self)
+            .set(edit_good)
+            .get_result::<Good>(&_connection)
+            .expect("Error.");
+        return self;
+    }
+
+    pub fn plus_likes(&self, count: i32) -> bool {
+        let _connection = establish_connection();
+        diesel::update(self)
+            .set(schema::goods::liked.eq(self.liked + count))
+            .get_result::<Good>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn plus_dislikes(&self, count: i32) -> bool {
+        let _connection = establish_connection();
+        diesel::update(self)
+            .set(schema::goods::disliked.eq(self.disliked + count))
+            .get_result::<Good>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn plus_comments(&self, count: i32) -> bool {
+        let _connection = establish_connection();
+        diesel::update(self)
+            .set(schema::goods::comment.eq(self.comment + count))
+            .get_result::<Good>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_likes(&self, count: i32) -> bool {
+        let _connection = establish_connection();
+        diesel::update(self)
+            .set(schema::goods::liked.eq(self.liked - count))
+            .get_result::<Good>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_dislikes(&self, count: i32) -> bool {
+        let _connection = establish_connection();
+        diesel::update(self)
+            .set(schema::goods::disliked.eq(self.disliked - count))
+            .get_result::<Good>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_comments(&self, count: i32) -> bool {
+        let _connection = establish_connection();
+        diesel::update(self)
+            .set(schema::goods::comment.eq(self.comment - count))
+            .get_result::<Good>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+
     pub fn is_user_can_edit_delete_item(&self, user_id: i32) -> bool {
         if self.community_id.is_some() {
             let community = self.get_community();
@@ -1884,6 +2009,15 @@ impl Good {
         }
         else {
             return "".to_string()
+        }
+    }
+    pub fn is_user_can_edit_delete_item(&self, user_id: i32) -> bool {
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            return community.get_staff_users_ids().iter().any(|&i| i==user_id);
+        }
+        else {
+            return self.user_id == user_id;
         }
     }
 
@@ -2011,6 +2145,432 @@ impl Good {
             .offset(offset)
             .load::<GoodComment>(&_connection)
             .expect("E.");
+    }
+
+    pub fn send_like(&self, user_id: i32) -> Json<JsonReactions> {
+        let list = self.get_list();
+        if self.votes_on == false && !list.is_user_can_see_el(user_id) {
+            return Json(JsonReactions {
+                like_count:    self.liked,
+                dislike_count: self.disliked,
+            });
+        }
+        use crate::schema::good_votes::dsl::good_votes;
+
+        let _connection = establish_connection();
+
+        let votes = good_votes
+            .filter(schema::good_votes::user_id.eq(user_id))
+            .filter(schema::good_votes::good_id.eq(self.id))
+            .load::<GoodVote>(&_connection)
+            .expect("E.");
+        if votes.len() > 0 {
+            let vote = votes.into_iter().nth(0).unwrap();
+            if vote.vote != 1 {
+                diesel::update(&vote)
+                    .set(schema::good_votes::vote.eq(1))
+                    .get_result::<GoodVote>(&_connection)
+                    .expect("Error.");
+
+                let reactions = GoodReactionsUpdate {
+                    liked:    self.liked + 1,
+                    disliked: self.disliked - 1,
+                };
+                diesel::update(self)
+                    .set(reactions)
+                    .get_result::<Good>(&_connection)
+                    .expect("Error.");
+            }
+            else {
+                diesel::delete(good_votes
+                    .filter(schema::good_votes::user_id.eq(user_id))
+                    .filter(schema::good_votes::good_id.eq(self.id))
+                    )
+                    .execute(&_connection)
+                    .expect("E");
+
+                diesel::update(self)
+                    .set(schema::goods::liked.eq(self.liked - 1))
+                    .get_result::<Good>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else {
+            let new_vote = NewGoodVote {
+                vote: 1,
+                user_id: user_id,
+                good_id: self.id,
+            };
+            diesel::insert_into(schema::good_votes::table)
+                .values(&new_vote)
+                .get_result::<GoodVote>(&_connection)
+                .expect("Error.");
+
+            diesel::update(self)
+                .set(schema::goods::liked.eq(self.liked + 1))
+                .get_result::<Good>(&_connection)
+                .expect("Error.");
+        }
+        let reactions = JsonReactions {
+            like_count:    self.liked,
+            dislike_count: self.disliked,
+        };
+        return Json(reactions);
+    }
+
+    pub fn send_dislike(&self, user_id: i32) -> Json<JsonReactions> {
+        let list = self.get_list();
+        if self.votes_on == false && !list.is_user_can_see_el(user_id) {
+            return Json(JsonReactions {
+                like_count:    self.liked,
+                dislike_count: self.disliked,
+            });
+        }
+        use crate::schema::good_votes::dsl::good_votes;
+
+        let _connection = establish_connection();
+
+        let votes = good_votes
+            .filter(schema::good_votes::user_id.eq(user_id))
+            .filter(schema::good_votes::good_id.eq(self.id))
+            .load::<GoodVote>(&_connection)
+            .expect("E.");
+        if votes.len() > 0 {
+            let vote = votes.into_iter().nth(0).unwrap();
+            if vote.vote != -1 {
+                diesel::update(&vote)
+                    .set(schema::good_votes::vote.eq(-1))
+                    .get_result::<GoodVote>(&_connection)
+                    .expect("Error.");
+
+                let reactions = GoodReactionsUpdate {
+                    liked:    self.liked - 1,
+                    disliked: self.disliked + 1,
+                };
+                diesel::update(self)
+                    .set(reactions)
+                    .get_result::<Good>(&_connection)
+                    .expect("Error.");
+            }
+            else {
+                diesel::delete(good_votes
+                    .filter(schema::good_votes::user_id.eq(user_id))
+                    .filter(schema::good_votes::good_id.eq(self.id))
+                    )
+                    .execute(&_connection)
+                    .expect("E");
+
+                diesel::update(self)
+                    .set(schema::goods::liked.eq(self.disliked - 1))
+                    .get_result::<Good>(&_connection)
+                    .expect("Error.");
+            }
+        }
+        else {
+            let new_vote = NewGoodVote {
+                vote: 1,
+                user_id: user_id,
+                good_id: self.id,
+            };
+            diesel::insert_into(schema::good_votes::table)
+                .values(&new_vote)
+                .get_result::<GoodVote>(&_connection)
+                .expect("Error.");
+
+            diesel::update(self)
+                .set(schema::goods::liked.eq(self.disliked + 1))
+                .get_result::<Good>(&_connection)
+                .expect("Error.");
+        }
+        let reactions = JsonReactions {
+            like_count:    self.liked,
+            dislike_count: self.disliked,
+        };
+        return Json(reactions);
+    }
+
+    pub fn delete_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "a" => "c",
+            "b" => "m",
+            "f" => "i",
+            "g" => "y",
+            _ => "c",
+        };
+        diesel::update(self)
+            .set(schema::goods::types.eq(close_case))
+            .get_result::<Good>(&_connection)
+            .expect("E");
+        let list = self.get_list();
+        diesel::update(&list)
+            .set(schema::good_lists::count.eq(list.count - 1))
+            .get_result::<GoodList>(&_connection)
+            .expect("E");
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            community.minus_goods(1);
+        }
+        else {
+            let creator = self.get_creator();
+            creator.minus_goods(1);
+         }
+      return true;
+    }
+    pub fn restore_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "c" => "a",
+            "m" => "b",
+            "i" => "f",
+            "y" => "g",
+            _ => "a",
+        };
+        diesel::update(self)
+            .set(schema::goods::types.eq(close_case))
+            .get_result::<Good>(&_connection)
+            .expect("E");
+        let list = self.get_list();
+        diesel::update(&list)
+            .set(schema::good_lists::count.eq(list.count + 1))
+            .get_result::<GoodList>(&_connection)
+            .expect("E");
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            community.plus_goods(1);
+        }
+        else {
+            let creator = self.get_creator();
+            creator.plus_goods(1);
+         }
+       return true;
+    }
+
+    pub fn close_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "a" => "h",
+            "b" => "n",
+            _ => "h",
+        };
+        diesel::update(self)
+            .set(schema::goods::types.eq(close_case))
+            .get_result::<Good>(&_connection)
+            .expect("E");
+        let list = self.get_list();
+        diesel::update(&list)
+            .set(schema::good_lists::count.eq(list.count - 1))
+            .get_result::<GoodList>(&_connection)
+            .expect("E");
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            community.minus_goods(1);
+        }
+        else {
+            let creator = self.get_creator();
+            creator.minus_goods(1);
+        }
+       return true;
+    }
+    pub fn unclose_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "h" => "a",
+            "n" => "b",
+            _ => "a",
+        };
+        diesel::update(self)
+            .set(schema::goods::types.eq(close_case))
+            .get_result::<Good>(&_connection)
+            .expect("E");
+        let list = self.get_list();
+        diesel::update(&list)
+            .set(schema::good_lists::count.eq(list.count + 1))
+            .get_result::<GoodList>(&_connection)
+            .expect("E");
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            community.plus_goods(1);
+        }
+        else {
+            let creator = self.get_creator();
+            creator.plus_goods(1);
+         }
+       return true;
+    }
+
+    pub fn count_comments(&self) -> String {
+        if self.comment == 0 {
+            return "".to_string();
+        }
+        else {
+            return self.comment.to_string();
+        }
+    }
+    pub fn likes_count(&self) -> String {
+        if self.liked == 0 {
+            return "".to_string();
+        }
+        else {
+            return self.liked.to_string();
+        }
+    }
+    pub fn dislikes_count(&self) -> String {
+        if self.disliked == 0 {
+            return "".to_string();
+        }
+        else {
+            return self.disliked.to_string();
+        }
+    }
+    pub fn count_reposts(&self) -> String {
+        if self.repost == 0 {
+            return "".to_string();
+        }
+        else {
+            return self.repost.to_string();
+        }
+    }
+
+    pub fn likes_count_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            self.liked,
+            " человек".to_string(),
+            " человека".to_string(),
+            " человек".to_string(),
+        );
+    }
+    pub fn dislikes_count_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            self.disliked,
+            " человек".to_string(),
+            " человека".to_string(),
+            " человек".to_string(),
+        );
+    }
+    pub fn reposts_count_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            self.repost,
+            " человек".to_string(),
+            " человека".to_string(),
+            " человек".to_string(),
+        );
+    }
+    pub fn is_have_likes(&self) -> bool {
+        return self.liked > 0;
+    }
+    pub fn is_have_dislikes(&self) -> bool {
+        return self.disliked > 0;
+    }
+    pub fn is_have_reposts(&self) -> bool {
+        return self.repost > 0;
+    }
+
+    pub fn likes(&self) -> Vec<User> {
+        use crate::schema::good_votes::dsl::good_votes;
+        use crate::utils::get_users_from_ids;
+
+        let _connection = establish_connection();
+        let votes = good_votes
+            .filter(schema::good_votes::good_id.eq(self.id))
+            .filter(schema::good_votes::vote.eq(1))
+            .load::<GoodVote>(&_connection)
+            .expect("E");
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
+    }
+    pub fn dislikes(&self) -> Vec<User> {
+        use crate::schema::good_votes::dsl::good_votes;
+        use crate::utils::get_users_from_ids;
+
+        let _connection = establish_connection();
+        let votes = good_votes
+            .filter(schema::good_votes::good_id.eq(self.id))
+            .filter(schema::good_votes::vote.eq(-1))
+            .load::<GoodVote>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
+    }
+
+    pub fn window_likes(&self) -> Vec<User> {
+        use crate::schema::good_votes::dsl::good_votes;
+        use crate::utils::get_users_from_ids;
+
+        let _connection = establish_connection();
+        let votes = good_votes
+            .filter(schema::good_votes::good_id.eq(self.id))
+            .filter(schema::good_votes::vote.eq(1))
+            .limit(6)
+            .load::<GoodVote>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
+    }
+    pub fn window_dislikes(&self) -> Vec<User> {
+        use crate::schema::good_votes::dsl::good_votes;
+        use crate::utils::get_users_from_ids;
+
+        let _connection = establish_connection();
+        let votes = good_votes
+            .filter(schema::good_votes::good_id.eq(self.id))
+            .filter(schema::good_votes::vote.eq(-1))
+            .limit(6)
+            .load::<GoodVote>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
+    }
+    pub fn change_position(query: Json<Vec<JsonPosition>>) -> bool {
+        use crate::schema::goods::dsl::goods;
+
+        let _connection = establish_connection();
+        for i in query.iter() {
+            let item = goods
+                .filter(schema::goods::id.eq(i.key))
+                .filter(schema::goods::types.eq("a"))
+                .limit(1)
+                .load::<Good>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+
+            diesel::update(&item)
+                .set(schema::goods::position.eq(i.value))
+                .get_result::<Good>(&_connection)
+                .expect("Error.");
+        }
+        return true;
     }
 }
 
@@ -2228,7 +2788,7 @@ impl GoodComment {
         }
     }
 
-    pub fn send_like(&self, user: User) -> Json<JsonReactions> {
+    pub fn send_like(&self, user_id: i32) -> Json<JsonReactions> {
         if self.get_item().votes_on == false {
             return Json(JsonReactions {
                 like_count:    self.liked,
@@ -2240,7 +2800,7 @@ impl GoodComment {
         let _connection = establish_connection();
 
         let votes = good_comment_votes
-            .filter(schema::good_comment_votes::user_id.eq(user.id))
+            .filter(schema::good_comment_votes::user_id.eq(user_id))
             .filter(schema::good_comment_votes::good_comment_id.eq(self.id))
             .load::<GoodCommentVote>(&_connection)
             .expect("E.");
@@ -2263,7 +2823,7 @@ impl GoodComment {
             }
             else {
                 diesel::delete(good_comment_votes
-                    .filter(schema::good_comment_votes::user_id.eq(user.id))
+                    .filter(schema::good_comment_votes::user_id.eq(user_id))
                     .filter(schema::good_comment_votes::good_comment_id.eq(self.id))
                     )
                     .execute(&_connection)
@@ -2278,7 +2838,7 @@ impl GoodComment {
         else {
             let new_vote = NewGoodCommentVote {
                 vote:            1,
-                user_id:         user.id,
+                user_id:         user_id,
                 good_comment_id: self.id,
             };
             diesel::insert_into(schema::good_comment_votes::table)
@@ -2298,7 +2858,7 @@ impl GoodComment {
         return Json(reactions);
     }
 
-    pub fn send_dislike(&self, user: User) -> Json<JsonReactions> {
+    pub fn send_dislike(&self, user_id: i32) -> Json<JsonReactions> {
         if self.get_item().votes_on == false {
             return Json(JsonReactions {
                 like_count:    self.liked,
@@ -2310,7 +2870,7 @@ impl GoodComment {
         let _connection = establish_connection();
 
         let votes = good_comment_votes
-            .filter(schema::good_comment_votes::user_id.eq(user.id))
+            .filter(schema::good_comment_votes::user_id.eq(user_id))
             .filter(schema::good_comment_votes::good_comment_id.eq(self.id))
             .load::<GoodCommentVote>(&_connection)
             .expect("E.");
@@ -2333,7 +2893,7 @@ impl GoodComment {
             }
             else {
                 diesel::delete(good_comment_votes
-                    .filter(schema::good_comment_votes::user_id.eq(user.id))
+                    .filter(schema::good_comment_votes::user_id.eq(user_id))
                     .filter(schema::good_comment_votes::good_comment_id.eq(self.id))
                     )
                     .execute(&_connection)
@@ -2348,7 +2908,7 @@ impl GoodComment {
         else {
             let new_vote = NewGoodCommentVote {
                 vote: 1,
-                user_id: user.id,
+                user_id: user_id,
                 good_comment_id: self.id,
             };
             diesel::insert_into(schema::good_comment_votes::table)

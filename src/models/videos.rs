@@ -2054,9 +2054,9 @@ impl Video {
         return self.types == "h";
     }
 
-    pub fn send_like(&self, user: User) -> Json<JsonReactions> {
+    pub fn send_like(&self, user_id: i32) -> Json<JsonReactions> {
         let list = self.get_list();
-        if self.votes_on == false && !list.is_user_can_see_el(user.id) {
+        if self.votes_on == false && !list.is_user_can_see_el(user_id) {
             return Json(JsonReactions {
                 like_count:    self.liked,
                 dislike_count: self.disliked,
@@ -2067,7 +2067,7 @@ impl Video {
         let _connection = establish_connection();
 
         let votes = video_votes
-            .filter(schema::video_votes::user_id.eq(user.id))
+            .filter(schema::video_votes::user_id.eq(user_id))
             .filter(schema::video_votes::video_id.eq(self.id))
             .load::<VideoVote>(&_connection)
             .expect("E.");
@@ -2090,7 +2090,7 @@ impl Video {
             }
             else {
                 diesel::delete(video_votes
-                    .filter(schema::video_votes::user_id.eq(user.id))
+                    .filter(schema::video_votes::user_id.eq(user_id))
                     .filter(schema::video_votes::video_id.eq(self.id))
                     )
                     .execute(&_connection)
@@ -2105,7 +2105,7 @@ impl Video {
         else {
             let new_vote = NewVideoVote {
                 vote: 1,
-                user_id: user.id,
+                user_id: user_id,
                 video_id: self.id,
             };
             diesel::insert_into(schema::video_votes::table)
@@ -2125,9 +2125,9 @@ impl Video {
         return Json(reactions);
     }
 
-    pub fn send_dislike(&self, user: User) -> Json<JsonReactions> {
+    pub fn send_dislike(&self, user_id: i32) -> Json<JsonReactions> {
         let list = self.get_list();
-        if self.votes_on == false && !list.is_user_can_see_el(user.id) {
+        if self.votes_on == false && !list.is_user_can_see_el(user_id) {
             return Json(JsonReactions {
                 like_count:    self.liked,
                 dislike_count: self.disliked,
@@ -2138,7 +2138,7 @@ impl Video {
         let _connection = establish_connection();
 
         let votes = video_votes
-            .filter(schema::video_votes::user_id.eq(user.id))
+            .filter(schema::video_votes::user_id.eq(user_id))
             .filter(schema::video_votes::video_id.eq(self.id))
             .load::<VideoVote>(&_connection)
             .expect("E.");
@@ -2161,7 +2161,7 @@ impl Video {
             }
             else {
                 diesel::delete(video_votes
-                    .filter(schema::video_votes::user_id.eq(user.id))
+                    .filter(schema::video_votes::user_id.eq(user_id))
                     .filter(schema::video_votes::video_id.eq(self.id))
                     )
                     .execute(&_connection)
@@ -2176,7 +2176,7 @@ impl Video {
         else {
             let new_vote = NewVideoVote {
                 vote: 1,
-                user_id: user.id,
+                user_id: user_id,
                 video_id: self.id,
             };
             diesel::insert_into(schema::video_votes::table)
@@ -2844,7 +2844,7 @@ impl VideoComment {
         }
     }
 
-    pub fn send_like(&self, user: User) -> Json<JsonReactions> {
+    pub fn send_like(&self, user_id: i32) -> Json<JsonReactions> {
         if self.get_item().votes_on == false {
             return Json(JsonReactions {
                 like_count:    self.liked,
@@ -2856,7 +2856,7 @@ impl VideoComment {
         let _connection = establish_connection();
 
         let votes = video_comment_votes
-            .filter(schema::video_comment_votes::user_id.eq(user.id))
+            .filter(schema::video_comment_votes::user_id.eq(user_id))
             .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
             .load::<VideoCommentVote>(&_connection)
             .expect("E.");
@@ -2879,7 +2879,7 @@ impl VideoComment {
             }
             else {
                 diesel::delete(video_comment_votes
-                    .filter(schema::video_comment_votes::user_id.eq(user.id))
+                    .filter(schema::video_comment_votes::user_id.eq(user_id))
                     .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
                     )
                     .execute(&_connection)
@@ -2894,7 +2894,7 @@ impl VideoComment {
         else {
             let new_vote = NewVideoCommentVote {
                 vote:            1,
-                user_id:         user.id,
+                user_id:         user_id,
                 video_comment_id: self.id,
             };
             diesel::insert_into(schema::video_comment_votes::table)
@@ -2914,7 +2914,7 @@ impl VideoComment {
         return Json(reactions);
     }
 
-    pub fn send_dislike(&self, user: User) -> Json<JsonReactions> {
+    pub fn send_dislike(&self, user_id: i32) -> Json<JsonReactions> {
         if self.get_item().votes_on == false {
             return Json(JsonReactions {
                 like_count:    self.liked,
@@ -2926,7 +2926,7 @@ impl VideoComment {
         let _connection = establish_connection();
 
         let votes = video_comment_votes
-            .filter(schema::video_comment_votes::user_id.eq(user.id))
+            .filter(schema::video_comment_votes::user_id.eq(user_id))
             .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
             .load::<VideoCommentVote>(&_connection)
             .expect("E.");
@@ -2949,7 +2949,7 @@ impl VideoComment {
             }
             else {
                 diesel::delete(video_comment_votes
-                    .filter(schema::video_comment_votes::user_id.eq(user.id))
+                    .filter(schema::video_comment_votes::user_id.eq(user_id))
                     .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
                     )
                     .execute(&_connection)
@@ -2964,7 +2964,7 @@ impl VideoComment {
         else {
             let new_vote = NewVideoCommentVote {
                 vote: 1,
-                user_id: user.id,
+                user_id: user_id,
                 video_comment_id: self.id,
             };
             diesel::insert_into(schema::video_comment_votes::table)
