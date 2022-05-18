@@ -24,7 +24,7 @@ pub fn progs_routes(config: &mut web::ServiceConfig) {
 pub fn get_type(req: HttpRequest) -> (bool, i32, String) {
     #[derive(Debug, Deserialize)]
     pub struct TypesParams {
-        pub types: String,
+        pub types: Option<String>,
     }
     let params_some = web::Query::<TypesParams>::from_query(&req.query_string());
     if params_some.is_ok() {
