@@ -403,7 +403,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, post_id: web
             let body = Template {
                 list:                        _list,
                 item:                        _post,
-                request_user:                request_user,
+                request_user:                _request_user,
                 is_user_can_create_comments: is_user_can_create_comments,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
@@ -426,7 +426,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, post_id: web
             let body = Template {
                 list:                        _list,
                 item:                        _post,
-                request_user:                request_user,
+                request_user:                _request_user,
                 is_user_can_create_comments: is_user_can_create_comments,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
