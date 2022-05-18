@@ -54,7 +54,7 @@ pub struct JsonCommentResponse {
     pub content: Option<String>,
     pub attach:  Option<String>,
 }
-pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multipart) -> Json<JsonCommentResponse> {
+pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multipart) -> web::Json<JsonCommentResponse> {
 
     if is_signed_in(&session) {
         use crate::utils::comment_form;
@@ -66,10 +66,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
 
         let (type_exists, comment_id, types) = get_type(req);
         if type_exists == false {
-            return Json(JsonCommentResponse {
-                content: None,
-                attach:  None,
-            });
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
         }
         else {
             if types == "pos".to_string() {
