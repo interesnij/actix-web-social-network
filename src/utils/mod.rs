@@ -10,7 +10,7 @@ pub use self::{
     forms::*,
 };
 
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use argonautica::{Hasher, Verifier};
 use actix_session::Session;
 use diesel::prelude::*;
