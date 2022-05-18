@@ -14,7 +14,7 @@
                     </span>
 
                     <span class="comment_like_window">
-                      <% if reply.is_have_likes() { %>
+                      <% if reply.is_have_likes() == true { %>
                     <div class="comment_like_pop">
                       <span class="item_likes pointer">Оценили: <span data-count="like"><%= reply.likes_count() %></span> <%= reply.likes_count_ru() %></span>
                       <span style="display: flex;margin-top: 10px;">
@@ -41,7 +41,7 @@
                     </span>
 
                     <span class="comment_dislike_window custom_color">
-                     <% if reply.is_have_dislikes() { %>
+                     <% if reply.is_have_dislikes() == true { %>
                      <div class="comment_dislike_pop">
                      <span class="item_dislikes pointer">Не оценили: <span data-count="dislike"><%= reply.dislikes_count() %></span> <%= reply.dislikes_count_ru() %></span>
                      <span style="display: flex;margin-top: 10px;">
