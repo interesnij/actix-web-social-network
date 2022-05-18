@@ -50,7 +50,7 @@ pub fn get_type(req: HttpRequest) -> (bool, i32, String) {
     }
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Serialize)]
 pub struct JsonCommentResponse {
     pub content: Option<String>,
     pub attach:  Option<String>,
