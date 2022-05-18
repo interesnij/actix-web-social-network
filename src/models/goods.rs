@@ -1685,7 +1685,6 @@ impl GoodList {
             image: image,
             comment_enabled: comment_enabled,
             votes_on: votes_on,
-            votes_on: true,
 
             created: chrono::Local::now().naive_utc(),
             comment: 0,
