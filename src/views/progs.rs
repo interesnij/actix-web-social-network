@@ -302,7 +302,6 @@ pub async fn recover_comment(session: Session, req: HttpRequest) -> web::Json<Js
     }
 }
 
-#[get("/users/progs/like_comment/")]
 pub async fn like_comment(session: Session, req: HttpRequest) -> web::Json<JsonReactions> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
@@ -353,7 +352,6 @@ pub async fn like_comment(session: Session, req: HttpRequest) -> web::Json<JsonR
     }
 }
 
-#[get("/users/progs/dislike_comment/")]
 pub async fn dislike_comment(session: Session, req: HttpRequest) -> web::Json<JsonReactions> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
