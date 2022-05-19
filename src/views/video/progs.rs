@@ -38,8 +38,7 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
     config.route("/video/delete_community_list/{id}/", web::get().to(delete_community_list));
     config.route("/video/recover_community_list/{id}/", web::get().to(recover_community_list));
 
-    config.route("/video/add_user_video/{id}/", web::post().to(add_user_video));
-    config.route("/video/add_community_video/{id}/", web::post().to(add_community_video));
+    config.route("/video/add_video_in_list/{id}/", web::post().to(add_doc_in_list));
     config.route("/video/add_comment/{id}/", web::post().to(add_comment));
     config.route("/video/add_reply/{id}/", web::post().to(add_reply));
 }
@@ -432,14 +431,43 @@ pub async fn video_form(
     }
     form
 }
-pub async fn add_user_video(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn add_video_in_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
         let user_id = _request_user.id;
-        let list = get_video_list(*_id);
-        if list.is_user_can_create_el(_request_user.id) {
-            let form = video_form(payload.borrow_mut()).await;
-            let new_video = list.create_video (
+        let _list = get_video_list(*_id);
+        let mut owner_path = "".to_string();
+        let mut owner_id = 0;
+        let mut is_open = false;
+        let mut text = "".to_string();
+        let community_id = _list.community_id;
+
+        if community_id.is_some() {
+            let _tuple = get_community_permission(&_list.get_community(), &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
+            owner_path = "communities".to_string();
+            owner_id = community_id.unwrap();
+        }
+        else {
+            let _tuple = get_user_permission(&_list.get_creator(), &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
+            owner_path = "users".to_string();
+            owner_id = _request_user.id;
+        }
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+
+        else if _list.is_user_can_create_el(_request_user.id) {
+            let form = video_form(
+                payload.borrow_mut(),
+                owner_path,
+                owner_id.to_string()
+            ).await;
+            let new_video = _list.create_video (
                 form.title,
                 None,
                 _request_user.id,
@@ -452,7 +480,7 @@ pub async fn add_user_video(session: Session, mut payload: Multipart, _id: web::
             );
 
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/video/user/new_item.stpl")]
+            #[template(path = "desctop/video/new_item.stpl")]
             struct Template {
                 object: Video,
                 request_user: User,
@@ -475,167 +503,5 @@ pub async fn add_user_video(session: Session, mut payload: Multipart, _id: web::
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
             .body(""))
-    }
-}
-
-pub async fn add_community_video(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
-        let list = get_video_list(*_id);
-        let community_id = list.community_id;
-        let user_id = _request_user.id;
-        if list.is_user_can_create_el(_request_user.id) {
-            let form = video_form(payload.borrow_mut()).await;
-            let new_video = list.create_video (
-                form.title,
-                community_id,
-                _request_user.id,
-                form.preview,
-                form.image,
-                form.file,
-                form.description,
-                form.comment_enabled,
-                form.votes_on,
-            );
-
-            #[derive(TemplateOnce)]
-            #[template(path = "desctop/video/community/new_item.stpl")]
-            struct Template {
-                object: Video,
-                request_user: User,
-            }
-            let body = Template {
-                object: new_video,
-                request_user: _request_user,
-            }
-            .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
-        } else {
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(""))
-        }
-    } else {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(""))
-    }
-}
-
-pub async fn add_comment(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
-        let _request_user_id = &_request_user.id;
-        let item = get_video(*_id);
-        let list = item.get_list();
-        let mut is_open = false;
-        let mut text = "".to_string();
-
-        if item.community_id.is_some() {
-            let _tuple = get_community_permission(&item.get_community(), &_request_user);
-            is_open = _tuple.0;
-            text = _tuple.1;
-        }
-        else {
-            let _tuple = get_user_permission(&item.get_creator(), &_request_user);
-            is_open = _tuple.0;
-            text = _tuple.1;
-        }
-
-        if is_open == false {
-            use crate::views::close_item;
-            return close_item(text)
-        }
-        else if !list.is_user_can_create_comment(*_request_user_id) {
-            use crate::views::close_list;
-            return close_list()
-        }
-
-        use crate::utils::comment_form;
-        let form = comment_form(payload.borrow_mut()).await;
-        let new_comment = item.create_comment(
-            &_request_user,
-            form.attach,
-            None,
-            form.content,
-            form.sticker_id,
-        );
-
-        #[derive(TemplateOnce)]
-        #[template(path = "desctop/generic/items/comment/new_parent.stpl")]
-        struct Template {
-            comment: VideoComment,
-            request_user_id: i32,
-        }
-        let body = Template {
-            comment: new_comment,
-            request_user_id: *_request_user_id,
-        }
-        .render_once()
-        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
-    } else {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
-    }
-}
-
-pub async fn add_reply(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
-        let _request_user_id = &_request_user.id;
-        let comment = get_video_comment(*_id);
-        let item = get_video(comment.video_id);
-        let list = item.get_list();
-        let mut is_open = false;
-        let mut text = "".to_string();
-
-        if item.community_id.is_some() {
-            let _tuple = get_community_permission(&item.get_community(), &_request_user);
-            is_open = _tuple.0;
-            text = _tuple.1;
-        }
-        else {
-            let _tuple = get_user_permission(&item.get_creator(), &_request_user);
-            is_open = _tuple.0;
-            text = _tuple.1;
-        }
-
-        if is_open == false {
-            use crate::views::close_item;
-            return close_item(text)
-        }
-        else if !list.is_user_can_create_comment(*_request_user_id) {
-            use crate::views::close_list;
-            return close_list()
-        }
-
-        use crate::utils::comment_form;
-        let form = comment_form(payload.borrow_mut()).await;
-        let new_comment = item.create_comment(
-            &_request_user,
-            form.attach,
-            Some(comment.id),
-            form.content,
-            form.sticker_id,
-        );
-
-        #[derive(TemplateOnce)]
-        #[template(path = "desctop/generic/items/comment/new_reply.stpl")]
-        struct Template {
-            reply:           VideoComment,
-            request_user_id: i32,
-        }
-        let body = Template {
-            reply:           new_comment,
-            request_user_id: *_request_user_id,
-        }
-        .render_once()
-        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
-    } else {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
 }
