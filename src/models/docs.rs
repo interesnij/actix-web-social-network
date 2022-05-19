@@ -1459,7 +1459,10 @@ impl Doc {
         return v.last().unwrap().to_string();
     }
     pub fn get_size(&self) -> String {
-        return self.file.metadata().unwrap().len();
+        use std::fs;
+        let data = fs::read_to_string(self.file)
+            .expect("Unable to read file");
+        return data.metadata().unwrap().len();
     }
 
     pub fn count_copy(&self) -> String {
