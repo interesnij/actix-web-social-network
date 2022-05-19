@@ -409,7 +409,7 @@ pub async fn video_form(
                         form.title = data_string;
                     }
                     else if field.name() == "description" {
-                        form.description = Some(_int);
+                        form.description = Some(data_string);
                     }
                     else if field.name() == "comment_enabled" {
                         if data_string == "on" {
