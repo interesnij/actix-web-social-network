@@ -325,7 +325,7 @@ pub async fn docs_form (
         let mut field: Field = item.expect("split_payload err");
 
 
-        let _new_path = Uuid::new_v4().to_string() + &".".to_string() + &field.content_type().get_filename().unwrap();
+        let _new_path = Uuid::new_v4().to_string() + &".".to_string() + &field.content_disposition().get_filename().unwrap();
         let file = UploadedFiles::new (
             owner_path.clone(),
             owner_id.to_string(),
