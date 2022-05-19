@@ -386,13 +386,14 @@ pub async fn add_doc_in_list(session: Session, mut payload: Multipart, _id: web:
 
             let mut files_list = Vec::new();
             for file in form.files.iter() {
-                let v: &str = &file.split('/').collect()[..1];
+                let v: Vec<&str> = &file.split('/').collect();
+                let filename = v.last();
                 let new_doc = _list.create_doc (
-                    v.to_string(),
+                    filename.to_string(),
                     community_id,
                     _request_user.id,
                     "a".to_string(),
-                    file,
+                    file.to_string(),
                 );
                 files_list.push(new_doc);
             }

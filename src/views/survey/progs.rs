@@ -18,7 +18,7 @@ use crate::utils::{
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::{User, SurveyList, Survey, SurveyComment, Community};
+use crate::models::{User, SurveyList, Survey, Community};
 use serde::{Deserialize, Serialize};
 
 use std::str;

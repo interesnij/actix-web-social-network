@@ -23,7 +23,7 @@ use crate::utils::{
 
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::{User, DocList, Doc};
+use crate::models::{User, DocList, Doc, Community};
 
 
 pub fn pages_urls(config: &mut web::ServiceConfig) {
