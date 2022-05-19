@@ -1462,7 +1462,7 @@ impl Doc {
         use std::fs;
         let data = fs::read_to_string(self.file)
             .expect("Unable to read file");
-        return data.metadata().unwrap().len();
+        return data.len();
     }
 
     pub fn count_copy(&self) -> String {
