@@ -1661,6 +1661,58 @@ impl VideoList {
             return self.user_id == user_id;
         }
     }
+    pub fn create_video(&self, title: String, community_id: Option<i32>, user_id: i32,
+        preview: Option<String>, image: Option<String>, file: String,
+        description: Option<String>, comment_enabled: bool, votes_on: bool) -> Video {
+
+        let _connection = establish_connection();
+
+        diesel::update(&self)
+          .set(schema::video_lists::count.eq(self.count + 1))
+          .get_result::<VideoList>(&_connection)
+          .expect("Error.");
+
+        let new_video_form = NewVideo {
+          title: title,
+          community_id: community_id,
+          user_id: user_id,
+          video_list_id: self.id,
+          types: "a".to_string(),
+          preview: preview,
+          image: image,
+          file: file,
+          description: description,
+          comment_enabled: comment_enabled,
+          votes_on: votes_on,
+          created: chrono::Local::now().naive_utc(),
+
+          comment: 0,
+          view: 0,
+          liked: 0,
+          disliked: 0,
+          repost: 0,
+          copy: 0,
+          position: (self.count).try_into().unwrap(),
+        };
+        let new_video = diesel::insert_into(schema::videos::table)
+            .values(&new_video_form)
+            .get_result::<Video>(&_connection)
+            .expect("Error.");
+
+        if community_id.is_some() {
+            use crate::utils::get_community;
+            let community = self.get_community();
+            community.plus_videos(1);
+            return new_video;
+        }
+        else {
+            use crate::utils::get_user;
+
+            let creator = get_user(user_id);
+            creator.plus_videos(1);
+            return new_video;
+        }
+    }
 }
 /////// Video //////
 
@@ -1869,58 +1921,6 @@ impl Video {
             .unwrap();
     }
 
-    pub fn create_video(title: String, community_id: Option<i32>, user_id: i32,
-        list: VideoList, preview: Option<String>, image: Option<String>, file: String,
-        description: Option<String>, comment_enabled: bool, votes_on: bool) -> Video {
-
-        let _connection = establish_connection();
-
-        diesel::update(&list)
-          .set(schema::video_lists::count.eq(list.count + 1))
-          .get_result::<VideoList>(&_connection)
-          .expect("Error.");
-
-        let new_video_form = NewVideo {
-          title: title,
-          community_id: community_id,
-          user_id: user_id,
-          video_list_id: list.id,
-          types: "a".to_string(),
-          preview: preview,
-          image: image,
-          file: file,
-          description: description,
-          comment_enabled: comment_enabled,
-          votes_on: votes_on,
-          created: chrono::Local::now().naive_utc(),
-
-          comment: 0,
-          view: 0,
-          liked: 0,
-          disliked: 0,
-          repost: 0,
-          copy: 0,
-          position: (list.count).try_into().unwrap(),
-        };
-        let new_video = diesel::insert_into(schema::videos::table)
-            .values(&new_video_form)
-            .get_result::<Video>(&_connection)
-            .expect("Error.");
-
-        if community_id.is_some() {
-            use crate::utils::get_community;
-            let community = list.get_community();
-            community.plus_videos(1);
-            return new_video;
-        }
-        else {
-            use crate::utils::get_user;
-
-            let creator = get_user(user_id);
-            creator.plus_videos(1);
-            return new_video;
-        }
-    }
     pub fn copy_item(pk: i32, lists: Vec<i32>) -> bool {
         use crate::schema::videos::dsl::videos;
         use crate::schema::video_lists::dsl::video_lists;
@@ -1946,11 +1946,10 @@ impl Video {
                 .nth(0)
                 .unwrap();
 
-            Video::create_video (
+            list.create_video (
                 item.title.clone(),
                 item.community_id,
-                list.user_id,
-                list,
+                item.user_id,
                 item.preview.clone(),
                 item.image.clone(),
                 item.file.clone(),

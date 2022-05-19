@@ -351,7 +351,7 @@ pub async fn post_form(payload: &mut Multipart) -> PostForm {
                 if let Ok(s) = str::from_utf8(&data) {
                     let data_string = s.to_string();
                     let _int: i32 = data_string.parse().unwrap();
-                    form.cat = Some(_int);
+                    form.cat = Some(_int); 
                 }
             }
         }

@@ -28,6 +28,11 @@ use crate::models::{User, MusicList, Music};
 
 pub fn pages_urls(config: &mut web::ServiceConfig) {
     config.route("/music/load_list/{list_id}/", web::get().to(load_list_page));
+
+    config.route("/music/add_user_list/", web::get().to(add_user_list_page));
+    config.route("/music/edit_user_list/{id}/", web::get().to(edit_user_list_page));
+    config.route("/music/add_community_list//{id}", web::get().to(add_community_list_page));
+    config.route("/music/edit_community_list/{id}/", web::get().to(edit_community_list_page));
 }
 
 pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
@@ -176,5 +181,113 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
+    }
+}
+
+
+pub async fn add_user_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    if !is_signed_in(&session) {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        let _request_user = get_request_user_data(session);
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/music/user/add_list.stpl")]
+        struct Template {
+            request_user: User,
+        }
+        let body = Template {
+            request_user: _request_user,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok()
+        .content_type("text/html; charset=utf-8")
+        .body(body))
+    }
+}
+pub async fn edit_user_list_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if !is_signed_in(&session) {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        let _request_user = get_request_user_data(session);
+        let _list_id : i32 = *_id;
+        let list = get_music_list(_list_id);
+        if list.user_id != _request_user.id {
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(""))
+        }
+        else {
+
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/music/user/edit_list.stpl")]
+            struct YTemplate {
+                request_user: User,
+                list: MusicList,
+            }
+            let body = YTemplate {
+                request_user: _request_user,
+                list: list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body))
+        }
+    }
+}
+pub async fn add_community_list_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let community = get_community(*_id);
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/music/community/add_list.stpl")]
+        struct Template {
+            request_user: User,
+            community: Community,
+        }
+        let body = Template {
+            request_user: _request_user,
+            community: community,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body(body))
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+pub async fn edit_community_list_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let list = get_music_list(*_id);
+        let community = get_community(list.community_id.unwrap());
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/music/community/edit_list.stpl")]
+        struct Template {
+            request_user: User,
+            community: Community,
+            list: MusicList,
+        }
+        let body = Template {
+            request_user: _request_user,
+            community: community,
+            list: list,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok()
+            .content_type("text/html; charset=utf-8")
+            .body(body))
+    }
+    else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
 }

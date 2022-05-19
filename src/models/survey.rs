@@ -1314,6 +1314,54 @@ impl SurveyList {
             return self.user_id == user_id;
         }
     }
+    pub fn create_survey(&self, title: String, community_id: Option<i32>, user_id: i32,
+        image: Option<String>, is_anonymous: bool,
+        is_multiple: bool, is_no_edited: bool, time_end: Option<String>) -> Survey {
+
+        use chrono::NaiveTimeDate;
+
+        let _connection = establish_connection();
+        diesel::update(&self)
+          .set(schema::survey_lists::count.eq(self.count + 1))
+          .get_result::<SurveyList>(&_connection)
+          .expect("Error.");
+
+        let new_survey_form = NewSurvey {
+            title: title,
+            community_id: community_id,
+            user_id: user_id,
+            survey_list_id: self.id,
+            types: "a".to_string(),
+            image: image,
+            is_anonymous: is_anonymous,
+            is_multiple: is_multiple,
+            is_no_edited: is_no_edited,
+            time_end: NaiveTimeDate::parse_from_str(&time_end.clone(), "%Y-%m-%d %H:%M:%S"), 
+            created: chrono::Local::now().naive_utc(),
+            view: 0,
+            repost: 0,
+            copy: 0,
+            position: (self.count).try_into().unwrap(),
+            vote: 0,
+          };
+          let new_survey = diesel::insert_into(schema::surveys::table)
+              .values(&new_survey_form)
+              .get_result::<Survey>(&_connection)
+              .expect("Error.");
+
+        if community_id.is_some() {
+            let community = self.get_community();
+            community.plus_surveys(1);
+            return new_survey;
+        }
+        else {
+            use crate::utils::get_user;
+
+            let creator = get_user(user_id);
+            creator.plus_surveys(1);
+            return new_survey;
+        }
+    }
 }
 /////// Survey //////
 
@@ -1637,52 +1685,6 @@ impl Survey {
         else {
             let creator = self.get_creator();
             return "<a href='".to_owned() + &creator.link.to_string() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": опрос"
-        }
-    }
-    pub fn create_survey(title: String, community_id: Option<i32>, user_id: i32,
-        list: SurveyList, image: Option<String>, is_anonymous: bool,
-        is_multiple: bool, is_no_edited: bool, time_end:Option<NaiveDateTime>) -> Survey {
-
-        let _connection = establish_connection();
-        diesel::update(&list)
-          .set(schema::survey_lists::count.eq(list.count + 1))
-          .get_result::<SurveyList>(&_connection)
-          .expect("Error.");
-
-        let new_survey_form = NewSurvey {
-            title: title,
-            community_id: community_id,
-            user_id: user_id,
-            survey_list_id: list.id,
-            types: "a".to_string(),
-            image: image,
-            is_anonymous: is_anonymous,
-            is_multiple: is_multiple,
-            is_no_edited: is_no_edited,
-            time_end: time_end,
-            created: chrono::Local::now().naive_utc(),
-            view: 0,
-            repost: 0,
-            copy: 0,
-            position: (list.count).try_into().unwrap(),
-            vote: 0,
-          };
-          let new_survey = diesel::insert_into(schema::surveys::table)
-              .values(&new_survey_form)
-              .get_result::<Survey>(&_connection)
-              .expect("Error.");
-
-        if community_id.is_some() {
-            let community = list.get_community();
-            community.plus_surveys(1);
-            return new_survey;
-        }
-        else {
-            use crate::utils::get_user;
-
-            let creator = get_user(user_id);
-            creator.plus_surveys(1);
-            return new_survey;
         }
     }
 
