@@ -1336,7 +1336,7 @@ impl SurveyList {
             is_anonymous: is_anonymous,
             is_multiple: is_multiple,
             is_no_edited: is_no_edited,
-            time_end: NaiveDateTime::parse_from_str(&time_end.clone(), "%Y-%m-%d %H:%M:%S"),
+            time_end: Some(NaiveDateTime::parse_from_str(&time_end.unwrap().clone(), "%Y-%m-%d %H:%M:%S").unwrap()),
             created: chrono::Local::now().naive_utc(),
             view: 0,
             repost: 0,
