@@ -18,7 +18,7 @@ use crate::utils::{
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::{User, DocList, Doc, DocComment, Community};
+use crate::models::{User, DocList, Doc, Community};
 use serde::{Deserialize, Serialize};
 
 use std::str;
@@ -378,7 +378,7 @@ pub async fn add_doc_in_list(session: Session, mut payload: Multipart, _id: web:
             return close_item(text)
         }
         else if _list.is_user_can_create_el(_request_user.id) {
-            let form = doc_form(
+            let form = docs_form(
                 payload.borrow_mut(),
                 owner_path,
                 owner_id.to_string()
@@ -398,7 +398,7 @@ pub async fn add_doc_in_list(session: Session, mut payload: Multipart, _id: web:
             }
 
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/docs/new_item.stpl")]
+            #[template(path = "desctop/docs/new_docs.stpl")]
             struct Template {
                 object_list: Vec<Doc>,
                 request_user: User,
