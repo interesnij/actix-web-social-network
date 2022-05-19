@@ -356,7 +356,7 @@ pub async fn video_form(
         let mut field: Field = item.expect("split_payload err");
 
         if field.name() == "image" {
-            let _new_path = Uuid::new_v4().to_string() + &".jpg".to_string();
+            let _new_path = Uuid::new_v4().to_string() + &".".to_string() + &field.content_disposition().get_filename().unwrap();
             let file = UploadedFiles::new (
                 owner_path.clone(),
                 owner_id.to_string(),
@@ -380,7 +380,7 @@ pub async fn video_form(
             }
         }
         else if field.name() == "file" {
-            let _new_path = Uuid::new_v4().to_string() + &".mp4".to_string();
+            let _new_path = Uuid::new_v4().to_string() + &".".to_string() + &field.content_disposition().get_filename().unwrap();
             let file = UploadedFiles::new (
                 owner_path.clone(),
                 owner_id.to_string(),
