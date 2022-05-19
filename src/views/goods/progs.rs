@@ -329,7 +329,7 @@ pub struct GoodForm {
     pub category_id: Option<i32>,
     pub price: Option<i32>,
     pub description: Option<String>,
-    pub image: Option<i32>,
+    pub image: Option<String>,
     pub comment_enabled: bool,
     pub votes_on: bool,
     pub images: Vec<String>,

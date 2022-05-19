@@ -11,6 +11,6 @@ pub use self::{
 pub fn music_routes(cfg: &mut ServiceConfig) {
     cfg
     .configure(pages_urls)
-    .configure(progs_urls)
+    //.configure(progs_urls)
     ;
 }
