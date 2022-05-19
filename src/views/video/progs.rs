@@ -28,7 +28,7 @@ use futures::StreamExt;
 use std::borrow::BorrowMut;
 
 
-pub fn pages_urls(config: &mut web::ServiceConfig) {
+pub fn progs_urls(config: &mut web::ServiceConfig) {
     config.route("/video/add_user_list/", web::get().to(add_user_list_page));
     config.route("/video/edit_user_list/{id}/", web::get().to(edit_user_list_page));
     config.route("/video/add_community_list//{id}", web::get().to(add_community_list_page));
