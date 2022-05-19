@@ -1324,7 +1324,7 @@ impl DocList {
         types_2: String, file: String) -> Doc {
 
         let _connection = establish_connection();
-        diesel::update(&*self) 
+        diesel::update(&*self)
           .set(schema::doc_lists::count.eq(self.count + 1))
           .get_result::<DocList>(&_connection)
           .expect("Error.");
@@ -1452,6 +1452,14 @@ impl Doc {
         else {
             return "".to_string()
         }
+    }
+
+    pub fn get_mime(&self) -> String {
+        let v: Vec<&str> = self.file.split('.').collect();
+        return v.last().unwrap().to_string();
+    }
+    pub fn get_size(&self) -> String {
+        return self.file.metadata().unwrap().len();
     }
 
     pub fn count_copy(&self) -> String {

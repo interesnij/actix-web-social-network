@@ -20,7 +20,7 @@
               </svg>
                 <div class="media-body">
                     <a href="<%= object.file %>" target="_blank" rel="nofollow"><%= object.title %></a>
-                    <p class="small"><%= object.file %> }} | <%= object.file %></p>
+                    <p class="small"><%= object.get_mime() %> | <%= object.get_size() %></p>
                 </div>
             </div>
         </div>
