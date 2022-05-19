@@ -324,16 +324,15 @@ pub async fn docs_form (
     while let Some(item) = payload.next().await {
         let mut field: Field = item.expect("split_payload err");
 
-        let _new_path = Uuid::new_v4().to_string() + &".".to_string() + &field.content_type().essence_str();
+
+        let _new_path = Uuid::new_v4().to_string() + &".".to_string() + &field.content_type().get_filename().unwrap();
         let file = UploadedFiles::new (
             owner_path.clone(),
             owner_id.to_string(),
             "docs".to_string(),
             _new_path.to_string(),
         );
-        println!("content_type {:?}", &field.content_type());
-        println!("content_type_str {:?}", &field.content_type().essence_str());
-        println!("file_path {:?}", file.path.clone());
+        println!("content_type {:?}", &_new_path);
         let file_path = file.path.clone();
         let mut f = web::block(move || std::fs::File::create(&file_path).expect("E"))
             .await
