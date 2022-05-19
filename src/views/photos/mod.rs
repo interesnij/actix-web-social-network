@@ -1,16 +1,16 @@
 pub mod pages;
-pub mod photo_progs;
+pub mod progs;
 
 use actix_web::web::ServiceConfig;
 
 pub use self::{
     pages::*,
-    photo_progs::*,
+    progs::*,
 };
 
 pub fn photos_routes(cfg: &mut ServiceConfig) {
     cfg
-    .configure(photos_urls)
-    .configure(photo_progs_urls)
+    .configure(pages_urls)
+    .configure(progs_urls)
     ;
 }

@@ -28,7 +28,7 @@ use sailfish::TemplateOnce;
 use crate::models::{User, GoodList, Good, GoodComment, Community};
 
 
-pub fn goods_urls(config: &mut web::ServiceConfig) {
+pub fn pages_urls(config: &mut web::ServiceConfig) {
     config.route("/goods/load_list/{list_id}/", web::get().to(load_list_page));
     config.route("/goods/load_good/{id}/", web::get().to(load_good_page));
     config.route("/goods/load_comments/{id}/", web::get().to(load_comments_page));

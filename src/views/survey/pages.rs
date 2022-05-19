@@ -26,7 +26,7 @@ use sailfish::TemplateOnce;
 use crate::models::{User, SurveyList, Survey};
 
 
-pub fn surveys_urls(config: &mut web::ServiceConfig) {
+pub fn pages_urls(config: &mut web::ServiceConfig) {
     config.route("/survey/load_list/{list_id}/", web::get().to(load_list_page));
 }
 

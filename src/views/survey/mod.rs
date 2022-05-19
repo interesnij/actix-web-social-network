@@ -8,6 +8,6 @@ pub use self::{
 
 pub fn survey_routes(cfg: &mut ServiceConfig) {
     cfg
-    .configure(surveys_urls)
+    .configure(pages_urls)
     ;
 }

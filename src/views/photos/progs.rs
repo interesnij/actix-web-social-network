@@ -30,7 +30,7 @@ use actix_multipart::{Field, Multipart};
 use futures::StreamExt;
 
 
-pub fn photo_progs_urls(config: &mut web::ServiceConfig) {
+pub fn progs_urls(config: &mut web::ServiceConfig) {
     config.route("/photos/add_user_list/", web::post().to(add_user_photo_list));
     config.route("/photos/edit_user_list/{id}/", web::post().to(edit_user_photo_list));
     config.route("/photos/add_community_list/{id}/", web::post().to(add_community_photo_list));

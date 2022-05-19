@@ -27,7 +27,7 @@ use sailfish::TemplateOnce;
 use crate::models::{User, PhotoList, Photo, PhotoComment, Community};
 
 
-pub fn photos_urls(config: &mut web::ServiceConfig) {
+pub fn pages_urls(config: &mut web::ServiceConfig) {
     config.route("/photos/load_list/{list_id}/", web::get().to(load_list_page));
     config.route("/photos/load_photo/{id}/", web::get().to(load_photo_page));
     config.route("/photos/load_comments/{id}/", web::get().to(load_comments_page));

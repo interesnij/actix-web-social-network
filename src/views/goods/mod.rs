@@ -8,6 +8,6 @@ pub use self::{
 
 pub fn goods_routes(cfg: &mut ServiceConfig) {
     cfg
-    .configure(goods_urls)
+    .configure(pages_urls)
     ;
 }

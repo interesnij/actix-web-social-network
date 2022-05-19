@@ -8,6 +8,6 @@ pub use self::{
 
 pub fn video_routes(cfg: &mut ServiceConfig) {
     cfg
-    .configure(videos_urls)
+    .configure(pages_urls)
     ;
 }

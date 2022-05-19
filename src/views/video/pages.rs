@@ -27,7 +27,7 @@ use sailfish::TemplateOnce;
 use crate::models::{User, VideoList, Video, VideoComment, Community};
 
 
-pub fn videos_urls(config: &mut web::ServiceConfig) {
+pub fn pages_urls(config: &mut web::ServiceConfig) {
     config.route("/video/load_list/{list_id}/", web::get().to(load_list_page));
     config.route("/video/load_video/{id}/", web::get().to(load_video_page));
     config.route("/video/load_comments/{id}/", web::get().to(load_comments_page));
