@@ -52,14 +52,10 @@ pub async fn add_user_list(session: Session, mut payload: Multipart) -> actix_we
             form.description,
             None,
             form.can_see_el,
-            form.can_see_comment,
             form.create_el,
-            form.create_comment,
             form.copy_el,
             Some(form.can_see_el_users),
-            Some(form.can_see_comment_users),
             Some(form.create_el_users),
-            Some(form.create_comment_users),
             Some(form.copy_el_users),
         );
 
@@ -95,14 +91,10 @@ pub async fn edit_user_list(session: Session, mut payload: Multipart, _id: web::
                 form.name,
                 form.description,
                 form.can_see_el,
-                form.can_see_comment,
                 form.create_el,
-                form.create_comment,
                 form.copy_el,
                 Some(form.can_see_el_users),
-                Some(form.can_see_comment_users),
                 Some(form.create_el_users),
-                Some(form.create_comment_users),
                 Some(form.copy_el_users),
             );
 
@@ -145,14 +137,10 @@ pub async fn add_community_list(session: Session, mut payload: Multipart, _id: w
                 form.description,
                 Some(*_id),
                 form.can_see_el,
-                form.can_see_comment,
                 form.create_el,
-                form.create_comment,
                 form.copy_el,
                 Some(form.can_see_el_users),
-                Some(form.can_see_comment_users),
                 Some(form.create_el_users),
-                Some(form.create_comment_users),
                 Some(form.copy_el_users),
             );
 
