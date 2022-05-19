@@ -25,7 +25,7 @@ use serde::{Deserialize, Serialize};
 use std::str;
 use actix_multipart::{Field, Multipart};
 use futures::StreamExt;
-use std::borrow::BorrowMut;
+use std::{borrow::BorrowMut, io::Write};
 
 
 pub fn progs_urls(config: &mut web::ServiceConfig) {
@@ -381,7 +381,7 @@ pub async fn good_form(
                     form.images.push(file.path.clone().replace("./","/"));
                 }
                 else if field.name() == "image" {
-                    form.image = file.path.clone().replace("./","/");
+                    form.image = Some(file.path.clone().replace("./","/"));
                 }
             };
         }
@@ -464,7 +464,7 @@ pub async fn add_good_in_list(session: Session, mut payload: Multipart, _id: web
                 form.title,
                 None,
                 form.category_id,
-                _request_user,
+                _request_user.id,
                 form.price,
                 form.description,
                 form.image,

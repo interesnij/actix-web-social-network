@@ -195,14 +195,10 @@ pub async fn edit_community_list(session: Session, mut payload: Multipart, _id: 
                 form.name,
                 form.description,
                 form.can_see_el,
-                form.can_see_comment,
                 form.create_el,
-                form.create_comment,
                 form.copy_el,
                 Some(form.can_see_el_users),
-                Some(form.can_see_comment_users),
                 Some(form.create_el_users),
-                Some(form.create_comment_users),
                 Some(form.copy_el_users),
             );
 
@@ -344,7 +340,7 @@ pub async fn survey_form(
         is_anonymous: true,
         is_multiple: true,
         is_no_edited: true,
-        time_end: "".to_string(),
+        time_end: None,
     };
 
     while let Some(item) = payload.next().await {
@@ -441,7 +437,11 @@ pub async fn add_survey_in_list(session: Session, mut payload: Multipart, _id: w
             return close_item(text)
         }
         else if _list.is_user_can_create_el(_request_user.id) {
-            let form = survey_form(payload.borrow_mut()).await;
+            let form = survey_form(
+                payload.borrow_mut(),
+                owner_path,
+                owner_id.to_string()
+            ).await;
             let new_survey = _list.create_survey (
                 form.title,
                 None,
