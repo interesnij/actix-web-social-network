@@ -331,6 +331,9 @@ pub async fn docs_form (
             "docs".to_string(),
             _new_path.to_string(),
         );
+        println!("content_type {:?}", &field.content_type());
+        println!("content_type_str {:?}", &field.content_type().essence_str());
+        println!("file_path {:?}", file.path.clone());
         let file_path = file.path.clone();
         let mut f = web::block(move || std::fs::File::create(&file_path).expect("E"))
             .await
