@@ -1458,7 +1458,7 @@ impl Doc {
         let v: Vec<&str> = self.file.split('.').collect();
         return v.last().unwrap().to_string();
     }
-    pub fn get_size(&self) -> String {
+    pub fn get_size(&self) -> usize {
         use std::fs;
         let data = fs::read_to_string(self.file)
             .expect("Unable to read file");
