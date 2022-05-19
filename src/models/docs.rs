@@ -1324,7 +1324,7 @@ impl DocList {
         types_2: String, file: String) -> Doc {
 
         let _connection = establish_connection();
-        diesel::update(&self)
+        diesel::update(&*self) 
           .set(schema::doc_lists::count.eq(self.count + 1))
           .get_result::<DocList>(&_connection)
           .expect("Error.");

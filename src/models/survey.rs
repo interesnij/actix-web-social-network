@@ -1321,7 +1321,7 @@ impl SurveyList {
         use chrono::NaiveTimeDate;
 
         let _connection = establish_connection();
-        diesel::update(&self)
+        diesel::update(&*self)
           .set(schema::survey_lists::count.eq(self.count + 1))
           .get_result::<SurveyList>(&_connection)
           .expect("Error.");
@@ -1336,7 +1336,7 @@ impl SurveyList {
             is_anonymous: is_anonymous,
             is_multiple: is_multiple,
             is_no_edited: is_no_edited,
-            time_end: NaiveTimeDate::parse_from_str(&time_end.clone(), "%Y-%m-%d %H:%M:%S"), 
+            time_end: NaiveTimeDate::parse_from_str(&time_end.clone(), "%Y-%m-%d %H:%M:%S"),
             created: chrono::Local::now().naive_utc(),
             view: 0,
             repost: 0,

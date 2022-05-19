@@ -110,7 +110,7 @@
           <a class="i_link menu_drop_2 pointer">Администраторы</a>
           <span class="collector"></span>
 
-          <% } else if list.list.copy_el == "g" { %>
+          <% } else if list.copy_el == "g" { %>
           <input class="input" name="copy_el" type="hidden" value="g" />
           <a class="i_link menu_drop_2 pointer">Владелец сообщества</a>
           <span class="collector"></span>

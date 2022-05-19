@@ -25,7 +25,7 @@ use serde::{Deserialize, Serialize};
 use std::str;
 use actix_multipart::{Field, Multipart};
 use futures::StreamExt;
-use std::borrow::BorrowMut;
+use std::{borrow::BorrowMut, io::Write};
 
 
 pub fn progs_urls(config: &mut web::ServiceConfig) {
@@ -376,8 +376,8 @@ pub async fn video_form(
                     .expect("E");
             };
             if field.content_type().to_string() == "image/jpeg".to_string() {
-                form.image = file.path.clone().replace("./","/");
-                form.preview = file.path.clone().replace("./","/");
+                form.image = Some(file.path.clone().replace("./","/"));
+                form.preview = Some(file.path.clone().replace("./","/"));
             }
         }
         else if field.name() == "file" {

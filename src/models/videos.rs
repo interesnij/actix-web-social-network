@@ -1667,7 +1667,7 @@ impl VideoList {
 
         let _connection = establish_connection();
 
-        diesel::update(&self)
+        diesel::update(&*self)
           .set(schema::video_lists::count.eq(self.count + 1))
           .get_result::<VideoList>(&_connection)
           .expect("Error.");
