@@ -315,7 +315,7 @@ pub async fn docs_form (
     owner_id: String
 ) -> DocsForm {
     use crate::utils::UploadedFiles;
-    use uuid::Uuid;
+    //use uuid::Uuid;
 
     let mut form: DocsForm = DocsForm {
         files: Vec::new(),
@@ -325,7 +325,7 @@ pub async fn docs_form (
         let mut field: Field = item.expect("split_payload err");
 
 
-        let _new_path = Uuid::new_v4().to_string() + &".".to_string() + &field.content_disposition().get_filename().unwrap();
+        let _new_path = field.content_disposition().get_filename().unwrap();
         let file = UploadedFiles::new (
             owner_path.clone(),
             owner_id.to_string(),

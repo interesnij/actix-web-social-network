@@ -341,7 +341,7 @@ pub async fn good_form(
     owner_id: String
 ) -> GoodForm {
     use crate::utils::UploadedFiles;
-    use uuid::Uuid;
+    //use uuid::Uuid;
 
     let mut form: GoodForm = GoodForm {
         title: "".to_string(),
@@ -358,7 +358,7 @@ pub async fn good_form(
         let mut field: Field = item.expect("split_payload err");
 
         if field.name() == "image" || field.name() == "images" {
-            let _new_path = Uuid::new_v4().to_string() + &".".to_string() + &field.content_disposition().get_filename().unwrap();
+            let _new_path = field.content_disposition().get_filename().unwrap();
             let file = UploadedFiles::new (
                 owner_path.clone(),
                 owner_id.to_string(),

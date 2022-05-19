@@ -55,7 +55,7 @@ pub async fn images_form (
     owner_id: String
 ) -> ImageForm {
     use crate::utils::UploadedFiles;
-    use uuid::Uuid;
+    //use uuid::Uuid;
 
     let mut form: ImageForm = ImageForm {
         images: Vec::new(),
@@ -64,7 +64,7 @@ pub async fn images_form (
     while let Some(item) = payload.next().await {
         let mut field: Field = item.expect("split_payload err");
 
-        let _new_path = Uuid::new_v4().to_string() + &".".to_string() + &field.content_disposition().get_filename().unwrap();
+        let _new_path = field.content_disposition().get_filename().unwrap();
         let file = UploadedFiles::new (
             owner_path.clone(),
             owner_id.to_string(),
