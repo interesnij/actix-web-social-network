@@ -1460,7 +1460,7 @@ impl Doc {
     }
     pub fn get_size(&self) -> usize {
         use std::fs;
-        let data = fs::read_to_string(self.file)
+        let data = fs::read_to_string(self.file.clone())
             .expect("Unable to read file");
         return data.len();
     }
