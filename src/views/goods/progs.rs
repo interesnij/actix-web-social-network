@@ -38,8 +38,7 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
     config.route("/goods/delete_community_list/{id}/", web::get().to(delete_community_list));
     config.route("/goods/recover_community_list/{id}/", web::get().to(recover_community_list));
 
-    config.route("/goods/add_user_good/{id}/", web::post().to(add_user_good));
-    config.route("/goods/add_community_good/{id}/", web::post().to(add_community_good));
+    config.route("/goods/add_good_in_list/{id}/", web::post().to(add_good_in_list));
     config.route("/goods/add_comment/{id}/", web::post().to(add_comment));
     config.route("/goods/add_reply/{id}/", web::post().to(add_reply));
 }
@@ -425,14 +424,43 @@ pub async fn good_form(
     }
     form
 }
-pub async fn add_user_good(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn add_good_in_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
         let user_id = _request_user.id;
-        let list = get_good_list(*_id);
-        if list.is_user_can_create_el(_request_user.id) {
-            let form = good_form(payload.borrow_mut()).await;
-            let new_good = list.create_good (
+        let _list = get_good_list(*_id);
+        let mut owner_path = "".to_string();
+        let mut owner_id = 0;
+        let mut is_open = false;
+        let mut text = "".to_string();
+        let community_id = _list.community_id;
+
+        if community_id.is_some() {
+            let _tuple = get_community_permission(&_list.get_community(), &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
+            owner_path = "communities".to_string();
+            owner_id = community_id.unwrap();
+        }
+        else {
+            let _tuple = get_user_permission(&_list.get_creator(), &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
+            owner_path = "users".to_string();
+            owner_id = _request_user.id;
+        }
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+
+        else if _list.is_user_can_create_el(_request_user.id) {
+            let form = good_form (
+                payload.borrow_mut(),
+                owner_path,
+                owner_id.to_string()
+            ).await;
+            let new_good = _list.create_good (
                 form.title,
                 None,
                 form.category_id,
@@ -445,54 +473,7 @@ pub async fn add_user_good(session: Session, mut payload: Multipart, _id: web::P
             );
 
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/goods/user/new_item.stpl")]
-            struct Template {
-                object: Good,
-                request_user: User,
-            }
-            let body = Template {
-                object: new_good,
-                request_user: _request_user,
-            }
-            .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
-        } else {
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(""))
-        }
-    } else {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(""))
-    }
-}
-
-pub async fn add_community_good(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
-        let list = get_good_list(*_id);
-        let community_id = list.community_id;
-        let user_id = _request_user.id;
-        if list.is_user_can_create_el(_request_user.id) {
-            let form = good_form(payload.borrow_mut()).await;
-            let new_good = list.create_good (
-                form.title,
-                community_id,
-                form.category_id,
-                _request_user,
-                form.price,
-                form.description,
-                form.image,
-                form.comment_enabled,
-                form.votes_on,
-            );
-
-            #[derive(TemplateOnce)]
-            #[template(path = "desctop/goods/community/new_item.stpl")]
+            #[template(path = "desctop/goods/new_item.stpl")]
             struct Template {
                 object: Good,
                 request_user: User,

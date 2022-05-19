@@ -37,7 +37,7 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
     config.route("/surveys/delete_community_list/{id}/", web::get().to(delete_community_list));
     config.route("/surveys/recover_community_list/{id}/", web::get().to(recover_community_list));
 
-    config.route("/surveys/add_survey_in_list/{id}/", web::post().to(add_user_survey));
+    config.route("/surveys/add_survey_in_list/{id}/", web::post().to(add_survey_in_list));
 }
 
 pub async fn add_user_list(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
