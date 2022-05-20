@@ -457,7 +457,7 @@ pub async fn edit_track(session: Session, mut payload: Multipart, _id: web::Path
             use crate::utils::establish_connection;
             let _connection = establish_connection();
             diesel::update(&_track)
-                .set(form)
+                .set(&form) 
                 .get_result::<Music>(&_connection)
                 .expect("Error.");
 
