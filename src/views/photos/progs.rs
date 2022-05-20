@@ -481,9 +481,12 @@ pub async fn edit_photo_description(session: Session, mut payload: Multipart, _i
                     }
                 }
             }
+
+            use crate::utils::establish_connection;
+            let _connection = establish_connection();
             diesel::update(&_photo)
                 .set(schema::photos::description.eq(form.description))
-                .get_result::<BlogCategories>(&_connection)
+                .get_result::<Photo>(&_connection)
                 .expect("Error.");
             return Json(EditPhotoDescription {
                 description: _photo.description,
