@@ -336,6 +336,8 @@ pub async fn add_tracks_in_list(session: Session, mut payload: Multipart, _id: w
                     filename,
                     community_id,
                     _request_user.id,
+                    None,
+                    None,
                     file.to_string(),
                     None,
                 );

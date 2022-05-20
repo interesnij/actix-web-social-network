@@ -1420,10 +1420,11 @@ impl MusicList {
     }
 
     pub fn create_track(&self, title: String, community_id: Option<i32>,
-        user_id: i32, file: String, image: Option<String>) -> Music {
+        user_id: i32, genre_id: Option<i32>, album_id: Option<i32>,
+        file: String, image: Option<String>) -> Music {
 
         let _connection = establish_connection();
-        diesel::update(&self)
+        diesel::update(self)
           .set(schema::music_lists::count.eq(self.count + 1))
           .get_result::<MusicList>(&_connection)
           .expect("Error.");
@@ -1433,8 +1434,8 @@ impl MusicList {
             community_id: community_id,
             user_id: user_id,
             music_list_id: self.id,
-            genre_id: None,
-            album_id: None,
+            genre_id: genre_id,
+            album_id: album_id,
             types: "a".to_string(),
             file: file,
             image: image,

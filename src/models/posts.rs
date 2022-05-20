@@ -1680,7 +1680,7 @@ impl PostList {
         }
     }
 
-    pub fn create_post(user_id: i32, content: Option<String>, category_id: Option<i32>,
+    pub fn create_post(&self, user_id: i32, content: Option<String>, category_id: Option<i32>,
         attach: Option<String>, parent_id: Option<i32>,
         comment_enabled: bool, is_signature: bool, votes_on: bool,
         types: Option<String>) -> Post {
