@@ -54,7 +54,7 @@ pub async fn add_user_list(session: Session, mut payload: Multipart) -> actix_we
             form.name,
             form.description,
             None,
-            None, 
+            None,
             form.can_see_el,
             form.create_el,
             form.copy_el,
@@ -130,6 +130,7 @@ pub async fn add_community_list(session: Session, mut payload: Multipart, _id: w
                 _request_user,
                 form.name,
                 form.description,
+                None,
                 Some(*_id),
                 form.can_see_el,
                 form.create_el,
@@ -452,6 +453,8 @@ pub async fn edit_track(session: Session, mut payload: Multipart, _id: web::Path
                     form.image = Some(file.path.clone().replace("./","/"));
                 }
             }
+
+            use crate::utils::establish_connection;
             let _connection = establish_connection();
             diesel::update(&_track)
                 .set(form)

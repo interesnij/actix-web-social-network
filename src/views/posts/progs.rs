@@ -340,6 +340,7 @@ pub async fn post_form(payload: &mut Multipart) -> PostForm {
         attach: None,
         comment_enabled: true,
         votes_on: true,
+        is_signature: false,
     };
 
     while let Some(item) = payload.next().await {
@@ -381,6 +382,18 @@ pub async fn post_form(payload: &mut Multipart) -> PostForm {
                         form.comment_enabled = true;
                     } else {
                         form.comment_enabled = false;
+                    }
+                }
+            }
+        }
+        else if field.name() == "is_signature" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    if s.to_string() == "on" {
+                        form.is_signature = true;
+                    } else {
+                        form.is_signature = false;
                     }
                 }
             }
@@ -504,7 +517,7 @@ pub async fn edit_post(session: Session, mut payload: Multipart, _id: web::Path<
                 request_user: User,
             }
             let body = Template {
-                object: edit_post,
+                object: _post,
                 request_user: _request_user,
             }
             .render_once()

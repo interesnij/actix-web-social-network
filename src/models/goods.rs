@@ -1710,8 +1710,8 @@ impl GoodList {
             diesel::insert_into(good_images::table)
                 .values(&new_image)
                 .get_result::<GoodImage>(&_connection)
-                .expect("Error saving good image.")
-            };
+                .expect("Error saving good image.");
+            }
         if community_id.is_some() {
             use crate::utils::get_community;
             let community = self.get_community();
