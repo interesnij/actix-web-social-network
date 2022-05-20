@@ -517,7 +517,7 @@ pub async fn edit_survey(session: Session, mut payload: Multipart, _id: web::Pat
                 request_user: User,
             }
             let body = Template {
-                object: edit_survey.as_ref(),
+                object: _survey,
                 request_user: _request_user,
             }
             .render_once()

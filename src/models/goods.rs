@@ -1831,7 +1831,7 @@ impl Good {
         let _connection = establish_connection();
         return good_images
             .filter(schema::good_images::good_id.eq(self.id))
-            .load(&_connection)
+            .load::<GoodImage>(&_connection)
             .expect("E");
     }
     pub fn get_images_str(&self) -> Vec<String> {
@@ -1840,7 +1840,7 @@ impl Good {
         let _connection = establish_connection();
         let images_list = good_images
             .filter(schema::good_images::good_id.eq(self.id))
-            .load(&_connection)
+            .load::<GoodImage>(&_connection)
             .expect("E");
 
         let mut stack = Vec::new();

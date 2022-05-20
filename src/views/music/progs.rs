@@ -89,6 +89,7 @@ pub async fn edit_user_list(session: Session, mut payload: Multipart, _id: web::
             list.edit_list (
                 form.name,
                 form.description,
+                None,
                 form.can_see_el,
                 form.create_el,
                 form.copy_el,
@@ -169,6 +170,7 @@ pub async fn edit_community_list(session: Session, mut payload: Multipart, _id: 
             list.edit_list (
                 form.name,
                 form.description,
+                None,
                 form.can_see_el,
                 form.create_el,
                 form.copy_el,
@@ -450,7 +452,7 @@ pub async fn edit_track(session: Session, mut payload: Multipart, _id: web::Path
                 }
             }
             let _connection = establish_connection();
-            diesel::update(&form)
+            diesel::update(&_track)
                 .set(form)
                 .get_result::<Music>(&_connection)
                 .expect("Error.");

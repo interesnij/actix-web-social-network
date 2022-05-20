@@ -561,7 +561,7 @@ pub async fn edit_video(session: Session, mut payload: Multipart, _id: web::Path
                 request_user: User,
             }
             let body = Template {
-                object: edit_video.as_ref(),
+                object: _video,
                 request_user: _request_user,
             }
             .render_once()
