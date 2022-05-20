@@ -11,12 +11,8 @@
     <% } %>
     <ul>
       <% for object in user.get_fixed_posts().iter() { %>
-      <li class="scrollable">
-        <% if object.community_id.is_some() { %>
-          <% include!("../../communities/lenta/anon_fix_post.stpl"); %>
-        <% } else { %>
-          <% include!("../../users/lenta/anon_fix_post.stpl"); %>
-        <% } %>
+        <li class="scrollable">
+          <% include!("../../posts/anon_fix_post.stpl"); %>
         </li>
       <% } %>
     </ul>
@@ -32,11 +28,7 @@
   <% } else if user.count_fix_items() == 1 { %>
 
   <% for object in user.get_fixed_posts().iter() { %>
-    <% if object.community_id.is_some() { %>
-      <% include!("../../communities/lenta/anon_fix_post.stpl"); %>
-    <% } else { %>
-      <% include!("../../users/lenta/anon_fix_post.stpl"); %>
-    <% } %>
+    <% include!("../../posts/anon_fix_post.stpl"); %>
   <% } %>
   <% } %>
 
@@ -55,11 +47,7 @@
           <% } else if object_list.len() > 0 { %>
 
             <% for object in object_list.iter() { %>
-              <% if object.community_id.is_some() { %>
-                <% include!("../../posts/community/anon_post.stpl"); %>
-              <% } else { %>
-                <% include!("../../posts/user/anon_post.stpl"); %>
-              <% } %>
+              <% include!("../../posts/anon_post.stpl"); %>
             <% } %>
             <% if next_page_number > 0 { %>
               <div class="load centered m-1 next_page_list" data-link="/users/<%= user.id %>/wall/<%= list.id %>/?page=<%= next_page_number %>">
