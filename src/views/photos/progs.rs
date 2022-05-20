@@ -25,7 +25,7 @@ use std;
 use std::{borrow::BorrowMut, io::Write};
 use actix_multipart::{Field, Multipart};
 use futures::StreamExt;
-use crate::diesel::RunQueryDsl;
+use crate::diesel::{RunQueryDsl,ExpressionMethods};
 
 
 pub fn progs_urls(config: &mut web::ServiceConfig) {
