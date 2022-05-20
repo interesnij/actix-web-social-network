@@ -1845,7 +1845,7 @@ impl Good {
 
         let mut stack = Vec::new();
         for item in images_list.iter() {
-            stack.push(item.src);
+            stack.push(item.src.clone());
         };
         return stack;
     }
@@ -1881,7 +1881,7 @@ impl Good {
                 item.category_id,
                 item.user_id,
                 item.price,
-                item.description,
+                item.description.clone(),
                 item.image.clone(),
                 item.comment_enabled,
                 item.votes_on,
