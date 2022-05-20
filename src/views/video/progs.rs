@@ -545,7 +545,7 @@ pub async fn edit_video(session: Session, mut payload: Multipart, _id: web::Path
                 owner_path,
                 owner_id.to_string()
             ).await;
-            let edit_video = _video.edit_video (
+            _video.edit_video (
                 form.title,
                 form.preview,
                 form.image,

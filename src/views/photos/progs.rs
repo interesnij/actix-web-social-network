@@ -481,8 +481,12 @@ pub async fn edit_photo_description(session: Session, mut payload: Multipart, _i
                     }
                 }
             }
+            diesel::update(&_photo)
+                .set(schema::photos::description.eq(form.description))
+                .get_result::<BlogCategories>(&_connection)
+                .expect("Error.");
             return Json(EditPhotoDescription {
-                description: form.description,
+                description: _photo.description,
             })
         } else {
             return Json(EditPhotoDescription {

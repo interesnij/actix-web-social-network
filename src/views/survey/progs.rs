@@ -501,7 +501,7 @@ pub async fn edit_survey(session: Session, mut payload: Multipart, _id: web::Pat
                 owner_path,
                 owner_id.to_string()
             ).await;
-            let edit_survey = _survey.edit_survey (
+            _survey.edit_survey (
                 form.title,
                 form.image,
                 form.is_anonymous,

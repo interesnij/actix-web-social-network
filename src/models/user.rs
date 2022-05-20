@@ -2917,7 +2917,7 @@ impl User {
         for member in members_of_chats.iter() {
             stack.push(member.chat_id);
         }
-        let mut chat_list = chats
+        let chat_list = chats
             .filter(schema::chats::id.eq_any(&stack))
             .filter(schema::chats::types.lt(20))
             .load::<Chat>(&_connection)
