@@ -1,5 +1,4 @@
 use actix_web::{
-    HttpRequest,
     HttpResponse,
     web,
     web::Json,
@@ -8,9 +7,7 @@ use actix_web::{
 };
 use crate::utils::{
     is_signed_in,
-    is_desctop,
     get_request_user_data,
-    get_user,
     get_community,
     get_music_list,
     get_music,
@@ -19,7 +16,7 @@ use crate::utils::{
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::{User, MusicList, Music, Community};
+use crate::models::{User, MusicList, Music};
 use serde::{Deserialize, Serialize};
 
 use std::str;
@@ -457,7 +454,7 @@ pub async fn edit_track(session: Session, mut payload: Multipart, _id: web::Path
             use crate::utils::establish_connection;
             let _connection = establish_connection();
             diesel::update(&_track)
-                .set(&form) 
+                .set(&form)
                 .get_result::<Music>(&_connection)
                 .expect("Error.");
 

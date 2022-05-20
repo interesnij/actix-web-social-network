@@ -1,16 +1,12 @@
 use actix_web::{
-    HttpRequest,
     HttpResponse,
     web,
-    web::Json,
     error::InternalError,
     http::StatusCode,
 };
 use crate::utils::{
     is_signed_in,
-    is_desctop,
     get_request_user_data,
-    get_user,
     get_community,
     get_good_list,
     get_good,
@@ -20,14 +16,13 @@ use crate::utils::{
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::{User, GoodList, Good, GoodComment, Community};
+use crate::models::{User, GoodList, Good, GoodComment};
 use serde::{Deserialize, Serialize};
 
 use std::str;
 use actix_multipart::{Field, Multipart};
 use futures::StreamExt;
 use std::{borrow::BorrowMut, io::Write};
-use crate::diesel::RunQueryDsl;
 
 
 pub fn progs_urls(config: &mut web::ServiceConfig) {
@@ -458,8 +453,6 @@ pub async fn add_good_in_list(session: Session, mut payload: Multipart, _id: web
         }
 
         else if _list.is_user_can_create_el(_request_user.id) {
-            use crate::models::{GoodImage, NewGoodImage};
-
             let form = good_form (
                 payload.borrow_mut(),
                 owner_path,

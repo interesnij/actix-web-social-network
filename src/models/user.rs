@@ -6,7 +6,9 @@ use diesel::prelude::*;
 use crate::schema;
 use crate::models::{
     Chat, Message, UserLocation, Smile, Sticker, Community, UserProfile, Friend,
-    Post, Photo, Music, Video, Survey, Doc, Good,
+    Post, Photo, Music, Video, 
+    //Survey,
+    Doc, Good,
     PostList, PhotoList, MusicList, VideoList, SurveyList, DocList, GoodList,
     Follow, Notification, UserPrivate, UserBlock, PostCategorie,
 };
@@ -1663,7 +1665,7 @@ impl User {
     }
     pub fn get_online_friends(&self, limit: i64, offset: i64) -> Vec<User> {
         use crate::schema::users::dsl::users;
-        use chrono::{NaiveDateTime, Duration};
+        use chrono::Duration;
 
         let _connection = establish_connection();
 
@@ -2688,8 +2690,6 @@ impl User {
             .expect("E.");
     }
     pub fn count_common_friends_of_user(&self, user: &User) -> usize {
-        use crate::schema::users::dsl::users;
-
         let _connection = establish_connection();
         let self_friends = self.get_friends_ids();
         let user_friends = user.get_friends_ids();
@@ -2785,7 +2785,6 @@ impl User {
     pub fn get_users_ids_for_main_news(&self) -> Vec<i32> {
         use crate::schema::news_user_communities::dsl::news_user_communities;
         use crate::models::NewsUserCommunitie;
-        use chrono::Duration;
 
         let _connection = establish_connection();
 
@@ -2806,7 +2805,6 @@ impl User {
         //use crate::schema::users::dsl::users;
         use crate::schema::news_user_communities::dsl::news_user_communities;
         use crate::models::NewsUserCommunitie;
-        use chrono::Duration;
 
         let _connection = establish_connection();
 
@@ -2826,7 +2824,6 @@ impl User {
     pub fn get_users_ids_for_main_notifications(&self) -> Vec<i32> {
         use crate::schema::notify_user_communities::dsl::notify_user_communities;
         use crate::models::NotifyUserCommunitie;
-        use chrono::Duration;
 
         let _connection = establish_connection();
 
@@ -2846,7 +2843,6 @@ impl User {
     pub fn get_communities_ids_for_main_notifications(&self) -> Vec<i32> {
         use crate::schema::notify_user_communities::dsl::notify_user_communities;
         use crate::models::NotifyUserCommunitie;
-        use chrono::Duration;
 
         let _connection = establish_connection();
 

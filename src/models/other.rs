@@ -1,4 +1,4 @@
-use crate::schema;
+//use crate::schema;
 //use diesel::prelude::*;
 use crate::schema::{
     phone_codes,
@@ -10,7 +10,7 @@ use crate::schema::{
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
-use crate::utils::establish_connection;
+//use crate::utils::establish_connection;
 
 
 /////// PhoneCode //////

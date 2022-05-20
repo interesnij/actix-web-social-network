@@ -1,13 +1,13 @@
 //use diesel::prelude::*;
-use crate::schema;
+//use crate::schema;
 use crate::schema::{
     notifications,
     wall_objects,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
-use crate::utils::establish_connection;
-use crate::models::{User, Community};
+//use crate::utils::establish_connection;
+//use crate::models::{User, Community};
 
 
 /////// Notification //////

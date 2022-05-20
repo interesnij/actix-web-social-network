@@ -21,7 +21,6 @@ async fn main() -> std::io::Result<()> {
     use crate::routes::routes;
     use actix_redis::RedisSession;
     use actix_web::{App, HttpServer};
-    use actix_session::CookieSession;
 
     HttpServer::new(|| {
         let static_files = Files::new("/static", "static/").show_files_listing();

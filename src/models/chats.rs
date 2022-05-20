@@ -17,8 +17,8 @@ use crate::models::{
     Community,
     Post,
     Sticker,
-    Photo,
-    Video,
+    //Photo,
+    //Video,
 };
 
 

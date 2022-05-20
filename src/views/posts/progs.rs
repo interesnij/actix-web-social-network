@@ -8,9 +8,7 @@ use actix_web::{
 };
 use crate::utils::{
     is_signed_in,
-    is_desctop,
     get_request_user_data,
-    get_user,
     get_community,
     get_post_list,
     get_post,
@@ -20,7 +18,7 @@ use crate::utils::{
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::{User, PostList, Post, PostComment, Community};
+use crate::models::{User, PostList, Post, PostComment};
 use serde::{Deserialize, Serialize};
 
 use std::str;

@@ -8,10 +8,7 @@ use actix_web::{
 
 use crate::utils::{
     is_signed_in,
-    establish_connection,
-    is_desctop,
     get_request_user_data,
-    get_user,
     get_community,
     get_doc_list,
     get_user_permission,

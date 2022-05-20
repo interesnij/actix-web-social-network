@@ -4,7 +4,6 @@ use actix_web::{
     HttpResponse,
 };
 use sailfish::TemplateOnce;
-use crate::models::{User, PostList};
 
 
 pub fn close_item(text: String) -> actix_web::Result<HttpResponse> {

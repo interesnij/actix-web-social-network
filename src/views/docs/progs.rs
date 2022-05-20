@@ -1,5 +1,4 @@
 use actix_web::{
-    HttpRequest,
     HttpResponse,
     web,
     web::Json,
@@ -8,9 +7,7 @@ use actix_web::{
 };
 use crate::utils::{
     is_signed_in,
-    is_desctop,
     get_request_user_data,
-    get_user,
     get_community,
     get_doc_list,
     get_doc,
@@ -19,7 +16,7 @@ use crate::utils::{
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::{User, DocList, Doc, Community, EditDoc};
+use crate::models::{User, DocList, Doc, EditDoc};
 use serde::{Deserialize, Serialize};
 
 use std::str;

@@ -23,7 +23,7 @@ use crate::models::{
     CommunityPostListPosition,
     Photo,
     Video,
-    Message,
+    //Message,
 };
 use actix_web::web::Json;
 
@@ -1735,7 +1735,6 @@ impl PostList {
             .expect("Error.");
 
         if self.community_id.is_some() {
-            use crate::utils::get_community;
             let community = self.get_community();
             community.plus_posts(1);
             return new_post;
@@ -2727,9 +2726,6 @@ impl Post {
 
     pub fn create_comment(&self, user: &User, attach: Option<String>,
         parent_id: Option<i32>, content: Option<String>, sticker_id: Option<i32>) -> PostComment {
-
-        use crate::schema::post_comments::dsl::post_comments;
-        use crate::schema::posts::dsl::posts;
 
         let _connection = establish_connection();
         let mut new_attach: Option<String> = None;

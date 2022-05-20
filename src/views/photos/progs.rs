@@ -1,5 +1,4 @@
 use actix_web::{
-    HttpRequest,
     HttpResponse,
     web,
     web::Json,
@@ -8,21 +7,14 @@ use actix_web::{
 };
 use crate::utils::{
     is_signed_in,
-    is_desctop,
     get_request_user_data,
-    get_user,
     get_community,
     get_photo_list,
     get_photo,
-    get_photo_comment,
-    get_user_permission,
-    get_anon_user_permission,
-    get_community_permission,
-    get_anon_community_permission,
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::{User, PhotoList, Photo, PhotoComment, Community, EditPhotoDescription};
+use crate::models::{PhotoList, Photo, EditPhotoDescription};
 use serde::{Deserialize, Serialize};
 use std;
 
@@ -483,6 +475,7 @@ pub async fn edit_photo_description(session: Session, mut payload: Multipart, _i
             }
 
             use crate::utils::establish_connection;
+            use crate::schema;
             let _connection = establish_connection();
             diesel::update(&_photo)
                 .set(schema::photos::description.eq(form.description))

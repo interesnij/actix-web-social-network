@@ -19,7 +19,7 @@ use actix_session::Session;
 use sailfish::TemplateOnce;
 use crate::models::User;
 
-use std::{str, borrow::BorrowMut};
+use std::str;
 use actix_multipart::{Field, Multipart};
 use futures::StreamExt;
 
@@ -575,7 +575,6 @@ pub async fn get_background(session: Session, color: web::Path<String>) -> actix
 
 pub async fn edit_link(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        use crate::schema::users::dsl::users;
         use crate::schema::custom_links::dsl::custom_links;
         use crate::models::{EditLinkUser, CustomLink, NewCustomLink};
 
@@ -630,7 +629,6 @@ pub async fn edit_link(session: Session, mut payload: Multipart) -> actix_web::R
 }
 pub async fn edit_name(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        use crate::schema::users::dsl::users;
         use crate::models::EditNameUser;
 
         let _request_user = get_request_user_data(session);
@@ -671,7 +669,6 @@ pub async fn edit_name(session: Session, mut payload: Multipart) -> actix_web::R
 
 pub async fn edit_password(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        use crate::schema::users::dsl::users;
         use crate::models::EditPasswordUser;
         use crate::utils::hash_password;
 
@@ -706,7 +703,6 @@ pub async fn edit_password(session: Session, mut payload: Multipart) -> actix_we
 }
 pub async fn edit_phone(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        use crate::schema::users::dsl::users;
         use crate::models::EditPhoneUser;
 
         let _request_user = get_request_user_data(session);
@@ -741,7 +737,6 @@ pub async fn edit_phone(session: Session, mut payload: Multipart) -> actix_web::
 
 pub async fn remove_profile(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        use crate::schema::users::dsl::users;
         use crate::models::{UserDeleteAnketa, NewUserDeleteAnketa};
 
         let _request_user = get_request_user_data(session);

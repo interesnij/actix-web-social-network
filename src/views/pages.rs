@@ -7,7 +7,6 @@ use actix_web::{
     http::StatusCode,
     web,
 };
-use serde::Deserialize;
 use crate::utils::{
     is_signed_in,
     establish_connection,

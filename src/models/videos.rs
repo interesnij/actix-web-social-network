@@ -1700,7 +1700,6 @@ impl VideoList {
             .expect("Error.");
 
         if community_id.is_some() {
-            use crate::utils::get_community;
             let community = self.get_community();
             community.plus_videos(1);
             return new_video;
@@ -2492,9 +2491,6 @@ impl Video {
 
     pub fn create_comment(&self, user: &User, attach: Option<String>,
         parent_id: Option<i32>, content: Option<String>, sticker_id: Option<i32>) -> VideoComment {
-
-        use crate::schema::video_comments::dsl::video_comments;
-        use crate::schema::videos::dsl::videos;
 
         let _connection = establish_connection();
         let mut new_attach: Option<String> = None;

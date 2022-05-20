@@ -1713,7 +1713,6 @@ impl GoodList {
                 .expect("Error saving good image.");
             }
         if community_id.is_some() {
-            use crate::utils::get_community;
             let community = self.get_community();
             community.plus_goods(1);
             return new_good;
@@ -2188,9 +2187,6 @@ impl Good {
 
     pub fn create_comment(&self, user: &User, attach: Option<String>,
         parent_id: Option<i32>, content: Option<String>, sticker_id: Option<i32>) -> GoodComment {
-
-        use crate::schema::good_comments::dsl::good_comments;
-        use crate::schema::goods::dsl::goods;
 
         let _connection = establish_connection();
         let mut new_attach: Option<String> = None;

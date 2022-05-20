@@ -1,5 +1,4 @@
 use actix_web::{
-    HttpRequest,
     HttpResponse,
     web,
     error::InternalError,
@@ -7,9 +6,7 @@ use actix_web::{
 };
 use crate::utils::{
     is_signed_in,
-    is_desctop,
     get_request_user_data,
-    get_user,
     get_community,
     get_video_list,
     get_video,
@@ -19,14 +16,13 @@ use crate::utils::{
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::{User, VideoList, Video, VideoComment, Community};
+use crate::models::{User, VideoList, Video, VideoComment};
 use serde::{Deserialize, Serialize};
 
 use std::str;
 use actix_multipart::{Field, Multipart};
 use futures::StreamExt;
 use std::{borrow::BorrowMut, io::Write};
-use crate::diesel::RunQueryDsl;
 
 
 pub fn progs_urls(config: &mut web::ServiceConfig) {

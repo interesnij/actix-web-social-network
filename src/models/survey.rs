@@ -13,7 +13,7 @@ use crate::schema::{
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
-use crate::utils::{establish_connection, JsonReactions, JsonPosition};
+use crate::utils::{establish_connection, JsonPosition};
 use crate::models::{
     User,
     Community,
@@ -23,7 +23,6 @@ use crate::models::{
     Post,
 };
 use actix_web::web::Json;
-use chrono::NaiveDateTime;
 
 
 /////// SurveyList //////
@@ -1318,8 +1317,6 @@ impl SurveyList {
         image: Option<String>, is_anonymous: bool,
         is_multiple: bool, is_no_edited: bool, time_end: Option<String>) -> Survey {
 
-        use chrono::NaiveDateTime;
-
         let _connection = establish_connection();
         diesel::update(&*self)
           .set(schema::survey_lists::count.eq(self.count + 1))
@@ -1692,8 +1689,6 @@ impl Survey {
         image: Option<String>, is_anonymous: bool, is_multiple: bool,
         is_no_edited: bool, time_end:Option<String>) -> &Survey {
         let _connection = establish_connection();
-
-        use chrono::NaiveDateTime;
 
         let edit_survey = EditSurvey {
             title: title,

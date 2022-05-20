@@ -276,7 +276,6 @@ impl PhotoList {
             .expect("Error.");
 
         if community_id.is_some() {
-            use crate::utils::get_community;
             let community = self.get_community();
             community.plus_photos(1);
             return new_photo;
@@ -2519,9 +2518,6 @@ impl Photo {
 
     pub fn create_comment(&self, user: &User, attach: Option<String>,
         parent_id: Option<i32>, content: Option<String>, sticker_id: Option<i32>) -> PhotoComment {
-
-        use crate::schema::photo_comments::dsl::photo_comments;
-        use crate::schema::photos::dsl::photos;
 
         let _connection = establish_connection();
         let mut new_attach: Option<String> = None;

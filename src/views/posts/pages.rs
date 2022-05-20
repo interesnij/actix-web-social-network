@@ -7,13 +7,10 @@ use actix_web::{
 };
 use crate::utils::{
     is_signed_in,
-    is_desctop,
     get_request_user_data,
-    get_user,
     get_community,
     get_post_list,
     get_post,
-    get_post_comment,
     get_user_permission,
     get_anon_user_permission,
     get_community_permission,
