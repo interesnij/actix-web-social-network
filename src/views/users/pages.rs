@@ -1,5 +1,6 @@
 use actix_web::{
     HttpResponse,
+    HttpRequest,
     web,
     error::InternalError,
     http::StatusCode,
