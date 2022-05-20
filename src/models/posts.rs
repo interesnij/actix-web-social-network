@@ -1734,7 +1734,7 @@ impl PostList {
             .get_result::<Post>(&_connection)
             .expect("Error.");
 
-        if community_id.is_some() {
+        if self.community_id.is_some() {
             use crate::utils::get_community;
             let community = self.get_community();
             community.plus_posts(1);

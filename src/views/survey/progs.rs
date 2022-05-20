@@ -513,11 +513,11 @@ pub async fn edit_survey(session: Session, mut payload: Multipart, _id: web::Pat
             #[derive(TemplateOnce)]
             #[template(path = "desctop/surveys/new_item.stpl")]
             struct Template {
-                object: &Survey,
+                object: Survey,
                 request_user: User,
             }
             let body = Template {
-                object: edit_survey,
+                object: edit_survey.as_ref(),
                 request_user: _request_user,
             }
             .render_once()

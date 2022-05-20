@@ -1838,7 +1838,7 @@ impl Good {
         use crate::schema::good_images::dsl::good_images;
 
         let _connection = establish_connection();
-        list = good_images
+        let list = good_images
             .filter(schema::good_images::good_id.eq(self.id))
             .load(&_connection)
             .expect("E");

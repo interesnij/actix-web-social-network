@@ -435,7 +435,7 @@ pub async fn edit_doc(session: Session, mut payload: Multipart, _id: web::Path<i
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
         let user_id = _request_user.id;
-        let _doc = get_music(*_id);
+        let _doc = get_doc(*_id);
         let _list = _doc.get_list();
         let community_id = _doc.community_id;
         let mut is_open = false;
@@ -454,8 +454,8 @@ pub async fn edit_doc(session: Session, mut payload: Multipart, _id: web::Path<i
 
         if is_open == false {
             return Json(EditDoc {
-                title: form.title,
-                types_2: form.types_2,
+                title: "".to_string(),
+                types_2: "".to_string(),
             })
         }
         else if _doc.is_user_can_edit_delete_item(_request_user.id) {

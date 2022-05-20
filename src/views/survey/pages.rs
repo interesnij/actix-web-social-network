@@ -11,7 +11,7 @@ use crate::utils::{
     establish_connection,
     is_desctop,
     get_request_user_data,
-    get_user,
+    get_survey,
     get_community,
     get_survey_list,
     get_user_permission,

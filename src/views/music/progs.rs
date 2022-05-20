@@ -449,6 +449,7 @@ pub async fn edit_track(session: Session, mut payload: Multipart, _id: web::Path
                     form.image = Some(file.path.clone().replace("./","/"));
                 }
             }
+            let _connection = establish_connection();
             diesel::update(&form)
                 .set(form)
                 .get_result::<Music>(&_connection)

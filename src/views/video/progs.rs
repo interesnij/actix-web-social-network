@@ -557,11 +557,11 @@ pub async fn edit_video(session: Session, mut payload: Multipart, _id: web::Path
             #[derive(TemplateOnce)]
             #[template(path = "desctop/video/new_item.stpl")]
             struct Template {
-                object: &Video,
+                object: Video,
                 request_user: User,
             }
             let body = Template {
-                object: edit_video,
+                object: edit_video.as_ref(),
                 request_user: _request_user,
             }
             .render_once()

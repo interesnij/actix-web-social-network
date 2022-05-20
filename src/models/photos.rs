@@ -2026,7 +2026,7 @@ impl Photo {
 
         let _connection = establish_connection();
 
-        let edit_photo = EditPhoto {
+        let edit_photo = EditPhotoDescription {
             description: description,
             comment_enabled: comment_enabled,
             votes_on: votes_on,
