@@ -1695,7 +1695,7 @@ impl PostList {
                 .replace(" ", "")
             );
         }
-        diesel::update(&self)
+        diesel::update(self)
           .set(schema::post_lists::count.eq(self.count + 1))
           .get_result::<PostList>(&_connection)
           .expect("Error.");

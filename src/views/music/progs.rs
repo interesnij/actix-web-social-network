@@ -26,7 +26,7 @@ use std::str;
 use actix_multipart::{Field, Multipart};
 use futures::StreamExt;
 use std::{borrow::BorrowMut, io::Write};
-
+use crate::diesel::RunQueryDsl;
 
 
 pub fn progs_urls(config: &mut web::ServiceConfig) {
@@ -396,8 +396,10 @@ pub async fn edit_track(session: Session, mut payload: Multipart, _id: web::Path
         }
 
         if is_open == false {
-            use crate::views::close_item;
-            return close_item(text)
+            return Json(EditTrackResponse {
+                title: "".to_string(),
+                image: None,
+            })
         }
         else if _track.is_user_can_edit_delete_item(_request_user.id) {
             use crate::models::EditMusic;

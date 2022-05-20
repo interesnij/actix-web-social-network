@@ -25,6 +25,7 @@ use std::str;
 use actix_multipart::{Field, Multipart};
 use futures::StreamExt;
 use std::{borrow::BorrowMut, io::Write};
+use crate::diesel::RunQueryDsl;
 
 
 pub fn progs_urls(config: &mut web::ServiceConfig) {
@@ -449,8 +450,10 @@ pub async fn edit_doc(session: Session, mut payload: Multipart, _id: web::Path<i
         }
 
         if is_open == false {
-            use crate::views::close_item;
-            return close_item(text)
+            return Json(EditDoc {
+                title: form.title,
+                types_2: form.types_2,
+            })
         }
         else if _doc.is_user_can_edit_delete_item(_request_user.id) {
             let mut form: EditDoc = EditDoc {

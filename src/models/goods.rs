@@ -1717,8 +1717,8 @@ impl GoodList {
         }
         for image in images.iter() {
             let new_image = NewGoodImage {
-                self.id,
-                image.to_string()
+                good_id: self.id,
+                src: image.to_string(),
             };
             diesel::insert_into(good_images::table)
                 .values(&new_image)
@@ -1834,6 +1834,21 @@ impl Good {
             .load(&_connection)
             .expect("E");
     }
+    pub fn get_images_str(&self) -> Vec<String> {
+        use crate::schema::good_images::dsl::good_images;
+
+        let _connection = establish_connection();
+        list = good_images
+            .filter(schema::good_images::good_id.eq(self.id))
+            .load(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for item in list.iter() {
+            stack.push(item.src);
+        };
+        return stack;
+    }
 
     pub fn copy_item(pk: i32, lists: Vec<i32>) -> bool {
         use crate::schema::goods::dsl::goods;
@@ -1870,7 +1885,7 @@ impl Good {
                 item.image.clone(),
                 item.comment_enabled,
                 item.votes_on,
-                item.get_images(),
+                item.get_images_str(),
             );
         }
 
@@ -1914,8 +1929,8 @@ impl Good {
         diesel::delete(good_images.filter(schema::good_images::good_id.eq(self.id))).execute(&_connection).expect("E");
         for image in images.iter() {
             let new_image = NewGoodImage {
-                self.id,
-                image.to_string()
+                good_id: self.id,
+                src: image.to_string(),
             };
             diesel::insert_into(good_images::table)
                 .values(&new_image)

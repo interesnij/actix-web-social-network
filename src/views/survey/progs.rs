@@ -25,6 +25,7 @@ use std::str;
 use actix_multipart::{Field, Multipart};
 use futures::StreamExt;
 use std::{borrow::BorrowMut, io::Write};
+use crate::diesel::RunQueryDsl;
 
 
 pub fn progs_urls(config: &mut web::ServiceConfig) {
@@ -512,7 +513,7 @@ pub async fn edit_survey(session: Session, mut payload: Multipart, _id: web::Pat
             #[derive(TemplateOnce)]
             #[template(path = "desctop/surveys/new_item.stpl")]
             struct Template {
-                object: Survey,
+                object: &Survey,
                 request_user: User,
             }
             let body = Template {

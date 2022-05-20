@@ -26,6 +26,7 @@ use std::str;
 use actix_multipart::{Field, Multipart};
 use futures::StreamExt;
 use std::{borrow::BorrowMut, io::Write};
+use crate::diesel::RunQueryDsl;
 
 
 pub fn progs_urls(config: &mut web::ServiceConfig) {
@@ -556,7 +557,7 @@ pub async fn edit_video(session: Session, mut payload: Multipart, _id: web::Path
             #[derive(TemplateOnce)]
             #[template(path = "desctop/video/new_item.stpl")]
             struct Template {
-                object: Video,
+                object: &Video,
                 request_user: User,
             }
             let body = Template {

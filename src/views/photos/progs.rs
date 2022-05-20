@@ -28,6 +28,7 @@ use std;
 use std::{borrow::BorrowMut, io::Write};
 use actix_multipart::{Field, Multipart};
 use futures::StreamExt;
+use crate::diesel::RunQueryDsl;
 
 
 pub fn progs_urls(config: &mut web::ServiceConfig) {
@@ -458,8 +459,9 @@ pub async fn edit_photo_description(session: Session, mut payload: Multipart, _i
             text = _tuple.1;
         }
         if is_open == false {
-            use crate::views::close_item;
-            return close_item(text)
+            return Json(EditPhotoDescription {
+                description: None,
+            })
         }
         else if _photo.is_user_can_edit_delete_item(_request_user.id) {
             let mut form: EditPhotoDescription = EditPhotoDescription {
