@@ -3,17 +3,17 @@
   <% include!("anon_card_header.stpl"); %>
 
   <% if object.content.is_some() { %>
-    <div class="text_support">
+    <div class="fullscreen text_support pointer">
       <%- object.get_format_text() %>
     </div>
   <% } %>
 
-  <% include!("../../generic/items/anon_post.stpl"); %>
+  <% include!("../generic/items/anon_post.stpl"); %>
 
   <div class="card-footer border-top py-2">
       <div class="row">
         <div class="col interaction" data-type="pos<%= object.id %>">
-          <% include!("../../generic/items/anon_item_footer.stpl"); %>
+          <% include!("../generic/items/anon_item_footer.stpl"); %>
         </div>
       </div>
       <div class="load_comments"></div>

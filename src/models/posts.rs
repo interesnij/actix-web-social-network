@@ -1679,6 +1679,75 @@ impl PostList {
             return self.user_id == user_id;
         }
     }
+
+    pub fn create_post(user_id: i32, content: Option<String>, category_id: Option<i32>,
+        attach: Option<String>, parent_id: Option<i32>,
+        comment_enabled: bool, is_signature: bool, votes_on: bool,
+        types: Option<String>) -> Post {
+
+        let _connection = establish_connection();
+        let mut new_attach: Option<String> = None;
+        if attach.is_some() {
+            new_attach = Some(attach.unwrap()
+                .replace("'", "")
+                .replace("[", "")
+                .replace("]", "")
+                .replace(" ", "")
+            );
+        }
+        diesel::update(&self)
+          .set(schema::post_lists::count.eq(self.count + 1))
+          .get_result::<PostList>(&_connection)
+          .expect("Error.");
+
+        let mut _types = "".to_string();
+
+        if types.is_some() {
+            _types = types.unwrap();
+        }
+        else {
+            _types = "a".to_string();
+        }
+        let new_post_form = NewPost {
+          content: content,
+          community_id: self.community_id,
+          post_categorie_id: category_id,
+          user_id: user_id,
+          post_list_id: self.id,
+          types: _types,
+          attach: new_attach,
+          comment_enabled: comment_enabled,
+          votes_on: votes_on,
+          created: chrono::Local::now().naive_utc(),
+          comment: 0,
+          view: 0,
+          liked: 0,
+          disliked: 0,
+          repost: 0,
+          copy: 0,
+          position: (self.count).try_into().unwrap(),
+          is_signature: is_signature,
+          parent_id: parent_id,
+        };
+        let new_post = diesel::insert_into(schema::posts::table)
+            .values(&new_post_form)
+            .get_result::<Post>(&_connection)
+            .expect("Error.");
+
+        if community_id.is_some() {
+            use crate::utils::get_community;
+            let community = self.get_community();
+            community.plus_posts(1);
+            return new_post;
+        }
+        else {
+            use crate::utils::get_user;
+
+            let creator = get_user(user_id);
+            creator.plus_posts(1);
+            return new_post;
+        }
+    }
 }
 
 /////// Post //////
@@ -1878,74 +1947,7 @@ impl Post {
             return self.user_id == user_id;
         }
     }
-    pub fn create_post(user_id: i32, content: Option<String>, category_id: Option<i32>,
-        list: PostList, attach: Option<String>, parent_id: Option<i32>,
-        comment_enabled: bool, is_signature: bool, votes_on: bool,
-        community_id: Option<i32>, types: Option<String>) -> Post {
 
-        let _connection = establish_connection();
-        let mut new_attach: Option<String> = None;
-        if attach.is_some() {
-            new_attach = Some(attach.unwrap()
-                .replace("'", "")
-                .replace("[", "")
-                .replace("]", "")
-                .replace(" ", "")
-            );
-        }
-        diesel::update(&list)
-          .set(schema::post_lists::count.eq(list.count + 1))
-          .get_result::<PostList>(&_connection)
-          .expect("Error.");
-
-        let mut _types = "".to_string();
-
-        if types.is_some() {
-            _types = types.unwrap();
-        }
-        else {
-            _types = "a".to_string();
-        }
-        let new_post_form = NewPost {
-          content: content,
-          community_id: community_id,
-          post_categorie_id: category_id,
-          user_id: user_id,
-          post_list_id: list.id,
-          types: _types,
-          attach: new_attach,
-          comment_enabled: comment_enabled,
-          votes_on: votes_on,
-          created: chrono::Local::now().naive_utc(),
-          comment: 0,
-          view: 0,
-          liked: 0,
-          disliked: 0,
-          repost: 0,
-          copy: 0,
-          position: (list.count).try_into().unwrap(),
-          is_signature: is_signature,
-          parent_id: parent_id,
-        };
-        let new_post = diesel::insert_into(schema::posts::table)
-            .values(&new_post_form)
-            .get_result::<Post>(&_connection)
-            .expect("Error.");
-
-        if community_id.is_some() {
-            use crate::utils::get_community;
-            let community = list.get_community();
-            community.plus_posts(1);
-            return new_post;
-        }
-        else {
-            use crate::utils::get_user;
-
-            let creator = get_user(user_id);
-            creator.plus_posts(1);
-            return new_post;
-        }
-    }
     pub fn create_parent_post(user_id: i32, community_id: Option<i32>,
         attach: Option<String>) -> Post {
 
@@ -2011,11 +2013,10 @@ impl Post {
                 .nth(0)
                 .unwrap();
 
-            Post::create_post (
+            list.create_post (
                 list.user_id,
                 item.content.clone(),
                 item.post_categorie_id.clone(),
-                list,
                 item.attach.clone(),
                 item.parent_id.clone(),
                 item.comment_enabled.clone(),

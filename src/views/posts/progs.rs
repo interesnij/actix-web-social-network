@@ -38,8 +38,8 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
     config.route("/posts/delete_community_list/{id}/", web::get().to(delete_community_post_list));
     config.route("/posts/recover_community_list/{id}/", web::get().to(recover_community_post_list));
 
-    config.route("/posts/add_user_post/{id}/", web::post().to(add_user_post));
-    config.route("/posts/add_community_post/{id}/", web::post().to(add_community_post));
+    config.route("/posts/add_post_in_list/{id}/", web::post().to(add_post_in_list));
+    config.route("/posts/edit_post/{id}/", web::post().to(edit_post));
     config.route("/posts/add_comment/{id}/", web::post().to(add_comment));
     config.route("/posts/add_reply/{id}/", web::post().to(add_reply));
 }
@@ -235,7 +235,6 @@ pub async fn edit_community_post_list(session: Session, mut payload: Multipart, 
 }
 }
 
-
 pub async fn delete_user_post_list(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
 
@@ -351,7 +350,7 @@ pub async fn post_form(payload: &mut Multipart) -> PostForm {
                 if let Ok(s) = str::from_utf8(&data) {
                     let data_string = s.to_string();
                     let _int: i32 = data_string.parse().unwrap();
-                    form.cat = Some(_int); 
+                    form.cat = Some(_int);
                 }
             }
         }
@@ -400,29 +399,45 @@ pub async fn post_form(payload: &mut Multipart) -> PostForm {
     }
     form
 }
-pub async fn add_user_post(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn add_post_in_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
         let user_id = _request_user.id;
-        let list = get_post_list(*_id);
-        if list.is_user_can_create_el(_request_user.id) {
+        let _list = get_post_list(*_id);
+        let community_id = _list.community_id;
+
+        if community_id.is_some() {
+            let _tuple = get_community_permission(&_list.get_community(), &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
+        }
+        else {
+            let _tuple = get_user_permission(&_list.get_creator(), &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
+        }
+
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+
+        else if _list.is_user_can_create_el(_request_user.id) {
             let form = post_form(payload.borrow_mut()).await;
-            let new_post = Post::create_post (
+            let new_post = _list.create_post (
                 user_id,
                 form.content,
                 form.cat,
-                list,
                 form.attach,
                 None,
                 form.comment_enabled,
-                false,
+                form.is_signature,
                 form.votes_on,
-                None,
                 Some("a".to_string()),
             );
 
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/posts/user/new_item.stpl")]
+            #[template(path = "desctop/posts/post.stpl")]
             struct Template {
                 object: Post,
                 request_user: User,
@@ -433,67 +448,68 @@ pub async fn add_user_post(session: Session, mut payload: Multipart, _id: web::P
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         } else {
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(""))
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
         }
     } else {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(""))
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
 }
 
-pub async fn add_community_post(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn edit_post(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
-        let list = get_post_list(*_id);
-        let community_id = list.community_id;
         let user_id = _request_user.id;
-        if list.is_user_can_create_el(_request_user.id) {
+        let _post = get_post(*_id);
+        let _list = _post.get_list();
+        let community_id = _list.community_id;
+
+        if community_id.is_some() {
+            let _tuple = get_community_permission(&_list.get_community(), &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
+        }
+        else {
+            let _tuple = get_user_permission(&_list.get_creator(), &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
+        }
+
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+
+        else if _post.is_user_can_edit_delete_item(_request_user.id) {
             let form = post_form(payload.borrow_mut()).await;
-            let new_post = Post::create_post (
-                user_id,
+            let edit_post = _post.edit_post (
                 form.content,
                 form.cat,
-                list,
                 form.attach,
-                None,
                 form.comment_enabled,
-                false,
                 form.votes_on,
-                community_id,
-                Some("a".to_string()),
+                form.is_signature,
             );
 
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/posts/community/new_item.stpl")]
+            #[template(path = "desctop/posts/post.stpl")]
             struct Template {
                 object: Post,
                 request_user: User,
             }
             let body = Template {
-                object: new_post,
+                object: edit_post,
                 request_user: _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         } else {
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(""))
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
         }
     } else {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(""))
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
 }
 

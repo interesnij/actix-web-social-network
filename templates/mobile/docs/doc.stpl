@@ -3,7 +3,7 @@
     <div class="media" style="align-items: unset;position: relative;">
         <div class="media-body doc_media_body">
             <h6 class="pointer mb-0" style="width: 84%;overflow: hidden;"><a href="<%= object.file %>" target="_blank" rel="nofollow"><%= object.title %></a></h6>
-            <span class="small"><%= object.id %> | <%= object.id %></span>
+            <span class="small"><%= object.get_mime() %></span>
             <span class='span_btn' data-pk="<%= object.id %>">
                 <div class="dropdown" style="position: inherit;">
                     <a class="btn_default drop pointer">

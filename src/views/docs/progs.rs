@@ -18,7 +18,7 @@ use crate::utils::{
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::{User, DocList, Doc, Community};
+use crate::models::{User, DocList, Doc, Community, EditDoc};
 use serde::{Deserialize, Serialize};
 
 use std::str;
@@ -38,6 +38,7 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
     config.route("/docs/recover_community_list/{id}/", web::get().to(recover_community_list));
 
     config.route("/docs/add_docs_in_list/{id}/", web::post().to(add_doc_in_list));
+    config.route("/docs/edit_doc/{id}/", web::post().to(edit_doc));
 }
 
 pub async fn add_user_list(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
@@ -424,5 +425,74 @@ pub async fn add_doc_in_list(session: Session, mut payload: Multipart, _id: web:
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
             .body(""))
+    }
+}
+
+
+pub async fn edit_doc(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> web::Json<EditDoc> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let user_id = _request_user.id;
+        let _doc = get_music(*_id);
+        let _list = _doc.get_list();
+        let community_id = _doc.community_id;
+
+        if community_id.is_some() {
+            let _tuple = get_community_permission(&_list.get_community(), &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
+        }
+        else {
+            let _tuple = get_user_permission(&_list.get_creator(), &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
+        }
+
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+        else if _doc.is_user_can_edit_delete_item(_request_user.id) {
+            let mut form: EditDoc = EditDoc {
+                title: "".to_string(),
+                types_2: "".to_string(),
+            };
+
+            while let Some(item) = payload.next().await {
+                let mut field: Field = item.expect("split_payload err");
+
+                while let Some(chunk) = field.next().await {
+                    let data = chunk.expect("split_payload err chunk");
+                    if let Ok(s) = str::from_utf8(&data) {
+                        let data_string = s.to_string();
+                        if field.name() == "title" {
+                            form.title = data_string;
+                        }
+                        else if field.name() == "types_2" {
+                            form.types_2 = data_string;
+                        }
+                    }
+                }
+            }
+            diesel::update(&form)
+                .set(form)
+                .get_result::<Doc>(&_connection)
+                .expect("Error.");
+
+            return Json(EditDoc {
+                title: form.title,
+                types_2: form.types_2,
+            })
+        } else {
+            return Json(EditDoc {
+                title: "".to_string(),
+                types_2: "".to_string(),
+            })
+        }
+    } else {
+        return Json(EditDoc {
+            title: "".to_string(),
+            types_2: "".to_string(),
+        })
     }
 }

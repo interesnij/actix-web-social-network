@@ -1418,6 +1418,50 @@ impl MusicList {
             return self.user_id == user_id;
         }
     }
+
+    pub fn create_track(&self, title: String, community_id: Option<i32>,
+        user_id: i32, file: String, image: Option<String>) -> Music {
+
+        let _connection = establish_connection();
+        diesel::update(&self)
+          .set(schema::music_lists::count.eq(self.count + 1))
+          .get_result::<MusicList>(&_connection)
+          .expect("Error.");
+
+        let new_music_form = NewMusic {
+            title: title,
+            community_id: community_id,
+            user_id: user_id,
+            music_list_id: self.id,
+            genre_id: None,
+            album_id: None,
+            types: "a".to_string(),
+            file: file,
+            image: image,
+            created: chrono::Local::now().naive_utc(),
+            view: 0,
+            repost: 0,
+            copy: 0,
+            position: (self.count).try_into().unwrap(),
+          };
+          let new_music = diesel::insert_into(schema::musics::table)
+              .values(&new_music_form)
+              .get_result::<Music>(&_connection)
+              .expect("Error.");
+
+        if community_id.is_some() {
+            let community = self.get_community();
+            community.plus_tracks(1);
+            return new_music;
+        }
+        else {
+            use crate::utils::get_user;
+
+            let creator = get_user(user_id);
+            creator.plus_tracks(1);
+            return new_music;
+        }
+    }
 }
 /////// Music //////
 
@@ -1690,49 +1734,6 @@ impl Music {
             return "<a href='".to_owned() + &creator.link.to_string() + &"' target='_blank'>" + &creator.get_full_name() + &"</a>" + &": аудиозапись"
         }
     }
-    pub fn create_track(title: String, community_id: Option<i32>, user_id: i32, list: MusicList,
-        genre_id: Option<i32>, album_id: Option<i32>, file: String, image: Option<String>) -> Music {
-
-        let _connection = establish_connection();
-        diesel::update(&list)
-          .set(schema::music_lists::count.eq(list.count + 1))
-          .get_result::<MusicList>(&_connection)
-          .expect("Error.");
-
-        let new_music_form = NewMusic {
-            title: title,
-            community_id: community_id,
-            user_id: user_id,
-            music_list_id: list.id,
-            genre_id: genre_id,
-            album_id: album_id,
-            types: "a".to_string(),
-            file: file,
-            image: image,
-            created: chrono::Local::now().naive_utc(),
-            view: 0,
-            repost: 0,
-            copy: 0,
-            position: (list.count).try_into().unwrap(),
-          };
-          let new_music = diesel::insert_into(schema::musics::table)
-              .values(&new_music_form)
-              .get_result::<Music>(&_connection)
-              .expect("Error.");
-
-        if community_id.is_some() {
-            let community = list.get_community();
-            community.plus_tracks(1);
-            return new_music;
-        }
-        else {
-            use crate::utils::get_user;
-
-            let creator = get_user(user_id);
-            creator.plus_tracks(1);
-            return new_music;
-        }
-    }
 
     pub fn copy_item(pk: i32, lists: Vec<i32>) -> bool {
         use crate::schema::musics::dsl::musics;
@@ -1758,11 +1759,10 @@ impl Music {
                 .into_iter()
                 .nth(0)
                 .unwrap();
-            Music::create_track (
+            list.create_track (
                 item.title.clone(),
                 item.community_id,
                 list.user_id,
-                list,
                 item.genre_id,
                 item.album_id,
                 item.file.clone(),

@@ -38,6 +38,7 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
     config.route("/surveys/recover_community_list/{id}/", web::get().to(recover_community_list));
 
     config.route("/surveys/add_survey_in_list/{id}/", web::post().to(add_survey_in_list));
+    config.route("/surveys/edit_survey/{id}/", web::post().to(edit_survey));
 }
 
 pub async fn add_user_list(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
@@ -453,17 +454,78 @@ pub async fn add_survey_in_list(session: Session, mut payload: Multipart, _id: w
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         } else {
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(""))
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
         }
     } else {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(""))
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn edit_survey(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let user_id = _request_user.id;
+        let _survey = get_survey(*_id);
+        let _list = _survey.get_list();
+
+        let mut owner_path = "".to_string();
+        let mut owner_id = 0;
+        let mut is_open = false;
+        let mut text = "".to_string();
+        let community_id = _list.community_id;
+
+        if community_id.is_some() {
+            let _tuple = get_community_permission(&_list.get_community(), &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
+            owner_path = "communities".to_string();
+            owner_id = community_id.unwrap();
+        }
+        else {
+            let _tuple = get_user_permission(&_list.get_creator(), &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
+            owner_path = "users".to_string();
+            owner_id = _request_user.id;
+        }
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+        else if _survey.is_user_can_edit_delete_item(_request_user.id) {
+            let form = survey_form(
+                payload.borrow_mut(),
+                owner_path,
+                owner_id.to_string()
+            ).await;
+            let edit_survey = _survey.edit_survey (
+                form.title,
+                form.image,
+                form.is_anonymous,
+                form.is_multiple,
+                form.is_no_edited,
+                form.time_end,
+            );
+
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/surveys/new_item.stpl")]
+            struct Template {
+                object: Survey,
+                request_user: User,
+            }
+            let body = Template {
+                object: edit_survey,
+                request_user: _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
 }

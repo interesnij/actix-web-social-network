@@ -3,6 +3,7 @@ use crate::schema;
 use crate::schema::{
     good_lists,
     goods,
+    good_images,
     good_comments,
     user_good_list_collections,
     community_good_list_collections,
@@ -1664,7 +1665,8 @@ impl GoodList {
     }
     pub fn create_good(&self, title: String, community_id: Option<i32>, category_id: Option<i32>,
         user_id: i32, price: Option<i32>, description: Option<String>,
-        image: Option<String>, comment_enabled: bool, votes_on: bool) -> Good {
+        image: Option<String>, comment_enabled: bool, votes_on: bool,
+        images: Vec<String>) -> Good {
 
         let _connection = establish_connection();
 
@@ -1713,6 +1715,16 @@ impl GoodList {
             creator.plus_goods(1);
             return new_good;
         }
+        for image in images.iter() {
+            let new_image = NewGoodImage {
+                self.id,
+                image.to_string()
+            };
+            diesel::insert_into(good_images::table)
+                .values(&new_image)
+                .get_result::<GoodImage>(&_connection)
+                .expect("Error saving good image.");
+            };
     }
 }
 /////// Good //////
@@ -1813,10 +1825,76 @@ impl Good {
     pub fn is_good(&self) -> bool {
         return true;
     }
+    pub fn get_images(&self) -> Vec<GoodImage> {
+        use crate::schema::good_images::dsl::good_images;
 
-    pub fn edit_good(&self, title: String, price: Option<i32>,
-        description: Option<String>, image: Option<String>, comment_enabled: bool,
-        votes_on: bool) -> &Good {
+        let _connection = establish_connection();
+        return good_images
+            .filter(schema::good_images::good_id.eq(self.id))
+            .load(&_connection)
+            .expect("E");
+    }
+
+    pub fn copy_item(pk: i32, lists: Vec<i32>) -> bool {
+        use crate::schema::goods::dsl::goods;
+        use crate::schema::good_lists::dsl::good_lists;
+
+        let _connection = establish_connection();
+        let item = goods
+            .filter(schema::goods::id.eq(pk))
+            .filter(schema::goods::types.eq("a"))
+            .load::<Good>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+        let mut count = 0;
+        for list_id in lists.iter() {
+            count += 1;
+            let list = good_lists
+                .filter(schema::good_lists::id.eq(list_id))
+                .filter(schema::good_lists::types.lt(10))
+                .load::<GoodList>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+
+            list.create_good (
+                item.title.clone(),
+                list.community_id,
+                item.category_id,
+                item.user_id,
+                item.price,
+                item.description,
+                item.image.clone(),
+                item.comment_enabled,
+                item.votes_on,
+                item.get_images(),
+            );
+        }
+
+        diesel::update(&item)
+          .set(schema::goods::copy.eq(item.copy + count))
+          .get_result::<Good>(&_connection)
+          .expect("Error.");
+
+        if item.community_id.is_some() {
+            let community = item.get_community();
+            community.plus_goods(count);
+        }
+        else {
+            let creator = item.get_creator();
+            creator.plus_goods(count);
+          }
+        return true;
+    }
+
+    pub fn edit_good(&self, title: String, price: Option<i32>, description: Option<String>,
+        image: Option<String>, comment_enabled: bool, votes_on: bool,
+        images: Vec<String>) -> &Good {
+
+        use crate::schema::good_images::dsl::good_images;
 
         let _connection = establish_connection();
 
@@ -1832,6 +1910,18 @@ impl Good {
             .set(edit_good)
             .get_result::<Good>(&_connection)
             .expect("Error.");
+
+        diesel::delete(good_images.filter(schema::good_images::good_id.eq(self.id))).execute(&_connection).expect("E");
+        for image in images.iter() {
+            let new_image = NewGoodImage {
+                self.id,
+                image.to_string()
+            };
+            diesel::insert_into(good_images::table)
+                .values(&new_image)
+                .get_result::<GoodImage>(&_connection)
+                .expect("Error saving good image.");
+            };
         return self;
     }
 
@@ -2555,6 +2645,21 @@ impl Good {
     }
 }
 
+/////// GoodImage //////
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(Good)]
+pub struct GoodImage {
+    pub id:      i32,
+    pub good_id: i32,
+    pub src:     String,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="good_images"]
+pub struct NewGoodImage {
+    pub good_id: i32,
+    pub src:     String,
+}
+
 /////// GoodComment //////
 
     // 'a' Опубликованный
@@ -3163,7 +3268,7 @@ impl GoodComment {
             .set(schema::goods::comment.eq(item.comment + 1))
             .get_result::<Good>(&_connection)
             .expect("E");
-            
+
         diesel::update(self)
             .set(schema::good_comments::types.eq(close_case))
             .get_result::<GoodComment>(&_connection)

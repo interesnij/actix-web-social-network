@@ -1775,10 +1775,8 @@ pub struct NewPhoto {
 }
 #[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
 #[table_name="photos"]
-pub struct EditPhoto {
+pub struct EditPhotoDescription {
     pub description:     Option<String>,
-    pub comment_enabled: bool,
-    pub votes_on:        bool,
 }
 #[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
 #[table_name="photos"]
@@ -1974,55 +1972,7 @@ impl Photo {
             return self.user_id == user_id;
         }
     }
-    pub fn create_photo(community_id: Option<i32>, user_id: i32,
-        list: PhotoList, preview: String, file: String) -> Photo {
 
-        let _connection = establish_connection();
-
-        diesel::update(&list)
-          .set(schema::photo_lists::count.eq(list.count + 1))
-          .get_result::<PhotoList>(&_connection)
-          .expect("Error.");
-
-        let new_photo_form = NewPhoto {
-          community_id: community_id,
-          user_id: user_id,
-          photo_list_id: list.id,
-          types: "a".to_string(),
-          preview: preview,
-          file: file,
-          description: None,
-          comment_enabled: true,
-          votes_on: true,
-
-          created: chrono::Local::now().naive_utc(),
-          comment: 0,
-          view: 0,
-          liked: 0,
-          disliked: 0,
-          repost: 0,
-          copy: 0,
-          position: (list.count).try_into().unwrap(),
-        };
-        let new_photo = diesel::insert_into(schema::photos::table)
-            .values(&new_photo_form)
-            .get_result::<Photo>(&_connection)
-            .expect("Error.");
-
-        if community_id.is_some() {
-            use crate::utils::get_community;
-            let community = list.get_community();
-            community.plus_photos(1);
-            return new_photo;
-        }
-        else {
-            use crate::utils::get_user;
-
-            let creator = get_user(user_id);
-            creator.plus_photos(1);
-            return new_photo;
-        }
-    }
     pub fn copy_item(pk: i32, lists: Vec<i32>) -> bool {
         use crate::schema::photos::dsl::photos;
         use crate::schema::photo_lists::dsl::photo_lists;
@@ -2048,10 +1998,9 @@ impl Photo {
                 .nth(0)
                 .unwrap();
 
-            Photo::create_photo (
+            list.create_photo (
                 item.community_id,
                 list.user_id,
-                list,
                 item.preview.clone(),
                 item.file.clone()
             );

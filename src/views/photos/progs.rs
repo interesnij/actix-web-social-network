@@ -21,7 +21,7 @@ use crate::utils::{
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::{User, PhotoList, Photo, PhotoComment, Community};
+use crate::models::{User, PhotoList, Photo, PhotoComment, Community, EditPhotoDescription};
 use serde::{Deserialize, Serialize};
 use std;
 
@@ -41,6 +41,7 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
     config.route("/photos/recover_community_list/{id}/", web::get().to(recover_community_photo_list));
 
     config.route("/photos/add_photos_in_list/{id}/", web::post().to(add_photos_in_list));
+    config.route("/photos/edit_photo_description/{id}/", web::post().to(edit_photo_description));
 }
 
 
@@ -432,5 +433,62 @@ pub async fn recover_community_photo_list(session: Session, _id: web::Path<i32>)
         Ok(HttpResponse::Ok()
             .content_type("text/html; charset=utf-8")
             .body(""))
+    }
+}
+
+pub async fn edit_photo_description(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> web::Json<EditPhotoDescription> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let user_id = _request_user.id;
+        let _photo = get_photo(*_id);
+        let _list = _photo.get_list();
+
+        let mut is_open = false;
+        let mut text = "".to_string();
+        let community_id = _list.community_id;
+
+        if community_id.is_some() {
+            let _tuple = get_community_permission(&_list.get_community(), &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
+        }
+        else {
+            let _tuple = get_user_permission(&_list.get_creator(), &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
+        }
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+        else if _photo.is_user_can_edit_delete_item(_request_user.id) {
+            let mut form: EditPhotoDescription = EditPhotoDescription {
+                description: None,
+            };
+
+            while let Some(item) = payload.next().await {
+                let mut field: Field = item.expect("split_payload err");
+                while let Some(chunk) = field.next().await {
+                    let data = chunk.expect("split_payload err chunk");
+                    if let Ok(s) = str::from_utf8(&data) {
+                        let data_string = s.to_string();
+                        if field.name() == "description" {
+                            form.description = Some(data_string);
+                        }
+                    }
+                }
+            }
+            return Json(EditPhotoDescription {
+                description: form.description,
+            })
+        } else {
+            return Json(EditPhotoDescription {
+                description: None,
+            })
+        }
+    } else {
+        return Json(EditPhotoDescription {
+            description: form.description,
+        })
     }
 }

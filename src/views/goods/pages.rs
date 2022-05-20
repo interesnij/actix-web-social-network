@@ -37,6 +37,7 @@ pub fn pages_urls(config: &mut web::ServiceConfig) {
     config.route("/goods/edit_user_list/{id}/", web::get().to(edit_user_list_page));
     config.route("/goods/add_community_list//{id}", web::get().to(add_community_list_page));
     config.route("/goods/edit_community_list/{id}/", web::get().to(edit_community_list_page));
+    config.route("/goods/edit_good/{id}/", web::get().to(edit_good_page));
 }
 
 pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
@@ -650,5 +651,34 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, good_id: web
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
+    }
+}
+
+pub async fn edit_good_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let good = get_good(*_id);
+        if good.is_user_can_edit_delete_item(_request_user.id) {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/goods/edit_good.stpl")]
+            struct Template {
+                request_user: User,
+                object: Good,
+            }
+            let body = Template {
+                request_user: _request_user,
+                object: good,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
 }

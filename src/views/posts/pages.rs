@@ -30,6 +30,7 @@ pub fn pages_urls(config: &mut web::ServiceConfig) {
     config.route("/posts/edit_user_list/{id}/", web::get().to(edit_user_list_page));
     config.route("/posts/add_community_list//{id}", web::get().to(add_community_list_page));
     config.route("/posts/edit_community_list/{id}/", web::get().to(edit_community_list_page));
+    config.route("/posts/edit_post/{id}/", web::get().to(edit_post_page));
 
     config.route("/posts/load_post/{id}/", web::get().to(load_post_page));
     config.route("/posts/load_comments/{id}/", web::get().to(load_comments_page));
@@ -495,5 +496,32 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, post_id: web
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
+    }
+}
+
+pub async fn edit_post_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        let post = get_post(*_id);
+        if post.is_user_can_edit_delete_item(_request_user.id) {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/posts/edit_post.stpl")]
+            struct Template {
+                request_user: User,
+                object: Post,
+            }
+            let body = Template {
+                request_user: _request_user,
+                object: post,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
 }

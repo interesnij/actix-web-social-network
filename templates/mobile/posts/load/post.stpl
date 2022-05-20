@@ -12,8 +12,4 @@
   <% } %>
 </span>
 
-<% if object.community_id.is_some() { %>
-  <% include!("../community/post_detail.stpl"); %>
-<% } else { %>
-  <% include!("../user/post_detail.stpl"); %>
-<% } %>
+<% include!("../post_detail.stpl"); %>
