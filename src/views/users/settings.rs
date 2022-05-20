@@ -599,7 +599,7 @@ pub async fn edit_link(session: Session, mut payload: Multipart) -> actix_web::R
         }
 
         diesel::update(&_request_user)
-          .set(schema::users::link.eq("/".to_owned() + &form.link + &"/".to_string())) 
+          .set(schema::users::link.eq("/".to_owned() + &form.link + &"/".to_string()))
              .get_result::<User>(&_connection)
              .expect("Error.");
 
@@ -659,7 +659,7 @@ pub async fn edit_name(session: Session, mut payload: Multipart) -> actix_web::R
         }
 
         diesel::update(&_request_user)
-          .set(form)
+          .set(&form)
              .get_result::<User>(&_connection)
              .expect("Error.");
 
@@ -695,7 +695,7 @@ pub async fn edit_password(session: Session, mut payload: Multipart) -> actix_we
         }
 
         diesel::update(&_request_user)
-          .set(form)
+          .set(&form)
              .get_result::<User>(&_connection)
              .expect("Error.");
 
@@ -729,7 +729,7 @@ pub async fn edit_phone(session: Session, mut payload: Multipart) -> actix_web::
         }
 
         diesel::update(&_request_user)
-          .set(form)
+          .set(&form)
              .get_result::<User>(&_connection)
              .expect("Error.");
 

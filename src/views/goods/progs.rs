@@ -553,7 +553,7 @@ pub async fn edit_good(session: Session, mut payload: Multipart, _id: web::Path<
                 request_user: User,
             }
             let body = Template {
-                object: new_good,
+                object: _good,
                 request_user: _request_user,
             }
             .render_once()

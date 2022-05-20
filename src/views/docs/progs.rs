@@ -484,7 +484,7 @@ pub async fn edit_doc(session: Session, mut payload: Multipart, _id: web::Path<i
             use crate::utils::establish_connection;
             let _connection = establish_connection();
             diesel::update(&_doc)
-                .set(form)
+                .set(&form)
                 .get_result::<Doc>(&_connection)
                 .expect("Error.");
 
