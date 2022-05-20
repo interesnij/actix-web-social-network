@@ -11,7 +11,7 @@ use crate::utils::{
     establish_connection,
     is_desctop,
     get_request_user_data,
-    get_user,
+    get_music,
     get_community,
     get_music_list,
     get_user_permission,

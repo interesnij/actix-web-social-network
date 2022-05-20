@@ -2,6 +2,7 @@ use actix_web::{
     HttpRequest,
     HttpResponse,
     web,
+    web::Json,
     error::InternalError,
     http::StatusCode,
 };
@@ -437,6 +438,8 @@ pub async fn edit_doc(session: Session, mut payload: Multipart, _id: web::Path<i
         let _doc = get_music(*_id);
         let _list = _doc.get_list();
         let community_id = _doc.community_id;
+        let mut is_open = false;
+        let mut text = "".to_string();
 
         if community_id.is_some() {
             let _tuple = get_community_permission(&_list.get_community(), &_request_user);

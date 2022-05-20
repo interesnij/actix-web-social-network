@@ -379,6 +379,8 @@ pub async fn edit_track(session: Session, mut payload: Multipart, _id: web::Path
         let community_id = _track.community_id;
         let mut owner_path = "".to_string();
         let mut owner_id = 0;
+        let mut is_open = false;
+        let mut text = "".to_string();
 
         if community_id.is_some() {
             let _tuple = get_community_permission(&_list.get_community(), &_request_user);
@@ -424,6 +426,8 @@ pub async fn edit_track(session: Session, mut payload: Multipart, _id: web::Path
                     }
                 }
                 else if field.name() == "image" {
+                    use crate::utils::UploadedFiles;
+
                     let _new_path = field.content_disposition().get_filename().unwrap();
                     let file = UploadedFiles::new (
                         owner_path.clone(),
