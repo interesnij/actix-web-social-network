@@ -538,9 +538,6 @@ pub async fn edit_good(session: Session, mut payload: Multipart, _id: web::Path<
             ).await;
             let new_good = _good.edit_good (
                 form.title,
-                None,
-                form.category_id,
-                _request_user.id,
                 form.price,
                 form.description,
                 form.image,

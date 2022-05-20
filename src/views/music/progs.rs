@@ -54,6 +54,7 @@ pub async fn add_user_list(session: Session, mut payload: Multipart) -> actix_we
             form.name,
             form.description,
             None,
+            None, 
             form.can_see_el,
             form.create_el,
             form.copy_el,

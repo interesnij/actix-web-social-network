@@ -1702,6 +1702,16 @@ impl GoodList {
             .get_result::<Good>(&_connection)
             .expect("Error.");
 
+        for image in images.iter() {
+            let new_image = NewGoodImage {
+                good_id: self.id,
+                src: image.to_string(),
+            };
+            diesel::insert_into(good_images::table)
+                .values(&new_image)
+                .get_result::<GoodImage>(&_connection)
+                .expect("Error saving good image.")
+            };
         if community_id.is_some() {
             use crate::utils::get_community;
             let community = self.get_community();
@@ -1715,16 +1725,6 @@ impl GoodList {
             creator.plus_goods(1);
             return new_good;
         }
-        for image in images.iter() {
-            let new_image = NewGoodImage {
-                good_id: self.id,
-                src: image.to_string(),
-            };
-            diesel::insert_into(good_images::table)
-                .values(&new_image)
-                .get_result::<GoodImage>(&_connection)
-                .expect("Error saving good image.");
-            };
     }
 }
 /////// Good //////

@@ -1690,8 +1690,10 @@ impl Survey {
 
     pub fn edit_survey(&self, title: String,
         image: Option<String>, is_anonymous: bool, is_multiple: bool,
-        is_no_edited: bool, time_end:Option<NaiveDateTime>) -> &Survey {
+        is_no_edited: bool, time_end:Option<String>) -> &Survey {
         let _connection = establish_connection();
+
+        use chrono::NaiveDateTime;
 
         let edit_survey = EditSurvey {
             title: title,
@@ -1699,7 +1701,7 @@ impl Survey {
             is_anonymous: is_anonymous,
             is_multiple: is_multiple,
             is_no_edited: is_no_edited,
-            time_end: time_end,
+            time_end: Some(NaiveDateTime::parse_from_str(&time_end.unwrap().clone(), "%Y-%m-%d %H:%M:%S").unwrap()),
         };
         diesel::update(self)
             .set(edit_survey)
