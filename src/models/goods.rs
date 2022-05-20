@@ -1838,13 +1838,13 @@ impl Good {
         use crate::schema::good_images::dsl::good_images;
 
         let _connection = establish_connection();
-        let list = good_images
+        let images_list = good_images
             .filter(schema::good_images::good_id.eq(self.id))
             .load(&_connection)
             .expect("E");
 
         let mut stack = Vec::new();
-        for item in list.iter() {
+        for item in images_list.iter() {
             stack.push(item.src);
         };
         return stack;
@@ -1932,7 +1932,7 @@ impl Good {
                 good_id: self.id,
                 src: image.to_string(),
             };
-            diesel::insert_into(good_images::table)
+            diesel::insert_into(schema::good_images::table)
                 .values(&new_image)
                 .get_result::<GoodImage>(&_connection)
                 .expect("Error saving good image.");

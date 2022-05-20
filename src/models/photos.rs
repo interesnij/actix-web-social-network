@@ -2021,22 +2021,6 @@ impl Photo {
         return true;
     }
 
-    pub fn edit_photo(&self, description: Option<String>,
-        comment_enabled: bool, votes_on: bool) -> &Photo {
-
-        let _connection = establish_connection();
-
-        let edit_photo = EditPhotoDescription {
-            description: description,
-            comment_enabled: comment_enabled,
-            votes_on: votes_on,
-        };
-        diesel::update(self)
-            .set(edit_photo)
-            .get_result::<Photo>(&_connection)
-            .expect("Error.");
-        return self;
-    }
     pub fn plus_likes(&self, count: i32) -> bool {
         let _connection = establish_connection();
         diesel::update(self)
