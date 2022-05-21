@@ -299,7 +299,7 @@ pub async fn edit_track_page(session: Session, req: HttpRequest, _id: web::Path<
 
         let _connection = establish_connection();
 
-        let categories = sound_genres
+        let genres = sound_genres
             .load::<SoundGenre>(&_connection)
             .expect("E.");
 
@@ -311,12 +311,12 @@ pub async fn edit_track_page(session: Session, req: HttpRequest, _id: web::Path<
             struct Template {
                 request_user: User,
                 object:       Music,
-                categories:   Vec<SoundGenre>,
+                genres:       Vec<SoundGenre>,
             }
             let body = Template {
                 request_user: _request_user,
                 object:       track,
-                categories:   categories,
+                genres:       genres,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

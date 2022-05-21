@@ -10,7 +10,7 @@
     </span>
 
     <div class="row">
-        <div class="col attach_panel" <%= object.get_count_attach() == "files_10" { %>style="display: none;"<% } else { %>style="display: flex;"<% } %>>
+        <div class="col attach_panel" <% if object.get_count_attach() == "files_10" { %>style="display: none;"<% } else { %>style="display: flex;"<% } %>>
           <a class="btn btn-link btn-sm pointer menu_drop">
             медиа
           </a>

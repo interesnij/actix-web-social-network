@@ -35,13 +35,13 @@ use actix_web::web::Json;
 pub struct VideoCategorie {
     pub id:       i32,
     pub name:     String,
-    pub position: i16,
+    pub position: i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="video_categories"]
 pub struct NewVideoCategorie {
     pub name:     String,
-    pub position: i16,
+    pub position: i32,
 }
 
 /////// videoList //////

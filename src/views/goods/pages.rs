@@ -1,3 +1,4 @@
+use crate::schema;
 use actix_web::{
     HttpRequest,
     HttpResponse,
@@ -718,7 +719,7 @@ pub async fn edit_good_page(session: Session, req: HttpRequest, _id: web::Path<i
             }
             let body = Template {
                 request_user: _request_user,
-                object:       object,
+                object:       good,
                 categories:   categories,
             }
             .render_once()
