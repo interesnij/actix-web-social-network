@@ -1833,10 +1833,10 @@ impl Video {
     }
     pub fn get_image(&self) -> String {
         if self.image.is_some() {
-            return "<img class='image_fit' src='".to_string() +  &self.image.as_deref().unwrap().to_string() + &"' alt='img' />".to_string();
+            return "<img class='image_fit_200' src='".to_string() +  &self.image.as_deref().unwrap().to_string() + &"' alt='img' />".to_string();
         }
         else {
-            return "<img class='image_fit' src='/static/images/no_img/list.jpg' alt='img' />".to_string();
+            return "<img class='image_fit_200' src='/static/images/no_img/list.jpg' alt='img' />".to_string();
         }
     }
     pub fn get_code(&self) -> String {

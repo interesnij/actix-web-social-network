@@ -1,5 +1,5 @@
 <form id="upload_video_form">
-  <input type="hidden" id="upload_video_pk" name="pk">
+  <input class="new" type="hidden" id="upload_video_pk" name="pk">
       <div class="card">
           <div class="card-header border-bottom">
               <h6 class="content-color-primary mb-0" id="onload_info"></h6>

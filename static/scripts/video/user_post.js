@@ -65,8 +65,8 @@ on('#ajax', 'click', '#edit_video_btn', function() {
   form_post.append($input);
   form_data = new FormData(form_post);
 
-  lenta_load = document.body.querySelector(".is_paginate");
-  pk = form_post.querySelector("#upload_video_pk").value;
+  _case = form_post.querySelector("#upload_video_pk");
+  pk = case.value;
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/video/edit_video/" + pk + "/", true );
@@ -74,11 +74,15 @@ on('#ajax', 'click', '#edit_video_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    elem = link_.responseText;
-    new_post = document.createElement("span");
-    new_post.innerHTML = elem;
-    lenta_load.insertAdjacentHTML('afterBegin', new_post.innerHTML);
-    lenta_load.querySelector(".items_empty") ? lenta_load.querySelector(".items_empty").style.display = "none" : null;
+    if (_case.classList.contains("new")) {
+      elem = link_.responseText;
+      new_post = document.createElement("span");
+      new_post.innerHTML = elem;
+
+      lenta_load = document.body.querySelector(".is_paginate");
+      lenta_load.insertAdjacentHTML('afterBegin', new_post.innerHTML);
+      lenta_load.querySelector(".items_empty") ? lenta_load.querySelector(".items_empty").style.display = "none" : null;
+    }
     close_work_fullscreen();
     //main_container = document.body.querySelector(".main-container");
     //add_list_in_all_stat("created_user_post",new_post.querySelector(".pag").getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))

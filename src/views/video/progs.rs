@@ -558,7 +558,7 @@ pub async fn edit_video(session: Session, mut payload: Multipart, _id: web::Path
             );
 
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/video/new_item.stpl")]
+            #[template(path = "desctop/video/video.stpl")]
             struct Template {
                 object: Video,
                 request_user: User,
