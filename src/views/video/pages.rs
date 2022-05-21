@@ -705,9 +705,6 @@ pub async fn edit_video_page(session: Session, req: HttpRequest) -> actix_web::R
             let params = params_some.unwrap();
             pk = params.pk.unwrap();
         }
-        else {
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
-        }
 
         let _request_user = get_request_user_data(session);
         let video = get_video(pk);
