@@ -18,7 +18,8 @@ use crate::utils::{
     get_anon_community_permission,
     get_list_variables,
 };
- use crate::diesel::RunQueryDsl;
+use serde::Deserialize;
+use crate::diesel::RunQueryDsl;
 use actix_session::Session;
 use sailfish::TemplateOnce;
 use crate::models::{User, VideoList, Video, VideoComment, Community};
@@ -35,7 +36,7 @@ pub fn pages_urls(config: &mut web::ServiceConfig) {
     config.route("/video/edit_community_list/{id}/", web::get().to(edit_community_list_page));
 
     config.route("/video/add_video_in_list/{id}/", web::get().to(add_video_in_list_page));
-    config.route("/video/edit_video/{id}/", web::get().to(edit_video_page));
+    config.route("/video/edit_video/", web::get().to(edit_video_page));
 }
 
 pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
@@ -692,10 +693,21 @@ pub async fn add_video_in_list_page(session: Session, req: HttpRequest, _id: web
     }
 }
 
-pub async fn edit_video_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+#[derive(Deserialize)]
+pub struct VideoPk {
+    pub pk: i32,
+}
+pub async fn edit_video_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
+        let params_some = web::Query::<VideoPk>::from_query(&req.query_string());
+        let mut pk = 0;
+        if params_some.is_ok() {
+            let params = params_some.unwrap();
+            pk = params.pk.unwrap();
+        }
+
         let _request_user = get_request_user_data(session);
-        let video = get_video(*_id);
+        let video = get_video(pk);
         if video.is_user_can_edit_delete_item(_request_user.id) {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/video/edit_video.stpl")]
