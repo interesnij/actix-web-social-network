@@ -1,6 +1,7 @@
 use actix_web::{
     HttpResponse,
     web,
+    web::Json,
     error::InternalError,
     http::StatusCode,
 };
@@ -23,6 +24,7 @@ use std::str;
 use actix_multipart::{Field, Multipart};
 use futures::StreamExt;
 use std::{borrow::BorrowMut, io::Write};
+
 
 
 pub fn progs_urls(config: &mut web::ServiceConfig) {
@@ -439,7 +441,12 @@ pub async fn video_form(
     }
     form
 }
-pub async fn add_video_in_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+
+#[derive(Serialize)]
+pub struct NewVideoResponse {
+    pub pk: i32,
+}
+pub async fn add_video_in_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> web::Json<NewVideoResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
         let user_id = _request_user.id;
@@ -465,8 +472,9 @@ pub async fn add_video_in_list(session: Session, mut payload: Multipart, _id: we
             owner_id = _request_user.id;
         }
         if is_open == false {
-            use crate::views::close_item;
-            return close_item(text)
+            return Json(NewVideoResponse {
+                pk: 0,
+            })
         }
 
         else if _list.is_user_can_create_el(_request_user.id) {
@@ -487,31 +495,18 @@ pub async fn add_video_in_list(session: Session, mut payload: Multipart, _id: we
                 form.votes_on,
                 form.category_id,
             );
-
-            #[derive(TemplateOnce)]
-            #[template(path = "desctop/video/new_item.stpl")]
-            struct Template {
-                object: Video,
-                request_user: User,
-            }
-            let body = Template {
-                object: new_video,
-                request_user: _request_user,
-            }
-            .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+            return Json(NewVideoResponse {
+                pk: new_video.id,
+            })
         } else {
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(""))
+            return Json(NewVideoResponse {
+                pk: 0,
+            })
         }
     } else {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(""))
+        return Json(NewVideoResponse {
+            pk: 0,
+        })
     }
 }
 

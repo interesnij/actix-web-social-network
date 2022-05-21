@@ -1835,7 +1835,7 @@ impl Video {
         if self.image.is_some() {
             return "<img class='image_fit' src='".to_string() +  &self.image.as_deref().unwrap().to_string() + &"' alt='img' />".to_string();
         }
-        else {
+        else { 
             return "<img class='image_fit' src='/statuc/images/no_img/list.jpg' alt='img' />".to_string();
         }
     }
