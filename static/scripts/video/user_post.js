@@ -66,7 +66,7 @@ on('#ajax', 'click', '#edit_video_btn', function() {
   form_data = new FormData(form_post);
 
   _case = form_post.querySelector("#upload_video_pk");
-  pk = case.value;
+  pk = _case.value; 
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/video/edit_video/" + pk + "/", true );
