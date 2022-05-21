@@ -652,35 +652,6 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, good_id: web
     }
 }
 
-pub async fn edit_good_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
-        let good = get_good(*_id);
-        if good.is_user_can_edit_delete_item(_request_user.id) {
-            #[derive(TemplateOnce)]
-            #[template(path = "desctop/goods/edit_good.stpl")]
-            struct Template {
-                request_user: User,
-                object: Good,
-            }
-            let body = Template {
-                request_user: _request_user,
-                object: good,
-            }
-            .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
-        } else {
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
-        }
-
-    } else {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
-    }
-}
-
 pub async fn add_good_in_list_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         use crate::models::GoodSubcategorie;
