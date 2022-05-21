@@ -33,6 +33,8 @@ pub fn pages_urls(config: &mut web::ServiceConfig) {
     config.route("/video/edit_user_list/{id}/", web::get().to(edit_user_list_page));
     config.route("/video/add_community_list//{id}", web::get().to(add_community_list_page));
     config.route("/video/edit_community_list/{id}/", web::get().to(edit_community_list_page));
+
+    config.route("/video/add_video_in_list/{id}/", web::get().to(add_video_in_list_page));
     config.route("/video/edit_video/{id}/", web::get().to(edit_video_page));
 }
 
@@ -648,6 +650,44 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, video_id: we
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
+    }
+}
+
+pub async fn add_video_in_list_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        use crate::models::VideoCategorie;
+        use crate::schema::video_categories::dsl::video_categories;
+
+        let _connection = establish_connection();
+
+        let categories = video_categories
+            .load::<VideoCategorie>(&_connection)
+            .expect("E.");
+
+        let _request_user = get_request_user_data(session);
+        let list = get_video_list(*_id);
+        if list.is_user_can_edit_delete_item(_request_user.id) {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/video/create_video.stpl")]
+            struct Template {
+                request_user: User,
+                list:         VideoList,
+                categories:   Vec<VideoCategorie>,
+            }
+            let body = Template {
+                request_user: _request_user,
+                list:         list,
+                categories:   categories,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
 }
 

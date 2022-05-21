@@ -329,7 +329,7 @@ pub struct PostForm {
     pub attach: Option<String>,
     pub comment_enabled: bool,
     pub votes_on: bool,
-    is_signature: bool,
+    pub is_signature: bool,
 }
 
 pub async fn post_form(payload: &mut Multipart) -> PostForm {

@@ -293,6 +293,15 @@ pub async fn edit_community_list_page(session: Session, req: HttpRequest, _id: w
 
 pub async fn edit_track_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
+        use crate::models::SoundGenre;
+        use crate::schema::sound_genres::dsl::sound_genres;
+
+        let _connection = establish_connection();
+
+        let categories = sound_genres
+            .load::<SoundGenre>(&_connection)
+            .expect("E.");
+
         let _request_user = get_request_user_data(session);
         let track = get_music(*_id);
         if track.is_user_can_edit_delete_item(_request_user.id) {
@@ -300,11 +309,13 @@ pub async fn edit_track_page(session: Session, req: HttpRequest, _id: web::Path<
             #[template(path = "desctop/music/edit_track.stpl")]
             struct Template {
                 request_user: User,
-                object: Music,
+                object:       Music,
+                categories:   Vec<SoundGenre>,
             }
             let body = Template {
                 request_user: _request_user,
-                object: track,
+                object:       track,
+                categories:   categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

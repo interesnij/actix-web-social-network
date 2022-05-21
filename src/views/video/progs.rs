@@ -330,6 +330,7 @@ pub struct VideoForm {
     pub description: Option<String>,
     pub comment_enabled: bool,
     pub votes_on: bool,
+    pub category_id: Option<i32>,
 }
 
 pub async fn video_form(
@@ -348,6 +349,7 @@ pub async fn video_form(
         description: None,
         comment_enabled: true,
         votes_on: true,
+        category_id: None,
     };
 
     while let Some(item) = payload.next().await {
@@ -405,6 +407,10 @@ pub async fn video_form(
                     let data_string = s.to_string();
                     if field.name() == "title" {
                         form.title = data_string;
+                    }
+                    if field.name() == "category_id" {
+                        let _int: i32 = data_string.parse().unwrap();
+                        form.category_id = Some(_int);
                     }
                     else if field.name() == "description" {
                         form.description = Some(data_string);
@@ -475,6 +481,7 @@ pub async fn add_video_in_list(session: Session, mut payload: Multipart, _id: we
                 form.description,
                 form.comment_enabled,
                 form.votes_on,
+                form.category_id,
             );
 
             #[derive(TemplateOnce)]
@@ -548,6 +555,7 @@ pub async fn edit_video(session: Session, mut payload: Multipart, _id: web::Path
                 form.description,
                 form.comment_enabled,
                 form.votes_on,
+                form.category_id,
             );
 
             #[derive(TemplateOnce)]

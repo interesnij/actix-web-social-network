@@ -1,6 +1,8 @@
 use diesel::prelude::*;
 use crate::schema;
 use crate::schema::{
+    good_categories,
+    good_subcategories,
     good_lists,
     goods,
     good_images,
@@ -12,6 +14,7 @@ use crate::schema::{
     good_comment_votes,
     good_list_reposts,
     good_reposts,
+
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
@@ -28,6 +31,41 @@ use crate::models::{
     Message,
 };
 use actix_web::web::Json;
+
+
+/////// GoodCategorie //////
+#[derive(Debug, Queryable, Serialize, Identifiable)]
+pub struct GoodCategorie {
+    pub id:       i32,
+    pub name:     String,
+    pub avatar:   Option<String>,
+    pub position: i16,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="good_categories"]
+pub struct NewGoodCategorie {
+    pub name:     String,
+    pub avatar:   Option<String>,
+    pub position: i16,
+}
+
+/////// GoodSubcategorie //////
+#[derive(Debug, Queryable, Serialize, Identifiable)]
+pub struct GoodSubcategorie {
+    pub id:          i32,
+    pub name:        String,
+    pub category_id: i32,
+    pub avatar:      Option<String>,
+    pub position:    i16,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="good_subcategories"]
+pub struct NewGoodSubcategorie {
+    pub name:        String,
+    pub category_id: i32,
+    pub avatar:      Option<String>,
+    pub position:    i16,
+}
 
 /////// GoodList //////
 
