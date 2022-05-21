@@ -21,6 +21,7 @@
 
 <% } else { %>
 
+<% let post_creator = object.get_creator(); %>
     <div class="media">
     <a href="<%= post_creator.link %>" class="ajax">
       <figure>
