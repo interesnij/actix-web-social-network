@@ -11,11 +11,13 @@ use crate::utils::{
     get_request_user_data,
     get_community,
     get_doc_list,
+    get_doc,
     get_user_permission,
     get_anon_user_permission,
     get_community_permission,
     get_anon_community_permission,
     get_list_variables,
+    establish_connection,
 };
 
 use actix_session::Session;

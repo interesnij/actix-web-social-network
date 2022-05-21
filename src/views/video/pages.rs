@@ -657,6 +657,7 @@ pub async fn add_video_in_list_page(session: Session, req: HttpRequest, _id: web
     if is_signed_in(&session) {
         use crate::models::VideoCategorie;
         use crate::schema::video_categories::dsl::video_categories;
+        use crate::utils::establish_connection;
 
         let _connection = establish_connection();
 
