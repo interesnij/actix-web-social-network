@@ -66,10 +66,10 @@ on('#ajax', 'click', '#edit_video_btn', function() {
   form_data = new FormData(form_post);
 
   lenta_load = document.body.querySelector(".is_paginate");
-  pk = form_post.getAttribute("data-pk");
+  pk = form_post.querySelector("#upload_video_pk").value;
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/video/edit_video/", true );
+  link_.open( 'POST', "/video/edit_video/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {

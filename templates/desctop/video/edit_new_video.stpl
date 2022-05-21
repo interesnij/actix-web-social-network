@@ -1,5 +1,5 @@
 <form id="upload_video_form">
-  <input type="hidden" value="<%= object.id %>" id="upload_video_pk" name="pk">
+  <input type="hidden" id="upload_video_pk" name="pk"> 
       <div class="card">
           <div class="card-header border-bottom">
               <h6 class="content-color-primary mb-0" id="onload_info"></h6>
@@ -7,37 +7,31 @@
           <div class="card-body">
             <div class="form-group">
               <label>Название</label>
-              <input type="text" value="<%= object.title %>" name="title" class="form-control" id="id_title">
+              <input type="text" name="title" class="form-control" id="id_title">
             </div>
             <div class="form-group">
               <label>Описание видеозаписи</label>
-              <% if object.description.is_some() { %>
-                <div contenteditable="true" class="form-control smile_supported">
-                  <%= object.description.as_deref().unwrap() %>
-                </div>
-              <% } else { %>
                 <div placeholder="Добавьте описание" contenteditable="true" class="form-control smile_supported">
 
                 </div>
-              <% } %>
             </div>
             <div class="form-group">
               <div class="hide_image">
                 <input type="file" name="image" accept="image/*" id="id_image">
               </div>
               <div id="video_holder" class="border pointer">
-                <img class="img-fluid rounded" src="<%= object.get_image() %>" alt="img" style="height: 100%;">
+                <img class="img-fluid rounded" src="/static/images/no_img/list.jpg" alt="img" style="height: 100%;">
               </div>
             </div>
             <div class="form-group">
               <div class="custom-control custom-checkbox">
-                <input type="checkbox" name="comments_enabled" class="custom-control-input" <% if object.comment_enabled { %> checked <% } %> id="id_comments_enabled22">
+                <input type="checkbox" name="comments_enabled" class="custom-control-input" checked id="id_comments_enabled22">
                 <label class="custom-control-label" for="id_comments_enabled22">Комментарии включены</label>
               </div>
             </div>
             <div class="form-group">
               <div class="custom-control custom-checkbox">
-                <input type="checkbox" name="votes_on" class="custom-control-input" <% if object.votes_on { %> checked <% } %> id="id_votes_on22">
+                <input type="checkbox" name="votes_on" class="custom-control-input" checked id="id_votes_on22">
                 <label class="custom-control-label" for="id_votes_on22">Комментарии включены</label>
               </div>
             </div>
