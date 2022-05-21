@@ -44,7 +44,7 @@
         </div>
         <div id="good_image" class="border border_2">
           <% if object.image.is_some() { %>
-            <img src="<%= object.image.unwrap() %>" />
+            <img src="<%= object.image.as_ref().unwrap() %>" />
           <% } else { %>
             <h4>обложка</h4>
             <p>Нажмите, чтобы добавить</p>
@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <% let images = object.get_images_str(); %>
+    <% let images = &object.get_images_str(); %>
     <% let count = images.len(); %>
     <div class="form-group row">
       <div class="col-lg-3 col-md-3">

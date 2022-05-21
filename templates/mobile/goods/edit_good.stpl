@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <% let images = object.get_images_str(); %>
+    <% let images = &object.get_images_str(); %>
     <% let count = images.len(); %>
     <div class="form-group row">
       <div class="col-lg-3 col-md-3">
