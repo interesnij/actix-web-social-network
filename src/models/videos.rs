@@ -1998,7 +1998,7 @@ impl Video {
 
     pub fn edit_video(&self, title: String, preview: Option<String>,
         image: Option<String>, description: Option<String>,
-        comment_enabled: bool, votes_on: bool, category_id: Option<i32>) -> &Video {
+        comment_enabled: bool, votes_on: bool, category_id: Option<i32>) -> Video {
 
         let _connection = establish_connection();
 

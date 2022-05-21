@@ -547,7 +547,7 @@ pub async fn edit_video(session: Session, mut payload: Multipart, _id: web::Path
                 owner_path,
                 owner_id.to_string()
             ).await;
-            _video.edit_video (
+            let edited_video = _video.edit_video (
                 form.title,
                 form.preview,
                 form.image,
@@ -564,7 +564,7 @@ pub async fn edit_video(session: Session, mut payload: Multipart, _id: web::Path
                 request_user: User,
             }
             let body = Template {
-                object: _video,
+                object: edited_video,
                 request_user: _request_user,
             }
             .render_once()
