@@ -2011,7 +2011,7 @@ impl Video {
             votes_on: votes_on,
             category_id: category_id,
         };
-        diesel::update(self)
+        diesel::update(&self)
             .set(edit_video)
             .get_result::<Video>(&_connection)
             .expect("Error.");
