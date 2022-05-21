@@ -66,7 +66,7 @@
             <h4 style="font-weight:bold;font-size:30px;color:#CECECE">фото 2</h4>
             <p>Нажмите, чтобы добавить</p>
           <% } else { %>
-            <img src="<%= object.images[0] %>" />
+            <img src="<%= images[0] %>" />
           <% } %>
         </div>
       </div>
@@ -79,7 +79,7 @@
           <h4 style="font-weight:bold;font-size:30px;color:#CECECE">фото 3</h4>
           <p>Нажмите, чтобы добавить</p>
         <% } else { %>
-          <img src="<%= object.images[1] %>" />
+          <img src="<%= images[1] %>" />
         <% } %>
         </div>
       </div>
@@ -92,7 +92,7 @@
           <h4 style="font-weight:bold;font-size:30px;color:#CECECE">фото 4</h4>
           <p>Нажмите, чтобы добавить</p>
         <% } else { %>
-          <img src="<%= object.images[2] %>" />
+          <img src="<%= images[2] %>" />
         <% } %>
         </div>
       </div>
@@ -105,7 +105,7 @@
           <h4 style="font-weight:bold;font-size:30px;color:#CECECE">фото 5</h4>
           <p>Нажмите, чтобы добавить</p>
         <% } else { %>
-          <img src="<%= object.images[3] %>" />
+          <img src="<%= images[3] %>" />
         <% } %>
         </div>
       </div>

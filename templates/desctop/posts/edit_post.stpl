@@ -1,7 +1,10 @@
 
 <form class="post_edit_form">
-  <div contenteditable="true" class="form-control new_element_text smile_supported text_support"><%- object.content %></div>
-
+  <% if object.content.is_some() { %>
+    <div contenteditable="true" class="form-control new_element_text smile_supported text_support"><%- object.content.as_deref().unwrap() %></div>
+  <% } else { %>
+    <div contenteditable="true" class="form-control new_element_text smile_supported text_support"></div>
+  <% } %>
 <div class="card-footer border-top btn_default">
     <span class="<%= object.get_count_attach() %> row attach_block">
       <% if object.attach.is_some() { %>
