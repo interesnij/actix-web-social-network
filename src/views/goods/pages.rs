@@ -20,7 +20,7 @@ use crate::utils::{
     get_list_variables,
     establish_connection,
 };
-
+use crate::diesel::RunQueryDsl;
 use actix_session::Session;
 use sailfish::TemplateOnce;
 use crate::models::{User, GoodList, Good, GoodComment, Community};
@@ -657,6 +657,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, good_id: web
 pub async fn add_good_in_list_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         use crate::models::GoodSubcategorie;
+        use crate::schema::good_subcategories::dsl::good_subcategories;
 
         let _connection = establish_connection();
 

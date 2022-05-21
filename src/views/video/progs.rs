@@ -408,7 +408,7 @@ pub async fn video_form(
                     if field.name() == "title" {
                         form.title = data_string;
                     }
-                    if field.name() == "category_id" {
+                    else if field.name() == "category_id" {
                         let _int: i32 = data_string.parse().unwrap();
                         form.category_id = Some(_int);
                     }
