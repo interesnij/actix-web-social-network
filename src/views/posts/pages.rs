@@ -505,7 +505,7 @@ pub async fn edit_post_page(session: Session, req: HttpRequest, _id: web::Path<i
 
         let _connection = establish_connection();
 
-        let categories :Vec<PostCategorie> = post_categories.load(&_conn).expect("Error");
+        let categories :Vec<PostCategorie> = post_categories.load(&_connection).expect("Error");
 
         let _request_user = get_request_user_data(session);
         let post = get_post(*_id);

@@ -703,8 +703,8 @@ pub async fn edit_good_page(session: Session, req: HttpRequest, _id: web::Path<i
         let _connection = establish_connection();
 
         let categories = good_subcategories
-            .load::<GoodSubcategorie>(&_connection)
             .order(schema::good_subcategories::position.desc())
+            .load::<GoodSubcategorie>(&_connection)
             .expect("E.");
 
         let _request_user = get_request_user_data(session);
