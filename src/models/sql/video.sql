@@ -55,6 +55,7 @@ CREATE TABLE videos (
     repost          INT NOT NULL,
     copy            INT NOT NULL,
     position        SMALLINT NOT NULL,
+    category_id     INT,
 
     CONSTRAINT fk_videos_creator
         FOREIGN KEY(user_id)

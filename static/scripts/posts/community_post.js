@@ -3,60 +3,7 @@ on('#ajax', 'click', '#community_article_add', function() {
   create_fullscreen("/article/c_article_window/" + pk + "/", "item_fullscreen");
 });
 
-on('#ajax', 'click', '#c_add_post_btn', function() {
-  form_post = this.parentElement.parentElement.parentElement.parentElement;
-  text_val = form_post.querySelector(".smile_supported");
-  _val = format_text(text_val);
-  _text = _val.innerHTML;
-  if (_text.replace(/<(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "" && form_post.querySelector(".files_0")) {
-    toast_error("Напишите или прикрепите что-нибудь"); return
-  };
-
-  $input = document.createElement("input");
-  $input.setAttribute("name", "content");
-  $input.setAttribute("type", "hidden");
-  $input.classList.add("input_text");
-  $input.value = _text;
-  form_post.append($input);
-  form_data = new FormData(form_post);
-
-  lenta_load = form_post.parentElement.nextElementSibling;
-  pk = form_post.parentElement.parentElement.getAttribute("data-uuid");
-
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/posts/community_progs/add_post/" + pk + "/", true );
-  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    clear_attach_block();
-
-    elem = link_.responseText;
-    new_post = document.createElement("span");
-    new_post.innerHTML = elem;
-    drops = form_post.querySelectorAll(".dropdown-menu");
-    form_post.querySelector(".input_text").remove();
-    form_post.querySelector(".smile_supported").innerHTML = "";
-    for (var i = 0; i < drops.length; i++){drops[i].classList.remove("show")}
-    lenta_load.insertAdjacentHTML('afterBegin', new_post.innerHTML);
-    toast_info('Запись опубликована');
-    lenta_load.querySelector(".items_empty") ? lenta_load.querySelector(".items_empty").style.display = "none" : null;
-    main_container = document.body.querySelector(".main-container");
-    add_list_in_all_stat("created_community_post",new_post.querySelector(".pag").getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
-  } else {
-        new_post = document.createElement("span");
-        new_post.innerHTML = link_.responseText;
-        if (new_post.querySelector(".exception_value")){
-          text = new_post.querySelector(".exception_value").innerHTML;
-          toast_info(text)
-        }
-    }
-  };
-
-  link_.send(form_data);
-});
-
-on('#ajax', 'click', '#c_edit_post_btn', function() {
+on('#ajax', 'click', '#edit_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement.parentElement;
   text_val = form_post.querySelector(".smile_supported");
   _val = format_text(text_val);
@@ -103,7 +50,7 @@ on('#ajax', 'click', '#c_edit_post_btn', function() {
   link_.send(form_data);
 });
 
-on('#ajax', 'click', '#c_add_offer_post', function() {
+on('#ajax', 'click', '#add_offer_post', function() {
   form_post = document.body.querySelector("#admin_offer_post");
   form_data = new FormData(form_post);
 

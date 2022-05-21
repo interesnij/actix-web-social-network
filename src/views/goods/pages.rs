@@ -33,6 +33,8 @@ pub fn pages_urls(config: &mut web::ServiceConfig) {
     config.route("/goods/edit_user_list/{id}/", web::get().to(edit_user_list_page));
     config.route("/goods/add_community_list//{id}", web::get().to(add_community_list_page));
     config.route("/goods/edit_community_list/{id}/", web::get().to(edit_community_list_page));
+
+    config.route("/goods/add_good_in_list/{id}/", web::get().to(add_good_in_list_page));
     config.route("/goods/edit_good/{id}/", web::get().to(edit_good_page));
 }
 
@@ -664,6 +666,88 @@ pub async fn edit_good_page(session: Session, req: HttpRequest, _id: web::Path<i
             let body = Template {
                 request_user: _request_user,
                 object: good,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn add_good_in_list_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        use crate::models::GoodSubcategorie;
+
+        let _connection = establish_connection();
+
+        let categories = good_subcategories
+            .load::<GoodSubcategorie>(&_connection)
+            .order(schema::good_subcategories::position.desc())
+            .expect("E.");
+
+        let _request_user = get_request_user_data(session);
+        let list = get_good_list(*_id);
+        if list.is_user_can_edit_delete_item(_request_user.id) {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/goods/create_good.stpl")]
+            struct Template {
+                request_user: User,
+                list:         GoodList,
+                categories:   Vec<GoodSubcategorie>,
+            }
+            let body = Template {
+                request_user: _request_user,
+                list:         list,
+                categories:   categories,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok()
+                .content_type("text/html; charset=utf-8")
+                .body(body))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn edit_good_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        use crate::models::GoodSubcategorie;
+        use crate::schema::good_subcategories::dsl::good_subcategories;
+
+        let _connection = establish_connection();
+
+        let categories = good_subcategories
+            .load::<GoodSubcategorie>(&_connection)
+            .order(schema::good_subcategories::position.desc())
+            .expect("E.");
+
+        let _request_user = get_request_user_data(session);
+        let good = get_good(*_id);
+        let list = good.get_list();
+        if list.is_user_can_edit_delete_item(_request_user.id) {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/goods/edit_good.stpl")]
+            struct Template {
+                request_user: User,
+                object:       Good,
+                categories:   Vec<GoodSubcategorie>,
+            }
+            let body = Template {
+                request_user: _request_user,
+                object:       object,
+                categories:   categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

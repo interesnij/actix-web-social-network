@@ -1,0 +1,26 @@
+<form class="is_stat_list" data-pk="<%= object.id %>" data-type="edit_doc">
+    <div class="card">
+        <div class="card-header border-bottom">
+            <h5 class="content-color-primary mb-0">Изменение документа</h5>
+        </div>
+        <div class="card-body">
+              <div class="form-group">
+                <label>Название</label>
+                <input type="text" value="<%= object.title %>" name="title" class="form-control" id="id_title">
+              </div>
+              <div class="form-group">
+                <label>Тип</label>
+                <select class="form-control" name="types_2" data-live-search="true" tabindex="-1" aria-hidden="true">
+                  <option <% if object.types_2 == "a" { %>selected=""<% } %>value="a">Личный файл</option>
+                  <option <% if object.types_2 == "b" { %>selected=""<% } %>value="b">Учебный файл</option>
+                  <option <% if object.types_2 == "c" { %>selected=""<% } %>value="c">Книга</option>
+                  <option <% if object.types_2 == "d" { %>selected=""<% } %>value="d">Другой файл</option>
+                </select>
+              </div>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-sm border item_fullscreen_hide">Отмена</button>
+            <button type="button" class="btn btn-sm btn-success float-right" id="edit_doc_btn">Создать</button>
+        </div>
+    </div>
+</form>

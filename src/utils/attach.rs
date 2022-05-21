@@ -58,7 +58,6 @@ pub fn add_edited_post_list(pk: i32) -> String {
     use crate::models::PostList;
     let _connection = establish_connection();
 
-    let name = "".to_string();
     let mut link = "".to_string();
     let mut image = "".to_string();
     let mut owner = "".to_string();
@@ -402,8 +401,6 @@ pub fn add_edited_photo_list(pk: i32) -> String {
     use crate::models::PhotoList;
     let _connection = establish_connection();
 
-    let mut name = "".to_string();
-    let mut link = "".to_string();
     let mut owner = "".to_string();
 
     let list = photo_lists
@@ -499,11 +496,11 @@ pub fn add_edited_good_list(pk: i32) -> String {
 
     if list.community_id.is_some() {
         let community = list.get_community();
-        let owner = &community.id.to_string();
+        owner = &community.id.to_string();
     }
     else {
         let creator = list.get_creator();
-        let owner = &creator.id.to_string();
+        owner = &creator.id.to_string();
     }
 
     return "<div class='folder' owner-pk='".to_string() + &owner.to_string() +

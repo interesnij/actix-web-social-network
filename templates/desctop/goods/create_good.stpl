@@ -7,21 +7,15 @@
 <h5 class="m-0">Добавление товара</h5>
 <br><br>
 
-<form class="is_stat_list" data-pk="<%= object.id %>" data-type="edit_good" enctype="multipart/form-data">
+<form class="is_stat_list" data-pk="<%= request_user.id %>" data-type="create_user_good" enctype="multipart/form-data">
     <div class="form-group row">
       <div class="col-lg-6 col-md-6">
         <label>Название (обязательно)</label>
-        <input value="<%= object.title %>" type="text" name="title" class="form-control" id="id_title">
+        <input type="text" name="title" class="form-control" id="id_title">
       </div>
       <div class="col-lg-6 col-md-6">
         <label>Цена товара</label>
-        <input
-          <% if object.price.is_some() { %>
-            value="<%= object.price.unwrap() %>"
-          <% } else { %>
-            value="0"
-          <% } %>
-          type="number" min="0" name="price" class="form-control" id="id_price">
+        <input type="number" value="0" min="0" name="price" class="form-control" id="id_price">
       </div>
     </div>
     <div class="form-group row">
@@ -30,7 +24,7 @@
         <select class="form-control goods_category" id="category" data-live-search="true" tabindex="-1" aria-hidden="true">
           <option value="">Выберите категорию</option>
           <% for object in categories.iter() { %>
-          <option <% if object.category_id == object.id { %>selected=""<% } %>  data-pk="<%= object.id %>" value="<%= object.id %>"><%= object.name %></option>
+          <option data-pk="<%= object.id %>" value="<%= object.id %>"><%= object.name %></option>
           <% } %>
         </select>
         <div id="subcat"></div>
@@ -43,31 +37,21 @@
           <input type="file" accept="image/*" name="image">
         </div>
         <div id="good_image" class="border border_2">
-          <% if object.image.is_some() { %>
-            <img src="<%= object.image.unwrap() %>" />
-          <% } else { %>
             <h4>обложка</h4>
             <p>Нажмите, чтобы добавить</p>
             <i>(обязательно)</i>
-          <% } %>
+
         </div>
       </div>
     </div>
-
-    <% let images = object.get_images_str(); %>
-    <% let count = images.len(); %>
     <div class="form-group row">
       <div class="col-lg-3 col-md-3">
         <div class="hide_image">
           <input type="file" accept="image/*" name="images">
         </div>
         <div id="good_image2" class="border border_2">
-          <% if count == 0 { %>
             <h4 style="font-weight:bold;font-size:30px;color:#CECECE">фото 2</h4>
             <p>Нажмите, чтобы добавить</p>
-          <% } else { %>
-            <img src="<%= object.images[0] %>" />
-          <% } %>
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
@@ -75,12 +59,8 @@
           <input type="file" accept="image/*" name="images">
         </div>
         <div id="good_image3" class="border border_2">
-        <% if count == 1 { %>
-          <h4 style="font-weight:bold;font-size:30px;color:#CECECE">фото 3</h4>
-          <p>Нажмите, чтобы добавить</p>
-        <% } else { %>
-          <img src="<%= object.images[1] %>" />
-        <% } %>
+            <h4 style="font-weight:bold;font-size:30px;color:#CECECE">фото 3</h4>
+            <p>Нажмите, чтобы добавить</p>
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
@@ -88,12 +68,8 @@
           <input type="file" accept="image/*" name="images">
         </div>
         <div id="good_image4" class="border border_2">
-        <% if count == 2 { %>
-          <h4 style="font-weight:bold;font-size:30px;color:#CECECE">фото 4</h4>
-          <p>Нажмите, чтобы добавить</p>
-        <% } else { %>
-          <img src="<%= object.images[2] %>" />
-        <% } %>
+            <h4 style="font-weight:bold;font-size:30px;color:#CECECE">фото 4</h4>
+            <p>Нажмите, чтобы добавить</p>
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
@@ -101,12 +77,8 @@
           <input type="file" accept="image/*" name="images">
         </div>
         <div id="good_image5" class="border border_2">
-        <% if count == 3 { %>
-          <h4 style="font-weight:bold;font-size:30px;color:#CECECE">фото 5</h4>
-          <p>Нажмите, чтобы добавить</p>
-        <% } else { %>
-          <img src="<%= object.images[3] %>" />
-        <% } %>
+            <h4 style="font-weight:bold;font-size:30px;color:#CECECE">фото 5</h4>
+            <p>Нажмите, чтобы добавить</p>
         </div>
       </div>
     </div>
@@ -114,19 +86,19 @@
 
     <div class="form-group">
         <div class="custom-control custom-checkbox">
-            <input type="checkbox" <% if object.comment_enabled { %> checked <% } %> class="custom-control-input" name="comment_enabled" id="id_222">
+            <input type="checkbox" checked class="custom-control-input" name="comment_enabled" id="id_222">
             <label class="custom-control-label" for="id_222">Разрешить комментарии</label>
         </div>
     </div>
     <div class="form-group">
         <div class="custom-control custom-checkbox">
-            <input type="checkbox" <% if object.votes_on { %> checked <% } %> class="custom-control-input" name="votes_on" id="id_333">
+            <input type="checkbox" checked class="custom-control-input" name="votes_on" id="id_333">
             <label class="custom-control-label" for="id_333">Разрешить реакции</label>
         </div>
     </div>
 
     <div class="card-footer">
         <button class="btn btn-sm border border item_fullscreen_hide">Отмена</button>
-        <button type="button" id="edit_good_btn" class="btn btn-sm btn-success float-right">Опубликовать</button>
+        <button type="button" id="add_good_btn" class="btn btn-sm btn-success float-right">Опубликовать</button>
     </div>
 </form>

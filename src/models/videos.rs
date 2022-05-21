@@ -1,6 +1,7 @@
 use crate::schema;
 use diesel::prelude::*;
 use crate::schema::{
+    video_categories,
     video_lists,
     videos,
     video_comments,
@@ -27,6 +28,21 @@ use crate::models::{
     Message,
 };
 use actix_web::web::Json;
+
+
+/////// VideoCategorie //////
+#[derive(Debug, Queryable, Serialize, Identifiable)]
+pub struct VideoCategorie {
+    pub id:       i32,
+    pub name:     String,
+    pub position: i16,
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="video_categories"]
+pub struct NewVideoCategorie {
+    pub name:     String,
+    pub position: i16,
+}
 
 /////// videoList //////
 
@@ -1663,7 +1679,9 @@ impl VideoList {
     }
     pub fn create_video(&self, title: String, community_id: Option<i32>, user_id: i32,
         preview: Option<String>, image: Option<String>, file: String,
-        description: Option<String>, comment_enabled: bool, votes_on: bool) -> Video {
+        description: Option<String>, comment_enabled: bool, votes_on: bool,
+        category_id: Option<i32>
+    ) -> Video {
 
         let _connection = establish_connection();
 
@@ -1693,6 +1711,7 @@ impl VideoList {
           repost: 0,
           copy: 0,
           position: (self.count).try_into().unwrap(),
+          category_id: category_id,
         };
         let new_video = diesel::insert_into(schema::videos::table)
             .values(&new_video_form)
@@ -1753,6 +1772,7 @@ pub struct Video {
     pub repost:          i32,
     pub copy:            i32,
     pub position:        i16,
+    pub category_id:     i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="videos"]
@@ -1777,6 +1797,7 @@ pub struct NewVideo {
     pub repost:          i32,
     pub copy:            i32,
     pub position:        i16,
+    pub category_id:     i32,
 }
 
 #[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
@@ -1788,6 +1809,7 @@ pub struct EditVideo {
     pub description:     Option<String>,
     pub comment_enabled: bool,
     pub votes_on:        bool,
+    pub category_id:     i32,
 }
 #[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
 #[table_name="videos"]
@@ -1955,6 +1977,7 @@ impl Video {
                 None,
                 true,
                 true,
+                item.category_id,
             );
         }
         diesel::update(&item)
@@ -1975,7 +1998,7 @@ impl Video {
 
     pub fn edit_video(&self, title: String, preview: Option<String>,
         image: Option<String>, description: Option<String>,
-        comment_enabled: bool, votes_on: bool) -> &Video {
+        comment_enabled: bool, votes_on: bool, category_id: Option<i32>) -> &Video {
 
         let _connection = establish_connection();
 
@@ -1986,6 +2009,7 @@ impl Video {
             description: description,
             comment_enabled: comment_enabled,
             votes_on: votes_on,
+            category_id: category_id,
         };
         diesel::update(self)
             .set(edit_video)

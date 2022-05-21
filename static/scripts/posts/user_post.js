@@ -87,7 +87,7 @@ on('body', 'change', '.case_all_input', function() {
   } else if (this.classList.contains("add_tracks_in_list")) {
     url = "/music/add_tracks_in_list/"
   } else if (this.classList.contains("add_docs_in_list")) {
-    url = "/docs/add_docs_in_list/" 
+    url = "/docs/add_docs_in_list/"
   } else if (this.classList.contains("add_video_in_list")) {
     if (_this.files[0].type != "video/mp4") {
       toast_info("Пока работаем только с mp4");
@@ -173,7 +173,7 @@ on('#ajax', 'click', '#u_add_article', function() {
   create_fullscreen("/article/u_article_window/" + pk + "/", "item_fullscreen");
 });
 
-on('#ajax', 'click', '#u_add_post_btn', function() {
+on('#ajax', 'click', '#add_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement.parentElement;
   text_val = form_post.querySelector(".smile_supported");
   _val = format_text(text_val);

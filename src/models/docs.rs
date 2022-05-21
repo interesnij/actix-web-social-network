@@ -1377,6 +1377,11 @@ impl DocList {
 // 'i' Удаленый предложенный в сообщество
 // 'y' Удаленый предложенный у пользователя
 
+//////////// тип 2
+// 'a' Личный файл
+// 'b' Учебный файл
+// 'c' Книга
+// 'd' Другой файл
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]
 #[belongs_to(User)]

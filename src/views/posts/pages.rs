@@ -498,6 +498,15 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, post_id: web
 
 pub async fn edit_post_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
+        use crate::models::PostCategorie;
+        use crate::schema::post_categories::dsl::post_categories;
+
+        let _connection = establish_connection();
+
+        let categories = post_categories
+            .load::<PostCategorie>(&_connection)
+            .expect("E.");
+
         let _request_user = get_request_user_data(session);
         let post = get_post(*_id);
         if post.is_user_can_edit_delete_item(_request_user.id) {
@@ -506,10 +515,12 @@ pub async fn edit_post_page(session: Session, req: HttpRequest, _id: web::Path<i
             struct Template {
                 request_user: User,
                 object: Post,
+                post_categories: Vec<PostCategorie>,
             }
             let body = Template {
                 request_user: _request_user,
                 object: post,
+                post_categories: categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

@@ -1,0 +1,25 @@
+<form class="is_stat_list" data-pk="<%= object.id %>" data-type="edit_track">
+    <div class="card">
+        <div class="card-header border-bottom">
+            <h5 class="content-color-primary mb-0">Изменение аудиозаписи</h5>
+        </div>
+        <div class="card-body">
+              <div class="form-group">
+                <label>Название</label>
+                <input type="text" value="<%= object.title %>" name="title" class="form-control" id="id_title">
+              </div>
+              <div class="form-group">
+                <label>Жанр</label>
+                <select class="form-control" name="types_2" data-live-search="true" tabindex="-1" aria-hidden="true">
+                  <% for genre in genres.iter() { %>
+                    <option <% if object.genre_id == genre.id { %>selected=""<% } %>value="<%= genre.id %>"><%= genre.name %></option>
+                  <% } %>
+                </select>
+              </div>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-sm border item_fullscreen_hide">Отмена</button>
+            <button type="button" class="btn btn-sm btn-success float-right" id="edit_track_btn">Создать</button>
+        </div>
+    </div>
+</form>
