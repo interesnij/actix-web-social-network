@@ -1996,7 +1996,7 @@ impl Video {
         return true;
     }
 
-    pub fn edit_video(&self, title: String, preview: Option<String>,
+    pub fn edit_video(self, title: String, preview: Option<String>,
         image: Option<String>, description: Option<String>,
         comment_enabled: bool, votes_on: bool, category_id: Option<i32>) -> Video {
 
