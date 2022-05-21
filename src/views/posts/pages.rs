@@ -21,6 +21,7 @@ use crate::utils::{
 use actix_session::Session;
 use sailfish::TemplateOnce;
 use crate::models::{User, PostList, Post, PostComment, Community};
+use crate::diesel::RunQueryDsl;
 
 
 pub fn pages_urls(config: &mut web::ServiceConfig) {

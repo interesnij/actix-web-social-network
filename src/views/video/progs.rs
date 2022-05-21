@@ -404,18 +404,21 @@ pub async fn video_form(
             while let Some(chunk) = field.next().await {
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
-                    let data_string = s.to_string();
                     if field.name() == "title" {
+                        let data_string = s.to_string();
                         form.title = data_string;
                     }
                     else if field.name() == "category_id" {
+                        let data_string = s.to_string();
                         let _int: i32 = data_string.parse().unwrap();
                         form.category_id = Some(_int);
                     }
                     else if field.name() == "description" {
+                        let data_string = s.to_string();
                         form.description = Some(data_string);
                     }
                     else if field.name() == "comment_enabled" {
+                        let data_string = s.to_string();
                         if data_string == "on" {
                             form.comment_enabled = true;
                         } else {
@@ -423,6 +426,7 @@ pub async fn video_form(
                         }
                     }
                     else if field.name() == "votes_on" {
+                        let data_string = s.to_string();
                         if data_string == "on" {
                             form.votes_on = true;
                         } else {

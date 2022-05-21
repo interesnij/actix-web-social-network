@@ -18,7 +18,7 @@ use crate::utils::{
     get_anon_community_permission,
     get_list_variables,
 };
-
+ use crate::diesel::RunQueryDsl;
 use actix_session::Session;
 use sailfish::TemplateOnce;
 use crate::models::{User, VideoList, Video, VideoComment, Community};
