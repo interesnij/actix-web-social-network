@@ -1,27 +1,27 @@
 
 
-on('#ajax', 'click', '.u_photo_off_comment', function() {
-  send_photo_change(this, "/photos/user_progs/off_comment/", "u_photo_on_comment", "Вкл. комментарии");
+on('#ajax', 'click', '.photo_off_comment', function() {
+  send_photo_change(this, "/photos/off_comment/", "u_photo_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".load_photo_comments").style.display = "none"
 });
-on('#ajax', 'click', '.u_photo_on_comment', function() {
-  send_photo_change(this, "/photos/user_progs/on_comment/", "u_photo_off_comment", "Выкл. комментарии");
+on('#ajax', 'click', '.photo_on_comment', function() {
+  send_photo_change(this, "/photos/on_comment/", "u_photo_off_comment", "Выкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".load_photo_comments").style.display = "unset"
 });
 
-on('#ajax', 'click', '.u_photo_edit', function() {
+on('#ajax', 'click', '.photo_edit', function() {
   this.parentElement.nextElementSibling.style.display = "block"
 });
 
-on('#ajax', 'click', '.u_photo_description', function() {
+on('#ajax', 'click', '.photo_description', function() {
   form = this.parentElement.parentElement.parentElement;
   form_data = new FormData(form.querySelector(".u_photo_description_form"));
   pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/photos/user_progs/description/" + pk + "/", true );
+  link_.open( 'POST', "/photos/edit_photo_description/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -37,29 +37,29 @@ on('#ajax', 'click', '.u_photo_description', function() {
   link_.send(form_data);
 });
 
-on('#ajax', 'click', '.u_photo_off_votes', function() {
-  send_photo_change(this, "/photos/user_progs/off_votes/", "u_photo_on_votes", "Вкл. реакции");
+on('#ajax', 'click', '.photo_off_votes', function() {
+  send_photo_change(this, "/photos/off_votes/", "u_photo_on_votes", "Вкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "none";
   post.querySelector(".dislike").style.display = "none";
 });
-on('#ajax', 'click', '.u_photo_on_votes', function() {
-  send_photo_change(this, "/photos/user_progs/on_votes/", "u_photo_off_votes", "Выкл. реакции");
+on('#ajax', 'click', '.photo_on_votes', function() {
+  send_photo_change(this, "/photos/on_votes/", "u_photo_off_votes", "Выкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "unset";
   post.querySelector(".dislike").style.display = "unset";
 });
 
-on('#ajax', 'click', '.user_photo_remove', function() {
-  send_photo_change(this, "/photos/user_progs/delete/", "user_photo_restore", "Отмена");
+on('#ajax', 'click', '.photo_remove', function() {
+  send_photo_change(this, "/photos/delete/", "user_photo_restore", "Отмена");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   this.parentElement.parentElement.nextElementSibling.style.display = "none";
   post.querySelector(".order-2").style.display = "none";
   post.querySelector(".card").style.opacity = "0.5";
   this.style.color = "#FF0000";
 });
-on('#ajax', 'click', '.user_photo_restore', function() {
-  send_photo_change(this, "/photos/user_progs/restore/", "user_photo_remove", "Удалить");
+on('#ajax', 'click', '.photo_restore', function() {
+  send_photo_change(this, "/photos/restore/", "user_photo_remove", "Удалить");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   this.parentElement.parentElement.nextElementSibling.style.display = "unset";
   post.querySelector(".order-2").style.display = "unset";
@@ -68,16 +68,20 @@ on('#ajax', 'click', '.user_photo_restore', function() {
 
 on('#ajax', 'change', '#user_avatar_upload', function() {
   parent = this.parentElement;
-  post_with_pk_and_reload(parent, "/photos/user_progs/add_avatar/")
+  post_with_pk_and_reload(parent, "/photos/add_user_avatar/")
+});
+on('#ajax', 'change', '#community_avatar_upload', function() {
+  parent = this.parentElement;
+  post_with_pk_and_reload(parent, "/photos/add_community_avatar/")
 });
 
-on('#ajax', 'change', '#u_photo_attach', function() {
+on('#ajax', 'change', '#photo_attach', function() {
   if (this.files.length > 10) {
       toast_error("Не больше 10 фотографий");return
   }
   form_data = new FormData(this.parentElement);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/photos/user_progs/add_attach_photo/", true );
+  link_.open( 'POST', "/photos/add_attach_photo/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -93,13 +97,13 @@ on('#ajax', 'change', '#u_photo_attach', function() {
   link_.send(form_data);
 });
 
-on('#ajax', 'change', '#u_photo_comment_attach', function() {
+on('#ajax', 'change', '#photo_comment_attach', function() {
   if (this.files.length > 2) {
       toast_error("Не больше 2 фотографий");return
   }
   form_data = new FormData(this.parentElement);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/photos/user_progs/add_attach_photo/", true );
+  link_.open( 'POST', "/photos/add_attach_photo/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -115,37 +119,37 @@ on('#ajax', 'change', '#u_photo_comment_attach', function() {
   link_.send(form_data);
 });
 
-on('#ajax', 'click', '.mob_u_photo_off_comment', function() {
-  mob_send_change(this, "/photos/user_progs/off_comment/", "mob_u_photo_on_comment", "Вкл. комментарии");
+on('#ajax', 'click', '.mob_photo_off_comment', function() {
+  mob_send_change(this, "/photos/off_comment/", "mob_u_photo_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".load_photo_comments").style.display = "none"
 });
-on('#ajax', 'click', '.mob_u_photo_on_comment', function() {
-  mob_send_change(this, "/photos/user_progs/on_comment/", "mob_u_photo_off_comment", "Выкл. комментарии");
+on('#ajax', 'click', '.mob_photo_on_comment', function() {
+  mob_send_change(this, "/photos/on_comment/", "mob_u_photo_off_comment", "Выкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".load_photo_comments").style.display = "unset"
 });
 
-on('#ajax', 'click', '.mob_u_photo_off_votes', function() {
-  mob_send_change(this, "/photos/user_progs/off_votes/", "mob_u_photo_on_votes", "Вкл. реакции");
+on('#ajax', 'click', '.mob_photo_off_votes', function() {
+  mob_send_change(this, "/photos/off_votes/", "mob_u_photo_on_votes", "Вкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "none";
   post.querySelector(".dislike").style.display = "none";
 });
-on('#ajax', 'click', '.mob_u_photo_on_votes', function() {
-  mob_send_change(this, "/photos/user_progs/on_votes/", "mob_u_photo_off_votes", "Выкл. реакции");
+on('#ajax', 'click', '.mob_photo_on_votes', function() {
+  mob_send_change(this, "/photos/on_votes/", "mob_u_photo_off_votes", "Выкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "unset";
   post.querySelector(".dislike").style.display = "unset";
 });
-on('#ajax', 'click', '.mob_user_photo_remove', function() {
-  mob_send_change(this, "/photos/user_progs/delete/", "mob_user_photo_restore", "Отмена");
+on('#ajax', 'click', '.mob_photo_remove', function() {
+  mob_send_change(this, "/photos/delete/", "mob_user_photo_restore", "Отмена");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".content_block").style.display = "none";
   post.querySelector(".image_card").style.opacity = "0.5";
 });
-on('#ajax', 'click', '.mob_user_photo_restore', function() {
-  mob_send_change(this, "/photos/user_progs/restore/", "mob_user_photo_remove", "Удалить");
+on('#ajax', 'click', '.mob_photo_restore', function() {
+  mob_send_change(this, "/photos/restore/", "mob_user_photo_remove", "Удалить");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".content_block").style.display = "unset";
   post.querySelector(".image_card").style.opacity = "1";

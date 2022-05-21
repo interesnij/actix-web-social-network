@@ -32,28 +32,28 @@ on('#ajax', 'click', '.load_video_list', function() {
 on('#ajax', 'click', '.video_list_detail', function() {
   video_pk = this.getAttribute("video-pk");
   counter = this.getAttribute('video-counter') - 1;
-  play_video_list("/video/user/list/" + video_pk + "/", counter, video_pk)
+  play_video_list("/video/list/" + video_pk + "/", counter, video_pk)
 });
 
 on('#ajax', 'click', '.post_video', function() {
   video_pk = this.getAttribute("video-pk");
   pk = this.parentElement.parentElement.parentElement.getAttribute("data-pk");
   counter = this.getAttribute('video-counter') - 1;
-  play_video_list("/video/user/list_post/" + pk + "/", counter, video_pk)
+  play_video_list("/video/list_post/" + pk + "/", counter, video_pk)
 });
 
 on('#ajax', 'click', '.message_video', function() {
   video_pk = this.getAttribute("video-pk");
   uuid = this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
   counter = this.getAttribute('video-counter') - 1;
-  play_video_list("/video/user/list_message/" + uuid + "/", counter, video_pk)
+  play_video_list("/video/list_message/" + uuid + "/", counter, video_pk)
 });
 
 on('#ajax', 'click', '.play_comment_video', function() {
   comment_pk = this.getAttribute("comment-pk");
   video_pk = this.getAttribute("video-pk");
   counter = this.getAttribute('video-counter') - 1;
-  play_video_list("/video/user/list_post_comment/" + video_pk + "/", counter, video_pk);
+  play_video_list("/video/list_post_comment/" + video_pk + "/", counter, video_pk);
 });
 
 on('body', 'click', '.video_fullscreen_resize', function() {
