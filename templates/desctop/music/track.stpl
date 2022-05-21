@@ -1,14 +1,15 @@
-{% load user %}
 
 <li class="drag_item list-group-item" style="padding:5px">
-    <div class="media" music-counter="{{ object.order }}" style="align-items: unset;position: relative;">
+    <div class="media" music-counter="" style="align-items: unset;position: relative;">
       <figure>
         <a class="pointer music_list_item">
-          {{ object.get_image|safe }}
+          <%- object.get_image() %>
         </a>
       </figure>
         <div class="media-body" style="line-height: 0.4;">
-            <h6 class="music_list_item pointer mb-1" style="width: 84%;overflow: hidden;"><a>{{ object.title }}</a></h6>
+            <h6 class="music_list_item pointer mb-1" style="width: 84%;overflow: hidden;">
+              <a><%= object.title %></a><
+            /h6>
             <% if object.album_id.is_some() { %>
               <%- object.album_id.unwrap() %>
             <% } else { %>

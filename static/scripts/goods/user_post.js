@@ -100,12 +100,6 @@ on('#ajax', 'click', '#add_good_btn', function() {
   form_data = new FormData(form_post);
   pk = form_post.getAttribute("data-pk");
 
-  lists = form_post.querySelector("#id_list");
-  selectedOptions = lists.selectedOptions;
-  val = false;
-  for (var i = 0; i < selectedOptions.length; i++) {
-    if(selectedOptions[i].value) {val = true}
-  }
   if (!document.body.querySelector("#id_title").value){
     document.body.querySelector("#id_title").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!"); return
@@ -118,11 +112,8 @@ on('#ajax', 'click', '#add_good_btn', function() {
   } else if (!document.body.querySelector("#id_image").value){
     document.body.querySelector("#good_image").style.border = "1px #FF0000 solid !important";
     toast_error("Фотография на обложку обязательна!"); return
-  } else if (!val){
-    form_post.querySelector("#id_list").style.border = "1px #FF0000 solid";
-    toast_error("Выберите альбом!"); return
-  } else {this.disabled = true}
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  } else {this.disabled = true};
+
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/goods/add_good_in_list/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
