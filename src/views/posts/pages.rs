@@ -514,12 +514,12 @@ pub async fn edit_post_page(session: Session, req: HttpRequest, _id: web::Path<i
             struct Template {
                 request_user: User,
                 object: Post,
-                post_categories: Vec<PostCategorie>,
+                categories: Vec<PostCategorie>,
             }
             let body = Template {
                 request_user: _request_user,
                 object: post,
-                post_categories: categories,
+                categories: categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

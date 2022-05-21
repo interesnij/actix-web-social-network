@@ -12,7 +12,7 @@
                 <label>Жанр</label>
                 <select class="form-control" name="types_2" data-live-search="true" tabindex="-1" aria-hidden="true">
                   <% for genre in genres.iter() { %>
-                    <option <% if object.genre_id == genre.id { %>selected=""<% } %>value="<%= genre.id %>"><%= genre.name %></option>
+                    <option <% if object.genre_id.is_some() && object.genre_id.unwrap() == genre.id { %>selected=""<% } %>value="<%= genre.id %>"><%= genre.name %></option>
                   <% } %>
                 </select>
               </div>

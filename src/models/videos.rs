@@ -1797,7 +1797,7 @@ pub struct NewVideo {
     pub repost:          i32,
     pub copy:            i32,
     pub position:        i16,
-    pub category_id:     i32,
+    pub category_id:     Option<i32>,
 }
 
 #[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
@@ -1809,7 +1809,7 @@ pub struct EditVideo {
     pub description:     Option<String>,
     pub comment_enabled: bool,
     pub votes_on:        bool,
-    pub category_id:     i32,
+    pub category_id:     Option<i32>,
 }
 #[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
 #[table_name="videos"]
