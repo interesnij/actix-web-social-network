@@ -695,7 +695,7 @@ pub async fn add_video_in_list_page(session: Session, req: HttpRequest, _id: web
 
 #[derive(Deserialize)]
 pub struct VideoPk {
-    pub pk: i32,
+    pub pk: Option<i32>,
 }
 pub async fn edit_video_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
@@ -704,6 +704,9 @@ pub async fn edit_video_page(session: Session, req: HttpRequest) -> actix_web::R
         if params_some.is_ok() {
             let params = params_some.unwrap();
             pk = params.pk.unwrap();
+        }
+        else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
         }
 
         let _request_user = get_request_user_data(session);
