@@ -1772,7 +1772,7 @@ pub struct Video {
     pub repost:          i32,
     pub copy:            i32,
     pub position:        i16,
-    pub category_id:     i32,
+    pub category_id:     Option<i32>,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="videos"]

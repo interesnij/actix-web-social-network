@@ -39,7 +39,7 @@
           <div class="dropdown-menu" style="right: 0;left: 100px;">
             <% for cat in post_categories.iter() { %>
             <span data-pk="<%= cat.id %>">
-              <% if cat.id == object.post_categorie_id { %>
+              <% if object.post_categorie_id.is_some() && cat.id == object.post_categorie_id.unwrap() { %>
                 <a class="dropdown-item cat_list_select" style="padding-left: 14px;">
                   <span>
                     <input type="hidden" name="cat" value="<%= cat.id %>" >
