@@ -20,7 +20,7 @@ use crate::utils::{
     get_list_variables,
     establish_connection,
 };
-use crate::diesel::{ExpressionMethods, RunQueryDsl};
+use crate::diesel::{ExpressionMethods, RunQueryDsl, QueryDsl};
 use actix_session::Session;
 use sailfish::TemplateOnce;
 use crate::models::{User, GoodList, Good, GoodComment, Community};
