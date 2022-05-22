@@ -53,7 +53,7 @@ pub fn load_urls(config: &mut web::ServiceConfig) {
 }
 
 pub async fn photos_load(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    use crate::models::PhotoList;
+    use crate::models::Photo;
 
     let (is_desctop, page) = get_list_variables(req);
     let mut next_page_number = 0;
@@ -126,7 +126,7 @@ pub async fn photos_load(session: Session, req: HttpRequest) -> actix_web::Resul
 }
 
 pub async fn photos_list_load(session: Session, req: HttpRequest, list_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    use crate::models::PhotoList;
+    use crate::models::Photo;
     use crate::utils::get_photo_list;
 
     let (is_desctop, page) = get_list_variables(req);
@@ -200,7 +200,7 @@ pub async fn photos_list_load(session: Session, req: HttpRequest, list_id: web::
 }
 
 pub async fn video_load(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    use crate::models::VideoList;
+    use crate::models::Video;
 
     let (is_desctop, page) = get_list_variables(req);
     let mut next_page_number = 0;
@@ -273,7 +273,7 @@ pub async fn video_load(session: Session, req: HttpRequest) -> actix_web::Result
 }
 
 pub async fn video_list_load(session: Session, req: HttpRequest, list_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    use crate::models::VideoList;
+    use crate::models::Video;
     use crate::utils::get_video_list;
 
     let (is_desctop, page) = get_list_variables(req);
@@ -347,7 +347,7 @@ pub async fn video_list_load(session: Session, req: HttpRequest, list_id: web::P
 }
 
 pub async fn docs_load(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    use crate::models::DocList;
+    use crate::models::Doc;
 
     let (is_desctop, page) = get_list_variables(req);
     let mut next_page_number = 0;
@@ -420,7 +420,7 @@ pub async fn docs_load(session: Session, req: HttpRequest) -> actix_web::Result<
 }
 
 pub async fn docs_list_load(session: Session, req: HttpRequest, list_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    use crate::models::DocList;
+    use crate::models::Doc;
     use crate::utils::get_doc_list;
 
     let (is_desctop, page) = get_list_variables(req);
@@ -495,7 +495,7 @@ pub async fn docs_list_load(session: Session, req: HttpRequest, list_id: web::Pa
 
 
 pub async fn surveys_load(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    use crate::models::SurveyList;
+    use crate::models::Survey;
 
     let (is_desctop, page) = get_list_variables(req);
     let mut next_page_number = 0;
@@ -568,7 +568,7 @@ pub async fn surveys_load(session: Session, req: HttpRequest) -> actix_web::Resu
 }
 
 pub async fn surveys_list_load(session: Session, req: HttpRequest, list_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    use crate::models::SurveyList;
+    use crate::models::Survey;
     use crate::utils::get_survey_list;
 
     let (is_desctop, page) = get_list_variables(req);
@@ -643,7 +643,7 @@ pub async fn surveys_list_load(session: Session, req: HttpRequest, list_id: web:
 
 
 pub async fn music_load(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    use crate::models::MusicList;
+    use crate::models::Music;
 
     let (is_desctop, page) = get_list_variables(req);
     let mut next_page_number = 0;
@@ -716,7 +716,7 @@ pub async fn music_load(session: Session, req: HttpRequest) -> actix_web::Result
 }
 
 pub async fn music_list_load(session: Session, req: HttpRequest, list_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    use crate::models::MusicList;
+    use crate::models::Music;
     use crate::utils::get_music_list;
 
     let (is_desctop, page) = get_list_variables(req);
@@ -791,7 +791,7 @@ pub async fn music_list_load(session: Session, req: HttpRequest, list_id: web::P
 
 
 pub async fn goods_load(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    use crate::models::GoodList;
+    use crate::models::Good;
 
     let (is_desctop, page) = get_list_variables(req);
     let mut next_page_number = 0;
@@ -864,7 +864,7 @@ pub async fn goods_load(session: Session, req: HttpRequest) -> actix_web::Result
 }
 
 pub async fn goods_list_load(session: Session, req: HttpRequest, list_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    use crate::models::GoodList;
+    use crate::models::Good;
     use crate::utils::get_good_list;
 
     let (is_desctop, page) = get_list_variables(req);
@@ -1147,7 +1147,8 @@ pub async fn communities_lists_for_copy_load(session: Session, req: HttpRequest)
 
 pub async fn chat_items_load(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let (is_desctop, page) = get_list_variables(req);
-    let mut next_page_number = 0;
+    let mut chats_next_page_number = 0;
+    let mut friends_next_page_number = 0;
 
     if is_signed_in(&session) {
         use crate::models::Chat;
@@ -1281,13 +1282,13 @@ pub async fn friends_load(session: Session, req: HttpRequest) -> actix_web::Resu
         let count = _request_user.count_friends();
         if page > 1 {
             let step = (page - 1) * 20;
-            object_list = list.get_friends(20, step.into());
+            object_list = _request_user.get_friends(20, step.into());
             if count > (page * 20).try_into().unwrap() {
                 next_page_number = page + 1;
             }
         }
         else {
-            object_list = list.get_friends(20, 0);
+            object_list = _request_user.get_friends(20, 0);
             if count > 20.try_into().unwrap() {
                 next_page_number = 2;
             }
@@ -1496,13 +1497,13 @@ pub async fn chats_load(session: Session, req: HttpRequest) -> actix_web::Result
         let count = _request_user.get_all_chats_count();
         if page > 1 {
             let step = (page - 1) * 20;
-            object_list = list.get_all_chats(20, step.into());
+            object_list = _request_user.get_all_chats(20, step.into());
             if count > (page * 20).try_into().unwrap() {
                 next_page_number = page + 1;
             }
         }
         else {
-            object_list = list.get_all_chats(20, 0);
+            object_list = _request_user.get_all_chats(20, 0);
             if count > 20.try_into().unwrap() {
                 next_page_number = 2;
             }
@@ -1566,13 +1567,13 @@ pub async fn communities_load(session: Session, req: HttpRequest) -> actix_web::
         let count = _request_user.get_all_chats_count();
         if page > 1 {
             let step = (page - 1) * 20;
-            object_list = list.get_communities(20, step.into());
+            object_list = _request_user.get_communities(20, step.into());
             if count > (page * 20).try_into().unwrap() {
                 next_page_number = page + 1;
             }
         }
         else {
-            object_list = list.get_communities(20, 0);
+            object_list = _request_user.get_communities(20, 0);
             if count > 20.try_into().unwrap() {
                 next_page_number = 2;
             }
@@ -1637,9 +1638,10 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
             pub list:         Option<String>,
         }
 
-        let params_some = web::Query::<ChatItemsParams>::from_query(&req.query_string());
+        let params_some = web::Query::<ZParams>::from_query(&req.query_string());
         let mut page: i32 = 1;
         let mut count: i32 = 0;
+        let mut next_page_number: i32 = 0;
         let mut community_id: Option<i32> = None;
         let mut types =  "".to_string();
         let mut list =   "".to_string();
@@ -1662,7 +1664,7 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
 
         let _request_user = get_request_user_data(session);
         let object_list: Vec<User>;
-        let users: Vec<User>;
+        let users_list: Vec<User>;
 
         if community_id.is_some() {
             use crate::utils::get_community;
@@ -1917,8 +1919,9 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
             pub list:         Option<String>,
         }
 
-        let params_some = web::Query::<ChatItemsParams>::from_query(&req.query_string());
+        let params_some = web::Query::<ZParams>::from_query(&req.query_string());
         let mut page: i32 = 1;
+        let mut next_page_number: i32 = 0;
         let mut count: i32 = 0;
         let mut community_id: Option<i32> = None;
         let mut types =  "".to_string();
@@ -1942,7 +1945,7 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
 
         let _request_user = get_request_user_data(session);
         let object_list: Vec<User>;
-        let users: Vec<User>;
+        let users_list: Vec<User>;
 
         if community_id.is_some() {
             use crate::utils::get_community;
@@ -2134,21 +2137,21 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/list_include_users.stpl")]
             struct Template {
-                request_user:        User,
-                object_list:         Vec<User>,
-                users:               Vec<User>,
-                next_page_number:    i32,
-                types:               String,
-                count:               i32,
+                request_user:     User,
+                object_list:      Vec<User>,
+                users:            Vec<User>,
+                next_page_number: i32,
+                types:            String,
+                count:            i32,
             }
 
             let body = Template {
-                request_user:        _request_user,
-                object_list:         object_list,
-                users:               users_list,
-                next_page_number:    next_page_number,
-                types:               types,
-                count:               count,
+                request_user:     _request_user,
+                object_list:      object_list,
+                users:            users_list,
+                next_page_number: next_page_number,
+                types:            types,
+                count:            count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
