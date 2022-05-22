@@ -1,3 +1,4 @@
+use crate::schema;
 use actix_web::{
     HttpRequest,
     HttpResponse,

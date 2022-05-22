@@ -1,3 +1,4 @@
+use crate::schema;
 use actix_web::{
     HttpResponse,
     web,
@@ -23,6 +24,7 @@ use std::str;
 use actix_multipart::{Field, Multipart};
 use futures::StreamExt;
 use std::{borrow::BorrowMut, io::Write};
+use crate::diesel::RunQueryDsl;
 
 
 pub fn progs_urls(config: &mut web::ServiceConfig) {
@@ -721,6 +723,8 @@ pub async fn on_comment(session: Session, _id: web::Path<i32>) -> actix_web::Res
         let _request_user = get_request_user_data(session);
         if good.is_user_can_edit_delete_item(_request_user.id) {
             use crate::schema::goods::dsl::goods;
+            let _connection = establish_connection();
+
             diesel::update(&good)
                 .set(schema::goods::comment_enabled.eq(true))
                 .get_result::<Good>(&_connection)
@@ -740,6 +744,8 @@ pub async fn off_comment(session: Session, _id: web::Path<i32>) -> actix_web::Re
         let _request_user = get_request_user_data(session);
         if good.is_user_can_edit_delete_item(_request_user.id) {
             use crate::schema::goods::dsl::goods;
+
+            let _connection = establish_connection();
             diesel::update(&good)
                 .set(schema::goods::comment_enabled.eq(false))
                 .get_result::<Good>(&_connection)
@@ -759,6 +765,8 @@ pub async fn on_votes(session: Session, _id: web::Path<i32>) -> actix_web::Resul
         let _request_user = get_request_user_data(session);
         if good.is_user_can_edit_delete_item(_request_user.id) {
             use crate::schema::goods::dsl::goods;
+
+            let _connection = establish_connection();
             diesel::update(&good)
                 .set(schema::goods::votes_on.eq(true))
                 .get_result::<Good>(&_connection)
@@ -778,6 +786,8 @@ pub async fn off_votes(session: Session, _id: web::Path<i32>) -> actix_web::Resu
         let _request_user = get_request_user_data(session);
         if good.is_user_can_edit_delete_item(_request_user.id) {
             use crate::schema::goods::dsl::goods;
+
+            let _connection = establish_connection();
             diesel::update(&good)
                 .set(schema::goods::votes_on.eq(false))
                 .get_result::<Good>(&_connection)

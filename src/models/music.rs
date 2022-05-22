@@ -1553,6 +1553,125 @@ impl Music {
             return "<svg fill='currentColor' class='svg_default' width='30' height='30' viewBox='0 0 24 24'><path fill='none' d='M0 0h24v24H0z'></path><path d='M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z'></path></svg>".to_string();
         }
     }
+
+    pub fn delete_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "a" => "c",
+            "b" => "m",
+            "f" => "i",
+            "g" => "y",
+            _ => "c",
+        };
+        diesel::update(self)
+            .set(schema::goods::types.eq(close_case))
+            .get_result::<Good>(&_connection)
+            .expect("E");
+        let list = self.get_list();
+        diesel::update(&list)
+            .set(schema::good_lists::count.eq(list.count - 1))
+            .get_result::<GoodList>(&_connection)
+            .expect("E");
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            community.minus_goods(1);
+        }
+        else {
+            let creator = self.get_creator();
+            creator.minus_goods(1);
+         }
+      return true;
+    }
+    pub fn restore_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "c" => "a",
+            "m" => "b",
+            "i" => "f",
+            "y" => "g",
+            _ => "a",
+        };
+        diesel::update(self)
+            .set(schema::goods::types.eq(close_case))
+            .get_result::<Good>(&_connection)
+            .expect("E");
+        let list = self.get_list();
+        diesel::update(&list)
+            .set(schema::good_lists::count.eq(list.count + 1))
+            .get_result::<GoodList>(&_connection)
+            .expect("E");
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            community.plus_goods(1);
+        }
+        else {
+            let creator = self.get_creator();
+            creator.plus_goods(1);
+         }
+       return true;
+    }
+
+    pub fn close_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "a" => "h",
+            "b" => "n",
+            _ => "h",
+        };
+        diesel::update(self)
+            .set(schema::goods::types.eq(close_case))
+            .get_result::<Good>(&_connection)
+            .expect("E");
+        let list = self.get_list();
+        diesel::update(&list)
+            .set(schema::good_lists::count.eq(list.count - 1))
+            .get_result::<GoodList>(&_connection)
+            .expect("E");
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            community.minus_goods(1);
+        }
+        else {
+            let creator = self.get_creator();
+            creator.minus_goods(1);
+        }
+       return true;
+    }
+    pub fn unclose_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = &self.types;
+        let close_case = match user_types.as_str() {
+            "h" => "a",
+            "n" => "b",
+            _ => "a",
+        };
+        diesel::update(self)
+            .set(schema::goods::types.eq(close_case))
+            .get_result::<Good>(&_connection)
+            .expect("E");
+        let list = self.get_list();
+        diesel::update(&list)
+            .set(schema::good_lists::count.eq(list.count + 1))
+            .get_result::<GoodList>(&_connection)
+            .expect("E");
+
+        if self.community_id.is_some() {
+            let community = self.get_community();
+            community.plus_goods(1);
+        }
+        else {
+            let creator = self.get_creator();
+            creator.plus_goods(1);
+         }
+       return true;
+    }
+    
     pub fn count_reposts(&self) -> String {
         if self.repost > 0 {
             return self.repost.to_string()

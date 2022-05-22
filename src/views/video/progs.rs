@@ -1,3 +1,4 @@
+use crate::schema;
 use actix_web::{
     HttpResponse,
     web,
@@ -19,7 +20,7 @@ use actix_session::Session;
 use sailfish::TemplateOnce;
 use crate::models::{User, VideoList, Video, VideoComment};
 use serde::{Deserialize, Serialize};
-
+use crate::diesel::RunQueryDsl;
 use std::str;
 use actix_multipart::{Field, Multipart};
 use futures::StreamExt;
