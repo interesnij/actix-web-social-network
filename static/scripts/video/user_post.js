@@ -1,23 +1,23 @@
 
 on('#video_loader', 'click', '.video_off_comment', function() {
-  send_photo_change(this, "/video/off_comment/", "u_video_on_comment", "Вкл. комментарии");
+  send_photo_change(this, "/video/off_comment/", "video_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".load_video_comments").style.display = "none"
 });
 on('#video_loader', 'click', '.video_on_comment', function() {
-  send_photo_change(this, "/video/on_comment/", "u_video_off_comment", "Выкл. комментарии");
+  send_photo_change(this, "/video/on_comment/", "video_off_comment", "Выкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".load_video_comments").style.display = "unset"
 });
 
 on('#video_loader', 'click', '.video_off_votes', function() {
-  send_photo_change(this, "/video/off_votes/", "u_video_on_votes", "Вкл. реакции");
+  send_photo_change(this, "/video/off_votes/", "video_on_votes", "Вкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "none";
   post.querySelector(".dislike").style.display = "none";
 });
 on('#video_loader', 'click', '.video_on_votes', function() {
-  send_photo_change(this, "/video/on_votes/", "u_video_off_votes", "Выкл. реакции");
+  send_photo_change(this, "/video/on_votes/", "video_off_votes", "Выкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "unset";
   post.querySelector(".dislike").style.display = "unset";
@@ -66,7 +66,7 @@ on('#ajax', 'click', '#edit_video_btn', function() {
   form_data = new FormData(form_post);
 
   _case = form_post.querySelector("#upload_video_pk");
-  pk = _case.value; 
+  pk = _case.value;
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/video/edit_video/" + pk + "/", true );

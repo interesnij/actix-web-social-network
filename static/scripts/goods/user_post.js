@@ -34,28 +34,28 @@ on('#ajax', 'click', '.good_edit', function() {
 });
 
 on('#ajax', 'click', '.good_off_votes', function() {
-  send_good_change(this, "/goods/user_progs/off_votes/", "u_good_on_votes", "Вкл. реакции");
+  send_good_change(this, "/goods/user_progs/off_votes/", "good_on_votes", "Вкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "none";
   post.querySelector(".dislike").style.display = "none";
 });
 on('#ajax', 'click', '.u_good_on_votes', function() {
-  send_good_change(this, "/goods/on_votes/", "u_good_off_votes", "Выкл. реакции");
+  send_good_change(this, "/goods/on_votes/", "good_off_votes", "Выкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "unset";
   post.querySelector(".dislike").style.display = "unset";
 });
 on('#ajax', 'click', '.good_hide', function() {
-  send_good_change(this, "/goods/hide/", "u_good_unhide", "Товар не виден");
+  send_good_change(this, "/goods/hide/", "good_unhide", "Товар не виден");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
 });
 on('#ajax', 'click', '.good_unhide', function() {
-  send_good_change(this, "/goods/unhide/", "u_good_hide", "Товар виден");
+  send_good_change(this, "/goods/unhide/", "good_hide", "Товар виден");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
 });
 
 on('#ajax', 'click', '.good_remove', function() {
-  send_good_change(this, "/goods/delete/", "user_good_restore", "Отмена");
+  send_good_change(this, "/goods/delete/", "good_restore", "Отмена");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   this.parentElement.parentElement.nextElementSibling.style.display = "none";
   post.querySelector(".order-2").style.display = "none";
@@ -63,7 +63,7 @@ on('#ajax', 'click', '.good_remove', function() {
   this.style.color = "#FF0000";
 });
 on('#ajax', 'click', '.good_restore', function() {
-  send_good_change(this, "/goods/restore/", "user_good_remove", "Удалить");
+  send_good_change(this, "/goods/restore/", "good_remove", "Удалить");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   this.parentElement.parentElement.nextElementSibling.style.display = "unset";
   post.querySelector(".order-2").style.display = "unset";

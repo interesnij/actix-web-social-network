@@ -331,20 +331,20 @@ on('#ajax', 'click', '.post_restore', function() {
 on('#ajax', 'click', '.post_fixed', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   pk = item.getAttribute("data-pk");
-  send_change(this, "/posts/fixed/", "u_post_unfixed", "Открепить");
+  send_change(this, "/posts/fixed/", "post_unfixed", "Открепить");
   main_container = document.body.querySelector(".main-container");
   add_list_in_all_stat("fixed_user_post",pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 on('#ajax', 'click', '.post_unfixed', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   pk = item.getAttribute("data-pk");
-  send_change(this, "/posts/unfixed/", "u_post_fixed", "Закрепить");
+  send_change(this, "/posts/unfixed/", "post_fixed", "Закрепить");
   main_container = document.body.querySelector(".main-container");
   add_list_in_all_stat("unfixed_user_post",pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 
 on('#ajax', 'click', '.post_off_comment', function() {
-  send_change(this, "/posts/off_comment/", "u_post_on_comment", "Вкл. комментарии");
+  send_change(this, "/posts/off_comment/", "post_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".load_post_comments") ? post.querySelector(".load_post_comments").style.display = "none"
   : post.querySelector(".u_news_item_comments").style.display = "none";
@@ -352,7 +352,7 @@ on('#ajax', 'click', '.post_off_comment', function() {
   add_list_in_all_stat("off_comment_user_post",post.getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 })
 on('#ajax', 'click', '.post_on_comment', function() {
-  send_change(this, "/posts/on_comment/", "u_post_off_comment", "Выкл. комментарии");
+  send_change(this, "/posts/on_comment/", "post_off_comment", "Выкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".load_post_comments") ? post.querySelector(".load_post_comments").style.display = "unset"
   : post.querySelector(".u_news_item_comments").style.display = "unset";
@@ -361,7 +361,7 @@ on('#ajax', 'click', '.post_on_comment', function() {
 });
 
 on('#ajax', 'click', '.post_off_votes', function() {
-  send_change(this, "/posts/off_votes/", "u_post_on_votes", "Вкл. реакции");
+  send_change(this, "/posts/off_votes/", "post_on_votes", "Вкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "none";
   post.querySelector(".dislike").style.display = "none";
@@ -369,7 +369,7 @@ on('#ajax', 'click', '.post_off_votes', function() {
   add_list_in_all_stat("off_votes_user_post",post.getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 on('#ajax', 'click', '.post_on_votes', function() {
-  send_change(this, "/posts/on_votes/", "u_post_off_votes", "Выкл. реакции");
+  send_change(this, "/posts/on_votes/", "post_off_votes", "Выкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "unset";
   post.querySelector(".dislike").style.display = "unset";

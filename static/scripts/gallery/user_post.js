@@ -1,12 +1,12 @@
 
 
 on('#ajax', 'click', '.photo_off_comment', function() {
-  send_photo_change(this, "/photos/off_comment/", "u_photo_on_comment", "Вкл. комментарии");
+  send_photo_change(this, "/photos/off_comment/", "photo_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".load_photo_comments").style.display = "none"
 });
 on('#ajax', 'click', '.photo_on_comment', function() {
-  send_photo_change(this, "/photos/on_comment/", "u_photo_off_comment", "Выкл. комментарии");
+  send_photo_change(this, "/photos/on_comment/", "photo_off_comment", "Выкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".load_photo_comments").style.display = "unset"
 });
@@ -17,7 +17,7 @@ on('#ajax', 'click', '.photo_edit', function() {
 
 on('#ajax', 'click', '.photo_description', function() {
   form = this.parentElement.parentElement.parentElement;
-  form_data = new FormData(form.querySelector(".u_photo_description_form"));
+  form_data = new FormData(form.querySelector(".photo_description_form"));
   pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -30,7 +30,7 @@ on('#ajax', 'click', '.photo_description', function() {
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
-    form.previousElementSibling.innerHTML = new_post.innerHTML + '<br><br><span class="u_photo_edit pointer">Редактировать</span>';
+    form.previousElementSibling.innerHTML = new_post.innerHTML + '<br><br><span class="photo_edit pointer">Редактировать</span>';
     form.style.display = "none";
     form.querySelector('#id_description').value = new_post.innerHTML;
   }}
@@ -38,13 +38,13 @@ on('#ajax', 'click', '.photo_description', function() {
 });
 
 on('#ajax', 'click', '.photo_off_votes', function() {
-  send_photo_change(this, "/photos/off_votes/", "u_photo_on_votes", "Вкл. реакции");
+  send_photo_change(this, "/photos/off_votes/", "photo_on_votes", "Вкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "none";
   post.querySelector(".dislike").style.display = "none";
 });
 on('#ajax', 'click', '.photo_on_votes', function() {
-  send_photo_change(this, "/photos/on_votes/", "u_photo_off_votes", "Выкл. реакции");
+  send_photo_change(this, "/photos/on_votes/", "photo_off_votes", "Выкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "unset";
   post.querySelector(".dislike").style.display = "unset";
