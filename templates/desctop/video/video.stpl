@@ -1,6 +1,6 @@
 <div class="col-12 col-md-6 video_list_detail pointer" video-pk="<%= object.id %>" video-counter="">
   <div class="blog-header-img">
-      <%- object.get_image() %>"
+      <img class='image_fit_200' src='<%= object.get_image() %>' alt='img' />
   </div>
   <div class="media-body">
     <a class="mb-0"><%= object.title %></a>
