@@ -287,7 +287,7 @@ on('#ajax', 'click', '.post_remove', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   pk = item.getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/delete/" + pk + "/", true );
+  link.open( 'GET', "/posts/post_delete/" + pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
@@ -315,7 +315,7 @@ on('#ajax', 'click', '.post_restore', function() {
   pk = this.getAttribute("data-pk");
   block = this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/restore/" + pk + "/", true );
+  link.open( 'GET', "/posts/post_restore/" + pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
