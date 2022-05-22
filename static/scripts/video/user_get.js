@@ -35,6 +35,7 @@ on('#ajax', 'click', '.video_list_detail', function() {
     videos[i].classList.remove("play")
   };
   this.classList.add("play");
+  counter = 0;
   count = 0;
   for (var i = 0; i < videos.length; i++) {
     if (videos[i].classList.contains("play")) {
@@ -53,6 +54,7 @@ on('#ajax', 'click', '.post_video', function() {
     videos[i].classList.remove("play")
   };
   this.classList.add("play");
+  counter = 0;
   count = 0;
   for (var i = 0; i < videos.length; i++) {
     if (videos[i].classList.contains("play")) {
@@ -73,6 +75,7 @@ on('#ajax', 'click', '.message_video', function() {
     videos[i].classList.remove("play")
   };
   this.classList.add("play");
+  counter = 0;
   count = 0;
   for (var i = 0; i < videos.length; i++) {
     if (videos[i].classList.contains("play")) {
