@@ -6,8 +6,8 @@ use diesel::prelude::*;
 use crate::schema;
 use crate::models::{
     Chat, Message, UserLocation, Smile, Sticker, Community, UserProfile, Friend,
-    Post, Photo, Music, Video, 
-    //Survey,
+    Post, Photo, Music, Video,
+    Survey, StickerCategory,
     Doc, Good,
     PostList, PhotoList, MusicList, VideoList, SurveyList, DocList, GoodList,
     Follow, Notification, UserPrivate, UserBlock, PostCategorie,
@@ -600,6 +600,27 @@ impl User {
             .load::<Smile>(&_connection)
             .expect("E.");
     }
+    pub fn get_smiles(limit: i64, offset: i64) -> Vec<Smile> {
+        use crate::schema::smiles::dsl::smiles;
+
+        let _connection = establish_connection();
+        return smiles
+            .order(schema::smiles::position.asc())
+            .limit(limit)
+            .offset(offset)
+            .load::<Smile>(&_connection)
+            .expect("E.");
+    }
+    pub fn count_smiles() -> usize {
+        use crate::schema::smiles::dsl::smiles;
+
+        let _connection = establish_connection();
+        return smiles
+            .load::<Smile>(&_connection)
+            .expect("E.")
+            .len();
+    }
+
     pub fn get_populate_stickers(&self) -> Vec<Sticker> {
         use crate::schema::stickers::dsl::stickers;
         use crate::schema::user_populate_stickers::dsl::user_populate_stickers;
@@ -617,6 +638,29 @@ impl User {
         };
         return stickers
             .filter(schema::stickers::id.eq_any(stack))
+            .load::<Sticker>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_sticker_categories(limit: i64, offset: i64) -> Vec<StickerCategory> {
+        use crate::schema::sticker_categories::dsl::sticker_categories;
+
+        let _connection = establish_connection();
+        return sticker_categories
+            .order(schema::sticker_categories::position.asc())
+            .limit(limit)
+            .offset(offset)
+            .load::<StickerCategory>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_stickers_for_category(cat_id:i32, limit: i64, offset: i64) -> Vec<Sticker> {
+        use crate::schema::stickers::dsl::stickers;
+
+        let _connection = establish_connection();
+        return stickers
+            .filter(schema::stickers::sticker_categorie_id.eq(cat_id))
+            .order(schema::stickers::position.asc())
+            .limit(limit)
+            .offset(offset)
             .load::<Sticker>(&_connection)
             .expect("E.");
     }

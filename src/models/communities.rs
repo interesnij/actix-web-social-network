@@ -33,7 +33,7 @@ use crate::utils::establish_connection;
 use crate::models::{
     User, PostList, PhotoList, DocList, VideoList,
     SurveyList, MusicList, GoodList, Notification,
-    //Survey, 
+    //Survey,
     Music, Good, Video, Doc, Photo, Post, Message,
 };
 
@@ -2673,29 +2673,103 @@ impl Community {
         return get_users_from_ids(self.get_can_see_forum_include_users_ids());
     }
 
-    pub fn get_members(&self) -> Vec<User> {
+    pub fn get_members(&self, limit: i64, offset: i64) -> Vec<User> {
         use crate::utils::get_users_from_ids;
-        return get_users_from_ids(self.get_members_ids());
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+
+        let _connection = establish_connection();
+        let items = communities_memberships
+            .filter(schema::communities_memberships::community_id.eq(self.id))
+            .limit(limit)
+            .offset(offset)
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
     }
     pub fn get_6_members(&self) -> Vec<User> {
         use crate::utils::get_users_from_ids;
         return get_users_from_ids(self.get_6_members_ids());
     }
-    pub fn get_administrators(&self) -> Vec<User> {
+    pub fn get_administrators(&self, limit: i64, offset: i64) -> Vec<User> {
         use crate::utils::get_users_from_ids;
-        return get_users_from_ids(self.get_administrators_ids());
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+
+        let _connection = establish_connection();
+        let items = communities_memberships
+            .filter(schema::communities_memberships::community_id.eq(self.id))
+            .filter(schema::communities_memberships::is_administrator.eq(true))
+            .limit(limit)
+            .offset(offset)
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
     }
-    pub fn get_editors(&self) -> Vec<User> {
+    pub fn get_editors(&self, limit: i64, offset: i64) -> Vec<User> {
         use crate::utils::get_users_from_ids;
-        return get_users_from_ids(self.get_editors_ids());
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+
+        let _connection = establish_connection();
+        let items = communities_memberships
+            .filter(schema::communities_memberships::community_id.eq(self.id))
+            .filter(schema::communities_memberships::is_editor.eq(true))
+            .limit(limit)
+            .offset(offset)
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
     }
-    pub fn get_moderators(&self) -> Vec<User> {
+    pub fn get_moderators(&self, limit: i64, offset: i64) -> Vec<User> {
         use crate::utils::get_users_from_ids;
-        return get_users_from_ids(self.get_moderators_ids());
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+
+        let _connection = establish_connection();
+        let items = communities_memberships
+            .filter(schema::communities_memberships::community_id.eq(self.id))
+            .filter(schema::communities_memberships::is_moderator.eq(true))
+            .limit(limit)
+            .offset(offset)
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
     }
-    pub fn get_advertisers(&self) -> Vec<User> {
+    pub fn get_advertisers(&self, limit: i64, offset: i64) -> Vec<User> {
         use crate::utils::get_users_from_ids;
-        return get_users_from_ids(self.get_advertisers_ids());
+        use crate::schema::communities_memberships::dsl::communities_memberships;
+
+        let _connection = establish_connection();
+        let items = communities_memberships
+            .filter(schema::communities_memberships::community_id.eq(self.id))
+            .filter(schema::communities_memberships::is_advertiser.eq(true))
+            .limit(limit)
+            .offset(offset)
+            .load::<CommunitiesMembership>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
     }
     pub fn get_staff_users(&self) -> Vec<User> {
         use crate::utils::get_users_from_ids;
