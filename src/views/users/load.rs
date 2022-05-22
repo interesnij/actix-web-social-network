@@ -1348,11 +1348,11 @@ pub async fn smiles_stickers_load(session: Session, req: HttpRequest) -> actix_w
         let _request_user = get_request_user_data(session);
 
         let object_list: Vec<Smile>;
-        let categories = _request_user.get_sticker_categories(30, 0);
+        let categories = User::get_sticker_categories(30, 0);
         let count = User::count_smiles();
         if page > 1 {
             let step = (page - 1) * 20;
-            object_list = User::count_smiles(20, step.into());
+            object_list = User::get_smiles(20, step.into());
             if count > (page * 20).try_into().unwrap() {
                 next_page_number = page + 1;
             }
