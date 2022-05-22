@@ -41,12 +41,12 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
 
     config.route("/video/add_video_in_list/{id}/", web::post().to(add_video_in_list));
     config.route("/video/edit_video/{id}/", web::post().to(edit_video));
-    config.route("/video/delete_video/{id}/", web::post().to(delete_video));
-    config.route("/video/recover_video/{id}/", web::post().to(recover_video));
-    config.route("/video/on_comment/{id}/", web::post().to(on_comment));
-    config.route("/video/off_comment/{id}/", web::post().to(off_comment));
-    config.route("/video/on_votes/{id}/", web::post().to(on_votes));
-    config.route("/video/off_votes/{id}/", web::post().to(off_votes));
+    config.route("/video/delete_video/{id}/", web::get().to(delete_video));
+    config.route("/video/recover_video/{id}/", web::get().to(recover_video));
+    config.route("/video/on_comment/{id}/", web::get().to(on_comment));
+    config.route("/video/off_comment/{id}/", web::get().to(off_comment));
+    config.route("/video/on_votes/{id}/", web::get().to(on_votes));
+    config.route("/video/off_votes/{id}/", web::get().to(off_votes));
 
     config.route("/video/add_comment/{id}/", web::post().to(add_comment));
     config.route("/video/add_reply/{id}/", web::post().to(add_reply));

@@ -42,12 +42,12 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
 
     config.route("/photos/add_photos_in_list/{id}/", web::post().to(add_photos_in_list));
     config.route("/photos/edit_photo_description/{id}/", web::post().to(edit_photo_description));
-    config.route("/photos/delete_photo/{id}/", web::post().to(delete_photo));
-    config.route("/photos/recover_photo/{id}/", web::post().to(recover_photo));
-    config.route("/photos/on_comment/{id}/", web::post().to(on_comment));
-    config.route("/photos/off_comment/{id}/", web::post().to(off_comment));
-    config.route("/photos/on_votes/{id}/", web::post().to(on_votes));
-    config.route("/photos/off_votes/{id}/", web::post().to(off_votes));
+    config.route("/photos/delete_photo/{id}/", web::get().to(delete_photo));
+    config.route("/photos/recover_photo/{id}/", web::get().to(recover_photo));
+    config.route("/photos/on_comment/{id}/", web::get().to(on_comment));
+    config.route("/photos/off_comment/{id}/", web::get().to(off_comment));
+    config.route("/photos/on_votes/{id}/", web::get().to(on_votes));
+    config.route("/photos/off_votes/{id}/", web::get().to(off_votes));
 }
 
 

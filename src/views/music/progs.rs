@@ -38,8 +38,8 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
 
     config.route("/music/add_tracks_in_list/{id}/", web::post().to(add_tracks_in_list));
     config.route("/music/edit_track/{id}/", web::post().to(edit_track));
-    config.route("/music/delete_track/{id}/", web::post().to(delete_track));
-    config.route("/music/recover_track/{id}/", web::post().to(recover_track));
+    config.route("/music/delete_track/{id}/", web::get().to(delete_track));
+    config.route("/music/recover_track/{id}/", web::get().to(recover_track));
 }
 
 pub async fn add_user_list(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {

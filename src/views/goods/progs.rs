@@ -40,12 +40,12 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
 
     config.route("/goods/add_good_in_list/{id}/", web::post().to(add_good_in_list));
     config.route("/goods/edit_good/{id}/", web::post().to(edit_good));
-    config.route("/goods/delete_good/{id}/", web::post().to(delete_good));
-    config.route("/goods/recover_good/{id}/", web::post().to(recover_good));
-    config.route("/goods/on_comment/{id}/", web::post().to(on_comment));
-    config.route("/goods/off_comment/{id}/", web::post().to(off_comment));
-    config.route("/goods/on_votes/{id}/", web::post().to(on_votes));
-    config.route("/goods/off_votes/{id}/", web::post().to(off_votes));
+    config.route("/goods/delete_good/{id}/", web::get().to(delete_good));
+    config.route("/goods/recover_good/{id}/", web::get().to(recover_good));
+    config.route("/goods/on_comment/{id}/", web::get().to(on_comment));
+    config.route("/goods/off_comment/{id}/", web::get().to(off_comment));
+    config.route("/goods/on_votes/{id}/", web::get().to(on_votes));
+    config.route("/goods/off_votes/{id}/", web::get().to(off_votes));
 
     config.route("/goods/add_comment/{id}/", web::post().to(add_comment));
     config.route("/goods/add_reply/{id}/", web::post().to(add_reply));

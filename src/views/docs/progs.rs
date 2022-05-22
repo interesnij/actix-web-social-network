@@ -38,8 +38,8 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
 
     config.route("/docs/add_docs_in_list/{id}/", web::post().to(add_doc_in_list));
     config.route("/docs/edit_doc/{id}/", web::post().to(edit_doc));
-    config.route("/docs/delete_doc/{id}/", web::post().to(delete_doc));
-    config.route("/docs/recover_doc/{id}/", web::post().to(recover_doc));
+    config.route("/docs/delete_doc/{id}/", web::get().to(delete_doc));
+    config.route("/docs/recover_doc/{id}/", web::get().to(recover_doc));
 }
 
 pub async fn add_user_list(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
