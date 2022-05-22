@@ -808,7 +808,7 @@ pub async fn off_votes(session: Session, _id: web::Path<i32>) -> actix_web::Resu
             let _connection = establish_connection();
             diesel::update(&video)
                 .set(schema::videos::votes_on.eq(false))
-                .get_result::<video>(&_connection)
+                .get_result::<Video>(&_connection)
                 .expect("Error.");
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
         } else {

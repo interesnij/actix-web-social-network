@@ -794,7 +794,7 @@ pub async fn unfixed(session: Session, _id: web::Path<i32>) -> actix_web::Result
         let post = get_post(*_id);
         let _request_user = get_request_user_data(session);
         if post.is_user_can_edit_delete_item(_request_user.id) {
-            post.unfixed_post(_request_user);
+            post.unfixed_post();
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
         } else {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
