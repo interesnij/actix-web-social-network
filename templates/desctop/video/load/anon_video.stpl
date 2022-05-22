@@ -1,0 +1,102 @@
+
+
+<div id="video_player"></div>
+
+<div class="row no-gutters is_stat_list" data-pk="<%= object.id %>" data-type="user_video">
+  <div class="col-md-8">
+    <h4><%= object.title %></h4>
+
+    <div class="card-header">
+        <div class="media">
+
+    <% if object.community_id.is_some() { %>
+        <% let post_community = object.get_community(); %>
+
+        <a href="<%= post_community.link %>" class="ajax">
+          <figure>
+            <%- post_community.get_50_avatar() %>
+          </figure>
+        </a>
+            <div class="media-body">
+                <h6 class="mb-0">
+                  <a href="<%= post_community.link %>" class="ajax">
+                    <%= post_community.name %>
+                  </a>
+                </h6>
+                <a class="mb-0 wall_fullscreen pointer"><%= object.created.format("%d-%m-%Y в %H:%M").to_string() %></a>
+            </div>
+
+    <% } else { %>
+
+    <% let post_creator = object.get_creator(); %>
+        <a href="<%= post_creator.link %>" class="ajax">
+          <figure>
+            <%- post_creator.get_50_avatar() %>
+          </figure>
+        </a>
+            <div class="media-body">
+                <h6 class="mb-0">
+                  <a href="<%= post_creator.link %>" class="ajax">
+                    <%= post_creator.get_full_name() %>
+                  </a>
+                </h6>
+                <a class="mb-0 wall_fullscreen pointer"><%= object.created.format("%d-%m-%Y в %H:%M").to_string() %></a>
+            </div>
+
+    <% } %>
+            <div class="dropdown">
+                <a style="cursor:pointer" class="btn_default drop">
+                  <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" data-type="pos<%= object.id %>">
+                  <span class="dropdown-item copy_link">Скопировать ссылку</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p><%= object.description.as_deref().unwrap() %></p>
+
+    <div class="card-footer border-top py-2">
+        <div class="row">
+          <div class="col interaction" data-type="vid<%= object.id %>">
+            <% include!("../generic/items/anon_item_footer.stpl"); %>
+          </div>
+        </div>
+    </div>
+
+    <div class="load_comments"></div>
+  </div>
+  <div class="col-sm-12 col-md-4 col-lg-4"></div>
+</div>
+
+<ul id="video_playlists" style="display:none;">
+   <li data-source="my_playlist" data-playlist-name="Основной плейлист" data-thumbnail-path="/static/images/demo_video/p-html.jpg">
+     <p class="fwduvp-categories-title"><span class="fwduvp-header">Название: </span><span class="fwduvp-title">Основной плейлист</span></p>
+     <p class="fwduvp-categories-type"><span class="fwduvp-header">Тип: </span>Видеокаталог</p>
+     <p class="fwduvp-categories-description"><span class="fwduvp-header">Описание: </span>Это Ваш основной плейлист, куда попадают выбранные и закачанные видеороликипо умолчанию</p>
+   </li>
+</ul>
+
+
+<ul id="my_playlist" style="display:none;" class="">
+<% for object in videos.iter() { %>
+ <li data-thumb-source="<%= object.get_image() %>"
+     <%= object.file %>
+     data-poster-source="<%= object.get_image() %>"
+     data-video-uuid="<%= object.id %>" class="video_playlist_li">
+ <div data-video-short-description="">
+     <div style="width:100%">
+       <p class="fwduvp-thumbnail-title"><%= object.title %></p>
+       <p class="fwduvp-thumbnail-description">
+        <% if object.description.is_some() { %>
+          <%= object.description.as_deref().unwrap() %>
+        <% } else { %>
+          Без описания
+        <% } %>
+      </p>
+     </div>
+   </div>
+ </li>
+<% } %>
+</ul>

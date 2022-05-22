@@ -302,24 +302,11 @@ pub async fn load_video_page(session: Session, req: HttpRequest, video_id: web::
     let mut next_page_number = 0;
     let mut is_open = false;
     let mut text = "".to_string();
-    let mut prev: Option<i32> = None;
-    let mut next: Option<i32> = None;
 
     let _video = get_video(*video_id);
     let _list = get_video_list(_video.video_list_id);
 
-    let _videos = _list.get_items();
-    for (i, item) in _videos.iter().enumerate().rev() {
-        if item.id == _video.id {
-            if (i + 1) != _videos.len() {
-                prev = Some(_videos[i + 1].id);
-            };
-            if i != 0 {
-                next = Some(_videos[i - 1].id);
-            };
-            break;
-        }
-    };
+    let _videos = _list.get_paginate_items(50, 0);
 
     let object_list: Vec<VideoComment>;
     if page > 1 {
@@ -371,8 +358,7 @@ pub async fn load_video_page(session: Session, req: HttpRequest, video_id: web::
                 is_user_can_create_comments: bool,
                 object_list:                 Vec<VideoComment>,
                 next_page_number:            i32,
-                prev:                        Option<i32>,
-                next:                        Option<i32>,
+                videos:                      Vec<Video>,
             }
             let body = Template {
                 list:                       _list,
@@ -383,8 +369,7 @@ pub async fn load_video_page(session: Session, req: HttpRequest, video_id: web::
                 is_user_can_create_comments: is_user_can_create_comments,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
-                prev:                        prev,
-                next:                        next,
+                videos:                      _videos,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -402,8 +387,7 @@ pub async fn load_video_page(session: Session, req: HttpRequest, video_id: web::
                 is_user_can_create_comments: bool,
                 object_list:                 Vec<VideoComment>,
                 next_page_number:            i32,
-                prev:                        Option<i32>,
-                next:                        Option<i32>,
+                videos:                      Vec<Video>,
             }
             let body = Template {
                 list:                        _list,
@@ -414,8 +398,7 @@ pub async fn load_video_page(session: Session, req: HttpRequest, video_id: web::
                 is_user_can_create_comments: is_user_can_create_comments,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
-                prev:                        prev,
-                next:                        next,
+                videos:                      _videos,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -443,24 +426,22 @@ pub async fn load_video_page(session: Session, req: HttpRequest, video_id: web::
             #[derive(TemplateOnce)]
             #[template(path = "desctop/video/load/anon_video.stpl")]
             struct Template {
-                list:                      VideoList,
-                object:                    Video,
+                list:                       VideoList,
+                object:                     Video,
                 is_user_can_see_video_list: bool,
-                is_user_can_see_comments:  bool,
-                object_list:               Vec<VideoComment>,
-                next_page_number:          i32,
-                prev:                      Option<i32>,
-                next:                      Option<i32>,
+                is_user_can_see_comments:   bool,
+                object_list:                Vec<VideoComment>,
+                next_page_number:           i32,
+                videos:                     Vec<Video>,
             }
             let body = Template {
-                list:                      _list,
-                object:                    _video,
-                is_user_can_see_video_list: is_user_can_see_video_list,
-                is_user_can_see_comments:  is_user_can_see_comments,
-                object_list:               object_list,
-                next_page_number:          next_page_number,
-                prev:                      prev,
-                next:                      next,
+                list:                        _list,
+                object:                      _video,
+                is_user_can_see_video_list:  is_user_can_see_video_list,
+                is_user_can_see_comments:    is_user_can_see_comments,
+                object_list:                 object_list,
+                next_page_number:            next_page_number,
+                videos:                      _videos,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -470,14 +451,13 @@ pub async fn load_video_page(session: Session, req: HttpRequest, video_id: web::
             #[derive(TemplateOnce)]
             #[template(path = "mobile/video/load/anon_video.stpl")]
             struct Template {
-                list:                      VideoList,
-                object:                    Video,
+                list:                       VideoList,
+                object:                     Video,
                 is_user_can_see_video_list: bool,
-                is_user_can_see_comments:  bool,
-                object_list:               Vec<VideoComment>,
-                next_page_number:          i32,
-                prev:                      Option<i32>,
-                next:                      Option<i32>,
+                is_user_can_see_comments:   bool,
+                object_list:                Vec<VideoComment>,
+                next_page_number:           i32,
+                videos:                     Vec<Video>,
             }
             let body = Template {
                 list:                       _list,
@@ -486,8 +466,7 @@ pub async fn load_video_page(session: Session, req: HttpRequest, video_id: web::
                 is_user_can_see_comments:   is_user_can_see_comments,
                 object_list:                object_list,
                 next_page_number:           next_page_number,
-                prev:                       prev,
-                next:                       next,
+                videos:                     _videos,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
