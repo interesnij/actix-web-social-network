@@ -1652,13 +1652,13 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
                 page = params.page.unwrap();
             }
             if params.action.is_some() {
-                types = params.action.as_ref().unwrap();
+                types = params.action.as_ref().unwrap().to_string();
             }
             if params.community_id.is_some() {
                 community_id = params.community_id;
             }
             if params.list.is_some() {
-                list = params.list.as_ref().unwrap();
+                list = params.list.as_ref().unwrap().to_string();
             }
         }
 
@@ -1933,13 +1933,13 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
                 page = params.page.unwrap();
             }
             if params.action.is_some() {
-                types = params.action.as_ref().unwrap();
+                types = params.action.as_ref().unwrap().to_string();
             }
             if params.community_id.is_some() {
                 community_id = params.community_id;
             }
             if params.list.is_some() {
-                list = params.list.as_ref().unwrap();
+                list = params.list.as_ref().unwrap().to_string();
             }
         }
 
