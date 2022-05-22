@@ -84,7 +84,7 @@
     <div class="card-footer border-top py-2">
         <div class="row">
           <div class="col interaction" data-type="vid<%= object.id %>">
-            <% include!("../generic/items/item_footer.stpl"); %>
+            <% include!("../../generic/items/item_footer.stpl"); %>
           </div>
         </div>
     </div>
