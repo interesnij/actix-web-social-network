@@ -5,7 +5,7 @@ use actix_web::{
     error::InternalError,
     http::StatusCode,
 };
-
+use serde::{Serialize, Deserialize};
 use crate::utils::{
     is_signed_in,
     is_desctop,
@@ -2163,7 +2163,7 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
                 let current_list = get_video_list(pk);
                 users_list = current_list.get_copy_el_include_users()
             }
-            else if code == "mus".to_string() {
+            else if code == &"mus".to_string() {
                 use crate::utils::get_music_list;
                 let current_list = get_music_list(pk);
                 users_list = current_list.get_copy_el_include_users()
