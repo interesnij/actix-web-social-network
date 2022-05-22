@@ -346,16 +346,15 @@ on('#ajax', 'click', '.post_unfixed', function() {
 on('#ajax', 'click', '.post_off_comment', function() {
   send_change(this, "/posts/off_comment/", "post_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".load_post_comments") ? post.querySelector(".load_post_comments").style.display = "none"
-  : post.querySelector(".u_news_item_comments").style.display = "none";
+  post.querySelector(".load_comments_list").style.display = "none"
+  post.querySelector(".load_comments").style.display = "none";
   main_container = document.body.querySelector(".main-container");
   add_list_in_all_stat("off_comment_user_post",post.getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 })
 on('#ajax', 'click', '.post_on_comment', function() {
   send_change(this, "/posts/on_comment/", "post_off_comment", "Выкл. комментарии");
-  post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".load_post_comments") ? post.querySelector(".load_post_comments").style.display = "unset"
-  : post.querySelector(".u_news_item_comments").style.display = "unset";
+  post.querySelector(".load_comments_list").style.display = "unset"
+  post.querySelector(".load_comments").style.display = "unset";
   main_container = document.body.querySelector(".main-container");
   add_list_in_all_stat("on_comment_user_post",post.getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
