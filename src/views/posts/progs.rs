@@ -43,6 +43,12 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
     config.route("/posts/edit_post/{id}/", web::post().to(edit_post));
     config.route("/posts/delete_post/{id}/", web::post().to(delete_post));
     config.route("/posts/recover_post/{id}/", web::post().to(recover_post));
+    config.route("/posts/on_comment/{id}/", web::post().to(on_comment));
+    config.route("/posts/off_comment/{id}/", web::post().to(off_comment));
+    config.route("/posts/on_votes/{id}/", web::post().to(on_votes));
+    config.route("/posts/off_votes/{id}/", web::post().to(off_votes));
+    config.route("/posts/fixed/{id}/", web::post().to(fixed));
+    config.route("/posts/unfixed/{id}/", web::post().to(unfixed));
 
     config.route("/posts/add_comment/{id}/", web::post().to(add_comment));
     config.route("/posts/add_reply/{id}/", web::post().to(add_reply));
@@ -674,6 +680,121 @@ pub async fn recover_post(session: Session, _id: web::Path<i32>) -> actix_web::R
         let _request_user = get_request_user_data(session);
         if post.is_user_can_edit_delete_item(_request_user.id) {
             post.restore_item();
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+
+pub async fn on_comment(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let post = get_post(*_id);
+        let _request_user = get_request_user_data(session);
+        if post.is_user_can_edit_delete_item(_request_user.id) {
+            use crate::schema::posts::dsl::posts;
+            let _connection = establish_connection();
+
+            diesel::update(&post)
+                .set(schema::posts::comment_enabled.eq(true))
+                .get_result::<Post>(&_connection)
+                .expect("Error.");
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn off_comment(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let post = get_post(*_id);
+        let _request_user = get_request_user_data(session);
+        if post.is_user_can_edit_delete_item(_request_user.id) {
+            use crate::schema::posts::dsl::posts;
+
+            let _connection = establish_connection();
+            diesel::update(&post)
+                .set(schema::posts::comment_enabled.eq(false))
+                .get_result::<Post>(&_connection)
+                .expect("Error.");
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn on_votes(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let post = get_post(*_id);
+        let _request_user = get_request_user_data(session);
+        if post.is_user_can_edit_delete_item(_request_user.id) {
+            use crate::schema::posts::dsl::posts;
+
+            let _connection = establish_connection();
+            diesel::update(&post)
+                .set(schema::posts::votes_on.eq(true))
+                .get_result::<Post>(&_connection)
+                .expect("Error.");
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn off_votes(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let post = get_post(*_id);
+        let _request_user = get_request_user_data(session);
+        if post.is_user_can_edit_delete_item(_request_user.id) {
+            use crate::schema::posts::dsl::posts;
+
+            let _connection = establish_connection();
+            diesel::update(&post)
+                .set(schema::posts::votes_on.eq(false))
+                .get_result::<Post>(&_connection)
+                .expect("Error.");
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn fixed(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let post = get_post(*_id);
+        let _request_user = get_request_user_data(session);
+        if post.is_user_can_edit_delete_item(_request_user.id) {
+            post.fixed_post(_request_user);
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn unfixed(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let post = get_post(*_id);
+        let _request_user = get_request_user_data(session);
+        if post.is_user_can_edit_delete_item(_request_user.id) {
+            post.unfixed_post(_request_user);
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
         } else {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))

@@ -43,6 +43,10 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
     config.route("/video/edit_video/{id}/", web::post().to(edit_video));
     config.route("/video/delete_video/{id}/", web::post().to(delete_video));
     config.route("/video/recover_video/{id}/", web::post().to(recover_video));
+    config.route("/video/on_comment/{id}/", web::post().to(on_comment));
+    config.route("/video/off_comment/{id}/", web::post().to(off_comment));
+    config.route("/video/on_votes/{id}/", web::post().to(on_votes));
+    config.route("/video/off_votes/{id}/", web::post().to(off_votes));
 
     config.route("/video/add_comment/{id}/", web::post().to(add_comment));
     config.route("/video/add_reply/{id}/", web::post().to(add_reply));
@@ -721,6 +725,91 @@ pub async fn recover_video(session: Session, _id: web::Path<i32>) -> actix_web::
         let _request_user = get_request_user_data(session);
         if video.is_user_can_edit_delete_item(_request_user.id) {
             video.restore_item();
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+
+pub async fn on_comment(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let video = get_video(*_id);
+        let _request_user = get_request_user_data(session);
+        if video.is_user_can_edit_delete_item(_request_user.id) {
+            use crate::schema::videos::dsl::videos;
+            let _connection = establish_connection();
+
+            diesel::update(&video)
+                .set(schema::videos::comment_enabled.eq(true))
+                .get_result::<Video>(&_connection)
+                .expect("Error.");
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn off_comment(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let video = get_video(*_id);
+        let _request_user = get_request_user_data(session);
+        if video.is_user_can_edit_delete_item(_request_user.id) {
+            use crate::schema::videos::dsl::videos;
+
+            let _connection = establish_connection();
+            diesel::update(&video)
+                .set(schema::videos::comment_enabled.eq(false))
+                .get_result::<Video>(&_connection)
+                .expect("Error.");
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn on_votes(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let video = get_video(*_id);
+        let _request_user = get_request_user_data(session);
+        if video.is_user_can_edit_delete_item(_request_user.id) {
+            use crate::schema::videos::dsl::videos;
+
+            let _connection = establish_connection();
+            diesel::update(&video)
+                .set(schema::videos::votes_on.eq(true))
+                .get_result::<Video>(&_connection)
+                .expect("Error.");
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn off_votes(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let video = get_video(*_id);
+        let _request_user = get_request_user_data(session);
+        if video.is_user_can_edit_delete_item(_request_user.id) {
+            use crate::schema::videos::dsl::videos;
+
+            let _connection = establish_connection();
+            diesel::update(&video)
+                .set(schema::videos::votes_on.eq(false))
+                .get_result::<video>(&_connection)
+                .expect("Error.");
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
         } else {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
