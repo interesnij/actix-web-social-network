@@ -641,7 +641,7 @@ impl User {
             .load::<Sticker>(&_connection)
             .expect("E.");
     }
-    pub fn get_sticker_categories(limit: i64, offset: i64) -> Vec<StickerCategory> {
+    pub fn get_sticker_categories(limit: i64, offset: i64) -> Vec<StickerCategorie> {
         use crate::schema::sticker_categories::dsl::sticker_categories;
 
         let _connection = establish_connection();
