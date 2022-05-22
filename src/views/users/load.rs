@@ -1652,19 +1652,19 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
                 page = params.page.unwrap();
             }
             if params.action.is_some() {
-                types = params.action.unwrap();
+                types = params.action.as_ref().unwrap();
             }
             if params.community_id.is_some() {
                 community_id = params.community_id;
             }
             if params.list.is_some() {
-                list = params.list.unwrap();
+                list = params.list.as_ref().unwrap();
             }
         }
 
         let _request_user = get_request_user_data(session);
-        let object_list: Vec<User>;
-        let users_list: Vec<User>;
+        let object_list: Vec<User> = Vec::new();
+        let users_list: Vec<User> = Vec::new();
 
         if community_id.is_some() {
             use crate::utils::get_community;
@@ -1933,13 +1933,13 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
                 page = params.page.unwrap();
             }
             if params.action.is_some() {
-                types = params.action.unwrap();
+                types = params.action.as_ref().unwrap();
             }
             if params.community_id.is_some() {
                 community_id = params.community_id;
             }
             if params.list.is_some() {
-                list = params.list.unwrap();
+                list = params.list.as_ref().unwrap();
             }
         }
 
