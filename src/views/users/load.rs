@@ -1626,19 +1626,18 @@ pub async fn communities_load(session: Session, req: HttpRequest) -> actix_web::
 }
 
 pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    #[derive(Debug, Deserialize)]
+    pub struct ZParams {
+        pub page:         Option<i32>,
+        pub action:       Option<String>,
+        pub community_id: Option<i32>,
+        pub list:         Option<String>,
+    }
+
+    let params_some = web::Query::<ZParams>::from_query(&req.query_string());
     let (is_desctop, page) = get_list_variables(req);
 
     if is_signed_in(&session) {
-
-        #[derive(Debug, Deserialize)]
-        pub struct ZParams {
-            pub page:         Option<i32>,
-            pub action:       Option<String>,
-            pub community_id: Option<i32>,
-            pub list:         Option<String>,
-        }
-
-        let params_some = web::Query::<ZParams>::from_query(&req.query_string());
         let mut page: i32 = 1;
         let mut count: i32 = 0;
         let mut next_page_number: i32 = 0;
@@ -1907,19 +1906,18 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
 }
 
 pub async fn list_include_users_load(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    #[derive(Debug, Deserialize)]
+    pub struct ZParams {
+        pub page:         Option<i32>,
+        pub action:       Option<String>,
+        pub community_id: Option<i32>,
+        pub list:         Option<String>,
+    }
+
+    let params_some = web::Query::<ZParams>::from_query(&req.query_string());
     let (is_desctop, page) = get_list_variables(req);
 
     if is_signed_in(&session) {
-
-        #[derive(Debug, Deserialize)]
-        pub struct ZParams {
-            pub page:         Option<i32>,
-            pub action:       Option<String>,
-            pub community_id: Option<i32>,
-            pub list:         Option<String>,
-        }
-
-        let params_some = web::Query::<ZParams>::from_query(&req.query_string());
         let mut page: i32 = 1;
         let mut next_page_number: i32 = 0;
         let mut count: i32 = 0;
