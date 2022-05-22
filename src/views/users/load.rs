@@ -1146,6 +1146,13 @@ pub async fn communities_lists_for_copy_load(session: Session, req: HttpRequest)
 
 
 pub async fn chat_items_load(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    #[derive(Debug, Deserialize)]
+    pub struct ChatItemsParams {
+        pub chats_page: Option<i32>,
+        pub friends_page: Option<i32>,
+    }
+    let params_some = web::Query::<ChatItemsParams>::from_query(&req.query_string());
+
     let (is_desctop, page) = get_list_variables(req);
     let mut chats_next_page_number = 0;
     let mut friends_next_page_number = 0;
@@ -1153,13 +1160,6 @@ pub async fn chat_items_load(session: Session, req: HttpRequest) -> actix_web::R
     if is_signed_in(&session) {
         use crate::models::Chat;
 
-        #[derive(Debug, Deserialize)]
-        pub struct ChatItemsParams {
-            pub chats_page: Option<i32>,
-            pub friends_page: Option<i32>,
-        }
-
-        let params_some = web::Query::<ChatItemsParams>::from_query(&req.query_string());
         let mut chats_page: i32 = 0;
         let mut friends_page: i32 = 0;
         if params_some.is_ok() {
@@ -1342,7 +1342,7 @@ pub async fn friends_load(session: Session, req: HttpRequest) -> actix_web::Resu
 
 pub async fn smiles_stickers_load(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        use crate::models::{Smile,StickerCategory};
+        use crate::models::{Smile,StickerCategorie};
 
         let (is_desctop, page) = get_list_variables(req);
         let mut next_page_number = 0;
@@ -1371,7 +1371,7 @@ pub async fn smiles_stickers_load(session: Session, req: HttpRequest) -> actix_w
             struct Template {
                 request_user:     User,
                 object_list:      Vec<Smile>,
-                categories:       Vec<StickerCategory>,
+                categories:       Vec<StickerCategorie>,
                 next_page_number: i32,
                 count:            usize,
             }
@@ -1393,7 +1393,7 @@ pub async fn smiles_stickers_load(session: Session, req: HttpRequest) -> actix_w
             struct Template {
                 request_user:     User,
                 object_list:      Vec<Smile>,
-                categories:       Vec<StickerCategory>,
+                categories:       Vec<StickerCategorie>,
                 next_page_number: i32,
                 count:            usize,
             }
@@ -1654,7 +1654,7 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
             if params.action.is_some() {
                 types = params.action.unwrap();
             }
-            if params.community_pk.is_some() {
+            if params.community_id.is_some() {
                 community_id = params.community_id;
             }
             if params.list.is_some() {
@@ -1691,13 +1691,13 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
             count = _request_user.count_friends();
             if page > 1 {
                 let step = (page - 1) * 20;
-                object_list = community.get_friends(20, step.into());
+                object_list = _request_user.get_friends(20, step.into());
                 if count > (page * 20).try_into().unwrap() {
                     next_page_number = page + 1;
                 }
             }
             else {
-                object_list = community.get_friends(20, 0);
+                object_list = _request_user.get_friends(20, 0);
                 if count > 20.try_into().unwrap() {
                     next_page_number = 2;
                 }
@@ -1935,7 +1935,7 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
             if params.action.is_some() {
                 types = params.action.unwrap();
             }
-            if params.community_pk.is_some() {
+            if params.community_id.is_some() {
                 community_id = params.community_id;
             }
             if params.list.is_some() {
@@ -1972,13 +1972,13 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
             count = _request_user.count_friends();
             if page > 1 {
                 let step = (page - 1) * 20;
-                object_list = community.get_friends(20, step.into());
+                object_list = _request_user.get_friends(20, step.into());
                 if count > (page * 20).try_into().unwrap() {
                     next_page_number = page + 1;
                 }
             }
             else {
-                object_list = community.get_friends(20, 0);
+                object_list = _request_user.get_friends(20, 0);
                 if count > 20.try_into().unwrap() {
                     next_page_number = 2;
                 }
