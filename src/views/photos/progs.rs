@@ -40,6 +40,8 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
 
     config.route("/photos/add_photos_in_list/{id}/", web::post().to(add_photos_in_list));
     config.route("/photos/edit_photo_description/{id}/", web::post().to(edit_photo_description));
+    config.route("/photos/delete_photo/{id}/", web::post().to(delete_photo));
+    config.route("/photos/recover_photo/{id}/", web::post().to(recover_photo));
 }
 
 
@@ -497,5 +499,38 @@ pub async fn edit_photo_description(session: Session, mut payload: Multipart, _i
         return Json(EditPhotoDescription {
             description: None,
         })
+    }
+}
+
+
+pub async fn delete_photo(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+
+        let photo = get_photo(*_id);
+        let _request_user = get_request_user_data(session);
+        if photo.is_user_can_edit_delete_item(_request_user.id) {
+            photo.delete_item();
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn recover_photo(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+
+        let photo = get_photo(*_id);
+        let _request_user = get_request_user_data(session);
+        if photo.is_user_can_edit_delete_item(_request_user.id) {
+            photo.restore_item();
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
 }

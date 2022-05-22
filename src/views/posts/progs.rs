@@ -39,6 +39,9 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
 
     config.route("/posts/add_post_in_list/{id}/", web::post().to(add_post_in_list));
     config.route("/posts/edit_post/{id}/", web::post().to(edit_post));
+    config.route("/posts/delete_post/{id}/", web::post().to(delete_post));
+    config.route("/posts/recover_post/{id}/", web::post().to(recover_post));
+
     config.route("/posts/add_comment/{id}/", web::post().to(add_comment));
     config.route("/posts/add_reply/{id}/", web::post().to(add_reply));
 }
@@ -640,6 +643,39 @@ pub async fn add_reply(session: Session, mut payload: Multipart, _id: web::Path<
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+
+pub async fn delete_post(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+
+        let post = get_post(*_id);
+        let _request_user = get_request_user_data(session);
+        if post.is_user_can_edit_delete_item(_request_user.id) {
+            post.delete_item();
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn recover_post(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+
+        let post = get_post(*_id);
+        let _request_user = get_request_user_data(session);
+        if post.is_user_can_edit_delete_item(_request_user.id) {
+            post.restore_item();
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
     } else {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }

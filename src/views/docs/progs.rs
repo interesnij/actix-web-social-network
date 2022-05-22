@@ -38,6 +38,8 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
 
     config.route("/docs/add_docs_in_list/{id}/", web::post().to(add_doc_in_list));
     config.route("/docs/edit_doc/{id}/", web::post().to(edit_doc));
+    config.route("/docs/delete_doc/{id}/", web::post().to(delete_doc));
+    config.route("/docs/recover_doc/{id}/", web::post().to(recover_doc));
 }
 
 pub async fn add_user_list(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
@@ -501,5 +503,38 @@ pub async fn edit_doc(session: Session, mut payload: Multipart, _id: web::Path<i
             title: "".to_string(),
             types_2: "".to_string(),
         })
+    }
+}
+
+
+pub async fn delete_doc(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+
+        let doc = get_doc(*_id);
+        let _request_user = get_request_user_data(session);
+        if doc.is_user_can_edit_delete_item(_request_user.id) {
+            doc.delete_item();
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn recover_doc(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+
+        let doc = get_doc(*_id);
+        let _request_user = get_request_user_data(session);
+        if doc.is_user_can_edit_delete_item(_request_user.id) {
+            doc.restore_item();
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
 }

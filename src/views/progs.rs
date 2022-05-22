@@ -20,11 +20,11 @@ use crate::diesel::RunQueryDsl;
 pub fn progs_routes(config: &mut web::ServiceConfig) {
     config.route("/users/progs/like_item/", web::get().to(like_item));
     config.route("/users/progs/dislike_item/", web::get().to(dislike_item));
+
     config.route("/users/progs/like_comment/", web::get().to(like_comment));
     config.route("/users/progs/dislike_comment/", web::get().to(dislike_comment));
     config.route("/users/progs/delete_comment/", web::get().to(delete_comment));
     config.route("/users/progs/recover_comment/", web::get().to(recover_comment));
-
     config.route("/users/progs/edit_comment/", web::post().to(edit_comment));
 }
 

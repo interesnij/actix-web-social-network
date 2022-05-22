@@ -36,6 +36,8 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
 
     config.route("/surveys/add_survey_in_list/{id}/", web::post().to(add_survey_in_list));
     config.route("/surveys/edit_survey/{id}/", web::post().to(edit_survey));
+    config.route("/surveys/delete_survey/{id}/", web::post().to(delete_survey));
+    config.route("/surveys/recover_survey/{id}/", web::post().to(recover_survey));
 }
 
 pub async fn add_user_list(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
@@ -521,6 +523,38 @@ pub async fn edit_survey(session: Session, mut payload: Multipart, _id: web::Pat
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         } else {
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn delete_survey(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+
+        let survey = get_survey(*_id);
+        let _request_user = get_request_user_data(session);
+        if survey.is_user_can_edit_delete_item(_request_user.id) {
+            survey.delete_item();
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn recover_survey(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+
+        let survey = get_survey(*_id);
+        let _request_user = get_request_user_data(session);
+        if survey.is_user_can_edit_delete_item(_request_user.id) {
+            survey.restore_item();
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
         }
     } else {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))

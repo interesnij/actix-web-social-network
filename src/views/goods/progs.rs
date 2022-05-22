@@ -37,6 +37,13 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
 
     config.route("/goods/add_good_in_list/{id}/", web::post().to(add_good_in_list));
     config.route("/goods/edit_good/{id}/", web::post().to(edit_good));
+    config.route("/goods/delete_good/{id}/", web::post().to(delete_good));
+    config.route("/goods/recover_good/{id}/", web::post().to(recover_good));
+    config.route("/goods/on_comment/{id}/", web::post().to(on_comment));
+    config.route("/goods/off_comment/{id}/", web::post().to(off_comment));
+    config.route("/goods/on_votes/{id}/", web::post().to(on_votes));
+    config.route("/goods/off_votes/{id}/", web::post().to(off_votes));
+
     config.route("/goods/add_comment/{id}/", web::post().to(add_comment));
     config.route("/goods/add_reply/{id}/", web::post().to(add_reply));
 }
@@ -670,6 +677,115 @@ pub async fn add_reply(session: Session, mut payload: Multipart, _id: web::Path<
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+
+pub async fn delete_good(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+
+        let good = get_good(*_id);
+        let _request_user = get_request_user_data(session);
+        if good.is_user_can_edit_delete_item(_request_user.id) {
+            good.delete_item();
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn recover_good(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+
+        let good = get_good(*_id);
+        let _request_user = get_request_user_data(session);
+        if good.is_user_can_edit_delete_item(_request_user.id) {
+            good.restore_item();
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn on_comment(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let good = get_good(*_id);
+        let _request_user = get_request_user_data(session);
+        if good.is_user_can_edit_delete_item(_request_user.id) {
+            use crate::schema::goods::dsl::goods;
+            diesel::update(&good)
+                .set(schema::goods::comment_enabled.eq(true))
+                .get_result::<Good>(&_connection)
+                .expect("Error.");
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn off_comment(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let good = get_good(*_id);
+        let _request_user = get_request_user_data(session);
+        if good.is_user_can_edit_delete_item(_request_user.id) {
+            use crate::schema::goods::dsl::goods;
+            diesel::update(&good)
+                .set(schema::goods::comment_enabled.eq(false))
+                .get_result::<Good>(&_connection)
+                .expect("Error.");
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn on_votes(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let good = get_good(*_id);
+        let _request_user = get_request_user_data(session);
+        if good.is_user_can_edit_delete_item(_request_user.id) {
+            use crate::schema::goods::dsl::goods;
+            diesel::update(&good)
+                .set(schema::goods::votes_on.eq(true))
+                .get_result::<Good>(&_connection)
+                .expect("Error.");
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn off_votes(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let good = get_good(*_id);
+        let _request_user = get_request_user_data(session);
+        if good.is_user_can_edit_delete_item(_request_user.id) {
+            use crate::schema::goods::dsl::goods;
+            diesel::update(&good)
+                .set(schema::goods::votes_on.eq(false))
+                .get_result::<Good>(&_connection)
+                .expect("Error.");
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
     } else {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }

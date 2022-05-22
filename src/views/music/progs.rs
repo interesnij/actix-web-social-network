@@ -38,6 +38,8 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
 
     config.route("/music/add_tracks_in_list/{id}/", web::post().to(add_tracks_in_list));
     config.route("/music/edit_track/{id}/", web::post().to(edit_track));
+    config.route("/music/delete_track/{id}/", web::post().to(delete_track));
+    config.route("/music/recover_track/{id}/", web::post().to(recover_track));
 }
 
 pub async fn add_user_list(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
@@ -473,5 +475,37 @@ pub async fn edit_track(session: Session, mut payload: Multipart, _id: web::Path
             title: "".to_string(),
             image: None,
         })
+    }
+}
+
+pub async fn delete_track(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+
+        let track = get_music(*_id);
+        let _request_user = get_request_user_data(session);
+        if track.is_user_can_edit_delete_item(_request_user.id) {
+            track.delete_item();
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn recover_track(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+
+        let track = get_music(*_id);
+        let _request_user = get_request_user_data(session);
+        if track.is_user_can_edit_delete_item(_request_user.id) {
+            track.restore_item();
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
 }
