@@ -353,6 +353,7 @@ on('#ajax', 'click', '.post_off_comment', function() {
 })
 on('#ajax', 'click', '.post_on_comment', function() {
   send_change(this, "/posts/on_comment/", "post_off_comment", "Выкл. комментарии");
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".load_comments_list").style.display = "unset"
   post.querySelector(".load_comments").style.setProperty('display', 'unset', 'important');
   main_container = document.body.querySelector(".main-container");
