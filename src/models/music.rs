@@ -1565,22 +1565,22 @@ impl Music {
             _ => "c",
         };
         diesel::update(self)
-            .set(schema::goods::types.eq(close_case))
-            .get_result::<Good>(&_connection)
+            .set(schema::musics::types.eq(close_case))
+            .get_result::<Music>(&_connection)
             .expect("E");
         let list = self.get_list();
         diesel::update(&list)
-            .set(schema::good_lists::count.eq(list.count - 1))
-            .get_result::<GoodList>(&_connection)
+            .set(schema::music_lists::count.eq(list.count - 1))
+            .get_result::<MusicList>(&_connection)
             .expect("E");
 
         if self.community_id.is_some() {
             let community = self.get_community();
-            community.minus_goods(1);
+            community.minus_tracks(1);
         }
         else {
             let creator = self.get_creator();
-            creator.minus_goods(1);
+            creator.minus_tracks(1);
          }
       return true;
     }
@@ -1595,22 +1595,22 @@ impl Music {
             _ => "a",
         };
         diesel::update(self)
-            .set(schema::goods::types.eq(close_case))
-            .get_result::<Good>(&_connection)
+            .set(schema::musics::types.eq(close_case))
+            .get_result::<Music>(&_connection)
             .expect("E");
         let list = self.get_list();
         diesel::update(&list)
-            .set(schema::good_lists::count.eq(list.count + 1))
-            .get_result::<GoodList>(&_connection)
+            .set(schema::music_lists::count.eq(list.count + 1))
+            .get_result::<MusicList>(&_connection)
             .expect("E");
 
         if self.community_id.is_some() {
             let community = self.get_community();
-            community.plus_goods(1);
+            community.plus_tracks(1);
         }
         else {
             let creator = self.get_creator();
-            creator.plus_goods(1);
+            creator.plus_tracks(1);
          }
        return true;
     }
@@ -1624,22 +1624,22 @@ impl Music {
             _ => "h",
         };
         diesel::update(self)
-            .set(schema::goods::types.eq(close_case))
-            .get_result::<Good>(&_connection)
+            .set(schema::musics::types.eq(close_case))
+            .get_result::<Music>(&_connection)
             .expect("E");
         let list = self.get_list();
         diesel::update(&list)
-            .set(schema::good_lists::count.eq(list.count - 1))
-            .get_result::<GoodList>(&_connection)
+            .set(schema::music_lists::count.eq(list.count - 1))
+            .get_result::<MusicList>(&_connection)
             .expect("E");
 
         if self.community_id.is_some() {
             let community = self.get_community();
-            community.minus_goods(1);
+            community.minus_tracks(1);
         }
         else {
             let creator = self.get_creator();
-            creator.minus_goods(1);
+            creator.minus_tracks(1);
         }
        return true;
     }
@@ -1652,26 +1652,26 @@ impl Music {
             _ => "a",
         };
         diesel::update(self)
-            .set(schema::goods::types.eq(close_case))
-            .get_result::<Good>(&_connection)
+            .set(schema::musics::types.eq(close_case))
+            .get_result::<Music>(&_connection)
             .expect("E");
         let list = self.get_list();
         diesel::update(&list)
-            .set(schema::good_lists::count.eq(list.count + 1))
-            .get_result::<GoodList>(&_connection)
+            .set(schema::music_lists::count.eq(list.count + 1))
+            .get_result::<MusicList>(&_connection)
             .expect("E");
 
         if self.community_id.is_some() {
             let community = self.get_community();
-            community.plus_goods(1);
+            community.plus_tracks(1);
         }
         else {
             let creator = self.get_creator();
-            creator.plus_goods(1);
+            creator.plus_tracks(1);
          }
        return true;
     }
-    
+
     pub fn count_reposts(&self) -> String {
         if self.repost > 0 {
             return self.repost.to_string()
@@ -1929,63 +1929,6 @@ impl Music {
     }
     pub fn is_closed(&self) -> bool {
         return self.types == "h";
-    }
-
-    pub fn close_item(&self) -> bool {
-        let _connection = establish_connection();
-        let user_types = &self.types;
-        let close_case = match user_types.as_str() {
-            "a" => "h",
-            "b" => "n",
-            _ => "h",
-        };
-        diesel::update(self)
-            .set(schema::musics::types.eq(close_case))
-            .get_result::<Music>(&_connection)
-            .expect("E");
-        let list = self.get_list();
-        diesel::update(&list)
-            .set(schema::music_lists::count.eq(list.count - 1))
-            .get_result::<MusicList>(&_connection)
-            .expect("E");
-
-        if self.community_id.is_some() {
-            let community = self.get_community();
-            community.minus_tracks(1);
-        }
-        else {
-            let creator = self.get_creator();
-            creator.minus_tracks(1);
-        }
-       return true;
-    }
-    pub fn unclose_item(&self) -> bool {
-        let _connection = establish_connection();
-        let user_types = &self.types;
-        let close_case = match user_types.as_str() {
-            "h" => "a",
-            "n" => "b",
-            _ => "a",
-        };
-        diesel::update(self)
-            .set(schema::musics::types.eq(close_case))
-            .get_result::<Music>(&_connection)
-            .expect("E");
-        let list = self.get_list();
-        diesel::update(&list)
-            .set(schema::music_lists::count.eq(list.count + 1))
-            .get_result::<MusicList>(&_connection)
-            .expect("E");
-
-        if self.community_id.is_some() {
-            let community = self.get_community();
-            community.plus_tracks(1);
-        }
-        else {
-            let creator = self.get_creator();
-            creator.plus_tracks(1);
-         }
-       return true;
     }
 
     pub fn change_position(query: Json<Vec<JsonPosition>>) -> bool {

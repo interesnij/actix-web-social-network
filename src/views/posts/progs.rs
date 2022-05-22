@@ -16,6 +16,7 @@ use crate::utils::{
     get_post_comment,
     get_community_permission,
     get_user_permission,
+    establish_connection,
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;

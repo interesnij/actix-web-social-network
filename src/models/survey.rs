@@ -1588,22 +1588,22 @@ impl Survey {
             _ => "c",
         };
         diesel::update(self)
-            .set(schema::goods::types.eq(close_case))
-            .get_result::<Good>(&_connection)
+            .set(schema::surveys::types.eq(close_case))
+            .get_result::<Survey>(&_connection)
             .expect("E");
         let list = self.get_list();
         diesel::update(&list)
-            .set(schema::good_lists::count.eq(list.count - 1))
-            .get_result::<GoodList>(&_connection)
+            .set(schema::survey_lists::count.eq(list.count - 1))
+            .get_result::<SurveyList>(&_connection)
             .expect("E");
 
         if self.community_id.is_some() {
             let community = self.get_community();
-            community.minus_goods(1);
+            community.minus_surveys(1);
         }
         else {
             let creator = self.get_creator();
-            creator.minus_goods(1);
+            creator.minus_surveys(1);
          }
       return true;
     }
@@ -1618,79 +1618,22 @@ impl Survey {
             _ => "a",
         };
         diesel::update(self)
-            .set(schema::goods::types.eq(close_case))
-            .get_result::<Good>(&_connection)
+            .set(schema::surveys::types.eq(close_case))
+            .get_result::<Survey>(&_connection)
             .expect("E");
         let list = self.get_list();
         diesel::update(&list)
-            .set(schema::good_lists::count.eq(list.count + 1))
-            .get_result::<GoodList>(&_connection)
+            .set(schema::survey_lists::count.eq(list.count + 1))
+            .get_result::<SurveyList>(&_connection)
             .expect("E");
 
         if self.community_id.is_some() {
             let community = self.get_community();
-            community.plus_goods(1);
+            community.plus_surveys(1);
         }
         else {
             let creator = self.get_creator();
-            creator.plus_goods(1);
-         }
-       return true;
-    }
-
-    pub fn close_item(&self) -> bool {
-        let _connection = establish_connection();
-        let user_types = &self.types;
-        let close_case = match user_types.as_str() {
-            "a" => "h",
-            "b" => "n",
-            _ => "h",
-        };
-        diesel::update(self)
-            .set(schema::goods::types.eq(close_case))
-            .get_result::<Good>(&_connection)
-            .expect("E");
-        let list = self.get_list();
-        diesel::update(&list)
-            .set(schema::good_lists::count.eq(list.count - 1))
-            .get_result::<GoodList>(&_connection)
-            .expect("E");
-
-        if self.community_id.is_some() {
-            let community = self.get_community();
-            community.minus_goods(1);
-        }
-        else {
-            let creator = self.get_creator();
-            creator.minus_goods(1);
-        }
-       return true;
-    }
-    pub fn unclose_item(&self) -> bool {
-        let _connection = establish_connection();
-        let user_types = &self.types;
-        let close_case = match user_types.as_str() {
-            "h" => "a",
-            "n" => "b",
-            _ => "a",
-        };
-        diesel::update(self)
-            .set(schema::goods::types.eq(close_case))
-            .get_result::<Good>(&_connection)
-            .expect("E");
-        let list = self.get_list();
-        diesel::update(&list)
-            .set(schema::good_lists::count.eq(list.count + 1))
-            .get_result::<GoodList>(&_connection)
-            .expect("E");
-
-        if self.community_id.is_some() {
-            let community = self.get_community();
-            community.plus_goods(1);
-        }
-        else {
-            let creator = self.get_creator();
-            creator.plus_goods(1);
+            creator.plus_surveys(1);
          }
        return true;
     }

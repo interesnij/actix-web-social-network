@@ -16,6 +16,7 @@ use crate::utils::{
     get_anon_user_permission,
     get_community_permission,
     get_anon_community_permission,
+    establish_connection,
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
