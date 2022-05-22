@@ -969,7 +969,7 @@ pub async fn lists_for_copy_load(session: Session, req: HttpRequest) -> actix_we
         if types == "pos".to_string() {
             use crate::models::PostList;
 
-            let object_list: _request_user.get_post_lists();
+            let object_list = _request_user.get_post_lists();
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/lists_for_copy.stpl")]
@@ -982,7 +982,7 @@ pub async fn lists_for_copy_load(session: Session, req: HttpRequest) -> actix_we
         else if types == "pho".to_string() {
             use crate::models::PhotoList;
 
-            let object_list: _request_user.get_photo_lists();
+            let object_list = _request_user.get_photo_lists();
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/lists_for_copy.stpl")]
@@ -995,7 +995,7 @@ pub async fn lists_for_copy_load(session: Session, req: HttpRequest) -> actix_we
         else if types == "goo".to_string() {
             use crate::models::GoodList;
 
-            let object_list: _request_user.get_good_lists();
+            let object_list = _request_user.get_good_lists();
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/lists_for_copy.stpl")]
@@ -1008,7 +1008,7 @@ pub async fn lists_for_copy_load(session: Session, req: HttpRequest) -> actix_we
         else if types == "vid".to_string() {
             use crate::models::VideoList;
 
-            let object_list: _request_user.get_video_lists();
+            let object_list = _request_user.get_video_lists();
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/lists_for_copy.stpl")]
@@ -1021,7 +1021,7 @@ pub async fn lists_for_copy_load(session: Session, req: HttpRequest) -> actix_we
         else if types == "doc".to_string() {
             use crate::models::DocList;
 
-            let object_list: _request_user.get_doc_lists();
+            let object_list = _request_user.get_doc_lists();
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/lists_for_copy.stpl")]
@@ -1034,7 +1034,7 @@ pub async fn lists_for_copy_load(session: Session, req: HttpRequest) -> actix_we
         else if types == "mus".to_string() {
             use crate::models::MusicList;
 
-            let object_list: _request_user.get_music_lists();
+            let object_list = _request_user.get_music_lists();
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/lists_for_copy.stpl")]
@@ -1061,7 +1061,7 @@ pub async fn communities_lists_for_copy_load(session: Session, req: HttpRequest)
         if types == "pos".to_string() {
             use crate::models::PostList;
 
-            let object_list: _request_user.get_post_lists_from_staffed_comunities();
+            let object_list = _request_user.get_post_lists_from_staffed_comunities();
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/communities_lists_for_copy.stpl")]
@@ -1074,7 +1074,7 @@ pub async fn communities_lists_for_copy_load(session: Session, req: HttpRequest)
         else if types == "pho".to_string() {
             use crate::models::PhotoList;
 
-            let object_list: _request_user.get_photo_lists_from_staffed_comunities();
+            let object_list = _request_user.get_photo_lists_from_staffed_comunities();
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/communities_lists_for_copy.stpl")]
@@ -1087,7 +1087,7 @@ pub async fn communities_lists_for_copy_load(session: Session, req: HttpRequest)
         else if types == "goo".to_string() {
             use crate::models::GoodList;
 
-            let object_list: _request_user.get_good_lists_from_staffed_comunities();
+            let object_list = _request_user.get_good_lists_from_staffed_comunities();
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/communities_lists_for_copy.stpl")]
@@ -1100,7 +1100,7 @@ pub async fn communities_lists_for_copy_load(session: Session, req: HttpRequest)
         else if types == "vid".to_string() {
             use crate::models::VideoList;
 
-            let object_list: _request_user.get_video_lists_from_staffed_comunities();
+            let object_list = _request_user.get_video_lists_from_staffed_comunities();
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/communities_lists_for_copy.stpl")]
@@ -1113,7 +1113,7 @@ pub async fn communities_lists_for_copy_load(session: Session, req: HttpRequest)
         else if types == "doc".to_string() {
             use crate::models::DocList;
 
-            let object_list: _request_user.get_doc_lists_from_staffed_comunities();
+            let object_list = _request_user.get_doc_lists_from_staffed_comunities();
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/communities_lists_for_copy.stpl")]
@@ -1126,7 +1126,7 @@ pub async fn communities_lists_for_copy_load(session: Session, req: HttpRequest)
         else if types == "mus".to_string() {
             use crate::models::MusicList;
 
-            let object_list: _request_user.get_music_lists_from_staffed_comunities();
+            let object_list = _request_user.get_music_lists_from_staffed_comunities();
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/communities_lists_for_copy.stpl")]
