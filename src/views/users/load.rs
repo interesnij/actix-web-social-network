@@ -1349,7 +1349,7 @@ pub async fn smiles_stickers_load(session: Session, req: HttpRequest) -> actix_w
 
         let object_list: Vec<Smile>;
         let categories = _request_user.get_sticker_categories(30, 0);
-        let count = User::get_smiles();
+        let count = User::count_smiles();
         if page > 1 {
             let step = (page - 1) * 20;
             object_list = User::count_smiles(20, step.into());
@@ -2098,7 +2098,7 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
         }
         else if types == "copy_el".to_string() {
             text = "копировать записи и список".to_string();
-            if code == "pos".to_string() {
+            if code == &"pos".to_string() {
                 use crate::utils::get_post_list;
                 let current_list = get_post_list(pk);
                 users_list = current_list.get_copy_el_include_users()
