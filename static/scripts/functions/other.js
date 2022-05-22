@@ -76,7 +76,7 @@ function play_video_list(url, counter, video_pk){
     setTimeout(function() {video_player.playVideo(counter)}, 1000);
 
     info_video = document.body.querySelector("#info_video");
-    if (info_video.innerHTML == "" || info_video.getAttribute("video-pk") != video_pk){
+    if (info_video.innerHTML == "" || info_video.getAttribute("data-pk") != video_pk){
       info_video.setAttribute("data-pk", video_pk);
       console.log("Воспроизводится ролик № : " + video_pk)
     }
