@@ -1664,7 +1664,7 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
 
         let _request_user = get_request_user_data(session);
         let object_list: Vec<User> = Vec::new();
-        let users_list: Vec<User> = Vec::new();
+        let mut users_list: Vec<User> = Vec::new();
 
         if community_id.is_some() {
             use crate::utils::get_community;
@@ -1944,8 +1944,8 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
         }
 
         let _request_user = get_request_user_data(session);
-        let object_list: Vec<User>;
-        let users_list: Vec<User>;
+        let object_list: Vec<User> = Vec::new();
+        let mut users_list: Vec<User> = Vec::new();
 
         if community_id.is_some() {
             use crate::utils::get_community;
