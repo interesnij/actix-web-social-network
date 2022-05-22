@@ -649,7 +649,7 @@ impl User {
             .order(schema::sticker_categories::position.asc())
             .limit(limit)
             .offset(offset)
-            .load::<StickerCategory>(&_connection)
+            .load::<StickerCategorie>(&_connection)
             .expect("E.");
     }
     pub fn get_stickers_for_category(cat_id:i32, limit: i64, offset: i64) -> Vec<Sticker> {
