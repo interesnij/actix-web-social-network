@@ -1386,7 +1386,7 @@ pub async fn smiles_stickers_load(session: Session, req: HttpRequest) -> actix_w
             struct Template {
                 request_user:     User,
                 s_categories:     Vec<SmileCategorie>,
-                current_category: i32,
+                current_category: usize,
                 categories:       Vec<StickerCategorie>,
             }
 
@@ -1406,7 +1406,7 @@ pub async fn smiles_stickers_load(session: Session, req: HttpRequest) -> actix_w
             struct Template {
                 request_user:     User,
                 s_categories:     Vec<SmileCategorie>,
-                current_category: i32,
+                current_category: usize,
                 categories:       Vec<StickerCategorie>,
             }
 
@@ -1447,7 +1447,7 @@ pub async fn smiles_load(session: Session, req: HttpRequest) -> actix_web::Resul
             struct Template {
                 request_user:     User,
                 s_categories:     Vec<SmileCategorie>,
-                current_category: i32,
+                current_category: usize,
             }
 
             let body = Template {
@@ -1465,7 +1465,7 @@ pub async fn smiles_load(session: Session, req: HttpRequest) -> actix_web::Resul
             struct Template {
                 request_user:     User,
                 s_categories:     Vec<SmileCategorie>,
-                current_category: i32,
+                current_category: usize,
             }
 
             let body = Template {
