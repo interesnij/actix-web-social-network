@@ -25,7 +25,7 @@
                                 <p class="card-text file-name mb-0 list_name load_attach_good_list pointer list_toggle" style="text-align: left;" data-name="<%= object.name %>"><%= object.name %></p>
                                 <p class="card-text file-size mb-0 count"><%= object.count_items() %></p>
                             </div>
-                            <% if object.is_not_empty() { %>
+                            <% if object.count > 0 { %>
                             <small class="file-accessed pointer underline good_attach_list" data-pk="<%= object.id %>">Прикрепить список</small>
                             <% } else { %>
                               <p style="margin-bottom: 18px;"></p>
@@ -45,7 +45,7 @@
 <div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_block_paginate">
 <% for object in object_list.iter() { %>
 <div class="col-md-6 mb-3">
-  <div class="good_load_one pointer" good-pk="<%= object.pk %>">
+  <div class="good_load_one pointer" good-pk="<%= object.id %>">
     <div class="row align-items-center no-gutters">
       <div class="col">
         <img class="image_fit_200" src="<%- object.get_image() %>" alt="img">

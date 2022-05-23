@@ -1,8 +1,9 @@
 <div class="card p-1">
     <div class="card-body">
-        <% if request_user.is_have_populate_smiles() { %>
+    <% let populate_smiles = request_user.get_populate_smiles(); %>
+        <% if populate_smiles.len() > 0 { %>
           <h6>Часто используемые</h6>
-          <% for smile in request_user.get_populate_smiles().iter() { %>
+          <% for smile in populate_smiles.iter() { %>
             <img class="pointer classic_smile_item" data-pk="<%= smile.id %>" style="width: auto;" src="<%= smile.image %>" alt="smile">
           <% } %>
         <% } %>

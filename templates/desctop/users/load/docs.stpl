@@ -22,7 +22,7 @@
                                 <p class="card-text file-name mb-0 list_name load_attach_doc_list pointer list_toggle" style="text-align: left;" data-name="<%= object.name %>"><%= object.name %></p>
                                 <p class="card-text file-size mb-0 count"><%= object.count_items() %></p>
                             </div>
-                            <% if object.is_not_empty() { %>
+                            <% if object.count > 0 { %>
                             <small class="file-accessed pointer underline doc_attach_list" data-pk="<%= object.id %>">Прикрепить список</small>
                             <% } else { %>
                               <p style="margin-bottom: 18px;"></p>

@@ -4,7 +4,7 @@
 <div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_block_paginate">
 <% for object in object_list.iter() { %>
 <div class="col-md-6 mb-3">
-  <div class="good_load_one pointer" good-pk="<%= object.pk %>">
+  <div class="good_load_one pointer" good-pk="<%= object.id %>">
     <div class="row align-items-center no-gutters">
       <div class="col">
         <img class="image_fit_200" src="<%- object.get_image() %>" alt="img">

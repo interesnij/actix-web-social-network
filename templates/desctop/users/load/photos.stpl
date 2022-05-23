@@ -27,7 +27,7 @@
                             <span class="text-white count"><%= object.count_items_ru() %></span>
 
                             <hr style="margin-bottom: 3rem !important">
-                            <% if object.is_not_empty() { %>
+                            <% if object.count > 0 { %>
                               <small class="file-accessed pointer underline photo_attach_list" data-pk="<%= object.id %>">Прикрепить список</small>
                             <% } else { %>
                               <p style="margin-bottom: 64px;"></p>

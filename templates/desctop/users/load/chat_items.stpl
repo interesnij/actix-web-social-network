@@ -20,7 +20,7 @@
             </figure>
             <div class="media-body">
               <h6 class="mb-0" style="padding-top: 10px;">
-                <%= object.get_name(request_user.pk) %>
+                <%= object.get_name(request_user.id) %>
               </h6>
               <p><%= object.get_members_count_ru() %></p>
             </div>
@@ -40,7 +40,7 @@
 
           <% for object in friends_list.iter() { %>
 
-            <div class="media pointer chat_items_toggle border-bottom" data-pk="u<%= object.id %>" data-link="<%= object.get_link() %>" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
+            <div class="media pointer chat_items_toggle border-bottom" data-pk="u<%= object.id %>" data-link="<%= object.link %>" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
               <figure>
                 <% if object.s_avatar.is_some() { %>
                 <img src="<%= object.s_avatar.as_deref().unwrap() %>" style="border-radius:50px;width:50px;" alt="image">
