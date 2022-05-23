@@ -95,9 +95,10 @@ pub struct NewSmileCategorie {
 }
 impl SmileCategorie {
     pub fn get_smiles(&self) -> Vec<Smile> {
+        use crate::models::other::smiles::dsl::smiles;
         let _connection = establish_connection();
 
-        return penaltie = smiles
+        return smiles
             .filter(schema::smiles::smile_categorie_id.eq(self.id))
             .order(schema::smiles::position.asc())
             .load::<Smile>(&_connection)

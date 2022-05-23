@@ -8,7 +8,7 @@ use crate::models::{
     Chat, Message, UserLocation, Smile, Sticker, Community, UserProfile, Friend,
     Post, Photo, Music, Video,
     Survey, StickerCategorie,
-    Doc, Good,
+    Doc, Good, SmileCategorie, 
     PostList, PhotoList, MusicList, VideoList, SurveyList, DocList, GoodList,
     Follow, Notification, UserPrivate, UserBlock, PostCategorie,
 };

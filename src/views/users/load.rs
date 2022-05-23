@@ -732,7 +732,7 @@ pub async fn music_load(session: Session, req: HttpRequest) -> actix_web::Result
 }
 
 pub async fn music_list_load(session: Session, req: HttpRequest, list_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    use crate::models::{Music, NusicList};
+    use crate::models::{Music,MusicList};
     use crate::utils::get_music_list;
 
     let (is_desctop, page) = get_list_variables(req);
@@ -1376,7 +1376,8 @@ pub async fn smiles_stickers_load(session: Session, req: HttpRequest) -> actix_w
         let mut current_category = 1;
         let s_categories = User::get_smilies_categories();
         if page > 1 {
-            current_category = page;
+            let count_usize: usize = page as usize;
+            current_category = count_usize;
         }
 
         if is_desctop {
@@ -1431,11 +1432,13 @@ pub async fn smiles_load(session: Session, req: HttpRequest) -> actix_web::Resul
 
         let (is_desctop, page) = get_list_variables(req);
         let mut current_category = 1;
+
         let _request_user = get_request_user_data(session);
 
         let s_categories = User::get_smilies_categories();
         if page > 1 {
-            current_category = page;
+            let count_usize: usize = page as usize;
+            current_category = count_usize;
         }
 
         if is_desctop {
@@ -1468,7 +1471,7 @@ pub async fn smiles_load(session: Session, req: HttpRequest) -> actix_web::Resul
             let body = Template {
                 request_user:     _request_user,
                 s_categories:     s_categories,
-                current_category: next_page_number,
+                current_category: current_category,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
