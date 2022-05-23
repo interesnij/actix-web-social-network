@@ -1,5 +1,5 @@
-//use crate::schema;
-//use diesel::prelude::*;
+use crate::schema;
+use diesel::prelude::*;
 use crate::schema::{
     phone_codes,
     custom_links,
@@ -7,10 +7,10 @@ use crate::schema::{
     stickers,
     smile_categories,
     smiles,
+    establish_connection,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
-//use crate::utils::establish_connection;
 
 
 /////// PhoneCode //////
@@ -92,6 +92,17 @@ pub struct NewSmileCategorie {
     pub name:        String,
     pub position:    i16,
     pub description: Option<String>,
+}
+impl SmileCategorie {
+    pub fn get_smiles(&self) -> Vec<Smile> {
+        let _connection = establish_connection();
+
+        return penaltie = smiles
+            .filter(schema::smiles::smile_categorie_id.eq(self.id))
+            .order(schema::smiles::position.asc())
+            .load::<Smile>(&_connection)
+            .expect("E.");
+    }
 }
 
 /////// Smiles //////

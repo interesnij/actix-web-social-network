@@ -10,7 +10,7 @@
       <div class="card-body">
         <div class="is_block_paginate">
           <% for object in chats_list.iter() { %>
-          <div class="media pointer chat_items_toggle border-bottom" data-link="load_chat" data-pk="c<%= object.pk %>" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
+          <div class="media pointer chat_items_toggle border-bottom" data-link="load_chat" data-pk="c<%= object.id %>" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
             <figure>
               <% if object.image.is_some() { %>
                 <img src="<%= object.image.as_deref().unwrap() %>" style="border-radius:50px;width:50px;" alt="image">
@@ -40,7 +40,7 @@
 
           <% for object in friends_list.iter() { %>
 
-            <div class="media pointer chat_items_toggle border-bottom" data-pk="u<%= object.pk %>" data-link="<%= object.get_link() %>" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
+            <div class="media pointer chat_items_toggle border-bottom" data-pk="u<%= object.id %>" data-link="<%= object.get_link() %>" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
               <figure>
                 <% if object.s_avatar.is_some() { %>
                 <img src="<%= object.s_avatar.as_deref().unwrap() %>" style="border-radius:50px;width:50px;" alt="image">

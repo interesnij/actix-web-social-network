@@ -126,7 +126,7 @@ pub async fn photos_load(session: Session, req: HttpRequest) -> actix_web::Resul
 }
 
 pub async fn photos_list_load(session: Session, req: HttpRequest, list_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    use crate::models::Photo;
+    use crate::models::{Photo, PhotoList};
     use crate::utils::get_photo_list;
 
     let (is_desctop, page) = get_list_variables(req);
@@ -157,17 +157,19 @@ pub async fn photos_list_load(session: Session, req: HttpRequest, list_id: web::
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/photos_list.stpl")]
             struct Template {
-                request_user:                User,
-                object_list:                 Vec<Photo>,
-                next_page_number:            i32,
-                count:                       i32,
+                request_user:     User,
+                object_list:      Vec<Photo>,
+                next_page_number: i32,
+                count:            i32,
+                list:             PhotoList,
             }
 
             let body = Template {
-                request_user:                _request_user,
-                object_list:                 object_list,
-                next_page_number:            next_page_number,
-                count:                       count,
+                request_user:     _request_user,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                count:            count,
+                list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -177,17 +179,19 @@ pub async fn photos_list_load(session: Session, req: HttpRequest, list_id: web::
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/photos_list.stpl")]
             struct Template {
-                request_user:                User,
-                object_list:                 Vec<Photo>,
-                next_page_number:            i32,
-                count:                       i32,
+                request_user:     User,
+                object_list:      Vec<Photo>,
+                next_page_number: i32,
+                count:            i32,
+                list:             PhotoList,
             }
 
             let body = Template {
-                request_user:                _request_user,
-                object_list:                 object_list,
-                next_page_number:            next_page_number,
-                count:                       count,
+                request_user:     _request_user,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                count:            count,
+                list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -273,7 +277,7 @@ pub async fn video_load(session: Session, req: HttpRequest) -> actix_web::Result
 }
 
 pub async fn video_list_load(session: Session, req: HttpRequest, list_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    use crate::models::Video;
+    use crate::models::{Video, VideoList};
     use crate::utils::get_video_list;
 
     let (is_desctop, page) = get_list_variables(req);
@@ -304,17 +308,19 @@ pub async fn video_list_load(session: Session, req: HttpRequest, list_id: web::P
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/video_list.stpl")]
             struct Template {
-                request_user:                User,
-                object_list:                 Vec<Video>,
-                next_page_number:            i32,
-                count:                       i32,
+                request_user:     User,
+                object_list:      Vec<Video>,
+                next_page_number: i32,
+                count:            i32,
+                list:             VideoList,
             }
 
             let body = Template {
-                request_user:                _request_user,
-                object_list:                 object_list,
-                next_page_number:            next_page_number,
-                count:                       count,
+                request_user:     _request_user,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                count:            count,
+                list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -324,17 +330,19 @@ pub async fn video_list_load(session: Session, req: HttpRequest, list_id: web::P
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/video_list.stpl")]
             struct Template {
-                request_user:                User,
-                object_list:                 Vec<Video>,
-                next_page_number:            i32,
-                count:                       i32,
+                request_user:     User,
+                object_list:      Vec<Video>,
+                next_page_number: i32,
+                count:            i32,
+                list:             VideoList,
             }
 
             let body = Template {
-                request_user:                _request_user,
-                object_list:                 object_list,
-                next_page_number:            next_page_number,
-                count:                       count,
+                request_user:     _request_user,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                count:            count,
+                list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -420,7 +428,7 @@ pub async fn docs_load(session: Session, req: HttpRequest) -> actix_web::Result<
 }
 
 pub async fn docs_list_load(session: Session, req: HttpRequest, list_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    use crate::models::Doc;
+    use crate::models::{Doc, DocList};
     use crate::utils::get_doc_list;
 
     let (is_desctop, page) = get_list_variables(req);
@@ -451,17 +459,19 @@ pub async fn docs_list_load(session: Session, req: HttpRequest, list_id: web::Pa
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/docs_list.stpl")]
             struct Template {
-                request_user:                User,
-                object_list:                 Vec<Doc>,
-                next_page_number:            i32,
-                count:                       i32,
+                request_user:     User,
+                object_list:      Vec<Doc>,
+                next_page_number: i32,
+                count:            i32,
+                list:             DocList,
             }
 
             let body = Template {
-                request_user:                _request_user,
-                object_list:                 object_list,
-                next_page_number:            next_page_number,
-                count:                       count,
+                request_user:     _request_user,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                count:            count,
+                list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -471,17 +481,19 @@ pub async fn docs_list_load(session: Session, req: HttpRequest, list_id: web::Pa
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/docs_list.stpl")]
             struct Template {
-                request_user:                User,
-                object_list:                 Vec<Doc>,
-                next_page_number:            i32,
-                count:                       i32,
+                request_user:     User,
+                object_list:      Vec<Doc>,
+                next_page_number: i32,
+                count:            i32,
+                list:             DocList,
             }
 
             let body = Template {
-                request_user:                _request_user,
-                object_list:                 object_list,
-                next_page_number:            next_page_number,
-                count:                       count,
+                request_user:     _request_user,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                count:            count,
+                list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -568,7 +580,7 @@ pub async fn surveys_load(session: Session, req: HttpRequest) -> actix_web::Resu
 }
 
 pub async fn surveys_list_load(session: Session, req: HttpRequest, list_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    use crate::models::Survey;
+    use crate::models::{Survey, SurveyList};
     use crate::utils::get_survey_list;
 
     let (is_desctop, page) = get_list_variables(req);
@@ -599,17 +611,19 @@ pub async fn surveys_list_load(session: Session, req: HttpRequest, list_id: web:
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/surveys_list.stpl")]
             struct Template {
-                request_user:                User,
-                object_list:                 Vec<Survey>,
-                next_page_number:            i32,
-                count:                       i32,
+                request_user:     User,
+                object_list:      Vec<Survey>,
+                next_page_number: i32,
+                count:            i32,
+                list:             SurveyList,
             }
 
             let body = Template {
-                request_user:                _request_user,
-                object_list:                 object_list,
-                next_page_number:            next_page_number,
-                count:                       count,
+                request_user:     _request_user,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                count:            count,
+                list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -619,17 +633,19 @@ pub async fn surveys_list_load(session: Session, req: HttpRequest, list_id: web:
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/surveys_list.stpl")]
             struct Template {
-                request_user:                User,
-                object_list:                 Vec<Survey>,
-                next_page_number:            i32,
-                count:                       i32,
+                request_user:     User,
+                object_list:      Vec<Survey>,
+                next_page_number: i32,
+                count:            i32,
+                list:             SurveyList,
             }
 
             let body = Template {
-                request_user:                _request_user,
-                object_list:                 object_list,
-                next_page_number:            next_page_number,
-                count:                       count,
+                request_user:     _request_user,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                count:            count,
+                list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -716,7 +732,7 @@ pub async fn music_load(session: Session, req: HttpRequest) -> actix_web::Result
 }
 
 pub async fn music_list_load(session: Session, req: HttpRequest, list_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    use crate::models::Music;
+    use crate::models::{Music, NusicList};
     use crate::utils::get_music_list;
 
     let (is_desctop, page) = get_list_variables(req);
@@ -747,17 +763,19 @@ pub async fn music_list_load(session: Session, req: HttpRequest, list_id: web::P
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/music_list.stpl")]
             struct Template {
-                request_user:                User,
-                object_list:                 Vec<Music>,
-                next_page_number:            i32,
-                count:                       i32,
+                request_user:     User,
+                object_list:      Vec<Music>,
+                next_page_number: i32,
+                count:            i32,
+                list:             MusicList,
             }
 
             let body = Template {
-                request_user:                _request_user,
-                object_list:                 object_list,
-                next_page_number:            next_page_number,
-                count:                       count,
+                request_user:     _request_user,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                count:            count,
+                list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -767,17 +785,19 @@ pub async fn music_list_load(session: Session, req: HttpRequest, list_id: web::P
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/music_list.stpl")]
             struct Template {
-                request_user:                User,
-                object_list:                 Vec<Music>,
-                next_page_number:            i32,
-                count:                       i32,
+                request_user:     User,
+                object_list:      Vec<Music>,
+                next_page_number: i32,
+                count:            i32,
+                list:             MusicList,
             }
 
             let body = Template {
-                request_user:                _request_user,
-                object_list:                 object_list,
-                next_page_number:            next_page_number,
-                count:                       count,
+                request_user:     _request_user,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                count:            count,
+                list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -864,7 +884,7 @@ pub async fn goods_load(session: Session, req: HttpRequest) -> actix_web::Result
 }
 
 pub async fn goods_list_load(session: Session, req: HttpRequest, list_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    use crate::models::Good;
+    use crate::models::{Good, GoodList};
     use crate::utils::get_good_list;
 
     let (is_desctop, page) = get_list_variables(req);
@@ -895,17 +915,19 @@ pub async fn goods_list_load(session: Session, req: HttpRequest, list_id: web::P
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/goods_list.stpl")]
             struct Template {
-                request_user:                User,
-                object_list:                 Vec<Good>,
-                next_page_number:            i32,
-                count:                       i32,
+                request_user:     User,
+                object_list:      Vec<Good>,
+                next_page_number: i32,
+                count:            i32,
+                list:             GoodList,
             }
 
             let body = Template {
-                request_user:                _request_user,
-                object_list:                 object_list,
-                next_page_number:            next_page_number,
-                count:                       count,
+                request_user:     _request_user,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                count:            count,
+                list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -915,17 +937,19 @@ pub async fn goods_list_load(session: Session, req: HttpRequest, list_id: web::P
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/goods_list.stpl")]
             struct Template {
-                request_user:                User,
-                object_list:                 Vec<Good>,
-                next_page_number:            i32,
-                count:                       i32,
+                request_user:     User,
+                object_list:      Vec<Good>,
+                next_page_number: i32,
+                count:            i32,
+                list:             GoodList,
             }
 
             let body = Template {
-                request_user:                _request_user,
-                object_list:                 object_list,
-                next_page_number:            next_page_number,
-                count:                       count,
+                request_user:     _request_user,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                count:            count,
+                list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1342,27 +1366,17 @@ pub async fn friends_load(session: Session, req: HttpRequest) -> actix_web::Resu
 
 pub async fn smiles_stickers_load(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        use crate::models::{Smile,StickerCategorie};
+        use crate::models::{Smile,StickerCategorie,SmileCategorie};
 
         let (is_desctop, page) = get_list_variables(req);
-        let mut next_page_number = 0;
         let _request_user = get_request_user_data(session);
 
-        let object_list: Vec<Smile>;
         let categories = User::get_sticker_categories(30, 0);
-        let count = User::count_smiles();
+
+        let mut current_category = 1;
+        let s_categories = User::get_smilies_categories();
         if page > 1 {
-            let step = (page - 1) * 20;
-            object_list = User::get_smiles(20, step.into());
-            if count > (page * 20).try_into().unwrap() {
-                next_page_number = page + 1;
-            }
-        }
-        else {
-            object_list = User::get_smiles(20, 0);
-            if count > 20.try_into().unwrap() {
-                next_page_number = 2;
-            }
+            current_category = page;
         }
 
         if is_desctop {
@@ -1370,18 +1384,16 @@ pub async fn smiles_stickers_load(session: Session, req: HttpRequest) -> actix_w
             #[template(path = "desctop/users/load/smiles_stickers.stpl")]
             struct Template {
                 request_user:     User,
-                object_list:      Vec<Smile>,
+                s_categories:     Vec<SmileCategorie>,
+                current_category: i32,
                 categories:       Vec<StickerCategorie>,
-                next_page_number: i32,
-                count:            usize,
             }
 
             let body = Template {
                 request_user:     _request_user,
-                object_list:      object_list,
+                s_categories:     s_categories,
+                current_category: current_category,
                 categories:       categories,
-                next_page_number: next_page_number,
-                count:            count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1392,18 +1404,16 @@ pub async fn smiles_stickers_load(session: Session, req: HttpRequest) -> actix_w
             #[template(path = "mobile/users/load/smiles_stickers.stpl")]
             struct Template {
                 request_user:     User,
-                object_list:      Vec<Smile>,
+                s_categories:     Vec<SmileCategorie>,
+                current_category: i32,
                 categories:       Vec<StickerCategorie>,
-                next_page_number: i32,
-                count:            usize,
             }
 
             let body = Template {
                 request_user:     _request_user,
-                object_list:      object_list,
+                s_categories:     s_categories,
+                current_category: current_category,
                 categories:       categories,
-                next_page_number: next_page_number,
-                count:            count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1417,26 +1427,15 @@ pub async fn smiles_stickers_load(session: Session, req: HttpRequest) -> actix_w
 
 pub async fn smiles_load(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        use crate::models::Smile;
+        use crate::models::SmileCategorie;
 
         let (is_desctop, page) = get_list_variables(req);
-        let mut next_page_number = 0;
+        let mut current_category = 1;
         let _request_user = get_request_user_data(session);
 
-        let object_list: Vec<Smile>;
-        let count = User::count_smiles();
+        let s_categories = User::get_smilies_categories();
         if page > 1 {
-            let step = (page - 1) * 20;
-            object_list = User::get_smiles(20, step.into());
-            if count > (page * 20).try_into().unwrap() {
-                next_page_number = page + 1;
-            }
-        }
-        else {
-            object_list = User::get_smiles(20, 0);
-            if count > 20.try_into().unwrap() {
-                next_page_number = 2;
-            }
+            current_category = page;
         }
 
         if is_desctop {
@@ -1444,16 +1443,14 @@ pub async fn smiles_load(session: Session, req: HttpRequest) -> actix_web::Resul
             #[template(path = "desctop/users/load/smiles.stpl")]
             struct Template {
                 request_user:     User,
-                object_list:      Vec<Smile>,
-                next_page_number: i32,
-                count:            usize,
+                s_categories:     Vec<SmileCategorie>,
+                current_category: i32,
             }
 
             let body = Template {
                 request_user:     _request_user,
-                object_list:      object_list,
-                next_page_number: next_page_number,
-                count:            count,
+                s_categories:     s_categories,
+                current_category: current_category,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1464,16 +1461,14 @@ pub async fn smiles_load(session: Session, req: HttpRequest) -> actix_web::Resul
             #[template(path = "mobile/users/load/smiles.stpl")]
             struct Template {
                 request_user:     User,
-                object_list:      Vec<Smile>,
-                next_page_number: i32,
-                count:            usize,
+                s_categories:     Vec<SmileCategorie>,
+                current_category: i32,
             }
 
             let body = Template {
                 request_user:     _request_user,
-                object_list:      object_list,
-                next_page_number: next_page_number,
-                count:            count,
+                s_categories:     s_categories,
+                current_category: next_page_number,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

@@ -652,6 +652,15 @@ impl User {
             .load::<StickerCategorie>(&_connection)
             .expect("E.");
     }
+    pub fn get_smilies_categories() -> Vec<SmileCategorie> {
+        use crate::schema::smile_categories::dsl::smile_categories;
+
+        let _connection = establish_connection();
+        return smile_categories
+            .order(schema::smile_categories::position.asc())
+            .load::<SmileCategorie>(&_connection)
+            .expect("E.");
+    }
     pub fn get_stickers_for_category(cat_id:i32, limit: i64, offset: i64) -> Vec<Sticker> {
         use crate::schema::stickers::dsl::stickers;
 
