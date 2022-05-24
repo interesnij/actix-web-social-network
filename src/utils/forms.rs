@@ -166,7 +166,7 @@ pub async fn comment_form(payload: &mut Multipart) -> CommentForm {
                 else if field.name() == "content" {
                     form.content = Some(data_string);
                 }
-                else if field.name() == "attach_items" {
+                else if field.name() == "attach_items[]" {
                     form.attach_items = Some(data_string);
                 }
             }

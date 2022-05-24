@@ -375,7 +375,7 @@ pub async fn post_form(payload: &mut Multipart) -> PostForm {
                 }
             }
         }
-        else if field.name() == "attach_items" {
+        else if field.name() == "attach_items[]" {
             while let Some(chunk) = field.next().await {
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
