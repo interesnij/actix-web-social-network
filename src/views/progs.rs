@@ -85,7 +85,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
 
                 let edited_comment = EditPostComment {
                     content: form.content,
-                    items:   form.attach_items,
+                    attach:  form.attach_items,
                 };
                 let item = get_post_comment(comment_id);
                 if item.get_list().is_user_can_create_comment(_request_user.id) {
