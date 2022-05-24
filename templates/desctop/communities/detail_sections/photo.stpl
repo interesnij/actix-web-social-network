@@ -14,7 +14,7 @@
     <div class="card-body p-1">
         <div class="row no-gutters">
           <% for object in community.get_6_photos().iter() { %>
-            <div style="flex: 0 0 33.33333%;max-width:33.33333%;padding:5px;" class="detail_photo pointer" photo-pk="<%= object.id %>">
+            <div style="flex: 0 0 33.33333%;max-width:33.33333%;padding:3px;" class="detail_photo pointer" photo-pk="<%= object.id %>">
               <img class="image_fit_70" src="<%= object.file %>" alt="">
             </div>
           <% } %>
