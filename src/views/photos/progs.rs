@@ -20,7 +20,7 @@ use crate::utils::{
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::{PhotoList, Photo, EditPhotoDescription};
+use crate::models::{PhotoList, Photo, PhotoComment, EditPhotoDescription};
 use serde::{Deserialize, Serialize};
 use std;
 
