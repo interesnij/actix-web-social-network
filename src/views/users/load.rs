@@ -20,36 +20,36 @@ use crate::models::User;
 
 
 pub fn load_urls(config: &mut web::ServiceConfig) {
-    config.route("/load/photos/", web::get().to(photos_load));
-    config.route("/load/photos_list/{id}/", web::get().to(photos_list_load));
+    config.route("/users/load/photos/", web::get().to(photos_load));
+    config.route("/users/load/photos_list/{id}/", web::get().to(photos_list_load));
 
-    config.route("/load/video/", web::get().to(video_load));
-    config.route("/load/video_list/{id}/", web::get().to(video_list_load));
+    config.route("/users/load/video/", web::get().to(video_load));
+    config.route("/users/load/video_list/{id}/", web::get().to(video_list_load));
 
-    config.route("/load/docs/", web::get().to(docs_load));
-    config.route("/load/docs_list/{id}/", web::get().to(docs_list_load));
+    config.route("/users/load/docs/", web::get().to(docs_load));
+    config.route("/users/load/docs_list/{id}/", web::get().to(docs_list_load));
 
-    config.route("/load/surveys/", web::get().to(surveys_load));
-    config.route("/load/surveys_list/{id}/", web::get().to(surveys_list_load));
+    config.route("/users/load/surveys/", web::get().to(surveys_load));
+    config.route("/users/load/surveys_list/{id}/", web::get().to(surveys_list_load));
 
-    config.route("/load/music/", web::get().to(music_load));
-    config.route("/load/music_list/{id}/", web::get().to(music_list_load));
+    config.route("/users/load/music/", web::get().to(music_load));
+    config.route("/users/load/music_list/{id}/", web::get().to(music_list_load));
 
-    config.route("/load/goods/", web::get().to(goods_load));
-    config.route("/load/goods_list/{id}/", web::get().to(goods_list_load));
+    config.route("/users/load/goods/", web::get().to(goods_load));
+    config.route("/users/load/goods_list/{id}/", web::get().to(goods_list_load));
 
-    config.route("/load/lists_for_copy/", web::get().to(lists_for_copy_load));
-    config.route("/load/communities_lists_for_copy/", web::get().to(communities_lists_for_copy_load));
-    config.route("/load/chat_items/", web::get().to(chat_items_load));
+    config.route("/users/load/lists_for_copy/", web::get().to(lists_for_copy_load));
+    config.route("/users/load/communities_lists_for_copy/", web::get().to(communities_lists_for_copy_load));
+    config.route("/users/load/chat_items/", web::get().to(chat_items_load));
 
-    config.route("/load/friends/", web::get().to(friends_load));
-    config.route("/load/smiles/", web::get().to(smiles_load));
-    config.route("/load/smiles_stickers/", web::get().to(smiles_stickers_load));
-    config.route("/load/chats/", web::get().to(chats_load));
-    config.route("/load/communities/", web::get().to(communities_load));
+    config.route("/users/load/friends/", web::get().to(friends_load));
+    config.route("/users/load/smiles/", web::get().to(smiles_load));
+    config.route("/users/load/smiles_stickers/", web::get().to(smiles_stickers_load));
+    config.route("/users/load/chats/", web::get().to(chats_load));
+    config.route("/users/load/communities/", web::get().to(communities_load));
 
-    config.route("/load/list_include_users/", web::get().to(list_include_users_load));
-    config.route("/load/list_exclude_users/", web::get().to(list_exclude_users_load));
+    config.route("/users/load/list_include_users/", web::get().to(list_include_users_load));
+    config.route("/users/load/list_exclude_users/", web::get().to(list_exclude_users_load));
 }
 
 pub async fn photos_load(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
