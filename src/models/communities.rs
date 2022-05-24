@@ -272,7 +272,7 @@ impl Community {
     pub fn get_code(&self) -> String {
         return "com".to_string() + &self.get_str_id();
     }
-    pub fn is_community_list(&self, types: String) -> bool {
+    pub fn is_community_list(&self, types: &String) -> bool {
         let pk: i32 = types[3..].parse().unwrap();
         let code = &types[..3];
         if types == "lpo".to_string() {
@@ -326,7 +326,7 @@ impl Community {
         }
         return false;
     }
-    pub fn is_list_in_collection(&self, types: String) -> bool {
+    pub fn is_list_in_collection(&self, types: &String) -> bool {
         let pk: i32 = types[3..].parse().unwrap();
         let code = &types[..3];
         if types == "lpo".to_string() {

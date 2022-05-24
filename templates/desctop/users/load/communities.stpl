@@ -12,7 +12,7 @@
         <div class="is_block_paginate">
           <% for object in object_list.iter() { %>
 
-            <% if object.is_community_list(types) { %>
+            <% if object.is_community_list(&types) { %>
             <div class="media pointer border-bottom" data-link="<%= object.link %>" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
               <figure>
                 <% if object.s_avatar.is_some() { %>
@@ -37,7 +37,7 @@
               </span>
             </div>
 
-            <% } else if object.is_list_in_collection(types) { %>
+            <% } else if object.is_list_in_collection(&types) { %>
 
             <div class="media border-bottom" data-pk="c<%= object.id %>" data-link="<%= object.link %>" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
             <figure>
