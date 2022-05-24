@@ -1184,6 +1184,7 @@ impl Community {
         use crate::utils::get_count_for_ru_alt;
 
         return get_count_for_ru_alt(
+            self.count_goods(),
             " товар".to_string(),
             " товара".to_string(),
             " товаров".to_string(),
@@ -1207,6 +1208,7 @@ impl Community {
         use crate::utils::get_count_for_ru_alt;
 
         return get_count_for_ru_alt(
+            self.count_tracks(),
             " аудиозапись".to_string(),
             " аудиозаписи".to_string(),
             " аудиозаписей".to_string(),
@@ -1230,6 +1232,7 @@ impl Community {
         use crate::utils::get_count_for_ru_alt;
 
         return get_count_for_ru_alt(
+            self.count_photos(),
             " фотография".to_string(),
             " фотографии".to_string(),
             " фотографий".to_string(),
@@ -1253,6 +1256,7 @@ impl Community {
         use crate::utils::get_count_for_ru_alt;
 
         return get_count_for_ru_alt(
+            self.count_docs(),
             " документ".to_string(),
             " документа".to_string(),
             " документов".to_string(),
@@ -1276,6 +1280,7 @@ impl Community {
         use crate::utils::get_count_for_ru_alt;
 
         return get_count_for_ru_alt(
+            self.count_posts(),
             " запись".to_string(),
             " записи".to_string(),
             " записей".to_string(),
@@ -1299,6 +1304,7 @@ impl Community {
         use crate::utils::get_count_for_ru_alt;
 
         return get_count_for_ru_alt(
+            self.count_articles(),
             " статья".to_string(),
             " статьи".to_string(),
             " статей".to_string(),
@@ -1322,6 +1328,7 @@ impl Community {
         use crate::utils::get_count_for_ru_alt;
 
         return get_count_for_ru_alt(
+            self.count_videos(),
             " видеозапись".to_string(),
             " видеозаписи".to_string(),
             " видеозаписей".to_string(),
@@ -1345,6 +1352,7 @@ impl Community {
         use crate::utils::get_count_for_ru_alt;
 
         return get_count_for_ru_alt(
+            self.count_members(),
             " подписчик".to_string(),
             " подписчика".to_string(),
             " подписчиков".to_string(),

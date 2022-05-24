@@ -1278,6 +1278,7 @@ impl User {
         use crate::utils::get_count_for_ru_alt;
 
         return get_count_for_ru_alt (
+            self.count_followers(),
             " подписчик".to_string(),
             " подписчика".to_string(),
             " подписчиков".to_string(),
@@ -1312,6 +1313,7 @@ impl User {
         use crate::utils::get_count_for_ru_alt;
 
         return get_count_for_ru_alt (
+            self.count_goods(),
             " товар".to_string(),
             " товара".to_string(),
             " товаров".to_string(),
@@ -1335,6 +1337,7 @@ impl User {
         use crate::utils::get_count_for_ru_alt;
 
         return get_count_for_ru_alt (
+            self.count_tracks(),
             " трек".to_string(),
             " трека".to_string(),
             " треков".to_string(),
@@ -1358,6 +1361,7 @@ impl User {
         use crate::utils::get_count_for_ru_alt;
 
         return get_count_for_ru_alt(
+            self.count_photos(),
             " фотография".to_string(),
             " фотографии".to_string(),
             " фотографий".to_string(),
@@ -1381,6 +1385,7 @@ impl User {
         use crate::utils::get_count_for_ru_alt;
 
         return get_count_for_ru_alt(
+            self.count_docs(),
             " документ".to_string(),
             " документа".to_string(),
             " документов".to_string(),
@@ -1404,6 +1409,7 @@ impl User {
         use crate::utils::get_count_for_ru_alt;
 
         return get_count_for_ru_alt(
+            self.count_posts(),
             " запись".to_string(),
             " записи".to_string(),
             " записей".to_string(),
@@ -1427,6 +1433,7 @@ impl User {
         use crate::utils::get_count_for_ru_alt;
 
         return get_count_for_ru_alt(
+            self.count_articles(),
             " статья".to_string(),
             " статьи".to_string(),
             " статей".to_string(),
@@ -1450,6 +1457,7 @@ impl User {
         use crate::utils::get_count_for_ru_alt;
 
         return get_count_for_ru_alt (
+            self.count_communities(),
             " сообщество".to_string(),
             " сообщества".to_string(),
             " сообществ".to_string(),
@@ -1473,6 +1481,7 @@ impl User {
         use crate::utils::get_count_for_ru_alt;
 
         return get_count_for_ru_alt (
+            self.count_videos(),
             " ролик".to_string(),
             " ролика".to_string(),
             " роликов".to_string(),
