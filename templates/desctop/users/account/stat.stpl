@@ -18,7 +18,7 @@
    </div>
    <% } %>
 
-   <% if user.count_communities() { %>
+   <% if user.count_communities() > 0 { %>
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
