@@ -1,6 +1,6 @@
 
 <% if object.attach.is_some() { %>
-attach!!
+<%= object.attach.unwrap() %>
   <%- object.get_attach(request_user.id) %>
 <% } %>
 

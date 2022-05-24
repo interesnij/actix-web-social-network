@@ -31,6 +31,31 @@ function get_audio_dop(){
   return settings.split(',')
 };
 
+function play_video_list(url, counter, video_pk){
+  loader = document.getElementById("video_loader");
+  open_video_fullscreen(url);
+
+  video_player_id = document.body.getAttribute('data-video');
+  document.body.setAttribute('data-video', document.body.getAttribute('data-video') + "a");
+  setTimeout(function() {
+    load_video_playlist(video_player_id + "a");
+    video_player.addListener(FWDUVPlayer.READY, onReady);
+    function onReady(){
+    console.log("video player ready");
+    setTimeout(function() {video_player.playVideo(counter)}, 1000);
+
+    info_video = document.body.querySelector("#info_video");
+    if (info_video.innerHTML == "" || info_video.getAttribute("data-pk") != video_pk){
+      info_video.setAttribute("data-pk", video_pk);
+      console.log("Воспроизводится ролик № : " + video_pk)
+    }
+    }
+  }, 500);
+  video = document.createElement("div");
+  video.classList.add("video_init");
+  document.body.querySelector("#video_loader").append(video)
+};
+
 function load_video_playlist(video_saver_id) {
   video_saver = document.body.querySelector("#video_id_saver");
   styles = document.querySelectorAll(".my_color_settings");
