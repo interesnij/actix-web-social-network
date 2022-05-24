@@ -12,6 +12,7 @@ use crate::utils::{
     get_community,
     get_photo_list,
     get_photo,
+    get_photo_comment,
     get_user_permission,
     get_anon_user_permission,
     get_community_permission,
