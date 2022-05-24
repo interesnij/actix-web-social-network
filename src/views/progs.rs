@@ -54,8 +54,8 @@ pub fn get_type(req: HttpRequest) -> (bool, i32, String) {
 
 #[derive(Deserialize, Serialize)]
 pub struct JsonCommentResponse {
-    pub content: Option<String>,
-    pub attach:  Option<String>,
+    pub content:      Option<String>,
+    pub attach_items: Option<String>,
 }
 #[derive(Deserialize, Serialize)]
 pub struct JsonResponse {
@@ -74,8 +74,8 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
         let (type_exists, comment_id, types) = get_type(req);
         if type_exists == false {
             return Json(JsonCommentResponse {
-                content: None,
-                attach:  None,
+                content:     None,
+                attach_items:None,
             })
         }
         else {
@@ -84,8 +84,8 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                 use crate::models::{PostComment, EditPostComment};
 
                 let edited_comment = EditPostComment {
-                    content: form.content,
-                    attach:  form.attach,
+                    content:      form.content,
+                    attach_items: form.attach_items,
                 };
                 let item = get_post_comment(comment_id);
                 if item.get_list().is_user_can_create_comment(_request_user.id) {
@@ -95,8 +95,8 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                         .expect("Error.");
                 }
                 return Json(JsonCommentResponse {
-                    content: edited_comment.content,
-                    attach:  edited_comment.attach,
+                    content:     edited_comment.content,
+                    attach_items: edited_comment.attach_items,
                 })
             }
             else if types == "cgo".to_string() {
@@ -106,8 +106,8 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                 let item = get_good_comment(comment_id);
 
                 let edited_comment = EditGoodComment {
-                    content: form.content,
-                    attach:  form.attach,
+                    content:      form.content,
+                    attach_items: form.attach_items,
                 };
                 if item.get_list().is_user_can_create_comment(_request_user.id) {
                     diesel::update(&item)
@@ -116,8 +116,8 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                         .expect("Error.");
                 }
                 return Json(JsonCommentResponse {
-                    content: edited_comment.content,
-                    attach:  edited_comment.attach,
+                    content:      edited_comment.content,
+                    attach_items: edited_comment.attach_items,
                 })
             }
             else if types == "cph".to_string() {
@@ -127,8 +127,8 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                 let item = get_photo_comment(comment_id);
 
                 let edited_comment = EditPhotoComment {
-                    content: form.content,
-                    attach:  form.attach,
+                    content:      form.content,
+                    attach_items: form.attach_items,
                 };
                 if item.get_list().is_user_can_create_comment(_request_user.id) {
                     diesel::update(&item)
@@ -137,8 +137,8 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                         .expect("Error.");
                 }
                 return Json(JsonCommentResponse {
-                    content: edited_comment.content,
-                    attach:  edited_comment.attach,
+                    content:      edited_comment.content,
+                    attach_items: edited_comment.attach_items,
                 })
             }
             else if types == "cvi".to_string() {
@@ -148,8 +148,8 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                 let item = get_video_comment(comment_id);
 
                 let edited_comment = EditVideoComment {
-                    content: form.content,
-                    attach:  form.attach,
+                    content:      form.content,
+                    attach_items: form.attach_items,
                 };
 
                 if item.get_list().is_user_can_create_comment(_request_user.id) {
@@ -159,21 +159,21 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                         .expect("Error.");
                 }
                 return Json(JsonCommentResponse {
-                    content: edited_comment.content,
-                    attach:  edited_comment.attach,
+                    content:      edited_comment.content,
+                    attach_items: edited_comment.attach_items,
                 })
             }
             else {
                 return Json(JsonCommentResponse {
-                    content: None,
-                    attach:  None,
+                    content:      None,
+                    attach_items: None,
                 })
             }
         }
     } else {
         return Json(JsonCommentResponse {
-            content: None,
-            attach:  None,
+            content:      None,
+            attach_items: None,
         })
     }
 }

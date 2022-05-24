@@ -335,19 +335,19 @@ pub async fn recover_community_post_list(session: Session, _id: web::Path<i32>) 
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct PostForm {
-    pub content: Option<String>,
-    pub cat: Option<i32>,
-    pub attach: Option<String>,
+    pub content:         Option<String>,
+    pub cat:             Option<i32>,
+    pub attach_items:    Option<String>,
     pub comment_enabled: bool,
-    pub votes_on: bool,
-    pub is_signature: bool,
+    pub votes_on:        bool,
+    pub is_signature:    bool,
 }
 
 pub async fn post_form(payload: &mut Multipart) -> PostForm {
     let mut form: PostForm = PostForm {
         content: None,
         cat: None,
-        attach: None,
+        attach_items: None,
         comment_enabled: true,
         votes_on: true,
         is_signature: false,
@@ -375,12 +375,12 @@ pub async fn post_form(payload: &mut Multipart) -> PostForm {
                 }
             }
         }
-        else if field.name() == "attach" {
+        else if field.name() == "attach_items" {
             while let Some(chunk) = field.next().await {
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
                     let data_string = s.to_string();
-                    form.attach = Some(data_string);
+                    form.attach_items = Some(data_string);
                 }
             }
         }
@@ -454,7 +454,7 @@ pub async fn add_post_in_list(session: Session, mut payload: Multipart, _id: web
                 user_id,
                 form.content,
                 form.cat,
-                form.attach,
+                form.attach_items,
                 None,
                 form.comment_enabled,
                 form.is_signature,
@@ -514,7 +514,7 @@ pub async fn edit_post(session: Session, mut payload: Multipart, _id: web::Path<
             let edit_post = _post.edit_post (
                 form.content,
                 form.cat,
-                form.attach,
+                form.attach_items,
                 form.comment_enabled,
                 form.votes_on,
                 form.is_signature,
@@ -574,7 +574,7 @@ pub async fn add_comment(session: Session, mut payload: Multipart, _id: web::Pat
         let form = comment_form(payload.borrow_mut()).await;
         let new_comment = item.create_comment(
             &_request_user,
-            form.attach,
+            form.attach_items,
             None,
             form.content,
             form.sticker_id,
@@ -632,7 +632,7 @@ pub async fn add_reply(session: Session, mut payload: Multipart, _id: web::Path<
         let form = comment_form(payload.borrow_mut()).await;
         let new_comment = item.create_comment(
             &_request_user,
-            form.attach,
+            form.attach_items,
             Some(comment.id),
             form.content,
             form.sticker_id,
