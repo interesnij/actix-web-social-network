@@ -1566,7 +1566,7 @@ pub async fn communities_load(session: Session, req: HttpRequest) -> actix_web::
         if params_some.is_ok() {
             let params = params_some.unwrap();
             if params.types.is_some() {
-                types = params.types.as_deref().unwrap();
+                types = params.types.as_deref().unwrap().to_string();
             }
         }
 
