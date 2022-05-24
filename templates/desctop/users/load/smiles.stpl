@@ -8,7 +8,7 @@
           <% } %>
         <% } %>
 
-        <% let cat = s_categories[current_category]; %>
+        <% let cat = &s_categories[current_category]; %>
         <h6><%= cat.name %></h6>
         <% for smile in cat.get_smiles().iter() { %>
           <img class="pointer classic_smile_item" data-pk="<%= smile.id %>" style="width: auto;" src="<%= smile.image %>" alt="smile">
