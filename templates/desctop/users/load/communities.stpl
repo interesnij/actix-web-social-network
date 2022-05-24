@@ -12,7 +12,7 @@
         <div class="is_block_paginate">
           <% for object in object_list.iter() { %>
 
-            <% if list.is_community_list(object) { %>
+            <% if object.is_community_list(types) { %>
             <div class="media pointer border-bottom" data-link="<%= object.link %>" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
               <figure>
                 <% if object.s_avatar.is_some() { %>
@@ -37,7 +37,7 @@
               </span>
             </div>
 
-            <% } else if list.is_community_collection_list(object.id) { %>
+            <% } else if object.is_list_in_collection(types) { %>
 
             <div class="media border-bottom" data-pk="c<%= object.id %>" data-link="<%= object.link %>" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
             <figure>
@@ -54,7 +54,7 @@
                 <h6 class="mb-0" style="padding-top: 10px;">
                   <%= object.name %>
                 </h6>
-                <p>Список в коллекции - <a class="pointer remove_list_in_community_collections" data-type="<%= list.get_code() %>" data-pk="<%= object.id %>">удалить</a></p>
+                <p>Список в коллекции - <a class="pointer remove_list_in_community_collections" data-type="<%= types %>" data-pk="<%= object.id %>">удалить</a></p>
               </div>
               <span class="custom_color border item_attach_circle" tooltip="Выбрать сообщество" flow="up">
                 <svg class="svg_default" fill="currentColor" viewBox="2 2 20 20">

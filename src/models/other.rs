@@ -7,11 +7,10 @@ use crate::schema::{
     stickers,
     smile_categories,
     smiles,
-    establish_connection,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
-
+use crate::utils::establish_connection;
 
 /////// PhoneCode //////
 #[derive(Debug, Queryable, Serialize, Identifiable)]

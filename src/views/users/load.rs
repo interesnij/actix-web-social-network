@@ -1557,6 +1557,19 @@ pub async fn communities_load(session: Session, req: HttpRequest) -> actix_web::
     if is_signed_in(&session) {
         use crate::models::Community;
 
+        #[derive(Debug, Deserialize)]
+        pub struct TypesParams {
+            pub types: Option<String>,
+        }
+        let mut types = "".to_string();
+        let params_some = web::Query::<TypesParams>::from_query(&req.query_string());
+        if params_some.is_ok() {
+            let params = params_some.unwrap();
+            if params.types.is_some() {
+                types = params.types.as_deref().unwrap();
+            }
+        }
+
         let (is_desctop, page) = get_list_variables(req);
         let mut next_page_number = 0;
         let _request_user = get_request_user_data(session);
@@ -1585,6 +1598,7 @@ pub async fn communities_load(session: Session, req: HttpRequest) -> actix_web::
                 object_list:      Vec<Community>,
                 next_page_number: i32,
                 count:            usize,
+                types:            String,
             }
 
             let body = Template {
@@ -1592,6 +1606,7 @@ pub async fn communities_load(session: Session, req: HttpRequest) -> actix_web::
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 count:            count,
+                types:            types,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1605,6 +1620,7 @@ pub async fn communities_load(session: Session, req: HttpRequest) -> actix_web::
                 object_list:      Vec<Community>,
                 next_page_number: i32,
                 count:            usize,
+                types:            String,
             }
 
             let body = Template {
@@ -1612,6 +1628,7 @@ pub async fn communities_load(session: Session, req: HttpRequest) -> actix_web::
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 count:            count,
+                types:            types,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
