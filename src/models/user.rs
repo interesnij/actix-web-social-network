@@ -8,7 +8,7 @@ use crate::models::{
     Chat, Message, UserLocation, Smile, Sticker, Community, UserProfile, Friend,
     Post, Photo, Music, Video,
     Survey, StickerCategorie,
-    Doc, Good, SmileCategorie, 
+    Doc, Good, SmileCategorie,
     PostList, PhotoList, MusicList, VideoList, SurveyList, DocList, GoodList,
     Follow, Notification, UserPrivate, UserBlock, PostCategorie,
 };
@@ -1274,6 +1274,16 @@ impl User {
             " подписчиков".to_string(),
         );
     }
+    pub fn count_followers_ru_alt(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            " подписчик".to_string(),
+            " подписчика".to_string(),
+            " подписчиков".to_string(),
+        );
+    }
+
     pub fn count_blacklist(&self) -> usize {
         use crate::schema::user_blocks::dsl::user_blocks;
 
@@ -1298,6 +1308,15 @@ impl User {
             " товаров".to_string(),
         );
     }
+    pub fn count_goods_ru_alt(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            " товар".to_string(),
+            " товара".to_string(),
+            " товаров".to_string(),
+        );
+    }
 
     pub fn count_tracks(&self) -> i32 {
         return self.get_profile().tracks;
@@ -1312,18 +1331,106 @@ impl User {
             " треков".to_string(),
         );
     }
+    pub fn count_tracks_ru_alt(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            " трек".to_string(),
+            " трека".to_string(),
+            " треков".to_string(),
+        );
+    }
 
     pub fn count_photos(&self) -> i32 {
         return self.get_profile().photos;
     }
+    pub fn count_photos_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru(
+            self.count_photos(),
+            " фотография".to_string(),
+            " фотографии".to_string(),
+            " фотографий".to_string(),
+        );
+    }
+    pub fn count_photos_ru_alt(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru(
+            " фотография".to_string(),
+            " фотографии".to_string(),
+            " фотографий".to_string(),
+        );
+    }
+
     pub fn count_docs(&self) -> i32 {
         return self.get_profile().docs;
     }
+    pub fn count_docs_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru(
+            self.count_docs(),
+            " документ".to_string(),
+            " документа".to_string(),
+            " документов".to_string(),
+        );
+    }
+    pub fn count_docs_ru_alt(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru(
+            " документ".to_string(),
+            " документа".to_string(),
+            " документов".to_string(),
+        );
+    }
+
     pub fn count_posts(&self) -> i32 {
         return self.get_profile().posts;
     }
+    pub fn count_posts_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru(
+            self.count_posts(),
+            " запись".to_string(),
+            " записи".to_string(),
+            " записей".to_string(),
+        );
+    }
+    pub fn count_posts_ru_alt(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru(
+            " запись".to_string(),
+            " записи".to_string(),
+            " записей".to_string(),
+        );
+    }
+
     pub fn count_articles(&self) -> i32 {
         return self.get_profile().articles;
+    }
+    pub fn count_articles_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru(
+            self.count_articles(),
+            " статья".to_string(),
+            " статьи".to_string(),
+            " статей".to_string(),
+        );
+    }
+    pub fn count_articles_ru_alt(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru(
+            " статья".to_string(),
+            " статьи".to_string(),
+            " статей".to_string(),
+        );
     }
 
     pub fn count_communities(&self) -> i32 {
@@ -1339,6 +1446,15 @@ impl User {
             " сообществ".to_string(),
         );
     }
+    pub fn count_communities_ru_alt(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            " сообщество".to_string(),
+            " сообщества".to_string(),
+            " сообществ".to_string(),
+        );
+    }
 
     pub fn count_videos(&self) -> i32 {
         return self.get_profile().videos;
@@ -1348,6 +1464,15 @@ impl User {
 
         return get_count_for_ru (
             self.count_videos(),
+            " ролик".to_string(),
+            " ролика".to_string(),
+            " роликов".to_string(),
+        );
+    }
+    pub fn count_videos_ru_alt(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
             " ролик".to_string(),
             " ролика".to_string(),
             " роликов".to_string(),
