@@ -96,7 +96,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                 }
                 return Json(JsonCommentResponse {
                     content:     edited_comment.content,
-                    attach_items: edited_comment.attach_items,
+                    attach_items: edited_comment.attach,
                 })
             }
             else if types == "cgo".to_string() {
@@ -117,7 +117,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                 }
                 return Json(JsonCommentResponse {
                     content:      edited_comment.content,
-                    attach_items: edited_comment.attach_items,
+                    attach_items: edited_comment.attach,
                 })
             }
             else if types == "cph".to_string() {
@@ -138,7 +138,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                 }
                 return Json(JsonCommentResponse {
                     content:      edited_comment.content,
-                    attach_items: edited_comment.attach_items,
+                    attach_items: edited_comment.attach,
                 })
             }
             else if types == "cvi".to_string() {
@@ -160,7 +160,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                 }
                 return Json(JsonCommentResponse {
                     content:      edited_comment.content,
-                    attach_items: edited_comment.attach_items,
+                    attach_items: edited_comment.attach,
                 })
             }
             else {
