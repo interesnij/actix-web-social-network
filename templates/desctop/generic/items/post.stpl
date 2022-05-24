@@ -58,6 +58,7 @@
   <% } %>
 
   <% if parent.attach.is_some() { %>
+  attach!!
     <%- parent.get_attach(request_user.id) %>
   <% } %>
 </span>
