@@ -1,4 +1,5 @@
 
+<%= object.attach { %>
 <% if object.attach.is_some() { %>
 attach!!
   <%- object.get_attach(request_user.id) %>
