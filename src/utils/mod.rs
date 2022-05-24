@@ -139,6 +139,19 @@ pub fn get_count_for_ru(count:i32, word1: String, word2: String, word3: String) 
         return count_str + &word3;
     }
 }
+pub fn get_count_for_ru_alt(count:i32, word1: String, word2: String, word3: String) -> String {
+    let a = count % 10;
+    let b = count % 100;
+    if a == 1 && b != 11 {
+        return word1;
+    }
+    else if a >= 2 && a <= 4 && (b < 10 || b >= 20) {
+        return word2;
+    }
+    else {
+        return word3;
+    }
+}
 
 pub fn get_users_from_ids(ids:Vec<i32>) -> Vec<User> {
     use crate::schema::users::dsl::users;
