@@ -84,8 +84,8 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                 use crate::models::{PostComment, EditPostComment};
 
                 let edited_comment = EditPostComment {
-                    content:      form.content,
-                    attach_items: form.attach_items,
+                    content: form.content,
+                    items:   form.attach_items,
                 };
                 let item = get_post_comment(comment_id);
                 if item.get_list().is_user_can_create_comment(_request_user.id) {
@@ -106,8 +106,8 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                 let item = get_good_comment(comment_id);
 
                 let edited_comment = EditGoodComment {
-                    content:      form.content,
-                    attach_items: form.attach_items,
+                    content: form.content,
+                    attach:  form.attach_items,
                 };
                 if item.get_list().is_user_can_create_comment(_request_user.id) {
                     diesel::update(&item)
@@ -127,8 +127,8 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                 let item = get_photo_comment(comment_id);
 
                 let edited_comment = EditPhotoComment {
-                    content:      form.content,
-                    attach_items: form.attach_items,
+                    content: form.content,
+                    attach:  form.attach_items,
                 };
                 if item.get_list().is_user_can_create_comment(_request_user.id) {
                     diesel::update(&item)
@@ -148,8 +148,8 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
                 let item = get_video_comment(comment_id);
 
                 let edited_comment = EditVideoComment {
-                    content:      form.content,
-                    attach_items: form.attach_items,
+                    content: form.content,
+                    attach:  form.attach_items,
                 };
 
                 if item.get_list().is_user_can_create_comment(_request_user.id) {
