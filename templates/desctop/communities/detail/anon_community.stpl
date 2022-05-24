@@ -47,7 +47,7 @@
             </ul>
           </div>
 
-          <% include!("../detail_sections/anon_stat.stpl"); %>
+          <% include!("../detail_sections/stat.stpl"); %>
 
           <% if private_bools[7] == true && community.is_have_good() { %>
 

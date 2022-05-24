@@ -403,113 +403,113 @@ on('#ajax', 'click', '.post_edit', function() {
 on('#ajax', 'click', '.u_load_comment_photo', function() {
   this.classList.add("current_file_dropdown");
   document.body.querySelector(".attach_block") ? (attach_block = document.body.querySelector(".attach_block"), attach_block.innerHTML = "", attach_block.classList.remove("attach_block")) : null;
-  create_fullscreen('/users/load/img_comment_load/', "item_fullscreen");
+  create_fullscreen('/users/load/photos/', "item_fullscreen");
 });
 on('#ajax', 'click', '.u_load_comment_video', function() {
   this.classList.add("current_file_dropdown");
   clear_attach_block();
-  create_fullscreen('/users/load/video_load/', "item_fullscreen");
+  create_fullscreen('/users/load/video/', "item_fullscreen");
 });
 on('#ajax', 'click', '.u_load_comment_music', function() {
   this.classList.add("current_file_dropdown");
   clear_attach_block();
-  create_fullscreen('/users/load/music_load/', "item_fullscreen");
+  create_fullscreen('/users/load/music/', "item_fullscreen");
 });
 on('#ajax', 'click', '.u_load_comment_doc', function() {
   this.classList.add("current_file_dropdown");
   clear_attach_block();
-  create_fullscreen('/users/load/doc_load/', "item_fullscreen");
+  create_fullscreen('/users/load/docs/', "item_fullscreen");
 });
 on('#ajax', 'click', '.u_load_comment_good', function() {
   this.classList.add("current_file_dropdown");
   clear_attach_block();
-  create_fullscreen('/users/load/good_load/', "item_fullscreen");
+  create_fullscreen('/users/load/goods/', "item_fullscreen");
 });
 on('#ajax', 'click', '.u_load_comment_article', function() {
   this.classList.add("current_file_dropdown");
   clear_attach_block();
-  create_fullscreen('/users/load/article_load/', "item_fullscreen");
+  create_fullscreen('/users/load/articles/', "item_fullscreen");
 });
 
 on('#ajax', 'click', '.u_select_photo', function() {
   this.parentElement.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
   this.parentElement.classList.remove("show");
   clear_comment_dropdown();
-  create_fullscreen('/users/load/img_load/', "item_fullscreen");
+  create_fullscreen('/users/load/photos/', "item_fullscreen");
 });
 on('#ajax', 'click', '.u_select_survey', function() {
   this.parentElement.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
   this.parentElement.classList.remove("show");
   clear_comment_dropdown();
-  create_fullscreen('/users/load/survey_load/', "item_fullscreen");
+  create_fullscreen('/users/load/surveys/', "item_fullscreen");
 });
 
 on('#ajax', 'click', '.u_select_video', function() {
   this.parentElement.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
   this.parentElement.classList.remove("show");
   clear_comment_dropdown();
-  create_fullscreen('/users/load/video_load/', "item_fullscreen");
+  create_fullscreen('/users/load/video/', "item_fullscreen");
 });
 on('#ajax', 'click', '.u_select_music', function() {
   this.parentElement.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
   this.parentElement.classList.remove("show");
   clear_comment_dropdown();
-  create_fullscreen('/users/load/music_load/', "item_fullscreen");
+  create_fullscreen('/users/load/music/', "item_fullscreen");
 });
 on('#ajax', 'click', '.u_select_doc', function() {
   this.parentElement.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
   this.parentElement.classList.remove("show");
   clear_comment_dropdown();
-  create_fullscreen('/users/load/doc_load/', "item_fullscreen");
+  create_fullscreen('/users/load/docs/', "item_fullscreen");
 });
 on('#ajax', 'click', '.u_select_good', function() {
   this.parentElement.classList.remove("show");
   this.parentElement.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
   clear_comment_dropdown();
-  create_fullscreen('/users/load/good_load/', "item_fullscreen");
+  create_fullscreen('/users/load/goods/', "item_fullscreen");
 });
 on('#ajax', 'click', '.u_select_article', function() {
   this.parentElement.parentElement.parentElement.parentElement.previousElementSibling.classList.add("attach_block");
   this.parentElement.classList.remove("show");
   clear_comment_dropdown();
-  create_fullscreen('/users/load/article_load/', "item_fullscreen");
+  create_fullscreen('/users/load/articles/', "item_fullscreen");
 });
 
 on('#ajax', 'click', '.m_select_photo', function() {
   this.parentElement.classList.remove("show");
   this.parentElement.parentElement.parentElement.parentElement.previousElementSibling.classList.add("message_attach_block");
   clear_comment_dropdown();
-  create_fullscreen('/users/load/img_message_load/', "item_fullscreen");
+  create_fullscreen('/users/load/photos/', "item_fullscreen");
 });
 on('#ajax', 'click', '.m_select_video', function() {
   this.parentElement.classList.remove("show");
   this.parentElement.parentElement.parentElement.parentElement.previousElementSibling.classList.add("message_attach_block");
   clear_comment_dropdown();
-  create_fullscreen('/users/load/video_load/', "item_fullscreen");
+  create_fullscreen('/users/load/video/', "item_fullscreen");
 });
 on('#ajax', 'click', '.m_select_music', function() {
   this.parentElement.classList.remove("show");
   this.parentElement.parentElement.parentElement.parentElement.previousElementSibling.classList.add("message_attach_block");
   clear_comment_dropdown();
-  create_fullscreen('/users/load/music_load/', "item_fullscreen");
+  create_fullscreen('/users/load/music/', "item_fullscreen");
 });
 on('#ajax', 'click', '.m_select_doc', function() {
   this.parentElement.classList.remove("show");
   this.parentElement.parentElement.parentElement.parentElement.previousElementSibling.classList.add("message_attach_block");
   clear_comment_dropdown();
-  create_fullscreen('/users/load/doc_load/', "item_fullscreen");
+  create_fullscreen('/users/load/docs/', "item_fullscreen");
 });
 on('#ajax', 'click', '.m_select_good', function() {
   this.parentElement.classList.remove("show");
   this.parentElement.parentElement.parentElement.parentElement.previousElementSibling.classList.add("message_attach_block");
   clear_comment_dropdown();
-  create_fullscreen('/users/load/good_load/', "item_fullscreen");
+  create_fullscreen('/users/load/goods/', "item_fullscreen");
 });
 on('#ajax', 'click', '.m_select_article', function() {
   this.parentElement.classList.remove("show");
   this.parentElement.parentElement.parentElement.parentElement.previousElementSibling.classList.add("message_attach_block");
   clear_comment_dropdown();
-  create_fullscreen('/users/load/article_load/', "item_fullscreen");
+  create_fullscreen('/users/load/articles/', "item_fullscreen");
 });
 
 on('#ajax', 'click', '.delete_thumb', function(e) {

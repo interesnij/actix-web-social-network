@@ -105,7 +105,7 @@
            </h4>
            <p class="content-color-secondary mb-0">
              <a href="/<%= user.id %>/video/" class="ajax">
-               <%= user.count_videos_ru() %>
+               <%= user.count_videos_ru_alt() %>
             </a>
            </p>
          </div>
