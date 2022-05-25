@@ -1115,8 +1115,27 @@ function send_message (form_post, url) {
     form_post.querySelector(".message_dropdown").classList.add("border_red");
     return
   };
-  text = form_post.querySelector(".type_hidden");
-  text.value = _text;
+
+  $content_input = document.createElement("input");
+  $content_input.setAttribute("name", "content");
+  $content_input.setAttribute("type", "hidden");
+  $content_input.classList.add("input_content");
+  $content_input.value = _text;
+  form_post.append($content_input);
+
+  _attach_value = "";
+  attach_list = form_post.querySelectorAll(".attach");
+  for (var i = 0; i < attach_list.length; i++) {
+    _attach_value += attach_list[i].value + ","
+  };
+
+  $attach_input = document.createElement("input");
+  $attach_input.setAttribute("name", "attach");
+  $attach_input.setAttribute("type", "hidden");
+  $attach_input.classList.add("input_attach");
+  $attach_input.value = _attach_value.slice(0,-1);
+  form_post.append($attach_input);
+
   form_data = new FormData(form_post);
   message_load = form_post.parentElement.parentElement.parentElement.querySelector(".chatlist");
   pk = document.body.querySelector(".pk_saver").getAttribute("chat-pk");
@@ -1139,7 +1158,8 @@ function send_message (form_post, url) {
     form_post.querySelector(".message_text").innerHTML = ""
     form_post.querySelector(".message_dropdown").classList.remove("border_red");
     try{form_post.querySelector(".parent_message_block").remove()}catch{null};
-    form_post.querySelector(".type_hidden").value = '';
+    form_post.querySelector(".input_content").remove();
+    form_post.querySelector(".type_hidden").remove();
     show_message_form_voice_btn();
     if (document.querySelector(".chat_container")) {
       window.scrollTo({
@@ -1419,8 +1439,26 @@ on('#ajax', 'click', '.edit_message_post_btn', function() {
     return
   };
 
-  text = form_post.querySelector(".type_hidden");
-  text.value = form_post.querySelector(".message_text").innerHTML.replace("data:image", '');
+  $content_input = document.createElement("input");
+  $content_input.setAttribute("name", "content");
+  $content_input.setAttribute("type", "hidden");
+  $content_input.classList.add("input_content");
+  $content_input.value = _text;
+  form_post.append($content_input);
+
+  _attach_value = "";
+  attach_list = form_post.querySelectorAll(".attach");
+  for (var i = 0; i < attach_list.length; i++) {
+    _attach_value += attach_list[i].value + ","
+  };
+
+  $attach_input = document.createElement("input");
+  $attach_input.setAttribute("name", "attach");
+  $attach_input.setAttribute("type", "hidden");
+  $attach_input.classList.add("input_attach");
+  $attach_input.value = _attach_value.slice(0,-1);
+  form_post.append($attach_input);
+  
   form_data = new FormData(form_post);
   message = form_post.parentElement.previousElementSibling;
 

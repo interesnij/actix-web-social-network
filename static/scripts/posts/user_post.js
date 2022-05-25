@@ -275,12 +275,27 @@ on('body', 'click', '.comment_edit_btn', function() {
 
   span_form = form.parentElement;
   block = span_form.parentElement.parentElement.parentElement;
-  $input = document.createElement("input");
-  $input.setAttribute("name", "content");
-  $input.setAttribute("type", "hidden");
-  $input.classList.add("input_text");
-  $input.value = form.querySelector(".smile_supported").innerHTML;
-  form.append($input);
+
+  $content_input = document.createElement("input");
+  $content_input.setAttribute("name", "content");
+  $content_input.setAttribute("type", "hidden");
+  $content_input.classList.add("input_content");
+  $content_input.value = _text;
+  form.append($content_input);
+
+  _attach_value = "";
+  attach_list = form.querySelectorAll(".attach");
+  for (var i = 0; i < attach_list.length; i++) {
+    _attach_value += attach_list[i].value + ","
+  };
+
+  $attach_input = document.createElement("input");
+  $attach_input.setAttribute("name", "attach");
+  $attach_input.setAttribute("type", "hidden");
+  $attach_input.classList.add("input_attach");
+  $attach_input.value = _attach_value.slice(0,-1);
+  form.append($attach_input);
+
   form_comment = new FormData(form);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
   link_.open('POST', "/users/progs/edit_comment/", true);

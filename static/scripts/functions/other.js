@@ -579,12 +579,26 @@ function send_comment(form, block, link) {
     return
   };
 
-  $input = document.createElement("input");
-  $input.setAttribute("name", "content");
-  $input.setAttribute("type", "hidden");
-  $input.classList.add("type_hidden");
-  $input.value = _text;
-  form.append($input);
+  $content_input = document.createElement("input");
+  $content_input.setAttribute("name", "content");
+  $content_input.setAttribute("type", "hidden");
+  $content_input.classList.add("input_content");
+  $content_input.value = _text;
+  form.append($content_input);
+
+  _attach_value = "";
+  attach_list = form.querySelectorAll(".attach");
+  for (var i = 0; i < attach_list.length; i++) {
+    _attach_value += attach_list[i].value + ","
+  };
+
+  $attach_input = document.createElement("input");
+  $attach_input.setAttribute("name", "attach");
+  $attach_input.setAttribute("type", "hidden");
+  $attach_input.classList.add("input_attach");
+  $attach_input.value = _attach_value.slice(0,-1);
+  form.append($attach_input);
+
   form_comment = new FormData(form);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
   link_.open('POST', link, true);
@@ -599,7 +613,8 @@ function send_comment(form, block, link) {
           block.append(new_post);
           toast_success(" Комментарий опубликован");
           form.querySelector(".img_block").innerHTML = "";
-          form.querySelector(".type_hidden").remove();
+          form.querySelector(".input_content").remove();
+          form.querySelector(".input_attach").remove();
           try {
               form_dropdown = form.querySelector(".current_file_dropdown");
               form_dropdown.classList.remove("current_file_dropdown");
