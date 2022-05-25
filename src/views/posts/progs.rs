@@ -463,7 +463,7 @@ pub async fn add_post_in_list(session: Session, mut payload: Multipart, _id: web
             );
 
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/posts/post.stpl")]
+            #[template(path = "desctop/posts/new_item.stpl")] 
             struct Template {
                 object: Post,
                 request_user: User,
