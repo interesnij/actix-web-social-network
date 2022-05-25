@@ -863,7 +863,7 @@ on('#ajax', 'input', '.custom_link_input', function() {
   }
   else {
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    link.open('GET', "/check_custom_link/" + value + "/", true);
+    link.open('GET', "/progs/check_custom_link/" + value + "/", true);
     link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     link.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -1458,7 +1458,7 @@ on('#ajax', 'click', '.edit_message_post_btn', function() {
   $attach_input.classList.add("input_attach");
   $attach_input.value = _attach_value.slice(0,-1);
   form_post.append($attach_input);
-  
+
   form_data = new FormData(form_post);
   message = form_post.parentElement.previousElementSibling;
 

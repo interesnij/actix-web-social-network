@@ -50,7 +50,7 @@ on('body', 'click', '.create_repost', function() {
   if (parent.getAttribute('data-subtype')) {
     subtype = parent.getAttribute('data-subtype')
   } else { subtype = null};
-  create_fullscreen("/users/progs/create_repost/?types=" + type, "worker_fullscreen");
+  create_fullscreen("/progs/repost/?types=" + type, "worker_fullscreen");
   clear_attach_block();
 });
 

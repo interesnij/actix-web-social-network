@@ -26,10 +26,10 @@ pub fn pages_routes(config: &mut web::ServiceConfig) {
     config.route("/featured/", web::get().to(featured_list_page));
     config.route("/all-users/", web::get().to(all_users_page));
     config.route("/all-communities/", web::get().to(all_communities_page));
-    config.route("/check_custom_link/{slug}/", web::get().to(check_custom_link));
     config.route("/{slug}/", web::get().to(link_page));
 
-    config.route("/repost/", web::get().to(repost_page));
+    config.route("/progs/check_custom_link/{slug}/", web::get().to(check_custom_link));
+    config.route("/progs/repost/", web::get().to(repost_page));
 }
 
 pub async fn link_page(session: Session, req: HttpRequest, slug: web::Path<String>) -> actix_web::Result<HttpResponse> {
