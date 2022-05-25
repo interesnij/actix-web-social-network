@@ -1,5 +1,8 @@
 <div class="card mb-3 u_post pag" data-type="user_post" data-pk="<%= object.id %>">
-    <% include!("card_header.stpl"); %>
+  <% let is_staff = list.is_user_can_create_el(request_user.id); %>
+  <% let is_manager = request_user.is_moderator(); %>
+
+  <% include!("card_header.stpl"); %>
     <% if object.content.is_some() { %>
       <div class="text_support">
         <%- object.get_format_text() %>
