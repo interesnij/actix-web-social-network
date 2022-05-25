@@ -1,6 +1,6 @@
 use crate::utils::establish_connection;
-use actix_web::HttpRequest;
 use crate::schema;
+use actix_web::{web, HttpRequest};
 use diesel::prelude::*;
 use crate::models::{
     User, Community,

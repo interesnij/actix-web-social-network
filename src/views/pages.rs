@@ -681,13 +681,15 @@ pub async fn repost_page(session: Session, req: HttpRequest) -> actix_web::Resul
             struct Template {
                 request_user:  User,
                 text:          String,
+                types:         String,
                 creator_id:    i32,
                 is_list:       bool,
                 can_copy_item: bool,
             }
             let body = Template {
-                request_user:  request_user,
+                request_user:  _request_user,
                 text:          text,
+                types:         types,
                 creator_id:    creator_id,
                 is_list:       is_list,
                 can_copy_item: can_copy_item,
