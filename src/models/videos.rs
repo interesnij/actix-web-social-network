@@ -2517,14 +2517,6 @@ impl Video {
         parent_id: Option<i32>, content: Option<String>, sticker_id: Option<i32>) -> VideoComment {
 
         let _connection = establish_connection();
-        let mut new_attach: Option<String> = None;
-        if attach.is_some() {
-            new_attach = Some(attach.unwrap()
-                .replace("'", "")
-                .replace("[", "")
-                .replace("]", "")
-                .replace(" ", ""));
-        }
         diesel::update(self)
           .set(schema::videos::comment.eq(self.comment + 1))
           .get_result::<Video>(&_connection)
@@ -2536,7 +2528,7 @@ impl Video {
             sticker_id: sticker_id,
             parent_id:  parent_id,
             content:    content,
-            attach:     new_attach,
+            attach:     attach,
             types:      "a".to_string(),
             created:    chrono::Local::now().naive_utc(),
             liked:      0,

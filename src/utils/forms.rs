@@ -142,15 +142,15 @@ pub async fn post_list_form(payload: &mut Multipart) -> PostListForm {
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct CommentForm {
-    pub content:      Option<String>,
-    pub attach_items: Option<String>,
-    pub sticker_id:   Option<i32>,
+    pub content:    Option<String>,
+    pub attach:     Option<String>,
+    pub sticker_id: Option<i32>,
 }
 pub async fn comment_form(payload: &mut Multipart) -> CommentForm {
     let mut form: CommentForm = CommentForm {
-        content:      None,
-        attach_items: None,
-        sticker_id:   None,
+        content:    None,
+        attach:     None,
+        sticker_id: None,
     };
 
     while let Some(item) = payload.next().await {
@@ -166,8 +166,8 @@ pub async fn comment_form(payload: &mut Multipart) -> CommentForm {
                 else if field.name() == "content" {
                     form.content = Some(data_string);
                 }
-                else if field.name() == "attach_items[]" {
-                    form.attach_items = Some(data_string);
+                else if field.name() == "attach" {
+                    form.attach = Some(data_string);
                 }
             }
         }

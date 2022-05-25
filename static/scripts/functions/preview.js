@@ -221,7 +221,7 @@ function create_preview_survey(pk, src, container_html){
   $div.classList.add("mb-3", "border", "text-center", "position-relative", "box-shadow");
 
   $input = document.createElement("span");
-  $input.innerHTML = '<input type="hidden" name="attach_items[]" value="sur' + pk + '">';
+  $input.innerHTML = '<input class="attach" type="hidden" name="attach_items" value="sur' + pk + '">';
 
   $figure = document.createElement("div");
   $figure.classList.add("background-img");
@@ -251,7 +251,7 @@ function create_preview_photo(img_src, photo_pk, user_pk){
   $div = document.createElement("div");
   $div.classList.add("photo");
   $input = document.createElement("span");
-  $input.innerHTML = '<input type="hidden" name="attach_items[]" value="pho' + photo_pk + '">';
+  $input.innerHTML = '<input class="attach" type="hidden" name="attach_items" value="pho' + photo_pk + '">';
   $img = document.createElement("img");
   $img.classList.add("detail_photo", "image_fit", "pointer", "handle");
   $img.setAttribute("src", img_src);
@@ -266,7 +266,7 @@ function create_preview_message_photo(img_src, photo_pk, user_pk){
   $div = document.createElement("div");
   $div.classList.add("photo", "handle");
   $input = document.createElement("span");
-  $input.innerHTML = '<input type="hidden" name="attach_items[]" value="pho' + photo_pk + '">';
+  $input.innerHTML = '<input class="attach" type="hidden" name="attach_items" value="pho' + photo_pk + '">';
   $img = document.createElement("img");
   $img.classList.add("u_photo_priview", "image_fit", "pointer");
   $img.setAttribute("src", img_src);
@@ -283,7 +283,7 @@ function create_preview_photo_list(src, title, pk, count){
   $div.setAttribute("photolist-pk", pk);
 
   $input = document.createElement("span");
-  $input.innerHTML = '<input type="hidden" name="attach_items[]" value="lph' + pk + '">';
+  $input.innerHTML = '<input class="attach" type="hidden" name="attach_items" value="lph' + pk + '">';
 
   $img = document.createElement("img");
   $img.setAttribute("src", src);
@@ -323,7 +323,7 @@ function create_preview_video(img_src, pk, counter){
   $div = document.createElement("div");
   $div.classList.add("video", "handle");
   $input = document.createElement("span");
-  $input.innerHTML = '<input type="hidden" name="attach_items[]" value="vid' + pk + '">';
+  $input.innerHTML = '<input class="attach" type="hidden" name="attach_items" value="vid' + pk + '">';
   $img = document.createElement("img");
   $icon_div = document.createElement("span");
   $img.classList.add("image_fit");
@@ -348,7 +348,7 @@ function create_preview_video_list(name, pk, count){
   $div.innerHTML = '<div style="display:flex"><figure><a class="load_video_list pointer"><svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg></a></figure><div class="media-body" style="margin-left: 10px;margin-top: 15px;"><h6 class="my-0 mt-1 load_video_list pointer">' + name + '</h6><p>Роликов: ' + count + '</p></div></div>'
 
   $input = document.createElement("span");
-  $input.innerHTML = '<input type="hidden" name="attach_items[]" value="lvi' + pk + '">';
+  $input.innerHTML = '<input class="attach" type="hidden" name="attach_items" value="lvi' + pk + '">';
   $div.append($input);
   $div.append(list_preview_delete());
   return $div
@@ -370,7 +370,7 @@ function create_preview_music(img_src, pk, counter){
   $div.style.flexBasis = "100%";
   $div.setAttribute('music-counter', counter);
 
-  $input.innerHTML = '<input type="hidden" name="attach_items[]" value="mus' + pk + '">';
+  $input.innerHTML = '<input class="attach" type="hidden" name="attach_items" value="mus' + pk + '">';
 
   $img.src = img_src;
   $img.style.width = "30px";
@@ -398,7 +398,7 @@ function create_preview_playlist(name, pk, count){
   $div.innerHTML = '<div style="display:flex;"><figure><a class="load_playlist pointer"><svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg></a></figure><div class="media-body" style="margin-left: 10px;margin-top: 15px;"><h6 class="my-0 mt-1 load_playlist pointer">' + name + '</h6><p>Треков: ' + count + '</p></div></div>'
 
   $input = document.createElement("span");
-  $input.innerHTML = '<input type="hidden" name="attach_items[]" value="lmu' + pk + '">';
+  $input.innerHTML = '<input class="attach" type="hidden" name="attach_items" value="lmu' + pk + '">';
   $div.append($input);
   $div.append(list_preview_delete());
   return $div
@@ -417,7 +417,7 @@ function create_preview_doc(media_body, pk){
   $div.style.margin = "5px";
   $div.style.flexBasis = "100%";
 
-  $input.innerHTML = '<input type="hidden" name="attach_items[]" value="doc' + pk + '">';
+  $input.innerHTML = '<input class="attach" type="hidden" name="attach_items" value="doc' + pk + '">';
 
   $span.innerHTML = '<svg fill="currentColor" style="width:35px;heigth:35px" class="svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>';
   $figure.append($span);
@@ -444,7 +444,7 @@ function create_preview_doc_list(name, pk, count){
   $div.innerHTML = '<div style="display:flex;"><figure><a class="load_doc_list pointer"><svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg></a></figure><div class="media-body" style="margin-left: 10px;margin-top: 15px;"><h6 class="my-0 mt-1 load_doc_list pointer">' + name + '</h6><p>Документов: ' + count + '</p></div></div>'
 
   $input = document.createElement("span");
-  $input.innerHTML = '<input type="hidden" name="attach_items[]" value="ldo' + pk + '">';
+  $input.innerHTML = '<input class="attach" type="hidden" name="attach_items" value="ldo' + pk + '">';
   $div.append($input);
   $div.append(list_preview_delete());
   return $div
@@ -459,7 +459,7 @@ function create_preview_good(img_src, pk, uuid, title){
   $input = document.createElement("span");
   $title = document.createElement("span");
   $title.innerHTML = '<span class="badge badge-info mb-2" style="position: absolute;bottom:-8px;"><svg style="padding-bottom: 1px" height="13" fill="#FFFFFF" viewBox="0 0 24 24" width="13"><path d="M0 0h24v24H0z" fill="none"/><path d="M17.21 9l-4.38-6.56c-.19-.28-.51-.42-.83-.42-.32 0-.64.14-.83.43L6.79 9H2c-.55 0-1 .45-1 1 0 .09.01.18.04.27l2.54 9.27c.23.84 1 1.46 1.92 1.46h13c.92 0 1.69-.62 1.93-1.46l2.54-9.27L23 10c0-.55-.45-1-1-1h-4.79zM9 9l3-4.4L15 9H9zm3 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>' + title + '</span>';
-  $input.innerHTML = '<input type="hidden" name="attach_items[]" value="goo' + pk + '">';
+  $input.innerHTML = '<input class="attach" type="hidden" name="attach_items" value="goo' + pk + '">';
   $img = document.createElement("img");
   $img.classList.add("image_fit");
   $img.src = img_src;
@@ -479,7 +479,7 @@ function create_preview_good_list(name, pk, count){
   $div.innerHTML = '<div style="display:flex;"><figure><a class="load_good_list pointer"><svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg></a></figure><div class="media-body" style="margin-left: 10px;margin-top: 15px;"><h6 class="my-0 mt-1 load_good_list pointer">' + name + '</h6><p>Товаров: ' + count + '</p></div></div>'
 
   $input = document.createElement("span");
-  $input.innerHTML = '<input type="hidden" name="attach_items[]" value="lgo' + pk + '">';
+  $input.innerHTML = '<input class="attach" type="hidden" name="attach_items" value="lgo' + pk + '">';
   $div.append($input);
   $div.append(list_preview_delete());
   return $div
@@ -493,7 +493,7 @@ function create_preview_article(img_src, pk, title){
   $div.style.cursor = "pointer";
 
   $input = document.createElement("span");
-  $input.innerHTML = '<input type="hidden" name="attach_items[]" value="art' + pk + '">';
+  $input.innerHTML = '<input class="attach" type="hidden" name="attach_items" value="art' + pk + '">';
 
   $img = document.createElement("img");
   $img.style.width = "100%";
@@ -521,7 +521,7 @@ function create_preview_article_list(name, pk, count){
   $div.innerHTML = '<div style="display:flex;"><figure><a class="load_article_list pointer"><svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg></a></figure><div class="media-body" style="margin-left: 10px;margin-top: 15px;"><h6 class="my-0 mt-1 load_article_list pointer">' + name + '</h6><p>Статей: ' + count + '</p></div></div>'
 
   $input = document.createElement("span");
-  $input.innerHTML = '<input type="hidden" name="attach_items[]" value="lgo' + pk + '">';
+  $input.innerHTML = '<input class="attach" type="hidden" name="attach_items" value="lgo' + pk + '">';
   $div.append($input);
   $div.append(list_preview_delete());
   return $div

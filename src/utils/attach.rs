@@ -82,7 +82,7 @@ pub fn add_edited_post_list(pk: i32) -> String {
 
     return "<div class='folder' owner-pk='".to_string() + &owner.to_string() +
     &"' postlist-pk='".to_string() + &list.id.to_string() +
-    &"' style='text-align: center;padding: 3px;'><span><input type='hidden' name='attach_items[]'
+    &"' style='text-align: center;padding: 3px;'><span><input type='hidden' name='attach_items'
     value='lpo".to_string() + &list.id.to_string() +
     &"'></span><div class='card-img-top file-logo-wrapper' style='padding: 2rem;'>
     <a class='nowrap'><div class='d-flex align-items-center justify-content-center
@@ -174,7 +174,7 @@ pub fn add_edited_music_list(pk: i32) -> String {
 
     return "<div class='folder' owner-pk='".to_string() + &owner.to_string() +
     &"' playlist-pk='".to_string() + &list.id.to_string() +
-    &"' style='text-align: center;padding: 3px;'><span><input type='hidden' name='attach_items[]'
+    &"' style='text-align: center;padding: 3px;'><span><input type='hidden' name='attach_items'
     value='lmu".to_string() + &list.id.to_string() +
     &"'></span><div class='card-img-top file-logo-wrapper' style='padding: 2rem;'>
     <a class='nowrap'><div class='d-flex align-items-center justify-content-center
@@ -258,7 +258,7 @@ pub fn add_edited_doc_list(pk: i32) -> String {
 
     return "<div class='folder' owner-pk='".to_string() + &owner.to_string() +
     &"' doclist-pk='".to_string() + &list.id.to_string() +
-    &"' style='text-align: center;padding: 3px;'><span><input type='hidden' name='attach_items[]'
+    &"' style='text-align: center;padding: 3px;'><span><input type='hidden' name='attach_items'
     value='ldo".to_string() + &list.id.to_string() +
     &"'></span><div class='card-img-top file-logo-wrapper' style='padding: 2rem;'>
     <a class='nowrap'><div class='d-flex align-items-center justify-content-center
@@ -340,7 +340,7 @@ pub fn add_edited_video_list(pk: i32) -> String {
 
     return "<div class='folder' owner-pk='".to_string() + &owner.to_string() +
     &"' videolist-pk='".to_string() + &list.id.to_string() +
-    &"' style='text-align: center;padding: 3px;'><span><input type='hidden' name='attach_items[]'
+    &"' style='text-align: center;padding: 3px;'><span><input type='hidden' name='attach_items'
     value='lvi".to_string() + &list.id.to_string() +
     &"'></span><div class='card-img-top file-logo-wrapper' style='padding: 2rem;'>
     <a class='nowrap'><div class='d-flex align-items-center justify-content-center
@@ -423,7 +423,7 @@ pub fn add_edited_photo_list(pk: i32) -> String {
 
     return "<div class='folder' owner-pk='".to_string() + &owner.to_string() +
     &"' photolist-pk='".to_string() + &list.id.to_string() +
-    &"' style='text-align: center;padding: 3px;'><span><input type='hidden' name='attach_items[]'
+    &"' style='text-align: center;padding: 3px;'><span><input type='hidden' name='attach_items'
     value='lph".to_string() + &list.id.to_string() +
     &"'></span><div class='card-img-top file-logo-wrapper' style='padding: 2rem;'>
     <a class='nowrap'><div class='d-flex align-items-center justify-content-center
@@ -505,7 +505,7 @@ pub fn add_edited_good_list(pk: i32) -> String {
 
     return "<div class='folder' owner-pk='".to_string() + &owner.to_string() +
     &"' goodlist-pk='".to_string() + &list.id.to_string() +
-    &"' style='text-align: center;padding: 3px;'><span><input type='hidden' name='attach_items[]'
+    &"' style='text-align: center;padding: 3px;'><span><input type='hidden' name='attach_items'
     value='lgo".to_string() + &list.id.to_string() +
     &"'></span><div class='card-img-top file-logo-wrapper' style='padding: 2rem;'>
     <a class='nowrap'><div class='d-flex align-items-center justify-content-center
@@ -547,7 +547,7 @@ pub fn add_edited_photo(pk: i32, case: String) -> String {
         .nth(0)
         .unwrap();
 
-    return "<div class='photo'><span class='photo_preview_delete' tooltip='Не прикреплять' flow='up'><span><input type='hidden' name='attach_items[]' value='pho".to_string() + &photo.id.to_string() + &"'></span><div class='progressive replace ".to_string() + &case + &" pointer' data-href='".to_string() + &photo.file + &"' photo-pk='".to_string() + &photo.file + &"'><img class='preview image_fit' width='20' height='15' loading='lazy' src='".to_string() + &photo.preview + &"' alt='img'></div></div>".to_string();
+    return "<div class='photo'><span class='photo_preview_delete' tooltip='Не прикреплять' flow='up'><span><input type='hidden' name='attach_items' value='pho".to_string() + &photo.id.to_string() + &"'></span><div class='progressive replace ".to_string() + &case + &" pointer' data-href='".to_string() + &photo.file + &"' photo-pk='".to_string() + &photo.file + &"'><img class='preview image_fit' width='20' height='15' loading='lazy' src='".to_string() + &photo.preview + &"' alt='img'></div></div>".to_string();
 }
 
 pub fn add_video(pk: i32, case: String) -> String {
@@ -580,7 +580,7 @@ pub fn add_edited_video(pk: i32, case: String) -> String {
         .nth(0)
         .unwrap();
 
-    return "<div class='video'><span class='video_preview_delete' tooltip='Не прикреплять' flow='up'><span><input type='hidden' name='attach_items[]' value='vid".to_string() + &video.id.to_string() + &"'></span><img class='image_fit' src='".to_owned() + &video.get_image() + &"' alt='img'><div class='video_icon_play_v2 ".to_string() + &case + &"' video-pk='" + &pk.to_string() + &"' video-counter=''></div></div>".to_string();
+    return "<div class='video'><span class='video_preview_delete' tooltip='Не прикреплять' flow='up'><span><input type='hidden' name='attach_items' value='vid".to_string() + &video.id.to_string() + &"'></span><img class='image_fit' src='".to_owned() + &video.get_image() + &"' alt='img'><div class='video_icon_play_v2 ".to_string() + &case + &"' video-pk='" + &pk.to_string() + &"' video-counter=''></div></div>".to_string();
 }
 
 pub fn add_good(pk: i32) -> String {
@@ -614,7 +614,7 @@ pub fn add_edited_good(pk: i32) -> String {
         .unwrap();
 
         return "<div class='card has-background-img good_detail mb-3 pointer' good-pk='".to_string() + &good.id.to_string() + &"' style='flex-basis: 100%;'>
-        <span class='good_preview_delete' tooltip='Не прикреплять' flow='up'><span><input type='hidden' name='attach_items[]' value='goo".to_string() + &good.id.to_string() + &"'></span>
+        <span class='good_preview_delete' tooltip='Не прикреплять' flow='up'><span><input type='hidden' name='attach_items' value='goo".to_string() + &good.id.to_string() + &"'></span>
         <figure class='background-img shadow-dark'>".to_string() + &good.get_image() + &"</figure><div class='card-header'><div class='media'><div class='media-body'><h4 class='text-white mb-0'>".to_string() + &good.title + &"</h4></div></div></div><div class='card-body spantshirt'></div><div class='card-footer'><p class='small mb-1 text-success'>".to_string() + &good.get_price() + &"</p></div></div>".to_string();
 }
 
@@ -672,7 +672,7 @@ pub fn add_edited_music(pk: i32) -> String {
     tooltip='Не прикреплять' flow='up'><svg fill='#FF0000' viewBox='0 0 24 24'>
     <path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'>
     </path><path d='M0 0h24v24H0z' fill='none'></path></svg></span><span>
-    <input type='hidden' name='attach_items[]' value='mus".to_string() + &music.id.to_string() +
+    <input type='hidden' name='attach_items' value='mus".to_string() + &music.id.to_string() +
     &"'></span><span><svg width='30' height='30' viewBox='0 0 24 24' fill='none'
     stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'
     ><polygon points='5 3 19 12 5 21 5 3'></polygon></svg></span>
@@ -790,7 +790,7 @@ pub fn add_edited_doc(pk: i32) -> String {
         tooltip='Не прикреплять' flow='up'><svg fill='#FF0000' viewBox='0 0 24 24'>
         <path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'>
         </path><path d='M0 0h24v24H0z' fill='none'></path></svg></span><span>
-        <input type='hidden' name='attach_items[]' value='mus".to_string() + &doc.id.to_string() +
+        <input type='hidden' name='attach_items' value='mus".to_string() + &doc.id.to_string() +
         &"'></span><span><svg fill='currentColor' class='svg_default' style='width:45px;margin: 0;' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none'/><path d='M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z'/></svg>
         </span><span style='margin-left: 10px; margin-right: 40px; overflow: hidden;'>
         <h6 class='music_list_item pointer music_title' style='padding-top: 4px;'>
@@ -838,7 +838,7 @@ pub fn add_edited_user(pk: i32) -> String {
     tooltip='Не прикреплять' flow='up'><svg fill='#FF0000' viewBox='0 0 24 24'>
     <path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'>
     </path><path d='M0 0h24v24H0z' fill='none'></path></svg></span><span>
-    <input type='hidden' name='attach_items[]' value='use".to_string() + &user.id.to_string() +
+    <input type='hidden' name='attach_items' value='use".to_string() + &user.id.to_string() +
     &"'></span>
     <div style='display:flex'><figure><a class='ajax'
     href='".to_string() + &user.link.to_string() + &"' >".to_string() +
@@ -892,7 +892,7 @@ pub fn add_edited_community(pk: i32) -> String {
     tooltip='Не прикреплять' flow='up'><svg fill='#FF0000' viewBox='0 0 24 24'>
     <path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'>
     </path><path d='M0 0h24v24H0z' fill='none'></path></svg></span><span>
-    <input type='hidden' name='attach_items[]' value='com".to_string() + &community.id.to_string() +
+    <input type='hidden' name='attach_items' value='com".to_string() + &community.id.to_string() +
     &"'></span>
     <div style='display:flex'><figure><a class='ajax'
     href='".to_string() + &community.link.to_string() + &"' >".to_string() +
@@ -1112,7 +1112,7 @@ pub fn add_edited_survey(pk: i32) -> String {
     tooltip='Не прикреплять' flow='up'><svg fill='#FF0000' viewBox='0 0 24 24'>
     <path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'>
     </path><path d='M0 0h24v24H0z' fill='none'></path></svg></span><span>
-    <input type='hidden' name='attach_items[]' value='sur".to_string() + &survey.id.to_string() +
+    <input type='hidden' name='attach_items' value='sur".to_string() + &survey.id.to_string() +
     &"'></span>
     <figure class='background-img'><img src='".to_string() + &survey.get_image() +
     &"alt='img' ></figure><div class='dropdown'><a class='btn_default drop pointer' style='position:absolute;right:5px;top:5px;'>

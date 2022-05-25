@@ -177,12 +177,26 @@ on('#ajax', 'click', '#add_post_btn', function() {
     toast_error("Напишите или прикрепите что-нибудь"); return
   };
 
-  $input = document.createElement("input");
-  $input.setAttribute("name", "content");
-  $input.setAttribute("type", "hidden");
-  $input.classList.add("input_text");
-  $input.value = _text;
-  form_post.append($input);
+  $content_input = document.createElement("input");
+  $content_input.setAttribute("name", "content");
+  $content_input.setAttribute("type", "hidden");
+  $content_input.classList.add("input_content");
+  $content_input.value = _text;
+  form_post.append($content_input);
+
+  _attach_value = "";
+  attach_list = form_post.querySelectorAll(".attach");
+  for (var i = 0; i < attach_list.length; i++) {
+    _attach_value += attach_list[i].value + ","
+  };
+
+  $attach_input = document.createElement("input");
+  $attach_input.setAttribute("name", "attach");
+  $attach_input.setAttribute("type", "hidden");
+  $attach_input.classList.add("input_attach");
+  $attach_input.value = _attach_value.substring(0, _attach_value.length – 1);
+  form_post.append($attach_input);
+
   form_data = new FormData(form_post);
 
   lenta_load = form_post.parentElement.nextElementSibling;
@@ -199,10 +213,14 @@ on('#ajax', 'click', '#add_post_btn', function() {
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
-    drops = form_post.querySelectorAll(".dropdown-menu");
-    form_post.querySelector(".input_text").remove();
+
+    form_post.querySelector(".input_content").remove();
+    form_post.querySelector(".input_attach").remove();
     form_post.querySelector(".smile_supported").innerHTML = "";
-    for (var i = 0; i < drops.length; i++){drops[i].classList.remove("show")}
+
+    drops = form_post.querySelectorAll(".dropdown-menu");
+    for (var i = 0; i < drops.length; i++){drops[i].classList.remove("show")};
+
     lenta_load.insertAdjacentHTML('afterBegin', new_post.innerHTML);
     toast_info('Запись опубликована');
     lenta_load.querySelector(".items_empty") ? lenta_load.querySelector(".items_empty").style.display = "none" : null;

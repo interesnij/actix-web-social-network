@@ -1686,15 +1686,6 @@ impl PostList {
         types: Option<String>) -> Post {
 
         let _connection = establish_connection();
-        let mut new_attach: Option<String> = None;
-        if attach.is_some() {
-            new_attach = Some(attach.unwrap()
-                .replace("'", "")
-                .replace("[", "")
-                .replace("]", "")
-                .replace(" ", "")
-            );
-        }
         diesel::update(self)
           .set(schema::post_lists::count.eq(self.count + 1))
           .get_result::<PostList>(&_connection)
@@ -1715,7 +1706,7 @@ impl PostList {
           user_id: user_id,
           post_list_id: self.id,
           types: _types,
-          attach: new_attach,
+          attach: attach,
           comment_enabled: comment_enabled,
           votes_on: votes_on,
           created: chrono::Local::now().naive_utc(),
@@ -2045,21 +2036,11 @@ impl Post {
         is_signature: bool) -> &Post {
 
         let _connection = establish_connection();
-        let mut new_attach: Option<String> = None;
-        if attach.is_some() {
-            new_attach = Some(attach
-                .as_ref()
-                .unwrap()
-                .replace("'", "")
-                .replace("[", "")
-                .replace("]", "")
-                .replace(" ", ""));
-        }
 
         let edit_post = EditPost {
             content: content,
             post_categorie_id: post_categorie_id,
-            attach: new_attach,
+            attach: attach,
             comment_enabled: comment_enabled,
             votes_on: votes_on,
             is_signature: is_signature,
@@ -2728,14 +2709,6 @@ impl Post {
         parent_id: Option<i32>, content: Option<String>, sticker_id: Option<i32>) -> PostComment {
 
         let _connection = establish_connection();
-        let mut new_attach: Option<String> = None;
-        if attach.is_some() {
-            new_attach = Some(attach.unwrap()
-                .replace("'", "")
-                .replace("[", "")
-                .replace("]", "")
-                .replace(" ", ""));
-        }
         diesel::update(self)
           .set(schema::posts::comment.eq(self.comment + 1))
           .get_result::<Post>(&_connection)
@@ -2747,7 +2720,7 @@ impl Post {
             sticker_id: sticker_id,
             parent_id:  parent_id,
             content:    content,
-            attach:     new_attach,
+            attach:     attach,
             types:      "a".to_string(),
             created:    chrono::Local::now().naive_utc(),
             liked:      0,

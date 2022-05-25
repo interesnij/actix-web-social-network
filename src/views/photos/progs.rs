@@ -664,7 +664,7 @@ pub async fn add_comment(session: Session, mut payload: Multipart, _id: web::Pat
         let form = comment_form(payload.borrow_mut()).await;
         let new_comment = item.create_comment(
             &_request_user,
-            form.attach_items,
+            form.attach,
             None,
             form.content,
             form.sticker_id,
@@ -722,7 +722,7 @@ pub async fn add_reply(session: Session, mut payload: Multipart, _id: web::Path<
         let form = comment_form(payload.borrow_mut()).await;
         let new_comment = item.create_comment(
             &_request_user,
-            form.attach_items,
+            form.attach,
             Some(comment.id),
             form.content,
             form.sticker_id,
