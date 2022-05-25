@@ -491,7 +491,7 @@ pub async fn repost_page(session: Session, req: HttpRequest) -> actix_web::Resul
         let pre_types = &types[..1];
 
         if pre_types == "l".to_string() {
-            is_list = true
+            is_list = true;
             if types == "lpo".to_string() {
                 use crate::utils::get_post_list;
 
