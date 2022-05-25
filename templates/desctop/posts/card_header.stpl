@@ -49,7 +49,7 @@
                   <span class="dropdown-item post_fixed">Закрепить</span>
                 <% } %>
               <% } %>
-              <% if object.get_list().is_user_can_create_el(request_user.id) { %>
+              <% if is_staff { %>
                 <span class="dropdown-item post_remove">Удалить запись</span>
                 <span class="dropdown-item post_edit">Редактировать</span>
                 <span>
@@ -68,7 +68,7 @@
                 </span>
                 <span class="dropdown-item item_stat_f">Статистика записи</span>
 
-              <% } else if request_user.is_moderator() { %>
+              <% } else if is_manager { %>
                 <span class="dropdown-item post_close">Закрыть</span>
               <% } else { %>
                 <span class="dropdown-item post_claim">Пожаловаться</span>
