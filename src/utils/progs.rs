@@ -11,7 +11,7 @@ use crate::models::{
     Survey, SurveyList,
     VideoList, Video, VideoComment,
 };
-
+use serde::Deserialize;
 
 pub fn get_type(req: &HttpRequest) -> (bool, i32, String) {
     #[derive(Debug, Deserialize)]
