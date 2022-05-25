@@ -499,10 +499,10 @@ pub async fn repost_page(session: Session, req: HttpRequest) -> actix_web::Resul
                 can_copy_item = list.is_user_can_see_el(*_request_user_id) && list.is_user_can_copy_el(*_request_user_id);
                 creator_id = list.user_id;
                 if list.community_id.is_some() {
-                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                    permission_check = get_community_permission(&list.get_community(), &_request_user).0;
                 }
                 else {
-                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                    permission_check = get_user_permission(&list.get_creator(), &_request_user).0;
                 }
             }
             else if types == "ldo".to_string() {
@@ -512,10 +512,10 @@ pub async fn repost_page(session: Session, req: HttpRequest) -> actix_web::Resul
                 can_copy_item = list.is_user_can_see_el(*_request_user_id) && list.is_user_can_copy_el(*_request_user_id);
                 creator_id = list.user_id;
                 if list.community_id.is_some() {
-                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                    permission_check = get_community_permission(&list.get_community(), &_request_user).0;
                 }
                 else {
-                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                    permission_check = get_user_permission(&list.get_creator(), &_request_user).0;
                 }
             }
             else if types == "lgo".to_string() {
@@ -525,10 +525,10 @@ pub async fn repost_page(session: Session, req: HttpRequest) -> actix_web::Resul
                 can_copy_item = list.is_user_can_see_el(*_request_user_id) && list.is_user_can_copy_el(*_request_user_id);
                 creator_id = list.user_id;
                 if list.community_id.is_some() {
-                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                    permission_check = get_community_permission(&list.get_community(), &_request_user).0;
                 }
                 else {
-                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                    permission_check = get_user_permission(&list.get_creator(), &_request_user).0;
                 }
             }
             else if types == "lmu".to_string() {
@@ -538,10 +538,10 @@ pub async fn repost_page(session: Session, req: HttpRequest) -> actix_web::Resul
                 can_copy_item = list.is_user_can_see_el(*_request_user_id) && list.is_user_can_copy_el(*_request_user_id);
                 creator_id = list.user_id;
                 if list.community_id.is_some() {
-                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                    permission_check = get_community_permission(&list.get_community(), &_request_user).0;
                 }
                 else {
-                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                    permission_check = get_user_permission(&list.get_creator(), &_request_user).0;
                 }
             }
             else if types == "lph".to_string() {
@@ -551,10 +551,10 @@ pub async fn repost_page(session: Session, req: HttpRequest) -> actix_web::Resul
                 can_copy_item = list.is_user_can_see_el(*_request_user_id) && list.is_user_can_copy_el(*_request_user_id);
                 creator_id = list.user_id;
                 if list.community_id.is_some() {
-                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                    permission_check = get_community_permission(&list.get_community(), &_request_user).0;
                 }
                 else {
-                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                    permission_check = get_user_permission(&list.get_creator(), &_request_user).0;
                 }
             }
             else if types == "lsu".to_string() {
@@ -564,10 +564,10 @@ pub async fn repost_page(session: Session, req: HttpRequest) -> actix_web::Resul
                 can_copy_item = list.is_user_can_see_el(*_request_user_id) && list.is_user_can_copy_el(*_request_user_id);
                 creator_id = list.user_id;
                 if list.community_id.is_some() {
-                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                    permission_check = get_community_permission(&list.get_community(), &_request_user).0;
                 }
                 else {
-                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                    permission_check = get_user_permission(&list.get_creator(), &_request_user).0;
                 }
             }
             else if types == "lvi".to_string() {
@@ -577,10 +577,10 @@ pub async fn repost_page(session: Session, req: HttpRequest) -> actix_web::Resul
                 can_copy_item = list.is_user_can_see_el(*_request_user_id) && list.is_user_can_copy_el(*_request_user_id);
                 creator_id = list.user_id;
                 if list.community_id.is_some() {
-                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                    permission_check = get_community_permission(&list.get_community(), &_request_user).0;
                 }
                 else {
-                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                    permission_check = get_user_permission(&list.get_creator(), &_request_user).0;
                 }
             }
         }
@@ -592,10 +592,10 @@ pub async fn repost_page(session: Session, req: HttpRequest) -> actix_web::Resul
                 can_copy_item = list.is_user_can_see_el(*_request_user_id) && list.is_user_can_copy_el(*_request_user_id);
                 creator_id = list.user_id;
                 if list.community_id.is_some() {
-                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                    permission_check = get_community_permission(&list.get_community(), &_request_user).0;
                 }
                 else {
-                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                    permission_check = get_user_permission(&list.get_creator(), &_request_user).0;
                 }
             }
             else if types == "doc".to_string() {
@@ -605,10 +605,10 @@ pub async fn repost_page(session: Session, req: HttpRequest) -> actix_web::Resul
                 can_copy_item = list.is_user_can_see_el(*_request_user_id) && list.is_user_can_copy_el(*_request_user_id);
                 creator_id = list.user_id;
                 if list.community_id.is_some() {
-                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                    permission_check = get_community_permission(&list.get_community(), &_request_user).0;
                 }
                 else {
-                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                    permission_check = get_user_permission(&list.get_creator(), &_request_user).0;
                 }
             }
             else if types == "goo".to_string() {
@@ -618,10 +618,10 @@ pub async fn repost_page(session: Session, req: HttpRequest) -> actix_web::Resul
                 can_copy_item = list.is_user_can_see_el(*_request_user_id) && list.is_user_can_copy_el(*_request_user_id);
                 creator_id = list.user_id;
                 if list.community_id.is_some() {
-                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                    permission_check = get_community_permission(&list.get_community(), &_request_user).0;
                 }
                 else {
-                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                    permission_check = get_user_permission(&list.get_creator(), &_request_user).0;
                 }
             }
             else if types == "mus".to_string() {
@@ -631,10 +631,10 @@ pub async fn repost_page(session: Session, req: HttpRequest) -> actix_web::Resul
                 can_copy_item = list.is_user_can_see_el(*_request_user_id) && list.is_user_can_copy_el(*_request_user_id);
                 creator_id = list.user_id;
                 if list.community_id.is_some() {
-                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                    permission_check = get_community_permission(&list.get_community(), &_request_user).0;
                 }
                 else {
-                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                    permission_check = get_user_permission(&list.get_creator(), &_request_user).0;
                 }
             }
             else if types == "sur".to_string() {
@@ -643,10 +643,10 @@ pub async fn repost_page(session: Session, req: HttpRequest) -> actix_web::Resul
                 let list = get_survey(item_id).get_list();
                 creator_id = list.user_id;
                 if list.community_id.is_some() {
-                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                    permission_check = get_community_permission(&list.get_community(), &_request_user).0;
                 }
                 else {
-                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                    permission_check = get_user_permission(&list.get_creator(), &_request_user).0;
                 }
             }
             else if types == "vid".to_string() {
@@ -655,18 +655,13 @@ pub async fn repost_page(session: Session, req: HttpRequest) -> actix_web::Resul
                 let list = get_video(item_id).get_list();
                 creator_id = list.user_id;
                 if list.community_id.is_some() {
-                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                    permission_check = get_community_permission(&list.get_community(), &_request_user).0;
                 }
                 else {
-                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                    permission_check = get_user_permission(&list.get_creator(), &_request_user).0;
                 }
             }
         }
-        let mut text = "".to_string();
-        let mut creator_id = 0;
-        let mut is_list = false;
-        let mut can_copy_item = false;
-        let mut permission_check = false;
         if permission_check == false {
             #[derive(TemplateOnce)]
             #[template(path = "base_block/close/close_item.stpl")]
@@ -674,7 +669,7 @@ pub async fn repost_page(session: Session, req: HttpRequest) -> actix_web::Resul
                 text: String,
             }
             let body = Template {
-                text:  "Permission Denied.",
+                text:  "Permission Denied.".to_string(),
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

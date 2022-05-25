@@ -6,7 +6,7 @@
         <label class="custom-control-label">В мои списки</label>
       </div>
 
-      <% if request_user.get_staffed_communities().len() == 0 { %>
+      <% if request_user.is_staffed_user() { %>
       <div class="custom-control custom-radio" style="margin-bottom:10px" flow="up" tooltip="У Вас нет управляемых сообществ">
         <input type="radio" disabled="disabled" class="custom-control-input" id="repost_radio_community">
         <label class="custom-control-label">Закрыто</label>
@@ -18,7 +18,7 @@
       </div>
       <% } %>
 
-      <% if request_user.get_chats_and_friends.len() == 0 { %>
+      <% if request_user.count_friends() == 0 || request_user.get_all_chats_count() == 0 { %> 
       <div class="custom-control custom-radio" flow="up" tooltip="У Вас нет друзей и чатов" style="margin-bottom:10px">
         <input type="radio" disabled="disabled" class="custom-control-input" id="repost_radio_message">
         <label class="custom-control-label">Закрыто</label>
