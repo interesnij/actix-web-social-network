@@ -18,7 +18,7 @@ use sailfish::TemplateOnce;
 use crate::models::{User, Chat, Message};
 
 
-pub fn chat_pages_urls(config: &mut web::ServiceConfig) {
+pub fn pages_urls(config: &mut web::ServiceConfig) {
     config.route("/chats_list/", web::get().to(chats_list_page));
     config.route("/chat/{id}/", web::get().to(chat_page));
 }
@@ -108,7 +108,7 @@ pub async fn chats_list_page(session: Session, req: HttpRequest) -> actix_web::R
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
     } else {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("Ошибка доступа."))
     }
 }
 

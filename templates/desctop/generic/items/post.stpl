@@ -1,6 +1,5 @@
 
 <% if object.attach.is_some() { %>
-<%= object.attach.as_ref().unwrap() %>
   <%- object.get_attach(request_user.id) %>
 <% } %>
 
