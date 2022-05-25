@@ -1,4 +1,6 @@
 <span class="load_block">
+  <% let is_staff = list.is_user_can_create_el(request_user.id); %>
+  <% let is_manager = request_user.is_moderator(); %>
 
   <% if community.count_fix_items() > 1 { %>
   <div class="csslider infinity slider_100 mt-2">
@@ -51,9 +53,6 @@
 
           <% } else if object_list.len() > 0 { %>
 
-            <% let is_staff = list.is_user_can_create_el(request_user.id); %>
-            <% let is_manager = request_user.is_moderator(); %>
-            
             <% for object in object_list.iter() { %>
               <% include!("../../posts/post.stpl"); %>
             <% } %>
