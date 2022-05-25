@@ -12,6 +12,7 @@ use crate::utils::{
     is_signed_in,
     establish_connection,
     get_request_user_data,
+    get_type,
     JsonReactions,
 };
 use actix_session::Session;
@@ -26,30 +27,6 @@ pub fn progs_routes(config: &mut web::ServiceConfig) {
     config.route("/users/progs/delete_comment/", web::get().to(delete_comment));
     config.route("/users/progs/recover_comment/", web::get().to(recover_comment));
     config.route("/users/progs/edit_comment/", web::post().to(edit_comment));
-}
-
-pub fn get_type(req: HttpRequest) -> (bool, i32, String) {
-    #[derive(Debug, Deserialize)]
-    pub struct TypesParams {
-        pub types: Option<String>,
-    }
-    let params_some = web::Query::<TypesParams>::from_query(&req.query_string());
-    if params_some.is_ok() {
-        let params = params_some.unwrap();
-        if params.types.is_some() {
-            let item = params.types.as_deref().unwrap();
-            let pk: i32 = item[3..].parse().unwrap();
-            let code = &item[..3].to_string();
-
-            return (true, pk, code.to_string());
-        }
-        else {
-            return (false, 0, "".to_string());
-        }
-    }
-    else {
-        return (false, 0, "".to_string());
-    }
 }
 
 #[derive(Deserialize, Serialize)]
@@ -71,7 +48,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
         let _request_user = get_request_user_data(session);
         let form = comment_form(payload.borrow_mut()).await;
 
-        let (type_exists, comment_id, types) = get_type(req);
+        let (type_exists, comment_id, types) = get_type(&req);
         if type_exists == false {
             return Json(JsonCommentResponse {
                 content: None,
@@ -181,7 +158,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
 pub async fn delete_comment(session: Session, req: HttpRequest) -> web::Json<JsonResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
-        let (type_exists, comment_id, types) = get_type(req);
+        let (type_exists, comment_id, types) = get_type(&req);
         if type_exists == false {
             return Json(JsonResponse {info: "Ошибка доступа".to_string()})
         }
@@ -242,7 +219,7 @@ pub async fn delete_comment(session: Session, req: HttpRequest) -> web::Json<Jso
 pub async fn recover_comment(session: Session, req: HttpRequest) -> web::Json<JsonResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
-        let (type_exists, comment_id, types) = get_type(req);
+        let (type_exists, comment_id, types) = get_type(&req);
         if type_exists == false {
             return Json(JsonResponse {info: "Ошибка доступа".to_string()})
         }
@@ -303,7 +280,7 @@ pub async fn recover_comment(session: Session, req: HttpRequest) -> web::Json<Js
 pub async fn like_comment(session: Session, req: HttpRequest) -> web::Json<JsonReactions> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
-        let (type_exists, comment_id, types) = get_type(req);
+        let (type_exists, comment_id, types) = get_type(&req);
         if type_exists == false {
             return Json(JsonReactions {
                 like_count: 0,
@@ -353,7 +330,7 @@ pub async fn like_comment(session: Session, req: HttpRequest) -> web::Json<JsonR
 pub async fn dislike_comment(session: Session, req: HttpRequest) -> web::Json<JsonReactions> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
-        let (type_exists, comment_id, types) = get_type(req);
+        let (type_exists, comment_id, types) = get_type(&req);
         if type_exists == false {
             return Json(JsonReactions {
                 like_count: 0,
@@ -403,7 +380,7 @@ pub async fn dislike_comment(session: Session, req: HttpRequest) -> web::Json<Js
 pub async fn like_item(session: Session, req: HttpRequest) -> web::Json<JsonReactions> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
-        let (type_exists, item_id, types) = get_type(req);
+        let (type_exists, item_id, types) = get_type(&req);
         if type_exists == false {
             return Json(JsonReactions {
                 like_count: 0,
@@ -453,7 +430,7 @@ pub async fn like_item(session: Session, req: HttpRequest) -> web::Json<JsonReac
 pub async fn dislike_item(session: Session, req: HttpRequest) -> web::Json<JsonReactions> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
-        let (type_exists, item_id, types) = get_type(req);
+        let (type_exists, item_id, types) = get_type(&req);
         if type_exists == false {
             return Json(JsonReactions {
                 like_count: 0,

@@ -1,9 +1,9 @@
 
     <form>
-      <input type="hidden" name="type" value="<%= type %>" class="item_type">
+      <input type="hidden" name="type" value="<%= types %>" class="item_type">
             <div class="card-header border-bottom">
               <h6 class="content-color-primary mb-0">
-                <span style="font-weight:bold">Добавить <%- object.get_description() %></span>
+                <span style="font-weight:bold">Добавить <%- text %></span>
                 <br>
                 <span id="toggle_case_item_repost" class="underline" data-flag="create_repost_btn">Репост</span>
                 <% if can_copy_item { %>
@@ -18,7 +18,7 @@
                 <% include!("form.stpl"); %>
               </span>
 
-              <% if object.can_see_el { %>
+              <% if is_list { %>
               <span class="copy_case is_list" style="display:none">
                 {% include 'desctop/generic/repost/profile_choice.html' %}
               </span>

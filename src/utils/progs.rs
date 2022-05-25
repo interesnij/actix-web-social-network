@@ -1,5 +1,5 @@
 use crate::utils::establish_connection;
-
+use actix_web::HttpRequest;
 use crate::schema;
 use diesel::prelude::*;
 use crate::models::{
@@ -12,6 +12,30 @@ use crate::models::{
     VideoList, Video, VideoComment,
 };
 
+
+pub fn get_type(req: &HttpRequest) -> (bool, i32, String) {
+    #[derive(Debug, Deserialize)]
+    pub struct TypesParams {
+        pub types: Option<String>,
+    }
+    let params_some = web::Query::<TypesParams>::from_query(&req.query_string());
+    if params_some.is_ok() {
+        let params = params_some.unwrap();
+        if params.types.is_some() {
+            let item = params.types.as_deref().unwrap();
+            let pk: i32 = item[3..].parse().unwrap();
+            let code = &item[..3].to_string();
+
+            return (true, pk, code.to_string());
+        }
+        else {
+            return (false, 0, "".to_string());
+        }
+    }
+    else {
+        return (false, 0, "".to_string());
+    }
+}
 
 pub fn get_user(id: i32) -> User {
     use crate::schema::users::dsl::users;

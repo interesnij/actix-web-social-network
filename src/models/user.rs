@@ -546,6 +546,48 @@ impl User {
             .expect("E")
             .len();
     }
+
+    pub fn is_list_in_collection(&self, types: &String) -> bool {
+        let pk: i32 = types[3..].parse().unwrap();
+        let code = &types[..3];
+        if types == &"lpo".to_string() {
+            use crate::utils::get_post_list;
+            let list = get_post_list(pk);
+            return list.get_users_ids().iter().any(|&i| i==self.id);
+        }
+        else if types == &"lgo".to_string() {
+            use crate::utils::get_good_list;
+            let list = get_good_list(pk);
+            return list.get_users_ids().iter().any(|&i| i==self.id);
+        }
+        else if types == &"lph".to_string() {
+            use crate::utils::get_photo_list;
+            let list = get_photo_list(pk);
+            return list.get_users_ids().iter().any(|&i| i==self.id);
+        }
+        else if types == &"lvi".to_string() {
+            use crate::utils::get_video_list;
+            let list = get_video_list(pk);
+            return list.get_users_ids().iter().any(|&i| i==self.id);
+        }
+        else if types == &"lsu".to_string() {
+            use crate::utils::get_survey_list;
+            let list = get_survey_list(pk);
+            return list.get_users_ids().iter().any(|&i| i==self.id);
+        }
+        else if types == &"ldo".to_string() {
+            use crate::utils::get_doc_list;
+            let list = get_doc_list(pk);
+            return list.get_users_ids().iter().any(|&i| i==self.id);
+        }
+        else if types == &"lmu".to_string() {
+            use crate::utils::get_music_list;
+            let list = get_music_list(pk);
+            return list.get_users_ids().iter().any(|&i| i==self.id);
+        }
+        return false;
+    }
+
     pub fn get_fixed_posts(&self) -> Vec<Post> {
         use crate::schema::posts::dsl::posts;
 

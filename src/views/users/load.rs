@@ -12,6 +12,7 @@ use crate::utils::{
     get_request_user_data,
     get_list_variables,
     get_user,
+    get_type,
 };
 
 use actix_session::Session;
@@ -961,31 +962,8 @@ pub async fn goods_list_load(session: Session, req: HttpRequest, list_id: web::P
     }
 }
 
-fn get_load_type(req: &HttpRequest) -> (bool, i32, String) {
-    #[derive(Debug, Deserialize)]
-    pub struct TypesParams {
-        pub types: Option<String>,
-    }
-    let params_some = web::Query::<TypesParams>::from_query(&req.query_string());
-    if params_some.is_ok() {
-        let params = params_some.unwrap();
-        if params.types.is_some() {
-            let item = params.types.as_deref().unwrap();
-            let pk: i32 = item[3..].parse().unwrap();
-            let code = &item[..3].to_string();
-
-            return (true, pk, code.to_string());
-        }
-        else {
-            return (false, 0, "".to_string());
-        }
-    }
-    else {
-        return (false, 0, "".to_string());
-    }
-}
 pub async fn lists_for_copy_load(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    let (type_exists, comment_id, types) = get_load_type(&req);
+    let (type_exists, comment_id, types) = get_type(&req);
 
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
@@ -1077,7 +1055,7 @@ pub async fn lists_for_copy_load(session: Session, req: HttpRequest) -> actix_we
 }
 
 pub async fn communities_lists_for_copy_load(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    let (type_exists, comment_id, types) = get_load_type(&req);
+    let (type_exists, comment_id, types) = get_type(&req);
 
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);

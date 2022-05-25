@@ -1,11 +1,11 @@
 <div class="form-group">
   <div class="row">
     <div class="col-md-6">
-      <% if object.is_user_list(request_user) { %>
+      <% if request_user.id == creator_id { %>
       <div class="" style="margin-bottom:10px">
         <label>Это Ваш список</label>
       </div>
-      <% } elif object.is_user_collection_list(request_user.id) { %>
+      <% } else if request_user.is_list_in_collection(&types) { %>
       <div class="" style="margin-bottom:10px">
         <label>Список в коллекции - <a class="pointer remove_list_in_user_collections" data-pk="<%= request_user.id %>">удалить</a></label>
       </div>
@@ -16,13 +16,13 @@
       </div>
       <% } %>
 
-      <% if !request_user.get_staffed_communities().len() > 0 { %>
+      <% if request_user.get_staffed_communities().len() == 0 { %>
       <div class="custom-control custom-radio" style="margin-bottom:10px" flow="up" tooltip="У Вас нет управляемых сообществ">
         <input type="radio" disabled="disabled" class="custom-control-input copy_for_communities">
         <label class="custom-control-label">Закрыто</label>
       </div>
       <% } else { %>
-      <div class="custom-control custom-radio" id="copy_for_communities" style="margin-bottom:10px" data-type="<%= object.get_code %>">
+      <div class="custom-control custom-radio" id="copy_for_communities" style="margin-bottom:10px" data-type="<%= types %>">
         <input type="radio" class="custom-control-input copy_for_communities">
         <label class="custom-control-label">В сообщества</label>
       </div>

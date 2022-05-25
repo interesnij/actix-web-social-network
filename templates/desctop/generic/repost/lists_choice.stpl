@@ -6,7 +6,7 @@
         <label class="custom-control-label">В мои списки</label>
       </div>
 
-      <% if !request_user.get_staffed_communities().len() > 0 { %>
+      <% if request_user.get_staffed_communities().len() == 0 { %>
       <div class="custom-control custom-radio" style="margin-bottom:10px" flow="up" tooltip="У Вас нет управляемых сообществ">
         <input type="radio" disabled="disabled" class="custom-control-input" id="repost_radio_community">
         <label class="custom-control-label">Закрыто</label>

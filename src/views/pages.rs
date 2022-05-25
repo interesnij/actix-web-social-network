@@ -14,6 +14,7 @@ use crate::utils::{
     get_request_user_data,
     to_home,
     get_list_variables,
+    get_type,
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
@@ -27,6 +28,8 @@ pub fn pages_routes(config: &mut web::ServiceConfig) {
     config.route("/all-communities/", web::get().to(all_communities_page));
     config.route("/check_custom_link/{slug}/", web::get().to(check_custom_link));
     config.route("/{slug}/", web::get().to(link_page));
+
+    config.route("/repost/", web::get().to(repost_page));
 }
 
 pub async fn link_page(session: Session, req: HttpRequest, slug: web::Path<String>) -> actix_web::Result<HttpResponse> {
@@ -470,4 +473,235 @@ pub async fn check_custom_link(session: Session, req: HttpRequest, slug: web::Pa
         <span id='string'>".to_string() + &_string.to_string() + &"</span>
     </div>".to_string();
     Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(answer))
+}
+
+pub async fn repost_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        use crate::utils::{get_user_permission,get_community_permission};
+
+        let (type_exists, item_id, types) = get_type(&req);
+        let _request_user = get_request_user_data(session);
+        let _request_user_id = &_request_user.id;
+        let mut text = "".to_string();
+        let mut creator_id = 0;
+        let mut is_list = false;
+        let mut can_copy_item = false;
+        let mut permission_check = false;
+
+        let pre_types = &types[..1];
+
+        if pre_types == "l".to_string() {
+            is_list = true
+            if types == "lpo".to_string() {
+                use crate::utils::get_post_list;
+
+                let list = get_post_list(item_id);
+                can_copy_item = list.is_user_can_see_el(*_request_user_id) && list.is_user_can_copy_el(*_request_user_id);
+                creator_id = list.user_id;
+                if list.community_id.is_some() {
+                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                }
+                else {
+                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                }
+            }
+            else if types == "ldo".to_string() {
+                use crate::utils::get_doc_list;
+
+                let list = get_doc_list(item_id);
+                can_copy_item = list.is_user_can_see_el(*_request_user_id) && list.is_user_can_copy_el(*_request_user_id);
+                creator_id = list.user_id;
+                if list.community_id.is_some() {
+                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                }
+                else {
+                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                }
+            }
+            else if types == "lgo".to_string() {
+                use crate::utils::get_good_list;
+
+                let list = get_good_list(item_id);
+                can_copy_item = list.is_user_can_see_el(*_request_user_id) && list.is_user_can_copy_el(*_request_user_id);
+                creator_id = list.user_id;
+                if list.community_id.is_some() {
+                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                }
+                else {
+                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                }
+            }
+            else if types == "lmu".to_string() {
+                use crate::utils::get_music_list;
+
+                let list = get_music_list(item_id);
+                can_copy_item = list.is_user_can_see_el(*_request_user_id) && list.is_user_can_copy_el(*_request_user_id);
+                creator_id = list.user_id;
+                if list.community_id.is_some() {
+                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                }
+                else {
+                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                }
+            }
+            else if types == "lph".to_string() {
+                use crate::utils::get_photo_list;
+
+                let list = get_photo_list(item_id);
+                can_copy_item = list.is_user_can_see_el(*_request_user_id) && list.is_user_can_copy_el(*_request_user_id);
+                creator_id = list.user_id;
+                if list.community_id.is_some() {
+                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                }
+                else {
+                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                }
+            }
+            else if types == "lsu".to_string() {
+                use crate::utils::get_survey_list;
+
+                let list = get_survey_list(item_id);
+                can_copy_item = list.is_user_can_see_el(*_request_user_id) && list.is_user_can_copy_el(*_request_user_id);
+                creator_id = list.user_id;
+                if list.community_id.is_some() {
+                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                }
+                else {
+                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                }
+            }
+            else if types == "lvi".to_string() {
+                use crate::utils::get_video_list;
+
+                let list = get_video_list(item_id);
+                can_copy_item = list.is_user_can_see_el(*_request_user_id) && list.is_user_can_copy_el(*_request_user_id);
+                creator_id = list.user_id;
+                if list.community_id.is_some() {
+                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                }
+                else {
+                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                }
+            }
+        }
+        else {
+            if types == "pos".to_string() {
+                use crate::utils::get_post;
+
+                let list = get_post(item_id).get_list();
+                can_copy_item = list.is_user_can_see_el(*_request_user_id) && list.is_user_can_copy_el(*_request_user_id);
+                creator_id = list.user_id;
+                if list.community_id.is_some() {
+                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                }
+                else {
+                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                }
+            }
+            else if types == "doc".to_string() {
+                use crate::utils::get_doc;
+
+                let list = get_doc(item_id).get_list();
+                can_copy_item = list.is_user_can_see_el(*_request_user_id) && list.is_user_can_copy_el(*_request_user_id);
+                creator_id = list.user_id;
+                if list.community_id.is_some() {
+                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                }
+                else {
+                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                }
+            }
+            else if types == "goo".to_string() {
+                use crate::utils::get_good;
+
+                let list = get_good(item_id).get_list();
+                can_copy_item = list.is_user_can_see_el(*_request_user_id) && list.is_user_can_copy_el(*_request_user_id);
+                creator_id = list.user_id;
+                if list.community_id.is_some() {
+                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                }
+                else {
+                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                }
+            }
+            else if types == "mus".to_string() {
+                use crate::utils::get_music;
+
+                let list = get_music(item_id).get_list();
+                can_copy_item = list.is_user_can_see_el(*_request_user_id) && list.is_user_can_copy_el(*_request_user_id);
+                creator_id = list.user_id;
+                if list.community_id.is_some() {
+                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                }
+                else {
+                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                }
+            }
+            else if types == "sur".to_string() {
+                use crate::utils::get_survey;
+
+                let list = get_survey(item_id).get_list();
+                creator_id = list.user_id;
+                if list.community_id.is_some() {
+                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                }
+                else {
+                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                }
+            }
+            else if types == "vid".to_string() {
+                use crate::utils::get_video;
+
+                let list = get_video(item_id).get_list();
+                creator_id = list.user_id;
+                if list.community_id.is_some() {
+                    permission_check = get_community_permission(&_list.get_community(), &_request_user).0;
+                }
+                else {
+                    permission_check = get_user_permission(&_list.get_creator(), &_request_user).0;
+                }
+            }
+        }
+        let mut text = "".to_string();
+        let mut creator_id = 0;
+        let mut is_list = false;
+        let mut can_copy_item = false;
+        let mut permission_check = false;
+        if permission_check == false {
+            #[derive(TemplateOnce)]
+            #[template(path = "base_block/close/close_item.stpl")]
+            struct Template {
+                text: String,
+            }
+            let body = Template {
+                text:  "Permission Denied.",
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/generic/repost/repost.stpl")]
+            struct Template {
+                request_user:  User,
+                text:          String,
+                creator_id:    i32,
+                is_list:       bool,
+                can_copy_item: bool,
+            }
+            let body = Template {
+                request_user:  request_user,
+                text:          text,
+                creator_id:    creator_id,
+                is_list:       is_list,
+                can_copy_item: can_copy_item,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
 }
