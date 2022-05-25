@@ -194,7 +194,7 @@ on('#ajax', 'click', '#add_post_btn', function() {
   $attach_input.setAttribute("name", "attach");
   $attach_input.setAttribute("type", "hidden");
   $attach_input.classList.add("input_attach");
-  $attach_input.value = _attach_value.substring(0, _attach_value.length – 1);
+  $attach_input.value = _attach_value.slice(0,-1);
   form_post.append($attach_input);
 
   form_data = new FormData(form_post);
