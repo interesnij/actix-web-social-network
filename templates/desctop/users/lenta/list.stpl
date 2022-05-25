@@ -1,6 +1,5 @@
 <span class="load_block">
-<% let is_staff = list.is_user_can_create_el(request_user.id); %>
-<% let is_manager = request_user.is_moderator(); %>
+
   <% if user.count_fix_items() > 1 { %>
   <div class="csslider infinity slider_100 mt-2">
     <p>Особые записи</p>
@@ -29,6 +28,9 @@
   </div>
   <% } else if user.count_fix_items() == 1 { %>
 
+  <% let is_staff = list.is_user_can_create_el(request_user.id); %>
+  <% let is_manager = request_user.is_moderator(); %>
+  
   <% for object in user.get_fixed_posts().iter() { %>
     <% include!("../../posts/fix_post.stpl"); %>
   <% } %>
