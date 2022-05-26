@@ -756,7 +756,7 @@ function send_like(item, link) {
             if (resp_dislike_count == 0) {
               resp_dislike_count = ""
             };
-            likes_count.innerHTML = resp_dislike_count;
+            likes_count.innerHTML = likes_count;
             dislikes_count.innerHTML = resp_dislike_count;
             like.classList.toggle("btn_success");
             like.classList.toggle("btn_default");
