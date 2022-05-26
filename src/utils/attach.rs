@@ -1002,7 +1002,7 @@ pub fn add_anon_survey(pk: i32) -> String {
             answer.get_procent().to_string(), "%</span></span></div>");
     }
 
-    concat_string!(
+    return concat_string!(
         "<div data-pk='", survey.id.to_string(),
         "' class='card p-1 border text-center position-relative box-shadow' style='flex-basis: 100%;'>
         <figure class='background-img'><img src='", survey.get_image(),
