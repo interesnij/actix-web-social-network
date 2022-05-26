@@ -661,7 +661,7 @@ pub fn add_music(pk: i32, is_staff: bool, user_id: i32) -> String {
         .unwrap();
 
     let mut drops = "<span class='dropdown-item create_repost'>Добавить</span><span class='dropdown-item copy_link'>Копировать ссылку</span>".to_string();
-    if music.is_user_can_edit_delete_item(user.id) {
+    if music.is_user_can_edit_delete_item(user_id) {
         drops = drops + &"<span class='dropdown-item track_edit'>Изменить</span><span class='dropdown-item track_remove'>Удалить</span>".to_string();
     }
     else if is_staff {
@@ -786,7 +786,7 @@ pub fn add_doc(pk: i32, is_staff: bool, user_id: i32) -> String {
         .unwrap();
 
     let mut drops = "<span class='dropdown-item create_repost'>Добавить</span><span class='dropdown-item copy_link'>Копировать ссылку</span>".to_string();
-    if doc.is_user_can_edit_delete_item(user.id) {
+    if doc.is_user_can_edit_delete_item(user_id) {
         drops = drops + &"<span class='dropdown-item track_edit'>Изменить</span><span class='dropdown-item track_remove'>Удалить</span>".to_string();
     }
     else if is_staff == true {
@@ -930,13 +930,20 @@ pub fn add_edited_community(pk: i32) -> String {
         <span class='doc_preview_delete' tooltip='Не прикреплять' flow='up'><svg fill='#FF0000' viewBox='0 0 24 24'>
         <path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'>
         </path><path d='M0 0h24v24H0z' fill='none'></path></svg></span><span>
-        <input type='hidden' name='attach_items' value='com", community.id.to_string(), "'></span>
-        <div style='display:flex'><figure><a class='ajax'
-        href='", community.link, "' >", community.get_bb_avatar(),
+        <input type='hidden' name='attach_items' value='com",
+        community.id.to_string(),
+        "'></span><div style='display:flex'><figure><a class='ajax' href='",
+        community.link, "' >", community.get_bb_avatar(),
         "</a></figure><div class='media-body' style='margin-left: 10px;'>
-        <a href='", community.link, "' class='my-0 mt-1 ajax'>", community.name,
-        "</a><p>", community.description.as_ref().unwrap(), "<br>Подписчиков: ",
-        community.get_members().to_string(), "</p></div></div></div></div>");
+        <a href='",
+        community.link,
+        "' class='my-0 mt-1 ajax'>",
+        community.name,
+        "</a><p>",
+        community.description.as_ref().unwrap(),
+        "<br>Подписчиков: ",
+        community.count_members().to_string(),
+        "</p></div></div></div></div>");
 }
 
 pub fn add_anon_survey(pk: i32) -> String {
@@ -1153,7 +1160,7 @@ pub fn add_edited_survey(pk: i32) -> String {
             answer.vote.to_string(),
             "</span></span><span class='progress_span_l' style='margin-left: auto;'>
             <span class='vote_svg'></span><span class='procent'>",
-            answer.get_procent(),
+            answer.get_procent().to_string(),
             "%</span></span></div>");
     }
 
