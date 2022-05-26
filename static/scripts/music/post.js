@@ -49,7 +49,7 @@ on('#ajax', 'click', '.track_restore', function() {
   pk = this.getAttribute("data-pk");
   block = this.parentElement; next = block.nextElementSibling;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/music/restore_track/" + pk + "/", true );
+  link.open( 'GET', "/music/recover_track/" + pk + "/", true ); 
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {

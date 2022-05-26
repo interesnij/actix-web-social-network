@@ -22,7 +22,7 @@ on('body', 'click', '.doc_restore', function() {
   pk = this.getAttribute("data-pk");
   block = this.parentElement; next = block.nextElementSibling;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/docs/restore_doc/" + pk + "/", true );
+  link.open( 'GET', "/docs/recover_doc/" + pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {

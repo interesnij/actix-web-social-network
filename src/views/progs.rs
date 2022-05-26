@@ -381,12 +381,38 @@ pub async fn like_item(session: Session, req: HttpRequest) -> web::Json<JsonReac
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
         let (type_exists, item_id, types) = get_type(&req);
+        let pre_types = &types[..1];
         if type_exists == false {
             return Json(JsonReactions {
                 like_count: 0,
                 dislike_count: 0,
             })
         }
+        else if pre_types == "c".to_string() {
+            if types == "cpo".to_string() {
+                use crate::utils::get_post_comment;
+
+                let item = get_post_comment(item_id);
+                item.send_like(_request_user.id)
+            }
+            else if types == "cph".to_string() {
+                use crate::utils::get_photo_comment;
+
+                let item = get_photo_comment(item_id);
+                item.send_like(_request_user.id)
+            }
+            else if types == "cgo".to_string() {
+                use crate::utils::get_good_comment;
+
+                let item = get_good_comment(item_id);
+                item.send_like(_request_user.id)
+            }
+            else if types == "cvi".to_string() {
+                use crate::utils::get_video_comment;
+
+                let item = get_video_comment(item_id);
+                item.send_like(_request_user.id)
+            }
         else {
             if types == "pos".to_string() {
                 use crate::utils::get_post;

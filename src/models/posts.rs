@@ -2142,11 +2142,7 @@ impl Post {
                     .get_result::<PostVote>(&_connection)
                     .expect("Error.");
 
-                let reactions = PostReactionsUpdate {
-                    liked:    self.liked + 1,
-                    disliked: self.disliked - 1,
-                };
-                diesel::update(self)
+                diesel::update(&self)
                     .set(reactions)
                     .get_result::<Post>(&_connection)
                     .expect("Error.");
@@ -2181,9 +2177,9 @@ impl Post {
                 .get_result::<Post>(&_connection)
                 .expect("Error.");
         }
-        let reactions = JsonReactions {
-            like_count:    self.liked,
-            dislike_count: self.disliked,
+        let reactions = PostReactionsUpdate {
+            liked:    self.liked,
+            disliked: self.disliked,
         };
         return Json(reactions);
     }
