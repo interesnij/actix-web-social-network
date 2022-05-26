@@ -56,7 +56,7 @@ pub fn add_post(pk: i32, user_id: i32, is_staff: bool) -> String {
                 "'>", user.get_50_avatar(),
                 "</figure></a>"
             );
-            window_likes += "</span></div>".to_string(),
+            window_likes += "</span></div>".to_string();
         }
     }
     if post.is_have_dislikes() {
@@ -75,7 +75,7 @@ pub fn add_post(pk: i32, user_id: i32, is_staff: bool) -> String {
                 "'>", user.get_50_avatar(),
                 "</figure></a>"
             );
-            window_dislikes += "</span></div>".to_string(),
+            window_dislikes += "</span></div>".to_string();
         }
     }
 
