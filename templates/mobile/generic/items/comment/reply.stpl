@@ -31,7 +31,7 @@
         <div class="">
             <div class="row">
                 <div class="col" data-type="<%= reply.get_code() %>" data-subtype="comment">
-                <span class="like like2
+                <span class="like like_item
                 <% if reply.likes_ids().iter().any(|&i| i==request_user.id) { %>
                   btn_success
                 <% } else { %>
@@ -57,7 +57,7 @@
                 </div>
                 <% } %>
                 </span>
-                <span class="dislike dislike2
+                <span class="dislike dislike_item
                 <% if reply.dislikes_ids().iter().any(|&i| i==request_user.id) { %>
                   btn_danger
                 <% } else { %>
