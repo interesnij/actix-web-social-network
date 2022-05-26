@@ -56,7 +56,7 @@ pub fn add_post(pk: i32, user_id: i32, is_staff: bool) -> String {
                 "'>", user.get_50_avatar(),
                 "</figure></a>"
             );
-            window_likes += "</span></div>".to_string();
+            window_likes += &"</span></div>".to_string();
         }
     }
     if post.is_have_dislikes() {
@@ -75,7 +75,7 @@ pub fn add_post(pk: i32, user_id: i32, is_staff: bool) -> String {
                 "'>", user.get_50_avatar(),
                 "</figure></a>"
             );
-            window_dislikes += "</span></div>".to_string();
+            window_dislikes += &"</span></div>".to_string();
         }
     }
 
@@ -108,7 +108,7 @@ pub fn add_post(pk: i32, user_id: i32, is_staff: bool) -> String {
         "<div class='card-footer border-top py-2'><div class='row'>
         <div class='col interaction' data-type='pos'",
         post.id.to_string(), "'><span ", votes_on,
-        " class='like like_item ", user_like, "' title='Нравится'>
+        " class='like like_item ", user_likes, "' title='Нравится'>
         <svg class='svg_info' viewBox='0 0 24 24' fill='currentColor'>
         <path d='M0 0h24v24H0V0zm0 0h24v24H0V0z' fill='none'></path><path d='M9 21h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.58 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2zM9 9l4.34-4.34L12 10h9v2l-3 7H9V9zM1 9h4v12H1z'></path></svg><span class='likes_count' data-count='like'>",
         post.likes_count().to_string(),
@@ -120,7 +120,7 @@ pub fn add_post(pk: i32, user_id: i32, is_staff: bool) -> String {
         "</span></span><span class='dislike_window'>", window_dislikes,
         "</span><span title='Комментарий' class='pointer load_comments_list btn_default'
         style='margin-right: 5px;",
-        comments_enabled, "'>
+        comment_enabled, "'>
         <svg viewBox='0 0 24 24' class='svg_info' fill='currentColor'>
         <path d='M0 0h24v24H0V0z' fill='none'></path><path d='M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z'></path></svg><span class='comment-count'>",
         post.count_comments().to_string(),
