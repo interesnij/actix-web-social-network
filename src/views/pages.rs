@@ -32,6 +32,7 @@ pub fn pages_routes(config: &mut web::ServiceConfig) {
     config.route("/progs/create_repost/", web::get().to(create_repost_page));
     config.route("/progs/create_claim/", web::get().to(create_claim_page));
     config.route("/load/likes/", web::get().to(all_likes_page));
+    config.route("/load/dislikes/", web::get().to(all_dislikes_page));
 }
 
 pub async fn link_page(session: Session, req: HttpRequest, slug: web::Path<String>) -> actix_web::Result<HttpResponse> {
@@ -1012,7 +1013,7 @@ pub async fn all_likes_page(session: Session, req: HttpRequest) -> actix_web::Re
                             next_page_number = 2;
                         }
                     }
-                    text = "Комментарий оценили".to_string() + &comment.likes_count_ru();
+                    text = "Комментарий не оценили: ".to_string() + &comment.likes_count_ru();
                 }
             }
             else if types == "cph".to_string() {
@@ -1036,7 +1037,7 @@ pub async fn all_likes_page(session: Session, req: HttpRequest) -> actix_web::Re
                             next_page_number = 2;
                         }
                     }
-                    text = "Комментарий оценили".to_string() + &comment.likes_count_ru();
+                    text = "Комментарий не оценили: ".to_string() + &comment.likes_count_ru();
                 }
             }
             else if types == "cgo".to_string() {
@@ -1060,7 +1061,7 @@ pub async fn all_likes_page(session: Session, req: HttpRequest) -> actix_web::Re
                             next_page_number = 2;
                         }
                     }
-                    text = "Комментарий оценили".to_string() + &comment.likes_count_ru();
+                    text = "Комментарий не оценили: ".to_string() + &comment.likes_count_ru();
                 }
             }
             else if types == "cvi".to_string() {
@@ -1084,7 +1085,7 @@ pub async fn all_likes_page(session: Session, req: HttpRequest) -> actix_web::Re
                             next_page_number = 2;
                         }
                     }
-                    text = "Комментарий оценили".to_string() + &comment.likes_count_ru();
+                    text = "Комментарий не оценили: ".to_string() + &comment.likes_count_ru();
                 }
             }
         }
@@ -1110,7 +1111,7 @@ pub async fn all_likes_page(session: Session, req: HttpRequest) -> actix_web::Re
                             next_page_number = 2;
                         }
                     }
-                    text = "Запись оценили".to_string() + &item.likes_count_ru();
+                    text = "Запись не оценили: ".to_string() + &item.likes_count_ru();
                 }
             }
             else if types == "goo".to_string() {
@@ -1134,7 +1135,7 @@ pub async fn all_likes_page(session: Session, req: HttpRequest) -> actix_web::Re
                             next_page_number = 2;
                         }
                     }
-                    text = "Товар оценили".to_string() + &item.likes_count_ru();
+                    text = "Товар не оценили: ".to_string() + &item.likes_count_ru();
                 }
             }
             else if types == "vid".to_string() {
@@ -1158,7 +1159,7 @@ pub async fn all_likes_page(session: Session, req: HttpRequest) -> actix_web::Re
                             next_page_number = 2;
                         }
                     }
-                    text = "Видеозапись оценили".to_string() + &item.likes_count_ru();
+                    text = "Видеозапись не оценили: ".to_string() + &item.likes_count_ru();
                 }
             }
         }
@@ -1197,6 +1198,254 @@ pub async fn all_likes_page(session: Session, req: HttpRequest) -> actix_web::Re
         else {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/generic/items/comment/anon_likes.stpl")]
+            struct Template {
+                text:             String,
+                types:            String,
+                object_list:      Vec<User>,
+                next_page_number: i32,
+            }
+            let body = Template {
+                text:             text,
+                types:            types,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn all_dislikes_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        use crate::utils::{get_user_permission, get_community_permission};
+
+        let (type_exists, item_id, types) = get_type(&req);
+        let (is_desctop, page) = get_list_variables(req);
+        let mut next_page_number = 0;
+        let mut step = 0;
+        let pre_types = &types[..1];
+        let _request_user = get_request_user_data(session);
+        let _request_user_id = &_request_user.id;
+        let mut text = "".to_string();
+        let mut permission_check = false;
+
+        let mut object_list: Vec<User> = Vec::new();
+
+        if page > 1 {
+            step = (page - 1) * 20;
+        }
+
+        if pre_types == "c".to_string() {
+            if types == "cpo".to_string() {
+                use crate::utils::get_post_comment;
+
+                let comment = get_post_comment(item_id);
+                let list = comment.get_list();
+                if list.community_id.is_some() {
+                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
+                }
+                else {
+                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                }
+                if permission_check {
+                    object_list = comment.dislikes(20, step.into());
+                    if page > 1 && comment.disliked > (page * 20) {
+                        next_page_number = page + 1;
+                    }
+                    else {
+                        if comment.disliked > 20 {
+                            next_page_number = 2;
+                        }
+                    }
+                    text = "Комментарий не оценили: ".to_string() + &comment.dislikes_count_ru();
+                }
+            }
+            else if types == "cph".to_string() {
+                use crate::utils::get_photo_comment;
+
+                let comment = get_photo_comment(item_id);
+                let list = comment.get_list();
+                if list.community_id.is_some() {
+                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
+                }
+                else {
+                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                }
+                if permission_check {
+                    object_list = comment.dislikes(20, step.into());
+                    if page > 1 && comment.disliked > (page * 20) {
+                        next_page_number = page + 1;
+                    }
+                    else {
+                        if comment.disliked > 20 {
+                            next_page_number = 2;
+                        }
+                    }
+                    text = "Комментарий не оценили: ".to_string() + &comment.dislikes_count_ru();
+                }
+            }
+            else if types == "cgo".to_string() {
+                use crate::utils::get_good_comment;
+
+                let comment = get_good_comment(item_id);
+                let list = comment.get_list();
+                if list.community_id.is_some() {
+                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
+                }
+                else {
+                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                }
+                if permission_check {
+                    object_list = comment.dislikes(20, step.into());
+                    if page > 1 && comment.disliked > (page * 20) {
+                        next_page_number = page + 1;
+                    }
+                    else {
+                        if comment.disliked > 20 {
+                            next_page_number = 2;
+                        }
+                    }
+                    text = "Комментарий не оценили: ".to_string() + &comment.dislikes_count_ru();
+                }
+            }
+            else if types == "cvi".to_string() {
+                use crate::utils::get_video_comment;
+
+                let comment = get_video_comment(item_id);
+                let list = comment.get_list();
+                if list.community_id.is_some() {
+                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
+                }
+                else {
+                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                }
+                if permission_check {
+                    object_list = comment.dislikes(20, step.into());
+                    if page > 1 && comment.disliked > (page * 20) {
+                        next_page_number = page + 1;
+                    }
+                    else {
+                        if comment.disliked > 20 {
+                            next_page_number = 2;
+                        }
+                    }
+                    text = "Комментарий не оценили: ".to_string() + &comment.dislikes_count_ru();
+                }
+            }
+        }
+        else {
+            if types == "pos".to_string() {
+                use crate::utils::get_post;
+
+                let item = get_post(item_id);
+                let list = item.get_list();
+                if list.community_id.is_some() {
+                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
+                }
+                else {
+                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                }
+                if permission_check {
+                    object_list = item.dislikes(20, step.into());
+                    if page > 1 && item.disliked > (page * 20) {
+                        next_page_number = page + 1;
+                    }
+                    else {
+                        if item.disliked > 20 {
+                            next_page_number = 2;
+                        }
+                    }
+                    text = "Запись не оценили: ".to_string() + &item.dislikes_count_ru();
+                }
+            }
+            else if types == "goo".to_string() {
+                use crate::utils::get_good;
+
+                let item = get_good(item_id);
+                let list = item.get_list();
+                if list.community_id.is_some() {
+                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
+                }
+                else {
+                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                }
+                if permission_check {
+                    object_list = item.dislikes(20, step.into());
+                    if page > 1 && item.disliked > (page * 20) {
+                        next_page_number = page + 1;
+                    }
+                    else {
+                        if item.disliked > 20 {
+                            next_page_number = 2;
+                        }
+                    }
+                    text = "Товар не оценили: ".to_string() + &item.dislikes_count_ru();
+                }
+            }
+            else if types == "vid".to_string() {
+                use crate::utils::get_video;
+
+                let item = get_video(item_id);
+                let list = item.get_list();
+                if list.community_id.is_some() {
+                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
+                }
+                else {
+                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                }
+                if permission_check {
+                    object_list = item.dislikes(20, step.into());
+                    if page > 1 && item.disliked > (page * 20) {
+                        next_page_number = page + 1;
+                    }
+                    else {
+                        if item.disliked > 20 {
+                            next_page_number = 2;
+                        }
+                    }
+                    text = "Видеозапись не оценили: ".to_string() + &item.dislikes_count_ru();
+                }
+            }
+        }
+        if permission_check == false {
+            #[derive(TemplateOnce)]
+            #[template(path = "base_block/close/close_item.stpl")]
+            struct Template {
+                text: String,
+            }
+            let body = Template {
+                text:  "Permission Denied.".to_string(),
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/generic/items/comment/dislikes.stpl")]
+            struct Template {
+                text:             String,
+                types:            String,
+                object_list:      Vec<User>,
+                next_page_number: i32,
+            }
+            let body = Template {
+                text:             text,
+                types:            types,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/generic/items/comment/anon_dislikes.stpl")]
             struct Template {
                 text:             String,
                 types:            String,
