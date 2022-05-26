@@ -748,6 +748,8 @@ function send_like(item, link) {
 
             resp_like_count = jsonResponse.like_count;
             resp_dislike_count = jsonResponse.dislike_count;
+            console.log(resp_like_count);
+            console.log(resp_dislike_count);
             if (resp_like_count == 0) {
               resp_like_count = ""
             };
