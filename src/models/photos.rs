@@ -133,7 +133,7 @@ impl PhotoList {
     }
     pub fn get_cover_photo(&self) -> String {
         if self.cover_photo.is_some() {
-            return self.cover_photo.as_deref.unwrap();
+            return self.cover_photo.as_deref().unwrap();
         }
         else if self.count == 0 {
             return "/static/images/no_img/list.jpg".to_string()
@@ -148,7 +148,7 @@ impl PhotoList {
                 .load::<Photo>(&_connection)
                 .expect("E.");
             if _photos.len() > 0 {
-                return _photos.first().file
+                return _photos.first().unwrap().file
             }
             else {
                 return "/static/images/no_img/list.jpg".to_string()
