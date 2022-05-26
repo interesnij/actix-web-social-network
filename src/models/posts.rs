@@ -2183,7 +2183,7 @@ impl Post {
                 .expect("Error.");
         }
 
-        return Json(PostReactionsUpdate {
+        return Json(JsonReactions {
             liked:    self.liked,
             disliked: self.disliked,
         });
