@@ -351,9 +351,9 @@ on('#ajax', 'click', '#repost_for_wall', function() {
   form = parent.parentElement.parentElement.parentElement.parentElement.parentElement;
   copy_case = form.querySelector("#toggle_case_item_copy");
   if (copy_case && copy_case.classList.contains("underline")) {
-    url = "/users/load/post_lists/?types=" + form.querySelector(".item_type").value
+    url = "/users/load/lists_for_copy/?types=" + form.querySelector(".item_type").value
   } else {
-    url = "/users/load/post_lists/"
+    url = "/users/load/lists_for_copy/"
   };
   create_fullscreen(url, "worker_fullscreen")
 });
@@ -368,9 +368,9 @@ on('#ajax', 'click', '#u_repost_for_community', function() {
   form = parent.parentElement.parentElement.parentElement.parentElement.parentElement;
   copy_case = form.querySelector("#toggle_case_item_copy");
   if (copy_case && copy_case.classList.contains("underline")) {
-    url = "/users/load/communities_post_lists/?types=" + form.querySelector(".item_type").value
+    url = "/users/load/communities_lists_for_copy/?types=" + form.querySelector(".item_type").value
   } else {
-    url = "/users/load/communities_post_lists/"
+    url = "/users/load/communities_lists_for_copy/"
   };
   create_fullscreen(url, "worker_fullscreen");
 });
