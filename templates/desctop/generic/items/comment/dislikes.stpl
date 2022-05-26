@@ -3,7 +3,7 @@
   <span><%= text %></span>
   <br><br>
   <span style="display: flex;">
-    <% for voter in object_list.iter() { %>
+    <% for user in object_list.iter() { %>
       <% include!("../../user/voter.stpl"); %>
     <% } %>
     <% if next_page_number > 0 { %>

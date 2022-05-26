@@ -3,7 +3,7 @@
     style="display:none"
   <% } %>
   class="like like_item
-  <% if object.likes_ids().iter().any(|i| i==request_user.id) { %>
+  <% if object.likes_ids().iter().any(|&i| i==request_user.id) { %>
     btn_success
   <% } else { %>
     btn_default
@@ -32,7 +32,7 @@
     style="display:none"
   <% } %>
   class="dislike dislike_item
-  <% if object.dislikes_ids().iter().any(|i| i==request_user.id) { %>
+  <% if object.dislikes_ids().iter().any(|&i| i==request_user.id) { %>
     btn_danger
   <% } else { %>
     btn_default
