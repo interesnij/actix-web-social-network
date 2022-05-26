@@ -39,7 +39,7 @@ pub fn add_post_list(pk: i32) -> String {
         owner = creator.id.to_string();
     }
 
-    return = concat_string!(
+    return concat_string!(
         "<div style='flex-basis: 100%;' class='card'><div class='card-body' owner-pk='",
         owner, "' &postlist-pk='",
         list.id,
