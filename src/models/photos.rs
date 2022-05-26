@@ -131,6 +131,30 @@ impl PhotoList {
     pub fn get_code(&self) -> String {
         return "lph".to_string() + &self.get_str_id();
     }
+    pub fn get_cover_photo(&self) -> String {
+        if self.cover_photo.is_some() {
+            return self.cover_photo.as_deref.unwrap();
+        }
+        else if self.count == 0 {
+            return "/static/images/no_img/list.jpg".to_string()
+        }
+        else {
+            use crate::schema::photos::dsl::photos;
+            let _connection = establish_connection();
+
+            let _photos = photos
+                .filter(schema::photos::photo_list_id.eq(self.id))
+                .filter(schema::photos::types.eq("a"))
+                .load::<Photo>(&_connection)
+                .expect("E.");
+            if _photos.len() > 0 {
+                return _photos.first().file
+            }
+            else {
+                return "/static/images/no_img/list.jpg".to_string()
+            }
+        }
+    }
     pub fn get_longest_penalties(&self) -> String {
         use crate::schema::moderated_penalties::dsl::moderated_penalties;
         use crate::models::ModeratedPenaltie;
