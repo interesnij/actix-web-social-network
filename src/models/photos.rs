@@ -133,7 +133,7 @@ impl PhotoList {
     }
     pub fn get_cover_photo(&self) -> String {
         if self.cover_photo.is_some() {
-            return self.cover_photo.as_deref().unwrap();
+            return self.cover_photo.as_deref().unwrap().to_string();
         }
         else if self.count == 0 {
             return "/static/images/no_img/list.jpg".to_string()
