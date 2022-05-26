@@ -2197,7 +2197,7 @@ impl Photo {
                     .expect("E");
 
                 diesel::update(self)
-                    .set(schema::photos::liked.eq(self.disliked - 1))
+                    .set(schema::photos::disliked.eq(self.disliked - 1))
                     .get_result::<Photo>(&_connection)
                     .expect("Error.");
             }
@@ -2214,7 +2214,7 @@ impl Photo {
                 .expect("Error.");
 
             diesel::update(self)
-                .set(schema::photos::liked.eq(self.disliked + 1))
+                .set(schema::photos::disliked.eq(self.disliked + 1))
                 .get_result::<Photo>(&_connection)
                 .expect("Error.");
         }

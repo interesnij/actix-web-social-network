@@ -2385,7 +2385,7 @@ impl Good {
                     .expect("E");
 
                 diesel::update(self)
-                    .set(schema::goods::liked.eq(self.disliked - 1))
+                    .set(schema::goods::disliked.eq(self.disliked - 1))
                     .get_result::<Good>(&_connection)
                     .expect("Error.");
             }
@@ -2402,7 +2402,7 @@ impl Good {
                 .expect("Error.");
 
             diesel::update(self)
-                .set(schema::goods::liked.eq(self.disliked + 1))
+                .set(schema::goods::disliked.eq(self.disliked + 1))
                 .get_result::<Good>(&_connection)
                 .expect("Error.");
         }

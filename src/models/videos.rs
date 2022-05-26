@@ -2192,7 +2192,7 @@ impl Video {
                     .expect("E");
 
                 diesel::update(self)
-                    .set(schema::videos::liked.eq(self.disliked - 1))
+                    .set(schema::videos::disliked.eq(self.disliked - 1))
                     .get_result::<Video>(&_connection)
                     .expect("Error.");
             }
@@ -2209,7 +2209,7 @@ impl Video {
                 .expect("Error.");
 
             diesel::update(self)
-                .set(schema::videos::liked.eq(self.disliked + 1))
+                .set(schema::videos::disliked.eq(self.disliked + 1))
                 .get_result::<Video>(&_connection)
                 .expect("Error.");
         }
