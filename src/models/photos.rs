@@ -2116,6 +2116,11 @@ impl Photo {
                     .set(reactions)
                     .get_result::<Photo>(&_connection)
                     .expect("Error.");
+
+                return Json(JsonReactions {
+                    like_count:    self.liked + 1,
+                    dislike_count: self.disliked - 1,
+                });
             }
             else {
                 diesel::delete(photo_votes
@@ -2129,6 +2134,11 @@ impl Photo {
                     .set(schema::photos::liked.eq(self.liked - 1))
                     .get_result::<Photo>(&_connection)
                     .expect("Error.");
+
+                return Json(JsonReactions {
+                    like_count:    self.liked - 1,
+                    dislike_count: self.disliked,
+                });
             }
         }
         else {
@@ -2146,12 +2156,12 @@ impl Photo {
                 .set(schema::photos::liked.eq(self.liked + 1))
                 .get_result::<Photo>(&_connection)
                 .expect("Error.");
+
+            return Json(JsonReactions {
+                like_count:    self.liked + 1,
+                dislike_count: self.disliked,
+            });
         }
-        let reactions = JsonReactions {
-            like_count:    self.liked,
-            dislike_count: self.disliked,
-        };
-        return Json(reactions);
     }
 
     pub fn send_dislike(&self, user_id: i32) -> Json<JsonReactions> {
@@ -2187,6 +2197,11 @@ impl Photo {
                     .set(reactions)
                     .get_result::<Photo>(&_connection)
                     .expect("Error.");
+
+                return Json(JsonReactions {
+                    like_count:    self.liked - 1,
+                    dislike_count: self.disliked + 1,
+                });
             }
             else {
                 diesel::delete(photo_votes
@@ -2200,6 +2215,11 @@ impl Photo {
                     .set(schema::photos::disliked.eq(self.disliked - 1))
                     .get_result::<Photo>(&_connection)
                     .expect("Error.");
+
+                return Json(JsonReactions {
+                    like_count:    self.liked,
+                    dislike_count: self.disliked - 1,
+                });
             }
         }
         else {
@@ -2217,12 +2237,12 @@ impl Photo {
                 .set(schema::photos::disliked.eq(self.disliked + 1))
                 .get_result::<Photo>(&_connection)
                 .expect("Error.");
+
+            return Json(JsonReactions {
+                like_count:    self.liked,
+                dislike_count: self.disliked + 1,
+            });
         }
-        let reactions = JsonReactions {
-            like_count:    self.liked,
-            dislike_count: self.disliked,
-        };
-        return Json(reactions);
     }
     pub fn delete_item(&self) -> bool {
         let _connection = establish_connection();
@@ -2853,6 +2873,11 @@ impl PhotoComment {
                     .set(reactions)
                     .get_result::<PhotoComment>(&_connection)
                     .expect("Error.");
+
+                return Json(JsonReactions {
+                    like_count:    self.liked + 1,
+                    dislike_count: self.disliked - 1,
+                });
             }
             else {
                 diesel::delete(photo_comment_votes
@@ -2866,6 +2891,11 @@ impl PhotoComment {
                     .set(schema::photo_comments::liked.eq(self.liked - 1))
                     .get_result::<PhotoComment>(&_connection)
                     .expect("Error.");
+
+                return Json(JsonReactions {
+                    like_count:    self.liked - 1,
+                    dislike_count: self.disliked,
+                });
             }
         }
         else {
@@ -2883,12 +2913,12 @@ impl PhotoComment {
                 .set(schema::photo_comments::liked.eq(self.liked + 1))
                 .get_result::<PhotoComment>(&_connection)
                 .expect("Error.");
+
+            return Json(JsonReactions {
+                like_count:    self.liked + 1,
+                dislike_count: self.disliked,
+            });
         }
-        let reactions = JsonReactions {
-            like_count:    self.liked,
-            dislike_count: self.disliked,
-        };
-        return Json(reactions);
     }
 
     pub fn send_dislike(&self, user_id: i32) -> Json<JsonReactions> {
@@ -2923,6 +2953,11 @@ impl PhotoComment {
                     .set(reactions)
                     .get_result::<PhotoComment>(&_connection)
                     .expect("Error.");
+
+                return Json(JsonReactions {
+                    like_count:    self.liked - 1,
+                    dislike_count: self.disliked + 1,
+                });
             }
             else {
                 diesel::delete(photo_comment_votes
@@ -2936,6 +2971,11 @@ impl PhotoComment {
                     .set(schema::photo_comments::disliked.eq(self.disliked - 1))
                     .get_result::<PhotoComment>(&_connection)
                     .expect("Error.");
+
+                return Json(JsonReactions {
+                    like_count:    self.liked,
+                    dislike_count: self.disliked - 1,
+                });
             }
         }
         else {
@@ -2953,12 +2993,12 @@ impl PhotoComment {
                 .set(schema::photo_comments::disliked.eq(self.disliked + 1))
                 .get_result::<PhotoComment>(&_connection)
                 .expect("Error.");
+
+            return Json(JsonReactions {
+                like_count:    self.liked,
+                dislike_count: self.disliked + 1,
+            });
         }
-        let reactions = JsonReactions {
-            like_count:    self.liked,
-            dislike_count: self.disliked,
-        };
-        return Json(reactions);
     }
     pub fn likes_count(&self) -> String {
         if self.liked == 0 {

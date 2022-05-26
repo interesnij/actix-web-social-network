@@ -2111,6 +2111,11 @@ impl Video {
                     .set(reactions)
                     .get_result::<Video>(&_connection)
                     .expect("Error.");
+
+                return Json(JsonReactions {
+                    like_count:    self.liked + 1,
+                    dislike_count: self.disliked - 1,
+                });
             }
             else {
                 diesel::delete(video_votes
@@ -2124,6 +2129,11 @@ impl Video {
                     .set(schema::videos::liked.eq(self.liked - 1))
                     .get_result::<Video>(&_connection)
                     .expect("Error.");
+
+                return Json(JsonReactions {
+                    like_count:    self.liked - 1,
+                    dislike_count: self.disliked,
+                });
             }
         }
         else {
@@ -2141,12 +2151,12 @@ impl Video {
                 .set(schema::videos::liked.eq(self.liked + 1))
                 .get_result::<Video>(&_connection)
                 .expect("Error.");
+
+            return Json(JsonReactions {
+                like_count:    self.liked + 1,
+                dislike_count: self.disliked,
+            });
         }
-        let reactions = JsonReactions {
-            like_count:    self.liked,
-            dislike_count: self.disliked,
-        };
-        return Json(reactions);
     }
 
     pub fn send_dislike(&self, user_id: i32) -> Json<JsonReactions> {
@@ -2182,6 +2192,11 @@ impl Video {
                     .set(reactions)
                     .get_result::<Video>(&_connection)
                     .expect("Error.");
+
+                return Json(JsonReactions {
+                    like_count:    self.liked - 1,
+                    dislike_count: self.disliked + 1,
+                });
             }
             else {
                 diesel::delete(video_votes
@@ -2195,6 +2210,11 @@ impl Video {
                     .set(schema::videos::disliked.eq(self.disliked - 1))
                     .get_result::<Video>(&_connection)
                     .expect("Error.");
+
+                return Json(JsonReactions {
+                    like_count:    self.liked,
+                    dislike_count: self.disliked - 1,
+                });
             }
         }
         else {
@@ -2212,12 +2232,12 @@ impl Video {
                 .set(schema::videos::disliked.eq(self.disliked + 1))
                 .get_result::<Video>(&_connection)
                 .expect("Error.");
+
+            return Json(JsonReactions {
+                like_count:    self.liked,
+                dislike_count: self.disliked + 1,
+            });
         }
-        let reactions = JsonReactions {
-            like_count:    self.liked,
-            dislike_count: self.disliked,
-        };
-        return Json(reactions);
     }
     pub fn delete_item(&self) -> bool {
         let _connection = establish_connection();
@@ -2926,6 +2946,11 @@ impl VideoComment {
                     .set(reactions)
                     .get_result::<VideoComment>(&_connection)
                     .expect("Error.");
+
+                return Json(JsonReactions {
+                    like_count:    self.liked + 1,
+                    dislike_count: self.disliked - 1,
+                });
             }
             else {
                 diesel::delete(video_comment_votes
@@ -2939,6 +2964,11 @@ impl VideoComment {
                     .set(schema::video_comments::liked.eq(self.liked - 1))
                     .get_result::<VideoComment>(&_connection)
                     .expect("Error.");
+
+                return Json(JsonReactions {
+                    like_count:    self.liked - 1,
+                    dislike_count: self.disliked,
+                });
             }
         }
         else {
@@ -2956,12 +2986,12 @@ impl VideoComment {
                 .set(schema::video_comments::liked.eq(self.liked + 1))
                 .get_result::<VideoComment>(&_connection)
                 .expect("Error.");
+
+            return Json(JsonReactions {
+                like_count:    self.liked + 1,
+                dislike_count: self.disliked,
+            });
         }
-        let reactions = JsonReactions {
-            like_count:    self.liked,
-            dislike_count: self.disliked,
-        };
-        return Json(reactions);
     }
 
     pub fn send_dislike(&self, user_id: i32) -> Json<JsonReactions> {
@@ -2996,6 +3026,11 @@ impl VideoComment {
                     .set(reactions)
                     .get_result::<VideoComment>(&_connection)
                     .expect("Error.");
+
+                return Json(JsonReactions {
+                    like_count:    self.liked - 1,
+                    dislike_count: self.disliked + 1,
+                });
             }
             else {
                 diesel::delete(video_comment_votes
@@ -3009,6 +3044,11 @@ impl VideoComment {
                     .set(schema::video_comments::disliked.eq(self.disliked - 1))
                     .get_result::<VideoComment>(&_connection)
                     .expect("Error.");
+
+                return Json(JsonReactions {
+                    like_count:    self.liked,
+                    dislike_count: self.disliked - 1,
+                });
             }
         }
         else {
@@ -3026,12 +3066,12 @@ impl VideoComment {
                 .set(schema::video_comments::disliked.eq(self.disliked + 1))
                 .get_result::<VideoComment>(&_connection)
                 .expect("Error.");
+
+            return Json(JsonReactions {
+                like_count:    self.liked,
+                dislike_count: self.disliked + 1,
+            });
         }
-        let reactions = JsonReactions {
-            like_count:    self.liked,
-            dislike_count: self.disliked,
-        };
-        return Json(reactions);
     }
     pub fn likes_count(&self) -> String {
         if self.liked == 0 {

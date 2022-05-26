@@ -745,8 +745,17 @@ function send_like(item, link) {
             jsonResponse = JSON.parse(link__.responseText);
             likes_count = item.querySelector(".likes_count");
             dislikes_count = item.querySelector(".dislikes_count");
-            likes_count.innerHTML = jsonResponse.like_count;
-            dislikes_count.innerHTML = jsonResponse.dislike_count;
+
+            resp_like_count = jsonResponse.like_count;
+            resp_dislike_count = jsonResponse.dislike_count;
+            if (resp_like_count == 0) {
+              resp_like_count = ""
+            };
+            if (resp_dislike_count == 0) {
+              resp_dislike_count = ""
+            };
+            likes_count.innerHTML = resp_dislike_count;
+            dislikes_count.innerHTML = resp_dislike_count;
             like.classList.toggle("btn_success");
             like.classList.toggle("btn_default");
             dislike.classList.add("btn_default");

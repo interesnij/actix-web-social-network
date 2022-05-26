@@ -3079,6 +3079,11 @@ impl PostComment {
                     .set(reactions)
                     .get_result::<PostComment>(&_connection)
                     .expect("Error.");
+
+                return Json(JsonReactions {
+                    like_count:    self.liked + 1,
+                    dislike_count: self.disliked - 1,
+                });
             }
             else {
                 diesel::delete(post_comment_votes
@@ -3092,6 +3097,11 @@ impl PostComment {
                     .set(schema::post_comments::liked.eq(self.liked - 1))
                     .get_result::<PostComment>(&_connection)
                     .expect("Error.");
+
+                return Json(JsonReactions {
+                    like_count:    self.liked - 1,
+                    dislike_count: self.disliked,
+                });
             }
         }
         else {
@@ -3109,12 +3119,12 @@ impl PostComment {
                 .set(schema::post_comments::liked.eq(self.liked + 1))
                 .get_result::<PostComment>(&_connection)
                 .expect("Error.");
+
+            return Json(JsonReactions {
+                like_count:    self.liked + 1,
+                dislike_count: self.disliked,
+            });
         }
-        let reactions = JsonReactions {
-            like_count:    self.liked,
-            dislike_count: self.disliked,
-        };
-        return Json(reactions);
     }
 
     pub fn send_dislike(&self, user_id: i32) -> Json<JsonReactions> {
@@ -3149,6 +3159,11 @@ impl PostComment {
                     .set(reactions)
                     .get_result::<PostComment>(&_connection)
                     .expect("Error.");
+
+                return Json(JsonReactions {
+                    like_count:    self.liked - 1,
+                    dislike_count: self.disliked + 1,
+                });
             }
             else {
                 diesel::delete(post_comment_votes
@@ -3162,6 +3177,11 @@ impl PostComment {
                     .set(schema::post_comments::disliked.eq(self.disliked - 1))
                     .get_result::<PostComment>(&_connection)
                     .expect("Error.");
+
+                return Json(JsonReactions {
+                    like_count:    self.liked,
+                    dislike_count: self.disliked - 1,
+                });
             }
         }
         else {
@@ -3179,12 +3199,12 @@ impl PostComment {
                 .set(schema::post_comments::disliked.eq(self.disliked + 1))
                 .get_result::<PostComment>(&_connection)
                 .expect("Error.");
+
+            return Json(JsonReactions {
+                like_count:    self.liked,
+                dislike_count: self.disliked + 1,
+            });
         }
-        let reactions = JsonReactions {
-            like_count:    self.liked,
-            dislike_count: self.disliked,
-        };
-        return Json(reactions);
     }
     pub fn likes_count(&self) -> String {
         if self.liked == 0 {
