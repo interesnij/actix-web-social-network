@@ -136,7 +136,7 @@ impl PhotoList {
             return self.cover_photo.as_deref().unwrap().to_string();
         }
         else if self.count == 0 {
-            return "/static/images/no_img/list.jpg".to_string()
+            return "/static/images/no_img/list.jpg".to_string();
         }
         else {
             use crate::schema::photos::dsl::photos;
@@ -148,10 +148,10 @@ impl PhotoList {
                 .load::<Photo>(&_connection)
                 .expect("E.");
             if _photos.len() > 0 {
-                return _photos.first().unwrap().file
+                return _photos.first().unwrap().file.clone();
             }
             else {
-                return "/static/images/no_img/list.jpg".to_string()
+                return "/static/images/no_img/list.jpg".to_string();
             }
         }
     }
