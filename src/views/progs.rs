@@ -413,6 +413,7 @@ pub async fn like_item(session: Session, req: HttpRequest) -> web::Json<JsonReac
                 let item = get_video_comment(item_id);
                 item.send_like(_request_user.id)
             }
+        }
         else {
             if types == "pos".to_string() {
                 use crate::utils::get_post;
