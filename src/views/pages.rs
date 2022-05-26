@@ -30,6 +30,7 @@ pub fn pages_routes(config: &mut web::ServiceConfig) {
 
     config.route("/progs/check_custom_link/{slug}/", web::get().to(check_custom_link));
     config.route("/progs/repost/", web::get().to(repost_page));
+    config.route("/load/likes/", web::get().to(all_likes_page));
 }
 
 pub async fn link_page(session: Session, req: HttpRequest, slug: web::Path<String>) -> actix_web::Result<HttpResponse> {
@@ -819,7 +820,7 @@ pub async fn claim_page(session: Session, req: HttpRequest) -> actix_web::Result
             let community = get_community(item_id);
             permission_check = get_community_permission(&community, &_request_user).0;
         }
-        if pre_types == "c".to_string() {
+        else if pre_types == "c".to_string() {
             if types == "cpo".to_string() {
                 use crate::utils::get_post_comment;
 
@@ -973,149 +974,116 @@ pub async fn all_likes_page(session: Session, req: HttpRequest) -> actix_web::Re
         use crate::utils::{get_user_permission,get_community_permission};
 
         let (type_exists, item_id, types) = get_type(&req);
+        let (is_desctop, page) = get_list_variables(req);
+        let mut next_page_number = 0;
+        let mut step = 0;
+        let pre_types = &types[..1];
         let _request_user = get_request_user_data(session);
         let _request_user_id = &_request_user.id;
         let mut text = "".to_string();
         let mut permission_check = false;
-        let pre_types = &types[..1];
+
         let mut object_list: Vec<User> = Vec::new();
 
-        if pre_types == "l".to_string() {
-            if types == "lpo".to_string() {
-                use crate::utils::get_post_list;
-
-                let list = get_post_list(item_id);
-                if list.community_id.is_some() {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
-                }
-                else {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
-                }
-            }
-            else if types == "ldo".to_string() {
-                use crate::utils::get_doc_list;
-
-                let list = get_doc_list(item_id);
-                if list.community_id.is_some() {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
-                }
-                else {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
-                }
-            }
-            else if types == "lgo".to_string() {
-                use crate::utils::get_good_list;
-
-                let list = get_good_list(item_id);
-                if list.community_id.is_some() {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
-                }
-                else {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
-                }
-            }
-            else if types == "lmu".to_string() {
-                use crate::utils::get_music_list;
-
-                let list = get_music_list(item_id);
-                can_copy_item = list.is_user_can_see_el(*_request_user_id) && list.is_user_can_copy_el(*_request_user_id);
-                creator_id = list.user_id;
-                if list.community_id.is_some() {
-                    permission_check = get_community_permission(&list.get_community(), &_request_user).0;
-                }
-                else {
-                    permission_check = get_user_permission(&list.get_creator(), &_request_user).0;
-                }
-            }
-            else if types == "lph".to_string() {
-                use crate::utils::get_photo_list;
-
-                let list = get_photo_list(item_id);
-                if list.community_id.is_some() {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
-                }
-                else {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
-                }
-            }
-            else if types == "lsu".to_string() {
-                use crate::utils::get_survey_list;
-
-                let list = get_survey_list(item_id);
-                if list.community_id.is_some() {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
-                }
-                else {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
-                }
-            }
-            else if types == "lvi".to_string() {
-                use crate::utils::get_video_list;
-
-                let list = get_video_list(item_id);
-                if list.community_id.is_some() {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
-                }
-                else {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
-                }
-            }
+        if page > 1 {
+            step = (page - 1) * 20;
         }
-        else if types == "use".to_string() {
-            use crate::utils::get_user;
 
-            let user = get_user(item_id);
-            permission_check = get_user_permission(&user, &_request_user).0;
-        }
-        else if types == "com".to_string() {
-            use crate::utils::get_community;
-
-            let community = get_community(item_id);
-            permission_check = get_community_permission(&community, &_request_user).0;
-        }
         if pre_types == "c".to_string() {
             if types == "cpo".to_string() {
                 use crate::utils::get_post_comment;
 
-                let list = get_post_comment(item_id).get_list();
+                let comment = get_post_comment(item_id);
+                let list = comment.get_list();
                 if list.community_id.is_some() {
                     permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
                 }
                 else {
                     permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                }
+                if permission_check {
+                    object_list = comment.likes(20, step.into());
+                    if page > 1 && comment.liked > (page * 20) {
+                        next_page_number = page + 1;
+                    }
+                    else {
+                        if comment.liked > 20 {
+                            next_page_number = 2;
+                        }
+                    }
+                    text = "Комментарий оценили".to_string() + &comment.likes_count_ru();
                 }
             }
             else if types == "cph".to_string() {
                 use crate::utils::get_photo_comment;
 
-                let list = get_photo_comment(item_id).get_list();
+                let comment = get_photo_comment(item_id);
+                let list = comment.get_list();
                 if list.community_id.is_some() {
                     permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
                 }
                 else {
                     permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                }
+                if permission_check {
+                    object_list = comment.likes(20, step.into());
+                    if page > 1 && comment.liked > (page * 20) {
+                        next_page_number = page + 1;
+                    }
+                    else {
+                        if comment.liked > 20 {
+                            next_page_number = 2;
+                        }
+                    }
+                    text = "Комментарий оценили".to_string() + &comment.likes_count_ru();
                 }
             }
             else if types == "cgo".to_string() {
                 use crate::utils::get_good_comment;
 
-                let list = get_good_comment(item_id).get_list();
+                let comment = get_good_comment(item_id);
+                let list = comment.get_list();
                 if list.community_id.is_some() {
                     permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
                 }
                 else {
                     permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                }
+                if permission_check {
+                    object_list = comment.likes(20, step.into());
+                    if page > 1 && comment.liked > (page * 20) {
+                        next_page_number = page + 1;
+                    }
+                    else {
+                        if comment.liked > 20 {
+                            next_page_number = 2;
+                        }
+                    }
+                    text = "Комментарий оценили".to_string() + &comment.likes_count_ru();
                 }
             }
             else if types == "cvi".to_string() {
                 use crate::utils::get_video_comment;
 
-                let list = get_video_comment(item_id).get_list();
+                let comment = get_video_comment(item_id);
+                let list = comment.get_list();
                 if list.community_id.is_some() {
                     permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
                 }
                 else {
                     permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                }
+                if permission_check {
+                    object_list = comment.likes(20, step.into());
+                    if page > 1 && comment.liked > (page * 20) {
+                        next_page_number = page + 1;
+                    }
+                    else {
+                        if comment.liked > 20 {
+                            next_page_number = 2;
+                        }
+                    }
+                    text = "Комментарий оценили".to_string() + &comment.likes_count_ru();
                 }
             }
         }
@@ -1123,67 +1091,73 @@ pub async fn all_likes_page(session: Session, req: HttpRequest) -> actix_web::Re
             if types == "pos".to_string() {
                 use crate::utils::get_post;
 
-                let list = get_post(item_id).get_list();
+                let item = get_post(item_id);
+                let list = item.get_list();
                 if list.community_id.is_some() {
                     permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
                 }
                 else {
                     permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
                 }
-            }
-            else if types == "doc".to_string() {
-                use crate::utils::get_doc;
-
-                let list = get_doc(item_id).get_list();
-                if list.community_id.is_some() {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
-                }
-                else {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                if permission_check {
+                    object_list = item.likes(20, step.into());
+                    if page > 1 && item.liked > (page * 20) {
+                        next_page_number = page + 1;
+                    }
+                    else {
+                        if item.liked > 20 {
+                            next_page_number = 2;
+                        }
+                    }
+                    text = "Запись оценили".to_string() + &item.likes_count_ru();
                 }
             }
             else if types == "goo".to_string() {
                 use crate::utils::get_good;
 
-                let list = get_good(item_id).get_list();
+                let item = get_good(item_id);
+                let list = item.get_list();
                 if list.community_id.is_some() {
                     permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
                 }
                 else {
                     permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
                 }
-            }
-            else if types == "mus".to_string() {
-                use crate::utils::get_music;
-
-                let list = get_music(item_id).get_list();
-                if list.community_id.is_some() {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
-                }
-                else {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
-                }
-            }
-            else if types == "sur".to_string() {
-                use crate::utils::get_survey;
-
-                let list = get_survey(item_id).get_list();
-                if list.community_id.is_some() {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
-                }
-                else {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                if permission_check {
+                    object_list = item.likes(20, step.into());
+                    if page > 1 && item.liked > (page * 20) {
+                        next_page_number = page + 1;
+                    }
+                    else {
+                        if item.liked > 20 {
+                            next_page_number = 2;
+                        }
+                    }
+                    text = "Товар оценили".to_string() + &item.likes_count_ru();
                 }
             }
             else if types == "vid".to_string() {
                 use crate::utils::get_video;
 
-                let list = get_video(item_id).get_list();
+                let item = get_video(item_id);
+                let list = item.get_list();
                 if list.community_id.is_some() {
                     permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
                 }
                 else {
                     permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                }
+                if permission_check {
+                    object_list = item.likes(20, step.into());
+                    if page > 1 && item.liked > (page * 20) {
+                        next_page_number = page + 1;
+                    }
+                    else {
+                        if item.liked > 20 {
+                            next_page_number = 2;
+                        }
+                    }
+                    text = "Видеозапись оценили".to_string() + &item.likes_count_ru();
                 }
             }
         }
@@ -1200,18 +1174,39 @@ pub async fn all_likes_page(session: Session, req: HttpRequest) -> actix_web::Re
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
-        else {
+        else if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/generic/user/report.stpl")]
+            #[template(path = "desctop/generic/items/comment/likes.stpl")]
             struct Template {
-                request_user:  User,
-                text:          String,
-                types:         String,
+                text:             String,
+                types:            String,
+                object_list:      Vec<User>,
+                next_page_number: i32,
             }
             let body = Template {
-                request_user:  _request_user,
-                text:          text,
-                types:         types,
+                text:             text,
+                types:            types,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/generic/items/comment/anon_likes.stpl")]
+            struct Template {
+                text:             String,
+                types:            String,
+                object_list:      Vec<User>,
+                next_page_number: i32,
+            }
+            let body = Template {
+                text:             text,
+                types:            types,
+                object_list:      object_list,
+                next_page_number: next_page_number,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
