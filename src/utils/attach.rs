@@ -41,15 +41,15 @@ pub fn add_post_list(pk: i32) -> String {
 
     return concat_string!(
         "<div style='flex-basis: 100%;' class='card'><div class='card-body' owner-pk='",
-        owner, "' &postlist-pk='",
-        list.id,
+        owner, "' postlist-pk='",
+        list.id.to_string(),
         "' style='padding: 8px;padding-bottom: 0;'><div style='display:flex'><figure><a class='load_post_list btn_default pointer'>",
         image,
         "</a></figure><div class='media-body' style='margin-left: 10px;'><h6 class='my-0 mt-1 load_post_list pointer'>",
         list.name,
         "</h6><p>Список записей: <a style='vertical-align: baseline;'class='ajax underline' href='",
         link, "'>", name, "</a><br>Записей: ",
-        list.count,"</p></div></div></div></div>");
+        list.count.to_string(),"</p></div></div></div></div>");
 }
 
 pub fn add_edited_post_list(pk: i32) -> String {
