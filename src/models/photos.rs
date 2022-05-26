@@ -196,7 +196,7 @@ impl PhotoList {
             return ", из них в сообщениях - ".to_string() + &count.to_string();
         }
     }
-    pub fn reposts(&self) -> Vec<Post> {
+    pub fn reposts(&self, limit: i64, offset: i64) -> Vec<Post> {
         use crate::schema::photo_list_reposts::dsl::photo_list_reposts;
         use crate::schema::posts::dsl::posts;
 
@@ -204,6 +204,8 @@ impl PhotoList {
         let item_reposts = photo_list_reposts
             .filter(schema::photo_list_reposts::photo_list_id.eq(self.id))
             .filter(schema::photo_list_reposts::post_id.is_not_null())
+            .limit(limit)
+            .offset(offset)
             .load::<PhotoListRepost>(&_connection)
             .expect("E");
 
@@ -1908,7 +1910,7 @@ impl Photo {
             return ", из них в сообщениях - ".to_string() + &count.to_string();
         }
     }
-    pub fn reposts(&self) -> Vec<Post> {
+    pub fn reposts(&self, limit: i64, offset: i64) -> Vec<Post> {
         use crate::schema::photo_reposts::dsl::photo_reposts;
         use crate::schema::posts::dsl::posts;
 
@@ -1916,6 +1918,8 @@ impl Photo {
         let item_reposts = photo_reposts
             .filter(schema::photo_reposts::photo_id.eq(self.id))
             .filter(schema::photo_reposts::post_id.is_not_null())
+            .limit(limit)
+            .offset(offset)
             .load::<PhotoRepost>(&_connection)
             .expect("E");
 
@@ -2423,9 +2427,8 @@ impl Photo {
         return self.repost > 0;
     }
 
-    pub fn likes(&self) -> Vec<User> {
+    pub fn likes_ids(&self) -> Vec<User> {
         use crate::schema::photo_votes::dsl::photo_votes;
-        use crate::utils::get_users_from_ids;
 
         let _connection = establish_connection();
         let votes = photo_votes
@@ -2437,9 +2440,43 @@ impl Photo {
         for _item in votes.iter() {
             stack.push(_item.user_id);
         };
+        return stack;
+    }
+    pub fn dislikes_ids(&self) -> Vec<User> {
+        use crate::schema::photo_votes::dsl::photo_votes;
+
+        let _connection = establish_connection();
+        let votes = photo_votes
+            .filter(schema::photo_votes::photo_id.eq(self.id))
+            .filter(schema::photo_votes::vote.eq(-1))
+            .load::<PhotoVote>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn likes(&self, limit: i64, offset: i64) -> Vec<User> {
+        use crate::schema::photo_votes::dsl::photo_votes;
+        use crate::utils::get_users_from_ids;
+
+        let _connection = establish_connection();
+        let votes = photo_votes
+            .filter(schema::photo_votes::photo_id.eq(self.id))
+            .filter(schema::photo_votes::vote.eq(1))
+            .limit(limit)
+            .offset(offset)
+            .load::<PhotoVote>(&_connection)
+            .expect("E");
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
         return get_users_from_ids(stack);
     }
-    pub fn dislikes(&self) -> Vec<User> {
+    pub fn dislikes(&self, limit: i64, offset: i64) -> Vec<User> {
         use crate::schema::photo_votes::dsl::photo_votes;
         use crate::utils::get_users_from_ids;
 
@@ -2447,6 +2484,8 @@ impl Photo {
         let votes = photo_votes
             .filter(schema::photo_votes::photo_id.eq(self.id))
             .filter(schema::photo_votes::vote.eq(-1))
+            .limit(limit)
+            .offset(offset)
             .load::<PhotoVote>(&_connection)
             .expect("E");
 
@@ -3008,9 +3047,8 @@ impl PhotoComment {
         return self.repost > 0;
     }
 
-    pub fn likes(&self) -> Vec<User> {
+    pub fn likes_ids(&self) -> Vec<User> {
         use crate::schema::photo_comment_votes::dsl::photo_comment_votes;
-        use crate::utils::get_users_from_ids;
 
         let _connection = establish_connection();
         let votes = photo_comment_votes
@@ -3023,9 +3061,43 @@ impl PhotoComment {
         for _item in votes.iter() {
             stack.push(_item.user_id);
         };
+        return stack;
+    }
+    pub fn dislikes_ids(&self) -> Vec<User> {
+        use crate::schema::photo_comment_votes::dsl::photo_comment_votes;
+
+        let _connection = establish_connection();
+        let votes = photo_comment_votes
+            .filter(schema::photo_comment_votes::photo_comment_id.eq(self.id))
+            .filter(schema::photo_comment_votes::vote.eq(-1))
+            .load::<PhotoCommentVote>(&_connection)
+            .expect("E");
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn likes(&self, limit: i64, offset: i64) -> Vec<User> {
+        use crate::schema::photo_comment_votes::dsl::photo_comment_votes;
+        use crate::utils::get_users_from_ids;
+
+        let _connection = establish_connection();
+        let votes = photo_comment_votes
+            .filter(schema::photo_comment_votes::photo_comment_id.eq(self.id))
+            .filter(schema::photo_comment_votes::vote.eq(1))
+            .limit(limit)
+            .offset(offset)
+            .load::<PhotoCommentVote>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
         return get_users_from_ids(stack);
     }
-    pub fn dislikes(&self) -> Vec<User> {
+    pub fn dislikes(&self, limit: i64, offset: i64) -> Vec<User> {
         use crate::schema::photo_comment_votes::dsl::photo_comment_votes;
         use crate::utils::get_users_from_ids;
 
@@ -3033,6 +3105,8 @@ impl PhotoComment {
         let votes = photo_comment_votes
             .filter(schema::photo_comment_votes::photo_comment_id.eq(self.id))
             .filter(schema::photo_comment_votes::vote.eq(-1))
+            .limit(limit)
+            .offset(offset)
             .load::<PhotoCommentVote>(&_connection)
             .expect("E");
         let mut stack = Vec::new();

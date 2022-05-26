@@ -20,7 +20,7 @@
 
               <% if is_list { %>
               <span class="copy_case is_list" style="display:none">
-                {% include 'desctop/generic/repost/profile_choice.html' %}
+                <% include!("profile_choice.stpl"); %>
               </span>
               <% } %>
             </div>

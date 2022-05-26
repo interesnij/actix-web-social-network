@@ -180,7 +180,7 @@ impl User {
             return ", из них в сообщениях - ".to_string() + &count.to_string();
         }
     }
-    pub fn reposts(&self) -> Vec<Post> {
+    pub fn reposts(&self, limit: i64, offset: i64) -> Vec<Post> {
         use crate::schema::user_reposts::dsl::user_reposts;
         use crate::schema::posts::dsl::posts;
         use crate::models::UserRepost;
@@ -189,6 +189,8 @@ impl User {
         let item_reposts = user_reposts
             .filter(schema::user_reposts::user_id.eq(self.id))
             .filter(schema::user_reposts::post_id.is_not_null())
+            .limit(limit)
+            .offset(offset)
             .load::<UserRepost>(&_connection)
             .expect("E");
 

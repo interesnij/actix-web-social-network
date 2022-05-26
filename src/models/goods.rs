@@ -235,7 +235,7 @@ impl GoodList {
             return ", из них в сообщениях - ".to_string() + &count.to_string();
         }
     }
-    pub fn reposts(&self) -> Vec<Post> {
+    pub fn reposts(&self, limit: i64, offset: i64) -> Vec<Post> {
         use crate::schema::good_list_reposts::dsl::good_list_reposts;
         use crate::schema::posts::dsl::posts;
 
@@ -243,6 +243,8 @@ impl GoodList {
         let item_reposts = good_list_reposts
             .filter(schema::good_list_reposts::good_list_id.eq(self.id))
             .filter(schema::good_list_reposts::post_id.is_not_null())
+            .limit(limit)
+            .offset(offset)
             .load::<GoodListRepost>(&_connection)
             .expect("E");
 
@@ -2179,7 +2181,7 @@ impl Good {
             return ", из них в сообщениях - ".to_string() + &count.to_string();
         }
     }
-    pub fn reposts(&self) -> Vec<Post> {
+    pub fn reposts(&self, limit: i64, offset: i64) -> Vec<Post> {
         use crate::schema::good_reposts::dsl::good_reposts;
         use crate::schema::posts::dsl::posts;
 
@@ -2187,6 +2189,8 @@ impl Good {
         let item_reposts = good_reposts
             .filter(schema::good_reposts::good_id.eq(self.id))
             .filter(schema::good_reposts::post_id.is_not_null())
+            .limit(limit)
+            .offset(offset)
             .load::<GoodRepost>(&_connection)
             .expect("E");
 
@@ -2592,9 +2596,8 @@ impl Good {
         return self.repost > 0;
     }
 
-    pub fn likes(&self) -> Vec<User> {
+    pub fn likes_ids(&self) -> Vec<User> {
         use crate::schema::good_votes::dsl::good_votes;
-        use crate::utils::get_users_from_ids;
 
         let _connection = establish_connection();
         let votes = good_votes
@@ -2606,9 +2609,43 @@ impl Good {
         for _item in votes.iter() {
             stack.push(_item.user_id);
         };
+        return stack;
+    }
+    pub fn dislikes_ids(&self) -> Vec<User> {
+        use crate::schema::good_votes::dsl::good_votes;
+
+        let _connection = establish_connection();
+        let votes = good_votes
+            .filter(schema::good_votes::good_id.eq(self.id))
+            .filter(schema::good_votes::vote.eq(-1))
+            .load::<GoodVote>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn likes(&self, limit: i64, offset: i64) -> Vec<User> {
+        use crate::schema::good_votes::dsl::good_votes;
+        use crate::utils::get_users_from_ids;
+
+        let _connection = establish_connection();
+        let votes = good_votes
+            .filter(schema::good_votes::good_id.eq(self.id))
+            .filter(schema::good_votes::vote.eq(1))
+            .limit(limit)
+            .offset(offset)
+            .load::<GoodVote>(&_connection)
+            .expect("E");
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
         return get_users_from_ids(stack);
     }
-    pub fn dislikes(&self) -> Vec<User> {
+    pub fn dislikes(&self, limit: i64, offset: i64) -> Vec<User> {
         use crate::schema::good_votes::dsl::good_votes;
         use crate::utils::get_users_from_ids;
 
@@ -2616,6 +2653,8 @@ impl Good {
         let votes = good_votes
             .filter(schema::good_votes::good_id.eq(self.id))
             .filter(schema::good_votes::vote.eq(-1))
+            .limit(limit)
+            .offset(offset)
             .load::<GoodVote>(&_connection)
             .expect("E");
 
@@ -3141,9 +3180,8 @@ impl GoodComment {
         return self.repost > 0;
     }
 
-    pub fn likes(&self) -> Vec<User> {
+    pub fn likes_ids(&self) -> Vec<User> {
         use crate::schema::good_comment_votes::dsl::good_comment_votes;
-        use crate::utils::get_users_from_ids;
 
         let _connection = establish_connection();
         let votes = good_comment_votes
@@ -3156,9 +3194,44 @@ impl GoodComment {
         for _item in votes.iter() {
             stack.push(_item.user_id);
         };
+        return stack;
+    }
+    pub fn dislikes_ids(&self) -> Vec<User> {
+        use crate::schema::good_comment_votes::dsl::good_comment_votes;
+
+        let _connection = establish_connection();
+        let votes = good_comment_votes
+            .filter(schema::good_comment_votes::good_comment_id.eq(self.id))
+            .filter(schema::good_comment_votes::vote.eq(-1))
+            .load::<GoodCommentVote>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn likes(&self, limit: i64, offset: i64) -> Vec<User> {
+        use crate::schema::good_comment_votes::dsl::good_comment_votes;
+        use crate::utils::get_users_from_ids;
+
+        let _connection = establish_connection();
+        let votes = good_comment_votes
+            .filter(schema::good_comment_votes::good_comment_id.eq(self.id))
+            .filter(schema::good_comment_votes::vote.eq(1))
+            .limit(limit)
+            .offset(offset)
+            .load::<GoodCommentVote>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
         return get_users_from_ids(stack);
     }
-    pub fn dislikes(&self) -> Vec<User> {
+    pub fn dislikes(&self, limit: i64, offset: i64) -> Vec<User> {
         use crate::schema::good_comment_votes::dsl::good_comment_votes;
         use crate::utils::get_users_from_ids;
 
@@ -3166,6 +3239,8 @@ impl GoodComment {
         let votes = good_comment_votes
             .filter(schema::good_comment_votes::good_comment_id.eq(self.id))
             .filter(schema::good_comment_votes::vote.eq(-1))
+            .limit(limit)
+            .offset(offset)
             .load::<GoodCommentVote>(&_connection)
             .expect("E");
 

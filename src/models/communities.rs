@@ -198,7 +198,7 @@ impl Community {
             return ", из них в сообщениях - ".to_string() + &count.to_string();
         }
     }
-    pub fn reposts(&self) -> Vec<Post> {
+    pub fn reposts(&self, limit: i64, offset: i64) -> Vec<Post> {
         use crate::schema::community_reposts::dsl::community_reposts;
         use crate::schema::posts::dsl::posts;
 
@@ -206,6 +206,8 @@ impl Community {
         let item_reposts = community_reposts
             .filter(schema::community_reposts::community_id.eq(self.id))
             .filter(schema::community_reposts::post_id.is_not_null())
+            .limit(limit)
+            .offset(offset)
             .load::<CommunityRepost>(&_connection)
             .expect("E");
 

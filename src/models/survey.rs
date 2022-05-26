@@ -178,7 +178,7 @@ impl SurveyList {
             return ", из них в сообщениях - ".to_string() + &count.to_string();
         }
     }
-    pub fn reposts(&self) -> Vec<Post> {
+    pub fn reposts(&self, limit: i64, offset: i64) -> Vec<Post> {
         use crate::schema::survey_list_reposts::dsl::survey_list_reposts;
         use crate::schema::posts::dsl::posts;
 
@@ -186,6 +186,8 @@ impl SurveyList {
         let item_reposts = survey_list_reposts
             .filter(schema::survey_list_reposts::survey_list_id.eq(self.id))
             .filter(schema::survey_list_reposts::post_id.is_not_null())
+            .limit(limit)
+            .offset(offset)
             .load::<SurveyListRepost>(&_connection)
             .expect("E");
 
@@ -1483,7 +1485,7 @@ impl Survey {
             return ", из них в сообщениях - ".to_string() + &count.to_string();
         }
     }
-    pub fn reposts(&self) -> Vec<Post> {
+    pub fn reposts(&self, limit: i64, offset: i64) -> Vec<Post> {
         use crate::schema::survey_reposts::dsl::survey_reposts;
         use crate::schema::posts::dsl::posts;
 
@@ -1491,6 +1493,8 @@ impl Survey {
         let item_reposts = survey_reposts
             .filter(schema::survey_reposts::survey_id.eq(self.id))
             .filter(schema::survey_reposts::post_id.is_not_null())
+            .limit(limit)
+            .offset(offset)
             .load::<SurveyRepost>(&_connection)
             .expect("E");
 

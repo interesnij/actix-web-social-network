@@ -212,7 +212,7 @@ impl VideoList {
             return ", из них в сообщениях - ".to_string() + &count.to_string();
         }
     }
-    pub fn reposts(&self) -> Vec<Post> {
+    pub fn reposts(&self, limit: i64, offset: i64) -> Vec<Post> {
         use crate::schema::video_list_reposts::dsl::video_list_reposts;
         use crate::schema::posts::dsl::posts;
 
@@ -220,6 +220,8 @@ impl VideoList {
         let item_reposts = video_list_reposts
             .filter(schema::video_list_reposts::video_list_id.eq(self.id))
             .filter(schema::video_list_reposts::post_id.is_not_null())
+            .limit(limit)
+            .offset(offset)
             .load::<VideoListRepost>(&_connection)
             .expect("E");
 
@@ -2420,9 +2422,8 @@ impl Video {
         return self.repost > 0;
     }
 
-    pub fn likes(&self) -> Vec<User> {
+    pub fn likes_ids(&self) -> Vec<User> {
         use crate::schema::video_votes::dsl::video_votes;
-        use crate::utils::get_users_from_ids;
 
         let _connection = establish_connection();
         let votes = video_votes
@@ -2434,9 +2435,43 @@ impl Video {
         for _item in votes.iter() {
             stack.push(_item.user_id);
         };
+        return stack;
+    }
+    pub fn dislikes_ids(&self) -> Vec<User> {
+        use crate::schema::video_votes::dsl::video_votes;
+
+        let _connection = establish_connection();
+        let votes = video_votes
+            .filter(schema::video_votes::video_id.eq(self.id))
+            .filter(schema::video_votes::vote.eq(-1))
+            .load::<VideoVote>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn likes(&self, limit: i64, offset: i64) -> Vec<User> {
+        use crate::schema::video_votes::dsl::video_votes;
+        use crate::utils::get_users_from_ids;
+
+        let _connection = establish_connection();
+        let votes = video_votes
+            .filter(schema::video_votes::video_id.eq(self.id))
+            .filter(schema::video_votes::vote.eq(1))
+            .limit(limit)
+            .offset(offset)
+            .load::<VideoVote>(&_connection)
+            .expect("E");
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
         return get_users_from_ids(stack);
     }
-    pub fn dislikes(&self) -> Vec<User> {
+    pub fn dislikes(&self, limit: i64, offset: i64) -> Vec<User> {
         use crate::schema::video_votes::dsl::video_votes;
         use crate::utils::get_users_from_ids;
 
@@ -2444,6 +2479,8 @@ impl Video {
         let votes = video_votes
             .filter(schema::video_votes::video_id.eq(self.id))
             .filter(schema::video_votes::vote.eq(-1))
+            .limit(limit)
+            .offset(offset)
             .load::<VideoVote>(&_connection)
             .expect("E");
 
@@ -2583,7 +2620,7 @@ impl Video {
             return ", из них в сообщениях - ".to_string() + &count.to_string();
         }
     }
-    pub fn reposts(&self) -> Vec<Post> {
+    pub fn reposts(&self, limit: i64, offset: i64) -> Vec<Post> {
         use crate::schema::video_reposts::dsl::video_reposts;
         use crate::schema::posts::dsl::posts;
 
@@ -2591,6 +2628,8 @@ impl Video {
         let item_reposts = video_reposts
             .filter(schema::video_reposts::video_id.eq(self.id))
             .filter(schema::video_reposts::post_id.is_not_null())
+            .limit(limit)
+            .offset(offset)
             .load::<VideoRepost>(&_connection)
             .expect("E");
 
@@ -3081,9 +3120,8 @@ impl VideoComment {
         return self.repost > 0;
     }
 
-    pub fn likes(&self) -> Vec<User> {
+    pub fn likes_ids(&self) -> Vec<User> {
         use crate::schema::video_comment_votes::dsl::video_comment_votes;
-        use crate::utils::get_users_from_ids;
 
         let _connection = establish_connection();
         let votes = video_comment_votes
@@ -3096,9 +3134,44 @@ impl VideoComment {
         for _item in votes.iter() {
             stack.push(_item.user_id);
         };
+        return stack;
+    }
+    pub fn dislikes_ids(&self) -> Vec<User> {
+        use crate::schema::video_comment_votes::dsl::video_comment_votes;
+
+        let _connection = establish_connection();
+        let votes = video_comment_votes
+            .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
+            .filter(schema::video_comment_votes::vote.eq(-1))
+            .load::<VideoCommentVote>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+    pub fn likes(&self, limit: i64, offset: i64) -> Vec<User> {
+        use crate::schema::video_comment_votes::dsl::video_comment_votes;
+        use crate::utils::get_users_from_ids;
+
+        let _connection = establish_connection();
+        let votes = video_comment_votes
+            .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
+            .filter(schema::video_comment_votes::vote.eq(1))
+            .limit(limit)
+            .offset(offset)
+            .load::<VideoCommentVote>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
         return get_users_from_ids(stack);
     }
-    pub fn dislikes(&self) -> Vec<User> {
+    pub fn dislikes(&self, limit: i64, offset: i64) -> Vec<User> {
         use crate::schema::video_comment_votes::dsl::video_comment_votes;
         use crate::utils::get_users_from_ids;
 
@@ -3106,6 +3179,8 @@ impl VideoComment {
         let votes = video_comment_votes
             .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
             .filter(schema::video_comment_votes::vote.eq(-1))
+            .limit(limit)
+            .offset(offset)
             .load::<VideoCommentVote>(&_connection)
             .expect("E");
 

@@ -1,0 +1,31 @@
+<form class="mt-4" style="min-height:400px">
+    <input type="hidden" name="types" value="<%= types %>">
+    <div class="card-header">
+      <h4>Создание жалобы</h4>
+    </div>
+    <div class="card-body">
+      <div class="form-group">
+        <label>Выберите причину жалобы</label>
+        <select class="form-control" name="types">
+            <option value="a">Порнография</option>
+            <option value="b">Для взрослых</option>
+            <option value="c">Оскорбительное содержание</option>
+            <option value="d">Мошенничество</option>
+            <option value="e">Наркотики</option>
+            <option value="f">Продажа оружия</option>
+            <option value="g">Насилие</option>
+            <option value="h">Призыв к травле</option>
+            <option value="i">Призыв к суициду</option>
+            <option value="j">Жестокое обращение c животными</option>
+            <option value="k">Введение в заблуждение</option>
+            <option value="l">Экстремизм</option>
+            <option value="m">Риторика ненависти</option>
+        </select>
+      </div>
+      <div style="display:inline-block" contenteditable="true" placeholder="Добавить комментарий" class="form-control smile_supported"></div>
+    </div>
+    <div class="card-footer">
+        <button class="btn border item_fullscreen_hide">Отмена</button>
+        <button type="button" class="btn custom_color border float-right" id="create_claim_btn">Пожаловаться</button>
+    </div>
+</form>

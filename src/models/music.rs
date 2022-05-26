@@ -281,7 +281,7 @@ impl MusicList {
             return ", из них в сообщениях - ".to_string() + &count.to_string();
         }
     }
-    pub fn reposts(&self) -> Vec<Post> {
+    pub fn reposts(&self, limit: i64, offset: i64) -> Vec<Post> {
         use crate::schema::music_list_reposts::dsl::music_list_reposts;
         use crate::schema::posts::dsl::posts;
 
@@ -289,6 +289,8 @@ impl MusicList {
         let item_reposts = music_list_reposts
             .filter(schema::music_list_reposts::music_list_id.eq(self.id))
             .filter(schema::music_list_reposts::post_id.is_not_null())
+            .limit(limit)
+            .offset(offset)
             .load::<MusicListRepost>(&_connection)
             .expect("E");
 
@@ -1800,7 +1802,7 @@ impl Music {
             return ", из них в сообщениях - ".to_string() + &count.to_string();
         }
     }
-    pub fn reposts(&self) -> Vec<Post> {
+    pub fn reposts(&self, limit: i64, offset: i64) -> Vec<Post> {
         use crate::schema::music_reposts::dsl::music_reposts;
         use crate::schema::posts::dsl::posts;
 
@@ -1808,6 +1810,8 @@ impl Music {
         let item_reposts = music_reposts
             .filter(schema::music_reposts::music_id.eq(self.id))
             .filter(schema::music_reposts::post_id.is_not_null())
+            .limit(limit)
+            .offset(offset)
             .load::<MusicRepost>(&_connection)
             .expect("E");
 

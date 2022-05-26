@@ -155,7 +155,7 @@ impl DocList {
             return ", из них в сообщениях - ".to_string() + &count.to_string();
         }
     }
-    pub fn reposts(&self) -> Vec<Post> {
+    pub fn reposts(&self, limit: i64, offset: i64) -> Vec<Post> {
         use crate::schema::doc_list_reposts::dsl::doc_list_reposts;
         use crate::schema::posts::dsl::posts;
 
@@ -163,6 +163,8 @@ impl DocList {
         let item_reposts = doc_list_reposts
             .filter(schema::doc_list_reposts::doc_list_id.eq(self.id))
             .filter(schema::doc_list_reposts::post_id.is_not_null())
+            .limit(limit)
+            .offset(offset)
             .load::<DocListRepost>(&_connection)
             .expect("E");
 
@@ -1497,7 +1499,7 @@ impl Doc {
             return ", из них в сообщениях - ".to_string() + &count.to_string();
         }
     }
-    pub fn reposts(&self) -> Vec<Post> {
+    pub fn reposts(&self, limit: i64, offset: i64) -> Vec<Post> {
         use crate::schema::doc_reposts::dsl::doc_reposts;
         use crate::schema::posts::dsl::posts;
 
@@ -1505,6 +1507,8 @@ impl Doc {
         let item_reposts = doc_reposts
             .filter(schema::doc_reposts::doc_id.eq(self.id))
             .filter(schema::doc_reposts::post_id.is_not_null())
+            .limit(limit)
+            .offset(offset)
             .load::<DocRepost>(&_connection)
             .expect("E");
 
