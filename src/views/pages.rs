@@ -697,6 +697,7 @@ pub async fn create_repost_page(session: Session, req: HttpRequest) -> actix_web
                 text:          String,
                 types:         String,
                 creator_id:    i32,
+                item_id:       i32,
                 is_list:       bool,
                 can_copy_item: bool,
             }
@@ -705,6 +706,7 @@ pub async fn create_repost_page(session: Session, req: HttpRequest) -> actix_web
                 text:          text,
                 types:         types,
                 creator_id:    creator_id,
+                item_id:       item_id,
                 is_list:       is_list,
                 can_copy_item: can_copy_item,
             }
