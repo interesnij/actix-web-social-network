@@ -367,6 +367,7 @@ function create_preview_music(img_src, pk, counter){
   $div.classList.add("music", "handle");
   $div.style.display = "flex";
   $div.style.margin = "5px";
+  $div.style.posution = "relative";
   $div.style.flexBasis = "100%";
   $div.setAttribute('music-counter', counter);
 
@@ -416,6 +417,7 @@ function create_preview_doc(media_body, pk){
   $div.style.display = "flex";
   $div.style.margin = "5px";
   $div.style.flexBasis = "100%";
+  $div.style.posution = "relative";
 
   $input.innerHTML = '<input class="attach" type="hidden" name="attach_items" value="doc' + pk + '">';
 

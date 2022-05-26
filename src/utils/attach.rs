@@ -5,6 +5,134 @@ use diesel::prelude::*;
 use crate::models::User;
 
 
+pub fn add_post(pk: i32, user_id: i32, is_staff: bool) -> String {
+    use crate::utils::get_post;
+
+    let mut name = "".to_string();
+    let mut link = "".to_string();
+    let mut image = "".to_string();
+
+    let post = get_post(pk);
+
+    if post.community_id.is_some() {
+        let community = post.get_community();
+        name = community.name.clone();
+        link = community.link.clone();
+        image = community.get_bb_avatar();
+    }
+    else {
+        let creator = post.get_creator();
+        name = creator.get_full_name().clone();
+        link = creator.link.clone();
+        image = creator.get_bb_avatar();
+    }
+
+    let mut votes_on = "".to_string();
+    let mut comment_enabled = "".to_string();
+    let mut window_likes = "".to_string();
+    let mut window_dislikes = "".to_string();
+    let mut user_likes = "btn_default".to_string();
+    let mut user_dislikes = "btn_default".to_string();
+    let mut drops = "".to_string();
+    if !post.comment_enabled {
+        comment_enabled = "style='display:none'".to_string();
+    }
+    if !post.votes_on {
+        votes_on = "style='display:none'".to_string();
+    }
+    if post.is_have_likes() {
+        if post.likes_ids().iter().any(|&i| i==user_id) {
+            user_likes = "btn_success".to_string();
+        }
+        window_likes = "<div class='like_pop'><span class='item_likes pointer'>Оценили: ".to_owned() + &post.likes_count_ru() + &"</span><span style='display: flex;margin-top: 10px;'>".to_string();
+        for user in post.window_likes() {
+            window_likes = concat_string!(
+                window_likes, "<a href='",
+                user.link,
+                "class='ajax' style='padding-right:10px' data-pk='",
+                user.id.to_string(),
+                "'><figure style='margin: 0;' title='",
+                user.get_full_name(),
+                "'>", user.get_50_avatar(),
+                "</figure></a>"
+            );
+            window_likes += "</span></div>".to_string(),
+        }
+    }
+    if post.is_have_dislikes() {
+        if post.dislikes_ids().iter().any(|&i| i==user_id) {
+            user_dislikes = "btn_danger".to_string();
+        }
+        window_dislikes = "<div class='dislike_pop'><span class='item_dislikes pointer'>Не оценили: ".to_owned() + &post.dislikes_count_ru() + &"</span><span style='display: flex;margin-top: 10px;'>".to_string();
+        for user in post.window_dislikes() {
+            window_dislikes = concat_string!(
+                window_dislikes, "<a href='",
+                user.link,
+                "class='ajax' style='padding-right:10px' data-pk='",
+                user.id.to_string(),
+                "'><figure style='margin: 0;' title='",
+                user.get_full_name(),
+                "'>", user.get_50_avatar(),
+                "</figure></a>"
+            );
+            window_dislikes += "</span></div>".to_string(),
+        }
+    }
+
+    let mut drops = "<span class='dropdown-item create_repost'>Добавить</span><span class='dropdown-item copy_link'>Копировать ссылку</span>".to_string();
+    if post.is_user_can_edit_delete_item(user_id) {
+        drops = drops + &"<span class='dropdown-item post_edit'>Изменить</span><span class='dropdown-item post_remove'>Удалить</span>".to_string();
+    }
+    else if is_staff == true {
+        drops = drops + &"<span class='dropdown-item create_close'>Закрыть</span>".to_string();
+    }
+    else {
+        drops = drops + &"<span class='dropdown-item create_claim'>Пожаловаться</span>".to_string();
+    }
+
+    return concat_string!(
+        "<div class='pag card mb-3' data-type='user_post' data-pk='",
+        post.id.to_string(),
+        "'><div class='card-header'><div class='media'><a href='",
+        link, "' class='ajax'><figure>",
+        image, "</figure></a><div class='media-body'><h6 class='mb-0'><a href='",
+        link, "' class='ajax'>", name,
+        "</a></h6><p class='mb-0 fullscreen_2 pointer'>",
+        post.created.format("%d-%m-%Y в %H:%M").to_string(),
+        "</p></div><div class='dropdown'><a class='icon-circle icon-30 btn_default drop pointer'>
+        <svg class='svg_info' fill='currentColor' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none'/><path d='M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z' /></svg>
+        </a><div class='dropdown-menu dropdown-menu-right'><span><span class='dropdown-item item_likes pointer'>Оценили</span>
+        <span class='dropdown-item item_dislikes pointer'>Не оценили</span></span>",
+        card_drop, "</div></div></div></div><div class='fullscreen text_support pointer'>",
+        post.get_format_text(), "</div>", post.get_attach(user_id),
+        "<div class='card-footer border-top py-2'><div class='row'>
+        <div class='col interaction' data-type='pos'",
+        post.id.to_string(), "'><span ", votes_on,
+        " class='like like_item ", user_like, "' title='Нравится'>
+        <svg class='svg_info' viewBox='0 0 24 24' fill='currentColor'>
+        <path d='M0 0h24v24H0V0zm0 0h24v24H0V0z' fill='none'></path><path d='M9 21h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.58 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2zM9 9l4.34-4.34L12 10h9v2l-3 7H9V9zM1 9h4v12H1z'></path></svg><span class='likes_count' data-count='like'>",
+        post.likes_count().to_string(),
+        "</span></span><span class='like_window'>", window_likes,
+        "</span><span ", votes_on, " class='dislike dislike_item ",
+        user_dislikes, "' title='Не нравится'>
+        <svg viewBox='0 0 24 24' class='svg_info' fill='currentColor'><path d='M0 0h24v24H0V0zm0 0h24v24H0V0z' fill='none'></path><path d='M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm0 12l-4.34 4.34L12 14H3v-2l3-7h9v10zm4-12h4v12h-4z'></path></svg><span class='dislikes_count'>",
+        post.dislikes_count().to_string(),
+        "</span></span><span class='dislike_window'>", window_dislikes,
+        "</span><span title='Комментарий' class='pointer load_comments_list btn_default'
+        style='margin-right: 5px;",
+        comments_enabled, "'>
+        <svg viewBox='0 0 24 24' class='svg_info' fill='currentColor'>
+        <path d='M0 0h24v24H0V0z' fill='none'></path><path d='M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z'></path></svg><span class='comment-count'>",
+        post.count_comments().to_string(),
+        "</span></span> <span title='Поделиться' class='create_repost btn_default pointer'><svg class='svg_info repost_style_btn' viewBox='0 0 24 24' fill='currentColor'><path d='m0 0h24v24h-24z' fill='none'></path><path fill='currentColor' d='m12.1 7.87v-3.47a1.32 1.32 0 0 1 2.17-1l8.94 7.6a1.32 1.32 0 0 1 .15 1.86l-.15.15-8.94 7.6a1.32 1.32 0 0 1 -2.17-1v-3.45c-4.68.11-8 1.09-9.89 2.87a1.15 1.15 0 0 1 -1.9-1.11c1.53-6.36 5.51-9.76 11.79-10.05zm1.8-2.42v4.2h-.9c-5.3 0-8.72 2.25-10.39 6.86 2.45-1.45 5.92-2.16 10.39-2.16h.9v4.2l7.71-6.55z'></path></svg><span class='repost_count'>",
+        post.count_reposts().to_string(),
+        "</span></span></div><span class='small' style='float: right;' title='Просмотры'>
+        <svg fill='currentColor' class='svg_info svg_default' style='width:17px;'
+        viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none' /><path d='M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z' /></svg>
+        </span></div><div class='load_comments'></div></div></div>"
+    );
+}
+
 pub fn add_post_list(pk: i32) -> String {
     use crate::schema::post_lists::dsl::post_lists;
     use crate::models::PostList;
@@ -261,9 +389,9 @@ pub fn add_edited_doc_list(pk: i32) -> String {
         value='ldo", list.id.to_string(),
         "'></span><div class='card-img-top file-logo-wrapper' style='padding: 2rem;'>
         <a class='nowrap'><div class='d-flex align-items-center justify-content-center
-        w-100 load_doclist pointer'><svg fill='currentColor' class='svg_default' style='width:60px;height:88px;' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none'/><path d='M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13'/></svg>
+        w-100 load_doc_list pointer'><svg fill='currentColor' class='svg_default' style='width:60px;height:88px;' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none'/><path d='M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13'/></svg>
         </div></a></div><div class='card-body pt-0'><div class='content-wrapper'
-        style='display: flex;'><p class='card-text file-name mb-0 load_doclist pointer'>
+        style='display: flex;'><p class='card-text file-name mb-0 load_doc_list pointer'>
         <a class='nowrap'>", list.name, " (",
         list.count_items(), ")</a></p></div><small class='file-accessed pointer
         doc_attach_list_remove underline'>Открепить</small></div></div>");
