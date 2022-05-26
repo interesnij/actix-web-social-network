@@ -4,7 +4,7 @@
   <br><br>
   <span style="display: flex;">
     <% for voter in object_list.iter() { %>
-      <% include!("../user/voter.stpl"); %>
+      <% include!("../../user/voter.stpl"); %>
     <% } %>
   </span>
 </div>

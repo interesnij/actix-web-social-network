@@ -765,8 +765,6 @@ pub async fn claim_page(session: Session, req: HttpRequest) -> actix_web::Result
                 use crate::utils::get_music_list;
 
                 let list = get_music_list(item_id);
-                can_copy_item = list.is_user_can_see_el(*_request_user_id) && list.is_user_can_copy_el(*_request_user_id);
-                creator_id = list.user_id;
                 if list.community_id.is_some() {
                     permission_check = get_community_permission(&list.get_community(), &_request_user).0;
                 }
@@ -971,7 +969,7 @@ pub async fn claim_page(session: Session, req: HttpRequest) -> actix_web::Result
 
 pub async fn all_likes_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        use crate::utils::{get_user_permission,get_community_permission};
+        use crate::utils::{get_user_permission, get_community_permission};
 
         let (type_exists, item_id, types) = get_type(&req);
         let (is_desctop, page) = get_list_variables(req);

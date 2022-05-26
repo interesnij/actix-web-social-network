@@ -16,7 +16,7 @@
       </div>
       <% } %>
 
-      <% if request_user.get_staffed_communities().len() == 0 { %>
+      <% if request_user.is_staffed_user() { %>
       <div class="custom-control custom-radio" style="margin-bottom:10px" flow="up" tooltip="У Вас нет управляемых сообществ">
         <input type="radio" disabled="disabled" class="custom-control-input copy_for_communities">
         <label class="custom-control-label">Закрыто</label>
