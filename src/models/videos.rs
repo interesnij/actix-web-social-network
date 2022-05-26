@@ -2199,7 +2199,7 @@ impl Video {
         }
         else {
             let new_vote = NewVideoVote {
-                vote: 1,
+                vote: -1,
                 user_id: user_id,
                 video_id: self.id,
             };
@@ -3013,7 +3013,7 @@ impl VideoComment {
         }
         else {
             let new_vote = NewVideoCommentVote {
-                vote: 1,
+                vote: -1,
                 user_id: user_id,
                 video_comment_id: self.id,
             };

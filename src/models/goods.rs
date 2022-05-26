@@ -2392,7 +2392,7 @@ impl Good {
         }
         else {
             let new_vote = NewGoodVote {
-                vote: 1,
+                vote: -1,
                 user_id: user_id,
                 good_id: self.id,
             };
@@ -3073,7 +3073,7 @@ impl GoodComment {
         }
         else {
             let new_vote = NewGoodCommentVote {
-                vote: 1,
+                vote: -1,
                 user_id: user_id,
                 good_comment_id: self.id,
             };

@@ -2204,7 +2204,7 @@ impl Photo {
         }
         else {
             let new_vote = NewPhotoVote {
-                vote: 1,
+                vote: -1,
                 user_id: user_id,
                 photo_id: self.id,
             };
@@ -2940,7 +2940,7 @@ impl PhotoComment {
         }
         else {
             let new_vote = NewPhotoCommentVote {
-                vote: 1,
+                vote: -1,
                 user_id: user_id,
                 photo_comment_id: self.id,
             };

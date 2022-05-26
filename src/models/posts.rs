@@ -2134,6 +2134,8 @@ impl Post {
             .filter(schema::post_votes::post_id.eq(self.id))
             .load::<PostVote>(&_connection)
             .expect("E.");
+
+        // если пользователь реагировал на запись
         if votes.len() > 0 {
             let vote = votes.into_iter().nth(0).unwrap();
             if vote.vote != 1 {
@@ -2232,6 +2234,11 @@ impl Post {
                     .set(reactions)
                     .get_result::<Post>(&_connection)
                     .expect("Error.");
+
+                return Json(JsonReactions {
+                    like_count:    self.liked - 1,
+                    dislike_count: self.disliked + 1,
+                });
             }
             else {
                 diesel::delete(post_votes
@@ -2245,11 +2252,16 @@ impl Post {
                     .set(schema::posts::liked.eq(self.disliked - 1))
                     .get_result::<Post>(&_connection)
                     .expect("Error.");
+
+                return Json(JsonReactions {
+                    like_count:    self.liked,
+                    dislike_count: self.disliked - 1,
+                });
             }
         }
         else {
             let new_vote = NewPostVote {
-                vote: 1,
+                vote: -1,
                 user_id: user_id,
                 post_id: self.id,
             };
@@ -2262,12 +2274,12 @@ impl Post {
                 .set(schema::posts::liked.eq(self.disliked + 1))
                 .get_result::<Post>(&_connection)
                 .expect("Error.");
+
+            return Json(JsonReactions {
+                like_count:    self.liked,
+                dislike_count: self.disliked + 1,
+            });
         }
-        let reactions = JsonReactions {
-            like_count:    self.liked,
-            dislike_count: self.disliked,
-        };
-        return Json(reactions);
     }
     pub fn delete_item(&self) -> bool {
         let _connection = establish_connection();
@@ -3154,7 +3166,7 @@ impl PostComment {
         }
         else {
             let new_vote = NewPostCommentVote {
-                vote: 1,
+                vote: -1,
                 user_id: user_id,
                 post_comment_id: self.id,
             };
