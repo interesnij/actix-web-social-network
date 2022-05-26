@@ -2422,7 +2422,7 @@ impl Video {
         return self.repost > 0;
     }
 
-    pub fn likes_ids(&self) -> Vec<User> {
+    pub fn likes_ids(&self) -> Vec<i32> {
         use crate::schema::video_votes::dsl::video_votes;
 
         let _connection = establish_connection();
@@ -2437,7 +2437,7 @@ impl Video {
         };
         return stack;
     }
-    pub fn dislikes_ids(&self) -> Vec<User> {
+    pub fn dislikes_ids(&self) -> Vec<i32> {
         use crate::schema::video_votes::dsl::video_votes;
 
         let _connection = establish_connection();
@@ -3120,7 +3120,7 @@ impl VideoComment {
         return self.repost > 0;
     }
 
-    pub fn likes_ids(&self) -> Vec<User> {
+    pub fn likes_ids(&self) -> Vec<i32> {
         use crate::schema::video_comment_votes::dsl::video_comment_votes;
 
         let _connection = establish_connection();
@@ -3136,7 +3136,7 @@ impl VideoComment {
         };
         return stack;
     }
-    pub fn dislikes_ids(&self) -> Vec<User> {
+    pub fn dislikes_ids(&self) -> Vec<i32> {
         use crate::schema::video_comment_votes::dsl::video_comment_votes;
 
         let _connection = establish_connection();

@@ -2596,7 +2596,7 @@ impl Good {
         return self.repost > 0;
     }
 
-    pub fn likes_ids(&self) -> Vec<User> {
+    pub fn likes_ids(&self) -> Vec<i32> {
         use crate::schema::good_votes::dsl::good_votes;
 
         let _connection = establish_connection();
@@ -2611,7 +2611,7 @@ impl Good {
         };
         return stack;
     }
-    pub fn dislikes_ids(&self) -> Vec<User> {
+    pub fn dislikes_ids(&self) -> Vec<i32> {
         use crate::schema::good_votes::dsl::good_votes;
 
         let _connection = establish_connection();
@@ -3180,7 +3180,7 @@ impl GoodComment {
         return self.repost > 0;
     }
 
-    pub fn likes_ids(&self) -> Vec<User> {
+    pub fn likes_ids(&self) -> Vec<i32> {
         use crate::schema::good_comment_votes::dsl::good_comment_votes;
 
         let _connection = establish_connection();
@@ -3196,7 +3196,7 @@ impl GoodComment {
         };
         return stack;
     }
-    pub fn dislikes_ids(&self) -> Vec<User> {
+    pub fn dislikes_ids(&self) -> Vec<i32> {
         use crate::schema::good_comment_votes::dsl::good_comment_votes;
 
         let _connection = establish_connection();

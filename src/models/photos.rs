@@ -2427,7 +2427,7 @@ impl Photo {
         return self.repost > 0;
     }
 
-    pub fn likes_ids(&self) -> Vec<User> {
+    pub fn likes_ids(&self) -> Vec<i32> {
         use crate::schema::photo_votes::dsl::photo_votes;
 
         let _connection = establish_connection();
@@ -2442,7 +2442,7 @@ impl Photo {
         };
         return stack;
     }
-    pub fn dislikes_ids(&self) -> Vec<User> {
+    pub fn dislikes_ids(&self) -> Vec<i32> {
         use crate::schema::photo_votes::dsl::photo_votes;
 
         let _connection = establish_connection();
@@ -3047,7 +3047,7 @@ impl PhotoComment {
         return self.repost > 0;
     }
 
-    pub fn likes_ids(&self) -> Vec<User> {
+    pub fn likes_ids(&self) -> Vec<i32> {
         use crate::schema::photo_comment_votes::dsl::photo_comment_votes;
 
         let _connection = establish_connection();
@@ -3063,7 +3063,7 @@ impl PhotoComment {
         };
         return stack;
     }
-    pub fn dislikes_ids(&self) -> Vec<User> {
+    pub fn dislikes_ids(&self) -> Vec<i32> {
         use crate::schema::photo_comment_votes::dsl::photo_comment_votes;
 
         let _connection = establish_connection();

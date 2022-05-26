@@ -2594,7 +2594,7 @@ impl Post {
         return "files_0".to_string();
     }
 
-    pub fn likes_ids(&self) -> Vec<User> {
+    pub fn likes_ids(&self) -> Vec<i32> {
         use crate::schema::post_votes::dsl::post_votes;
 
         let _connection = establish_connection();
@@ -2609,7 +2609,7 @@ impl Post {
         };
         return stack;
     }
-    pub fn dislikes_ids(&self) -> Vec<User> {
+    pub fn dislikes_ids(&self) -> Vec<i32> {
         use crate::schema::post_votes::dsl::post_votes;
 
         let _connection = establish_connection();
@@ -3247,7 +3247,7 @@ impl PostComment {
         return self.disliked > 0;
     }
 
-    pub fn likes_ids(&self) -> Vec<User> {
+    pub fn likes_ids(&self) -> Vec<i32> {
         use crate::schema::post_comment_votes::dsl::post_comment_votes;
 
         let _connection = establish_connection();
@@ -3263,7 +3263,7 @@ impl PostComment {
         };
         return stack;
     }
-    pub fn dislikes_ids(&self) -> Vec<User> {
+    pub fn dislikes_ids(&self) -> Vec<i32> {
         use crate::schema::post_comment_votes::dsl::post_comment_votes;
 
         let _connection = establish_connection();
