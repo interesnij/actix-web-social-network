@@ -29,7 +29,8 @@ pub fn pages_routes(config: &mut web::ServiceConfig) {
     config.route("/{slug}/", web::get().to(link_page));
 
     config.route("/progs/check_custom_link/{slug}/", web::get().to(check_custom_link));
-    config.route("/progs/repost/", web::get().to(repost_page));
+    config.route("/progs/create_repost/", web::get().to(create_repost_page));
+    config.route("/progs/create_claim/", web::get().to(create_claim_page));
     config.route("/load/likes/", web::get().to(all_likes_page));
 }
 
@@ -476,7 +477,7 @@ pub async fn check_custom_link(session: Session, req: HttpRequest, slug: web::Pa
     Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(answer))
 }
 
-pub async fn repost_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+pub async fn create_repost_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         use crate::utils::{get_user_permission,get_community_permission};
 
@@ -716,7 +717,7 @@ pub async fn repost_page(session: Session, req: HttpRequest) -> actix_web::Resul
     }
 }
 
-pub async fn claim_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+pub async fn create_claim_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         use crate::utils::{get_user_permission,get_community_permission};
 

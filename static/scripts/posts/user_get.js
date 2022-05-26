@@ -50,7 +50,7 @@ on('body', 'click', '.create_repost', function() {
   if (parent.getAttribute('data-subtype')) {
     subtype = parent.getAttribute('data-subtype')
   } else { subtype = null};
-  create_fullscreen("/progs/repost/?types=" + type, "worker_fullscreen");
+  create_fullscreen("/progs/create_repost/?types=" + type, "worker_fullscreen");
   clear_attach_block();
 });
 
@@ -184,10 +184,10 @@ on('#ajax', 'click', '.comment_dislikes', function() {
 });
 
 on('body', 'click', '.item_likes', function() {
-  create_fullscreen("/items/likes/?types=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
+  create_fullscreen("/load/likes/?types=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
 });
 on('body', 'click', '.item_dislikes', function() {
-  create_fullscreen("/items/dislikes/?types=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
+  create_fullscreen("/load/dislikes/?types=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
 });
 
 on('#ajax', 'click', '.input_new_post_in_list', function() {
