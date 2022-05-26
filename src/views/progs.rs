@@ -413,6 +413,12 @@ pub async fn like_item(session: Session, req: HttpRequest) -> web::Json<JsonReac
                 let item = get_video_comment(item_id);
                 item.send_like(_request_user.id)
             }
+            else {
+                return Json(JsonReactions {
+                    like_count: 0,
+                    dislike_count: 0,
+                })
+            }
         }
         else {
             if types == "pos".to_string() {

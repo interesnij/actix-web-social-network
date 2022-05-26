@@ -2184,8 +2184,8 @@ impl Post {
         }
 
         return Json(JsonReactions {
-            liked:    self.liked,
-            disliked: self.disliked,
+            like_count:    self.liked,
+            dislike_count: self.disliked,
         });
     }
 
