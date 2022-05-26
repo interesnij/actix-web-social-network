@@ -2151,6 +2151,11 @@ impl Post {
                     .set(reactions)
                     .get_result::<Post>(&_connection)
                     .expect("Error.");
+
+                return Json(JsonReactions {
+                    like_count:    self.liked + 1,
+                    dislike_count: self.disliked - 1,
+                });
             }
             else {
                 diesel::delete(post_votes
@@ -2164,6 +2169,11 @@ impl Post {
                     .set(schema::posts::liked.eq(self.liked - 1))
                     .get_result::<Post>(&_connection)
                     .expect("Error.");
+
+                return Json(JsonReactions {
+                    like_count:    self.liked - 1,
+                    dislike_count: self.disliked,
+                });
             }
         }
         else {
@@ -2181,12 +2191,12 @@ impl Post {
                 .set(schema::posts::liked.eq(self.liked + 1))
                 .get_result::<Post>(&_connection)
                 .expect("Error.");
-        }
 
-        return Json(JsonReactions {
-            like_count:    self.liked,
-            dislike_count: self.disliked,
-        });
+            return Json(JsonReactions {
+                like_count:    self.liked + 1,
+                dislike_count: self.disliked,
+            });
+        }
     }
 
     pub fn send_dislike(&self, user_id: i32) -> Json<JsonReactions> {
