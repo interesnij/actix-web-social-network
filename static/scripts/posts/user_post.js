@@ -413,7 +413,7 @@ on('#ajax', 'click', '.post_on_votes', function() {
 on('body', 'click', '.like_item', function() {
   _this = this;
   item = _this.parentElement;
-  send_like(item, "/progs/like_item/?types=" + item.getAttribute("data-type"));
+  send_like(item, "/users/progs/like_item/?types=" + item.getAttribute("data-type"));
   like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "item_likes")
   main_container = document.body.querySelector(".main-container");
   //add_list_in_all_stat("dislike_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
@@ -421,7 +421,7 @@ on('body', 'click', '.like_item', function() {
 on('body', 'click', '.dislike_item', function() {
   _this = this;
   item = _this.parentElement;
-  send_dislike(item, "/progs/dislike_item/?types=" + item.getAttribute("data-type"));
+  send_dislike(item, "/users/progs/dislike_item/?types=" + item.getAttribute("data-type"));
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "item_dislikes");
 
   //main_container = document.body.querySelector(".main-container");
@@ -582,24 +582,6 @@ on('body', 'click', '.recover_list', function() {
     //add_list_in_all_stat(stat_class,type.slice(3),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
   }}
   link_.send();
-});
-
-on('body', 'click', '.like2', function() {
-  _this = this;
-  item = _this.parentElement;
-  send_like(item, "/progs/like_comment/?types=" + item.getAttribute("data-type"));
-  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "comment_likes")
-  main_container = document.body.querySelector(".main-container");
-  //add_list_in_all_stat("dislike_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
-});
-on('body', 'click', '.dislike2', function() {
-  _this = this;
-  item = _this.parentElement;
-  send_dislike(item, "/progs/dislike_comment/?types=" + item.getAttribute("data-type"));
-  dislike_reload(this.previousElementSibling, this.nextElementSibling, "comment_dislikes");
-
-  main_container = document.body.querySelector(".main-container");
-  //add_list_in_all_stat("dislike_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 
 on('#ajax', 'change', '#u_photo_post_attach', function() {
