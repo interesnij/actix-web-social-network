@@ -41,15 +41,14 @@ pub fn add_post_list(pk: i32) -> String {
 
     return concat_string!(
         "<div style='flex-basis: 100%;' class='card'><div class='card-body' owner-pk='",
-        owner, "' postlist-pk='",
-        list.id.to_string(),
+        owner, "' postlist-pk='", list.id.to_string(),
         "' style='padding: 8px;padding-bottom: 0;'><div style='display:flex'><figure><a class='load_post_list btn_default pointer'>",
         image,
         "</a></figure><div class='media-body' style='margin-left: 10px;'><h6 class='my-0 mt-1 load_post_list pointer'>",
         list.name,
         "</h6><p>Список записей: <a style='vertical-align: baseline;'class='ajax underline' href='",
         link, "'>", name, "</a><br>Записей: ",
-        list.count.to_string(),"</p></div></div></div></div>");
+        list.count.to_string(), "</p></div></div></div></div>");
 }
 
 pub fn add_edited_post_list(pk: i32) -> String {
@@ -79,20 +78,22 @@ pub fn add_edited_post_list(pk: i32) -> String {
         owner = creator.id.to_string();
     }
 
-    return "<div class='folder' owner-pk='".to_string() + &owner.to_string() +
-    &"' postlist-pk='".to_string() + &list.id.to_string() +
-    &"' style='text-align: center;padding: 3px;'><span><input type='hidden' name='attach_items'
-    value='lpo".to_string() + &list.id.to_string() +
-    &"'></span><div class='card-img-top file-logo-wrapper' style='padding: 2rem;'>
-    <a class='nowrap'><div class='d-flex align-items-center justify-content-center
-    w-100 load_postlist pointer'><svg width='50' height='50' viewBox='0 0 24 24'
-    fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'
-    stroke-linejoin='round'><polygon points='5 3 19 12 5 21 5 3'></polygon></svg>
-    </div></a></div><div class='card-body pt-0'><div class='content-wrapper'
-    style='display: flex;'><p class='card-text file-name mb-0 load_postlist pointer'>
-    <a class='nowrap'>".to_string() + &list.name + &" (".to_string() +
-    &list.count_items().to_string() + &")</a></p></div><small class='file-accessed pointer
-    post_attach_list_remove underline'>Открепить</small></div></div>".to_string();
+    return concat_string!(
+        "<div class='folder' owner-pk='", owner,
+        "' postlist-pk='", list.id.to_string(),
+        "' style='text-align: center;padding: 3px;'><span><input type='hidden' name='attach_items'
+        value='lpo",
+        list.id.to_string(),
+        "'></span><div class='card-img-top file-logo-wrapper' style='padding: 2rem;'>
+        <a class='nowrap'><div class='d-flex align-items-center justify-content-center
+        w-100 load_postlist pointer'><svg width='50' height='50' viewBox='0 0 24 24'
+        fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'
+        stroke-linejoin='round'><polygon points='5 3 19 12 5 21 5 3'></polygon></svg>
+        </div></a></div><div class='card-body pt-0'><div class='content-wrapper'
+        style='display: flex;'><p class='card-text file-name mb-0 load_postlist pointer'>
+        <a class='nowrap'>", list.name, " (",
+        list.count_items(), ")</a></p></div><small class='file-accessed pointer
+        post_attach_list_remove underline'>Открепить</small></div></div>");
 }
 
 pub fn add_music_list(pk: i32) -> String {
@@ -133,18 +134,16 @@ pub fn add_music_list(pk: i32) -> String {
     else {
         image = "<svg fill='currentColor' class='svg_default border' style='width:120px;height:120px;' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none'/><path d='M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z'/></svg>".to_string();
     }
-    return "<div style='flex-basis: 100%;' class='card'>
-    <div class='card-body' owner-pk='".to_string() + &owner +
-    &"' &playlist-pk='".to_string() +
-    &list.id.to_string() +
-    &"' style='padding: 8px;padding-bottom: 0;'><div style='display:flex'>
-    <figure><a class='load_music_list btn_default pointer'>".to_string() +
-    &image + &"</a></figure><div class='media-body' style='margin-left: 10px;'>
-    <h6 class='my-0 mt-1 load_music_list pointer'>".to_string() +
-    &list.name + &"</h6><p>Плейлист: <a style='vertical-align: baseline;'
-    class='ajax underline' href='".to_string() +
-    &link + &"'>" + &name + &"</a><br>Треков: ".to_string() +
-    &list.count.to_string() + &"</p></div><span class='playlist_share'></span></div></div></div>".to_string();
+    return concat_string!(
+        "<div style='flex-basis: 100%;' class='card'><div class='card-body' owner-pk='",
+        owner, "' &playlist-pk='", list.id.to_string(),
+        "' style='padding: 8px;padding-bottom: 0;'><div style='display:flex'>
+        <figure><a class='load_music_list btn_default pointer'>",
+        image, "</a></figure><div class='media-body' style='margin-left: 10px;'>
+        <h6 class='my-0 mt-1 load_music_list pointer'>",
+        list.name, "</h6><p>Плейлист: <a style='vertical-align: baseline;'class='ajax underline' href='",
+        link, "'>", name, "</a><br>Треков: ",
+        list.count.to_string(), "</p></div><span class='playlist_share'></span></div></div></div>");
 }
 pub fn add_edited_music_list(pk: i32) -> String {
     use crate::schema::music_lists::dsl::music_lists;
@@ -171,20 +170,21 @@ pub fn add_edited_music_list(pk: i32) -> String {
         owner = creator.id.to_string();
     }
 
-    return "<div class='folder' owner-pk='".to_string() + &owner.to_string() +
-    &"' playlist-pk='".to_string() + &list.id.to_string() +
-    &"' style='text-align: center;padding: 3px;'><span><input type='hidden' name='attach_items'
-    value='lmu".to_string() + &list.id.to_string() +
-    &"'></span><div class='card-img-top file-logo-wrapper' style='padding: 2rem;'>
-    <a class='nowrap'><div class='d-flex align-items-center justify-content-center
-    w-100 load_playlist pointer'><svg width='50' height='50' viewBox='0 0 24 24'
-    fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'
-    stroke-linejoin='round'><polygon points='5 3 19 12 5 21 5 3'></polygon></svg>
-    </div></a></div><div class='card-body pt-0'><div class='content-wrapper'
-    style='display: flex;'><p class='card-text file-name mb-0 load_playlist pointer'>
-    <a class='nowrap'>".to_string() + &list.name + &" (".to_string() +
-    &list.count_items().to_string() + &")</a></p></div><small class='file-accessed pointer
-    music_attach_list_remove underline'>Открепить</small></div></div>".to_string();
+    return concat_string!(
+        "<div class='folder' owner-pk='", owner,
+        "' playlist-pk='", list.id.to_string(),
+        "' style='text-align: center;padding: 3px;'><span><input type='hidden' name='attach_items'
+        value='lmu", list.id.to_string(),
+        "'></span><div class='card-img-top file-logo-wrapper' style='padding: 2rem;'>
+        <a class='nowrap'><div class='d-flex align-items-center justify-content-center
+        w-100 load_playlist pointer'><svg width='50' height='50' viewBox='0 0 24 24'
+        fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'
+        stroke-linejoin='round'><polygon points='5 3 19 12 5 21 5 3'></polygon></svg>
+        </div></a></div><div class='card-body pt-0'><div class='content-wrapper'
+        style='display: flex;'><p class='card-text file-name mb-0 load_playlist pointer'>
+        <a class='nowrap'>", list.name, " (",
+        list.count_items(), ")</a></p></div><small class='file-accessed pointer
+        music_attach_list_remove underline'>Открепить</small></div></div>");
 }
 
 pub fn add_doc_list(pk: i32) -> String {
@@ -218,17 +218,16 @@ pub fn add_doc_list(pk: i32) -> String {
         owner = creator.id.to_string();
     }
 
-    return "<div style='flex-basis: 100%;' class='card'>
-    <div class='card-body' owner-pk='".to_string() + &owner +
-    &"' &doclist-pk='".to_string() +
-    &list.id.to_string() +
-    &"' style='padding: 8px;padding-bottom: 0;'><div style='display:flex'>
-    <figure><a class='load_doc_list btn_default pointer'><svg fill='currentColor' class='svg_default' style='width:60px;height:88px;' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none'/><path d='M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z'/></svg></a></figure><div class='media-body' style='margin-left: 10px;'>
-    <h6 class='my-0 mt-1 load_doc_list pointer'>".to_string() +
-    &list.name + &"</h6><p>Список документов: <a style='vertical-align: baseline;'
-    class='ajax underline' href='".to_string() +
-    &link + &"'>" + &name + &"</a><br>Документов: ".to_string() +
-    &list.count.to_string() + &"</p></div></div></div></div>".to_string();
+    return concat_string!(
+        "<div style='flex-basis: 100%;' class='card'><div class='card-body' owner-pk='",
+        owner, "' &doclist-pk='", list.id.to_string(),
+        "' style='padding: 8px;padding-bottom: 0;'><div style='display:flex'>
+        <figure><a class='load_doc_list btn_default pointer'><svg fill='currentColor' class='svg_default' style='width:60px;height:88px;' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none'/><path d='M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z'/></svg></a></figure><div class='media-body' style='margin-left: 10px;'>
+        <h6 class='my-0 mt-1 load_doc_list pointer'>",
+        list.name, "</h6><p>Список документов: <a style='vertical-align: baseline;'
+        class='ajax underline' href='",
+        link, "'>", name, "</a><br>Документов: ",
+        list.count.to_string(), "</p></div></div></div></div>");
 }
 pub fn add_edited_doc_list(pk: i32) -> String {
     use crate::schema::doc_lists::dsl::doc_lists;
@@ -255,18 +254,19 @@ pub fn add_edited_doc_list(pk: i32) -> String {
         owner = creator.id.to_string();
     }
 
-    return "<div class='folder' owner-pk='".to_string() + &owner.to_string() +
-    &"' doclist-pk='".to_string() + &list.id.to_string() +
-    &"' style='text-align: center;padding: 3px;'><span><input type='hidden' name='attach_items'
-    value='ldo".to_string() + &list.id.to_string() +
-    &"'></span><div class='card-img-top file-logo-wrapper' style='padding: 2rem;'>
-    <a class='nowrap'><div class='d-flex align-items-center justify-content-center
-    w-100 load_doclist pointer'><svg fill='currentColor' class='svg_default' style='width:60px;height:88px;' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none'/><path d='M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13'/></svg>
-    </div></a></div><div class='card-body pt-0'><div class='content-wrapper'
-    style='display: flex;'><p class='card-text file-name mb-0 load_doclist pointer'>
-    <a class='nowrap'>".to_string() + &list.name + &" (".to_string() +
-    &list.count_items().to_string() + &")</a></p></div><small class='file-accessed pointer
-    doc_attach_list_remove underline'>Открепить</small></div></div>".to_string();
+    return concat_string!(
+        "<div class='folder' owner-pk='", owner,
+        "' doclist-pk='", list.id.to_string(),
+        "' style='text-align: center;padding: 3px;'><span><input type='hidden' name='attach_items'
+        value='ldo", list.id.to_string(),
+        "'></span><div class='card-img-top file-logo-wrapper' style='padding: 2rem;'>
+        <a class='nowrap'><div class='d-flex align-items-center justify-content-center
+        w-100 load_doclist pointer'><svg fill='currentColor' class='svg_default' style='width:60px;height:88px;' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none'/><path d='M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13'/></svg>
+        </div></a></div><div class='card-body pt-0'><div class='content-wrapper'
+        style='display: flex;'><p class='card-text file-name mb-0 load_doclist pointer'>
+        <a class='nowrap'>", list.name, " (",
+        list.count_items(), ")</a></p></div><small class='file-accessed pointer
+        doc_attach_list_remove underline'>Открепить</small></div></div>");
 }
 
 pub fn add_video_list(pk: i32) -> String {
