@@ -2142,7 +2142,7 @@ impl Post {
                     .get_result::<PostVote>(&_connection)
                     .expect("Error.");
 
-                diesel::update(&self)
+                diesel::update(&*self)
                     .set(reactions)
                     .get_result::<Post>(&_connection)
                     .expect("Error.");
@@ -2155,7 +2155,7 @@ impl Post {
                     .execute(&_connection)
                     .expect("E");
 
-                diesel::update(self)
+                diesel::update(&*self)
                     .set(schema::posts::liked.eq(self.liked - 1))
                     .get_result::<Post>(&_connection)
                     .expect("Error.");
@@ -2172,7 +2172,7 @@ impl Post {
                 .get_result::<PostVote>(&_connection)
                 .expect("Error.");
 
-            diesel::update(self)
+            diesel::update(&*self)
                 .set(schema::posts::liked.eq(self.liked + 1))
                 .get_result::<Post>(&_connection)
                 .expect("Error.");
