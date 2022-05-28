@@ -2169,22 +2169,7 @@ impl Post {
             .expect("Error.");
         return self;
     }
-    pub fn plus_likes(&self, count: i32) -> bool {
-        let _connection = establish_connection();
-        diesel::update(self)
-            .set(schema::posts::liked.eq(self.liked + count))
-            .get_result::<Post>(&_connection)
-            .expect("Error.");
-        return true;
-    }
-    pub fn plus_dislikes(&self, count: i32) -> bool {
-        let _connection = establish_connection();
-        diesel::update(self)
-            .set(schema::posts::disliked.eq(self.disliked + count))
-            .get_result::<Post>(&_connection)
-            .expect("Error.");
-        return true;
-    }
+
     pub fn plus_comments(&self, count: i32) -> bool {
         let _connection = establish_connection();
         diesel::update(self)
@@ -2193,18 +2178,18 @@ impl Post {
             .expect("Error.");
         return true;
     }
-    pub fn minus_likes(&self, count: i32) -> bool {
+    pub fn plus_reactions(&self, count: i32) -> bool {
         let _connection = establish_connection();
         diesel::update(self)
-            .set(schema::posts::liked.eq(self.liked - count))
+            .set(schema::posts::reactions.eq(self.reactions + count))
             .get_result::<Post>(&_connection)
             .expect("Error.");
         return true;
     }
-    pub fn minus_dislikes(&self, count: i32) -> bool {
+    pub fn minus_reactions(&self, count: i32) -> bool {
         let _connection = establish_connection();
         diesel::update(self)
-            .set(schema::posts::disliked.eq(self.disliked - count))
+            .set(schema::posts::reactions.eq(self.reactions - count))
             .get_result::<Post>(&_connection)
             .expect("Error.");
         return true;
@@ -2233,7 +2218,7 @@ impl Post {
     pub fn is_repost(&self) -> bool {
         return self.types == "r";
     }
-    
+
     pub fn delete_item(&self) -> bool {
         let _connection = establish_connection();
         let user_types = &self.types;
@@ -2624,6 +2609,27 @@ impl Post {
             stack.push(_item.user_id);
         };
         return stack;
+    }
+
+    pub fn is_have_user_reaction(&self, user_id: i32) -> bool {
+        return self.reactions_ids().iter().any(|&i| i==user_id);
+    }
+
+    pub fn get_user_reaction(&self, user_id: i32) -> i16 {
+        use crate::schema::post_votes::dsl::post_votes;
+        // "/static/images/reactions/" + get_user_reaction + ".jpg"
+
+        let _connection = establish_connection();
+        let vote = post_votes
+            .filter(schema::post_votes::user_id.eq(user_id))
+            .filter(schema::post_votes::post_id.eq(self.id))
+            .load::<PostVote>(&_connection)
+            .expect("E.")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+
+        return vote.types;
     }
 
     pub fn get_reactions_users_of_types(&self, limit: i64, offset: i64, types: i16) -> Vec<User> {

@@ -2612,8 +2612,9 @@ impl Good {
     }
 
     pub fn get_user_reaction(&self, user_id: i32) -> i16 {
+        use crate::schema::good_votes::dsl::good_votes;
         // "/static/images/reactions/" + get_user_reaction + ".jpg"
-
+        let _connection = establish_connection();
         let vote = good_votes
             .filter(schema::good_votes::user_id.eq(user_id))
             .filter(schema::good_votes::good_id.eq(self.id))

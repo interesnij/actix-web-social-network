@@ -2164,42 +2164,27 @@ impl Photo {
         return true;
     }
 
-    pub fn plus_likes(&self, count: i32) -> bool {
+    pub fn plus_reactions(&self, count: i32) -> bool {
         let _connection = establish_connection();
         diesel::update(self)
-            .set(schema::photos::liked.eq(self.liked + count))
+            .set(schema::photos::reactions.eq(self.reactions + count))
             .get_result::<Photo>(&_connection)
             .expect("Error.");
         return true;
     }
-    pub fn plus_dislikes(&self, count: i32) -> bool {
+    pub fn minus_reactions(&self, count: i32) -> bool {
         let _connection = establish_connection();
         diesel::update(self)
-            .set(schema::photos::disliked.eq(self.disliked + count))
+            .set(schema::photos::reactions.eq(self.reactions - count))
             .get_result::<Photo>(&_connection)
             .expect("Error.");
         return true;
     }
+
     pub fn plus_comments(&self, count: i32) -> bool {
         let _connection = establish_connection();
         diesel::update(self)
             .set(schema::photos::comment.eq(self.comment + count))
-            .get_result::<Photo>(&_connection)
-            .expect("Error.");
-        return true;
-    }
-    pub fn minus_likes(&self, count: i32) -> bool {
-        let _connection = establish_connection();
-        diesel::update(self)
-            .set(schema::photos::liked.eq(self.liked - count))
-            .get_result::<Photo>(&_connection)
-            .expect("Error.");
-        return true;
-    }
-    pub fn minus_dislikes(&self, count: i32) -> bool {
-        let _connection = establish_connection();
-        diesel::update(self)
-            .set(schema::photos::disliked.eq(self.disliked - count))
             .get_result::<Photo>(&_connection)
             .expect("Error.");
         return true;
@@ -2456,6 +2441,26 @@ impl Photo {
             stack.push(_item.user_id);
         };
         return stack;
+    }
+
+    pub fn is_have_user_reaction(&self, user_id: i32) -> bool {
+        return self.reactions_ids().iter().any(|&i| i==user_id);
+    }
+
+    pub fn get_user_reaction(&self, user_id: i32) -> i16 {
+        use crate::schema::photo_votes::dsl::photo_votes;
+        // "/static/images/reactions/" + get_user_reaction + ".jpg"
+        let _connection = establish_connection();
+        let vote = photo_votes
+            .filter(schema::photo_votes::user_id.eq(user_id))
+            .filter(schema::photo_votes::photo_id.eq(self.id))
+            .load::<PhotoVote>(&_connection)
+            .expect("E.")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+
+        return vote.types;
     }
 
     pub fn get_reactions_users_of_types(&self, limit: i64, offset: i64, types: i16) -> Vec<User> {

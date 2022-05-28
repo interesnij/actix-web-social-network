@@ -2276,8 +2276,9 @@ impl Message {
     }
 
     pub fn get_user_reaction(&self, user_id: i32) -> i16 {
+        use crate::schema::message_votes::dsl::message_votes;
         // "/static/images/reactions/" + get_user_reaction + ".jpg"
-
+        let _connection = establish_connection();
         let vote = message_votes
             .filter(schema::message_votes::user_id.eq(user_id))
             .filter(schema::message_votes::message_id.eq(self.id))

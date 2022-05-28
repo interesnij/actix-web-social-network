@@ -2118,22 +2118,7 @@ impl Video {
             .expect("Error.");
         return self;
     }
-    pub fn plus_likes(&self, count: i32) -> bool {
-        let _connection = establish_connection();
-        diesel::update(self)
-            .set(schema::videos::liked.eq(self.liked + count))
-            .get_result::<Video>(&_connection)
-            .expect("Error.");
-        return true;
-    }
-    pub fn plus_dislikes(&self, count: i32) -> bool {
-        let _connection = establish_connection();
-        diesel::update(self)
-            .set(schema::videos::disliked.eq(self.disliked + count))
-            .get_result::<Video>(&_connection)
-            .expect("Error.");
-        return true;
-    }
+
     pub fn plus_comments(&self, count: i32) -> bool {
         let _connection = establish_connection();
         diesel::update(self)
@@ -2142,22 +2127,23 @@ impl Video {
             .expect("Error.");
         return true;
     }
-    pub fn minus_likes(&self, count: i32) -> bool {
+    pub fn plus_reactions(&self, count: i32) -> bool {
         let _connection = establish_connection();
         diesel::update(self)
-            .set(schema::videos::liked.eq(self.liked - count))
+            .set(schema::videos::reactions.eq(self.reactions + count))
             .get_result::<Video>(&_connection)
             .expect("Error.");
         return true;
     }
-    pub fn minus_dislikes(&self, count: i32) -> bool {
+    pub fn minus_reactions(&self, count: i32) -> bool {
         let _connection = establish_connection();
         diesel::update(self)
-            .set(schema::videos::disliked.eq(self.disliked - count))
+            .set(schema::videos::reactions.eq(self.reactions - count))
             .get_result::<Video>(&_connection)
             .expect("Error.");
         return true;
     }
+
     pub fn minus_comments(&self, count: i32) -> bool {
         let _connection = establish_connection();
         diesel::update(self)
@@ -2409,6 +2395,26 @@ impl Video {
             stack.push(_item.user_id);
         };
         return stack;
+    }
+
+    pub fn is_have_user_reaction(&self, user_id: i32) -> bool {
+        return self.reactions_ids().iter().any(|&i| i==user_id);
+    }
+
+    pub fn get_user_reaction(&self, user_id: i32) -> i16 {
+        use crate::schema::video_votes::dsl::video_votes;
+        // "/static/images/reactions/" + get_user_reaction + ".jpg"
+        let _connection = establish_connection();
+        let vote = video_votes
+            .filter(schema::video_votes::user_id.eq(user_id))
+            .filter(schema::video_votes::video_id.eq(self.id))
+            .load::<VideoVote>(&_connection)
+            .expect("E.")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+
+        return vote.types;
     }
 
     pub fn get_reactions_users_of_types(&self, limit: i64, offset: i64, types: i16) -> Vec<User> {
