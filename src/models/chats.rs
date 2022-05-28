@@ -2388,7 +2388,7 @@ pub struct NewMessageTransfer {
 
 /////// MessageReaction //////
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
-#[belongs_to(Chat)]
+#[belongs_to(Message)]
 pub struct MessageReaction {
     pub id:          i32,
     pub message_id:  i32,
