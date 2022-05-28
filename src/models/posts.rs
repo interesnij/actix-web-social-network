@@ -1898,23 +1898,6 @@ impl Post {
         }
     }
 
-    pub fn plus_reactions(&self, count: i32) -> bool {
-        let _connection = establish_connection();
-        diesel::update(self)
-            .set(schema::posts::reactions.eq(self.reactions + count))
-            .get_result::<Post>(&_connection)
-            .expect("Error.");
-        return true;
-    }
-    pub fn minus_reactions(&self, count: i32) -> bool {
-        let _connection = establish_connection();
-        diesel::update(self)
-            .set(schema::posts::reactions.eq(self.reactions - count))
-            .get_result::<Post>(&_connection)
-            .expect("Error.");
-        return true;
-    }
-
     pub fn send_reaction(&self, user_id: i32, types: i16) -> Json<JsonItemReactions> {
         use crate::schema::post_votes::dsl::post_votes;
 

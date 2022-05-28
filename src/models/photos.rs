@@ -1883,23 +1883,6 @@ impl Photo {
         }
     }
 
-    pub fn plus_reactions(&self, count: i32) -> bool {
-        let _connection = establish_connection();
-        diesel::update(self)
-            .set(schema::photos::reactions.eq(self.reactions + count))
-            .get_result::<Photo>(&_connection)
-            .expect("Error.");
-        return true;
-    }
-    pub fn minus_reactions(&self, count: i32) -> bool {
-        let _connection = establish_connection();
-        diesel::update(self)
-            .set(schema::photos::reactions.eq(self.reactions - count))
-            .get_result::<Photo>(&_connection)
-            .expect("Error.");
-        return true;
-    }
-
     pub fn send_reaction(&self, user_id: i32, types: i16) -> Json<JsonItemReactions> {
         use crate::schema::photo_votes::dsl::photo_votes;
 
@@ -2470,7 +2453,7 @@ impl Photo {
         let _connection = establish_connection();
         let votes = photo_votes
             .filter(schema::photo_votes::photo_id.eq(self.id))
-            .filter(schema::photo_votes::types.eq(types))
+            .filter(schema::photo_votes::reaction.eq(types))
             .limit(limit)
             .offset(offset)
             .load::<PhotoVote>(&_connection)
@@ -2489,7 +2472,7 @@ impl Photo {
         let _connection = establish_connection();
         let votes = photo_votes
             .filter(schema::photo_votes::photo_id.eq(self.id))
-            .filter(schema::photo_votes::types.eq(types))
+            .filter(schema::photo_votes::reaction.eq(types))
             .limit(6)
             .load::<PhotoVote>(&_connection)
             .expect("E");
