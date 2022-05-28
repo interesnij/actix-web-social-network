@@ -1,3 +1,5 @@
+-- Your SQL goes here
+
 CREATE TABLE phone_codes (
     id    SERIAL PRIMARY KEY,
     phone VARCHAR(14) NOT NULL,
@@ -5,9 +7,8 @@ CREATE TABLE phone_codes (
 );
 
 CREATE TABLE custom_links (
-    id    SERIAL PRIMARY KEY,
-    link  VARCHAR(100) NOT NULL,
-    owner SMALLINT NOT NULL,
+    id   SERIAL PRIMARY KEY,
+    link VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE sticker_categories (
