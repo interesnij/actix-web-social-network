@@ -73,6 +73,7 @@ pub async fn add_user_list(session: Session, mut payload: Multipart) -> actix_we
             Some(form.create_el_users),
             Some(form.create_comment_users),
             Some(form.copy_el_users),
+            form.reactions,
         );
 
         #[derive(TemplateOnce)]
@@ -116,6 +117,7 @@ pub async fn edit_user_list(session: Session, mut payload: Multipart, _id: web::
                 Some(form.create_el_users),
                 Some(form.create_comment_users),
                 Some(form.copy_el_users),
+                form.reactions,
             );
 
             #[derive(TemplateOnce)]
@@ -166,6 +168,7 @@ pub async fn add_community_list(session: Session, mut payload: Multipart, _id: w
                 Some(form.create_el_users),
                 Some(form.create_comment_users),
                 Some(form.copy_el_users),
+                form.reactions,
             );
 
             #[derive(TemplateOnce)]
@@ -216,6 +219,7 @@ pub async fn edit_community_list(session: Session, mut payload: Multipart, _id: 
                 Some(form.create_el_users),
                 Some(form.create_comment_users),
                 Some(form.copy_el_users),
+                form.reactions,
             );
 
         #[derive(TemplateOnce)]

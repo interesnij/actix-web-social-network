@@ -1029,12 +1029,7 @@ impl Community {
             mention:                true,
             comment_mention:        true,
             repost:                 true,
-            liked:                  true,
-            disliked:               true,
-            comment_liked:          true,
-            comment_disliked:       true,
-            comment_reply_liked:    true,
-            comment_reply_disliked: true,
+            reactions:              true,
         };
         diesel::insert_into(schema::community_post_notifications::table)
             .values(&_post_notification)
@@ -1049,12 +1044,7 @@ impl Community {
             mention:                true,
             comment_mention:        true,
             repost:                 true,
-            liked:                  true,
-            disliked:               true,
-            comment_liked:          true,
-            comment_disliked:       true,
-            comment_reply_liked:    true,
-            comment_reply_disliked: true,
+            reactions:              true,
         };
         diesel::insert_into(schema::community_photo_notifications::table)
             .values(&_photo_notification)
@@ -1069,12 +1059,7 @@ impl Community {
             mention:                true,
             comment_mention:        true,
             repost:                 true,
-            liked:                  true,
-            disliked:               true,
-            comment_liked:          true,
-            comment_disliked:       true,
-            comment_reply_liked:    true,
-            comment_reply_disliked: true,
+            reactions:              true,
         };
         diesel::insert_into(schema::community_good_notifications::table)
             .values(&_good_notification)
@@ -1089,12 +1074,7 @@ impl Community {
             mention:                true,
             comment_mention:        true,
             repost:                 true,
-            liked:                  true,
-            disliked:               true,
-            comment_liked:          true,
-            comment_disliked:       true,
-            comment_reply_liked:    true,
-            comment_reply_disliked: true,
+            reactions:              true,
         };
         diesel::insert_into(schema::community_video_notifications::table)
             .values(&_video_notification)
@@ -1395,6 +1375,7 @@ impl Community {
                     create_el:       "g".to_string(),
                     create_comment:  "a".to_string(),
                     copy_el:         "g".to_string(),
+                    reactions:       Some("1, 2".to_string()),
                 };
             let _goods_list = diesel::insert_into(schema::good_lists::table)
                 .values(&new_list)
@@ -1500,6 +1481,7 @@ impl Community {
                     create_el:       "g".to_string(),
                     create_comment:  "a".to_string(),
                     copy_el:         "g".to_string(),
+                    reactions:       Some("1, 2".to_string()),
                 };
             let _videos_list = diesel::insert_into(schema::video_lists::table)
                 .values(&new_list)
@@ -1555,6 +1537,7 @@ impl Community {
                     create_el:       "g".to_string(),
                     create_comment:  "a".to_string(),
                     copy_el:         "g".to_string(),
+                    reactions:       Some("1, 2".to_string()),
                 };
             let _photos_list = diesel::insert_into(schema::photo_lists::table)
                 .values(&new_list)
@@ -1633,6 +1616,7 @@ impl Community {
                     create_el:       "g".to_string(),
                     create_comment:  "a".to_string(),
                     copy_el:         "g".to_string(),
+                    reactions:       Some("1, 2".to_string()),
                 };
             let _posts_list = diesel::insert_into(schema::post_lists::table)
                 .values(&new_list)
@@ -3928,12 +3912,7 @@ pub struct CommunityPostNotification {
     pub mention:                bool,
     pub comment_mention:        bool,
     pub repost:                 bool,
-    pub liked:                  bool,
-    pub disliked:               bool,
-    pub comment_liked:          bool,
-    pub comment_disliked:       bool,
-    pub comment_reply_liked:    bool,
-    pub comment_reply_disliked: bool,
+    pub reactions:              bool,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_post_notifications"]
@@ -3944,12 +3923,7 @@ pub struct NewCommunityPostNotification {
     pub mention:                bool,
     pub comment_mention:        bool,
     pub repost:                 bool,
-    pub liked:                  bool,
-    pub disliked:               bool,
-    pub comment_liked:          bool,
-    pub comment_disliked:       bool,
-    pub comment_reply_liked:    bool,
-    pub comment_reply_disliked: bool,
+    pub reactions:              bool,
 }
 
 /////// CommunityNotificationsPhoto //////
@@ -3963,12 +3937,7 @@ pub struct CommunityPhotoNotification {
     pub mention:                bool,
     pub comment_mention:        bool,
     pub repost:                 bool,
-    pub liked:                  bool,
-    pub disliked:               bool,
-    pub comment_liked:          bool,
-    pub comment_disliked:       bool,
-    pub comment_reply_liked:    bool,
-    pub comment_reply_disliked: bool,
+    pub reactions:              bool,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_photo_notifications"]
@@ -3979,12 +3948,7 @@ pub struct NewCommunityPhotoNotification {
     pub mention:                bool,
     pub comment_mention:        bool,
     pub repost:                 bool,
-    pub liked:                  bool,
-    pub disliked:               bool,
-    pub comment_liked:          bool,
-    pub comment_disliked:       bool,
-    pub comment_reply_liked:    bool,
-    pub comment_reply_disliked: bool,
+    pub reactions:              bool,
 }
 
 /////// CommunityNotificationsVideo //////
@@ -3998,12 +3962,7 @@ pub struct CommunityVideoNotification {
     pub mention:                bool,
     pub comment_mention:        bool,
     pub repost:                 bool,
-    pub liked:                  bool,
-    pub disliked:               bool,
-    pub comment_liked:          bool,
-    pub comment_disliked:       bool,
-    pub comment_reply_liked:    bool,
-    pub comment_reply_disliked: bool,
+    pub reactions:              bool,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_video_notifications"]
@@ -4014,12 +3973,7 @@ pub struct NewCommunityVideoNotification {
     pub mention:                bool,
     pub comment_mention:        bool,
     pub repost:                 bool,
-    pub liked:                  bool,
-    pub disliked:               bool,
-    pub comment_liked:          bool,
-    pub comment_disliked:       bool,
-    pub comment_reply_liked:    bool,
-    pub comment_reply_disliked: bool,
+    pub reactions:              bool,
 }
 
 /////// CommunityNotificationsGood //////
@@ -4033,12 +3987,7 @@ pub struct CommunityGoodNotification {
     pub mention:                bool,
     pub comment_mention:        bool,
     pub repost:                 bool,
-    pub liked:                  bool,
-    pub disliked:               bool,
-    pub comment_liked:          bool,
-    pub comment_disliked:       bool,
-    pub comment_reply_liked:    bool,
-    pub comment_reply_disliked: bool,
+    pub reactions:              bool,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="community_good_notifications"]
@@ -4049,12 +3998,7 @@ pub struct NewCommunityGoodNotification {
     pub mention:                bool,
     pub comment_mention:        bool,
     pub repost:                 bool,
-    pub liked:                  bool,
-    pub disliked:               bool,
-    pub comment_liked:          bool,
-    pub comment_disliked:       bool,
-    pub comment_reply_liked:    bool,
-    pub comment_reply_disliked: bool,
+    pub reactions:              bool,
 }
 
 /////// CommunityNotificationsMusic //////

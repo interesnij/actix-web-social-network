@@ -8,10 +8,12 @@ use crate::schema::{
     message_versions,
     message_options,
     message_transfers,
+    message_reactions,
+    message_votes,
 };
 use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
-use crate::utils::establish_connection;
+use crate::utils::{establish_connection,JsonItemReactions};
 use crate::models::{
     User,
     Community,
@@ -19,6 +21,8 @@ use crate::models::{
     Sticker,
     //Photo,
     //Video,
+    Reaction,
+
 };
 
 
@@ -59,42 +63,44 @@ use crate::models::{
 #[belongs_to(User)]
 #[belongs_to(Community)]
 pub struct Chat {
-    pub id:                 i32,
-    pub name:               Option<String>,
-    pub types:              i16,
-    pub image:              Option<String>,
-    pub description:        Option<String>,
-    pub community_id:       Option<i32>,
-    pub user_id:            i32,
-    pub position:           i16,
-    pub members:            i32,
-    pub created:            chrono::NaiveDateTime,
-    pub can_add_members:    String,
-    pub can_fix_item:       String,
-    pub can_mention:        String,
-    pub can_add_admin:      String,
-    pub can_add_design:     String,
-    pub can_see_settings:   String,
-    pub can_see_log:        String,
+    pub id:               i32,
+    pub name:             Option<String>,
+    pub types:            i16,
+    pub image:            Option<String>,
+    pub description:      Option<String>,
+    pub community_id:     Option<i32>,
+    pub user_id:          i32,
+    pub position:         i16,
+    pub members:          i32,
+    pub created:          chrono::NaiveDateTime,
+    pub can_add_members:  String,
+    pub can_fix_item:     String,
+    pub can_mention:      String,
+    pub can_add_admin:    String,
+    pub can_add_design:   String,
+    pub can_see_settings: String,
+    pub can_see_log:      String,
+    pub reactions:        Option<String>,
 }
 
 #[derive(Deserialize, Insertable)]
 #[table_name="chats"]
 pub struct NewChat {
-    pub name:               Option<String>,
-    pub types:              i16,
-    pub community_id:       Option<i32>,
-    pub user_id:            i32,
-    pub position:           i16,
-    pub members:            i32,
-    pub created:            chrono::NaiveDateTime,
-    pub can_add_members:    String,
-    pub can_fix_item:       String,
-    pub can_mention:        String,
-    pub can_add_admin:      String,
-    pub can_add_design:     String,
-    pub can_see_settings:   String,
-    pub can_see_log:        String,
+    pub name:             Option<String>,
+    pub types:            i16,
+    pub community_id:     Option<i32>,
+    pub user_id:          i32,
+    pub position:         i16,
+    pub members:          i32,
+    pub created:          chrono::NaiveDateTime,
+    pub can_add_members:  String,
+    pub can_fix_item:     String,
+    pub can_mention:      String,
+    pub can_add_admin:    String,
+    pub can_add_design:   String,
+    pub can_see_settings: String,
+    pub can_see_log:      String,
+    pub reactions:        Option<String>,
 }
 impl Chat {
     pub fn get_str_id(&self) -> String {
@@ -116,6 +122,17 @@ impl Chat {
         else {
             return "Без имени".to_string();
         }
+    }
+    pub fn get_reactions_list(&self) -> Vec<i16> {
+        let mut stack = Vec::new();
+        if self.reactions.is_some() {
+            let v: Vec<&str> = self.reactions.as_ref().unwrap().split(",").collect();
+            for item in v.iter() {
+                let pk: i16 = item.parse().unwrap();
+                stack.push(pk);
+            }
+
+        return stack;
     }
     pub fn liked_manager(&self, user_id: i32) -> bool {
         use crate::schema::support_user_votes::dsl::support_user_votes;
@@ -1754,33 +1771,37 @@ pub struct NewChatIeSetting {
 #[belongs_to(Post)]
 #[belongs_to(Sticker)]
 pub struct Message {
-    pub id:            i32,
-    pub user_id:       i32,
-    pub chat_id:       i32,
-    pub parent_id:     Option<i32>,
-    pub sticker_id:    Option<i32>,
-    pub post_id:       Option<i32>,
-    pub created:       chrono::NaiveDateTime,
-    pub content:       Option<String>,
-    pub unread:        bool,
-    pub types:         i16,
-    pub attach:        Option<String>,
-    pub voice:         Option<String>,
+    pub id:         i32,
+    pub user_id:    i32,
+    pub chat_id:    i32,
+    pub parent_id:  Option<i32>,
+    pub sticker_id: Option<i32>,
+    pub post_id:    Option<i32>,
+    pub created:    chrono::NaiveDateTime,
+    pub content:    Option<String>,
+    pub unread:     bool,
+    pub types:      i16,
+    pub attach:     Option<String>,
+    pub voice:      Option<String>,
+    pub reactions:  i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="messages"]
 pub struct NewMessage {
-    pub user_id:       i32,
-    pub chat_id:       i32,
-    pub parent_id:     Option<i32>,
-    pub sticker_id:    Option<i32>,
-    pub post_id:       Option<i32>,
-    pub created:       chrono::NaiveDateTime,
-    pub content:       Option<String>,
-    pub types:         i16,
-    pub attach:        Option<String>,
-    pub voice:         Option<String>,
+    pub user_id:    i32,
+    pub chat_id:    i32,
+    pub parent_id:  Option<i32>,
+    pub sticker_id: Option<i32>,
+    pub post_id:    Option<i32>,
+    pub created:    chrono::NaiveDateTime,
+    pub content:    Option<String>,
+    pub unread:     bool,
+    pub types:      i16,
+    pub attach:     Option<String>,
+    pub voice:      Option<String>,
+    pub reactions:  i32,
 }
+
 impl Message {
     pub fn get_attach(&self, user_id: i32) -> String {
         if self.attach.is_some() {
@@ -2054,6 +2075,257 @@ impl Message {
             return "".to_string();
         }
     }
+
+    pub fn count_reactions(&self) -> String {
+        if self.reactions == 0 {
+            return "".to_string();
+        }
+        else {
+            return self.reactions.to_string();
+        }
+    }
+
+    pub fn get_or_create_react_model(&self) -> MessageReaction {
+        use crate::schema::message_reactions::dsl::message_reactions;
+
+        let _connection = establish_connection();
+        let _react_model = message_reactions
+            .filter(schema::message_reactions::message_id.eq(self.id))
+            .load::<MessageReaction>(&_connection)
+            .expect("E.");
+        if _react_model.len() > 0 {
+            return _react_model.last().unwrap();
+        }
+        else {
+            let new_react_model = NewMessageReaction {
+                message_id:  self.id,
+                thumbs_up:   0,
+                thumbs_down: 0,
+                red_heart:   0,
+                fire:        0,
+                love_face:   0,
+                clapping:    0,
+                beaming:     0,
+                thinking:    0,
+                exploding:   0,
+                screaming:   0,
+                evil:        0,
+                crying:      0,
+                party:       0,
+                star:        0,
+                vomiting:    0,
+                pile_of_poo: 0,
+            };
+            let _react_model = diesel::insert_into(schema::message_reactions::table)
+                .values(&new_react_model)
+                .get_result::<MessageReaction>(&_connection)
+                .expect("Error.");
+
+            return _react_model;
+        }
+    }
+
+    pub fn send_reaction(&self, user_id: i32, types: i16) -> Json<JsonItemReactions> {
+        use crate::schema::message_votes::dsl::message_votes;
+        use crate::schema::reactions::dsl::reactions;
+
+        let _connection = establish_connection();
+        let list = self.get_list();
+        let reactions_of_list = list.get_reactions_list();
+        let react_model = self.get_or_create_react_model();
+
+        if reactions_of_list.iter().any(|&i| i==types) && list.is_user_can_see_el(user_id) {
+
+            let votes = message_votes
+                .filter(schema::message_votes::user_id.eq(user_id))
+                .filter(schema::message_votes::message_id.eq(self.id))
+                .load::<MessageVote>(&_connection)
+                .expect("E.");
+
+            // если пользователь уже реагировал на товар
+            if votes.len() > 0 {
+                let vote = votes.into_iter().nth(0).unwrap();
+
+                // если пользователь уже реагировал этой реакцией на этот товар
+                if vote.reaction == types {
+                    diesel::delete(message_votes
+                        .filter(schema::message_votes::user_id.eq(user_id))
+                        .filter(schema::message_votes::message_id.eq(self.id))
+                        )
+                        .execute(&_connection)
+                        .expect("E");
+                    react_model.update_model(types, None, false);
+                    self.minus_reactions(1);
+                }
+                // если пользователь уже реагировал другой реакцией на этот товар
+                else {
+                    let old_type = vote.types;
+                    diesel::update(&vote)
+                        .set(schema::message_votes::reaction.eq(types))
+                        .get_result::<MessageVote>(&_connection)
+                        .expect("Error.");
+
+                    react_model.update_model(types, Some(old_type), false);
+                }
+            }
+
+            // если пользователь не реагировал на этот товар
+            else {
+                let new_vote = NewMessageVote {
+                    vote:       1,
+                    user_id:    user_id,
+                    message_id: self.id,
+                    reaction:   types,
+                };
+                diesel::insert_into(schema::message_votes::table)
+                    .values(&new_vote)
+                    .get_result::<MessageVote>(&_connection)
+                    .expect("Error.");
+
+                react_model.update_model(types, None, true);
+                self.plus_reactions(1);
+            }
+        }
+
+        return Json(JsonItemReactions {
+            reactions:   self.reactions,
+            thumbs_up:   react_model.thumbs_up,
+            thumbs_down: react_model.thumbs_down,
+            red_heart:   react_model.red_heart,
+            fire:        react_model.fire,
+            love_face:   react_model.love_face,
+            clapping:    react_model.clapping,
+            beaming:     react_model.beaming,
+            thinking:    react_model.thinking,
+            exploding:   react_model.exploding,
+            screaming:   react_model.screaming,
+            evil:        react_model.evil,
+            crying:      react_model.crying,
+            party:       react_model.party,
+            star:        react_model.star,
+            vomiting:    react_model.vomiting,
+            pile_of_poo: react_model.pile_of_poo,
+        });
+    }
+
+    pub fn count_reactions_of_types(&self, types: i16) -> Vec<User> {
+        let react_model = self.get_or_create_react_model();
+        let count = match types {
+            1 => react_model.thumbs_up,
+            2 => react_model.thumbs_down,
+            3 => react_model.red_heart,
+            4 => react_model.fire,
+            5 => react_model.love_face,
+            6 => react_model.clapping,
+            7 => react_model.beaming,
+            8 => react_model.thinking,
+            9 => react_model.exploding,
+            10 => react_model.screaming,
+            11 => react_model.evil,
+            12 => react_model.crying,
+            13 => react_model.party,
+            14 => react_model.star,
+            15 => react_model.vomiting,
+            16 => react_model.pile_of_poo,
+        };
+        return count;
+    }
+    pub fn count_reactions_of_types_ru(&self, types: i16) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            self.count_reactions_of_types(types),
+            " человек".to_string(),
+            " человека".to_string(),
+            " человек".to_string(),
+        );
+    }
+
+    pub fn count_reactions_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            self.reactions,
+            " человек".to_string(),
+            " человека".to_string(),
+            " человек".to_string(),
+        );
+    }
+
+    pub fn is_have_reactions(&self) -> bool {
+        return self.reactions > 0;
+    }
+
+    pub fn reactions_ids(&self) -> Vec<i32> {
+        use crate::schema::message_votes::dsl::message_votes;
+
+        let _connection = establish_connection();
+        let votes = message_votes
+            .filter(schema::message_votes::message_id.eq(self.id))
+            .load::<MessageVote>(&_connection)
+            .expect("E");
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+
+    pub fn is_have_user_reaction(&self, user_id: i32) -> bool {
+        return self.reactions_ids().iter().any(|&i| i==user_id);
+    }
+
+    pub fn get_user_reaction(&self, user_id: i32) -> i16 {
+        // "/static/images/reactions/" + get_user_reaction + ".jpg"
+
+        let vote = message_votes
+            .filter(schema::message_votes::user_id.eq(user_id))
+            .filter(schema::message_votes::message_id.eq(self.id))
+            .load::<MessageVote>(&_connection)
+            .expect("E.")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+
+        return vote.types;
+    }
+
+    pub fn get_reactions_users_of_types(&self, limit: i64, offset: i64, types: i16) -> Vec<User> {
+        use crate::schema::message_votes::dsl::message_votes;
+        use crate::utils::get_users_from_ids;
+
+        let _connection = establish_connection();
+        let votes = message_votes
+            .filter(schema::message_votes::message_id.eq(self.id))
+            .filter(schema::message_votes::reaction.eq(types))
+            .limit(limit)
+            .offset(offset)
+            .load::<MessageVote>(&_connection)
+            .expect("E");
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
+    }
+
+    pub fn get_6_reactions_users_of_types(&self, types: i16) -> Vec<User> {
+        use crate::schema::message_votes::dsl::message_votes;
+        use crate::utils::get_users_from_ids;
+
+        let _connection = establish_connection();
+        let votes = message_votes
+            .filter(schema::message_votes::message_id.eq(self.id))
+            .filter(schema::message_votes::reaction.eq(types))
+            .limit(6)
+            .load::<MessageVote>(&_connection)
+            .expect("E");
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
+    }
 }
 
 /////// MessageOptions //////
@@ -2112,4 +2384,374 @@ pub struct MessageTransfer {
 pub struct NewMessageTransfer {
     pub message_id:  i32,
     pub transfer_id: i32,
+}
+
+/////// MessageReaction //////
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(Chat)]
+pub struct MessageReaction {
+    pub id:          i32,
+    pub message_id:  i32,
+    pub thumbs_up:   i32,
+    pub thumbs_down: i32,
+    pub red_heart:   i32,
+    pub fire:        i32,
+    pub love_face:   i32,
+    pub clapping:    i32,
+    pub beaming:     i32,
+    pub thinking:    i32,
+    pub exploding:   i32,
+    pub screaming:   i32,
+    pub evil:        i32,
+    pub crying:      i32,
+    pub party:       i32,
+    pub star:        i32,
+    pub vomiting:    i32,
+    pub pile_of_poo: i32,
+}
+
+impl MessageReaction {
+    pub fn update_model(
+        &self,
+        new_types: i16,
+        old_types_option: Option<i16>,
+        plus: bool,
+    ) -> MessageReaction {
+        let _connection = establish_connection();
+        if old_types_option.is_some() {
+            let old_types = old_types_option.unwrap();
+            let update_model = match new_types {
+                1 => diesel::update(&self)
+                    .set(schema::message_reactions::thumbs_up.eq(self.thumbs_up + 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                2 => diesel::update(&self).
+                    set(schema::message_reactions::thumbs_down.eq(self.thumbs_down + 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                3 => diesel::update(&self)
+                    .set(schema::message_reactions::red_heart.eq(self.red_heart + 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                4 => diesel::update(&self)
+                    .set(schema::message_reactions::fire.eq(self.fire + 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                5 => diesel::update(&self)
+                    .set(schema::message_reactions::love_face.eq(self.love_face + 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                6 => diesel::update(&self)
+                    .set(schema::message_reactions::clapping.eq(self.clapping + 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                7 => diesel::update(&self)
+                    .set(schema::message_reactions::beaming.eq(self.beaming + 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                8 => diesel::update(&self)
+                    .set(schema::message_reactions::thinking.eq(self.thinking + 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                9 => diesel::update(&self)
+                    .set(schema::message_reactions::exploding.eq(self.exploding + 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                10 => diesel::update(&self)
+                    .set(schema::message_reactions::screaming.eq(self.screaming + 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                11 => diesel::update(&self)
+                    .set(schema::message_reactions::evil.eq(self.evil + 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                12 => diesel::update(&self)
+                    .set(schema::message_reactions::crying.eq(self.crying + 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                13 => diesel::update(&self)
+                    .set(schema::message_reactions::party.eq(self.party + 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                14 => diesel::update(&self)
+                    .set(schema::message_reactions::star.eq(self.star + 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                15 => diesel::update(&self)
+                    .set(schema::message_reactions::vomiting.eq(self.vomiting + 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                16 => diesel::update(&self)
+                    .set(schema::message_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                _ => (),
+            };
+
+            let update_model = match old_types {
+                1 => diesel::update(&self)
+                    .set(schema::message_reactions::thumbs_up.eq(self.thumbs_up - 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                2 => diesel::update(&self).
+                    set(schema::message_reactions::thumbs_down.eq(self.thumbs_down - 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                3 => diesel::update(&self)
+                    .set(schema::message_reactions::red_heart.eq(self.red_heart - 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                4 => diesel::update(&self)
+                    .set(schema::message_reactions::fire.eq(self.fire - 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                5 => diesel::update(&self)
+                    .set(schema::message_reactions::love_face.eq(self.love_face - 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                6 => diesel::update(&self)
+                    .set(schema::message_reactions::clapping.eq(self.clapping - 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                7 => diesel::update(&self)
+                    .set(schema::message_reactions::beaming.eq(self.beaming - 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                8 => diesel::update(&self)
+                    .set(schema::message_reactions::thinking.eq(self.thinking - 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                9 => diesel::update(&self)
+                    .set(schema::message_reactions::exploding.eq(self.exploding - 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                10 => diesel::update(&self)
+                    .set(schema::message_reactions::screaming.eq(self.screaming - 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                11 => diesel::update(&self)
+                    .set(schema::message_reactions::evil.eq(self.evil - 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                12 => diesel::update(&self)
+                    .set(schema::message_reactions::crying.eq(self.crying - 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                13 => diesel::update(&self)
+                    .set(schema::message_reactions::party.eq(self.party - 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                14 => diesel::update(&self)
+                    .set(schema::message_reactions::star.eq(self.star - 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                15 => diesel::update(&self)
+                    .set(schema::message_reactions::vomiting.eq(self.vomiting - 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                16 => diesel::update(&self)
+                    .set(schema::message_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
+                _ => (),
+            };
+        }
+        else {
+            if plus {
+                let update_model = match new_types {
+                    1 => diesel::update(&self)
+                        .set(schema::message_reactions::thumbs_up.eq(self.thumbs_up + 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    2 => diesel::update(&self).
+                        set(schema::message_reactions::thumbs_down.eq(self.thumbs_down + 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    3 => diesel::update(&self)
+                        .set(schema::message_reactions::red_heart.eq(self.red_heart + 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    4 => diesel::update(&self)
+                        .set(schema::message_reactions::fire.eq(self.fire + 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    5 => diesel::update(&self)
+                        .set(schema::message_reactions::love_face.eq(self.love_face + 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    6 => diesel::update(&self)
+                        .set(schema::message_reactions::clapping.eq(self.clapping + 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    7 => diesel::update(&self)
+                        .set(schema::message_reactions::beaming.eq(self.beaming + 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    8 => diesel::update(&self)
+                        .set(schema::message_reactions::thinking.eq(self.thinking + 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    9 => diesel::update(&self)
+                        .set(schema::message_reactions::exploding.eq(self.exploding + 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    10 => diesel::update(&self)
+                        .set(schema::message_reactions::screaming.eq(self.screaming + 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    11 => diesel::update(&self)
+                        .set(schema::message_reactions::evil.eq(self.evil + 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    12 => diesel::update(&self)
+                        .set(schema::message_reactions::crying.eq(self.crying + 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    13 => diesel::update(&self)
+                        .set(schema::message_reactions::party.eq(self.party + 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    14 => diesel::update(&self)
+                        .set(schema::message_reactions::star.eq(self.star + 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    15 => diesel::update(&self)
+                        .set(schema::message_reactions::vomiting.eq(self.vomiting + 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    16 => diesel::update(&self)
+                        .set(schema::message_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    _ => (),
+                };
+            }
+            else {
+                let update_model = match new_types {
+                    1 => diesel::update(&self)
+                        .set(schema::message_reactions::thumbs_up.eq(self.thumbs_up - 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    2 => diesel::update(&self).
+                        set(schema::message_reactions::thumbs_down.eq(self.thumbs_down - 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    3 => diesel::update(&self)
+                        .set(schema::message_reactions::red_heart.eq(self.red_heart - 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    4 => diesel::update(&self)
+                        .set(schema::message_reactions::fire.eq(self.fire - 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    5 => diesel::update(&self)
+                        .set(schema::message_reactions::love_face.eq(self.love_face - 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    6 => diesel::update(&self)
+                        .set(schema::message_reactions::clapping.eq(self.clapping - 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    7 => diesel::update(&self)
+                        .set(schema::message_reactions::beaming.eq(self.beaming - 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    8 => diesel::update(&self)
+                        .set(schema::message_reactions::thinking.eq(self.thinking - 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    9 => diesel::update(&self)
+                        .set(schema::message_reactions::exploding.eq(self.exploding - 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    10 => diesel::update(&self)
+                        .set(schema::message_reactions::screaming.eq(self.screaming - 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    11 => diesel::update(&self)
+                        .set(schema::message_reactions::evil.eq(self.evil - 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    12 => diesel::update(&self)
+                        .set(schema::message_reactions::crying.eq(self.crying - 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    13 => diesel::update(&self)
+                        .set(schema::message_reactions::party.eq(self.party - 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    14 => diesel::update(&self)
+                        .set(schema::message_reactions::star.eq(self.star - 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    15 => diesel::update(&self)
+                        .set(schema::message_reactions::vomiting.eq(self.vomiting - 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    16 => diesel::update(&self)
+                        .set(schema::message_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
+                    _ => (),
+                };
+            }
+            return self;
+        }
+    }
+}
+
+#[derive(Deserialize, Insertable)]
+#[table_name="message_reactions"]
+pub struct NewMessageReaction {
+    pub message_id:  i32,
+    pub thumbs_up:   i32,
+    pub thumbs_down: i32,
+    pub red_heart:   i32,
+    pub fire:        i32,
+    pub love_face:   i32,
+    pub clapping:    i32,
+    pub beaming:     i32,
+    pub thinking:    i32,
+    pub exploding:   i32,
+    pub screaming:   i32,
+    pub evil:        i32,
+    pub crying:      i32,
+    pub party:       i32,
+    pub star:        i32,
+    pub vomiting:    i32,
+    pub pile_of_poo: i32,
+}
+
+/////// MessageVote//////
+#[derive(Debug ,Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(User)]
+#[belongs_to(Message)]
+pub struct MessageVote {
+    pub id:         i32,
+    pub vote:       i16,
+    pub user_id:    i32,
+    pub message_id: i32,
+    pub reaction:   i16,
+}
+impl MessageVote {
+    pub fn get_reaction(&self) -> Reaction {
+        use crate::schema::reactions::dsl::reactions;
+
+        let _connection = establish_connection();
+        return reactions
+            .filter(schema::reactions::types.eq(self.reaction))
+            .load::<Reaction>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
+}
+#[derive(Deserialize, Insertable)]
+#[table_name="message_votes"]
+pub struct NewMessageVote {
+    pub vote:       i16,
+    pub user_id:    i32,
+    pub message_id: i32,
+    pub reaction:   i16,
 }

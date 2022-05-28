@@ -187,6 +187,7 @@ pub async fn add_user_photo_list(session: Session, mut payload: Multipart) -> ac
             Some(form.create_el_users),
             Some(form.create_comment_users),
             Some(form.copy_el_users),
+            form.reactions,
         );
 
         #[derive(TemplateOnce)]
@@ -230,6 +231,7 @@ pub async fn edit_user_photo_list(session: Session, mut payload: Multipart, _id:
                 Some(form.create_el_users),
                 Some(form.create_comment_users),
                 Some(form.copy_el_users),
+                form.reactions,
             );
 
             #[derive(TemplateOnce)]
@@ -280,6 +282,7 @@ pub async fn add_community_photo_list(session: Session, mut payload: Multipart, 
                 Some(form.create_el_users),
                 Some(form.create_comment_users),
                 Some(form.copy_el_users),
+                form.reactions,
             );
 
             #[derive(TemplateOnce)]
@@ -330,6 +333,7 @@ pub async fn edit_community_photo_list(session: Session, mut payload: Multipart,
                 Some(form.create_el_users),
                 Some(form.create_comment_users),
                 Some(form.copy_el_users),
+                form.reactions,
             );
 
         #[derive(TemplateOnce)]

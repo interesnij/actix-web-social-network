@@ -14,13 +14,13 @@ use crate::utils::{
     get_request_user_data,
     get_type,
     JsonReactions,
+    JsonItemReactions,
 };
 use actix_session::Session;
 use crate::diesel::RunQueryDsl;
 
 pub fn progs_routes(config: &mut web::ServiceConfig) {
-    config.route("/users/progs/like_item/", web::get().to(like_item));
-    config.route("/users/progs/dislike_item/", web::get().to(dislike_item));
+    config.route("/users/progs/send_reaction/", web::get().to(send_reaction));
 
     config.route("/users/progs/like_comment/", web::get().to(like_comment));
     config.route("/users/progs/dislike_comment/", web::get().to(dislike_comment));
@@ -377,135 +377,96 @@ pub async fn dislike_comment(session: Session, req: HttpRequest) -> web::Json<Js
     }
 }
 
-pub async fn like_item(session: Session, req: HttpRequest) -> web::Json<JsonReactions> {
+pub async fn send_reaction(session: Session, req: HttpRequest) -> web::Json<JsonItemReactions> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
-        let (type_exists, item_id, types) = get_type(&req);
-        let pre_types = &types[..1];
-        if type_exists == false {
-            return Json(JsonReactions {
-                like_count: 0,
-                dislike_count: 0,
-            })
+        #[derive(Debug, Deserialize)]
+        struct TypesParams {
+            pub types:    Option<String>,
+            pub reaction: Option<i16>,
         }
-        else if pre_types == "c".to_string() {
-            if types == "cpo".to_string() {
-                use crate::utils::get_post_comment;
+        let mut item_id: i32 = 0;
+        let mut code = "".to_string();
+        let mut reaction: i16 = 0;
 
-                let item = get_post_comment(item_id);
-                item.send_like(_request_user.id)
+        let params_some = web::Query::<TypesParams>::from_query(&req.query_string());
+        if params_some.is_ok() {
+            let params = params_some.unwrap();
+            if params.types.is_some() {
+                let item = params.types.as_deref().unwrap();
+                let pk: i32 = item[3..].parse().unwrap();
+                let code = &item[..3].to_string();
             }
-            else if types == "cph".to_string() {
-                use crate::utils::get_photo_comment;
+            if params.reaction.is_some() {
+                let reaction: i16 = params.reaction.unwrap();
+            }
+        }
 
-                let item = get_photo_comment(item_id);
-                item.send_like(_request_user.id)
-            }
-            else if types == "cgo".to_string() {
-                use crate::utils::get_good_comment;
+        let _request_user = get_request_user_data(session);
 
-                let item = get_good_comment(item_id);
-                item.send_like(_request_user.id)
-            }
-            else if types == "cvi".to_string() {
-                use crate::utils::get_video_comment;
+        if types == "pos".to_string() {
+            use crate::utils::get_post;
 
-                let item = get_video_comment(item_id);
-                item.send_like(_request_user.id)
-            }
-            else {
-                return Json(JsonReactions {
-                    like_count: 0,
-                    dislike_count: 0,
-                })
-            }
+            let item = get_post(item_id);
+            item.send_reaction(_request_user.id, reaction)
+        }
+        else if types == "goo".to_string() {
+            use crate::utils::get_good;
+
+            let item = get_good(item_id);
+            item.send_reaction(_request_user.id, reaction)
+        }
+        else if types == "pho".to_string() {
+            use crate::utils::get_photo;
+
+            let item = get_photo(item_id);
+            item.send_reaction(_request_user.id, reaction)
+        }
+        else if types == "vid".to_string() {
+            use crate::utils::get_video;
+
+            let item = get_video(item_id);
+            item.send_reaction(_request_user.id, reaction)
         }
         else {
-            if types == "pos".to_string() {
-                use crate::utils::get_post;
-
-                let item = get_post(item_id);
-                item.send_like(_request_user.id)
-            }
-            else if types == "goo".to_string() {
-                use crate::utils::get_good;
-
-                let item = get_good(item_id);
-                item.send_like(_request_user.id)
-            }
-            else if types == "pho".to_string() {
-                use crate::utils::get_photo;
-
-                let item = get_photo(item_id);
-                item.send_like(_request_user.id)
-            }
-            else if types == "vid".to_string() {
-                use crate::utils::get_video;
-
-                let item = get_video(item_id);
-                item.send_like(_request_user.id)
-            }
-            else {
-                return Json(JsonReactions {
-                    like_count: 0,
-                    dislike_count: 0,
-                })
-            }
+            return Json(JsonItemReactions {
+                reactions:   0,
+                thumbs_up:   0,
+                thumbs_down: 0,
+                red_heart:   0,
+                fire:        0,
+                love_face:   0,
+                clapping:    0,
+                beaming:     0,
+                thinking:    0,
+                exploding:   0,
+                screaming:   0,
+                evil:        0,
+                crying:      0,
+                party:       0,
+                star:        0,
+                vomiting:    0,
+                pile_of_poo: 0,
+            });
         }
     } else {
-        return Json(JsonReactions {
-            like_count: 0,
-            dislike_count: 0,
-        })
-    }
-}
-
-pub async fn dislike_item(session: Session, req: HttpRequest) -> web::Json<JsonReactions> {
-    if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
-        let (type_exists, item_id, types) = get_type(&req);
-        if type_exists == false {
-            return Json(JsonReactions {
-                like_count: 0,
-                dislike_count: 0,
-            })
-        }
-        else {
-            if types == "pos".to_string() {
-                use crate::utils::get_post;
-
-                let item = get_post(item_id);
-                item.send_dislike(_request_user.id)
-            }
-            else if types == "goo".to_string() {
-                use crate::utils::get_good;
-
-                let item = get_good(item_id);
-                item.send_dislike(_request_user.id)
-            }
-            else if types == "pho".to_string() {
-                use crate::utils::get_photo;
-
-                let item = get_photo(item_id);
-                item.send_dislike(_request_user.id)
-            }
-            else if types == "vid".to_string() {
-                use crate::utils::get_video;
-
-                let item = get_video(item_id);
-                item.send_dislike(_request_user.id)
-            }
-            else {
-                return Json(JsonReactions {
-                    like_count: 0,
-                    dislike_count: 0,
-                })
-            }
-        }
-    } else {
-        return Json(JsonReactions {
-            like_count: 0,
-            dislike_count: 0,
-        })
+        return Json(JsonItemReactions {
+            reactions:   0,
+            thumbs_up:   0,
+            thumbs_down: 0,
+            red_heart:   0,
+            fire:        0,
+            love_face:   0,
+            clapping:    0,
+            beaming:     0,
+            thinking:    0,
+            exploding:   0,
+            screaming:   0,
+            evil:        0,
+            crying:      0,
+            party:       0,
+            star:        0,
+            vomiting:    0,
+            pile_of_poo: 0,
+        });
     }
 }

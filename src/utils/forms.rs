@@ -56,6 +56,7 @@ pub struct PostListForm {
     pub create_el_users: Vec<i32>,
     pub create_comment_users: Vec<i32>,
     pub copy_el_users: Vec<i32>,
+    pub reactions: Option<String>,
 }
 
 pub async fn post_list_form(payload: &mut Multipart) -> PostListForm {
@@ -72,6 +73,7 @@ pub async fn post_list_form(payload: &mut Multipart) -> PostListForm {
         create_el_users: Vec::new(),
         create_comment_users: Vec::new(),
         copy_el_users: Vec::new(),
+        reactions: None,
     };
     let _list = [
         "can_see_el_users",
@@ -132,6 +134,8 @@ pub async fn post_list_form(payload: &mut Multipart) -> PostListForm {
                     }
                     else if field.name() == "copy_el" {
                         form.copy_el = data_string
+                    } else if field.name() == "reactions" {
+                        form.reactions = Some(data_string)
                     }
                 }
             }

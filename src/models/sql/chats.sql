@@ -9,15 +9,16 @@ CREATE TABLE chats (
     user_id           INT NOT NULL,              -- id создателя
     position          SMALLINT NOT NULL,             -- порядковый номер
     members           INT NOT NULL,             -- кол-во участников
-    created           TIMESTAMP NOT NULL,        -- когда создан
+    created           TIMESTAMP NOT NULL,       -- когда создан
 
-    can_add_members   "char" NOT NULL,                       -- кто добавляет участников
-    can_fix_item      "char" NOT NULL,                       -- кто закрепляет сообщения чата
-    can_mention       "char" NOT NULL,                       -- кто упоминает о чате
-    can_add_admin     "char" NOT NULL,                       -- кто работает с админами
-    can_add_design    "char" NOT NULL,                       -- кто работает с дизайном
-    can_see_settings  "char" NOT NULL,                       -- кто видит настройки
-    can_see_log       "char" NOT NULL,                       -- кто видит логи чата
+    can_add_members   "char" NOT NULL,          -- кто добавляет участников
+    can_fix_item      "char" NOT NULL,          -- кто закрепляет сообщения чата
+    can_mention       "char" NOT NULL,          -- кто упоминает о чате
+    can_add_admin     "char" NOT NULL,          -- кто работает с админами
+    can_add_design    "char" NOT NULL,          -- кто работает с дизайном
+    can_see_settings  "char" NOT NULL,          -- кто видит настройки
+    can_see_log       "char" NOT NULL,          -- кто видит логи чата
+    reactions         VARCHAR(100),             -- список id разрешенных реакций
 
     CONSTRAINT fk_chat_creator                   -- связь с создателем
         FOREIGN KEY(user_id)
@@ -76,6 +77,7 @@ CREATE TABLE messages (
     types        SMALLINT NOT NULL,                     -- тип
     attach       VARCHAR(200),                  -- прикрепленные объекты
     voice        VARCHAR(500),                  -- ссылка на голосовое
+    reactions    INT NOT NULL,
 
     CONSTRAINT fk_message_creator               -- связь с создателем
         FOREIGN KEY(user_id)
@@ -144,5 +146,55 @@ CREATE TABLE message_transfers (
 
     CONSTRAINT fk_message_transfers_transfer   -- связь с пересылаемым сообщением
         FOREIGN KEY(transfer_id)
+            REFERENCES messages(id)
+);
+
+CREATE TABLE chat_reactions (
+    id          SERIAL PRIMARY KEY,
+    chat_id     INT NOT NULL,
+    thumbs_up   BOOLEAN NOT NULL DEFAULT false,
+    thumbs_down BOOLEAN NOT NULL DEFAULT false,
+    red_heart   BOOLEAN NOT NULL DEFAULT false,
+    fire        BOOLEAN NOT NULL DEFAULT false,
+    love_face   BOOLEAN NOT NULL DEFAULT false,
+    clapping    BOOLEAN NOT NULL DEFAULT false,
+    beaming     BOOLEAN NOT NULL DEFAULT false,
+    thinking    BOOLEAN NOT NULL DEFAULT false,
+    exploding   BOOLEAN NOT NULL DEFAULT false,
+    screaming   BOOLEAN NOT NULL DEFAULT false,
+    evil        BOOLEAN NOT NULL DEFAULT false,
+    crying      BOOLEAN NOT NULL DEFAULT false,
+    party       BOOLEAN NOT NULL DEFAULT false,
+    star        BOOLEAN NOT NULL DEFAULT false,
+    vomiting    BOOLEAN NOT NULL DEFAULT false,
+    pile_of_poo BOOLEAN NOT NULL DEFAULT false,
+
+    CONSTRAINT fk_chat_reactions
+        FOREIGN KEY(chat_id)
+            REFERENCES chats(id)
+);
+
+CREATE TABLE message_reactions (
+    id          SERIAL PRIMARY KEY,
+    message_id  INT NOT NULL,
+    thumbs_up   INT NOT NULL,
+    thumbs_down INT NOT NULL,
+    red_heart   INT NOT NULL,
+    fire        INT NOT NULL,
+    love_face   INT NOT NULL,
+    clapping    INT NOT NULL,
+    beaming     INT NOT NULL,
+    thinking    INT NOT NULL,
+    exploding   INT NOT NULL,
+    screaming   INT NOT NULL,
+    evil        INT NOT NULL,
+    crying      INT NOT NULL,
+    party       INT NOT NULL,
+    star        INT NOT NULL,
+    vomiting    INT NOT NULL,
+    pile_of_poo INT NOT NULL,
+
+    CONSTRAINT fk_message_reactions
+        FOREIGN KEY(message_id)
             REFERENCES messages(id)
 );

@@ -1,8 +1,16 @@
-CREATE TABLE post_votes (
+CREATE TABLE reactions (
   id      SERIAL PRIMARY KEY,
-  vote    SMALLINT NOT NULL,
-  user_id INT NOT NULL,
-  post_id INT NOT NULL,
+  types   SMALLINT,
+  image   VARCHAR(500),
+  gif     VARCHAR(500)
+);
+
+CREATE TABLE post_votes (
+  id          SERIAL PRIMARY KEY,
+  vote        SMALLINT NOT NULL,
+  user_id     INT NOT NULL,
+  post_id     INT NOT NULL,
+  reaction    SMALLINT NOT NULL,
 
   CONSTRAINT fk_post_votes_user
       FOREIGN KEY(user_id)
@@ -31,10 +39,11 @@ CREATE TABLE post_comment_votes (
 -------------------------
 
 CREATE TABLE photo_votes (
-  id       SERIAL PRIMARY KEY,
-  vote     SMALLINT NOT NULL,
-  user_id  INT NOT NULL,
-  photo_id INT NOT NULL,
+  id          SERIAL PRIMARY KEY,
+  vote        SMALLINT NOT NULL,
+  user_id     INT NOT NULL,
+  photo_id    INT NOT NULL,
+  reaction    SMALLINT NOT NULL,
 
   CONSTRAINT fk_photo_votes_user
       FOREIGN KEY(user_id)
@@ -63,10 +72,11 @@ CREATE TABLE photo_comment_votes (
 -------------------------
 
 CREATE TABLE good_votes (
-  id       SERIAL PRIMARY KEY,
-  vote     SMALLINT NOT NULL,
-  user_id  INT NOT NULL,
-  good_id  INT NOT NULL,
+  id          SERIAL PRIMARY KEY,
+  vote        SMALLINT NOT NULL,
+  user_id     INT NOT NULL,
+  good_id     INT NOT NULL,
+  reaction    SMALLINT NOT NULL,
 
   CONSTRAINT fk_good_votes_user
       FOREIGN KEY(user_id)
@@ -78,27 +88,24 @@ CREATE TABLE good_votes (
 );
 
 CREATE TABLE good_comment_votes (
-  id               SERIAL PRIMARY KEY,
-  vote             SMALLINT NOT NULL,
-  user_id          INT NOT NULL,
+  id              SERIAL PRIMARY KEY,
+  vote            SMALLINT NOT NULL,
+  user_id         INT NOT NULL,
   good_comment_id INT NOT NULL,
 
   CONSTRAINT fk_good_comment_votes_user
       FOREIGN KEY(user_id)
-          REFERENCES users(id),
-
-  CONSTRAINT fk_good_comment_votes_good
-      FOREIGN KEY(good_comment_id)
-          REFERENCES good_comments(id)
+          REFERENCES users(id)
 );
 
 -------------------------
 
 CREATE TABLE video_votes (
-  id       SERIAL PRIMARY KEY,
-  vote     SMALLINT NOT NULL,
-  user_id  INT NOT NULL,
-  video_id INT NOT NULL,
+  id          SERIAL PRIMARY KEY,
+  vote        SMALLINT NOT NULL,
+  user_id     INT NOT NULL,
+  video_id    INT NOT NULL,
+  reaction    SMALLINT NOT NULL,
 
   CONSTRAINT fk_video_votes_user
       FOREIGN KEY(user_id)
@@ -124,6 +131,22 @@ CREATE TABLE video_comment_votes (
           REFERENCES video_comments(id)
 );
 
+-----------------------------
+CREATE TABLE message_votes (
+  id          SERIAL PRIMARY KEY,
+  vote        SMALLINT NOT NULL,
+  user_id     INT NOT NULL,
+  message_id  INT NOT NULL,
+  reaction    SMALLINT NOT NULL,
+
+  CONSTRAINT fk_message_votes_user
+      FOREIGN KEY(user_id)
+          REFERENCES users(id),
+
+  CONSTRAINT fk_video_votes_message
+      FOREIGN KEY(message_id)
+          REFERENCES messages(id)
+);
 ------------------------------
 
 CREATE TABLE support_user_votes (

@@ -18,6 +18,7 @@ CREATE TABLE photo_lists (
     create_el        "char" NOT NULL,
     create_comment   "char" NOT NULL,
     copy_el          "char" NOT NULL,
+    reactions        VARCHAR(100),
 
     CONSTRAINT fk_photo_lists_creator
         FOREIGN KEY(user_id)
@@ -44,11 +45,10 @@ CREATE TABLE photos (
 
     comment         INT NOT NULL,
     view            INT NOT NULL,
-    liked           INT NOT NULL,
-    disliked        INT NOT NULL,
     repost          INT NOT NULL,
     copy            INT NOT NULL,
     position        SMALLINT NOT NULL,
+    reactions       INT NOT NULL,
 
     CONSTRAINT fk_photos_creator
         FOREIGN KEY(user_id)
@@ -146,4 +146,29 @@ CREATE TABLE photo_list_perms (
    CONSTRAINT fk_photo_list_perm_list
         FOREIGN KEY(photo_list_id)
             REFERENCES photo_lists(id)
+);
+
+CREATE TABLE photo_reactions (
+    id          SERIAL PRIMARY KEY,
+    photo_id    INT NOT NULL,
+    thumbs_up   INT NOT NULL,
+    thumbs_down INT NOT NULL,
+    red_heart   INT NOT NULL,
+    fire        INT NOT NULL,
+    love_face   INT NOT NULL,
+    clapping    INT NOT NULL,
+    beaming     INT NOT NULL,
+    thinking    INT NOT NULL,
+    exploding   INT NOT NULL,
+    screaming   INT NOT NULL,
+    evil        INT NOT NULL,
+    crying      INT NOT NULL,
+    party       INT NOT NULL,
+    star        INT NOT NULL,
+    vomiting    INT NOT NULL,
+    pile_of_poo INT NOT NULL,
+
+    CONSTRAINT fk_photo_reactions
+        FOREIGN KEY(photo_id)
+            REFERENCES photos(id)
 );

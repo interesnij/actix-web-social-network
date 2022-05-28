@@ -75,6 +75,7 @@ pub async fn add_user_post_list(session: Session, mut payload: Multipart) -> act
             Some(form.create_el_users),
             Some(form.create_comment_users),
             Some(form.copy_el_users),
+            form.reactions,
         );
 
         #[derive(TemplateOnce)]
@@ -118,6 +119,7 @@ pub async fn edit_user_post_list(session: Session, mut payload: Multipart, _id: 
                 Some(form.create_el_users),
                 Some(form.create_comment_users),
                 Some(form.copy_el_users),
+                form.reactions,
             );
 
             #[derive(TemplateOnce)]
@@ -168,6 +170,7 @@ pub async fn add_community_post_list(session: Session, mut payload: Multipart, _
                 Some(form.create_el_users),
                 Some(form.create_comment_users),
                 Some(form.copy_el_users),
+                form.reactions,
             );
 
             #[derive(TemplateOnce)]
@@ -218,6 +221,7 @@ pub async fn edit_community_post_list(session: Session, mut payload: Multipart, 
                 Some(form.create_el_users),
                 Some(form.create_comment_users),
                 Some(form.copy_el_users),
+                form.reactions,
             );
 
         #[derive(TemplateOnce)]

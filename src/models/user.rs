@@ -405,13 +405,13 @@ impl User {
             use crate::models::{NewChat, ChatUser, NewChatUser};
 
             let new_manager_chat = NewChat{
-                name: Some("Рассылка новостей".to_string()),
-                types: 3,
-                community_id: None,
-                user_id: self.id,
-                position: 10,
-                members: 1,
-                created: chrono::Local::now().naive_utc(),
+                name:             Some("Рассылка новостей".to_string()),
+                types:            3,
+                community_id:     None,
+                user_id:          self.id,
+                position:         10,
+                members:          1,
+                created:          chrono::Local::now().naive_utc(),
                 can_add_members:  "f".to_string(),
                 can_fix_item:     "b".to_string(),
                 can_mention:      "f".to_string(),
@@ -419,6 +419,7 @@ impl User {
                 can_add_design:   "f".to_string(),
                 can_see_settings: "f".to_string(),
                 can_see_log:      "f".to_string(),
+                reactions:         None,
             };
             let manager_chat = diesel::insert_into(schema::chats::table)
                 .values(&new_manager_chat)
@@ -456,13 +457,13 @@ impl User {
             use crate::models::{NewChat, ChatUser, NewChatUser};
 
             let new_manager_chat = NewChat{
-                name: Some("Рассылка служународу.рус".to_string()),
-                types: 11,
-                community_id: None,
-                user_id: self.id,
-                position: 10,
-                members: 1,
-                created: chrono::Local::now().naive_utc(),
+                name:             Some("Рассылка служународу.рус".to_string()),
+                types:            11,
+                community_id:     None,
+                user_id:          self.id,
+                position:         10,
+                members:          1,
+                created:          chrono::Local::now().naive_utc(),
                 can_add_members:  "f".to_string(),
                 can_fix_item:     "b".to_string(),
                 can_mention:      "f".to_string(),
@@ -470,6 +471,7 @@ impl User {
                 can_add_design:   "f".to_string(),
                 can_see_settings: "f".to_string(),
                 can_see_log:      "f".to_string(),
+                reactions:         None,
             };
             let manager_chat = diesel::insert_into(schema::chats::table)
                 .values(&new_manager_chat)
@@ -1984,6 +1986,7 @@ impl User {
                     create_el:       "g".to_string(),
                     create_comment:  "a".to_string(),
                     copy_el:         "g".to_string(),
+                    reactions:       Some("1, 2".to_string()),
                 };
             let _goods_list = diesel::insert_into(schema::good_lists::table)
                 .values(&new_list)
@@ -2093,6 +2096,7 @@ impl User {
                     create_el:       "g".to_string(),
                     create_comment:  "a".to_string(),
                     copy_el:         "g".to_string(),
+                    reactions:       Some("1, 2".to_string()),
                 };
             let _videos_list = diesel::insert_into(schema::video_lists::table)
                 .values(&new_list)
@@ -2149,6 +2153,7 @@ impl User {
                     create_el:       "g".to_string(),
                     create_comment:  "a".to_string(),
                     copy_el:         "g".to_string(),
+                    reactions:       Some("1, 2".to_string()),
                 };
             let _photos_list = diesel::insert_into(schema::photo_lists::table)
                 .values(&new_list)
@@ -2230,6 +2235,7 @@ impl User {
                     create_el:       "g".to_string(),
                     create_comment:  "a".to_string(),
                     copy_el:         "g".to_string(),
+                    reactions:       Some("1, 2".to_string()),
                 };
             let _posts_list = diesel::insert_into(schema::post_lists::table)
                 .values(&new_list)
@@ -2283,6 +2289,7 @@ impl User {
                     can_see_el:      "a".to_string(),
                     create_el:       "g".to_string(),
                     copy_el:         "g".to_string(),
+                    reactions:       Some("1, 2".to_string()),
                 };
             let _docs_list = diesel::insert_into(schema::doc_lists::table)
                 .values(&new_list)

@@ -42,6 +42,24 @@ pub struct JsonReactions {
     pub like_count:    i32,
     pub dislike_count: i32,
 }
+pub struct JsonItemReactions {
+    pub thumbs_up:   i32,
+    pub thumbs_down: i32,
+    pub red_heart:   i32,
+    pub fire:        i32,
+    pub love_face:   i32,
+    pub clapping:    i32,
+    pub beaming:     i32,
+    pub thinking:    i32,
+    pub exploding:   i32,
+    pub screaming:   i32,
+    pub evil:        i32,
+    pub crying:      i32,
+    pub party:       i32,
+    pub star:        i32,
+    pub vomiting:    i32,
+    pub pile_of_poo: i32,
+}
 
 #[derive(Deserialize)]
 pub struct PaginationParams {
