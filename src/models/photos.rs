@@ -149,7 +149,7 @@ impl PhotoList {
                 let pk: i16 = item.parse().unwrap();
                 stack.push(pk);
             }
-
+        }
         return stack;
     }
     pub fn get_cover_photo(&self) -> String {

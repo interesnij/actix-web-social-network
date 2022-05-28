@@ -131,7 +131,7 @@ impl Chat {
                 let pk: i16 = item.parse().unwrap();
                 stack.push(pk);
             }
-
+        }
         return stack;
     }
     pub fn liked_manager(&self, user_id: i32) -> bool {

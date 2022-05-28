@@ -165,7 +165,7 @@ impl VideoList {
                 let pk: i16 = item.parse().unwrap();
                 stack.push(pk);
             }
-
+        }
         return stack;
     }
     pub fn get_longest_penalties(&self) -> String {
