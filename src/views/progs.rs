@@ -403,25 +403,25 @@ pub async fn send_reaction(session: Session, req: HttpRequest) -> web::Json<Json
 
         let _request_user = get_request_user_data(session);
 
-        if types == "pos".to_string() {
+        if code == "pos".to_string() {
             use crate::utils::get_post;
 
             let item = get_post(item_id);
             item.send_reaction(_request_user.id, reaction)
         }
-        else if types == "goo".to_string() {
+        else if code == "goo".to_string() {
             use crate::utils::get_good;
 
             let item = get_good(item_id);
             item.send_reaction(_request_user.id, reaction)
         }
-        else if types == "pho".to_string() {
+        else if code == "pho".to_string() {
             use crate::utils::get_photo;
 
             let item = get_photo(item_id);
             item.send_reaction(_request_user.id, reaction)
         }
-        else if types == "vid".to_string() {
+        else if code == "vid".to_string() {
             use crate::utils::get_video;
 
             let item = get_video(item_id);
