@@ -3585,51 +3585,6 @@ pub struct NewPhotoRepost {
     pub message_id: Option<i32>,
 }
 
-/////// PhotoListReaction //////
-#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
-#[belongs_to(PhotoList)]
-pub struct PhotoListReaction {
-    pub id:           i32,
-    pub photo_list_id: i32,
-    pub thumbs_up:    bool,
-    pub thumbs_down:  bool,
-    pub red_heart:    bool,
-    pub fire:         bool,
-    pub love_face:    bool,
-    pub clapping:     bool,
-    pub beaming:      bool,
-    pub thinking:     bool,
-    pub exploding:    bool,
-    pub screaming:    bool,
-    pub evil:         bool,
-    pub crying:       bool,
-    pub party:        bool,
-    pub star:         bool,
-    pub vomiting:     bool,
-    pub pile_of_poo:  bool,
-}
-#[derive(Deserialize, Insertable)]
-#[table_name="photo_list_reactions"]
-pub struct NewPhotoListReaction {
-    pub photo_list_id: i32,
-    pub thumbs_up:    bool,
-    pub thumbs_down:  bool,
-    pub red_heart:    bool,
-    pub fire:         bool,
-    pub love_face:    bool,
-    pub clapping:     bool,
-    pub beaming:      bool,
-    pub thinking:     bool,
-    pub exploding:    bool,
-    pub screaming:    bool,
-    pub evil:         bool,
-    pub crying:       bool,
-    pub party:        bool,
-    pub star:         bool,
-    pub vomiting:     bool,
-    pub pile_of_poo:  bool,
-}
-
 /////// PhotoReaction //////
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Photo)]
