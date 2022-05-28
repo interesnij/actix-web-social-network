@@ -28,6 +28,29 @@ table! {
 }
 
 table! {
+    chat_reactions (id) {
+        id -> Int4,
+        chat_id -> Int4,
+        thumbs_up -> Bool,
+        thumbs_down -> Bool,
+        red_heart -> Bool,
+        fire -> Bool,
+        love_face -> Bool,
+        clapping -> Bool,
+        beaming -> Bool,
+        thinking -> Bool,
+        exploding -> Bool,
+        screaming -> Bool,
+        evil -> Bool,
+        crying -> Bool,
+        party -> Bool,
+        star -> Bool,
+        vomiting -> Bool,
+        pile_of_poo -> Bool,
+    }
+}
+
+table! {
     chat_users (id) {
         id -> Int4,
         user_id -> Int4,
@@ -58,6 +81,7 @@ table! {
         can_add_design -> Char,
         can_see_settings -> Char,
         can_see_log -> Char,
+        reactions -> Nullable<Varchar>,
     }
 }
 
@@ -467,7 +491,6 @@ table! {
     custom_links (id) {
         id -> Int4,
         link -> Varchar,
-        owner -> Int2,
     }
 }
 
@@ -756,6 +779,30 @@ table! {
         create_el -> Char,
         create_comment -> Char,
         copy_el -> Char,
+        reactions -> Nullable<Varchar>,
+    }
+}
+
+table! {
+    good_reactions (id) {
+        id -> Int4,
+        good_id -> Int4,
+        thumbs_up -> Int4,
+        thumbs_down -> Int4,
+        red_heart -> Int4,
+        fire -> Int4,
+        love_face -> Int4,
+        clapping -> Int4,
+        beaming -> Int4,
+        thinking -> Int4,
+        exploding -> Int4,
+        screaming -> Int4,
+        evil -> Int4,
+        crying -> Int4,
+        party -> Int4,
+        star -> Int4,
+        vomiting -> Int4,
+        pile_of_poo -> Int4,
     }
 }
 
@@ -784,6 +831,7 @@ table! {
         vote -> Int2,
         user_id -> Int4,
         good_id -> Int4,
+        reaction -> Int2,
     }
 }
 
@@ -804,11 +852,10 @@ table! {
         created -> Timestamp,
         comment -> Int4,
         view -> Int4,
-        liked -> Int4,
-        disliked -> Int4,
         repost -> Int4,
         copy -> Int4,
         position -> Int2,
+        reactions -> Int4,
     }
 }
 
@@ -840,6 +887,29 @@ table! {
 }
 
 table! {
+    message_reactions (id) {
+        id -> Int4,
+        message_id -> Int4,
+        thumbs_up -> Int4,
+        thumbs_down -> Int4,
+        red_heart -> Int4,
+        fire -> Int4,
+        love_face -> Int4,
+        clapping -> Int4,
+        beaming -> Int4,
+        thinking -> Int4,
+        exploding -> Int4,
+        screaming -> Int4,
+        evil -> Int4,
+        crying -> Int4,
+        party -> Int4,
+        star -> Int4,
+        vomiting -> Int4,
+        pile_of_poo -> Int4,
+    }
+}
+
+table! {
     message_transfers (id) {
         id -> Int4,
         message_id -> Int4,
@@ -861,6 +931,16 @@ table! {
 }
 
 table! {
+    message_votes (id) {
+        id -> Int4,
+        vote -> Int2,
+        user_id -> Int4,
+        message_id -> Int4,
+        reaction -> Int2,
+    }
+}
+
+table! {
     messages (id) {
         id -> Int4,
         user_id -> Int4,
@@ -874,6 +954,7 @@ table! {
         types -> Int2,
         attach -> Nullable<Varchar>,
         voice -> Nullable<Varchar>,
+        reactions -> Int4,
     }
 }
 
@@ -1131,6 +1212,30 @@ table! {
         create_el -> Char,
         create_comment -> Char,
         copy_el -> Char,
+        reactions -> Nullable<Varchar>,
+    }
+}
+
+table! {
+    photo_reactions (id) {
+        id -> Int4,
+        photo_id -> Int4,
+        thumbs_up -> Int4,
+        thumbs_down -> Int4,
+        red_heart -> Int4,
+        fire -> Int4,
+        love_face -> Int4,
+        clapping -> Int4,
+        beaming -> Int4,
+        thinking -> Int4,
+        exploding -> Int4,
+        screaming -> Int4,
+        evil -> Int4,
+        crying -> Int4,
+        party -> Int4,
+        star -> Int4,
+        vomiting -> Int4,
+        pile_of_poo -> Int4,
     }
 }
 
@@ -1149,6 +1254,7 @@ table! {
         vote -> Int2,
         user_id -> Int4,
         photo_id -> Int4,
+        reaction -> Int2,
     }
 }
 
@@ -1167,11 +1273,10 @@ table! {
         created -> Timestamp,
         comment -> Int4,
         view -> Int4,
-        liked -> Int4,
-        disliked -> Int4,
         repost -> Int4,
         copy -> Int4,
         position -> Int2,
+        reactions -> Int4,
     }
 }
 
@@ -1249,6 +1354,30 @@ table! {
         create_el -> Char,
         create_comment -> Char,
         copy_el -> Char,
+        reactions -> Nullable<Varchar>,
+    }
+}
+
+table! {
+    post_reactions (id) {
+        id -> Int4,
+        post_id -> Int4,
+        thumbs_up -> Int4,
+        thumbs_down -> Int4,
+        red_heart -> Int4,
+        fire -> Int4,
+        love_face -> Int4,
+        clapping -> Int4,
+        beaming -> Int4,
+        thinking -> Int4,
+        exploding -> Int4,
+        screaming -> Int4,
+        evil -> Int4,
+        crying -> Int4,
+        party -> Int4,
+        star -> Int4,
+        vomiting -> Int4,
+        pile_of_poo -> Int4,
     }
 }
 
@@ -1258,6 +1387,7 @@ table! {
         vote -> Int2,
         user_id -> Int4,
         post_id -> Int4,
+        reaction -> Int2,
     }
 }
 
@@ -1276,13 +1406,21 @@ table! {
         created -> Timestamp,
         comment -> Int4,
         view -> Int4,
-        liked -> Int4,
-        disliked -> Int4,
         repost -> Int4,
         copy -> Int4,
         position -> Int2,
         is_signature -> Bool,
         parent_id -> Nullable<Int4>,
+        reactions -> Int4,
+    }
+}
+
+table! {
+    reactions (id) {
+        id -> Int4,
+        types -> Nullable<Int2>,
+        image -> Nullable<Varchar>,
+        gif -> Nullable<Varchar>,
     }
 }
 
@@ -1973,6 +2111,30 @@ table! {
         create_el -> Char,
         create_comment -> Char,
         copy_el -> Char,
+        reactions -> Nullable<Varchar>,
+    }
+}
+
+table! {
+    video_reactions (id) {
+        id -> Int4,
+        video_id -> Int4,
+        thumbs_up -> Int4,
+        thumbs_down -> Int4,
+        red_heart -> Int4,
+        fire -> Int4,
+        love_face -> Int4,
+        clapping -> Int4,
+        beaming -> Int4,
+        thinking -> Int4,
+        exploding -> Int4,
+        screaming -> Int4,
+        evil -> Int4,
+        crying -> Int4,
+        party -> Int4,
+        star -> Int4,
+        vomiting -> Int4,
+        pile_of_poo -> Int4,
     }
 }
 
@@ -1991,6 +2153,7 @@ table! {
         vote -> Int2,
         user_id -> Int4,
         video_id -> Int4,
+        reaction -> Int2,
     }
 }
 
@@ -2011,12 +2174,11 @@ table! {
         created -> Timestamp,
         comment -> Int4,
         view -> Int4,
-        liked -> Int4,
-        disliked -> Int4,
         repost -> Int4,
         copy -> Int4,
         position -> Int2,
         category_id -> Nullable<Int4>,
+        reactions -> Int4,
     }
 }
 
@@ -2037,6 +2199,7 @@ table! {
 }
 
 joinable!(chat_ie_settings -> chat_users (chat_user_id));
+joinable!(chat_reactions -> chats (chat_id));
 joinable!(chat_users -> chats (chat_id));
 joinable!(chat_users -> users (user_id));
 joinable!(chats -> communitys (community_id));
@@ -2097,7 +2260,6 @@ joinable!(follows_visible_perms -> users (user_id));
 joinable!(follows_work_perms -> users (user_id));
 joinable!(friends_visible_perms -> users (user_id));
 joinable!(friends_work_perms -> users (user_id));
-joinable!(good_comment_votes -> good_comments (good_comment_id));
 joinable!(good_comment_votes -> users (user_id));
 joinable!(good_comments -> goods (good_id));
 joinable!(good_comments -> stickers (sticker_id));
@@ -2110,6 +2272,7 @@ joinable!(good_list_reposts -> messages (message_id));
 joinable!(good_list_reposts -> posts (post_id));
 joinable!(good_lists -> communitys (community_id));
 joinable!(good_lists -> users (user_id));
+joinable!(good_reactions -> goods (good_id));
 joinable!(good_reposts -> goods (good_id));
 joinable!(good_reposts -> messages (message_id));
 joinable!(good_reposts -> posts (post_id));
@@ -2123,7 +2286,10 @@ joinable!(goods -> users (user_id));
 joinable!(ip_users -> users (user_id));
 joinable!(message_options -> messages (message_id));
 joinable!(message_options -> users (user_id));
+joinable!(message_reactions -> messages (message_id));
 joinable!(message_versions -> messages (message_id));
+joinable!(message_votes -> messages (message_id));
+joinable!(message_votes -> users (user_id));
 joinable!(messages -> chats (chat_id));
 joinable!(messages -> posts (post_id));
 joinable!(messages -> stickers (sticker_id));
@@ -2160,6 +2326,7 @@ joinable!(photo_list_reposts -> photo_lists (photo_list_id));
 joinable!(photo_list_reposts -> posts (post_id));
 joinable!(photo_lists -> communitys (community_id));
 joinable!(photo_lists -> users (user_id));
+joinable!(photo_reactions -> photos (photo_id));
 joinable!(photo_reposts -> messages (message_id));
 joinable!(photo_reposts -> photos (photo_id));
 joinable!(photo_reposts -> posts (post_id));
@@ -2180,6 +2347,7 @@ joinable!(post_list_reposts -> post_lists (post_list_id));
 joinable!(post_list_reposts -> posts (post_id));
 joinable!(post_lists -> communitys (community_id));
 joinable!(post_lists -> users (user_id));
+joinable!(post_reactions -> posts (post_id));
 joinable!(post_votes -> posts (post_id));
 joinable!(post_votes -> users (user_id));
 joinable!(posts -> communitys (community_id));
@@ -2252,6 +2420,7 @@ joinable!(video_list_reposts -> posts (post_id));
 joinable!(video_list_reposts -> video_lists (video_list_id));
 joinable!(video_lists -> communitys (community_id));
 joinable!(video_lists -> users (user_id));
+joinable!(video_reactions -> videos (video_id));
 joinable!(video_reposts -> messages (message_id));
 joinable!(video_reposts -> posts (post_id));
 joinable!(video_reposts -> videos (video_id));
@@ -2265,6 +2434,7 @@ joinable!(wall_objects -> users (user_id));
 allow_tables_to_appear_in_same_query!(
     artists,
     chat_ie_settings,
+    chat_reactions,
     chat_users,
     chats,
     communities_memberships,
@@ -2310,4 +2480,127 @@ allow_tables_to_appear_in_same_query!(
     featured_user_communities,
     follows,
     follows_visible_perms,
+    follows_work_perms,
+    friends,
+    friends_visible_perms,
+    friends_work_perms,
+    good_categories,
+    good_comment_votes,
+    good_comments,
+    good_images,
+    good_list_perms,
+    good_list_reposts,
+    good_lists,
+    good_reactions,
+    good_reposts,
+    good_subcategories,
+    good_votes,
+    goods,
+    ip_users,
+    list_user_communities_keys,
+    message_options,
+    message_reactions,
+    message_transfers,
+    message_versions,
+    message_votes,
+    messages,
+    moderated_logs,
+    moderated_penalties,
+    moderated_reports,
+    moderateds,
+    music_albums,
+    music_list_perms,
+    music_list_reposts,
+    music_lists,
+    music_reposts,
+    musics,
+    news_user_communities,
+    notifications,
+    notify_user_communities,
+    phone_codes,
+    photo_comment_votes,
+    photo_comments,
+    photo_list_perms,
+    photo_list_reposts,
+    photo_lists,
+    photo_reactions,
+    photo_reposts,
+    photo_votes,
+    photos,
+    post_categories,
+    post_comment_votes,
+    post_comments,
+    post_list_perms,
+    post_list_reposts,
+    post_lists,
+    post_reactions,
+    post_votes,
+    posts,
+    reactions,
+    smile_categories,
+    smiles,
+    sound_genres,
+    staff_logs,
+    sticker_categories,
+    stickers,
+    support_user_votes,
+    support_users,
+    survey_answers,
+    survey_list_perms,
+    survey_list_reposts,
+    survey_lists,
+    survey_reposts,
+    survey_votes,
+    surveys,
+    user_anketas,
+    user_blocks,
+    user_brother_sisters,
+    user_children_ones,
+    user_colleagues_ones,
+    user_dad_ones,
+    user_delete_anketas,
+    user_doc_list_collections,
+    user_doc_list_positions,
+    user_good_list_collections,
+    user_good_list_positions,
+    user_good_notifications,
+    user_grandsons_ones,
+    user_locations,
+    user_love_statuss,
+    user_mom_ones,
+    user_music_list_collections,
+    user_music_list_positions,
+    user_music_notifications,
+    user_notifications,
+    user_partner_ones,
+    user_photo_list_collections,
+    user_photo_list_positions,
+    user_photo_notifications,
+    user_populate_smiles,
+    user_populate_stickers,
+    user_post_list_collections,
+    user_post_list_positions,
+    user_post_notifications,
+    user_privates,
+    user_profile_notifications,
+    user_profiles,
+    user_reposts,
+    user_survey_list_collections,
+    user_survey_list_positions,
+    user_survey_notifications,
+    user_video_list_collections,
+    user_video_list_positions,
+    user_video_notifications,
+    users,
+    video_categories,
+    video_comment_votes,
+    video_comments,
+    video_list_perms,
+    video_list_reposts,
+    video_lists,
+    video_reactions,
+    video_reposts,
+    video_votes,
+    videos,
+    wall_objects,
 );
