@@ -17,7 +17,7 @@ use crate::utils::{
     get_community_permission,
     get_anon_community_permission,
     get_list_variables,
-    establish_connection,
+    //establish_connection,
 };
 
 use actix_session::Session;

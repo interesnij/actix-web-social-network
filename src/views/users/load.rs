@@ -8,10 +8,8 @@ use actix_web::{
 use serde::Deserialize;
 use crate::utils::{
     is_signed_in,
-    is_desctop,
     get_request_user_data,
     get_list_variables,
-    get_user,
     get_type,
 };
 

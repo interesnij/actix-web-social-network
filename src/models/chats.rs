@@ -2125,7 +2125,7 @@ impl Message {
             .load::<MessageReaction>(&_connection)
             .expect("E.");
         if _react_model.len() > 0 {
-            return _react_model.into_iter().nth(0).unwrap();  
+            return _react_model.into_iter().nth(0).unwrap();
         }
         else {
             let new_react_model = NewMessageReaction {
@@ -2158,7 +2158,6 @@ impl Message {
 
     pub fn send_reaction(&self, user_id: i32, types: i16) -> Json<JsonItemReactions> {
         use crate::schema::message_votes::dsl::message_votes;
-        use crate::schema::reactions::dsl::reactions;
 
         let _connection = establish_connection();
         let list = self.get_chat();
