@@ -1,4 +1,7 @@
-
+<% let is_staff = list.is_user_can_create_el(request_user.id); %>
+<% let reactions_list = list.get_reactions_list(); %>
+<% let count_reactions_list = list.count_reactions_list(); %>
+<% let is_manager = request_user.is_moderator(); %>
 
 <div id="video_player"></div>
 
@@ -59,16 +62,9 @@
                         <span class="dropdown-item video_on_comment">Вкл. комментарии</span>
                       <% } %>
                     </span>
-                    <span>
-                      <% if object.votes_on { %>
-                        <span class="dropdown-item video_off_votes">Выкл. реакции</span>
-                      <% } else { %>
-                        <span class="dropdown-item video_on_votes">Вкл. реакции</span>
-                      <% } %>
-                    </span>
                     <span class="dropdown-item item_stat_f">Статистика записи</span>
 
-                  <% } else if request_user.is_moderator() { %>
+                  <% } else if is_moderator() { %>
                     <span class="dropdown-item item_close">Закрыть</span>
                   <% } else { %>
                     <span class="dropdown-item item_claim">Пожаловаться</span>
