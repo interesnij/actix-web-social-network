@@ -3,7 +3,9 @@
   <% let reactions_list = object.get_list().get_reactions_list(); %>
   <% let count_reactions_list = object.get_list().count_reactions_list(); %>
   <% let post_creator = object.get_creator(); %>
-  <%= reactions_list %>
+   <% for reaction in reactions_list.iter() { %>
+    <%= reaction %>
+  <% } %>
 
 <div class="card-header">
     <div class="media">

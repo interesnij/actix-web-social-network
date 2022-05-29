@@ -1342,7 +1342,7 @@ pub async fn friends_load(session: Session, req: HttpRequest) -> actix_web::Resu
 
 pub async fn smiles_stickers_load(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        use crate::models::{Smile,StickerCategorie,SmileCategorie};
+        use crate::models::{StickerCategorie,SmileCategorie};
 
         let (is_desctop, page) = get_list_variables(req);
         let _request_user = get_request_user_data(session);
