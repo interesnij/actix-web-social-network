@@ -40,14 +40,12 @@ use actix_web::web::Json;
 pub struct PostCategorie {
     pub id:       i32,
     pub name:     String,
-    //pub avatar:   Option<String>,
     pub position: i16,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="post_categories"]
 pub struct NewPostCategorie {
     pub name:     String,
-    //pub avatar:   Option<String>,
     pub position: i16,
 }
 
@@ -101,6 +99,7 @@ pub struct PostList {
     pub user_id:         i32,
     pub types:           i16,
     pub description:     Option<String>,
+    pub image:           Option<String>,
     pub created:         chrono::NaiveDateTime,
     pub count:           i32,
     pub repost:          i32,
@@ -121,6 +120,7 @@ pub struct NewPostList {
     pub user_id:         i32,
     pub types:           i16,
     pub description:     Option<String>,
+    pub image:           Option<String>,
     pub created:         chrono::NaiveDateTime,
     pub count:           i32,
     pub repost:          i32,
@@ -138,6 +138,7 @@ pub struct NewPostList {
 pub struct EditPostList {
     pub name:            String,
     pub description:     Option<String>,
+    pub image:           Option<String>,
     pub can_see_el:      String,
     pub can_see_comment: String,
     pub create_el:       String,
