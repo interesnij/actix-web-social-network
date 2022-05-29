@@ -64,7 +64,6 @@ pub async fn add_user_list(session: Session, mut payload: Multipart) -> actix_we
             Some(form.can_see_el_users),
             Some(form.create_el_users),
             Some(form.copy_el_users),
-            Some(form.reactions),
         );
 
         #[derive(TemplateOnce)]

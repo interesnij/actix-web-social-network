@@ -1,4 +1,5 @@
-
+<% let reactions_list = list.get_reactions_list(); %>
+<% let count_reactions_list = list.count_reactions_list(); %>
 
 <div id="video_player"></div>
 
