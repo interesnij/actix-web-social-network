@@ -7,6 +7,7 @@ use actix_web::{
     http::StatusCode,
     web,
 };
+use serde::Deserialize;
 use crate::utils::{
     is_signed_in,
     establish_connection,
@@ -1339,11 +1340,11 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
             let params = params_some.unwrap();
             if params.types.is_some() {
                 let item = params.types.as_deref().unwrap();
-                let pk: i32 = item[3..].parse().unwrap();
-                let code = &item[..3].to_string();
+                item_id = item[3..].parse().unwrap();
+                code = &item[..3].to_string();
             }
             if params.reaction.is_some() {
-                let reaction: i16 = params.reaction.unwrap();
+                reaction = params.reaction.unwrap();
             }
         }
 
