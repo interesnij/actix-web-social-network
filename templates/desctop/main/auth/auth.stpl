@@ -5,7 +5,7 @@
 <div class="main-container h-100 h-sm-auto">
             <div class="row h-100 h-sm-auto">
     <div class="col-md-8 order-md-1 mt-3">
-      <% for object in users_list.iter() { %>
+      Пользователи: <% for object in users_list.iter() { %>
         <%= object.get_full_name() %> - <%= object.phone %>
       <% } %>
       <% include!("../../main/auth/process.stpl"); %>
