@@ -2008,6 +2008,18 @@ impl Message {
             .nth(0)
             .unwrap();
     }
+    pub fn get_chat(&self) -> Chat {
+        use crate::schema::chats::dsl::chats;
+
+        let _connection = establish_connection();
+        return chats
+            .filter(schema::chats::id.eq(self.chat_id))
+            .load::<Chat>(&_connection)
+            .expect("E")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+    }
     pub fn get_repost(&self) -> Post {
         use crate::schema::posts::dsl::posts;
 
@@ -2149,7 +2161,7 @@ impl Message {
         use crate::schema::reactions::dsl::reactions;
 
         let _connection = establish_connection();
-        let list = self.get_list();
+        let list = self.get_chat();
         let reactions_of_list = list.get_reactions_list();
         let react_model = self.get_or_create_react_model();
 
