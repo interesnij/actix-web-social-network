@@ -29,26 +29,26 @@ use crate::diesel::{ExpressionMethods,RunQueryDsl};
 
 
 pub fn progs_urls(config: &mut web::ServiceConfig) {
-    config.route("/goods/add_user_list/", web::post().to(add_user_list));
-    config.route("/goods/edit_user_list/{id}/", web::post().to(edit_user_list));
-    config.route("/goods/add_community_list/{id}/", web::post().to(add_community_list));
-    config.route("/goods/edit_community_list/{id}/", web::post().to(edit_community_list));
-    config.route("/goods/delete_user_list/{id}/", web::get().to(delete_user_list));
-    config.route("/goods/recover_user_list/{id}/", web::get().to(recover_user_list));
-    config.route("/goods/delete_community_list/{id}/", web::get().to(delete_community_list));
-    config.route("/goods/recover_community_list/{id}/", web::get().to(recover_community_list));
+    //config.route("/goods/add_user_list/", web::post().to(add_user_list));
+    //config.route("/goods/edit_user_list/{id}/", web::post().to(edit_user_list));
+    //config.route("/goods/add_community_list/{id}/", web::post().to(add_community_list));
+    //config.route("/goods/edit_community_list/{id}/", web::post().to(edit_community_list));
+    //config.route("/goods/delete_user_list/{id}/", web::get().to(delete_user_list));
+    //config.route("/goods/recover_user_list/{id}/", web::get().to(recover_user_list));
+    //config.route("/goods/delete_community_list/{id}/", web::get().to(delete_community_list));
+    //config.route("/goods/recover_community_list/{id}/", web::get().to(recover_community_list));
 
-    config.route("/goods/add_good_in_list/{id}/", web::post().to(add_good_in_list));
-    config.route("/goods/edit_good/{id}/", web::post().to(edit_good));
-    config.route("/goods/delete_good/{id}/", web::get().to(delete_good));
-    config.route("/goods/recover_good/{id}/", web::get().to(recover_good));
-    config.route("/goods/on_comment/{id}/", web::get().to(on_comment));
-    config.route("/goods/off_comment/{id}/", web::get().to(off_comment));
-    config.route("/goods/on_votes/{id}/", web::get().to(on_votes));
-    config.route("/goods/off_votes/{id}/", web::get().to(off_votes));
+    //config.route("/goods/add_good_in_list/{id}/", web::post().to(add_good_in_list));
+    //config.route("/goods/edit_good/{id}/", web::post().to(edit_good));
+    //config.route("/goods/delete_good/{id}/", web::get().to(delete_good));
+    //config.route("/goods/recover_good/{id}/", web::get().to(recover_good));
+    //config.route("/goods/on_comment/{id}/", web::get().to(on_comment));
+    //config.route("/goods/off_comment/{id}/", web::get().to(off_comment));
+    //config.route("/goods/on_votes/{id}/", web::get().to(on_votes));
+    //config.route("/goods/off_votes/{id}/", web::get().to(off_votes));
 
-    config.route("/goods/add_comment/{id}/", web::post().to(add_comment));
-    config.route("/goods/add_reply/{id}/", web::post().to(add_reply));
+    //config.route("/goods/add_comment/{id}/", web::post().to(add_comment));
+    //config.route("/goods/add_reply/{id}/", web::post().to(add_reply));
 }
 
 pub async fn add_user_list(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {

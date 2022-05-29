@@ -27,17 +27,17 @@ use crate::models::{User, GoodList, Good, GoodComment, Community};
 
 
 pub fn pages_urls(config: &mut web::ServiceConfig) {
-    config.route("/goods/load_list/{list_id}/", web::get().to(load_list_page));
-    config.route("/goods/load_good/{id}/", web::get().to(load_good_page));
-    config.route("/goods/load_comments/{id}/", web::get().to(load_comments_page));
+    //config.route("/goods/load_list/{list_id}/", web::get().to(load_list_page));
+    //config.route("/goods/load_good/{id}/", web::get().to(load_good_page));
+    //config.route("/goods/load_comments/{id}/", web::get().to(load_comments_page));
 
-    config.route("/goods/add_user_list/", web::get().to(add_user_list_page));
-    config.route("/goods/edit_user_list/{id}/", web::get().to(edit_user_list_page));
-    config.route("/goods/add_community_list//{id}", web::get().to(add_community_list_page));
-    config.route("/goods/edit_community_list/{id}/", web::get().to(edit_community_list_page));
+    //config.route("/goods/add_user_list/", web::get().to(add_user_list_page));
+    //config.route("/goods/edit_user_list/{id}/", web::get().to(edit_user_list_page));
+    //config.route("/goods/add_community_list//{id}", web::get().to(add_community_list_page));
+    //config.route("/goods/edit_community_list/{id}/", web::get().to(edit_community_list_page));
 
-    config.route("/goods/add_good_in_list/{id}/", web::get().to(add_good_in_list_page));
-    config.route("/goods/edit_good/{id}/", web::get().to(edit_good_page));
+    //config.route("/goods/add_good_in_list/{id}/", web::get().to(add_good_in_list_page));
+    //config.route("/goods/edit_good/{id}/", web::get().to(edit_good_page));
 }
 
 pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
