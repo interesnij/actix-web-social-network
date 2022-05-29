@@ -12,7 +12,7 @@ mod follows;
 mod friends;
 mod managers;
 mod notify;
-//mod goods;
+mod goods;
 mod music;
 
 pub use self::{
