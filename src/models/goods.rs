@@ -3593,7 +3593,7 @@ impl GoodReaction {
         new_types: i16,
         old_types_option: Option<i16>,
         plus: bool,
-    ) -> GoodReaction {
+    ) -> bool {
         let _connection = establish_connection();
         if old_types_option.is_some() {
             let old_types = old_types_option.unwrap();
@@ -3662,7 +3662,7 @@ impl GoodReaction {
                     .set(schema::good_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                     .get_result::<GoodReaction>(&_connection)
                     .expect("Error."),
-                _ => (),
+                _ => false,
             };
 
             let update_model = match old_types {
@@ -3730,7 +3730,7 @@ impl GoodReaction {
                     .set(schema::good_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                     .get_result::<GoodReaction>(&_connection)
                     .expect("Error."),
-                _ => (),
+                _ => false,
             };
         }
         else {
@@ -3800,7 +3800,7 @@ impl GoodReaction {
                         .set(schema::good_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                         .get_result::<GoodReaction>(&_connection)
                         .expect("Error."),
-                    _ => (),
+                    _ => false,
                 };
             }
             else {
@@ -3869,10 +3869,10 @@ impl GoodReaction {
                         .set(schema::good_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                         .get_result::<GoodReaction>(&_connection)
                         .expect("Error."),
-                    _ => (),
+                    _ => false,
                 };
             }
-            return &self;
+            return true;
         }
     }
 }

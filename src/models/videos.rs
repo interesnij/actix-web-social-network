@@ -3563,7 +3563,7 @@ impl VideoReaction {
                     .set(schema::video_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                _ => (),
+                _ => false,
             };
 
             let update_model = match old_types {
@@ -3631,7 +3631,7 @@ impl VideoReaction {
                     .set(schema::video_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                _ => (),
+                _ => false,
             };
         }
         else {
@@ -3701,7 +3701,7 @@ impl VideoReaction {
                         .set(schema::video_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    _ => (),
+                    _ => false,
                 };
             }
             else {
@@ -3770,7 +3770,7 @@ impl VideoReaction {
                         .set(schema::video_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    _ => (),
+                    _ => false,
                 };
             }
             return true;
