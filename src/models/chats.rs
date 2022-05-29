@@ -2125,7 +2125,7 @@ impl Message {
             .load::<MessageReaction>(&_connection)
             .expect("E.");
         if _react_model.len() > 0 {
-            return _react_model.last().unwrap();
+            return &_react_model.last().unwrap(); 
         }
         else {
             let new_react_model = NewMessageReaction {
