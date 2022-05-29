@@ -3494,7 +3494,7 @@ impl VideoReaction {
         new_types: i16,
         old_types_option: Option<i16>,
         plus: bool,
-    ) -> VideoReaction {
+    ) -> &VideoReaction {
         let _connection = establish_connection();
         if old_types_option.is_some() {
             let old_types = old_types_option.unwrap();
