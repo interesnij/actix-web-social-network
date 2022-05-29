@@ -1326,7 +1326,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
         use crate::utils::{get_user_permission, get_community_permission};
 
         #[derive(Debug, Deserialize)]
-        pub struct TypesParams {
+        pub struct TypesParams2 {
             pub types:    Option<String>,
             pub reaction: Option<i16>,
         }
@@ -1334,7 +1334,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
         let mut code = "".to_string();
         let mut reaction: i16 = 0;
 
-        let params_some = web::Query::<TypesParams>::from_query(&req.query_string());
+        let params_some = web::Query::<TypesParams2>::from_query(&req.query_string());
         if params_some.is_ok() {
             let params = params_some.unwrap();
             if params.types.is_some() {
@@ -1361,7 +1361,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
             step = (page - 1) * 20;
         }
 
-        if types == "pos".to_string() {
+        if code == "pos".to_string() {
             use crate::utils::get_post;
 
             let item = get_post(item_id);
@@ -1385,7 +1385,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
                 text = item.count_reactions_of_types_ru(reactions);
             }
         }
-        else if types == "pho".to_string() {
+        else if code == "pho".to_string() {
             use crate::utils::get_photo;
 
             let item = get_photo(item_id);
@@ -1409,7 +1409,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
                 text = item.count_reactions_of_types_ru(reactions);
             }
         }
-        else if types == "goo".to_string() {
+        else if code == "goo".to_string() {
             use crate::utils::get_good;
 
             let item = get_good(item_id);
@@ -1433,7 +1433,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
                 text = item.count_reactions_of_types_ru(reactions);
             }
         }
-        else if types == "vid".to_string() {
+        else if code == "vid".to_string() {
             use crate::utils::get_video;
 
             let item = get_video(item_id);
@@ -1482,7 +1482,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
             }
             let body = Template {
                 text:             text,
-                types:            types,
+                types:            code + &item_id.to_string(),
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 reaction:         reaction,
@@ -1503,7 +1503,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
             }
             let body = Template {
                 text:             text,
-                types:            types,
+                types:            code + &item_id.to_string(),
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 reaction:         reaction,

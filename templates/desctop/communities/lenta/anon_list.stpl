@@ -1,4 +1,7 @@
 <span class="load_block">
+  <% let reactions_list = list.get_reactions_list(); %>
+  <% let count_reactions_list = list.count_reactions_list(); %>
+  
   <% if community.count_fix_items() > 1 { %>
   <div class="csslider infinity slider_100 mt-2">
     <p>Особые записи</p>
