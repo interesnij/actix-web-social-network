@@ -3604,7 +3604,10 @@ impl VideoReaction {
                     .set(schema::video_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                //_ => &self,
+                _ => diesel::update(self)
+                    .set(schema::video_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
+                    .get_result::<VideoReaction>(&_connection)
+                    .expect("Error."),
             };
 
             let update_model = match old_types {
@@ -3672,7 +3675,10 @@ impl VideoReaction {
                     .set(schema::video_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                //_ => &self,
+                _ => diesel::update(self)
+                    .set(schema::video_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
+                    .get_result::<VideoReaction>(&_connection)
+                    .expect("Error."),
             };
             return &self;
         }
@@ -3743,7 +3749,10 @@ impl VideoReaction {
                         .set(schema::video_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    //_ => &self,
+                    _ => diesel::update(self)
+                        .set(schema::video_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
+                        .get_result::<VideoReaction>(&_connection)
+                        .expect("Error."),
                 };
             }
             else {
@@ -3812,7 +3821,10 @@ impl VideoReaction {
                         .set(schema::video_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    //_ => &self,
+                    _ => diesel::update(self)
+                        .set(schema::video_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
+                        .get_result::<VideoReaction>(&_connection)
+                        .expect("Error."),
                 };
             }
             return &self;

@@ -2557,7 +2557,7 @@ impl Good {
             14 => react_model.star_face,
             15 => react_model.vomiting,
             16 => react_model.pile_of_poo,
-            _ => 0, 
+            _ => 0,
         };
         return count;
     }
@@ -3662,7 +3662,10 @@ impl GoodReaction {
                     .set(schema::good_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                     .get_result::<GoodReaction>(&_connection)
                     .expect("Error."),
-                //_ => &self,
+                _ => diesel::update(self)
+                    .set(schema::good_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
+                    .get_result::<GoodReaction>(&_connection)
+                    .expect("Error."),
             };
 
             let update_model = match old_types {
@@ -3730,7 +3733,10 @@ impl GoodReaction {
                     .set(schema::good_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                     .get_result::<GoodReaction>(&_connection)
                     .expect("Error."),
-                //_ => &self,
+                _ => diesel::update(self)
+                    .set(schema::good_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
+                    .get_result::<GoodReaction>(&_connection)
+                    .expect("Error."),
             };
             return &self;
         }
@@ -3801,7 +3807,10 @@ impl GoodReaction {
                         .set(schema::good_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                         .get_result::<GoodReaction>(&_connection)
                         .expect("Error."),
-                    //_ => &self,
+                    _ => diesel::update(self)
+                        .set(schema::good_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
+                        .get_result::<GoodReaction>(&_connection)
+                        .expect("Error."),
                 };
             }
             else {
@@ -3870,7 +3879,10 @@ impl GoodReaction {
                         .set(schema::good_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                         .get_result::<GoodReaction>(&_connection)
                         .expect("Error."),
-                //    _ => &self,
+                    _ => diesel::update(self)
+                        .set(schema::good_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
+                        .get_result::<GoodReaction>(&_connection)
+                        .expect("Error."),
                 };
             }
             return &self;

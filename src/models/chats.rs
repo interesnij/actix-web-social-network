@@ -2518,7 +2518,10 @@ impl MessageReaction {
                     .set(schema::message_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
-                //_ => false,
+                _ => diesel::update(self)
+                    .set(schema::message_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
             };
 
             let update_model = match old_types {
@@ -2586,7 +2589,10 @@ impl MessageReaction {
                     .set(schema::message_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
-                //_ => false,
+                _ => diesel::update(self)
+                    .set(schema::message_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
+                    .get_result::<MessageReaction>(&_connection)
+                    .expect("Error."),
             };
             return &self;
         }
@@ -2657,7 +2663,10 @@ impl MessageReaction {
                         .set(schema::message_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
-                    //_ => false,
+                    _ => diesel::update(self)
+                        .set(schema::message_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
                 };
             }
             else {
@@ -2726,7 +2735,10 @@ impl MessageReaction {
                         .set(schema::message_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
-                    //_ => false,
+                    _ => diesel::update(self)
+                        .set(schema::message_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
+                        .get_result::<MessageReaction>(&_connection)
+                        .expect("Error."),
                 };
             }
             return &self;
