@@ -2165,7 +2165,7 @@ impl Message {
         let reactions_of_list = list.get_reactions_list();
         let react_model = self.get_or_create_react_model();
 
-        if reactions_of_list.iter().any(|&i| i==types) && list.get_members_ids.iter().any(|&i| i==user_id) {
+        if reactions_of_list.iter().any(|&i| i==types) && list.get_members_ids().iter().any(|&i| i==user_id) {
 
             let votes = message_votes
                 .filter(schema::message_votes::user_id.eq(user_id))
