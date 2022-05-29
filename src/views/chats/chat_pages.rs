@@ -12,7 +12,7 @@ use crate::utils::{
     get_request_user_data,
     get_chat,
 };
-use crate::diesel::{ExpressionMethods,RunQueryDsl};
+
 use actix_session::Session;
 use sailfish::TemplateOnce;
 use crate::models::{User, Chat, Message};

@@ -14,9 +14,7 @@ use crate::utils::{
     get_photo,
     get_photo_comment,
     get_user_permission,
-    get_anon_user_permission,
     get_community_permission,
-    get_anon_community_permission,
     establish_connection,
 };
 use actix_session::Session;
@@ -573,7 +571,6 @@ pub async fn on_comment(session: Session, _id: web::Path<i32>) -> actix_web::Res
         let photo = get_photo(*_id);
         let _request_user = get_request_user_data(session);
         if photo.is_user_can_edit_delete_item(_request_user.id) {
-            use crate::schema::photos::dsl::photos;
             let _connection = establish_connection();
 
             diesel::update(&photo)
@@ -594,7 +591,6 @@ pub async fn off_comment(session: Session, _id: web::Path<i32>) -> actix_web::Re
         let photo = get_photo(*_id);
         let _request_user = get_request_user_data(session);
         if photo.is_user_can_edit_delete_item(_request_user.id) {
-            use crate::schema::photos::dsl::photos;
 
             let _connection = establish_connection();
             diesel::update(&photo)

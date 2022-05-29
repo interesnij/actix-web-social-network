@@ -17,7 +17,6 @@ use actix_session::Session;
 use sailfish::TemplateOnce;
 use crate::models::{User, SurveyList, Survey};
 use serde::{Deserialize, Serialize};
-use crate::diesel::{ExpressionMethods,RunQueryDsl};
 use std::str;
 use actix_multipart::{Field, Multipart};
 use futures::StreamExt;

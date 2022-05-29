@@ -762,7 +762,6 @@ pub async fn on_comment(session: Session, _id: web::Path<i32>) -> actix_web::Res
         let video = get_video(*_id);
         let _request_user = get_request_user_data(session);
         if video.is_user_can_edit_delete_item(_request_user.id) {
-            use crate::schema::videos::dsl::videos;
             let _connection = establish_connection();
 
             diesel::update(&video)
@@ -783,8 +782,6 @@ pub async fn off_comment(session: Session, _id: web::Path<i32>) -> actix_web::Re
         let video = get_video(*_id);
         let _request_user = get_request_user_data(session);
         if video.is_user_can_edit_delete_item(_request_user.id) {
-            use crate::schema::videos::dsl::videos;
-
             let _connection = establish_connection();
             diesel::update(&video)
                 .set(schema::videos::comment_enabled.eq(false))

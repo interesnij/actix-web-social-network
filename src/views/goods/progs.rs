@@ -745,7 +745,6 @@ pub async fn on_comment(session: Session, _id: web::Path<i32>) -> actix_web::Res
         let good = get_good(*_id);
         let _request_user = get_request_user_data(session);
         if good.is_user_can_edit_delete_item(_request_user.id) {
-            use crate::schema::goods::dsl::goods;
             let _connection = establish_connection();
 
             diesel::update(&good)
@@ -766,7 +765,6 @@ pub async fn off_comment(session: Session, _id: web::Path<i32>) -> actix_web::Re
         let good = get_good(*_id);
         let _request_user = get_request_user_data(session);
         if good.is_user_can_edit_delete_item(_request_user.id) {
-            use crate::schema::goods::dsl::goods;
 
             let _connection = establish_connection();
             diesel::update(&good)

@@ -711,13 +711,11 @@ pub async fn recover_post(session: Session, _id: web::Path<i32>) -> actix_web::R
     }
 }
 
-
 pub async fn on_comment(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         let post = get_post(*_id);
         let _request_user = get_request_user_data(session);
         if post.is_user_can_edit_delete_item(_request_user.id) {
-            use crate::schema::posts::dsl::posts;
             let _connection = establish_connection();
 
             diesel::update(&post)
@@ -738,7 +736,6 @@ pub async fn off_comment(session: Session, _id: web::Path<i32>) -> actix_web::Re
         let post = get_post(*_id);
         let _request_user = get_request_user_data(session);
         if post.is_user_can_edit_delete_item(_request_user.id) {
-            use crate::schema::posts::dsl::posts;
 
             let _connection = establish_connection();
             diesel::update(&post)
