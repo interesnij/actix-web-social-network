@@ -2110,13 +2110,12 @@ impl Post {
             created: chrono::Local::now().naive_utc(),
             comment: 0,
             view: 0,
-            liked: 0,
-            disliked: 0,
             repost: 0,
             copy: 0,
             position: 0,
             is_signature: false,
             parent_id: None,
+            reactions: 0,
         };
         let new_post = diesel::insert_into(schema::posts::table)
             .values(&new_post_form)

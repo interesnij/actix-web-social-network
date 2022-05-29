@@ -364,12 +364,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             mention:                true,
             comment_mention:        true,
             repost:                 true,
-            liked:                  true,
-            disliked:               true,
-            comment_liked:          true,
-            comment_disliked:       true,
-            comment_reply_liked:    true,
-            comment_reply_disliked: true,
+            reactions:              true,
         };
         diesel::insert_into(schema::user_post_notifications::table)
             .values(&_user_post_notification)
@@ -384,12 +379,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             mention:                true,
             comment_mention:        true,
             repost:                 true,
-            liked:                  true,
-            disliked:               true,
-            comment_liked:          true,
-            comment_disliked:       true,
-            comment_reply_liked:    true,
-            comment_reply_disliked: true,
+            reactions:              true,
         };
         diesel::insert_into(schema::user_photo_notifications::table)
             .values(&_user_photo_notification)
@@ -404,12 +394,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             mention:                true,
             comment_mention:        true,
             repost:                 true,
-            liked:                  true,
-            disliked:               true,
-            comment_liked:          true,
-            comment_disliked:       true,
-            comment_reply_liked:    true,
-            comment_reply_disliked: true,
+            reactions:              true,
         };
         diesel::insert_into(schema::user_good_notifications::table)
             .values(&_user_good_notification)
@@ -424,12 +409,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             mention:                true,
             comment_mention:        true,
             repost:                 true,
-            liked:                  true,
-            disliked:               true,
-            comment_liked:          true,
-            comment_disliked:       true,
-            comment_reply_liked:    true,
-            comment_reply_disliked: true,
+            reactions:              true,
         };
         diesel::insert_into(schema::user_video_notifications::table)
             .values(&_user_video_notification)

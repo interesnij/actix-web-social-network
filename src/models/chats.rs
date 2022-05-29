@@ -1833,6 +1833,22 @@ impl Message {
             return self.get_type_text();
         }
     }
+    pub fn plus_reactions(&self, count: i32) -> bool {
+        let _connection = establish_connection();
+        diesel::update(self)
+            .set(schema::messages::reactions.eq(self.reactions + count))
+            .get_result::<Message>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_reactions(&self, count: i32) -> bool {
+        let _connection = establish_connection();
+        diesel::update(self)
+            .set(schema::messages::reactions.eq(self.reactions - count))
+            .get_result::<Message>(&_connection)
+            .expect("Error.");
+        return true;
+    }
     pub fn get_manager_text(&self) -> String {
         if self.parent_id.is_some() {
             let message = self.get_parent();
