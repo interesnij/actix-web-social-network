@@ -675,12 +675,7 @@ pub struct UserPostNotification {
     pub mention:                bool,
     pub comment_mention:        bool,
     pub repost:                 bool,
-    pub liked:                  bool,
-    pub disliked:               bool,
-    pub comment_liked:          bool,
-    pub comment_disliked:       bool,
-    pub comment_reply_liked:    bool,
-    pub comment_reply_disliked: bool,
+    pub reactions:              bool,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_post_notifications"]
@@ -691,12 +686,7 @@ pub struct NewUserPostNotification {
     pub mention:                bool,
     pub comment_mention:        bool,
     pub repost:                 bool,
-    pub liked:                  bool,
-    pub disliked:               bool,
-    pub comment_liked:          bool,
-    pub comment_disliked:       bool,
-    pub comment_reply_liked:    bool,
-    pub comment_reply_disliked: bool,
+    pub reactions:              bool,
 }
 
 /////// UserSurveyNotification //////
@@ -727,12 +717,7 @@ pub struct UserPhotoNotification {
     pub mention:                bool,
     pub comment_mention:        bool,
     pub repost:                 bool,
-    pub liked:                  bool,
-    pub disliked:               bool,
-    pub comment_liked:          bool,
-    pub comment_disliked:       bool,
-    pub comment_reply_liked:    bool,
-    pub comment_reply_disliked: bool,
+    pub reactions:              bool,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_photo_notifications"]
@@ -743,12 +728,7 @@ pub struct NewUserPhotoNotification {
     pub mention:                bool,
     pub comment_mention:        bool,
     pub repost:                 bool,
-    pub liked:                  bool,
-    pub disliked:               bool,
-    pub comment_liked:          bool,
-    pub comment_disliked:       bool,
-    pub comment_reply_liked:    bool,
-    pub comment_reply_disliked: bool,
+    pub reactions:              bool,
 }
 
 /////// UserNotificationsVideo //////
@@ -762,12 +742,7 @@ pub struct UserVideoNotification {
     pub mention:                bool,
     pub comment_mention:        bool,
     pub repost:                 bool,
-    pub liked:                  bool,
-    pub disliked:               bool,
-    pub comment_liked:          bool,
-    pub comment_disliked:       bool,
-    pub comment_reply_liked:    bool,
-    pub comment_reply_disliked: bool,
+    pub reactions:              bool,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_video_notifications"]
@@ -778,12 +753,7 @@ pub struct NewUserVideoNotification {
     pub mention:                bool,
     pub comment_mention:        bool,
     pub repost:                 bool,
-    pub liked:                  bool,
-    pub disliked:               bool,
-    pub comment_liked:          bool,
-    pub comment_disliked:       bool,
-    pub comment_reply_liked:    bool,
-    pub comment_reply_disliked: bool,
+    pub reactions:              bool,
 }
 
 /////// UserNotificationsGood //////
@@ -797,12 +767,7 @@ pub struct UserGoodNotification {
     pub mention:                bool,
     pub comment_mention:        bool,
     pub repost:                 bool,
-    pub liked:                  bool,
-    pub disliked:               bool,
-    pub comment_liked:          bool,
-    pub comment_disliked:       bool,
-    pub comment_reply_liked:    bool,
-    pub comment_reply_disliked: bool,
+    pub reactions:              bool,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="user_good_notifications"]
@@ -813,12 +778,7 @@ pub struct NewUserGoodNotification {
     pub mention:                bool,
     pub comment_mention:        bool,
     pub repost:                 bool,
-    pub liked:                  bool,
-    pub disliked:               bool,
-    pub comment_liked:          bool,
-    pub comment_disliked:       bool,
-    pub comment_reply_liked:    bool,
-    pub comment_reply_disliked: bool,
+    pub reactions:              bool,
 }
 
 /////// UserNotificationsMusic //////

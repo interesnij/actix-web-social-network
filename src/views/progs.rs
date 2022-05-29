@@ -443,7 +443,7 @@ pub async fn send_reaction(session: Session, req: HttpRequest) -> web::Json<Json
                 evil:        0,
                 crying:      0,
                 party:       0,
-                star:        0,
+                star_face:   0,
                 vomiting:    0,
                 pile_of_poo: 0,
             });
@@ -464,7 +464,7 @@ pub async fn send_reaction(session: Session, req: HttpRequest) -> web::Json<Json
             evil:        0,
             crying:      0,
             party:       0,
-            star:        0,
+            star_face:   0,
             vomiting:    0,
             pile_of_poo: 0,
         });

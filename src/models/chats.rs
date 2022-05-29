@@ -24,7 +24,7 @@ use crate::models::{
     Reaction,
 
 };
-
+use actix_web::web::Json;
 
 /////// Тип чата //////
     // 1 публичный чат
@@ -2112,7 +2112,7 @@ impl Message {
                 evil:        0,
                 crying:      0,
                 party:       0,
-                star:        0,
+                star_face:   0,
                 vomiting:    0,
                 pile_of_poo: 0,
             };
@@ -2202,7 +2202,7 @@ impl Message {
             evil:        react_model.evil,
             crying:      react_model.crying,
             party:       react_model.party,
-            star:        react_model.star,
+            star_face:   react_model.star_face,
             vomiting:    react_model.vomiting,
             pile_of_poo: react_model.pile_of_poo,
         });
@@ -2224,7 +2224,7 @@ impl Message {
             11 => react_model.evil,
             12 => react_model.crying,
             13 => react_model.party,
-            14 => react_model.star,
+            14 => react_model.star_face,
             15 => react_model.vomiting,
             16 => react_model.pile_of_poo,
         };
@@ -2406,7 +2406,7 @@ pub struct MessageReaction {
     pub evil:        i32,
     pub crying:      i32,
     pub party:       i32,
-    pub star:        i32,
+    pub star_face:   i32,
     pub vomiting:    i32,
     pub pile_of_poo: i32,
 }
@@ -2475,7 +2475,7 @@ impl MessageReaction {
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 14 => diesel::update(&self)
-                    .set(schema::message_reactions::star.eq(self.star + 1))
+                    .set(schema::message_reactions::star_face.eq(self.star_face + 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 15 => diesel::update(&self)
@@ -2543,7 +2543,7 @@ impl MessageReaction {
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 14 => diesel::update(&self)
-                    .set(schema::message_reactions::star.eq(self.star - 1))
+                    .set(schema::message_reactions::star_face.eq(self.star_face - 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 15 => diesel::update(&self)
@@ -2613,7 +2613,7 @@ impl MessageReaction {
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     14 => diesel::update(&self)
-                        .set(schema::message_reactions::star.eq(self.star + 1))
+                        .set(schema::message_reactions::star_face.eq(self.star_face + 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     15 => diesel::update(&self)
@@ -2682,7 +2682,7 @@ impl MessageReaction {
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     14 => diesel::update(&self)
-                        .set(schema::message_reactions::star.eq(self.star - 1))
+                        .set(schema::message_reactions::star_face.eq(self.star_face - 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     15 => diesel::update(&self)
@@ -2718,7 +2718,7 @@ pub struct NewMessageReaction {
     pub evil:        i32,
     pub crying:      i32,
     pub party:       i32,
-    pub star:        i32,
+    pub star_face:   i32,
     pub vomiting:    i32,
     pub pile_of_poo: i32,
 }

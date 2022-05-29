@@ -133,12 +133,7 @@ CREATE TABLE community_post_notifications (
     mention                 BOOLEAN NOT NULL DEFAULT true,
     comment_mention         BOOLEAN NOT NULL DEFAULT true,
     repost                  BOOLEAN NOT NULL DEFAULT true,
-    liked                   BOOLEAN NOT NULL DEFAULT true,
-    disliked                BOOLEAN NOT NULL DEFAULT true,
-    comment_liked           BOOLEAN NOT NULL DEFAULT true,
-    comment_disliked        BOOLEAN NOT NULL DEFAULT true,
-    comment_reply_liked     BOOLEAN NOT NULL DEFAULT true,
-    comment_reply_disliked  BOOLEAN NOT NULL DEFAULT true,
+    reactions               BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT fk_community_post_notifications
          FOREIGN KEY(community_id)
@@ -154,12 +149,7 @@ CREATE TABLE community_photo_notifications (
     mention                 BOOLEAN NOT NULL DEFAULT true,
     comment_mention         BOOLEAN NOT NULL DEFAULT true,
     repost                  BOOLEAN NOT NULL DEFAULT true,
-    liked                   BOOLEAN NOT NULL DEFAULT true,
-    disliked                BOOLEAN NOT NULL DEFAULT true,
-    comment_liked           BOOLEAN NOT NULL DEFAULT true,
-    comment_disliked        BOOLEAN NOT NULL DEFAULT true,
-    comment_reply_liked     BOOLEAN NOT NULL DEFAULT true,
-    comment_reply_disliked  BOOLEAN NOT NULL DEFAULT true,
+    reactions               BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT fk_community_photo_notifications
          FOREIGN KEY(community_id)
@@ -175,12 +165,6 @@ CREATE TABLE community_video_notifications (
     mention                 BOOLEAN NOT NULL DEFAULT true,
     comment_mention         BOOLEAN NOT NULL DEFAULT true,
     repost                  BOOLEAN NOT NULL DEFAULT true,
-    liked                   BOOLEAN NOT NULL DEFAULT true,
-    disliked                BOOLEAN NOT NULL DEFAULT true,
-    comment_liked           BOOLEAN NOT NULL DEFAULT true,
-    comment_disliked        BOOLEAN NOT NULL DEFAULT true,
-    comment_reply_liked     BOOLEAN NOT NULL DEFAULT true,
-    comment_reply_disliked  BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT fk_community_video_notifications
          FOREIGN KEY(community_id)
@@ -196,12 +180,7 @@ CREATE TABLE community_good_notifications (
     mention                 BOOLEAN NOT NULL DEFAULT true,
     comment_mention         BOOLEAN NOT NULL DEFAULT true,
     repost                  BOOLEAN NOT NULL DEFAULT true,
-    liked                   BOOLEAN NOT NULL DEFAULT true,
-    disliked                BOOLEAN NOT NULL DEFAULT true,
-    comment_liked           BOOLEAN NOT NULL DEFAULT true,
-    comment_disliked        BOOLEAN NOT NULL DEFAULT true,
-    comment_reply_liked     BOOLEAN NOT NULL DEFAULT true,
-    comment_reply_disliked  BOOLEAN NOT NULL DEFAULT true,
+    reactions               BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT fk_community_good_notifications
          FOREIGN KEY(community_id)

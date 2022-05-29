@@ -2300,7 +2300,7 @@ impl Good {
                 evil:        0,
                 crying:      0,
                 party:       0,
-                star:        0,
+                star_face:   0,
                 vomiting:    0,
                 pile_of_poo: 0,
             };
@@ -2390,7 +2390,7 @@ impl Good {
             evil:        react_model.evil,
             crying:      react_model.crying,
             party:       react_model.party,
-            star:        react_model.star,
+            star_face:   react_model.star_face,
             vomiting:    react_model.vomiting,
             pile_of_poo: react_model.pile_of_poo,
         });
@@ -2547,7 +2547,7 @@ impl Good {
             11 => react_model.evil,
             12 => react_model.crying,
             13 => react_model.party,
-            14 => react_model.star,
+            14 => react_model.star_face,
             15 => react_model.vomiting,
             16 => react_model.pile_of_poo,
         };
@@ -3575,7 +3575,7 @@ pub struct GoodReaction {
     pub evil:        i32,
     pub crying:      i32,
     pub party:       i32,
-    pub star:        i32,
+    pub star_face:   i32,
     pub vomiting:    i32,
     pub pile_of_poo: i32,
 }
@@ -3643,7 +3643,7 @@ impl GoodReaction {
                     .get_result::<GoodReaction>(&_connection)
                     .expect("Error."),
                 14 => diesel::update(&self)
-                    .set(schema::good_reactions::star.eq(self.star + 1))
+                    .set(schema::good_reactions::star_face.eq(self.star_face + 1))
                     .get_result::<GoodReaction>(&_connection)
                     .expect("Error."),
                 15 => diesel::update(&self)
@@ -3711,7 +3711,7 @@ impl GoodReaction {
                     .get_result::<GoodReaction>(&_connection)
                     .expect("Error."),
                 14 => diesel::update(&self)
-                    .set(schema::good_reactions::star.eq(self.star - 1))
+                    .set(schema::good_reactions::star_face.eq(self.star_face - 1))
                     .get_result::<GoodReaction>(&_connection)
                     .expect("Error."),
                 15 => diesel::update(&self)
@@ -3781,7 +3781,7 @@ impl GoodReaction {
                         .get_result::<GoodReaction>(&_connection)
                         .expect("Error."),
                     14 => diesel::update(&self)
-                        .set(schema::good_reactions::star.eq(self.star + 1))
+                        .set(schema::good_reactions::star_face.eq(self.star_face + 1))
                         .get_result::<GoodReaction>(&_connection)
                         .expect("Error."),
                     15 => diesel::update(&self)
@@ -3850,7 +3850,7 @@ impl GoodReaction {
                         .get_result::<GoodReaction>(&_connection)
                         .expect("Error."),
                     14 => diesel::update(&self)
-                        .set(schema::good_reactions::star.eq(self.star - 1))
+                        .set(schema::good_reactions::star_face.eq(self.star_face - 1))
                         .get_result::<GoodReaction>(&_connection)
                         .expect("Error."),
                     15 => diesel::update(&self)
@@ -3886,7 +3886,7 @@ pub struct NewGoodReaction {
     pub evil:        i32,
     pub crying:      i32,
     pub party:       i32,
-    pub star:        i32,
+    pub star_face:   i32,
     pub vomiting:    i32,
     pub pile_of_poo: i32,
 }

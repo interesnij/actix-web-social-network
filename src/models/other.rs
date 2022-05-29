@@ -141,7 +141,7 @@ pub struct NewSmile {
     // 11 evil         очень злое лицо
     // 12 crying       плачущее лицо
     // 13 party        вечеринка
-    // 14 star         звезды в глазах
+    // 14 star_face    звезды в глазах
     // 15 vomiting     рвота на лице
     // 16 pile_of_poo  куча какашек
 
@@ -151,10 +151,13 @@ pub struct Reaction {
     pub types: i16,
     pub image: String,
     pub gif:   String,
+    pub name:  String,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="reactions"]
 pub struct NewReaction {
-    pub phone: String,
-    pub code:  i32,
+    pub types: i16,
+    pub image: String,
+    pub gif:   String,
+    pub name:  String,
 }

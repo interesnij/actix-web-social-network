@@ -1,8 +1,9 @@
 CREATE TABLE reactions (
-  id      SERIAL PRIMARY KEY,
-  types   SMALLINT,
-  image   VARCHAR(500),
-  gif     VARCHAR(500)
+  id     SERIAL PRIMARY KEY,
+  types  SMALLINT NOT NULL,
+  image  VARCHAR(500) NOT NULL,
+  gif    VARCHAR(500) NOT NULL,
+  name   VARCHAR(100) NOT NULL,
 );
 
 CREATE TABLE post_votes (

@@ -199,7 +199,7 @@ CREATE TABLE good_reactions (
     evil        INT NOT NULL,
     crying      INT NOT NULL,
     party       INT NOT NULL,
-    star        INT NOT NULL,
+    star_face   INT NOT NULL,
     vomiting    INT NOT NULL,
     pile_of_poo INT NOT NULL,
 

@@ -165,7 +165,7 @@ CREATE TABLE chat_reactions (
     evil        BOOLEAN NOT NULL DEFAULT false,
     crying      BOOLEAN NOT NULL DEFAULT false,
     party       BOOLEAN NOT NULL DEFAULT false,
-    star        BOOLEAN NOT NULL DEFAULT false,
+    star_face   BOOLEAN NOT NULL DEFAULT false,
     vomiting    BOOLEAN NOT NULL DEFAULT false,
     pile_of_poo BOOLEAN NOT NULL DEFAULT false,
 
@@ -190,7 +190,7 @@ CREATE TABLE message_reactions (
     evil        INT NOT NULL,
     crying      INT NOT NULL,
     party       INT NOT NULL,
-    star        INT NOT NULL,
+    star_face   INT NOT NULL,
     vomiting    INT NOT NULL,
     pile_of_poo INT NOT NULL,
 

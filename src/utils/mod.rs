@@ -56,7 +56,7 @@ pub struct JsonItemReactions {
     pub evil:        i32,
     pub crying:      i32,
     pub party:       i32,
-    pub star:        i32,
+    pub star_face:   i32,
     pub vomiting:    i32,
     pub pile_of_poo: i32,
 }

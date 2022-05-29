@@ -1977,7 +1977,7 @@ impl Video {
             evil:        react_model.evil,
             crying:      react_model.crying,
             party:       react_model.party,
-            star:        react_model.star,
+            star_face:   react_model.star_face,
             vomiting:    react_model.vomiting,
             pile_of_poo: react_model.pile_of_poo,
         });
@@ -2350,7 +2350,7 @@ impl Video {
             11 => react_model.evil,
             12 => react_model.crying,
             13 => react_model.party,
-            14 => react_model.star,
+            14 => react_model.star_face,
             15 => react_model.vomiting,
             16 => react_model.pile_of_poo,
         };
@@ -3475,7 +3475,7 @@ pub struct VideoReaction {
     pub evil:        i32,
     pub crying:      i32,
     pub party:       i32,
-    pub star:        i32,
+    pub star_face:   i32,
     pub vomiting:    i32,
     pub pile_of_poo: i32,
 }
@@ -3544,7 +3544,7 @@ impl VideoReaction {
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
                 14 => diesel::update(&self)
-                    .set(schema::video_reactions::star.eq(self.star + 1))
+                    .set(schema::video_reactions::star_face.eq(self.star_face + 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
                 15 => diesel::update(&self)
@@ -3612,7 +3612,7 @@ impl VideoReaction {
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
                 14 => diesel::update(&self)
-                    .set(schema::video_reactions::star.eq(self.star - 1))
+                    .set(schema::video_reactions::star_face.eq(self.star_face - 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
                 15 => diesel::update(&self)
@@ -3682,7 +3682,7 @@ impl VideoReaction {
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
                     14 => diesel::update(&self)
-                        .set(schema::video_reactions::star.eq(self.star + 1))
+                        .set(schema::video_reactions::star_face.eq(self.star_face + 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
                     15 => diesel::update(&self)
@@ -3751,7 +3751,7 @@ impl VideoReaction {
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
                     14 => diesel::update(&self)
-                        .set(schema::video_reactions::star.eq(self.star - 1))
+                        .set(schema::video_reactions::star_face.eq(self.star_face - 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
                     15 => diesel::update(&self)
@@ -3788,7 +3788,7 @@ pub struct NewVideoReaction {
     pub evil:        i32,
     pub crying:      i32,
     pub party:       i32,
-    pub star:        i32,
+    pub star_face:   i32,
     pub vomiting:    i32,
     pub pile_of_poo: i32,
 }
