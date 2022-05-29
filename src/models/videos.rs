@@ -3499,67 +3499,67 @@ impl VideoReaction {
         if old_types_option.is_some() {
             let old_types = old_types_option.unwrap();
             let update_model = match new_types {
-                1 => diesel::update(&self)
+                1 => diesel::update(self)
                     .set(schema::video_reactions::thumbs_up.eq(self.thumbs_up + 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                2 => diesel::update(&self).
+                2 => diesel::update(self).
                     set(schema::video_reactions::thumbs_down.eq(self.thumbs_down + 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                3 => diesel::update(&self)
+                3 => diesel::update(self)
                     .set(schema::video_reactions::red_heart.eq(self.red_heart + 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                4 => diesel::update(&self)
+                4 => diesel::update(self)
                     .set(schema::video_reactions::fire.eq(self.fire + 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                5 => diesel::update(&self)
+                5 => diesel::update(self)
                     .set(schema::video_reactions::love_face.eq(self.love_face + 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                6 => diesel::update(&self)
+                6 => diesel::update(self)
                     .set(schema::video_reactions::clapping.eq(self.clapping + 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                7 => diesel::update(&self)
+                7 => diesel::update(self)
                     .set(schema::video_reactions::beaming.eq(self.beaming + 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                8 => diesel::update(&self)
+                8 => diesel::update(self)
                     .set(schema::video_reactions::thinking.eq(self.thinking + 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                9 => diesel::update(&self)
+                9 => diesel::update(self)
                     .set(schema::video_reactions::exploding.eq(self.exploding + 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                10 => diesel::update(&self)
+                10 => diesel::update(self)
                     .set(schema::video_reactions::screaming.eq(self.screaming + 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                11 => diesel::update(&self)
+                11 => diesel::update(self)
                     .set(schema::video_reactions::evil.eq(self.evil + 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                12 => diesel::update(&self)
+                12 => diesel::update(self)
                     .set(schema::video_reactions::crying.eq(self.crying + 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                13 => diesel::update(&self)
+                13 => diesel::update(self)
                     .set(schema::video_reactions::party.eq(self.party + 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                14 => diesel::update(&self)
+                14 => diesel::update(self)
                     .set(schema::video_reactions::star_face.eq(self.star_face + 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                15 => diesel::update(&self)
+                15 => diesel::update(self)
                     .set(schema::video_reactions::vomiting.eq(self.vomiting + 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                16 => diesel::update(&self)
+                16 => diesel::update(self)
                     .set(schema::video_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
@@ -3567,67 +3567,67 @@ impl VideoReaction {
             };
 
             let update_model = match old_types {
-                1 => diesel::update(&self)
+                1 => diesel::update(self)
                     .set(schema::video_reactions::thumbs_up.eq(self.thumbs_up - 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                2 => diesel::update(&self).
+                2 => diesel::update(self).
                     set(schema::video_reactions::thumbs_down.eq(self.thumbs_down - 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                3 => diesel::update(&self)
+                3 => diesel::update(self)
                     .set(schema::video_reactions::red_heart.eq(self.red_heart - 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                4 => diesel::update(&self)
+                4 => diesel::update(self)
                     .set(schema::video_reactions::fire.eq(self.fire - 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                5 => diesel::update(&self)
+                5 => diesel::update(self)
                     .set(schema::video_reactions::love_face.eq(self.love_face - 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                6 => diesel::update(&self)
+                6 => diesel::update(self)
                     .set(schema::video_reactions::clapping.eq(self.clapping - 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                7 => diesel::update(&self)
+                7 => diesel::update(self)
                     .set(schema::video_reactions::beaming.eq(self.beaming - 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                8 => diesel::update(&self)
+                8 => diesel::update(self)
                     .set(schema::video_reactions::thinking.eq(self.thinking - 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                9 => diesel::update(&self)
+                9 => diesel::update(self)
                     .set(schema::video_reactions::exploding.eq(self.exploding - 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                10 => diesel::update(&self)
+                10 => diesel::update(self)
                     .set(schema::video_reactions::screaming.eq(self.screaming - 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                11 => diesel::update(&self)
+                11 => diesel::update(self)
                     .set(schema::video_reactions::evil.eq(self.evil - 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                12 => diesel::update(&self)
+                12 => diesel::update(self)
                     .set(schema::video_reactions::crying.eq(self.crying - 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                13 => diesel::update(&self)
+                13 => diesel::update(self)
                     .set(schema::video_reactions::party.eq(self.party - 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                14 => diesel::update(&self)
+                14 => diesel::update(self)
                     .set(schema::video_reactions::star_face.eq(self.star_face - 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                15 => diesel::update(&self)
+                15 => diesel::update(self)
                     .set(schema::video_reactions::vomiting.eq(self.vomiting - 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                16 => diesel::update(&self)
+                16 => diesel::update(self)
                     .set(schema::video_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
@@ -3637,67 +3637,67 @@ impl VideoReaction {
         else {
             if plus {
                 let update_model = match new_types {
-                    1 => diesel::update(&self)
+                    1 => diesel::update(self)
                         .set(schema::video_reactions::thumbs_up.eq(self.thumbs_up + 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    2 => diesel::update(&self).
+                    2 => diesel::update(self).
                         set(schema::video_reactions::thumbs_down.eq(self.thumbs_down + 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    3 => diesel::update(&self)
+                    3 => diesel::update(self)
                         .set(schema::video_reactions::red_heart.eq(self.red_heart + 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    4 => diesel::update(&self)
+                    4 => diesel::update(self)
                         .set(schema::video_reactions::fire.eq(self.fire + 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    5 => diesel::update(&self)
+                    5 => diesel::update(self)
                         .set(schema::video_reactions::love_face.eq(self.love_face + 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    6 => diesel::update(&self)
+                    6 => diesel::update(self)
                         .set(schema::video_reactions::clapping.eq(self.clapping + 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    7 => diesel::update(&self)
+                    7 => diesel::update(self)
                         .set(schema::video_reactions::beaming.eq(self.beaming + 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    8 => diesel::update(&self)
+                    8 => diesel::update(self)
                         .set(schema::video_reactions::thinking.eq(self.thinking + 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    9 => diesel::update(&self)
+                    9 => diesel::update(self)
                         .set(schema::video_reactions::exploding.eq(self.exploding + 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    10 => diesel::update(&self)
+                    10 => diesel::update(self)
                         .set(schema::video_reactions::screaming.eq(self.screaming + 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    11 => diesel::update(&self)
+                    11 => diesel::update(self)
                         .set(schema::video_reactions::evil.eq(self.evil + 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    12 => diesel::update(&self)
+                    12 => diesel::update(self)
                         .set(schema::video_reactions::crying.eq(self.crying + 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    13 => diesel::update(&self)
+                    13 => diesel::update(self)
                         .set(schema::video_reactions::party.eq(self.party + 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    14 => diesel::update(&self)
+                    14 => diesel::update(self)
                         .set(schema::video_reactions::star_face.eq(self.star_face + 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    15 => diesel::update(&self)
+                    15 => diesel::update(self)
                         .set(schema::video_reactions::vomiting.eq(self.vomiting + 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    16 => diesel::update(&self)
+                    16 => diesel::update(self)
                         .set(schema::video_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
@@ -3706,67 +3706,67 @@ impl VideoReaction {
             }
             else {
                 let update_model = match new_types {
-                    1 => diesel::update(&self)
+                    1 => diesel::update(self)
                         .set(schema::video_reactions::thumbs_up.eq(self.thumbs_up - 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    2 => diesel::update(&self).
+                    2 => diesel::update(self).
                         set(schema::video_reactions::thumbs_down.eq(self.thumbs_down - 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    3 => diesel::update(&self)
+                    3 => diesel::update(self)
                         .set(schema::video_reactions::red_heart.eq(self.red_heart - 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    4 => diesel::update(&self)
+                    4 => diesel::update(self)
                         .set(schema::video_reactions::fire.eq(self.fire - 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    5 => diesel::update(&self)
+                    5 => diesel::update(self)
                         .set(schema::video_reactions::love_face.eq(self.love_face - 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    6 => diesel::update(&self)
+                    6 => diesel::update(self)
                         .set(schema::video_reactions::clapping.eq(self.clapping - 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    7 => diesel::update(&self)
+                    7 => diesel::update(self)
                         .set(schema::video_reactions::beaming.eq(self.beaming - 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    8 => diesel::update(&self)
+                    8 => diesel::update(self)
                         .set(schema::video_reactions::thinking.eq(self.thinking - 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    9 => diesel::update(&self)
+                    9 => diesel::update(self)
                         .set(schema::video_reactions::exploding.eq(self.exploding - 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    10 => diesel::update(&self)
+                    10 => diesel::update(self)
                         .set(schema::video_reactions::screaming.eq(self.screaming - 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    11 => diesel::update(&self)
+                    11 => diesel::update(self)
                         .set(schema::video_reactions::evil.eq(self.evil - 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    12 => diesel::update(&self)
+                    12 => diesel::update(self)
                         .set(schema::video_reactions::crying.eq(self.crying - 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    13 => diesel::update(&self)
+                    13 => diesel::update(self)
                         .set(schema::video_reactions::party.eq(self.party - 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    14 => diesel::update(&self)
+                    14 => diesel::update(self)
                         .set(schema::video_reactions::star_face.eq(self.star_face - 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    15 => diesel::update(&self)
+                    15 => diesel::update(self)
                         .set(schema::video_reactions::vomiting.eq(self.vomiting - 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    16 => diesel::update(&self)
+                    16 => diesel::update(self)
                         .set(schema::video_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
