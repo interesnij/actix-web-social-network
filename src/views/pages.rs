@@ -1383,7 +1383,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
                         next_page_number = 2;
                     }
                 }
-                text = item.count_reactions_of_types_ru(reactions);
+                text = item.count_reactions_of_types_ru(reaction);
             }
         }
         else if code == "pho".to_string() {
@@ -1407,7 +1407,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
                         next_page_number = 2;
                     }
                 }
-                text = item.count_reactions_of_types_ru(reactions);
+                text = item.count_reactions_of_types_ru(reaction);
             }
         }
         else if code == "goo".to_string() {
@@ -1431,7 +1431,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
                         next_page_number = 2;
                     }
                 }
-                text = item.count_reactions_of_types_ru(reactions);
+                text = item.count_reactions_of_types_ru(reaction);
             }
         }
         else if code == "vid".to_string() {
@@ -1455,7 +1455,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
                         next_page_number = 2;
                     }
                 }
-                text = item.count_reactions_of_types_ru(reactions);
+                text = item.count_reactions_of_types_ru(reaction);
             }
         }
         if permission_check == false {

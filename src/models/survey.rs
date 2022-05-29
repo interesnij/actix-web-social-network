@@ -570,7 +570,7 @@ impl SurveyList {
     pub fn is_anon_user_can_copy_el(&self) -> bool {
         return self.copy_el == "a";
     }
-    pub fn create_list(creator: User, name: String, description: Option<String>, description: Option<String>,
+    pub fn create_list(creator: User, name: String, description: Option<String>, image: Option<String>,
         community_id: Option<i32>, can_see_el: String, create_el: String, copy_el: String,
         can_see_el_users: Option<Vec<i32>>, create_el_users: Option<Vec<i32>>,
         copy_el_users: Option<Vec<i32>>) -> SurveyList {
