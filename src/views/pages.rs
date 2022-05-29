@@ -77,10 +77,17 @@ pub async fn link_page(session: Session, req: HttpRequest, slug: web::Path<Strin
 }
 
 pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    use crate::schema::users::dsl::users;
+
+    let _connection = establish_connection();
+    let users_list = users
+        .load::<User>(&_connection)
+        .expect("E.");
     #[derive(TemplateOnce)]
     #[template(path = "desctop/main/auth/auth.stpl")]
     struct DesctopAuthTemplate {
         title: String,
+        users: Vec<User>,
     }
     #[derive(TemplateOnce)]
     #[template(path = "desctop/main/lists/news_list.stpl")]
@@ -132,7 +139,10 @@ pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result
 
     } else {
         if is_desctop {
-            let body = DesctopAuthTemplate { title: "Трезвый.рус | Вход".to_string() }
+            let body = DesctopAuthTemplate {
+                title: "Трезвый.рус | Вход".to_string(),
+                users: users,
+            } 
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok()
