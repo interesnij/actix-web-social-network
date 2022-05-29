@@ -2281,7 +2281,7 @@ impl Good {
             .load::<GoodComment>(&_connection)
             .expect("E.");
     }
-    pub fn get_or_create_react_model(&self) -> &GoodReaction {
+    pub fn get_or_create_react_model(&self) -> GoodReaction {
         use crate::schema::good_reactions::dsl::good_reactions;
 
         let _connection = establish_connection();
@@ -2290,7 +2290,7 @@ impl Good {
             .load::<GoodReaction>(&_connection)
             .expect("E.");
         if _react_model.len() > 0 {
-            return _react_model.last().unwrap();
+            return _react_model.into_iter().nth(0).unwrap();
         }
         else {
             let new_react_model = NewGoodReaction {
@@ -2317,7 +2317,7 @@ impl Good {
                 .get_result::<GoodReaction>(&_connection)
                 .expect("Error.");
 
-            return &_react_model;
+            return _react_model;
         }
     }
 

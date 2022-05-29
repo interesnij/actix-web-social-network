@@ -1903,7 +1903,7 @@ impl Post {
         }
     }
 
-    pub fn get_or_create_react_model(&self) -> &PostReaction {
+    pub fn get_or_create_react_model(&self) -> PostReaction {
         use crate::schema::post_reactions::dsl::post_reactions;
 
         let _connection = establish_connection();
@@ -1912,7 +1912,7 @@ impl Post {
             .load::<PostReaction>(&_connection)
             .expect("E.");
         if _react_model.len() > 0 {
-            return _react_model.last().unwrap();
+            return _react_model.into_iter().nth(0).unwrap();
         }
         else {
             let new_react_model = NewPostReaction {
@@ -1939,7 +1939,7 @@ impl Post {
                 .get_result::<PostReaction>(&_connection)
                 .expect("Error.");
 
-            return &_react_model;
+            return _react_model;
         }
     }
 

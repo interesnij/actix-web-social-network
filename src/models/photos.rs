@@ -1887,7 +1887,7 @@ impl Photo {
         }
     }
 
-    pub fn get_or_create_react_model(&self) -> &PhotoReaction {
+    pub fn get_or_create_react_model(&self) -> PhotoReaction {
         use crate::schema::photo_reactions::dsl::photo_reactions;
 
         let _connection = establish_connection();
@@ -1896,7 +1896,7 @@ impl Photo {
             .load::<PhotoReaction>(&_connection)
             .expect("E.");
         if _react_model.len() > 0 {
-            return _react_model.last().unwrap();
+            return _react_model.into_iter().nth(0).unwrap();
         }
         else {
             let new_react_model = NewPhotoReaction {
@@ -1923,7 +1923,7 @@ impl Photo {
                 .get_result::<PhotoReaction>(&_connection)
                 .expect("Error.");
 
-            return &_react_model;
+            return _react_model;
         }
     }
 
