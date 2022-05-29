@@ -2293,7 +2293,7 @@ impl User {
                     can_see_el:      "a".to_string(),
                     create_el:       "g".to_string(),
                     copy_el:         "g".to_string(),
-                    reactions:       Some("1, 2".to_string()),
+                    //reactions:       Some("1, 2".to_string()),
                 };
             let _docs_list = diesel::insert_into(schema::doc_lists::table)
                 .values(&new_list)

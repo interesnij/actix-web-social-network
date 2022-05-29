@@ -1,0 +1,16 @@
+<% if object_list.len() > 0 { %>
+<div class="like_pop" style="margin:15px">
+  <span><%= text %></span>
+  <br><br>
+  <span style="display: flex;">
+    <% for user in object_list.iter() { %>
+      <% include!("../../user/voter.stpl"); %>
+    <% } %>
+    <% if next_page_number > 0 { %>
+    <div class="load centered m-1 next_page_list" data-link="/load/reactions/?types=<%= types %>&reaction=<%= reaction %>&page=<%= next_page_number %>">
+      <img src="/static/images/preloader.gif">
+    </div>
+    <% } %>
+  </span>
+</div>
+<% } %>

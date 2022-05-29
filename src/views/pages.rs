@@ -33,6 +33,7 @@ pub fn pages_routes(config: &mut web::ServiceConfig) {
     config.route("/progs/create_claim/", web::get().to(create_claim_page));
     config.route("/load/likes/", web::get().to(all_likes_page));
     config.route("/load/dislikes/", web::get().to(all_dislikes_page));
+    config.route("/load/reactions/", web::get().to(all_reactions_page));
 }
 
 pub async fn link_page(session: Session, req: HttpRequest, slug: web::Path<String>) -> actix_web::Result<HttpResponse> {
@@ -1089,80 +1090,6 @@ pub async fn all_likes_page(session: Session, req: HttpRequest) -> actix_web::Re
                 }
             }
         }
-        else {
-            if types == "pos".to_string() {
-                use crate::utils::get_post;
-
-                let item = get_post(item_id);
-                let list = item.get_list();
-                if list.community_id.is_some() {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
-                }
-                else {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
-                }
-                if permission_check {
-                    object_list = item.likes(20, step.into());
-                    if page > 1 && item.liked > (page * 20) {
-                        next_page_number = page + 1;
-                    }
-                    else {
-                        if item.liked > 20 {
-                            next_page_number = 2;
-                        }
-                    }
-                    text = "Запись не оценили: ".to_string() + &item.likes_count_ru();
-                }
-            }
-            else if types == "goo".to_string() {
-                use crate::utils::get_good;
-
-                let item = get_good(item_id);
-                let list = item.get_list();
-                if list.community_id.is_some() {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
-                }
-                else {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
-                }
-                if permission_check {
-                    object_list = item.likes(20, step.into());
-                    if page > 1 && item.liked > (page * 20) {
-                        next_page_number = page + 1;
-                    }
-                    else {
-                        if item.liked > 20 {
-                            next_page_number = 2;
-                        }
-                    }
-                    text = "Товар не оценили: ".to_string() + &item.likes_count_ru();
-                }
-            }
-            else if types == "vid".to_string() {
-                use crate::utils::get_video;
-
-                let item = get_video(item_id);
-                let list = item.get_list();
-                if list.community_id.is_some() {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
-                }
-                else {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
-                }
-                if permission_check {
-                    object_list = item.likes(20, step.into());
-                    if page > 1 && item.liked > (page * 20) {
-                        next_page_number = page + 1;
-                    }
-                    else {
-                        if item.liked > 20 {
-                            next_page_number = 2;
-                        }
-                    }
-                    text = "Видеозапись не оценили: ".to_string() + &item.likes_count_ru();
-                }
-            }
-        }
         if permission_check == false {
             #[derive(TemplateOnce)]
             #[template(path = "base_block/close/close_item.stpl")]
@@ -1337,80 +1264,6 @@ pub async fn all_dislikes_page(session: Session, req: HttpRequest) -> actix_web:
                 }
             }
         }
-        else {
-            if types == "pos".to_string() {
-                use crate::utils::get_post;
-
-                let item = get_post(item_id);
-                let list = item.get_list();
-                if list.community_id.is_some() {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
-                }
-                else {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
-                }
-                if permission_check {
-                    object_list = item.dislikes(20, step.into());
-                    if page > 1 && item.disliked > (page * 20) {
-                        next_page_number = page + 1;
-                    }
-                    else {
-                        if item.disliked > 20 {
-                            next_page_number = 2;
-                        }
-                    }
-                    text = "Запись не оценили: ".to_string() + &item.dislikes_count_ru();
-                }
-            }
-            else if types == "goo".to_string() {
-                use crate::utils::get_good;
-
-                let item = get_good(item_id);
-                let list = item.get_list();
-                if list.community_id.is_some() {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
-                }
-                else {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
-                }
-                if permission_check {
-                    object_list = item.dislikes(20, step.into());
-                    if page > 1 && item.disliked > (page * 20) {
-                        next_page_number = page + 1;
-                    }
-                    else {
-                        if item.disliked > 20 {
-                            next_page_number = 2;
-                        }
-                    }
-                    text = "Товар не оценили: ".to_string() + &item.dislikes_count_ru();
-                }
-            }
-            else if types == "vid".to_string() {
-                use crate::utils::get_video;
-
-                let item = get_video(item_id);
-                let list = item.get_list();
-                if list.community_id.is_some() {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
-                }
-                else {
-                    permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
-                }
-                if permission_check {
-                    object_list = item.dislikes(20, step.into());
-                    if page > 1 && item.disliked > (page * 20) {
-                        next_page_number = page + 1;
-                    }
-                    else {
-                        if item.disliked > 20 {
-                            next_page_number = 2;
-                        }
-                    }
-                    text = "Видеозапись не оценили: ".to_string() + &item.dislikes_count_ru();
-                }
-            }
-        }
         if permission_check == false {
             #[derive(TemplateOnce)]
             #[template(path = "base_block/close/close_item.stpl")]
@@ -1457,6 +1310,203 @@ pub async fn all_dislikes_page(session: Session, req: HttpRequest) -> actix_web:
                 types:            types,
                 object_list:      object_list,
                 next_page_number: next_page_number,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+
+pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        use crate::utils::{get_user_permission, get_community_permission};
+
+        #[derive(Debug, Deserialize)]
+        struct TypesParams {
+            pub types:    Option<String>,
+            pub reaction: Option<i16>,
+        }
+        let mut item_id: i32 = 0;
+        let mut code = "".to_string();
+        let mut reaction: i16 = 0;
+
+        let params_some = web::Query::<TypesParams>::from_query(&req.query_string());
+        if params_some.is_ok() {
+            let params = params_some.unwrap();
+            if params.types.is_some() {
+                let item = params.types.as_deref().unwrap();
+                let pk: i32 = item[3..].parse().unwrap();
+                let code = &item[..3].to_string();
+            }
+            if params.reaction.is_some() {
+                let reaction: i16 = params.reaction.unwrap();
+            }
+        }
+
+        let (is_desctop, page) = get_list_variables(req);
+        let mut next_page_number = 0;
+        let mut step = 0;
+        let _request_user = get_request_user_data(session);
+        let _request_user_id = &_request_user.id;
+        let mut text = "".to_string();
+        let mut permission_check = false;
+
+        let mut object_list: Vec<User> = Vec::new();
+
+        if page > 1 {
+            step = (page - 1) * 20;
+        }
+
+        if types == "pos".to_string() {
+            use crate::utils::get_post;
+
+            let item = get_post(item_id);
+            let list = item.get_list();
+            if list.community_id.is_some() {
+                permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
+            }
+            else {
+                permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+            }
+            if permission_check {
+                object_list = item.get_reactions_users_of_types(20, step.into(), reaction);
+                if page > 1 && item.reactions > (page * 20) {
+                    next_page_number = page + 1;
+                }
+                else {
+                    if item.reactions > 20 {
+                        next_page_number = 2;
+                    }
+                }
+                text = item.count_reactions_of_types_ru(reactions);
+            }
+        }
+        else if types == "pho".to_string() {
+            use crate::utils::get_photo;
+
+            let item = get_photo(item_id);
+            let list = item.get_list();
+            if list.community_id.is_some() {
+                permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
+            }
+            else {
+                permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+            }
+            if permission_check {
+                object_list = item.get_reactions_users_of_types(20, step.into(), reaction);
+                if page > 1 && item.reactions > (page * 20) {
+                    next_page_number = page + 1;
+                }
+                else {
+                    if item.reactions > 20 {
+                        next_page_number = 2;
+                    }
+                }
+                text = item.count_reactions_of_types_ru(reactions);
+            }
+        }
+        else if types == "goo".to_string() {
+            use crate::utils::get_good;
+
+            let item = get_good(item_id);
+            let list = item.get_list();
+            if list.community_id.is_some() {
+                permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
+            }
+            else {
+                permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+            }
+            if permission_check {
+                object_list = item.get_reactions_users_of_types(20, step.into(), reaction);
+                if page > 1 && item.reactions > (page * 20) {
+                    next_page_number = page + 1;
+                }
+                else {
+                    if item.reactions > 20 {
+                        next_page_number = 2;
+                    }
+                }
+                text = item.count_reactions_of_types_ru(reactions);
+            }
+        }
+        else if types == "vid".to_string() {
+            use crate::utils::get_video;
+
+            let item = get_video(item_id);
+            let list = item.get_list();
+            if list.community_id.is_some() {
+                permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
+            }
+            else {
+                permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+            }
+            if permission_check {
+                object_list = item.get_reactions_users_of_types(20, step.into(), reaction);
+                if page > 1 && item.reactions > (page * 20) {
+                    next_page_number = page + 1;
+                }
+                else {
+                    if item.reactions > 20 {
+                        next_page_number = 2;
+                    }
+                }
+                text = item.count_reactions_of_types_ru(reactions);
+            }
+        }
+        if permission_check == false {
+            #[derive(TemplateOnce)]
+            #[template(path = "base_block/close/close_item.stpl")]
+            struct Template {
+                text: String,
+            }
+            let body = Template {
+                text:  "Permission Denied.".to_string(),
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/generic/items/reactions.stpl")]
+            struct Template {
+                text:             String,
+                types:            String,
+                object_list:      Vec<User>,
+                next_page_number: i32,
+                reaction:         i16,
+            }
+            let body = Template {
+                text:             text,
+                types:            types,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                reaction:         reaction,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/generic/items/anon_reactions.stpl")]
+            struct Template {
+                text:             String,
+                types:            String,
+                object_list:      Vec<User>,
+                next_page_number: i32,
+                reaction:         i16,
+            }
+            let body = Template {
+                text:             text,
+                types:            types,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                reaction:         reaction,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
