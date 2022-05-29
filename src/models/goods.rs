@@ -3662,7 +3662,7 @@ impl GoodReaction {
                     .set(schema::good_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                     .get_result::<GoodReaction>(&_connection)
                     .expect("Error."),
-                _ => &self,
+                //_ => &self,
             };
 
             let update_model = match old_types {
@@ -3730,7 +3730,7 @@ impl GoodReaction {
                     .set(schema::good_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                     .get_result::<GoodReaction>(&_connection)
                     .expect("Error."),
-                _ => &self,
+                //_ => &self,
             };
         }
         else {
@@ -3800,7 +3800,7 @@ impl GoodReaction {
                         .set(schema::good_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                         .get_result::<GoodReaction>(&_connection)
                         .expect("Error."),
-                    _ => &self,
+                    //_ => &self,
                 };
             }
             else {
@@ -3869,7 +3869,7 @@ impl GoodReaction {
                         .set(schema::good_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                         .get_result::<GoodReaction>(&_connection)
                         .expect("Error."),
-                    _ => &self,
+                //    _ => &self,
                 };
             }
             return &self;
