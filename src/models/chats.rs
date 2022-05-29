@@ -2116,7 +2116,7 @@ impl Message {
         }
     }
 
-    pub fn get_or_create_react_model(&self) -> &MessageReaction {
+    pub fn get_or_create_react_model(&self) -> MessageReaction {
         use crate::schema::message_reactions::dsl::message_reactions;
 
         let _connection = establish_connection();
@@ -2125,7 +2125,7 @@ impl Message {
             .load::<MessageReaction>(&_connection)
             .expect("E.");
         if _react_model.len() > 0 {
-            return &_react_model.last().unwrap(); 
+            return _react_model.into_iter().nth(0).unwrap();  
         }
         else {
             let new_react_model = NewMessageReaction {
@@ -2152,7 +2152,7 @@ impl Message {
                 .get_result::<MessageReaction>(&_connection)
                 .expect("Error.");
 
-            return &_react_model;
+            return _react_model;
         }
     }
 
