@@ -3557,7 +3557,7 @@ impl PhotoReaction {
                     .set(schema::photo_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                     .get_result::<PhotoReaction>(&_connection)
                     .expect("Error."),
-                _ => &self,
+                _ => self,
             };
 
             let update_model = match old_types {
@@ -3625,7 +3625,7 @@ impl PhotoReaction {
                     .set(schema::photo_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                     .get_result::<PhotoReaction>(&_connection)
                     .expect("Error."),
-                _ => &self,
+                _ => self,
             };
             return &self;
         }
@@ -3696,7 +3696,7 @@ impl PhotoReaction {
                         .set(schema::photo_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                         .get_result::<PhotoReaction>(&_connection)
                         .expect("Error."),
-                    _ => &self,
+                    _ => self,
                 };
             }
             else {
@@ -3765,7 +3765,7 @@ impl PhotoReaction {
                         .set(schema::photo_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                         .get_result::<PhotoReaction>(&_connection)
                         .expect("Error."),
-                    _ => &self,
+                    _ => self,
                 };
             }
             return &self;

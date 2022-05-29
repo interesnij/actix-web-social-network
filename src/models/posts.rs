@@ -2576,7 +2576,8 @@ impl Post {
 
     pub fn count_reactions_of_types(&self, types: i16) -> i32 {
         let react_model = self.get_or_create_react_model();
-        let count = match types {
+        let format_types: i32 = types.into();
+        let count = match format_types {
             1 => react_model.thumbs_up,
             2 => react_model.thumbs_down,
             3 => react_model.red_heart,
