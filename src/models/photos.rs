@@ -3446,7 +3446,7 @@ impl PhotoReaction {
         new_types: i16,
         old_types_option: Option<i16>,
         plus: bool,
-    ) -> PhotoReaction {
+    ) -> bool {
         let _connection = establish_connection();
         if old_types_option.is_some() {
             let old_types = old_types_option.unwrap();
@@ -3725,7 +3725,7 @@ impl PhotoReaction {
                     _ => (),
                 };
             }
-            return self;
+            return true;
         }
     }
 }

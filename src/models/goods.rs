@@ -3872,7 +3872,7 @@ impl GoodReaction {
                     _ => (),
                 };
             }
-            return self;
+            return &self;
         }
     }
 }
