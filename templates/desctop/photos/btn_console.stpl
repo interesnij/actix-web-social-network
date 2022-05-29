@@ -1,5 +1,5 @@
 <span>
-<% if list.is_user_can_create_el(request_user.id) { %>
+<% if is_staff { %>
 <span>
   <span>
     <a class="photo_remove">Удалить</a>
@@ -19,16 +19,8 @@
           <a class="photo_on_comment">Вкл. комментарии</a>
         <% } %>
       </span>
-      &nbsp;
-      <span>
-        <% if object.votes_on { %>
-          <a class="photo_off_votes">Выкл. реакции</a>
-        <% } else { %>
-          <a class="photo_on_votes">Вкл. реакции</a>
-        <% } %>
-      </span>
   </span>
-  <% } else if request_user.is_moderator() { %>
+  <% } else if is_moderator { %>
     <span class="create_close pointer">Закрыть</span>
   <% } else { %>
     <span class="create_claim pointer">Пожаловаться</span>

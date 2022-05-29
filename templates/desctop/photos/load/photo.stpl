@@ -1,3 +1,8 @@
+<% let is_staff = list.is_user_can_create_el(request_user.id); %>
+<% let reactions_list = list.get_reactions_list(); %>
+<% let count_reactions_list = list.count_reactions_list(); %>
+<% let is_moderator = request_user.is_moderator(); %>
+
 <span class="text-hide-xs">
   <% if prev.is_some() { %>
     <a class="prev_item" href="/photos/load_photo/<%= prev.unwrap() %>/">
