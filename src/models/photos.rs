@@ -3557,7 +3557,10 @@ impl PhotoReaction {
                     .set(schema::photo_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                     .get_result::<PhotoReaction>(&_connection)
                     .expect("Error."),
-                _ => self,
+                _ => diesel::update(self)
+                    .set(schema::photo_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
+                    .get_result::<PhotoReaction>(&_connection)
+                    .expect("Error."),
             };
 
             let update_model = match old_types {
@@ -3625,7 +3628,10 @@ impl PhotoReaction {
                     .set(schema::photo_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                     .get_result::<PhotoReaction>(&_connection)
                     .expect("Error."),
-                _ => self,
+                _ => diesel::update(self)
+                    .set(schema::photo_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
+                    .get_result::<PhotoReaction>(&_connection)
+                    .expect("Error."),
             };
             return &self;
         }
@@ -3696,7 +3702,10 @@ impl PhotoReaction {
                         .set(schema::photo_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                         .get_result::<PhotoReaction>(&_connection)
                         .expect("Error."),
-                    _ => self,
+                    _ => diesel::update(self)
+                        .set(schema::photo_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
+                        .get_result::<PhotoReaction>(&_connection)
+                        .expect("Error."),
                 };
             }
             else {
@@ -3765,7 +3774,10 @@ impl PhotoReaction {
                         .set(schema::photo_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                         .get_result::<PhotoReaction>(&_connection)
                         .expect("Error."),
-                    _ => self,
+                    _ => diesel::update(self)
+                        .set(schema::photo_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
+                        .get_result::<PhotoReaction>(&_connection)
+                        .expect("Error."),
                 };
             }
             return &self;
