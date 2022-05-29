@@ -45,6 +45,7 @@ pub struct JsonReactions {
 
 #[derive(Deserialize,Serialize)]
 pub struct JsonItemReactions {
+    pub reactions:   i32,
     pub thumbs_up:   i32,
     pub thumbs_down: i32,
     pub red_heart:   i32,

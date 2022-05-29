@@ -2679,7 +2679,7 @@ impl Post {
         return get_users_from_ids(stack);
     }
 
-    pub fn get_6_reactions_users_of_types(&self, types: &str) -> Vec<User> {
+    pub fn get_6_reactions_users_of_types(&self, types: i16) -> Vec<User> {
         use crate::schema::post_votes::dsl::post_votes;
         use crate::utils::get_users_from_ids;
 
