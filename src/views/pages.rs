@@ -1326,7 +1326,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
         use crate::utils::{get_user_permission, get_community_permission};
 
         #[derive(Debug, Deserialize)]
-        struct TypesParams {
+        pub struct TypesParams {
             pub types:    Option<String>,
             pub reaction: Option<i16>,
         }

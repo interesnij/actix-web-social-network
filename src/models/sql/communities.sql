@@ -165,6 +165,7 @@ CREATE TABLE community_video_notifications (
     mention                 BOOLEAN NOT NULL DEFAULT true,
     comment_mention         BOOLEAN NOT NULL DEFAULT true,
     repost                  BOOLEAN NOT NULL DEFAULT true,
+    reactions               BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT fk_community_video_notifications
          FOREIGN KEY(community_id)
