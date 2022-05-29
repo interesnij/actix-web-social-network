@@ -1,6 +1,9 @@
 <div class="card mb-3 u_post pag" data-type="user_post" data-pk="<%= object.id %>">
 
-<% let post_creator = object.get_creator(); %>
+  <% let reactions_list = list.get_reactions_list(); %>
+  <% let count_reactions_list = list.count_reactions_list(); %>
+  <% let post_creator = object.get_creator(); %>
+
 <div class="card-header">
     <div class="media">
     <a href="<%= post_creator.link %>" class="ajax">

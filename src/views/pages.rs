@@ -1341,7 +1341,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
             if params.types.is_some() {
                 let item = params.types.as_deref().unwrap();
                 item_id = item[3..].parse().unwrap();
-                code = &item[..3].to_string();
+                code = item[..3].to_string();
             }
             if params.reaction.is_some() {
                 reaction = params.reaction.unwrap();
