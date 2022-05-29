@@ -141,8 +141,8 @@ pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result
         if is_desctop {
             let body = DesctopAuthTemplate {
                 title: "Трезвый.рус | Вход".to_string(),
-                users: users,
-            } 
+                users: users_list,
+            }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok()
