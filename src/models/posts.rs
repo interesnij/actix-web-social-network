@@ -2432,7 +2432,6 @@ impl Post {
     pub fn message_reposts(&self) -> Vec<Post> {
         use crate::schema::messages::dsl::messages;
         use crate::schema::posts::dsl::posts;
-        use crate::models::Message;
 
         let _connection = establish_connection();
         let messages_list = messages

@@ -510,8 +510,6 @@ pub async fn edit_photo_description(session: Session, mut payload: Multipart, _i
                 }
             }
 
-            use crate::utils::establish_connection;
-            use crate::schema;
             let _connection = establish_connection();
             diesel::update(&_photo)
                 .set(schema::photos::description.eq(form.description))
