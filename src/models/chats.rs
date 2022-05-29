@@ -134,6 +134,9 @@ impl Chat {
         }
         return stack;
     }
+    pub fn count_reactions_list(&self) -> usize {
+        return self.get_reactions_list().len();
+    }
     pub fn liked_manager(&self, user_id: i32) -> bool {
         use crate::schema::support_user_votes::dsl::support_user_votes;
         use crate::models::SupportUserVote;

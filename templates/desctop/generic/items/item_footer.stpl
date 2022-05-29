@@ -1,6 +1,8 @@
 <span
   class="like
-  <% if object.reactions_ids().iter().any(|&i| i==request_user.id) { %>
+  <% if count_reactions_list == 0 { %>
+    hide
+  <% } else if object.reactions_ids().iter().any(|&i| i==request_user.id) { %>
     btn_success
   <% } else { %>
     btn_default

@@ -152,6 +152,9 @@ impl PhotoList {
         }
         return stack;
     }
+    pub fn count_reactions_list(&self) -> usize {
+        return self.get_reactions_list().len();
+    }
     pub fn get_cover_photo(&self) -> String {
         if self.cover_photo.is_some() {
             return self.cover_photo.as_deref().unwrap().to_string();

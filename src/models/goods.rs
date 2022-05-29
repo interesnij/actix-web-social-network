@@ -196,6 +196,9 @@ impl GoodList {
         }
         return stack;
     }
+    pub fn count_reactions_list(&self) -> usize {
+        return self.get_reactions_list().len();
+    }
     pub fn get_longest_penalties(&self) -> String {
         use crate::schema::moderated_penalties::dsl::moderated_penalties;
         use crate::models::ModeratedPenaltie;
