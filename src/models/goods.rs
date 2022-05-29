@@ -2355,7 +2355,7 @@ impl Good {
                 }
                 // если пользователь уже реагировал другой реакцией на этот товар
                 else {
-                    let old_type = vote.types;
+                    let old_type = vote.reaction;
                     diesel::update(&vote)
                         .set(schema::good_votes::reaction.eq(types))
                         .get_result::<GoodVote>(&_connection)
@@ -2632,7 +2632,7 @@ impl Good {
             .nth(0)
             .unwrap();
 
-        return vote.types;
+        return vote.reaction;
     }
 
     pub fn get_reactions_users_of_types(&self, limit: i64, offset: i64, types: i16) -> Vec<User> {

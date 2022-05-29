@@ -1925,7 +1925,7 @@ impl Post {
                 let vote = votes.into_iter().nth(0).unwrap();
 
                 // если пользователь уже реагировал этой реакцией на этот товар
-                if vote.types == types {
+                if vote.reaction == types {
                     diesel::delete(post_votes
                         .filter(schema::post_votes::user_id.eq(user_id))
                         .filter(schema::post_votes::post_id.eq(self.id))
@@ -1937,7 +1937,7 @@ impl Post {
                 }
                 // если пользователь уже реагировал другой реакцией на этот товар
                 else {
-                    let old_type = vote.types;
+                    let old_type = vote.reaction;
                     diesel::update(&vote)
                         .set(schema::post_votes::reaction.eq(types))
                         .get_result::<PostVote>(&_connection)
@@ -2618,7 +2618,7 @@ impl Post {
             .nth(0)
             .unwrap();
 
-        return vote.types;
+        return vote.reaction;
     }
 
     pub fn get_reactions_users_of_types(&self, limit: i64, offset: i64, types: i16) -> Vec<User> {

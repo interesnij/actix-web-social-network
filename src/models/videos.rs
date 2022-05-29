@@ -1930,7 +1930,7 @@ impl Video {
                 let vote = votes.into_iter().nth(0).unwrap();
 
                 // если пользователь уже реагировал этой реакцией на этот товар
-                if vote.types == types {
+                if vote.reaction == types {
                     diesel::delete(video_votes
                         .filter(schema::video_votes::user_id.eq(user_id))
                         .filter(schema::video_votes::video_id.eq(self.id))
@@ -1942,7 +1942,7 @@ impl Video {
                 }
                 // если пользователь уже реагировал другой реакцией на этот товар
                 else {
-                    let old_type = vote.types;
+                    let old_type = vote.reaction;
                     diesel::update(&vote)
                         .set(schema::video_votes::reaction.eq(types))
                         .get_result::<VideoVote>(&_connection)
@@ -2422,7 +2422,7 @@ impl Video {
             .nth(0)
             .unwrap();
 
-        return vote.types;
+        return vote.reaction;
     }
 
     pub fn get_reactions_users_of_types(&self, limit: i64, offset: i64, types: i16) -> Vec<User> {

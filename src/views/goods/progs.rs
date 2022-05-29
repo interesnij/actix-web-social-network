@@ -58,7 +58,7 @@ pub async fn add_user_list(session: Session, mut payload: Multipart) -> actix_we
         let _request_user = get_request_user_data(session);
         let form = post_list_form(
             payload.borrow_mut(),
-            "users",
+            "users".to_string(),
             _request_user.id.to_string()
         ).await;
         let new_list = GoodList::create_list (
@@ -109,7 +109,7 @@ pub async fn edit_user_list(session: Session, mut payload: Multipart, _id: web::
         if list.user_id == _request_user.id {
             let form = post_list_form(
                 payload.borrow_mut(),
-                "users",
+                "users".to_string(),
                 _request_user.id.to_string()
             ).await;
             list.edit_list (
@@ -163,7 +163,7 @@ pub async fn add_community_list(session: Session, mut payload: Multipart, _id: w
         if community.get_administrators_ids().iter().any(|&i| i==_request_user.id) {
             let form = post_list_form(
                 payload.borrow_mut(),
-                "communities",
+                "communities".to_string(),
                 community.id.to_string()
             ).await;
             let new_list = GoodList::create_list (
@@ -221,7 +221,7 @@ pub async fn edit_community_list(session: Session, mut payload: Multipart, _id: 
         if community.get_administrators_ids().iter().any(|&i| i==_request_user.id) {
             let form = post_list_form(
                 payload.borrow_mut(),
-                "communities",
+                "communities".to_string(),
                 community.id.to_string()
             ).await;
             list.edit_list (

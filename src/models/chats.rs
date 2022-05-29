@@ -2162,7 +2162,7 @@ impl Message {
                 }
                 // если пользователь уже реагировал другой реакцией на этот товар
                 else {
-                    let old_type = vote.types;
+                    let old_type = vote.reaction;
                     diesel::update(&vote)
                         .set(schema::message_votes::reaction.eq(types))
                         .get_result::<MessageVote>(&_connection)
@@ -2211,7 +2211,7 @@ impl Message {
         });
     }
 
-    pub fn count_reactions_of_types(&self, types: i16) -> Vec<User> {
+    pub fn count_reactions_of_types(&self, types: i16) -> usize {
         let react_model = self.get_or_create_react_model();
         let count = match types {
             1 => react_model.thumbs_up,
@@ -2291,7 +2291,7 @@ impl Message {
             .nth(0)
             .unwrap();
 
-        return vote.types;
+        return vote.reaction;
     }
 
     pub fn get_reactions_users_of_types(&self, limit: i64, offset: i64, types: i16) -> Vec<User> {
@@ -2636,7 +2636,7 @@ impl MessageReaction {
                         .set(schema::message_reactions::thumbs_up.eq(self.thumbs_up - 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
-                    2 => diesel::update(&self).
+                    2 => diesel::update(self).
                         set(schema::message_reactions::thumbs_down.eq(self.thumbs_down - 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),

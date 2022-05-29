@@ -1908,7 +1908,7 @@ impl Photo {
                 let vote = votes.into_iter().nth(0).unwrap();
 
                 // если пользователь уже реагировал этой реакцией на этот товар
-                if vote.types == types {
+                if vote.reaction == types {
                     diesel::delete(photo_votes
                         .filter(schema::photo_votes::user_id.eq(user_id))
                         .filter(schema::photo_votes::photo_id.eq(self.id))
@@ -1920,7 +1920,7 @@ impl Photo {
                 }
                 // если пользователь уже реагировал другой реакцией на этот товар
                 else {
-                    let old_type = vote.types;
+                    let old_type = vote.reaction;
                     diesel::update(&vote)
                         .set(schema::photo_votes::reaction.eq(types))
                         .get_result::<PhotoVote>(&_connection)
@@ -2447,7 +2447,7 @@ impl Photo {
             .nth(0)
             .unwrap();
 
-        return vote.types;
+        return vote.reaction;
     }
 
     pub fn get_reactions_users_of_types(&self, limit: i64, offset: i64, types: i16) -> Vec<User> {
@@ -3710,7 +3710,7 @@ impl PhotoReaction {
                         .set(schema::photo_reactions::party.eq(self.party - 1))
                         .get_result::<PhotoReaction>(&_connection)
                         .expect("Error."),
-                    14 => diesel::update(&self)
+                    14 => diesel::update(self)
                         .set(schema::photo_reactions::star_face.eq(self.star_face - 1))
                         .get_result::<PhotoReaction>(&_connection)
                         .expect("Error."),
