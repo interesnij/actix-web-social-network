@@ -47,8 +47,6 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
     config.route("/photos/recover_photo/{id}/", web::get().to(recover_photo));
     config.route("/photos/on_comment/{id}/", web::get().to(on_comment));
     config.route("/photos/off_comment/{id}/", web::get().to(off_comment));
-    config.route("/photos/on_votes/{id}/", web::get().to(on_votes));
-    config.route("/photos/off_votes/{id}/", web::get().to(off_votes));
 
     config.route("/photos/add_comment/{id}/", web::post().to(add_comment));
     config.route("/photos/add_reply/{id}/", web::post().to(add_reply));
@@ -611,49 +609,6 @@ pub async fn off_comment(session: Session, _id: web::Path<i32>) -> actix_web::Re
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
 }
-
-pub async fn on_votes(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    if is_signed_in(&session) {
-        let photo = get_photo(*_id);
-        let _request_user = get_request_user_data(session);
-        if photo.is_user_can_edit_delete_item(_request_user.id) {
-            use crate::schema::photos::dsl::photos;
-
-            let _connection = establish_connection();
-            diesel::update(&photo)
-                .set(schema::photos::votes_on.eq(true))
-                .get_result::<Photo>(&_connection)
-                .expect("Error.");
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
-        } else {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
-        }
-    } else {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
-    }
-}
-
-pub async fn off_votes(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    if is_signed_in(&session) {
-        let photo = get_photo(*_id);
-        let _request_user = get_request_user_data(session);
-        if photo.is_user_can_edit_delete_item(_request_user.id) {
-            use crate::schema::photos::dsl::photos;
-
-            let _connection = establish_connection();
-            diesel::update(&photo)
-                .set(schema::photos::votes_on.eq(false))
-                .get_result::<Photo>(&_connection)
-                .expect("Error.");
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
-        } else {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
-        }
-    } else {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
-    }
-}
-
 
 pub async fn add_comment(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {

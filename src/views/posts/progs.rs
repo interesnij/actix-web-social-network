@@ -45,8 +45,6 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
     config.route("/posts/recover_post/{id}/", web::get().to(recover_post));
     config.route("/posts/on_comment/{id}/", web::get().to(on_comment));
     config.route("/posts/off_comment/{id}/", web::get().to(off_comment));
-    config.route("/posts/on_votes/{id}/", web::get().to(on_votes));
-    config.route("/posts/off_votes/{id}/", web::get().to(off_votes));
     config.route("/posts/fixed/{id}/", web::get().to(fixed));
     config.route("/posts/unfixed/{id}/", web::get().to(unfixed));
 
@@ -745,48 +743,6 @@ pub async fn off_comment(session: Session, _id: web::Path<i32>) -> actix_web::Re
             let _connection = establish_connection();
             diesel::update(&post)
                 .set(schema::posts::comment_enabled.eq(false))
-                .get_result::<Post>(&_connection)
-                .expect("Error.");
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
-        } else {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
-        }
-    } else {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
-    }
-}
-
-pub async fn on_votes(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    if is_signed_in(&session) {
-        let post = get_post(*_id);
-        let _request_user = get_request_user_data(session);
-        if post.is_user_can_edit_delete_item(_request_user.id) {
-            use crate::schema::posts::dsl::posts;
-
-            let _connection = establish_connection();
-            diesel::update(&post)
-                .set(schema::posts::votes_on.eq(true))
-                .get_result::<Post>(&_connection)
-                .expect("Error.");
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
-        } else {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
-        }
-    } else {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
-    }
-}
-
-pub async fn off_votes(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    if is_signed_in(&session) {
-        let post = get_post(*_id);
-        let _request_user = get_request_user_data(session);
-        if post.is_user_can_edit_delete_item(_request_user.id) {
-            use crate::schema::posts::dsl::posts;
-
-            let _connection = establish_connection();
-            diesel::update(&post)
-                .set(schema::posts::votes_on.eq(false))
                 .get_result::<Post>(&_connection)
                 .expect("Error.");
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
