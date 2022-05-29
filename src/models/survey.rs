@@ -74,6 +74,7 @@ pub struct SurveyList {
     pub user_id:         i32,
     pub types:           i16,
     pub description:     Option<String>,
+    pub image:           Option<String>,
     pub created:         chrono::NaiveDateTime,
     pub count:           i32,
     pub repost:          i32,
@@ -91,6 +92,7 @@ pub struct NewSurveyList {
     pub user_id:         i32,
     pub types:           i16,
     pub description:     Option<String>,
+    pub image:           Option<String>,
     pub created:         chrono::NaiveDateTime,
     pub count:           i32,
     pub repost:          i32,
@@ -103,11 +105,12 @@ pub struct NewSurveyList {
 #[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
 #[table_name="survey_lists"]
 pub struct EditSurveyList {
-    pub name:            String,
-    pub description:     Option<String>,
-    pub can_see_el:      String,
-    pub create_el:       String,
-    pub copy_el:         String,
+    pub name:         String,
+    pub description:  Option<String>,
+    pub image:        Option<String>,
+    pub can_see_el:   String,
+    pub create_el:    String,
+    pub copy_el:      String,
 }
 
 
@@ -567,7 +570,7 @@ impl SurveyList {
     pub fn is_anon_user_can_copy_el(&self) -> bool {
         return self.copy_el == "a";
     }
-    pub fn create_list(creator: User, name: String, description: Option<String>,
+    pub fn create_list(creator: User, name: String, description: Option<String>, description: Option<String>,
         community_id: Option<i32>, can_see_el: String, create_el: String, copy_el: String,
         can_see_el_users: Option<Vec<i32>>, create_el_users: Option<Vec<i32>>,
         copy_el_users: Option<Vec<i32>>) -> SurveyList {
@@ -584,6 +587,7 @@ impl SurveyList {
             user_id: creator.id,
             types: 2,
             description: description,
+            image: image,
             created: chrono::Local::now().naive_utc(),
             count: 0,
             repost: 0,
@@ -739,7 +743,7 @@ impl SurveyList {
         }
         return new_list;
     }
-    pub fn edit_list(&self, name: String, description: Option<String>,
+    pub fn edit_list(&self, name: String, description: Option<String>, image: Option<String>,
         can_see_el: String, create_el: String, copy_el: String,
         can_see_el_users: Option<Vec<i32>>, create_el_users: Option<Vec<i32>>,
         copy_el_users: Option<Vec<i32>>) -> &SurveyList {
@@ -751,6 +755,7 @@ impl SurveyList {
             let edit_survey_list = EditSurveyList{
                 name: name,
                 description: description,
+                image: image,
                 can_see_el: can_see_el.clone(),
                 create_el: create_el.clone(),
                 copy_el: copy_el.clone(),

@@ -46,6 +46,7 @@ impl UploadedFiles {
 pub struct PostListForm {
     pub name: String,
     pub description: Option<String>,
+    pub image: Option<String>,
     pub can_see_el: String,
     pub can_see_comment: String,
     pub create_el: String,
@@ -59,10 +60,15 @@ pub struct PostListForm {
     pub reactions: Option<String>,
 }
 
-pub async fn post_list_form(payload: &mut Multipart) -> PostListForm {
+pub async fn post_list_form(
+    payload: &mut Multipart,
+    owner_path: String,
+    owner_id: String
+) -> PostListForm {
     let mut form: PostListForm = PostListForm {
         name: "".to_string(),
         description: None,
+        image: None,
         can_see_el: "".to_string(),
         can_see_comment: "".to_string(),
         create_el: "".to_string(),
@@ -109,6 +115,27 @@ pub async fn post_list_form(payload: &mut Multipart) -> PostListForm {
                     }
                 }
             }
+        }
+        else if field.name() == "image" {
+            let _new_path = field.content_disposition().get_filename().unwrap();
+            let file = UploadedFiles::new (
+                owner_path.clone(),
+                owner_id.to_string(),
+                "list_images".to_string(),
+                _new_path.to_string(),
+            );
+            let file_path = file.path.clone();
+            let mut f = web::block(move || std::fs::File::create(&file_path).expect("E"))
+                .await
+                .unwrap();
+            while let Some(chunk) = field.next().await {
+                let data = chunk.unwrap();
+                f = web::block(move || f.write_all(&data).map(|_| f))
+                    .await
+                    .unwrap()
+                    .expect("E");
+            };
+            form.image = Some(file.path.clone().replace("./","/"));
         }
         else {
             while let Some(chunk) = field.next().await {

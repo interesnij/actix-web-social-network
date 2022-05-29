@@ -12,6 +12,7 @@ CREATE TABLE video_lists (
     user_id         INT NOT NULL,
     types           SMALLINT NOT NULL,
     description     VARCHAR(500),
+    image           VARCHAR(500),
     created         TIMESTAMP NOT NULL,
     count           INT NOT NULL,
     repost          INT NOT NULL,

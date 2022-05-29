@@ -3,7 +3,7 @@ CREATE TABLE reactions (
   types  SMALLINT NOT NULL,
   image  VARCHAR(500) NOT NULL,
   gif    VARCHAR(500) NOT NULL,
-  name   VARCHAR(100) NOT NULL,
+  name   VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE post_votes (

@@ -66,20 +66,21 @@ use actix_web::web::Json;
 #[belongs_to(Community)]
 #[belongs_to(User)]
 pub struct DocList {
-    pub id:              i32,
-    pub name:            String,
-    pub community_id:    Option<i32>,
-    pub user_id:         i32,
-    pub types:           i16,
-    pub description:     Option<String>,
-    pub created:         chrono::NaiveDateTime,
-    pub count:           i32,
-    pub repost:          i32,
-    pub copy:            i32,
-    pub position:        i16,
-    pub can_see_el:      String,
-    pub create_el:       String,
-    pub copy_el:         String,
+    pub id:           i32,
+    pub name:         String,
+    pub community_id: Option<i32>,
+    pub user_id:      i32,
+    pub types:        i16,
+    pub description:  Option<String>,
+    pub image:        Option<String>,
+    pub created:      chrono::NaiveDateTime,
+    pub count:        i32,
+    pub repost:       i32,
+    pub copy:         i32,
+    pub position:     i16,
+    pub can_see_el:   String,
+    pub create_el:    String,
+    pub copy_el:      String,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="doc_lists"]
@@ -89,6 +90,7 @@ pub struct NewDocList {
     pub user_id:         i32,
     pub types:           i16,
     pub description:     Option<String>,
+    pub image:           Option<String>,
     pub created:         chrono::NaiveDateTime,
     pub count:           i32,
     pub repost:          i32,
@@ -101,11 +103,12 @@ pub struct NewDocList {
 #[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
 #[table_name="doc_lists"]
 pub struct EditDocList {
-    pub name:            String,
-    pub description:     Option<String>,
-    pub can_see_el:      String,
-    pub create_el:       String,
-    pub copy_el:         String,
+    pub name:         String,
+    pub description:  Option<String>,
+    pub image:        Option<String>,
+    pub can_see_el:   String,
+    pub create_el:    String,
+    pub copy_el:      String,
 }
 
 impl DocList {
@@ -582,9 +585,9 @@ impl DocList {
         return self.copy_el == "a";
     }
     pub fn create_list(creator: User, name: String, description: Option<String>,
-        community_id: Option<i32>, can_see_el: String, create_el: String, copy_el: String,
-        can_see_el_users: Option<Vec<i32>>, create_el_users: Option<Vec<i32>>,
-        copy_el_users: Option<Vec<i32>>) -> DocList {
+        image: Option<String>, community_id: Option<i32>, can_see_el: String,
+        create_el: String, copy_el: String, can_see_el_users: Option<Vec<i32>>,
+        create_el_users: Option<Vec<i32>>, copy_el_users: Option<Vec<i32>>) -> DocList {
 
         use crate::models::{
             NewCommunityDocListPosition,
@@ -598,6 +601,7 @@ impl DocList {
             user_id: creator.id,
             types: 2,
             description: description,
+            image: image,
             created: chrono::Local::now().naive_utc(),
             count: 0,
             repost: 0,
@@ -753,7 +757,7 @@ impl DocList {
         }
         return new_list;
     }
-    pub fn edit_list(&self, name: String, description: Option<String>,
+    pub fn edit_list(&self, name: String, description: Option<String>, image: Option<String>,
         can_see_el: String, create_el: String, copy_el: String,
         can_see_el_users: Option<Vec<i32>>, create_el_users: Option<Vec<i32>>,
         copy_el_users: Option<Vec<i32>>) -> &DocList {
@@ -765,6 +769,7 @@ impl DocList {
             let edit_doc_list = EditDocList{
                 name: name,
                 description: description,
+                image: image,
                 can_see_el: can_see_el.clone(),
                 create_el: create_el.clone(),
                 copy_el: copy_el.clone(),

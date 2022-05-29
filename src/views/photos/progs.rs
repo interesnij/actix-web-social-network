@@ -171,11 +171,16 @@ pub async fn add_user_photo_list(session: Session, mut payload: Multipart) -> ac
         use crate::utils::post_list_form;
 
         let _request_user = get_request_user_data(session);
-        let form = post_list_form(payload.borrow_mut()).await;
+        let form = post_list_form(
+            payload.borrow_mut(),
+            "users",
+            _request_user.id.to_string()
+        ).await;
         let new_list = PhotoList::create_list (
             _request_user,
             form.name,
             form.description,
+            None,
             None,
             form.can_see_el,
             form.can_see_comment,
@@ -217,10 +222,15 @@ pub async fn edit_user_photo_list(session: Session, mut payload: Multipart, _id:
         let list = get_photo_list(*_id);
         let _request_user = get_request_user_data(session);
         if list.user_id == _request_user.id {
-            let form = post_list_form(payload.borrow_mut()).await;
+            let form = post_list_form(
+                payload.borrow_mut(),
+                "users",
+                _request_user.id.to_string()
+            ).await;
             list.edit_list (
                 form.name,
                 form.description,
+                form.image,
                 form.can_see_el,
                 form.can_see_comment,
                 form.create_el,
@@ -266,11 +276,16 @@ pub async fn add_community_photo_list(session: Session, mut payload: Multipart, 
         let community = get_community(*_id);
         let _request_user = get_request_user_data(session);
         if community.get_administrators_ids().iter().any(|&i| i==_request_user.id) {
-            let form = post_list_form(payload.borrow_mut()).await;
+            let form = post_list_form(
+                payload.borrow_mut(),
+                "communities",
+                community.id.to_string()
+            ).await;
             let new_list = PhotoList::create_list (
                 _request_user,
                 form.name,
                 form.description,
+                form.image,
                 Some(*_id),
                 form.can_see_el,
                 form.can_see_comment,
@@ -319,10 +334,15 @@ pub async fn edit_community_photo_list(session: Session, mut payload: Multipart,
         let community = get_community(list.community_id.unwrap());
         let _request_user = get_request_user_data(session);
         if community.get_administrators_ids().iter().any(|&i| i==_request_user.id) {
-            let form = post_list_form(payload.borrow_mut()).await;
+            let form = post_list_form(
+                payload.borrow_mut(),
+                "communities",
+                community.id.to_string()
+            ).await;
             list.edit_list (
                 form.name,
                 form.description,
+                form.image,
                 form.can_see_el,
                 form.can_see_comment,
                 form.create_el,

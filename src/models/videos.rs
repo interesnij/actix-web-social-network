@@ -101,6 +101,7 @@ pub struct VideoList {
     pub user_id:         i32,
     pub types:           i16,
     pub description:     Option<String>,
+    pub image:           Option<String>,
     pub created:         chrono::NaiveDateTime,
     pub count:           i32,
     pub repost:          i32,
@@ -121,6 +122,7 @@ pub struct NewVideoList {
     pub user_id:         i32,
     pub types:           i16,
     pub description:     Option<String>,
+    pub image:           Option<String>,
     pub created:         chrono::NaiveDateTime,
     pub count:           i32,
     pub repost:          i32,
@@ -138,6 +140,7 @@ pub struct NewVideoList {
 pub struct EditVideoList {
     pub name:            String,
     pub description:     Option<String>,
+    pub image:           Option<String>,
     pub can_see_el:      String,
     pub can_see_comment: String,
     pub create_el:       String,
@@ -767,7 +770,7 @@ impl VideoList {
     pub fn is_anon_user_can_copy_el(&self) -> bool {
         return self.copy_el == "a";
     }
-    pub fn create_list(creator: User, name: String, description: Option<String>,
+    pub fn create_list(creator: User, name: String, description: Option<String>, description: Option<String>,
         community_id: Option<i32>, can_see_el: String, can_see_comment: String,
         create_el: String, create_comment: String, copy_el: String,
         can_see_el_users: Option<Vec<i32>>, can_see_comment_users: Option<Vec<i32>>,create_el_users: Option<Vec<i32>>,
@@ -785,6 +788,7 @@ impl VideoList {
             user_id: creator.id,
             types: 2,
             description: description,
+            image: image,
             created: chrono::Local::now().naive_utc(),
             count: 0,
             repost: 0,
@@ -1033,7 +1037,7 @@ impl VideoList {
         }
         return new_list;
     }
-    pub fn edit_list(&self, name: String, description: Option<String>,
+    pub fn edit_list(&self, name: String, description: Option<String>, image: Option<String>,
         can_see_el: String, can_see_comment: String,
         create_el: String, create_comment: String, copy_el: String,
         can_see_el_users: Option<Vec<i32>>, can_see_comment_users: Option<Vec<i32>>,create_el_users: Option<Vec<i32>>,
@@ -1047,6 +1051,7 @@ impl VideoList {
             let edit_video_list = EditVideoList{
                 name: name,
                 description: description,
+                image: image,
                 can_see_el: can_see_el.clone(),
                 can_see_comment: can_see_comment.clone(),
                 create_el: create_el.clone(),
