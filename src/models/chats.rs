@@ -2257,6 +2257,7 @@ impl Message {
             14 => react_model.star_face,
             15 => react_model.vomiting,
             16 => react_model.pile_of_poo,
+            _ => 0, 
         };
         return count;
     }

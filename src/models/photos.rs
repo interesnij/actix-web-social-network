@@ -2426,6 +2426,7 @@ impl Photo {
             14 => react_model.star_face,
             15 => react_model.vomiting,
             16 => react_model.pile_of_poo,
+            _ => 0,
         };
         return count;
     }
@@ -3555,7 +3556,7 @@ impl PhotoReaction {
                     .set(schema::photo_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                     .get_result::<PhotoReaction>(&_connection)
                     .expect("Error."),
-                //_ => false,
+                _ => &self,
             };
 
             let update_model = match old_types {
@@ -3623,7 +3624,7 @@ impl PhotoReaction {
                     .set(schema::photo_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                     .get_result::<PhotoReaction>(&_connection)
                     .expect("Error."),
-                //_ => false,
+                _ => &self,
             };
             return &self;
         }
@@ -3694,7 +3695,7 @@ impl PhotoReaction {
                         .set(schema::photo_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                         .get_result::<PhotoReaction>(&_connection)
                         .expect("Error."),
-                    //_ => false,
+                    _ => &self,
                 };
             }
             else {
@@ -3763,7 +3764,7 @@ impl PhotoReaction {
                         .set(schema::photo_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                         .get_result::<PhotoReaction>(&_connection)
                         .expect("Error."),
-                    //_ => false,
+                    _ => &self,
                 };
             }
             return &self;
