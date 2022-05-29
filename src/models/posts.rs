@@ -1745,13 +1745,12 @@ impl PostList {
           created: chrono::Local::now().naive_utc(),
           comment: 0,
           view: 0,
-          liked: 0,
-          disliked: 0,
           repost: 0,
           copy: 0,
           position: (self.count).try_into().unwrap(),
           is_signature: is_signature,
           parent_id: parent_id,
+          reactions: 0,
         };
         let new_post = diesel::insert_into(schema::posts::table)
             .values(&new_post_form)
@@ -1901,6 +1900,46 @@ impl Post {
         }
         else {
             return "Предупреждение за нарушение правил соцсети трезвый.рус".to_string();
+        }
+    }
+
+    pub fn get_or_create_react_model(&self) -> &PostReaction {
+        use crate::schema::post_reactions::dsl::post_reactions;
+
+        let _connection = establish_connection();
+        let _react_model = post_reactions
+            .filter(schema::post_reactions::post_id.eq(self.id))
+            .load::<PostReaction>(&_connection)
+            .expect("E.");
+        if _react_model.len() > 0 {
+            return _react_model.last().unwrap();
+        }
+        else {
+            let new_react_model = NewPostReaction {
+                post_id:     self.id,
+                thumbs_up:   0,
+                thumbs_down: 0,
+                red_heart:   0,
+                fire:        0,
+                love_face:   0,
+                clapping:    0,
+                beaming:     0,
+                thinking:    0,
+                exploding:   0,
+                screaming:   0,
+                evil:        0,
+                crying:      0,
+                party:       0,
+                star_face:   0,
+                vomiting:    0,
+                pile_of_poo: 0,
+            };
+            let _react_model = diesel::insert_into(schema::post_reactions::table)
+                .values(&new_react_model)
+                .get_result::<PostReaction>(&_connection)
+                .expect("Error.");
+
+            return &_react_model;
         }
     }
 
@@ -2537,7 +2576,7 @@ impl Post {
         }
     }
 
-    pub fn count_reactions_of_types(&self, types: i16) -> Vec<User> {
+    pub fn count_reactions_of_types(&self, types: i16) -> i32 {
         let react_model = self.get_or_create_react_model();
         let count = match types {
             1 => react_model.thumbs_up,
@@ -3610,7 +3649,7 @@ impl PostReaction {
         new_types: i16,
         old_types_option: Option<i16>,
         plus: bool,
-    ) -> bool {
+    ) -> &PostReaction {
         let _connection = establish_connection();
         if old_types_option.is_some() {
             let old_types = old_types_option.unwrap();
@@ -3679,7 +3718,7 @@ impl PostReaction {
                     .set(schema::post_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                     .get_result::<PostReaction>(&_connection)
                     .expect("Error."),
-                _ => false,
+                //_ => false,
             };
 
             let update_model = match old_types {
@@ -3747,8 +3786,9 @@ impl PostReaction {
                     .set(schema::post_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                     .get_result::<PostReaction>(&_connection)
                     .expect("Error."),
-                _ => false,
+                //_ => false,
             };
+            return &self;
         }
         else {
             if plus {
@@ -3817,7 +3857,7 @@ impl PostReaction {
                         .set(schema::post_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                         .get_result::<PostReaction>(&_connection)
                         .expect("Error."),
-                    _ => false,
+                    //_ => false,
                 };
             }
             else {
@@ -3886,10 +3926,10 @@ impl PostReaction {
                         .set(schema::post_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                         .get_result::<PostReaction>(&_connection)
                         .expect("Error."),
-                    _ => false,
+                    //_ => false,
                 };
             }
-            return true;
+            return &self;
         }
     }
 }

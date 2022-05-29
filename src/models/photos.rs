@@ -314,11 +314,10 @@ impl PhotoList {
           created: chrono::Local::now().naive_utc(),
           comment: 0,
           view: 0,
-          liked: 0,
-          disliked: 0,
           repost: 0,
           copy: 0,
           position: (self.count).try_into().unwrap(),
+          reactions: 0,
         };
         let new_photo = diesel::insert_into(schema::photos::table)
             .values(&new_photo_form)
@@ -844,7 +843,7 @@ impl PhotoList {
             user_id: creator.id,
             types: 2,
             description: description,
-            image: image,
+            cover_photo: image,
             created: chrono::Local::now().naive_utc(),
             count: 0,
             repost: 0,
@@ -1107,7 +1106,7 @@ impl PhotoList {
             let edit_photo_list = EditPhotoList{
                 name: name,
                 description: description,
-                image: image,
+                cover_photo: image,
                 can_see_el: can_see_el.clone(),
                 can_see_comment: can_see_comment.clone(),
                 create_el: create_el.clone(),
@@ -1887,6 +1886,46 @@ impl Photo {
         }
     }
 
+    pub fn get_or_create_react_model(&self) -> &PhotoReaction {
+        use crate::schema::photo_reactions::dsl::photo_reactions;
+
+        let _connection = establish_connection();
+        let _react_model = photo_reactions
+            .filter(schema::photo_reactions::photo_id.eq(self.id))
+            .load::<PhotoReaction>(&_connection)
+            .expect("E.");
+        if _react_model.len() > 0 {
+            return _react_model.last().unwrap();
+        }
+        else {
+            let new_react_model = NewPhotoReaction {
+                photo_id:    self.id,
+                thumbs_up:   0,
+                thumbs_down: 0,
+                red_heart:   0,
+                fire:        0,
+                love_face:   0,
+                clapping:    0,
+                beaming:     0,
+                thinking:    0,
+                exploding:   0,
+                screaming:   0,
+                evil:        0,
+                crying:      0,
+                party:       0,
+                star_face:   0,
+                vomiting:    0,
+                pile_of_poo: 0,
+            };
+            let _react_model = diesel::insert_into(schema::photo_reactions::table)
+                .values(&new_react_model)
+                .get_result::<PhotoReaction>(&_connection)
+                .expect("Error.");
+
+            return &_react_model;
+        }
+    }
+
     pub fn send_reaction(&self, user_id: i32, types: i16) -> Json<JsonItemReactions> {
         use crate::schema::photo_votes::dsl::photo_votes;
 
@@ -2367,7 +2406,7 @@ impl Photo {
         }
     }
 
-    pub fn count_reactions_of_types(&self, types: i16) -> Vec<User> {
+    pub fn count_reactions_of_types(&self, types: i16) -> i32 {
         let react_model = self.get_or_create_react_model();
         let count = match types {
             1 => react_model.thumbs_up,
@@ -3446,7 +3485,7 @@ impl PhotoReaction {
         new_types: i16,
         old_types_option: Option<i16>,
         plus: bool,
-    ) -> bool {
+    ) -> &PhotoReaction {
         let _connection = establish_connection();
         if old_types_option.is_some() {
             let old_types = old_types_option.unwrap();
@@ -3515,7 +3554,7 @@ impl PhotoReaction {
                     .set(schema::photo_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                     .get_result::<PhotoReaction>(&_connection)
                     .expect("Error."),
-                _ => false,
+                //_ => false,
             };
 
             let update_model = match old_types {
@@ -3583,8 +3622,9 @@ impl PhotoReaction {
                     .set(schema::photo_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                     .get_result::<PhotoReaction>(&_connection)
                     .expect("Error."),
-                _ => false,
+                //_ => false,
             };
+            return &self;
         }
         else {
             if plus {
@@ -3653,7 +3693,7 @@ impl PhotoReaction {
                         .set(schema::photo_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                         .get_result::<PhotoReaction>(&_connection)
                         .expect("Error."),
-                    _ => false,
+                    //_ => false,
                 };
             }
             else {
@@ -3722,10 +3762,10 @@ impl PhotoReaction {
                         .set(schema::photo_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                         .get_result::<PhotoReaction>(&_connection)
                         .expect("Error."),
-                    _ => false,
+                    //_ => false,
                 };
             }
-            return true;
+            return &self;
         }
     }
 }

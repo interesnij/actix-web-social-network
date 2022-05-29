@@ -2281,7 +2281,7 @@ impl Good {
             .load::<GoodComment>(&_connection)
             .expect("E.");
     }
-    pub fn get_or_create_react_model(&self) -> GoodReaction {
+    pub fn get_or_create_react_model(&self) -> &GoodReaction {
         use crate::schema::good_reactions::dsl::good_reactions;
 
         let _connection = establish_connection();
@@ -2317,7 +2317,7 @@ impl Good {
                 .get_result::<GoodReaction>(&_connection)
                 .expect("Error.");
 
-            return _react_model;
+            return &_react_model;
         }
     }
 
@@ -2539,7 +2539,7 @@ impl Good {
         }
     }
 
-    pub fn count_reactions_of_types(&self, types: i16) -> Vec<User> {
+    pub fn count_reactions_of_types(&self, types: i16) -> i32 {
         let react_model = self.get_or_create_react_model();
         let count = match types {
             1 => react_model.thumbs_up,
@@ -3732,6 +3732,7 @@ impl GoodReaction {
                     .expect("Error."),
                 //_ => &self,
             };
+            return &self;
         }
         else {
             if plus {

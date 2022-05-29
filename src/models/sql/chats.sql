@@ -149,31 +149,6 @@ CREATE TABLE message_transfers (
             REFERENCES messages(id)
 );
 
-CREATE TABLE chat_reactions (
-    id          SERIAL PRIMARY KEY,
-    chat_id     INT NOT NULL,
-    thumbs_up   BOOLEAN NOT NULL DEFAULT false,
-    thumbs_down BOOLEAN NOT NULL DEFAULT false,
-    red_heart   BOOLEAN NOT NULL DEFAULT false,
-    fire        BOOLEAN NOT NULL DEFAULT false,
-    love_face   BOOLEAN NOT NULL DEFAULT false,
-    clapping    BOOLEAN NOT NULL DEFAULT false,
-    beaming     BOOLEAN NOT NULL DEFAULT false,
-    thinking    BOOLEAN NOT NULL DEFAULT false,
-    exploding   BOOLEAN NOT NULL DEFAULT false,
-    screaming   BOOLEAN NOT NULL DEFAULT false,
-    evil        BOOLEAN NOT NULL DEFAULT false,
-    crying      BOOLEAN NOT NULL DEFAULT false,
-    party       BOOLEAN NOT NULL DEFAULT false,
-    star_face   BOOLEAN NOT NULL DEFAULT false,
-    vomiting    BOOLEAN NOT NULL DEFAULT false,
-    pile_of_poo BOOLEAN NOT NULL DEFAULT false,
-
-    CONSTRAINT fk_chat_reactions
-        FOREIGN KEY(chat_id)
-            REFERENCES chats(id)
-);
-
 CREATE TABLE message_reactions (
     id          SERIAL PRIMARY KEY,
     message_id  INT NOT NULL,

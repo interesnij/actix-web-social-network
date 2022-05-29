@@ -2088,7 +2088,7 @@ impl Message {
         }
     }
 
-    pub fn get_or_create_react_model(&self) -> MessageReaction {
+    pub fn get_or_create_react_model(&self) -> &MessageReaction {
         use crate::schema::message_reactions::dsl::message_reactions;
 
         let _connection = establish_connection();
@@ -2124,7 +2124,7 @@ impl Message {
                 .get_result::<MessageReaction>(&_connection)
                 .expect("Error.");
 
-            return _react_model;
+            return &_react_model;
         }
     }
 
@@ -2211,7 +2211,7 @@ impl Message {
         });
     }
 
-    pub fn count_reactions_of_types(&self, types: i16) -> usize {
+    pub fn count_reactions_of_types(&self, types: i16) -> i32 {
         let react_model = self.get_or_create_react_model();
         let count = match types {
             1 => react_model.thumbs_up,
@@ -2420,7 +2420,7 @@ impl MessageReaction {
         new_types: i16,
         old_types_option: Option<i16>,
         plus: bool,
-    ) -> bool {
+    ) -> &MessageReaction {
         let _connection = establish_connection();
         if old_types_option.is_some() {
             let old_types = old_types_option.unwrap();
@@ -2489,7 +2489,7 @@ impl MessageReaction {
                     .set(schema::message_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
-                _ => false,
+                //_ => false,
             };
 
             let update_model = match old_types {
@@ -2557,8 +2557,9 @@ impl MessageReaction {
                     .set(schema::message_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
-                _ => false,
+                //_ => false,
             };
+            return &self;
         }
         else {
             if plus {
@@ -2627,7 +2628,7 @@ impl MessageReaction {
                         .set(schema::message_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
-                    _ => false,
+                    //_ => false,
                 };
             }
             else {
@@ -2696,10 +2697,10 @@ impl MessageReaction {
                         .set(schema::message_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
-                    _ => false,
+                    //_ => false,
                 };
             }
-            return true;
+            return &self;
         }
     }
 }

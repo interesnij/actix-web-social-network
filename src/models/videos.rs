@@ -1741,12 +1741,11 @@ impl VideoList {
 
           comment: 0,
           view: 0,
-          liked: 0,
-          disliked: 0,
           repost: 0,
           copy: 0,
           position: (self.count).try_into().unwrap(),
           category_id: category_id,
+          reactions: 0,
         };
         let new_video = diesel::insert_into(schema::videos::table)
             .values(&new_video_form)
@@ -1906,6 +1905,46 @@ impl Video {
         }
         else {
             return "Предупреждение за нарушение правил соцсети трезвый.рус".to_string();
+        }
+    }
+
+    pub fn get_or_create_react_model(&self) -> &VideoReaction {
+        use crate::schema::video_reactions::dsl::video_reactions;
+
+        let _connection = establish_connection();
+        let _react_model = video_reactions
+            .filter(schema::video_reactions::video_id.eq(self.id))
+            .load::<VideoReaction>(&_connection)
+            .expect("E.");
+        if _react_model.len() > 0 {
+            return _react_model.last().unwrap();
+        }
+        else {
+            let new_react_model = NewVideoReaction {
+                video_id:    self.id,
+                thumbs_up:   0,
+                thumbs_down: 0,
+                red_heart:   0,
+                fire:        0,
+                love_face:   0,
+                clapping:    0,
+                beaming:     0,
+                thinking:    0,
+                exploding:   0,
+                screaming:   0,
+                evil:        0,
+                crying:      0,
+                party:       0,
+                star_face:   0,
+                vomiting:    0,
+                pile_of_poo: 0,
+            };
+            let _react_model = diesel::insert_into(schema::video_reactions::table)
+                .values(&new_react_model)
+                .get_result::<VideoReaction>(&_connection)
+                .expect("Error.");
+
+            return &_react_model;
         }
     }
 
@@ -2342,7 +2381,7 @@ impl Video {
         }
     }
 
-    pub fn count_reactions_of_types(&self, types: i16) -> Vec<User> {
+    pub fn count_reactions_of_types(&self, types: i16) -> i32 {
         let react_model = self.get_or_create_react_model();
         let count = match types {
             1 => react_model.thumbs_up,
@@ -3563,7 +3602,7 @@ impl VideoReaction {
                     .set(schema::video_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                _ => &self,
+                //_ => &self,
             };
 
             let update_model = match old_types {
@@ -3631,8 +3670,9 @@ impl VideoReaction {
                     .set(schema::video_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                     .get_result::<VideoReaction>(&_connection)
                     .expect("Error."),
-                _ => &self,
+                //_ => &self,
             };
+            return &self;
         }
         else {
             if plus {
@@ -3701,7 +3741,7 @@ impl VideoReaction {
                         .set(schema::video_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    _ => &self,
+                    //_ => &self,
                 };
             }
             else {
@@ -3770,7 +3810,7 @@ impl VideoReaction {
                         .set(schema::video_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
-                    _ => &self,
+                    //_ => &self,
                 };
             }
             return &self;
