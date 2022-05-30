@@ -90,7 +90,7 @@ impl GoodCategorie {
         };
         let new_cat = diesel::insert_into(schema::good_subcategories::table)
             .values(&new_form)
-            .get_result::<NewGoodSubcategorie>(&_connection)
+            .get_result::<GoodSubcategorie>(&_connection)
             .expect("Error.");
         return new_cat;
     }
@@ -115,7 +115,7 @@ pub struct GoodSubcategorie {
 }
 
 impl GoodSubcategorie {
-    pub fn edit_subcategory(&self, name: String, category_id: i16,
+    pub fn edit_subcategory(&self, name: String, category_id: i32,
         avatar: Option<String>, position: i16) -> &GoodSubcategorie {
         let _connection = establish_connection();
         let new_form = NewGoodSubcategorie {

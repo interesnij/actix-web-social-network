@@ -287,8 +287,8 @@ pub struct Reaction {
 }
 
 impl Reaction {
-    pub fn create_reaction(types: i16, image: Option<String>,
-        gif: Option<String>, name: String) -> Reaction {
+    pub fn create_reaction(types: i16, image: String,
+        gif: String, name: String) -> Reaction {
         let _connection = establish_connection();
         let new_form = NewReaction {
             types: types,
@@ -302,8 +302,8 @@ impl Reaction {
             .expect("Error.");
         return new_reaction;
     }
-    pub fn edit_reaction(&self, types: i16, image: Option<String>,
-        gif: Option<String>, name: String) -> &Reaction {
+    pub fn edit_reaction(&self, types: i16, image: String,
+        gif: String, name: String) -> &Reaction {
         let _connection = establish_connection();
         let new_form = NewReaction {
             types: types,

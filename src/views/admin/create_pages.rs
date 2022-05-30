@@ -15,6 +15,7 @@ use crate::utils::{
 use actix_session::Session;
 use sailfish::TemplateOnce;
 use crate::models::User;
+use crate::diesel::ExpressionMethods;
 
 
 pub fn create_pages_urls(config: &mut web::ServiceConfig) {

@@ -117,7 +117,7 @@ impl Artist {
         };
         let new_artist = diesel::insert_into(schema::artists::table)
             .values(&new_form)
-            .get_result::<NewArtist>(&_connection)
+            .get_result::<Artist>(&_connection)
             .expect("Error.");
         return new_artist;
     }
@@ -207,7 +207,7 @@ impl MusicAlbum {
         return new_album;
     }
 
-    pub fn edit_album(&self, name: String, artist_id:Option<i32>,
+    pub fn edit_album(&self, name: String, artist_id: Option<i32>,
         description:Option<String>, image:Option<String>, position: i16) -> &MusicAlbum {
         let _connection = establish_connection();
         let new_form = EditMusicAlbum {
@@ -249,7 +249,7 @@ pub struct NewMusicAlbum {
 #[table_name="music_albums"]
 pub struct EditMusicAlbum {
     pub name:        String,
-    pub artist_id:   i32,
+    pub artist_id:   Option<i32>,
     pub description: Option<String>,
     pub image:       Option<String>,
     pub position:    i16,
