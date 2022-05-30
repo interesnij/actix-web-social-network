@@ -164,7 +164,7 @@ pub struct NewArtist {
 pub struct MusicAlbum {
     pub id:          i32,
     pub name:        String,
-    pub artist_id:   i32,
+    pub artist_id:   Option<i32>,
     pub user_id:     i32,
     pub description: Option<String>,
     pub image:       Option<String>,
@@ -181,11 +181,14 @@ pub struct MusicAlbum {
 }
 
 impl MusicAlbum {
-    pub fn create_album(name: String, description:Option<String>,
+    pub fn create_album(name: String, artist_id:Option<i32>,
+        user_id: i32, description:Option<String>,
         image:Option<String>, position:i16) -> MusicAlbum {
         let _connection = establish_connection();
         let new_form = NewMusicAlbum {
             name: name,
+            artist_id: artist_id,
+            user_id: user_id,
             description: description,
             image: image,
             created: chrono::Local::now().naive_utc(),
@@ -204,14 +207,15 @@ impl MusicAlbum {
         return new_album;
     }
 
-    pub fn edit_album(&self, name: String, artist_id: i32,
-        description:Option<String>, image:Option<String>) -> &MusicAlbum {
+    pub fn edit_album(&self, name: String, artist_id:Option<i32>,
+        description:Option<String>, image:Option<String>, position: i16) -> &MusicAlbum {
         let _connection = establish_connection();
         let new_form = EditMusicAlbum {
             name:        name,
             artist_id:   artist_id,
             description: description,
             image:       image,
+            position:    position,
         };
         diesel::update(self)
             .set(new_form)
@@ -225,7 +229,7 @@ impl MusicAlbum {
 #[table_name="music_albums"]
 pub struct NewMusicAlbum {
     pub name:        String,
-    pub artist_id:   i32,
+    pub artist_id:   Option<i32>,
     pub user_id:     i32,
     pub description: Option<String>,
     pub image:       Option<String>,
@@ -248,6 +252,7 @@ pub struct EditMusicAlbum {
     pub artist_id:   i32,
     pub description: Option<String>,
     pub image:       Option<String>,
+    pub position:    i16,
 }
 /////// MusicAlbum //////
 

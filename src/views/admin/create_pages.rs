@@ -833,6 +833,7 @@ pub async fn edit_smile_page(session: Session, cat_id: web::Path<i32>) -> actix_
         let _request_user = get_request_user_data(session);
         if _request_user.is_supermanager() {
             use crate::schema::smiles::dsl::smiles;
+            use crate::schema::smile_categories::dsl::smile_categories;
             use crate::models::{Smile,SmileCategorie};
 
             let _connection = establish_connection();
