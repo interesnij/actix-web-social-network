@@ -1,6 +1,6 @@
 use crate::schema;
 use actix_web::{
-    HttpRequest,
+    //HttpRequest,
     HttpResponse,
     web,
     error::InternalError,
@@ -282,7 +282,7 @@ pub async fn create_goods_subcategory_page(session: Session, cat_id: web::Path<i
         let _request_user = get_request_user_data(session);
         if _request_user.is_supermanager() {
             use crate::schema::good_categories::dsl::good_categories;
-            use crate::models::CommunityCategory;
+            use crate::models::GoodCategorie;
 
             let _connection = establish_connection();
             let category = good_categories
@@ -835,7 +835,7 @@ pub async fn edit_smile_page(session: Session, cat_id: web::Path<i32>) -> actix_
             use crate::models::Smile;
 
             let _connection = establish_connection();
-            let smile = stickers
+            let smile = smiles
                 .filter(schema::smiles::id.eq(*cat_id))
                 .load::<Smile>(&_connection)
                 .expect("E.")
@@ -1041,7 +1041,7 @@ pub async fn edit_reaction_page(session: Session, cat_id: web::Path<i32>) -> act
     else {
         let _request_user = get_request_user_data(session);
         if _request_user.is_supermanager() {
-            use crate::schema::reactions::dsl::video_categories;
+            use crate::schema::reactions::dsl::reactions;
             use crate::models::Reaction;
 
             let _connection = establish_connection();

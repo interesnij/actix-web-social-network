@@ -287,7 +287,7 @@ pub struct Reaction {
 }
 
 impl Reaction {
-    pub fn create_reaction(types: i16, image: Option<String>, 
+    pub fn create_reaction(types: i16, image: Option<String>,
         gif: Option<String>, name: String) -> Reaction {
         let _connection = establish_connection();
         let new_form = NewReaction {
@@ -319,7 +319,7 @@ impl Reaction {
     }
 }
 
-#[derive(Deserialize, Insertable, Insertable)]
+#[derive(Deserialize, Insertable)]
 #[table_name="reactions"]
 pub struct NewReaction {
     pub types: i16,
