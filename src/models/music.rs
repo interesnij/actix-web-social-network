@@ -34,7 +34,37 @@ pub struct SoundGenre {
     pub count:    i32,
     pub copy:     i32,
 }
-#[derive(Deserialize, Insertable)]
+
+impl SoundGenre {
+    pub fn create_genre(name: String) -> SoundGenre {
+        let _connection = establish_connection();
+        let new_form = NewSoundGenre {
+            name: name,
+            count: 0,
+            copy: 0,
+        };
+        let new_genre = diesel::insert_into(schema::sound_genres::table)
+            .values(&new_form)
+            .get_result::<SoundGenre>(&_connection)
+            .expect("Error.");
+        return new_genre;
+    }
+    pub fn edit_genre(&self, name: String) -> &SoundGenre {
+        let _connection = establish_connection();
+        let new_form = NewSoundGenre {
+            name: name,
+            count: 0,
+            copy: 0,
+        };
+        diesel::update(self)
+            .set(new_form)
+            .get_result::<SoundGenre>(&_connection)
+            .expect("Error.");
+        return self;
+    }
+}
+
+#[derive(Deserialize, Insertable, AsChangeset)]
 #[table_name="sound_genres"]
 pub struct NewSoundGenre {
     pub name:     String,
@@ -69,7 +99,51 @@ pub struct Artist {
     pub position:     i16,
     pub can_see_el:   String,
 }
-#[derive(Deserialize, Insertable)]
+
+impl Artist {
+    pub fn create_artist(name: String, description:Option<String>,
+        image:Option<String>, position:i16) -> Artist {
+        let _connection = establish_connection();
+        let new_form = NewArtist {
+            name: name,
+            description: description,
+            image: image,
+            created: chrono::Local::now().naive_utc(),
+            count: 0,
+            repost: 0,
+            copy: 0,
+            position: position,
+            can_see_el: "a".to_string(),
+        };
+        let new_artist = diesel::insert_into(schema::artists::table)
+            .values(&new_form)
+            .get_result::<NewArtist>(&_connection)
+            .expect("Error.");
+        return new_artist;
+    }
+    pub fn edit_artist(&self, name: String, description:Option<String>,
+        image:Option<String>, position:i16) -> &Artist {
+        let _connection = establish_connection();
+        let new_form = NewArtist {
+            name: name,
+            description: description,
+            image: image,
+            created: chrono::Local::now().naive_utc(),
+            count: self.count,
+            repost: self.repost,
+            copy: self.copy,
+            position: position,
+            can_see_el: self.can_see_el,
+        };
+        diesel::update(self)
+            .set(new_form)
+            .get_result::<Artist>(&_connection)
+            .expect("Error.");
+        return self;
+    }
+}
+
+#[derive(Deserialize, Insertable, AsChangeset)]
 #[table_name="artists"]
 pub struct NewArtist {
     pub name:         String,
@@ -105,6 +179,48 @@ pub struct MusicAlbum {
     pub create_el:   String,
     pub copy_el:     String,
 }
+
+impl MusicAlbum {
+    pub fn create_album(name: String, description:Option<String>,
+        image:Option<String>, position:i16) -> MusicAlbum {
+        let _connection = establish_connection();
+        let new_form = NewMusicAlbum {
+            name: name,
+            description: description,
+            image: image,
+            created: chrono::Local::now().naive_utc(),
+            count: 0,
+            repost: 0,
+            copy: 0,
+            position: position,
+            can_see_el: "a".to_string(),
+            create_el: "a".to_string(),
+            copy_el: "a".to_string(),
+        };
+        let new_album = diesel::insert_into(schema::music_albums::table)
+            .values(&new_form)
+            .get_result::<MusicAlbum>(&_connection)
+            .expect("Error.");
+        return new_album;
+    }
+
+    pub fn edit_album(&self, name: String, artist_id: i32,
+        description:Option<String>, image:Option<String>) -> &MusicAlbum {
+        let _connection = establish_connection();
+        let new_form = EditMusicAlbum {
+            name:        name,
+            artist_id:   artist_id,
+            description: description,
+            image:       image,
+        };
+        diesel::update(self)
+            .set(new_form)
+            .get_result::<MusicAlbum>(&_connection)
+            .expect("Error.");
+        return self;
+    }
+}
+
 #[derive(Deserialize, Insertable)]
 #[table_name="music_albums"]
 pub struct NewMusicAlbum {
@@ -125,6 +241,14 @@ pub struct NewMusicAlbum {
     pub copy_el:     String,
 }
 
+#[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
+#[table_name="music_albums"]
+pub struct EditMusicAlbum {
+    pub name:        String,
+    pub artist_id:   i32,
+    pub description: Option<String>,
+    pub image:       Option<String>,
+}
 /////// MusicAlbum //////
 
 ////////// Тип списка

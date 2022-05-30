@@ -46,6 +46,41 @@ pub struct CommunityCategory {
     pub avatar:   Option<String>,
     pub position: i16,
 }
+
+impl CommunityCategory {
+    pub fn create_category(name: String, avatar: Option<String>,
+        position: i16) -> CommunityCategory {
+
+        let _connection = establish_connection();
+        let new_form = NewCommunityCategory {
+            name: name,
+            avatar: avatar,
+            position: position,
+        };
+        let new_cat = diesel::insert_into(schema::community_categorys::table)
+            .values(&new_form)
+            .get_result::<CommunityCategory>(&_connection)
+            .expect("Error.");
+        return new_cat;
+    }
+    pub fn create_subcategory(&self, name: String, avatar: Option<String>,
+        position: i16) -> CommunitySubcategory {
+
+        let _connection = establish_connection();
+        let new_form = NewCommunitySubcategory {
+            name:        name,
+            category_id: self.id,
+            avatar:      avatar,
+            position:    position,
+        };
+        let new_cat = diesel::insert_into(schema::community_subcategorys::table)
+            .values(&new_form)
+            .get_result::<CommunitySubcategory>(&_connection)
+            .expect("Error.");
+        return new_cat;
+    }
+}
+
 #[derive(Deserialize, Insertable)]
 #[table_name="community_categorys"]
 pub struct NewCommunityCategory {
@@ -63,6 +98,25 @@ pub struct CommunitySubcategory {
     pub avatar:      Option<String>,
     pub position:    i16,
 }
+
+impl CommunitySubcategory {
+    pub fn edit_subcategory(&self, name: String, category_id:: i16,
+        avatar: Option<String>, position: i16) -> &CommunitySubcategory {
+        let _connection = establish_connection();
+        let new_form = NewCommunitySubcategory {
+            name:        name,
+            category_id: category_id,
+            avatar:      avatar,
+            position:    position,
+        };
+        diesel::update(self)
+            .set(new_form)
+            .get_result::<CommunitySubcategory>(&_connection)
+            .expect("Error.");
+        return self;
+    }
+}
+
 #[derive(Deserialize, Insertable)]
 #[table_name="community_subcategorys"]
 pub struct NewCommunitySubcategory {

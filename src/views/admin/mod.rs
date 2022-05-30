@@ -1,14 +1,15 @@
-pub mod chat_pages;
+pub mod create_pages;
+//pub mod create_progs;
 use actix_web::web::ServiceConfig;
 
 pub use self::{
     create_pages::*,
-    create_progs::*,
+    //create_progs::*,
 };
 
-pub fn chat_routes(cfg: &mut ServiceConfig) {
+pub fn admin_routes(cfg: &mut ServiceConfig) {
     cfg
     .configure(create_pages_urls)
-    .configure(create_progs_urls)
+    //.configure(create_progs_urls)
     ;
 }

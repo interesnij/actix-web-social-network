@@ -47,7 +47,56 @@ pub struct GoodCategorie {
     pub avatar:   Option<String>,
     pub position: i16,
 }
-#[derive(Deserialize, Insertable)]
+
+impl GoodCategorie {
+    pub fn create_category(name: String, avatar: Option<String>,
+        position: i16) -> GoodCategorie {
+
+        let _connection = establish_connection();
+        let new_form = NewGoodCategorie {
+            name: name,
+            avatar: avatar,
+            position: position,
+        };
+        let new_cat = diesel::insert_into(schema::good_categories::table)
+            .values(&new_form)
+            .get_result::<GoodCategorie>(&_connection)
+            .expect("Error.");
+        return new_cat;
+    }
+    pub fn edit_category(&self, name: String, avatar: Option<String>,
+        position: i16) -> &GoodCategorie {
+        let _connection = establish_connection();
+        let new_form = NewGoodCategorie {
+            name: name,
+            avatar: avatar,
+            position: position,
+        };
+        diesel::update(self)
+            .set(new_form)
+            .get_result::<GoodCategorie>(&_connection)
+            .expect("Error.");
+        return self;
+    }
+    pub fn create_subcategory(&self, name: String, avatar: Option<String>,
+        position: i16) -> GoodSubcategorie {
+
+        let _connection = establish_connection();
+        let new_form = NewGoodSubcategorie {
+            name:        name,
+            category_id: self.id,
+            avatar:      avatar,
+            position:    position,
+        };
+        let new_cat = diesel::insert_into(schema::good_subcategories::table)
+            .values(&new_form)
+            .get_result::<NewGoodSubcategorie>(&_connection)
+            .expect("Error.");
+        return new_cat;
+    }
+}
+
+#[derive(Deserialize, Insertable, AsChangeset)]
 #[table_name="good_categories"]
 pub struct NewGoodCategorie {
     pub name:     String,
@@ -64,7 +113,25 @@ pub struct GoodSubcategorie {
     pub avatar:      Option<String>,
     pub position:    i16,
 }
-#[derive(Deserialize, Insertable)]
+
+impl GoodSubcategorie {
+    pub fn edit_subcategory(&self, name: String, category_id:: i16,
+        avatar: Option<String>, position: i16) -> &GoodSubcategorie {
+        let _connection = establish_connection();
+        let new_form = NewGoodSubcategorie {
+            name:        name,
+            category_id: category_id,
+            avatar:      avatar,
+            position:    position,
+        };
+        diesel::update(self)
+            .set(new_form)
+            .get_result::<GoodSubcategorie>(&_connection)
+            .expect("Error.");
+        return self;
+    }
+}
+#[derive(Deserialize, Insertable, AsChangeset)]
 #[table_name="good_subcategories"]
 pub struct NewGoodSubcategorie {
     pub name:        String,

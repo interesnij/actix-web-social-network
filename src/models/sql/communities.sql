@@ -3,7 +3,7 @@ CREATE TABLE community_categorys (
     id SERIAL PRIMARY KEY,  -- id объекта
     name VARCHAR(100) NOT NULL,           -- название
     avatar VARCHAR(500),            -- аватар
-    position SMALLINT NOT NULL     -- порядковый номер
+    position SMALLINT NOT NULL      -- порядковый номер
 );
 
 -- Суб-категории сообществ -------

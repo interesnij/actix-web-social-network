@@ -42,7 +42,35 @@ pub struct PostCategorie {
     pub name:     String,
     pub position: i16,
 }
-#[derive(Deserialize, Insertable)]
+
+impl PostCategorie {
+    pub fn create_category(name: String, position: i16) -> PostCategorie {
+        let _connection = establish_connection();
+        let new_form = NewPostCategorie {
+            name:     name,
+            position: position,
+        };
+        let new_cat = diesel::insert_into(schema::post_categories::table)
+            .values(&new_form)
+            .get_result::<PostCategorie>(&_connection)
+            .expect("Error.");
+        return new_cat;
+    }
+    pub fn edit_category(&self, name: String, position: i16) -> &PostCategorie {
+        let _connection = establish_connection();
+        let new_form = NewPostCategorie {
+            name:     name,
+            position: position,
+        };
+        diesel::update(self)
+            .set(new_form)
+            .get_result::<PostCategorie>(&_connection)
+            .expect("Error.");
+        return self;
+    }
+}
+
+#[derive(Deserialize, Insertable, AsChangeset)]
 #[table_name="post_categories"]
 pub struct NewPostCategorie {
     pub name:     String,

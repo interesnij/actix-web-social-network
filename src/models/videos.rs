@@ -44,7 +44,35 @@ pub struct VideoCategorie {
     pub name:     String,
     pub position: i32,
 }
-#[derive(Deserialize, Insertable)]
+
+impl VideoCategorie {
+    pub fn create_category(name: String, position: i32) -> VideoCategorie {
+        let _connection = establish_connection();
+        let new_form = NewVideoCategorie {
+            name:     name,
+            position: position,
+        };
+        let new_cat = diesel::insert_into(schema::video_categories::table)
+            .values(&new_form)
+            .get_result::<VideoCategorie>(&_connection)
+            .expect("Error.");
+        return new_cat;
+    }
+    pub fn edit_category(&self, name: String, position: i32) -> &VideoCategorie {
+        let _connection = establish_connection();
+        let new_form = NewVideoCategorie {
+            name:     name,
+            position: position,
+        };
+        diesel::update(self)
+            .set(new_form)
+            .get_result::<VideoCategorie>(&_connection)
+            .expect("Error.");
+        return self;
+    }
+}
+
+#[derive(Deserialize, Insertable, AsChangeset)]
 #[table_name="video_categories"]
 pub struct NewVideoCategorie {
     pub name:     String,
