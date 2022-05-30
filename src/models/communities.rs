@@ -100,7 +100,7 @@ pub struct CommunitySubcategory {
 }
 
 impl CommunitySubcategory {
-    pub fn edit_subcategory(&self, name: String, category_id: i16,
+    pub fn edit_subcategory(&self, name: String, category_id: i32,
         avatar: Option<String>, position: i16) -> &CommunitySubcategory {
         let _connection = establish_connection();
         let new_form = NewCommunitySubcategory {
