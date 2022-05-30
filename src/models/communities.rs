@@ -81,7 +81,7 @@ impl CommunityCategory {
     }
 }
 
-#[derive(Deserialize, Insertable)]
+#[derive(Deserialize, Insertable, AsChangeset)]
 #[table_name="community_categorys"]
 pub struct NewCommunityCategory {
     pub name:     String,
@@ -117,7 +117,7 @@ impl CommunitySubcategory {
     }
 }
 
-#[derive(Deserialize, Insertable)]
+#[derive(Deserialize, Insertable, AsChangeset)]
 #[table_name="community_subcategorys"]
 pub struct NewCommunitySubcategory {
     pub name:        String,

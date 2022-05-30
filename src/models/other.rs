@@ -106,7 +106,7 @@ pub struct Sticker {
 
 impl Sticker {
     pub fn create_sticker(name: String, position: i16,
-        sticker_categorie_id: i32, image: Option<String>) -> Sticker {
+        sticker_categorie_id: i32, image: String) -> Sticker {
         let _connection = establish_connection();
         let new_form = NewSticker {
             name:                 name,
@@ -121,7 +121,7 @@ impl Sticker {
         return new_sticker;
     }
     pub fn edit_sticker(&self, name: String, position: i16,
-        description: Option<String>) -> &Sticker {
+        sticker_categorie_id: i32, image: String) -> &Sticker {
         let _connection = establish_connection();
         let new_form = NewSticker {
             name:                 name,
@@ -217,7 +217,7 @@ pub struct Smile {
 
 impl Smile {
     pub fn create_smile(name: String, position: i16,
-        smile_categorie_id: i32, image: Option<String>) -> Smile {
+        smile_categorie_id: i32, image: String) -> Smile {
         let _connection = establish_connection();
         let new_form = NewSmile {
             name:               name,
@@ -232,7 +232,7 @@ impl Smile {
         return new_smile;
     }
     pub fn edit_smile(&self, name: String, position: i16,
-        description: Option<String>) -> &Smile {
+        smile_categorie_id: i32, image: String) -> &Smile {
         let _connection = establish_connection();
         let new_form = NewSmile {
             name:               name,
@@ -294,7 +294,7 @@ impl Reaction {
             types: types,
             image: image,
             gif:   gif,
-            image: image,
+            name: name,
         };
         let new_reaction = diesel::insert_into(schema::reactions::table)
             .values(&new_form)
@@ -309,7 +309,7 @@ impl Reaction {
             types: types,
             image: image,
             gif:   gif,
-            image: image,
+            name: name,
         };
         diesel::update(self)
             .set(new_form)
@@ -319,7 +319,7 @@ impl Reaction {
     }
 }
 
-#[derive(Deserialize, Insertable)]
+#[derive(Deserialize, Insertable, AsChangeset)]
 #[table_name="reactions"]
 pub struct NewReaction {
     pub types: i16,
