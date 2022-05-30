@@ -115,7 +115,7 @@ pub struct GoodSubcategorie {
 }
 
 impl GoodSubcategorie {
-    pub fn edit_subcategory(&self, name: String, category_id:: i16,
+    pub fn edit_subcategory(&self, name: String, category_id: i16,
         avatar: Option<String>, position: i16) -> &GoodSubcategorie {
         let _connection = establish_connection();
         let new_form = NewGoodSubcategorie {

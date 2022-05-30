@@ -31,7 +31,7 @@ pub fn create_pages_urls(config: &mut web::ServiceConfig) {
     config.route("/admin/created/edit_sound_genre/{id}/", web::get().to(edit_sound_genre_page));
     config.route("/admin/created/create_artist/", web::get().to(create_artist_page));
     config.route("/admin/created/edit_artist/{id}/", web::get().to(edit_artist_page));
-    config.route("/admin/created/create_music_album/", web::get().to(create_music_album_)page));
+    config.route("/admin/created/create_music_album/", web::get().to(create_music_album_page));
     config.route("/admin/created/edit_music_album/{id}/", web::get().to(edit_music_album_page));
 
     config.route("/admin/created/create_stickers_category/", web::get().to(create_stickers_category_page));
