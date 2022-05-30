@@ -404,7 +404,7 @@ pub async fn edit_sound_genre_page(session: Session, cat_id: web::Path<i32>) -> 
             use crate::models::SoundGenre;
 
             let _connection = establish_connection();
-            let category = sound_genres
+            let sound_genre = sound_genres
                 .filter(schema::sound_genres::id.eq(*cat_id))
                 .load::<SoundGenre>(&_connection)
                 .expect("E.")
@@ -414,7 +414,7 @@ pub async fn edit_sound_genre_page(session: Session, cat_id: web::Path<i32>) -> 
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_sound_genre.stpl")]
-            struct Template { 
+            struct Template {
                 request_user: User,
                 sound_genre:  SoundGenre,
             }
