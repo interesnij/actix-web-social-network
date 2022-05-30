@@ -10,6 +10,7 @@ use actix_web::{
 use crate::utils::{
     is_signed_in,
     get_request_user_data,
+    establish_connection,
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
@@ -832,7 +833,7 @@ pub async fn edit_smile_page(session: Session, cat_id: web::Path<i32>) -> actix_
         let _request_user = get_request_user_data(session);
         if _request_user.is_supermanager() {
             use crate::schema::smiles::dsl::smiles;
-            use crate::models::Smile;
+            use crate::models::{Smile,SmileCategorie};
 
             let _connection = establish_connection();
             let smile = smiles
@@ -983,7 +984,7 @@ pub async fn edit_video_category_page(session: Session, cat_id: web::Path<i32>) 
                 .nth(0)
                 .unwrap();
 
-            let categories = post_categories
+            let categories = video_categories
                 .load::<VideoCategorie>(&_connection)
                 .expect("E.");
 
@@ -1045,7 +1046,7 @@ pub async fn edit_reaction_page(session: Session, cat_id: web::Path<i32>) -> act
             use crate::models::Reaction;
 
             let _connection = establish_connection();
-            let category = reactions
+            let reaction = reactions
                 .filter(schema::reactions::id.eq(*cat_id))
                 .load::<Reaction>(&_connection)
                 .expect("E.")

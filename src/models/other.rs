@@ -155,7 +155,7 @@ pub struct SmileCategorie {
     pub description: Option<String>,
 }
 
-impl StickerCategorie {
+impl SmileCategorie {
     pub fn get_smiles(&self) -> Vec<Smile> {
         use crate::models::other::smiles::dsl::smiles;
         let _connection = establish_connection();
