@@ -133,7 +133,7 @@ impl Artist {
             repost: self.repost,
             copy: self.copy,
             position: position,
-            can_see_el: self.can_see_el,
+            can_see_el: self.can_see_el.clone(),
         };
         diesel::update(self)
             .set(new_form)
