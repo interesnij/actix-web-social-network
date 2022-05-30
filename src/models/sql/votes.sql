@@ -4,7 +4,7 @@ CREATE TABLE reactions (
   image  VARCHAR(500) NOT NULL,
   gif    VARCHAR(500) NOT NULL,
   name   VARCHAR(100) NOT NULL
-);
+); 
 
 CREATE TABLE post_votes (
   id          SERIAL PRIMARY KEY,

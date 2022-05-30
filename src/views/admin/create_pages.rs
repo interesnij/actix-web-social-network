@@ -414,9 +414,9 @@ pub async fn edit_sound_genre_page(session: Session, cat_id: web::Path<i32>) -> 
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_sound_genre.stpl")]
-            struct Template {
+            struct Template { 
                 request_user: User,
-                sound_genre:  CommunityCategory,
+                sound_genre:  SoundGenre,
             }
             let body = Template {
                 request_user: _request_user,
@@ -736,11 +736,9 @@ pub async fn create_smiles_category_page(session: Session) -> actix_web::Result<
             #[template(path = "desctop/admin/created/create_smiles_category.stpl")]
             struct Template {
                 request_user: User,
-                categories:   Vec<SmileCategorie>,
             }
             let body = Template {
                 request_user: _request_user,
-                categories:   categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
