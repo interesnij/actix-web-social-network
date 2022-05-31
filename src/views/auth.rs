@@ -208,9 +208,9 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
 
     println!("is_authenticate!");
     if params.is_ok() {
-        println!("{:?}", params.unwrap());
 
         let params_2 = params.unwrap();
+        println!("{:?}", first_name);
         let mut get_perm = 1;
         let mut ipaddr: String = String::new();
 
