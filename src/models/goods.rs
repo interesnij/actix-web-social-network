@@ -250,12 +250,10 @@ impl GoodList {
         return "lgo".to_string() + &self.get_str_id();
     }
     pub fn get_reactions_list(&self) -> Vec<i16> {
-        // для скорости получения разрешенных реакций запишем их
-        // в поле reactions списков и чатов. Нам надо только разбить
-        // строку на звенья и превратить их в числа.
         let mut stack = Vec::new();
         if self.reactions.is_some() {
-            let v: Vec<&str> = self.reactions.as_ref().unwrap().split(",").collect();
+            let react_scring = self.reactions.as_ref().unwrap().to_string();
+            let v: Vec<&str> = react_scring.split(", ").collect();
             for item in v.iter() {
                 let pk: i16 = item.parse().unwrap();
                 stack.push(pk);

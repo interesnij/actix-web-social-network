@@ -7,7 +7,7 @@ use crate::schema;
 use crate::models::{
     Chat, Message, UserLocation, Smile, Sticker, Community, UserProfile, Friend,
     Post, Photo, Music, Video,
-    //Survey, 
+    //Survey,
     StickerCategorie,
     Doc, Good, SmileCategorie,
     PostList, PhotoList, MusicList, VideoList, SurveyList, DocList, GoodList,
@@ -1231,13 +1231,47 @@ impl User {
         use crate::schema::user_profiles::dsl::user_profiles;
 
         let _connection = establish_connection();
-        return user_profiles
+        let profile = user_profiles
             .filter(schema::user_profiles::id.eq(self.id))
             .load::<UserProfile>(&_connection)
-            .expect("E.")
-            .into_iter()
-            .nth(0)
-            .unwrap();
+            .expect("E.");
+
+        if profile.len() > 0 {
+            return profile.into_iter().nth(0).unwrap();
+        }
+        else {
+            use crate::models::NewUserProfile;
+
+            let _new_profile = NewUserProfile {
+                user_id: self.id,
+                posts: 0,
+                views_post: 0,
+                friends: 0,
+                follows: 0,
+                communities: 0,
+                photos: 0,
+                goods: 0,
+                docs: 0,
+                tracks: 0,
+                videos: 0,
+                articles: 0,
+                planners: 0,
+                avatar_id: None,
+                activity: None,
+                interests: None,
+                favorite_music: None,
+                favorite_films: None,
+                favorite_books: None,
+                favorite_game: None,
+                about: None,
+                survey: 0,
+            };
+            let profile = diesel::insert_into(schema::user_profiles::table)
+                .values(&_new_profile)
+                .get_result::<UserProfile>(&_connection)
+                .expect("Error saving user_profile.");
+            return profile;
+        }
     }
     pub fn is_have_followers(&self) -> bool {
         return self.get_profile().follows > 0

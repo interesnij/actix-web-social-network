@@ -197,21 +197,17 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
         UserSurveyNotification, NewUserSurveyNotification,
         UserNotification, NewUserNotification,
     };
-    println!("is_authenticate!");
      // Если пользователь не аноним, то отправляем его на страницу новостей
     if is_signed_in(&session) {
-        println!("is_authenticate!");
         to_home();
     }
 
     let _connection = establish_connection();
     let params = web::Query::<NewUserForm>::from_query(&req.query_string());
 
-
     if params.is_ok() {
 
         let params_2 = params.unwrap();
-        println!("{:?}", params_2.first_name);
         let mut get_perm = 1;
         let mut ipaddr: String = String::new();
 
