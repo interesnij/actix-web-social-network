@@ -201,7 +201,6 @@ impl PostList {
                 //if item_parse.is_ok() {
                 let pk: i16 = item.parse().unwrap();
                 stack.push(pk);
-                }
             }
         }
         return stack;
