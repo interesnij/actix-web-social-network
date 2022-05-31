@@ -2559,7 +2559,7 @@ input[type="button"].btn-block {
 }
 
 .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
-    background-color: #7979ff
+    background-color: #7979ff !important;
 }
 
 .custom-checkbox .custom-control-input:checked~.custom-control-label::after {
@@ -2587,7 +2587,7 @@ input[type="button"].btn-block {
 }
 
 .custom-radio .custom-control-input:checked~.custom-control-label::before {
-    background-color: #7979ff
+    background-color: #7979ff !important;
 }
 
 .custom-radio .custom-control-input:checked~.custom-control-label::after {
