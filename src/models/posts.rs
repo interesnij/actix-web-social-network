@@ -3571,6 +3571,7 @@ pub struct PostCommentVote {
     pub vote:            i16,
     pub user_id:         i32,
     pub post_comment_id: i32,
+    pub reaction:        i16,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="post_comment_votes"]
@@ -3578,6 +3579,7 @@ pub struct NewPostCommentVote {
     pub vote:            i16,
     pub user_id:         i32,
     pub post_comment_id: i32,
+    pub reaction:        i16,
 }
 
 /////// PostListRepost //////
