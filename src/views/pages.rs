@@ -77,14 +77,14 @@ pub async fn link_page(session: Session, req: HttpRequest, slug: web::Path<Strin
 pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     use crate::schema::users::dsl::users;
     use crate::schema::phone_codes::dsl::phone_codes;
-    use crate::models::PhoneCodes;
+    use crate::models::PhoneCode;
 
     let _connection = establish_connection();
     let users_list = users
         .load::<User>(&_connection)
         .expect("E.");
     let phone_codes_list = users
-        .load::<PhoneCodes>(&_connection)
+        .load::<PhoneCode>(&_connection)
         .expect("E.");
 
     #[derive(TemplateOnce)]
@@ -92,7 +92,7 @@ pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result
     struct DesctopAuthTemplate {
         title: String,
         users_list: Vec<User>,
-        phone_codes_list: Vec<PhoneCodes>,
+        phone_codes_list: Vec<PhoneCode>,
     }
     #[derive(TemplateOnce)]
     #[template(path = "desctop/main/lists/news_list.stpl")]
