@@ -196,7 +196,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
         UserSurveyNotification, NewUserSurveyNotification,
         UserNotification, NewUserNotification,
     };
-
+    println!("is_authenticate!");
      // Если пользователь не аноним, то отправляем его на страницу новостей
     if is_signed_in(&session) {
         println!("is_authenticate!");
@@ -206,7 +206,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
     let _connection = establish_connection();
     let params = web::Query::<NewUserForm>::from_query(&req.query_string());
 
-    println!("is_authenticate!");
+
     if params.is_ok() {
 
         let params_2 = params.unwrap();
