@@ -57,16 +57,6 @@ pub async fn logout(session: Session) -> HttpResponse {
     HttpResponse::Ok().body("ok")
 }
 
-#[derive(Deserialize)]
-pub struct NewUserForm {
-    pub first_name:  String,
-    pub last_name:   String,
-    pub gender:      String,
-    pub password:    String,
-    pub birthday:    String,
-    pub phone:       String,
-}
-
 fn find_user(data: LoginUser2) -> Result<SessionUser, AuthError> {
     use crate::schema::users::dsl::users;
 
@@ -178,6 +168,16 @@ pub struct CountryLoc {
     pub name_en:    String,
 }
 
+
+#[derive(Deserialize)]
+pub struct NewUserForm {
+    pub first_name:  String,
+    pub last_name:   String,
+    pub gender:      String,
+    pub password:    String,
+    pub birthday:    String,
+    pub phone:       String,
+}
 pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responder {
     use crate::utils::{hash_password, set_current_user};
     use chrono::NaiveDate;
@@ -199,13 +199,16 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
 
      // Если пользователь не аноним, то отправляем его на страницу новостей
     if is_signed_in(&session) {
+        println!("is_authenticate!");
         to_home();
     }
 
     let _connection = establish_connection();
     let params = web::Query::<NewUserForm>::from_query(&req.query_string());
+
+    println!("is_authenticate!");
     if params.is_ok() {
-        println!("params ok!");
+        println!("{:?}", params.unwrap());
 
         let params_2 = params.unwrap();
         let mut get_perm = 1;
