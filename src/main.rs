@@ -7,6 +7,7 @@ pub mod schema;
 pub mod models;
 pub mod routes;
 mod errors;
+mod vars;
 
 #[macro_use]
 mod utils;
@@ -32,7 +33,7 @@ async fn main() -> std::io::Result<()> {
         //    .allowed_header(header::CONTENT_TYPE)
         //    .max_age(3600);
 
-        App::new() 
+        App::new()
             .wrap(RedisSession::new("127.0.0.1:6379", private_key.master()))
             //.wrap(RedisSession::new("127.0.0.1:6379", &[0; 32]))
             //.wrap(cors)
