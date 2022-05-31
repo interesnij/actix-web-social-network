@@ -296,59 +296,54 @@ pub async fn send_reaction(session: Session, req: HttpRequest) -> web::Json<Json
         }
 
         let _request_user = get_request_user_data(session);
-        let pre_types = &code[..1];
 
-        if pre_types == "c".to_string() {
-            if code == "cpo".to_string() {
-                use crate::utils::get_post_comment;
+        if code == "cpo".to_string() {
+            use crate::utils::get_post_comment;
 
-                let item = get_post_comment(item_id);
-                item.send_reaction(_request_user.id, reaction)
-            }
-            else if code == "cgo".to_string() {
-                use crate::utils::get_good_comment;
-
-                let item = get_good_comment(item_id);
-                item.send_reaction(_request_user.id, reaction)
-            }
-            else if code == "cph".to_string() {
-                use crate::utils::get_photo_comment;
-
-                let item = get_photo_comment(item_id);
-                item.send_reaction(_request_user.id, reaction)
-            }
-            else if code == "cvi".to_string() {
-                use crate::utils::get_video_comment;
-
-                let item = get_video_comment(item_id);
-                item.send_reaction(_request_user.id, reaction)
-            }
+            let item = get_post_comment(item_id);
+            item.send_reaction(_request_user.id, reaction)
         }
-        else {
-            if code == "pos".to_string() {
-                use crate::utils::get_post;
+        else if code == "cgo".to_string() {
+            use crate::utils::get_good_comment;
 
-                let item = get_post(item_id);
-                item.send_reaction(_request_user.id, reaction)
-            }
-            else if code == "goo".to_string() {
-                use crate::utils::get_good;
+            let item = get_good_comment(item_id);
+            item.send_reaction(_request_user.id, reaction)
+        }
+        else if code == "cph".to_string() {
+            use crate::utils::get_photo_comment;
 
-                let item = get_good(item_id);
-                item.send_reaction(_request_user.id, reaction)
-            }
-            else if code == "pho".to_string() {
-                use crate::utils::get_photo;
+            let item = get_photo_comment(item_id);
+            item.send_reaction(_request_user.id, reaction)
+        }
+        else if code == "cvi".to_string() {
+            use crate::utils::get_video_comment;
 
-                let item = get_photo(item_id);
-                item.send_reaction(_request_user.id, reaction)
-            }
-            else if code == "vid".to_string() {
-                use crate::utils::get_video;
+            let item = get_video_comment(item_id);
+            item.send_reaction(_request_user.id, reaction)
+        }
+        else if code == "pos".to_string() {
+            use crate::utils::get_post;
 
-                let item = get_video(item_id);
-                item.send_reaction(_request_user.id, reaction)
-            }
+            let item = get_post(item_id);
+            item.send_reaction(_request_user.id, reaction)
+        }
+        else if code == "goo".to_string() {
+            use crate::utils::get_good;
+
+            let item = get_good(item_id);
+            item.send_reaction(_request_user.id, reaction)
+        }
+        else if code == "pho".to_string() {
+            use crate::utils::get_photo;
+
+            let item = get_photo(item_id);
+            item.send_reaction(_request_user.id, reaction)
+        }
+        else if code == "vid".to_string() {
+            use crate::utils::get_video;
+
+            let item = get_video(item_id);
+            item.send_reaction(_request_user.id, reaction)
         }
     }
     return Json(JsonItemReactions {
