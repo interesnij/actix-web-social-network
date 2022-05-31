@@ -17,7 +17,6 @@ use diesel::{Queryable, Insertable};
 use serde::{Serialize, Deserialize};
 use crate::utils::{
     establish_connection,
-    JsonReactions,
     JsonPosition,
     JsonItemReactions
 };

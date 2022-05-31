@@ -11,7 +11,6 @@ use crate::utils::{
     establish_connection,
     get_request_user_data,
     get_type,
-    JsonReactions,
     JsonItemReactions,
 };
 use actix_session::Session;
@@ -269,106 +268,6 @@ pub async fn recover_comment(session: Session, req: HttpRequest) -> web::Json<Js
         }
     } else {
         return Json(JsonResponse {info: "Ошибка доступа".to_string()})
-    }
-}
-
-pub async fn like_comment(session: Session, req: HttpRequest) -> web::Json<JsonReactions> {
-    if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
-        let (type_exists, comment_id, types) = get_type(&req);
-        if type_exists == false {
-            return Json(JsonReactions {
-                like_count: 0,
-                dislike_count: 0,
-            })
-        }
-        else {
-            if types == "cpo".to_string() {
-                use crate::utils::get_post_comment;
-
-                let item = get_post_comment(comment_id);
-                item.send_like(_request_user.id)
-            }
-            else if types == "cgo".to_string() {
-                use crate::utils::get_good_comment;
-
-                let item = get_good_comment(comment_id);
-                item.send_like(_request_user.id)
-            }
-            else if types == "cph".to_string() {
-                use crate::utils::get_photo_comment;
-
-                let item = get_photo_comment(comment_id);
-                item.send_like(_request_user.id)
-            }
-            else if types == "cvi".to_string() {
-                use crate::utils::get_video_comment;
-
-                let item = get_video_comment(comment_id);
-                item.send_like(_request_user.id)
-            }
-            else {
-                return Json(JsonReactions {
-                    like_count: 0,
-                    dislike_count: 0,
-                })
-            }
-        }
-    } else {
-        return Json(JsonReactions {
-            like_count: 0,
-            dislike_count: 0,
-        })
-    }
-}
-
-pub async fn dislike_comment(session: Session, req: HttpRequest) -> web::Json<JsonReactions> {
-    if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
-        let (type_exists, comment_id, types) = get_type(&req);
-        if type_exists == false {
-            return Json(JsonReactions {
-                like_count: 0,
-                dislike_count: 0,
-            })
-        }
-        else {
-            if types == "cpo".to_string() {
-                use crate::utils::get_post_comment;
-
-                let item = get_post_comment(comment_id);
-                item.send_dislike(_request_user.id)
-            }
-            else if types == "cgo".to_string() {
-                use crate::utils::get_good_comment;
-
-                let item = get_good_comment(comment_id);
-                item.send_dislike(_request_user.id)
-            }
-            else if types == "cph".to_string() {
-                use crate::utils::get_photo_comment;
-
-                let item = get_photo_comment(comment_id);
-                item.send_dislike(_request_user.id)
-            }
-            else if types == "cvi".to_string() {
-                use crate::utils::get_video_comment;
-
-                let item = get_video_comment(comment_id);
-                item.send_dislike(_request_user.id)
-            }
-            else {
-                return Json(JsonReactions {
-                    like_count: 0,
-                    dislike_count: 0,
-                })
-            }
-        }
-    } else {
-        return Json(JsonReactions {
-            like_count: 0,
-            dislike_count: 0,
-        })
     }
 }
 
