@@ -179,6 +179,7 @@ pub struct NewUserForm {
     pub phone:       String,
 }
 pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responder {
+    HttpResponse::Ok().body(format!("ok"))
     use crate::utils::{hash_password, set_current_user};
     use chrono::NaiveDate;
     use crate::models::{
