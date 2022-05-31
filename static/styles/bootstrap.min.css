@@ -2502,7 +2502,7 @@ input[type="button"].btn-block {
 
 .custom-control-input:checked~.custom-control-label::before {
     color: #fff;
-    background-color: #7979ff
+    background-color: #7979ff !important;
 }
 
 .custom-control-input:focus~.custom-control-label::before {
