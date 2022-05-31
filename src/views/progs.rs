@@ -345,24 +345,47 @@ pub async fn send_reaction(session: Session, req: HttpRequest) -> web::Json<Json
             let item = get_video(item_id);
             item.send_reaction(_request_user.id, reaction)
         }
+        else {
+            return Json(JsonItemReactions {
+                reactions:   0,
+                thumbs_up:   0,
+                thumbs_down: 0,
+                red_heart:   0,
+                fire:        0,
+                love_face:   0,
+                clapping:    0,
+                beaming:     0,
+                thinking:    0,
+                exploding:   0,
+                screaming:   0,
+                evil:        0,
+                crying:      0,
+                party:       0,
+                star_face:   0,
+                vomiting:    0,
+                pile_of_poo: 0,
+            });
+        }
     }
-    return Json(JsonItemReactions {
-        reactions:   0,
-        thumbs_up:   0,
-        thumbs_down: 0,
-        red_heart:   0,
-        fire:        0,
-        love_face:   0,
-        clapping:    0,
-        beaming:     0,
-        thinking:    0,
-        exploding:   0,
-        screaming:   0,
-        evil:        0,
-        crying:      0,
-        party:       0,
-        star_face:   0,
-        vomiting:    0,
-        pile_of_poo: 0,
-    });
+    else {
+        return Json(JsonItemReactions {
+            reactions:   0,
+            thumbs_up:   0,
+            thumbs_down: 0,
+            red_heart:   0,
+            fire:        0,
+            love_face:   0,
+            clapping:    0,
+            beaming:     0,
+            thinking:    0,
+            exploding:   0,
+            screaming:   0,
+            evil:        0,
+            crying:      0,
+            party:       0,
+            star_face:   0,
+            vomiting:    0,
+            pile_of_poo: 0,
+        });
+    }
 }
