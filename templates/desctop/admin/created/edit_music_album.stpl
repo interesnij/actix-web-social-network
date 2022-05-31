@@ -20,7 +20,7 @@
               </div>
               <div class="form-group">
                   <label>Изображение</label>
-                  <% if music_album.image.is_some() {
+                  <% if music_album.image.is_some() { %>
                     <img class="img-fluid rounded" src="<%= music_album.image.as_deref().unwrap() %>" alt="avatar" style="height: 100px;">
                   <% } %>
                   <input type="file" accept="image/*" name="avatar">

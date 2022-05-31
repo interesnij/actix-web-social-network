@@ -11,7 +11,7 @@
               </div>
               <div class="form-group">
                   <label>Изображение</label>
-                  <% if category.avatar.is_some() {
+                  <% if category.avatar.is_some() { %>
                     <img class="img-fluid rounded" src="<%= category.avatar.as_deref().unwrap() %>" alt="avatar" style="height: 100px;">
                   <% } %>
                   <input type="file" accept="image/*" name="avatar">

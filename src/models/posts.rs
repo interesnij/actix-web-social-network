@@ -4138,7 +4138,7 @@ impl PostCommentReaction {
                         .expect("Error."),
                     3 => diesel::update(self)
                         .set(schema::post_comment_reactions::red_heart.eq(self.red_heart + 1))
-                        .get_result::<PhotoCommentReaction>(&_connection)
+                        .get_result::<PostCommentReaction>(&_connection)
                         .expect("Error."),
                     4 => diesel::update(self)
                         .set(schema::post_comment_reactions::fire.eq(self.fire + 1))
