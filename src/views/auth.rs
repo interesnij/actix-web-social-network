@@ -210,7 +210,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
     if params.is_ok() {
 
         let params_2 = params.unwrap();
-        println!("{:?}", first_name);
+        println!("{:?}", params_2.first_name);
         let mut get_perm = 1;
         let mut ipaddr: String = String::new();
 
