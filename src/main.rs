@@ -34,8 +34,8 @@ async fn main() -> std::io::Result<()> {
         //    .max_age(3600);
 
         App::new()
-            .wrap(RedisSession::new("127.0.0.1:6379", private_key.master()))
-            //.wrap(RedisSession::new("127.0.0.1:6379", &[0; 32]))
+            //.wrap(RedisSession::new("127.0.0.1:6379", private_key.master()))
+            .wrap(RedisSession::new("127.0.0.1:6379", &[0; 32]))
             //.wrap(cors)
             .service(static_files)
             .service(media_files)
