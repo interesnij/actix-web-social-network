@@ -3249,7 +3249,7 @@ impl PostComment {
         use crate::schema::post_comment_votes::dsl::post_comment_votes;
 
         let _connection = establish_connection();
-        let list = self.get_chat();
+        let list = self.get_list();
         let reactions_of_list = list.get_reactions_list();
         let react_model = self.get_or_create_react_model();
 
