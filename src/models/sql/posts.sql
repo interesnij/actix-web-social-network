@@ -11,7 +11,7 @@ CREATE TABLE post_lists (
     user_id         INT NOT NULL,
     types           SMALLINT NOT NULL,
     description     VARCHAR(500),
-    image           VARCHAR(500), 
+    image           VARCHAR(500),
     created         TIMESTAMP NOT NULL,
     count           INT NOT NULL,
     repost          INT NOT NULL,
@@ -87,10 +87,8 @@ CREATE TABLE post_comments (
     attach      VARCHAR(200),
     types       "char" NOT NULL,
     created     TIMESTAMP NOT NULL,
-
-    liked       INT NOT NULL,
-    disliked    INT NOT NULL,
     repost      INT NOT NULL,
+    reactions   INT NOT NULL,
 
     CONSTRAINT fk_post_comment
         FOREIGN KEY(post_id)
@@ -185,4 +183,29 @@ CREATE TABLE post_reactions (
     CONSTRAINT fk_post_reactions
         FOREIGN KEY(post_id)
             REFERENCES posts(id)
+);
+
+CREATE TABLE post_comment_reactions (
+    id              SERIAL PRIMARY KEY,
+    post_comment_id INT NOT NULL,
+    thumbs_up       INT NOT NULL,
+    thumbs_down     INT NOT NULL,
+    red_heart       INT NOT NULL,
+    fire            INT NOT NULL,
+    love_face       INT NOT NULL,
+    clapping        INT NOT NULL,
+    beaming         INT NOT NULL,
+    thinking        INT NOT NULL,
+    exploding       INT NOT NULL,
+    screaming       INT NOT NULL,
+    evil            INT NOT NULL,
+    crying          INT NOT NULL,
+    party           INT NOT NULL,
+    star_face       INT NOT NULL,
+    vomiting        INT NOT NULL,
+    pile_of_poo     INT NOT NULL,
+
+    CONSTRAINT fk_post_comment_reactions
+        FOREIGN KEY(post_comment_id)
+            REFERENCES post_comments(id)
 );

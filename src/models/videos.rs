@@ -13,6 +13,7 @@ use crate::schema::{
     video_list_reposts,
     video_reposts,
     video_reactions,
+    video_comment_reactions,
 };
 
 use diesel::{Queryable, Insertable};
@@ -2572,9 +2573,8 @@ impl Video {
             attach:     attach,
             types:      "a".to_string(),
             created:    chrono::Local::now().naive_utc(),
-            liked:      0,
-            disliked:   0,
             repost:     0,
+            reactions:  0,
         };
         let new_comment = diesel::insert_into(schema::video_comments::table)
             .values(&new_comment_form)
@@ -2693,9 +2693,8 @@ pub struct VideoComment {
     pub types:      String,
     pub attach:     Option<String>,
     pub created:    chrono::NaiveDateTime,
-    pub liked:      i32,
-    pub disliked:   i32,
     pub repost:     i32,
+    pub reactions:  i32,
 }
 #[derive(Deserialize, Insertable)]
 #[table_name="video_comments"]
@@ -2708,9 +2707,8 @@ pub struct NewVideoComment {
     pub types:      String,
     pub attach:     Option<String>,
     pub created:    chrono::NaiveDateTime,
-    pub liked:      i32,
-    pub disliked:   i32,
     pub repost:     i32,
+    pub reactions:  i32,
 }
 
 #[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
@@ -2718,13 +2716,6 @@ pub struct NewVideoComment {
 pub struct EditVideoComment {
     pub content:    Option<String>,
     pub attach:     Option<String>,
-}
-
-#[derive(Serialize, AsChangeset)]
-#[table_name="video_comments"]
-pub struct VideoCommentReactionsUpdate {
-    pub liked:    i32,
-    pub disliked: i32,
 }
 
 impl VideoComment {
@@ -2898,181 +2889,6 @@ impl VideoComment {
         }
     }
 
-    pub fn send_like(&self, user_id: i32) -> Json<JsonReactions> {
-        if self.get_item().votes_on == false {
-            return Json(JsonReactions {
-                like_count:    self.liked,
-                dislike_count: self.disliked,
-            });
-        }
-        use crate::schema::video_comment_votes::dsl::video_comment_votes;
-
-        let _connection = establish_connection();
-
-        let votes = video_comment_votes
-            .filter(schema::video_comment_votes::user_id.eq(user_id))
-            .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
-            .load::<VideoCommentVote>(&_connection)
-            .expect("E.");
-        if votes.len() > 0 {
-            let vote = votes.into_iter().nth(0).unwrap();
-            if vote.vote != 1 {
-                diesel::update(&vote)
-                    .set(schema::video_comment_votes::vote.eq(1))
-                    .get_result::<VideoCommentVote>(&_connection)
-                    .expect("Error.");
-
-                let reactions = VideoCommentReactionsUpdate {
-                    liked:    self.liked + 1,
-                    disliked: self.disliked - 1,
-                };
-                diesel::update(self)
-                    .set(reactions)
-                    .get_result::<VideoComment>(&_connection)
-                    .expect("Error.");
-
-                return Json(JsonReactions {
-                    like_count:    self.liked + 1,
-                    dislike_count: self.disliked - 1,
-                });
-            }
-            else {
-                diesel::delete(video_comment_votes
-                    .filter(schema::video_comment_votes::user_id.eq(user_id))
-                    .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
-                    )
-                    .execute(&_connection)
-                    .expect("E");
-
-                diesel::update(self)
-                    .set(schema::video_comments::liked.eq(self.liked - 1))
-                    .get_result::<VideoComment>(&_connection)
-                    .expect("Error.");
-
-                return Json(JsonReactions {
-                    like_count:    self.liked - 1,
-                    dislike_count: self.disliked,
-                });
-            }
-        }
-        else {
-            let new_vote = NewVideoCommentVote {
-                vote:            1,
-                user_id:         user_id,
-                video_comment_id: self.id,
-            };
-            diesel::insert_into(schema::video_comment_votes::table)
-                .values(&new_vote)
-                .get_result::<VideoCommentVote>(&_connection)
-                .expect("Error.");
-
-            diesel::update(self)
-                .set(schema::video_comments::liked.eq(self.liked + 1))
-                .get_result::<VideoComment>(&_connection)
-                .expect("Error.");
-
-            return Json(JsonReactions {
-                like_count:    self.liked + 1,
-                dislike_count: self.disliked,
-            });
-        }
-    }
-
-    pub fn send_dislike(&self, user_id: i32) -> Json<JsonReactions> {
-        if self.get_item().votes_on == false {
-            return Json(JsonReactions {
-                like_count:    self.liked,
-                dislike_count: self.disliked,
-            });
-        }
-        use crate::schema::video_comment_votes::dsl::video_comment_votes;
-
-        let _connection = establish_connection();
-
-        let votes = video_comment_votes
-            .filter(schema::video_comment_votes::user_id.eq(user_id))
-            .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
-            .load::<VideoCommentVote>(&_connection)
-            .expect("E.");
-        if votes.len() > 0 {
-            let vote = votes.into_iter().nth(0).unwrap();
-            if vote.vote != -1 {
-                diesel::update(&vote)
-                    .set(schema::video_comment_votes::vote.eq(-1))
-                    .get_result::<VideoCommentVote>(&_connection)
-                    .expect("Error.");
-
-                let reactions = VideoCommentReactionsUpdate {
-                    liked:    self.liked - 1,
-                    disliked: self.disliked + 1,
-                };
-                diesel::update(self)
-                    .set(reactions)
-                    .get_result::<VideoComment>(&_connection)
-                    .expect("Error.");
-
-                return Json(JsonReactions {
-                    like_count:    self.liked - 1,
-                    dislike_count: self.disliked + 1,
-                });
-            }
-            else {
-                diesel::delete(video_comment_votes
-                    .filter(schema::video_comment_votes::user_id.eq(user_id))
-                    .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
-                    )
-                    .execute(&_connection)
-                    .expect("E");
-
-                diesel::update(self)
-                    .set(schema::video_comments::disliked.eq(self.disliked - 1))
-                    .get_result::<VideoComment>(&_connection)
-                    .expect("Error.");
-
-                return Json(JsonReactions {
-                    like_count:    self.liked,
-                    dislike_count: self.disliked - 1,
-                });
-            }
-        }
-        else {
-            let new_vote = NewVideoCommentVote {
-                vote: -1,
-                user_id: user_id,
-                video_comment_id: self.id,
-            };
-            diesel::insert_into(schema::video_comment_votes::table)
-                .values(&new_vote)
-                .get_result::<VideoCommentVote>(&_connection)
-                .expect("Error.");
-
-            diesel::update(self)
-                .set(schema::video_comments::disliked.eq(self.disliked + 1))
-                .get_result::<VideoComment>(&_connection)
-                .expect("Error.");
-
-            return Json(JsonReactions {
-                like_count:    self.liked,
-                dislike_count: self.disliked + 1,
-            });
-        }
-    }
-    pub fn likes_count(&self) -> String {
-        if self.liked == 0 {
-            return "".to_string();
-        }
-        else {
-            return self.liked.to_string();
-        }
-    }
-    pub fn dislikes_count(&self) -> String {
-        if self.disliked == 0 {
-            return "".to_string();
-        }
-        else {
-            return self.disliked.to_string();
-        }
-    }
     pub fn get_attach_photos(&self) -> Vec<Photo> {
         use crate::schema::photos::dsl::photos;
 
@@ -3114,142 +2930,8 @@ impl VideoComment {
             .expect("E");
     }
 
-    pub fn likes_count_ru(&self) -> String {
-        use crate::utils::get_count_for_ru;
 
-        return get_count_for_ru (
-            self.liked,
-            " человек".to_string(),
-            " человека".to_string(),
-            " человек".to_string(),
-        );
-    }
-    pub fn dislikes_count_ru(&self) -> String {
-        use crate::utils::get_count_for_ru;
 
-        return get_count_for_ru (
-            self.disliked,
-            " человек".to_string(),
-            " человека".to_string(),
-            " человек".to_string(),
-        );
-    }
-    pub fn is_have_likes(&self) -> bool {
-        return self.liked > 0;
-    }
-    pub fn is_have_dislikes(&self) -> bool {
-        return self.disliked > 0;
-    }
-    pub fn is_have_reposts(&self) -> bool {
-        return self.repost > 0;
-    }
-
-    pub fn likes_ids(&self) -> Vec<i32> {
-        use crate::schema::video_comment_votes::dsl::video_comment_votes;
-
-        let _connection = establish_connection();
-        let votes = video_comment_votes
-            .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
-            .filter(schema::video_comment_votes::vote.eq(1))
-            .load::<VideoCommentVote>(&_connection)
-            .expect("E");
-
-        let mut stack = Vec::new();
-        for _item in votes.iter() {
-            stack.push(_item.user_id);
-        };
-        return stack;
-    }
-    pub fn dislikes_ids(&self) -> Vec<i32> {
-        use crate::schema::video_comment_votes::dsl::video_comment_votes;
-
-        let _connection = establish_connection();
-        let votes = video_comment_votes
-            .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
-            .filter(schema::video_comment_votes::vote.eq(-1))
-            .load::<VideoCommentVote>(&_connection)
-            .expect("E");
-
-        let mut stack = Vec::new();
-        for _item in votes.iter() {
-            stack.push(_item.user_id);
-        };
-        return stack;
-    }
-    pub fn likes(&self, limit: i64, offset: i64) -> Vec<User> {
-        use crate::schema::video_comment_votes::dsl::video_comment_votes;
-        use crate::utils::get_users_from_ids;
-
-        let _connection = establish_connection();
-        let votes = video_comment_votes
-            .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
-            .filter(schema::video_comment_votes::vote.eq(1))
-            .limit(limit)
-            .offset(offset)
-            .load::<VideoCommentVote>(&_connection)
-            .expect("E");
-
-        let mut stack = Vec::new();
-        for _item in votes.iter() {
-            stack.push(_item.user_id);
-        };
-        return get_users_from_ids(stack);
-    }
-    pub fn dislikes(&self, limit: i64, offset: i64) -> Vec<User> {
-        use crate::schema::video_comment_votes::dsl::video_comment_votes;
-        use crate::utils::get_users_from_ids;
-
-        let _connection = establish_connection();
-        let votes = video_comment_votes
-            .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
-            .filter(schema::video_comment_votes::vote.eq(-1))
-            .limit(limit)
-            .offset(offset)
-            .load::<VideoCommentVote>(&_connection)
-            .expect("E");
-
-        let mut stack = Vec::new();
-        for _item in votes.iter() {
-            stack.push(_item.user_id);
-        };
-        return get_users_from_ids(stack);
-    }
-    pub fn window_likes(&self) -> Vec<User> {
-        use crate::schema::video_comment_votes::dsl::video_comment_votes;
-        use crate::utils::get_users_from_ids;
-
-        let _connection = establish_connection();
-        let votes = video_comment_votes
-            .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
-            .filter(schema::video_comment_votes::vote.eq(1))
-            .limit(6)
-            .load::<VideoCommentVote>(&_connection)
-            .expect("E");
-
-        let mut stack = Vec::new();
-        for _item in votes.iter() {
-            stack.push(_item.user_id);
-        };
-        return get_users_from_ids(stack);
-    }
-    pub fn window_dislikes(&self) -> Vec<User> {
-        use crate::schema::video_comment_votes::dsl::video_comment_votes;
-        use crate::utils::get_users_from_ids;
-
-        let _connection = establish_connection();
-        let votes = video_comment_votes
-            .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
-            .filter(schema::video_comment_votes::vote.eq(-1))
-            .limit(6)
-            .load::<VideoCommentVote>(&_connection)
-            .expect("E");
-
-        let mut stack = Vec::new();
-        for _item in votes.iter() {
-            stack.push(_item.user_id);
-        };
-        return get_users_from_ids(stack);
-    }
     pub fn get_replies(&self) -> Vec<VideoComment> {
         use crate::schema::video_comments::dsl::video_comments;
 
@@ -3378,6 +3060,276 @@ impl VideoComment {
                 return new_str;
             }
         } else { return "".to_string(); }
+    }
+
+    pub fn count_reactions(&self) -> String {
+        if self.reactions == 0 {
+            return "".to_string();
+        }
+        else {
+            return self.reactions.to_string();
+        }
+    }
+
+    pub fn get_or_create_react_model(&self) -> VideoCommentReaction {
+        use crate::schema::video_comment_reactions::dsl::video_comment_reactions;
+
+        let _connection = establish_connection();
+        let _react_model = video_comment_reactions
+            .filter(schema::video_comment_reactions::video_comment_id.eq(self.id))
+            .load::<VideoCommentReaction>(&_connection)
+            .expect("E.");
+        if _react_model.len() > 0 {
+            return _react_model.into_iter().nth(0).unwrap();
+        }
+        else {
+            let new_react_model = NewVideoCommentReaction {
+                video_comment_id: self.id,
+                thumbs_up:   0,
+                thumbs_down: 0,
+                red_heart:   0,
+                fire:        0,
+                love_face:   0,
+                clapping:    0,
+                beaming:     0,
+                thinking:    0,
+                exploding:   0,
+                screaming:   0,
+                evil:        0,
+                crying:      0,
+                party:       0,
+                star_face:   0,
+                vomiting:    0,
+                pile_of_poo: 0,
+            };
+            let _react_model = diesel::insert_into(schema::video_comment_reactions::table)
+                .values(&new_react_model)
+                .get_result::<VideoCommentReaction>(&_connection)
+                .expect("Error.");
+
+            return _react_model;
+        }
+    }
+
+    pub fn send_reaction(&self, user_id: i32, types: i16) -> Json<JsonItemReactions> {
+        use crate::schema::video_comment_votes::dsl::video_comment_votes;
+
+        let _connection = establish_connection();
+        let list = self.get_chat();
+        let reactions_of_list = list.get_reactions_list();
+        let react_model = self.get_or_create_react_model();
+
+        if reactions_of_list.iter().any(|&i| i==types) && list.get_members_ids().iter().any(|&i| i==user_id) {
+
+            let votes = video_comment_votes
+                .filter(schema::video_comment_votes::user_id.eq(user_id))
+                .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
+                .load::<VideoCommentVote>(&_connection)
+                .expect("E.");
+
+            // если пользователь уже реагировал на товар
+            if votes.len() > 0 {
+                let vote = votes.into_iter().nth(0).unwrap();
+
+                // если пользователь уже реагировал этой реакцией на этот товар
+                if vote.reaction == types {
+                    diesel::delete(video_comment_votes
+                        .filter(schema::video_comment_votes::user_id.eq(user_id))
+                        .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
+                        )
+                        .execute(&_connection)
+                        .expect("E");
+                    react_model.update_model(types, None, false);
+                    self.minus_reactions(1);
+                }
+                // если пользователь уже реагировал другой реакцией на этот товар
+                else {
+                    let old_type = vote.reaction;
+                    diesel::update(&vote)
+                        .set(schema::video_comment_votes::reaction.eq(types))
+                        .get_result::<VideoCommentVote>(&_connection)
+                        .expect("Error.");
+
+                    react_model.update_model(types, Some(old_type), false);
+                }
+            }
+
+            // если пользователь не реагировал на этот товар
+            else {
+                let new_vote = NewVideoCommentVote {
+                    vote:            1,
+                    user_id:         user_id,
+                    video_comment_id: self.id,
+                    reaction:        types,
+                };
+                diesel::insert_into(schema::video_comment_votes::table)
+                    .values(&new_vote)
+                    .get_result::<VideoCommentVote>(&_connection)
+                    .expect("Error.");
+
+                react_model.update_model(types, None, true);
+                self.plus_reactions(1);
+            }
+        }
+
+        return Json(JsonItemReactions {
+            reactions:   self.reactions,
+            thumbs_up:   react_model.thumbs_up,
+            thumbs_down: react_model.thumbs_down,
+            red_heart:   react_model.red_heart,
+            fire:        react_model.fire,
+            love_face:   react_model.love_face,
+            clapping:    react_model.clapping,
+            beaming:     react_model.beaming,
+            thinking:    react_model.thinking,
+            exploding:   react_model.exploding,
+            screaming:   react_model.screaming,
+            evil:        react_model.evil,
+            crying:      react_model.crying,
+            party:       react_model.party,
+            star_face:   react_model.star_face,
+            vomiting:    react_model.vomiting,
+            pile_of_poo: react_model.pile_of_poo,
+        });
+    }
+
+    pub fn count_reactions_of_types(&self, types: i16) -> i32 {
+        let react_model = self.get_or_create_react_model();
+        let format_types: i32 = types.into();
+        let count = match format_types {
+            1 => react_model.thumbs_up,
+            2 => react_model.thumbs_down,
+            3 => react_model.red_heart,
+            4 => react_model.fire,
+            5 => react_model.love_face,
+            6 => react_model.clapping,
+            7 => react_model.beaming,
+            8 => react_model.thinking,
+            9 => react_model.exploding,
+            10 => react_model.screaming,
+            11 => react_model.evil,
+            12 => react_model.crying,
+            13 => react_model.party,
+            14 => react_model.star_face,
+            15 => react_model.vomiting,
+            16 => react_model.pile_of_poo,
+            _ => 0,
+        };
+        return count;
+    }
+    pub fn count_reactions_of_types_ru(&self, types: i16) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            self.count_reactions_of_types(types),
+            " человек".to_string(),
+            " человека".to_string(),
+            " человек".to_string(),
+        );
+    }
+
+    pub fn count_reactions_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            self.reactions,
+            " человек".to_string(),
+            " человека".to_string(),
+            " человек".to_string(),
+        );
+    }
+
+    pub fn is_have_reactions(&self) -> bool {
+        return self.reactions > 0;
+    }
+
+    pub fn reactions_ids(&self) -> Vec<i32> {
+        use crate::schema::video_comment_votes::dsl::video_comment_votes;
+
+        let _connection = establish_connection();
+        let votes = video_comment_votes
+            .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
+            .load::<VideoCommentVote>(&_connection)
+            .expect("E");
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return stack;
+    }
+
+    pub fn is_have_user_reaction(&self, user_id: i32) -> bool {
+        return self.reactions_ids().iter().any(|&i| i==user_id);
+    }
+
+    pub fn get_user_reaction(&self, user_id: i32) -> i16 {
+        use crate::schema::video_comment_votes::dsl::video_comment_votes;
+        // "/static/images/reactions/" + get_user_reaction + ".jpg"
+        let _connection = establish_connection();
+        let vote = video_comment_votes
+            .filter(schema::video_comment_votes::user_id.eq(user_id))
+            .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
+            .load::<VideoCommentVote>(&_connection)
+            .expect("E.")
+            .into_iter()
+            .nth(0)
+            .unwrap();
+
+        return vote.reaction;
+    }
+
+    pub fn get_reactions_users_of_types(&self, limit: i64, offset: i64, types: i16) -> Vec<User> {
+        use crate::schema::video_comment_votes::dsl::video_comment_votes;
+        use crate::utils::get_users_from_ids;
+
+        let _connection = establish_connection();
+        let votes = video_comment_votes
+            .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
+            .filter(schema::video_comment_votes::reaction.eq(types))
+            .limit(limit)
+            .offset(offset)
+            .load::<VideoCommentVote>(&_connection)
+            .expect("E");
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
+    }
+
+    pub fn get_6_reactions_users_of_types(&self, types: i16) -> Vec<User> {
+        use crate::schema::video_comment_votes::dsl::video_comment_votes;
+        use crate::utils::get_users_from_ids;
+
+        let _connection = establish_connection();
+        let votes = video_comment_votes
+            .filter(schema::video_comment_votes::video_comment_id.eq(self.id))
+            .filter(schema::video_comment_votes::reaction.eq(types))
+            .limit(6)
+            .load::<VideoCommentVote>(&_connection)
+            .expect("E");
+        let mut stack = Vec::new();
+        for _item in votes.iter() {
+            stack.push(_item.user_id);
+        };
+        return get_users_from_ids(stack);
+    }
+
+    pub fn plus_reactions(&self, count: i32) -> bool {
+        let _connection = establish_connection();
+        diesel::update(self)
+            .set(schema::video_comments::reactions.eq(self.reactions + count))
+            .get_result::<VideoComment>(&_connection)
+            .expect("Error.");
+        return true;
+    }
+    pub fn minus_reactions(&self, count: i32) -> bool {
+        let _connection = establish_connection();
+        diesel::update(self)
+            .set(schema::video_comments::reactions.eq(self.reactions - count))
+            .get_result::<VideoComment>(&_connection)
+            .expect("Error.");
+        return true;
     }
 }
 
@@ -3864,7 +3816,6 @@ impl VideoReaction {
 #[table_name="video_reactions"]
 pub struct NewVideoReaction {
     pub video_id:    i32,
-
     pub thumbs_up:   i32,
     pub thumbs_down: i32,
     pub red_heart:   i32,
@@ -3881,4 +3832,353 @@ pub struct NewVideoReaction {
     pub star_face:   i32,
     pub vomiting:    i32,
     pub pile_of_poo: i32,
+}
+
+
+/////// VideoCommentReaction //////
+#[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
+#[belongs_to(VideoComment)]
+pub struct VideoCommentReaction {
+    pub id:              i32,
+    pub video_comment_id:i32,
+    pub thumbs_up:       i32,
+    pub thumbs_down:     i32,
+    pub red_heart:       i32,
+    pub fire:            i32,
+    pub love_face:       i32,
+    pub clapping:        i32,
+    pub beaming:         i32,
+    pub thinking:        i32,
+    pub exploding:       i32,
+    pub screaming:       i32,
+    pub evil:            i32,
+    pub crying:          i32,
+    pub party:           i32,
+    pub star_face:       i32,
+    pub vomiting:        i32,
+    pub pile_of_poo:     i32,
+}
+impl VideoCommentReaction {
+    pub fn update_model(
+        &self,
+        new_types: i16,
+        old_types_option: Option<i16>,
+        plus: bool,
+    ) -> &VideoCommentReaction {
+        let _connection = establish_connection();
+        if old_types_option.is_some() {
+            let old_types = old_types_option.unwrap();
+            let update_model = match new_types {
+                1 => diesel::update(self)
+                    .set(schema::video_comment_reactions::thumbs_up.eq(self.thumbs_up + 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                2 => diesel::update(self).
+                    set(schema::video_comment_reactions::thumbs_down.eq(self.thumbs_down + 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                3 => diesel::update(self)
+                    .set(schema::video_comment_reactions::red_heart.eq(self.red_heart + 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                4 => diesel::update(self)
+                    .set(schema::video_comment_reactions::fire.eq(self.fire + 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                5 => diesel::update(self)
+                    .set(schema::video_comment_reactions::love_face.eq(self.love_face + 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                6 => diesel::update(self)
+                    .set(schema::video_comment_reactions::clapping.eq(self.clapping + 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                7 => diesel::update(self)
+                    .set(schema::video_comment_reactions::beaming.eq(self.beaming + 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                8 => diesel::update(self)
+                    .set(schema::video_comment_reactions::thinking.eq(self.thinking + 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                9 => diesel::update(self)
+                    .set(schema::video_comment_reactions::exploding.eq(self.exploding + 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                10 => diesel::update(self)
+                    .set(schema::video_comment_reactions::screaming.eq(self.screaming + 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                11 => diesel::update(self)
+                    .set(schema::video_comment_reactions::evil.eq(self.evil + 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                12 => diesel::update(self)
+                    .set(schema::video_comment_reactions::crying.eq(self.crying + 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                13 => diesel::update(self)
+                    .set(schema::video_comment_reactions::party.eq(self.party + 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                14 => diesel::update(self)
+                    .set(schema::video_comment_reactions::star_face.eq(self.star_face + 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                15 => diesel::update(self)
+                    .set(schema::video_comment_reactions::vomiting.eq(self.vomiting + 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                16 => diesel::update(self)
+                    .set(schema::video_comment_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                _ => diesel::update(self)
+                    .set(schema::video_comment_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+            };
+
+            let update_model = match old_types {
+                1 => diesel::update(self)
+                    .set(schema::video_comment_reactions::thumbs_up.eq(self.thumbs_up - 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                2 => diesel::update(self).
+                    set(schema::video_comment_reactions::thumbs_down.eq(self.thumbs_down - 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                3 => diesel::update(self)
+                    .set(schema::video_comment_reactions::red_heart.eq(self.red_heart - 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                4 => diesel::update(self)
+                    .set(schema::video_comment_reactions::fire.eq(self.fire - 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                5 => diesel::update(self)
+                    .set(schema::video_comment_reactions::love_face.eq(self.love_face - 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                6 => diesel::update(self)
+                    .set(schema::video_comment_reactions::clapping.eq(self.clapping - 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                7 => diesel::update(self)
+                    .set(schema::video_comment_reactions::beaming.eq(self.beaming - 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                8 => diesel::update(self)
+                    .set(schema::video_comment_reactions::thinking.eq(self.thinking - 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                9 => diesel::update(self)
+                    .set(schema::video_comment_reactions::exploding.eq(self.exploding - 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                10 => diesel::update(self)
+                    .set(schema::video_comment_reactions::screaming.eq(self.screaming - 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                11 => diesel::update(self)
+                    .set(schema::video_comment_reactions::evil.eq(self.evil - 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                12 => diesel::update(self)
+                    .set(schema::video_comment_reactions::crying.eq(self.crying - 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                13 => diesel::update(self)
+                    .set(schema::video_comment_reactions::party.eq(self.party - 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                14 => diesel::update(self)
+                    .set(schema::video_comment_reactions::star_face.eq(self.star_face - 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                15 => diesel::update(self)
+                    .set(schema::video_comment_reactions::vomiting.eq(self.vomiting - 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                16 => diesel::update(self)
+                    .set(schema::video_comment_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+                _ => diesel::update(self)
+                    .set(schema::video_comment_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
+                    .get_result::<VideoCommentReaction>(&_connection)
+                    .expect("Error."),
+            };
+            return &self;
+        }
+        else {
+            if plus {
+                let update_model = match new_types {
+                    1 => diesel::update(self)
+                        .set(schema::video_comment_reactions::thumbs_up.eq(self.thumbs_up + 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    2 => diesel::update(self).
+                        set(schema::video_comment_reactions::thumbs_down.eq(self.thumbs_down + 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    3 => diesel::update(self)
+                        .set(schema::video_comment_reactions::red_heart.eq(self.red_heart + 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    4 => diesel::update(self)
+                        .set(schema::video_comment_reactions::fire.eq(self.fire + 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    5 => diesel::update(self)
+                        .set(schema::video_comment_reactions::love_face.eq(self.love_face + 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    6 => diesel::update(self)
+                        .set(schema::video_comment_reactions::clapping.eq(self.clapping + 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    7 => diesel::update(self)
+                        .set(schema::video_comment_reactions::beaming.eq(self.beaming + 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    8 => diesel::update(self)
+                        .set(schema::video_comment_reactions::thinking.eq(self.thinking + 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    9 => diesel::update(self)
+                        .set(schema::video_comment_reactions::exploding.eq(self.exploding + 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    10 => diesel::update(self)
+                        .set(schema::video_comment_reactions::screaming.eq(self.screaming + 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    11 => diesel::update(self)
+                        .set(schema::video_comment_reactions::evil.eq(self.evil + 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    12 => diesel::update(self)
+                        .set(schema::video_comment_reactions::crying.eq(self.crying + 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    13 => diesel::update(self)
+                        .set(schema::video_comment_reactions::party.eq(self.party + 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    14 => diesel::update(self)
+                        .set(schema::video_comment_reactions::star_face.eq(self.star_face + 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    15 => diesel::update(self)
+                        .set(schema::video_comment_reactions::vomiting.eq(self.vomiting + 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    16 => diesel::update(self)
+                        .set(schema::video_comment_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    _ => diesel::update(self)
+                        .set(schema::video_comment_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                };
+            }
+            else {
+                let update_model = match new_types {
+                    1 => diesel::update(self)
+                        .set(schema::video_comment_reactions::thumbs_up.eq(self.thumbs_up - 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    2 => diesel::update(self).
+                        set(schema::video_comment_reactions::thumbs_down.eq(self.thumbs_down - 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    3 => diesel::update(self)
+                        .set(schema::video_comment_reactions::red_heart.eq(self.red_heart - 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    4 => diesel::update(self)
+                        .set(schema::video_comment_reactions::fire.eq(self.fire - 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    5 => diesel::update(self)
+                        .set(schema::video_comment_reactions::love_face.eq(self.love_face - 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    6 => diesel::update(self)
+                        .set(schema::video_comment_reactions::clapping.eq(self.clapping - 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    7 => diesel::update(self)
+                        .set(schema::video_comment_reactions::beaming.eq(self.beaming - 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    8 => diesel::update(self)
+                        .set(schema::video_comment_reactions::thinking.eq(self.thinking - 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    9 => diesel::update(self)
+                        .set(schema::video_comment_reactions::exploding.eq(self.exploding - 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    10 => diesel::update(self)
+                        .set(schema::video_comment_reactions::screaming.eq(self.screaming - 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    11 => diesel::update(self)
+                        .set(schema::video_comment_reactions::evil.eq(self.evil - 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    12 => diesel::update(self)
+                        .set(schema::video_comment_reactions::crying.eq(self.crying - 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    13 => diesel::update(self)
+                        .set(schema::video_comment_reactions::party.eq(self.party - 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    14 => diesel::update(self)
+                        .set(schema::video_comment_reactions::star_face.eq(self.star_face - 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    15 => diesel::update(self)
+                        .set(schema::video_comment_reactions::vomiting.eq(self.vomiting - 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    16 => diesel::update(self)
+                        .set(schema::video_comment_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                    _ => diesel::update(self)
+                        .set(schema::video_comment_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
+                        .get_result::<VideoCommentReaction>(&_connection)
+                        .expect("Error."),
+                };
+            }
+            return &self;
+        }
+    }
+}
+
+#[derive(Deserialize, Insertable)]
+#[table_name="video_comment_reactions"]
+pub struct NewVideoCommentReaction {
+    pub video_comment_id:i32,
+    pub thumbs_up:       i32,
+    pub thumbs_down:     i32,
+    pub red_heart:       i32,
+    pub fire:            i32,
+    pub love_face:       i32,
+    pub clapping:        i32,
+    pub beaming:         i32,
+    pub thinking:        i32,
+    pub exploding:       i32,
+    pub screaming:       i32,
+    pub evil:            i32,
+    pub crying:          i32,
+    pub party:           i32,
+    pub star_face:       i32,
+    pub vomiting:        i32,
+    pub pile_of_poo:     i32,
 }

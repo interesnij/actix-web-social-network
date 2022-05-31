@@ -13,7 +13,7 @@ CREATE TABLE post_votes (
   vote        SMALLINT NOT NULL,
   user_id     INT NOT NULL,
   post_id     INT NOT NULL,
-  reaction    SMALLINT NOT NULL,
+  reaction    SMALLINT NOT NULL, -- тип реакции для скорости работы
 
   CONSTRAINT fk_post_votes_user
       FOREIGN KEY(user_id)
@@ -29,6 +29,7 @@ CREATE TABLE post_comment_votes (
   vote            SMALLINT NOT NULL,
   user_id         INT NOT NULL,
   post_comment_id INT NOT NULL,
+  reaction        SMALLINT NOT NULL,
 
   CONSTRAINT fk_post_comment_votes_user
       FOREIGN KEY(user_id)
@@ -62,6 +63,7 @@ CREATE TABLE photo_comment_votes (
   vote             SMALLINT NOT NULL,
   user_id          INT NOT NULL,
   photo_comment_id INT NOT NULL,
+  reaction         SMALLINT NOT NULL,
 
   CONSTRAINT fk_photo_comment_votes_user
       FOREIGN KEY(user_id)
@@ -95,6 +97,7 @@ CREATE TABLE good_comment_votes (
   vote            SMALLINT NOT NULL,
   user_id         INT NOT NULL,
   good_comment_id INT NOT NULL,
+  reaction        SMALLINT NOT NULL,
 
   CONSTRAINT fk_good_comment_votes_user
       FOREIGN KEY(user_id)
@@ -124,6 +127,7 @@ CREATE TABLE video_comment_votes (
   vote             SMALLINT NOT NULL,
   user_id          INT NOT NULL,
   video_comment_id INT NOT NULL,
+  reaction         SMALLINT NOT NULL,
 
   CONSTRAINT fk_video_comment_votes_user
       FOREIGN KEY(user_id)

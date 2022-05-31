@@ -110,10 +110,8 @@ CREATE TABLE good_comments (
     attach      VARCHAR(200),
     types       "char" NOT NULL,
     created     TIMESTAMP NOT NULL,
-
-    liked       INT NOT NULL,
-    disliked    INT NOT NULL,
     repost      INT NOT NULL,
+    reactions   INT NOT NULL,
 
     CONSTRAINT fk_good_comment
         FOREIGN KEY(good_id)
@@ -207,4 +205,29 @@ CREATE TABLE good_reactions (
     CONSTRAINT fk_good_reactions
         FOREIGN KEY(good_id)
             REFERENCES goods(id)
+);
+
+CREATE TABLE good_comment_reactions (
+    id              SERIAL PRIMARY KEY,
+    good_comment_id INT NOT NULL,
+    thumbs_up       INT NOT NULL,
+    thumbs_down     INT NOT NULL,
+    red_heart       INT NOT NULL,
+    fire            INT NOT NULL,
+    love_face       INT NOT NULL,
+    clapping        INT NOT NULL,
+    beaming         INT NOT NULL,
+    thinking        INT NOT NULL,
+    exploding       INT NOT NULL,
+    screaming       INT NOT NULL,
+    evil            INT NOT NULL,
+    crying          INT NOT NULL,
+    party           INT NOT NULL,
+    star_face       INT NOT NULL,
+    vomiting        INT NOT NULL,
+    pile_of_poo     INT NOT NULL,
+
+    CONSTRAINT fk_good_comment_reactions
+        FOREIGN KEY(good_comment_id)
+            REFERENCES good_comments(id)
 );

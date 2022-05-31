@@ -19,9 +19,6 @@ use crate::diesel::RunQueryDsl;
 
 pub fn progs_routes(config: &mut web::ServiceConfig) {
     config.route("/users/progs/send_reaction/", web::get().to(send_reaction));
-
-    config.route("/users/progs/like_comment/", web::get().to(like_comment));
-    config.route("/users/progs/dislike_comment/", web::get().to(dislike_comment));
     config.route("/users/progs/delete_comment/", web::get().to(delete_comment));
     config.route("/users/progs/recover_comment/", web::get().to(recover_comment));
     config.route("/users/progs/edit_comment/", web::post().to(edit_comment));
@@ -400,71 +397,78 @@ pub async fn send_reaction(session: Session, req: HttpRequest) -> web::Json<Json
         }
 
         let _request_user = get_request_user_data(session);
+        let pre_types = &code[..1];
 
-        if code == "pos".to_string() {
-            use crate::utils::get_post;
+        if pre_types == "c".to_string() {
+            if code == "cpo".to_string() {
+                use crate::utils::get_post_comment;
 
-            let item = get_post(item_id);
-            item.send_reaction(_request_user.id, reaction)
-        }
-        else if code == "goo".to_string() {
-            use crate::utils::get_good;
+                let item = get_post_comment(item_id);
+                item.send_reaction(_request_user.id, reaction)
+            }
+            else if code == "cgo".to_string() {
+                use crate::utils::get_good_comment;
 
-            let item = get_good(item_id);
-            item.send_reaction(_request_user.id, reaction)
-        }
-        else if code == "pho".to_string() {
-            use crate::utils::get_photo;
+                let item = get_good_comment(item_id);
+                item.send_reaction(_request_user.id, reaction)
+            }
+            else if code == "cph".to_string() {
+                use crate::utils::get_photo_comment;
 
-            let item = get_photo(item_id);
-            item.send_reaction(_request_user.id, reaction)
-        }
-        else if code == "vid".to_string() {
-            use crate::utils::get_video;
+                let item = get_photo_comment(item_id);
+                item.send_reaction(_request_user.id, reaction)
+            }
+            else if code == "cvi".to_string() {
+                use crate::utils::get_video_comment;
 
-            let item = get_video(item_id);
-            item.send_reaction(_request_user.id, reaction)
+                let item = get_video_comment(item_id);
+                item.send_reaction(_request_user.id, reaction)
+            }
         }
         else {
-            return Json(JsonItemReactions {
-                reactions:   0,
-                thumbs_up:   0,
-                thumbs_down: 0,
-                red_heart:   0,
-                fire:        0,
-                love_face:   0,
-                clapping:    0,
-                beaming:     0,
-                thinking:    0,
-                exploding:   0,
-                screaming:   0,
-                evil:        0,
-                crying:      0,
-                party:       0,
-                star_face:   0,
-                vomiting:    0,
-                pile_of_poo: 0,
-            });
+            if code == "pos".to_string() {
+                use crate::utils::get_post;
+
+                let item = get_post(item_id);
+                item.send_reaction(_request_user.id, reaction)
+            }
+            else if code == "goo".to_string() {
+                use crate::utils::get_good;
+
+                let item = get_good(item_id);
+                item.send_reaction(_request_user.id, reaction)
+            }
+            else if code == "pho".to_string() {
+                use crate::utils::get_photo;
+
+                let item = get_photo(item_id);
+                item.send_reaction(_request_user.id, reaction)
+            }
+            else if code == "vid".to_string() {
+                use crate::utils::get_video;
+
+                let item = get_video(item_id);
+                item.send_reaction(_request_user.id, reaction)
+            }
         }
-    } else {
-        return Json(JsonItemReactions {
-            reactions:   0,
-            thumbs_up:   0,
-            thumbs_down: 0,
-            red_heart:   0,
-            fire:        0,
-            love_face:   0,
-            clapping:    0,
-            beaming:     0,
-            thinking:    0,
-            exploding:   0,
-            screaming:   0,
-            evil:        0,
-            crying:      0,
-            party:       0,
-            star_face:   0,
-            vomiting:    0,
-            pile_of_poo: 0,
-        });
     }
+    return Json(JsonItemReactions {
+        reactions:   0,
+        thumbs_up:   0,
+        thumbs_down: 0,
+        red_heart:   0,
+        fire:        0,
+        love_face:   0,
+        clapping:    0,
+        beaming:     0,
+        thinking:    0,
+        exploding:   0,
+        screaming:   0,
+        evil:        0,
+        crying:      0,
+        party:       0,
+        star_face:   0,
+        vomiting:    0,
+        pile_of_poo: 0,
+    });
 }

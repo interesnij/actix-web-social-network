@@ -74,10 +74,8 @@ CREATE TABLE photo_comments (
     attach      VARCHAR(200),
     created     TIMESTAMP NOT NULL,
     types       "char" NOT NULL,
-
-    liked       INT NOT NULL,
-    disliked    INT NOT NULL,
     repost      INT NOT NULL,
+    reactions   INT NOT NULL,
 
     CONSTRAINT fk_photo_comment
         FOREIGN KEY(photo_id)
@@ -171,4 +169,29 @@ CREATE TABLE photo_reactions (
     CONSTRAINT fk_photo_reactions
         FOREIGN KEY(photo_id)
             REFERENCES photos(id)
+);
+
+CREATE TABLE photo_comment_reactions (
+    id               SERIAL PRIMARY KEY,
+    photo_comment_id INT NOT NULL,
+    thumbs_up        INT NOT NULL,
+    thumbs_down      INT NOT NULL,
+    red_heart        INT NOT NULL,
+    fire             INT NOT NULL,
+    love_face        INT NOT NULL,
+    clapping         INT NOT NULL,
+    beaming          INT NOT NULL,
+    thinking         INT NOT NULL,
+    exploding        INT NOT NULL,
+    screaming        INT NOT NULL,
+    evil             INT NOT NULL,
+    crying           INT NOT NULL,
+    party            INT NOT NULL,
+    star_face        INT NOT NULL,
+    vomiting         INT NOT NULL,
+    pile_of_poo      INT NOT NULL,
+
+    CONSTRAINT fk_photo_comment_reactions
+        FOREIGN KEY(photo_comment_id)
+            REFERENCES photo_comments(id)
 );
