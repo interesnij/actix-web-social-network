@@ -190,14 +190,18 @@ impl PostList {
     pub fn get_reactions_list(&self) -> Vec<i16> {
         let mut stack = Vec::new();
         if self.reactions.is_some() {
-            let v: Vec<&str> = self.reactions.as_ref().unwrap().split(",").collect();
+            let v: Vec<&str> = self.reactions
+                .as_ref()
+                .unwrap()
+                .to_string()
+                .split(",")
+                .collect();
             for item in v.iter() {
                 let item_parse = item.parse();
                 if item_parse.is_ok() {
                     let pk: i16 = item_parse.unwrap();
                     stack.push(pk);
                 }
-                stack.push(pk);
             }
         }
         return stack;
