@@ -13,7 +13,7 @@
                 <label>Исполнитель</label>
                 <select name="artist_id" class="form-control" id="category_id" data-live-search="true" tabindex="-1" aria-hidden="true">
                   <option value="">Выберите исполнителя</option>
-                  <% for object in artists.iter() { %>
+                  <% for object in all_artists.iter() { %>
                     <option <% if object.id == music_album.artist_id { %>selected=""<% } %> value="<%= object.id %>"><%= object.name %></option>
                   <% } %>
                 </select>
