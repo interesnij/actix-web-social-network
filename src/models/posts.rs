@@ -197,10 +197,10 @@ impl PostList {
                 .split(",")
                 .collect();
             for item in v.iter() {
-                let item_parse = item.parse();
-                if item_parse.is_ok() {
-                    let pk: i16 = item_parse.unwrap();
-                    stack.push(pk);
+                //let item_parse = item.parse();
+                //if item_parse.is_ok() {
+                let pk: i16 = item.parse().unwrap();
+                stack.push(pk);
                 }
             }
         }
