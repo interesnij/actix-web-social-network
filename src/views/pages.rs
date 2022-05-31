@@ -83,7 +83,7 @@ pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result
     let users_list = users
         .load::<User>(&_connection)
         .expect("E.");
-    let phone_codes_list = users
+    let phone_codes_list = phone_codes
         .load::<PhoneCode>(&_connection)
         .expect("E.");
 
