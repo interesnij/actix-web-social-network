@@ -1,0 +1,37 @@
+
+    <form data-pk="<%= smile.id %>">
+        <div class="card mb-3">
+            <div class="card-header border-bottom">
+                <h5 class="content-color-primary mb-0">Изменение смайла</h5>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>Название</label>
+                <input value="<%= smile.name %>" type="text" name="name" id="id_name" class="form-control">
+              </div>
+
+              <div class="form-group">
+                <select name="smile_categorie_id" class="form-control" id="smile_categorie_id" data-live-search="true" tabindex="-1" aria-hidden="true">
+                  <option value="">Выберите категорию</option>
+                  <% for object in categories.iter() { %>
+                    <option <% if object.id == smile.smile_categorie_id { %>selected=""<% } %> value="<%= object.id %>"><%= object.name %></option>
+                  <% } %>
+                </select>
+              </div>
+
+              <div class="form-group">
+                  <label>Изображение</label>
+                  <img class="img-fluid rounded" src="<%= smile.image %>" alt="file" style="height: 40px;">
+                  <input type="file" accept="image/*" name="image">
+              </div>
+              <div class="form-group">
+                  <label>Позиция</label>
+                  <input value="<%= smile.position %>" type="number" name="position" class="form-control">
+              </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-sm border item_fullscreen_hide">Отмена</button>
+                <button type="button" class="btn btn-sm btn-success float-right" id="edit_smile_btn">Изменить</button>
+            </div>
+        </div>
+    </form>

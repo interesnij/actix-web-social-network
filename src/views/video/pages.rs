@@ -29,10 +29,10 @@ pub fn pages_urls(config: &mut web::ServiceConfig) {
     config.route("/video/load_video/{id}/", web::get().to(load_video_page));
     config.route("/video/load_comments/{id}/", web::get().to(load_comments_page));
 
-    //config.route("/video/add_user_list/", web::get().to(add_user_list_page));
-    //config.route("/video/edit_user_list/{id}/", web::get().to(edit_user_list_page));
-    //config.route("/video/add_community_list//{id}", web::get().to(add_community_list_page));
-    //config.route("/video/edit_community_list/{id}/", web::get().to(edit_community_list_page));
+    config.route("/video/add_user_list/", web::get().to(add_user_list_page));
+    config.route("/video/edit_user_list/{id}/", web::get().to(edit_user_list_page));
+    config.route("/video/add_community_list//{id}", web::get().to(add_community_list_page));
+    config.route("/video/edit_community_list/{id}/", web::get().to(edit_community_list_page));
 
     config.route("/video/add_video_in_list/{id}/", web::get().to(add_video_in_list_page));
     config.route("/video/edit_new_video/", web::get().to(edit_new_video_page));

@@ -1,0 +1,23 @@
+
+    <form>
+        <div class="card mb-3">
+            <div class="card-header border-bottom">
+                <h5 class="content-color-primary mb-0">Создание категории записей</h5>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>Название</label>
+                <input type="text" name="name" id="id_name" class="form-control">
+              </div>
+              <div class="form-group">
+                  <label>Позиция</label>
+                  <input type="number" name="position" class="form-control">
+              </div>
+
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-sm border item_fullscreen_hide">Отмена</button>
+                <button type="button" class="btn btn-sm btn-success float-right" id="create_post_category_btn">Создать</button>
+            </div>
+        </div>
+    </form>

@@ -49,17 +49,20 @@ pub struct StickerCategorie {
     pub position:    i16,
     pub user_id:     Option<i32>,
     pub description: Option<String>,
+    pub avatar:      Option<String>,
 }
 
 impl StickerCategorie {
     pub fn create_category(name: String, position: i16,
-        user_id: Option<i32>, description: Option<String>) -> StickerCategorie {
+        user_id: Option<i32>, description: Option<String>,
+        avatar: Option<String>) -> StickerCategorie {
         let _connection = establish_connection();
         let new_form = NewStickerCategorie {
             name:        name,
             position:    position,
             user_id:     user_id,
             description: description,
+            avatar:      avatar,
         };
         let new_cat = diesel::insert_into(schema::sticker_categories::table)
             .values(&new_form)
@@ -68,13 +71,15 @@ impl StickerCategorie {
         return new_cat;
     }
     pub fn edit_category(&self, name: String, position: i16,
-        user_id: Option<i32>, description: Option<String>) -> &StickerCategorie {
+        user_id: Option<i32>, description: Option<String>,
+        avatar: Option<String>) -> &StickerCategorie {
         let _connection = establish_connection();
         let new_form = NewStickerCategorie {
             name:        name,
             position:    position,
             user_id:     user_id,
             description: description,
+            avatar:      avatar,
         };
         diesel::update(self)
             .set(new_form)
@@ -91,6 +96,7 @@ pub struct NewStickerCategorie {
     pub position:    i16,
     pub user_id:     Option<i32>,
     pub description: Option<String>,
+    pub avatar:      Option<String>,
 }
 
 /////// Stickers //////
@@ -279,22 +285,26 @@ pub struct NewSmile {
 
 #[derive(Debug, Queryable, Serialize, Identifiable)]
 pub struct Reaction {
-    pub id:    i32,
-    pub types: i16,
-    pub image: String,
-    pub gif:   String,
-    pub name:  String,
+    pub id:        i32,
+    pub types:     i16,
+    pub image:     String,
+    pub gif:       String,
+    pub name:      String,
+    pub is_active: bool,
+    pub position:  i16,
 }
 
 impl Reaction {
-    pub fn create_reaction(types: i16, image: String,
-        gif: String, name: String) -> Reaction {
+    pub fn create_reaction(types: i16, image: String, gif: String,
+        name: String, is_active: bool, position: i16) -> Reaction {
         let _connection = establish_connection();
         let new_form = NewReaction {
-            types: types,
-            image: image,
-            gif:   gif,
-            name: name,
+            types:     types,
+            image:     image,
+            gif:       gif,
+            name:      name,
+            is_active: is_active,
+            position:  position,
         };
         let new_reaction = diesel::insert_into(schema::reactions::table)
             .values(&new_form)
@@ -302,14 +312,16 @@ impl Reaction {
             .expect("Error.");
         return new_reaction;
     }
-    pub fn edit_reaction(&self, types: i16, image: String,
-        gif: String, name: String) -> &Reaction {
+    pub fn edit_reaction(&self, types: i16, image: String, gif: String,
+        name: String, is_active: bool, position: i16) -> &Reaction {
         let _connection = establish_connection();
         let new_form = NewReaction {
-            types: types,
-            image: image,
-            gif:   gif,
-            name: name,
+            types:     types,
+            image:     image,
+            gif:       gif,
+            name:      name,
+            is_active: is_active,
+            position:  position,
         };
         diesel::update(self)
             .set(new_form)
@@ -322,8 +334,10 @@ impl Reaction {
 #[derive(Deserialize, Insertable, AsChangeset)]
 #[table_name="reactions"]
 pub struct NewReaction {
-    pub types: i16,
-    pub image: String,
-    pub gif:   String,
-    pub name:  String,
+    pub types:     i16,
+    pub image:     String,
+    pub gif:       String,
+    pub name:      String,
+    pub is_active: bool,
+    pub position:  i16,
 }

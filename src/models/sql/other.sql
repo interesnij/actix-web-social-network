@@ -16,7 +16,8 @@ CREATE TABLE sticker_categories (
     name        VARCHAR(100) NOT NULL,
     position    SMALLINT NOT NULL DEFAULT 0,
     user_id     INT,
-    description VARCHAR(200)
+    description VARCHAR(200),
+    avatar      VARCHAR(500),
 );
 
 CREATE TABLE stickers (

@@ -1,0 +1,38 @@
+
+    <form data-pk="<%= artist.id %>">
+        <div class="card mb-3">
+            <div class="card-header border-bottom">
+                <h5 class="content-color-primary mb-0">Изменение муз исполнителя</h5>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>Название</label>
+                <input value="<%= artist.name %>" type="text" name="name" id="id_name" class="form-control">
+              </div>
+              <div class="form-group">
+                  <label>Изображение</label>
+                  <% if artist.image.is_some() {
+                    <img class="img-fluid rounded" src="<%= artist.image.as_deref().unwrap() %>" alt="avatar" style="height: 100px;">
+                  <% } %>
+                  <input type="file" accept="image/*" name="avatar">
+              </div>
+              <div class="form-group">
+                  <label>Описание</label>
+                  <% if artist.description.is_some() { %>
+                    <input type="text" value="<%= artist.description.as_deref().unwrap() %>" name="description" id="id_description" class="form-control">
+                  <% } else { %>
+                    <input type="text" name="description" id="id_description" class="form-control">
+                  <% } %>
+              </div>
+              <div class="form-group">
+                  <label>Позиция</label>
+                  <input value=<%= artist.position %> type="number" name="position" class="form-control">
+              </div>
+
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-sm border item_fullscreen_hide">Отмена</button>
+                <button type="button" class="btn btn-sm btn-success float-right" id="edit_artist_btn">Изменить</button>
+            </div>
+        </div>
+    </form>

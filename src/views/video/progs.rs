@@ -30,14 +30,14 @@ use std::{borrow::BorrowMut, io::Write};
 
 
 pub fn progs_urls(config: &mut web::ServiceConfig) {
-    //config.route("/video/add_user_list/", web::post().to(add_user_list));
-    //config.route("/video/edit_user_list/{id}/", web::post().to(edit_user_list));
-    //config.route("/video/add_community_list/{id}/", web::post().to(add_community_list));
-    //config.route("/video/edit_community_list/{id}/", web::post().to(edit_community_list));
-    //config.route("/video/delete_user_list/{id}/", web::get().to(delete_user_list));
-    //config.route("/video/recover_user_list/{id}/", web::get().to(recover_user_list));
-    //config.route("/video/delete_community_list/{id}/", web::get().to(delete_community_list));
-    //config.route("/video/recover_community_list/{id}/", web::get().to(recover_community_list));
+    config.route("/video/add_user_list/", web::post().to(add_user_list));
+    config.route("/video/edit_user_list/{id}/", web::post().to(edit_user_list));
+    config.route("/video/add_community_list/{id}/", web::post().to(add_community_list));
+    config.route("/video/edit_community_list/{id}/", web::post().to(edit_community_list));
+    config.route("/video/delete_user_list/{id}/", web::get().to(delete_user_list));
+    config.route("/video/recover_user_list/{id}/", web::get().to(recover_user_list));
+    config.route("/video/delete_community_list/{id}/", web::get().to(delete_community_list));
+    config.route("/video/recover_community_list/{id}/", web::get().to(recover_community_list));
 
     config.route("/video/add_video_in_list/{id}/", web::post().to(add_video_in_list));
     config.route("/video/edit_video/{id}/", web::post().to(edit_video));

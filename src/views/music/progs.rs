@@ -27,14 +27,14 @@ use crate::diesel::RunQueryDsl;
 
 
 pub fn progs_urls(config: &mut web::ServiceConfig) {
-    //config.route("/music/add_user_list/", web::post().to(add_user_list));
-    //config.route("/music/edit_user_list/{id}/", web::post().to(edit_user_list));
-    //config.route("/music/add_community_list/{id}/", web::post().to(add_community_list));
-    //config.route("/music/edit_community_list/{id}/", web::post().to(edit_community_list));
-    //config.route("/music/delete_user_list/{id}/", web::get().to(delete_user_list));
-    //config.route("/music/recover_user_list/{id}/", web::get().to(recover_user_list));
-    //config.route("/music/delete_community_list/{id}/", web::get().to(delete_community_list));
-    //config.route("/music/recover_community_list/{id}/", web::get().to(recover_community_list));
+    config.route("/music/add_user_list/", web::post().to(add_user_list));
+    config.route("/music/edit_user_list/{id}/", web::post().to(edit_user_list));
+    config.route("/music/add_community_list/{id}/", web::post().to(add_community_list));
+    config.route("/music/edit_community_list/{id}/", web::post().to(edit_community_list));
+    config.route("/music/delete_user_list/{id}/", web::get().to(delete_user_list));
+    config.route("/music/recover_user_list/{id}/", web::get().to(recover_user_list));
+    config.route("/music/delete_community_list/{id}/", web::get().to(delete_community_list));
+    config.route("/music/recover_community_list/{id}/", web::get().to(recover_community_list));
 
     config.route("/music/add_tracks_in_list/{id}/", web::post().to(add_tracks_in_list));
     config.route("/music/edit_track/{id}/", web::post().to(edit_track));

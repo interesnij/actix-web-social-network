@@ -1,0 +1,47 @@
+
+    <form data-pk="<%= music_album.id %>">
+        <div class="card mb-3">
+            <div class="card-header border-bottom">
+                <h5 class="content-color-primary mb-0">Изменение муз альбома</h5>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>Название</label>
+                <input value="<%= music_album.name %>" type="text" name="name" id="id_name" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Исполнитель</label>
+                <select name="artist_id" class="form-control" id="category_id" data-live-search="true" tabindex="-1" aria-hidden="true">
+                  <option value="">Выберите исполнителя</option>
+                  <% for object in artists.iter() { %>
+                    <option <% if object.id == music_album.artist_id { %>selected=""<% } value="<%= object.id %>"><%= object.name %></option>
+                  <% } %>
+                </select>
+              </div>
+              <div class="form-group">
+                  <label>Изображение</label>
+                  <% if music_album.image.is_some() {
+                    <img class="img-fluid rounded" src="<%= music_album.image.as_deref().unwrap() %>" alt="avatar" style="height: 100px;">
+                  <% } %>
+                  <input type="file" accept="image/*" name="avatar">
+              </div>
+              <div class="form-group">
+                  <label>Описание</label>
+                  <% if music_album.description.is_some() { %>
+                    <input type="text" value="<%= music_album.description.as_deref().unwrap() %>" name="description" id="id_description" class="form-control">
+                  <% } else { %>
+                    <input type="text" name="description" id="id_description" class="form-control">
+                  <% } %>
+              </div>
+              <div class="form-group">
+                  <label>Позиция</label>
+                  <input value="<%= music_album.position %>" type="number" name="position" class="form-control">
+              </div>
+
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-sm border item_fullscreen_hide">Отмена</button>
+                <button type="button" class="btn btn-sm btn-success float-right" id="edit_music_album_btn">Изменить</button>
+            </div>
+        </div>
+    </form>

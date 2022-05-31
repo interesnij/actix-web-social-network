@@ -26,13 +26,13 @@ use crate::models::{User, MusicList, Music, Community,};
 
 
 pub fn pages_urls(config: &mut web::ServiceConfig) {
-    //config.route("/music/load_list/{list_id}/", web::get().to(load_list_page));
+    config.route("/music/load_list/{list_id}/", web::get().to(load_list_page));
 
-    //config.route("/music/add_user_list/", web::get().to(add_user_list_page));
-    //config.route("/music/edit_user_list/{id}/", web::get().to(edit_user_list_page));
-    //config.route("/music/add_community_list//{id}", web::get().to(add_community_list_page));
-    //config.route("/music/edit_community_list/{id}/", web::get().to(edit_community_list_page));
-    //config.route("/music/edit_track/{id}/", web::get().to(edit_track_page));
+    config.route("/music/add_user_list/", web::get().to(add_user_list_page));
+    config.route("/music/edit_user_list/{id}/", web::get().to(edit_user_list_page));
+    config.route("/music/add_community_list//{id}", web::get().to(add_community_list_page));
+    config.route("/music/edit_community_list/{id}/", web::get().to(edit_community_list_page));
+    config.route("/music/edit_track/{id}/", web::get().to(edit_track_page));
 }
 
 pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {

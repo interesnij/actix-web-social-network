@@ -1,0 +1,38 @@
+
+    <form data-pk="<%= category.id %>">
+        <div class="card mb-3">
+            <div class="card-header border-bottom">
+                <h5 class="content-color-primary mb-0">Изменение категории стикеров</h5>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>Название</label>
+                <input value="<%= category.name %>" type="text" name="name" id="id_name" class="form-control">
+              </div>
+              <div class="form-group">
+                  <label>Изображение</label>
+                  <% if category.avatar.is_some() { %>
+                    <img class="img-fluid rounded" src="<%= category.avatar.as_deref().unwrap() %>" alt="avatar" style="height: 100px;">
+                  <% } %>
+                  <input type="file" accept="image/*" name="avatar">
+              </div>
+              <div class="form-group">
+                  <label>Описание</label>
+                  <% if category.description.is_some() { %>
+                    <input type="text" value="<%= category.description.as_deref().unwrap() %>" name="description" id="id_description" class="form-control">
+                  <% } else { %>
+                    <input type="text" name="description" id="id_description" class="form-control">
+                  <% } %>
+              </div>
+              <div class="form-group">
+                  <label>Позиция</label>
+                  <input value=<%= category.position %> type="number" name="position" class="form-control">
+              </div>
+
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-sm border item_fullscreen_hide">Отмена</button>
+                <button type="button" class="btn btn-sm btn-success float-right" id="edit_stickers_category_btn">Изменить</button>
+            </div>
+        </div>
+    </form>
