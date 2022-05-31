@@ -19,8 +19,8 @@ use crate::views::{
 
 pub fn routes(cfg: &mut web::ServiceConfig) {
     cfg
-    .configure(pages::pages_routes)
     .configure(auth::auth_routes)
+    .configure(pages::pages_routes)
     .configure(user_routes)
     .configure(community_routes)
     .configure(post_routes)
