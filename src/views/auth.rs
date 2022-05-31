@@ -180,6 +180,9 @@ pub struct NewUserForm {
 }
 pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responder {
     HttpResponse::Ok().body(format!("ok"))
+}
+pub async fn process_signup_2(session: Session, req: HttpRequest) -> impl Responder {
+
     use crate::utils::{hash_password, set_current_user};
     use chrono::NaiveDate;
     use crate::models::{
