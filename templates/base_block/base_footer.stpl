@@ -44,5 +44,8 @@
 <script defer src="/static/scripts/app.js?ver5" type="text/javascript"></script>
 <script defer src="/static/scripts/get.js?ver5" type="text/javascript"></script>
 
+<% if request_user.is_moderator() { %>
+  <script defer src="/static/scripts/manager.js" type="text/javascript"></script>
+<% } %>
 </body>
 </html>
