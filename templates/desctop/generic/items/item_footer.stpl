@@ -12,9 +12,9 @@
 
     <% let object_reactions_count = object.get_or_create_react_model(); %>
 
-    <% if object.is_have_user_reaction(request_user) { %>
+    <% if object.is_have_user_reaction(request_user.id) { %>
       пользователь реагировал
-      <% let user_reaction = object.get_user_reaction(request_user); %>
+      <% let user_reaction = object.get_user_reaction(request_user.id); %>
       - выводим окно с реакциями, проверяя их на сходство с user_reaction
 
     <% } else { %>
