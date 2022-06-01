@@ -25,7 +25,7 @@ pub fn pages_urls(config: &mut web::ServiceConfig) {
 
 pub async fn managers_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     if !is_signed_in(&session) {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("anon"))
     }
     else {
         let _request_user = get_request_user_data(session);
@@ -63,7 +63,7 @@ pub async fn managers_page(session: Session, req: HttpRequest) -> actix_web::Res
             }
         }
         else {
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("not permitted"))
         }
     }
 }
