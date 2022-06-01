@@ -2,6 +2,44 @@ on('#ajax', 'click', '.send_manager_messages', function() {
   create_fullscreen("/managers/send_messages/", "worker_fullscreen");
 });
 
+on('#ajax', 'click', '.create_communities_category', function() {
+  create_fullscreen("/admin/created/create_communities_category/", "worker_fullscreen");
+});
+on('#ajax', 'click', '.create_goods_category', function() {
+  create_fullscreen("/admin/created/create_goods_category/", "worker_fullscreen");
+});
+on('#ajax', 'click', '.create_sound_genre', function() {
+  create_fullscreen("/admin/created/create_sound_genre/", "worker_fullscreen");
+});
+on('#ajax', 'click', '.create_artist', function() {
+  create_fullscreen("/admin/created/create_artist/", "worker_fullscreen");
+});
+on('#ajax', 'click', '.create_music_album', function() {
+  create_fullscreen("/admin/created/create_music_album/", "worker_fullscreen");
+});
+on('#ajax', 'click', '.create_post_category', function() {
+  create_fullscreen("/admin/created/create_post_category/", "worker_fullscreen");
+});
+on('#ajax', 'click', '.create_video_category', function() {
+  create_fullscreen("/admin/created/create_video_category/", "worker_fullscreen");
+});
+on('#ajax', 'click', '.create_stickers_category', function() {
+  create_fullscreen("/admin/created/create_stickers_category/", "worker_fullscreen");
+});
+on('#ajax', 'click', '.create_sticker', function() {
+  create_fullscreen("/admin/created/create_sticker/", "worker_fullscreen");
+});
+on('#ajax', 'click', '.create_smiles_category', function() {
+  create_fullscreen("/admin/created/create_smiles_category/", "worker_fullscreen");
+});
+
+on('#ajax', 'click', '.create_smile', function() {
+  create_fullscreen("/admin/created/create_smile/", "worker_fullscreen");
+});
+on('#ajax', 'click', '.create_reaction', function() {
+  create_fullscreen("/admin/created/create_reaction/", "worker_fullscreen");
+});
+
 on('body', 'click', '.create_close', function() {
   parent = this.parentElement;
   type = parent.getAttribute('data-type');

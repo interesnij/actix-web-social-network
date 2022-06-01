@@ -120,24 +120,22 @@
       <% } %>
 
       <% if request_user.is_supermanager() { %>
-      <div class="col-12 col-md-6">
+      <div class="col-12">
         <div class="card mb-2 box-shadow-large">
           <div class="text-center">
             <h5 class="content-color-primary">Создать объект</h5>
-            <a class="pointer btn-link">Категория сообществ</a>
-            <a class="pointer btn-link">ПодКатегория сообществ</a>
-            <a class="pointer btn-link">Категория товаров</a>
-            <a class="pointer btn-link">ПодКатегория товаров</a>
-            <a class="pointer btn-link">Муз жанр</a>
-            <a class="pointer btn-link">Муз исполнитель</a>
-            <a class="pointer btn-link">Муз альбом</a>
-            <a class="pointer btn-link">Категория записей</a>
-            <a class="pointer btn-link">Категория видео</a>
-            <a class="pointer btn-link">Категория стикеров</a>
-            <a class="pointer btn-link">Стикер</a>
-            <a class="pointer btn-link">Категория смайлов</a>
-            <a class="pointer btn-link">Смайл</a>
-            <a class="pointer btn-link">Реакция</a>
+            <a class="pointer btn-link create_communities_category">Категория сообществ</a>
+            <a class="pointer btn-link create_goods_category">Категория товаров</a>
+            <a class="pointer btn-link create_sound_genre">Муз жанр</a>
+            <a class="pointer btn-link create_artist">Муз исполнитель</a>
+            <a class="pointer btn-link create_music_album">Муз альбом</a>
+            <a class="pointer btn-link create_post_category">Категория записей</a>
+            <a class="pointer btn-link create_video_category">Категория видео</a>
+            <a class="pointer btn-link create_stickers_category">Категория стикеров</a>
+            <a class="pointer btn-link create_sticker">Стикер</a>
+            <a class="pointer btn-link create_smiles_category">Категория смайлов</a>
+            <a class="pointer btn-link create_smile">Смайл</a>
+            <a class="pointer btn-link create_reaction">Реакция</a>
             <a class="pointer btn-link">Техподдержка</a>
             <a class="pointer btn-link">Категория вопросов</a>
             <a class="pointer btn-link">Вопрос-ответ</a>
