@@ -11,13 +11,11 @@
               </div>
               <div class="form-group">
                   <label>Изображение</label>
-                  <img class="img-fluid rounded" src="<%= reaction.image %>" alt="file" style="height: 40px;">
-                  <input type="file" accept="image/*" name="file">
+                  <input value="<%= reaction.file %>" type="text" name="file" id="id_file" class="form-control">
               </div>
               <div class="form-group">
                   <label>Gif</label>
-                  <img class="img-fluid rounded" src="<%= reaction.gif %>" alt="gif" style="height: 40px;">
-                  <input type="file" accept="image/*" name="gif">
+                  <input value="<%= reaction.gif %>" type="text" name="gif" id="id_gif" class="form-control">
               </div>
               <div class="form-group">
                   <label>Позиция</label>

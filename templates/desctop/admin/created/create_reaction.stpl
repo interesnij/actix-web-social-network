@@ -11,12 +11,11 @@
               </div>
               <div class="form-group">
                   <label>Изображение</label>
-                  
-                  <input type="file" accept="image/*" name="file">
+                  <input type="text" name="file" id="id_file" class="form-control">
               </div>
               <div class="form-group">
                   <label>Gif</label>
-                  <input type="file" accept="image/*" name="gif">
+                  <input type="text" name="gif" id="id_gif" class="form-control">
               </div>
               <div class="form-group">
                   <label>Позиция</label>
