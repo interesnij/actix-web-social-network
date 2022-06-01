@@ -526,7 +526,7 @@ pub async fn create_music_album(session: Session, mut payload: Multipart) -> act
 
             let new_list = MusicAlbum::create_album (
                 form.name,
-                form.category_id.unwrap(),
+                form.category_id,
                 _request_user.id,
                 form.description,
                 form.image,
@@ -564,7 +564,7 @@ pub async fn edit_music_album(session: Session, mut payload: Multipart, album_id
 
             category.edit_artist (
                 form.name,
-                form.category_id.unwrap(),
+                form.category_id,
                 form.description,
                 form.image,
                 form.position.unwrap(),
