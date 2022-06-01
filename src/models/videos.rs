@@ -3789,7 +3789,7 @@ impl VideoReaction {
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
                     5 => diesel::update(self)
-                        .set(schema::video_reactions::field_5field_5.eq(self.field_5 - 1))
+                        .set(schema::video_reactions::field_5.eq(self.field_5 - 1))
                         .get_result::<VideoReaction>(&_connection)
                         .expect("Error."),
                     6 => diesel::update(self)
