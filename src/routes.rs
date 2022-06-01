@@ -2,6 +2,7 @@ use actix_web::web;
 
 use crate::views::{
     pages,
+    manager_routes,
     progs,
     auth,
     user_routes,
@@ -14,13 +15,13 @@ use crate::views::{
     photos_routes,
     survey_routes,
     video_routes,
-    manager_routes,
     admin_routes,
 };
 
 pub fn routes(cfg: &mut web::ServiceConfig) {
     cfg
     .configure(auth::auth_routes)
+    .configure(manager_routes)
     .configure(pages::pages_routes)
     .configure(user_routes)
     .configure(community_routes)
@@ -33,7 +34,6 @@ pub fn routes(cfg: &mut web::ServiceConfig) {
     .configure(survey_routes)
     .configure(video_routes)
     .configure(progs::progs_routes)
-    .configure(manager_routes)
     .configure(admin_routes)
     ;
 }
