@@ -975,7 +975,7 @@ pub async fn reaction_form (payload: &mut Multipart) -> ReactionForm {
             if let Ok(s) = str::from_utf8(&data) {
                 let data_string = s.to_string();
                 if field.name() == "types" {
-                    let _int: i32 = data_string.parse().unwrap();
+                    let _int: i16 = data_string.parse().unwrap();
                     form.types = _int;
                 }
                 else if field.name() == "image" {
@@ -995,7 +995,7 @@ pub async fn reaction_form (payload: &mut Multipart) -> ReactionForm {
                     }
                 }
                 else if field.name() == "position" {
-                    let _int: i32 = data_string.parse().unwrap();
+                    let _int: i16 = data_string.parse().unwrap();
                     form.position = _int;
                 }
             }
@@ -1037,7 +1037,7 @@ pub async fn edit_reaction(session: Session, mut payload: Multipart, reaction_id
             use crate::models::Reaction;
 
             let _connection = establish_connection();
-            let category = reactions
+            let reaction = reactions
                 .filter(schema::reactions::id.eq(*reaction_id))
                 .load::<Reaction>(&_connection)
                 .expect("E")
