@@ -2131,22 +2131,22 @@ impl Message {
         else {
             let new_react_model = NewMessageReaction {
                 message_id:  self.id,
-                thumbs_up:   0,
-                thumbs_down: 0,
-                red_heart:   0,
-                fire:        0,
-                love_face:   0,
-                clapping:    0,
-                beaming:     0,
-                thinking:    0,
-                exploding:   0,
-                screaming:   0,
-                evil:        0,
-                crying:      0,
-                party:       0,
-                star_face:   0,
-                vomiting:    0,
-                pile_of_poo: 0,
+                field_1:  0,
+                field_2:  0,
+                field_3:  0,
+                field_4:  0,
+                field_5:  0,
+                field_6:  0,
+                field_7:  0,
+                field_8:  0,
+                field_9:  0,
+                field_10: 0,
+                field_11: 0,
+                field_12: 0,
+                field_13: 0,
+                field_14: 0,
+                field_15: 0,
+                field_16: 0,
             };
             let _react_model = diesel::insert_into(schema::message_reactions::table)
                 .values(&new_react_model)
@@ -2219,23 +2219,23 @@ impl Message {
         }
 
         return Json(JsonItemReactions {
-            reactions:   self.reactions,
-            thumbs_up:   react_model.thumbs_up,
-            thumbs_down: react_model.thumbs_down,
-            red_heart:   react_model.red_heart,
-            fire:        react_model.fire,
-            love_face:   react_model.love_face,
-            clapping:    react_model.clapping,
-            beaming:     react_model.beaming,
-            thinking:    react_model.thinking,
-            exploding:   react_model.exploding,
-            screaming:   react_model.screaming,
-            evil:        react_model.evil,
-            crying:      react_model.crying,
-            party:       react_model.party,
-            star_face:   react_model.star_face,
-            vomiting:    react_model.vomiting,
-            pile_of_poo: react_model.pile_of_poo,
+            reactions: self.reactions,
+            field_1:  react_model.field_1,
+            field_2:  react_model.field_2,
+            field_3:  react_model.field_3,
+            field_4:  react_model.field_4,
+            field_5:  react_model.field_5,
+            field_6:  react_model.field_6,
+            field_7:  react_model.field_7,
+            field_8:  react_model.field_8,
+            field_9:  react_model.field_9,
+            field_10: react_model.field_10,
+            field_11: react_model.field_11,
+            field_12: react_model.field_12,
+            field_13: react_model.field_13,
+            field_14: react_model.field_14,
+            field_15: react_model.field_15,
+            field_16: react_model.field_16,
         });
     }
 
@@ -2243,22 +2243,22 @@ impl Message {
         let react_model = self.get_or_create_react_model();
         let format_types: i32 = types.into();
         let count = match format_types {
-            1 => react_model.thumbs_up,
-            2 => react_model.thumbs_down,
-            3 => react_model.red_heart,
-            4 => react_model.fire,
-            5 => react_model.love_face,
-            6 => react_model.clapping,
-            7 => react_model.beaming,
-            8 => react_model.thinking,
-            9 => react_model.exploding,
-            10 => react_model.screaming,
-            11 => react_model.evil,
-            12 => react_model.crying,
-            13 => react_model.party,
-            14 => react_model.star_face,
-            15 => react_model.vomiting,
-            16 => react_model.pile_of_poo,
+            1 => react_model.field_1,
+            2 => react_model.field_2,
+            3 => react_model.field_3,
+            4 => react_model.field_4,
+            5 => react_model.field_5,
+            6 => react_model.field_6,
+            7 => react_model.field_7,
+            8 => react_model.field_8,
+            9 => react_model.field_9,
+            10 => react_model.field_10,
+            11 => react_model.field_11,
+            12 => react_model.field_12,
+            13 => react_model.field_13,
+            14 => react_model.field_14,
+            15 => react_model.field_15,
+            16 => react_model.field_16,
             _ => 0,
         };
         return count;
@@ -2424,27 +2424,61 @@ pub struct NewMessageTransfer {
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Message)]
 pub struct MessageReaction {
-    pub id:          i32,
-    pub message_id:  i32,
-    pub thumbs_up:   i32,
-    pub thumbs_down: i32,
-    pub red_heart:   i32,
-    pub fire:        i32,
-    pub love_face:   i32,
-    pub clapping:    i32,
-    pub beaming:     i32,
-    pub thinking:    i32,
-    pub exploding:   i32,
-    pub screaming:   i32,
-    pub evil:        i32,
-    pub crying:      i32,
-    pub party:       i32,
-    pub star_face:   i32,
-    pub vomiting:    i32,
-    pub pile_of_poo: i32,
+    pub id:       i32,
+    pub message_id: i32,
+    pub field_1:  i32,
+    pub field_2:  i32,
+    pub field_3:  i32,
+    pub field_4:  i32,
+    pub field_5:  i32,
+    pub field_6:  i32,
+    pub field_7:  i32,
+    pub field_8:  i32,
+    pub field_9:  i32,
+    pub field_10: i32,
+    pub field_11: i32,
+    pub field_12: i32,
+    pub field_13: i32,
+    pub field_14: i32,
+    pub field_15: i32,
+    pub field_16: i32,
 }
 
 impl MessageReaction {
+    pub fn count_reactions_of_types(&self, types: i16) -> i32 {
+        let format_types: i32 = types.into();
+        let count = match format_types {
+            1 => self.field_1,
+            2 => self.field_2,
+            3 => self.field_3,
+            4 => self.field_4,
+            5 => self.field_5,
+            6 => self.field_6,
+            7 => self.field_7,
+            8 => self.field_8,
+            9 => self.field_9,
+            10 => self.field_10,
+            11 => self.field_11,
+            12 => self.field_12,
+            13 => self.field_13,
+            14 => self.field_14,
+            15 => self.field_15,
+            16 => self.field_16,
+            _ => 0,
+        };
+        return count;
+    }
+    pub fn count_reactions_of_types_ru(&self, types: i16) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            self.count_reactions_of_types(types),
+            " человек".to_string(),
+            " человека".to_string(),
+            " человек".to_string(),
+        );
+    }
+
     pub fn update_model(
         &self,
         new_types: i16,
@@ -2456,142 +2490,142 @@ impl MessageReaction {
             let old_types = old_types_option.unwrap();
             let update_model = match new_types {
                 1 => diesel::update(self)
-                    .set(schema::message_reactions::thumbs_up.eq(self.thumbs_up + 1))
+                    .set(schema::message_reactions::field_1.eq(self.field_1 + 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 2 => diesel::update(self).
-                    set(schema::message_reactions::thumbs_down.eq(self.thumbs_down + 1))
+                    set(schema::message_reactions::field_2.eq(self.field_2 + 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 3 => diesel::update(self)
-                    .set(schema::message_reactions::red_heart.eq(self.red_heart + 1))
+                    .set(schema::message_reactions::field_3.eq(self.field_3 + 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 4 => diesel::update(self)
-                    .set(schema::message_reactions::fire.eq(self.fire + 1))
+                    .set(schema::message_reactions::field_4.eq(self.field_4 + 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 5 => diesel::update(self)
-                    .set(schema::message_reactions::love_face.eq(self.love_face + 1))
+                    .set(schema::message_reactions::field_5.eq(self.field_5 + 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 6 => diesel::update(self)
-                    .set(schema::message_reactions::clapping.eq(self.clapping + 1))
+                    .set(schema::message_reactions::field_6.eq(self.field_6 + 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 7 => diesel::update(self)
-                    .set(schema::message_reactions::beaming.eq(self.beaming + 1))
+                    .set(schema::message_reactions::field_7.eq(self.field_7 + 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 8 => diesel::update(self)
-                    .set(schema::message_reactions::thinking.eq(self.thinking + 1))
+                    .set(schema::message_reactions::field_8.eq(self.field_8 + 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 9 => diesel::update(self)
-                    .set(schema::message_reactions::exploding.eq(self.exploding + 1))
+                    .set(schema::message_reactions::field_9.eq(self.field_9 + 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 10 => diesel::update(self)
-                    .set(schema::message_reactions::screaming.eq(self.screaming + 1))
+                    .set(schema::message_reactions::field_10.eq(self.field_10 + 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 11 => diesel::update(self)
-                    .set(schema::message_reactions::evil.eq(self.evil + 1))
+                    .set(schema::message_reactions::field_11.eq(self.field_11 + 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 12 => diesel::update(self)
-                    .set(schema::message_reactions::crying.eq(self.crying + 1))
+                    .set(schema::message_reactions::field_12.eq(self.field_12 + 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 13 => diesel::update(self)
-                    .set(schema::message_reactions::party.eq(self.party + 1))
+                    .set(schema::message_reactions::field_13.eq(self.field_13 + 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 14 => diesel::update(self)
-                    .set(schema::message_reactions::star_face.eq(self.star_face + 1))
+                    .set(schema::message_reactions::field_14.eq(self.field_14 + 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 15 => diesel::update(self)
-                    .set(schema::message_reactions::vomiting.eq(self.vomiting + 1))
+                    .set(schema::message_reactions::field_15.eq(self.field_15 + 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 16 => diesel::update(self)
-                    .set(schema::message_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
+                    .set(schema::message_reactions::field_16.eq(self.field_16 + 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 _ => diesel::update(self)
-                    .set(schema::message_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
+                    .set(schema::message_reactions::field_16.eq(self.field_16 + 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
             };
 
             let update_model = match old_types {
                 1 => diesel::update(self)
-                    .set(schema::message_reactions::thumbs_up.eq(self.thumbs_up - 1))
+                    .set(schema::message_reactions::field_1.eq(self.field_1 - 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 2 => diesel::update(self).
-                    set(schema::message_reactions::thumbs_down.eq(self.thumbs_down - 1))
+                    set(schema::message_reactions::field_2.eq(self.field_2 - 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 3 => diesel::update(self)
-                    .set(schema::message_reactions::red_heart.eq(self.red_heart - 1))
+                    .set(schema::message_reactions::field_3.eq(self.field_3 - 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 4 => diesel::update(self)
-                    .set(schema::message_reactions::fire.eq(self.fire - 1))
+                    .set(schema::message_reactions::field_4.eq(self.field_4 - 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 5 => diesel::update(self)
-                    .set(schema::message_reactions::love_face.eq(self.love_face - 1))
+                    .set(schema::message_reactions::field_5.eq(self.field_5 - 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 6 => diesel::update(self)
-                    .set(schema::message_reactions::clapping.eq(self.clapping - 1))
+                    .set(schema::message_reactions::field_6.eq(self.field_6 - 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 7 => diesel::update(self)
-                    .set(schema::message_reactions::beaming.eq(self.beaming - 1))
+                    .set(schema::message_reactions::field_7.eq(self.field_7 - 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 8 => diesel::update(self)
-                    .set(schema::message_reactions::thinking.eq(self.thinking - 1))
+                    .set(schema::message_reactions::field_8.eq(self.field_8 - 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 9 => diesel::update(self)
-                    .set(schema::message_reactions::exploding.eq(self.exploding - 1))
+                    .set(schema::message_reactions::field_9.eq(self.field_9 - 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 10 => diesel::update(self)
-                    .set(schema::message_reactions::screaming.eq(self.screaming - 1))
+                    .set(schema::message_reactions::field_10.eq(self.field_10 - 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 11 => diesel::update(self)
-                    .set(schema::message_reactions::evil.eq(self.evil - 1))
+                    .set(schema::message_reactions::field_11.eq(self.field_11 - 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 12 => diesel::update(self)
-                    .set(schema::message_reactions::crying.eq(self.crying - 1))
+                    .set(schema::message_reactions::field_12.eq(self.field_12 - 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 13 => diesel::update(self)
-                    .set(schema::message_reactions::party.eq(self.party - 1))
+                    .set(schema::message_reactions::field_13.eq(self.field_13 - 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 14 => diesel::update(self)
-                    .set(schema::message_reactions::star_face.eq(self.star_face - 1))
+                    .set(schema::message_reactions::field_14.eq(self.field_14 - 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 15 => diesel::update(self)
-                    .set(schema::message_reactions::vomiting.eq(self.vomiting - 1))
+                    .set(schema::message_reactions::field_15.eq(self.field_15 - 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 16 => diesel::update(self)
-                    .set(schema::message_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
+                    .set(schema::message_reactions::field_16.eq(self.field_16 - 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
                 _ => diesel::update(self)
-                    .set(schema::message_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
+                    .set(schema::message_reactions::field_16.eq(self.field_16 - 1))
                     .get_result::<MessageReaction>(&_connection)
                     .expect("Error."),
             };
@@ -2601,71 +2635,71 @@ impl MessageReaction {
             if plus {
                 let update_model = match new_types {
                     1 => diesel::update(self)
-                        .set(schema::message_reactions::thumbs_up.eq(self.thumbs_up + 1))
+                        .set(schema::message_reactions::field_1.eq(self.field_1 + 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     2 => diesel::update(self).
-                        set(schema::message_reactions::thumbs_down.eq(self.thumbs_down + 1))
+                        set(schema::message_reactions::field_2.eq(self.field_2 + 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     3 => diesel::update(self)
-                        .set(schema::message_reactions::red_heart.eq(self.red_heart + 1))
+                        .set(schema::message_reactions::field_3.eq(self.field_3 + 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     4 => diesel::update(self)
-                        .set(schema::message_reactions::fire.eq(self.fire + 1))
+                        .set(schema::message_reactions::field_4.eq(self.field_4 + 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     5 => diesel::update(self)
-                        .set(schema::message_reactions::love_face.eq(self.love_face + 1))
+                        .set(schema::message_reactions::field_5.eq(self.field_5 + 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     6 => diesel::update(self)
-                        .set(schema::message_reactions::clapping.eq(self.clapping + 1))
+                        .set(schema::message_reactions::field_6.eq(self.field_6 + 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     7 => diesel::update(self)
-                        .set(schema::message_reactions::beaming.eq(self.beaming + 1))
+                        .set(schema::message_reactions::field_7.eq(self.field_7 + 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     8 => diesel::update(self)
-                        .set(schema::message_reactions::thinking.eq(self.thinking + 1))
+                        .set(schema::message_reactions::field_8.eq(self.field_8 + 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     9 => diesel::update(self)
-                        .set(schema::message_reactions::exploding.eq(self.exploding + 1))
+                        .set(schema::message_reactions::field_9.eq(self.field_9 + 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     10 => diesel::update(self)
-                        .set(schema::message_reactions::screaming.eq(self.screaming + 1))
+                        .set(schema::message_reactions::field_10.eq(self.field_10 + 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     11 => diesel::update(self)
-                        .set(schema::message_reactions::evil.eq(self.evil + 1))
+                        .set(schema::message_reactions::field_11.eq(self.field_11 + 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     12 => diesel::update(self)
-                        .set(schema::message_reactions::crying.eq(self.crying + 1))
+                        .set(schema::message_reactions::field_12.eq(self.field_12 + 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     13 => diesel::update(self)
-                        .set(schema::message_reactions::party.eq(self.party + 1))
+                        .set(schema::message_reactions::field_13.eq(self.field_13 + 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     14 => diesel::update(self)
-                        .set(schema::message_reactions::star_face.eq(self.star_face + 1))
+                        .set(schema::message_reactions::field_14.eq(self.field_14 + 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     15 => diesel::update(self)
-                        .set(schema::message_reactions::vomiting.eq(self.vomiting + 1))
+                        .set(schema::message_reactions::field_15.eq(self.field_15 + 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     16 => diesel::update(self)
-                        .set(schema::message_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
+                        .set(schema::message_reactions::field_16.eq(self.field_16 + 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     _ => diesel::update(self)
-                        .set(schema::message_reactions::pile_of_poo.eq(self.pile_of_poo + 1))
+                        .set(schema::message_reactions::field_16.eq(self.field_16 + 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                 };
@@ -2673,71 +2707,71 @@ impl MessageReaction {
             else {
                 let update_model = match new_types {
                     1 => diesel::update(self)
-                        .set(schema::message_reactions::thumbs_up.eq(self.thumbs_up - 1))
+                        .set(schema::message_reactions::field_1.eq(self.field_1 - 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     2 => diesel::update(self).
-                        set(schema::message_reactions::thumbs_down.eq(self.thumbs_down - 1))
+                        set(schema::message_reactions::field_2.eq(self.field_2 - 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     3 => diesel::update(self)
-                        .set(schema::message_reactions::red_heart.eq(self.red_heart - 1))
+                        .set(schema::message_reactions::field_3.eq(self.field_3 - 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     4 => diesel::update(self)
-                        .set(schema::message_reactions::fire.eq(self.fire - 1))
+                        .set(schema::message_reactions::field_4.eq(self.field_4 - 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     5 => diesel::update(self)
-                        .set(schema::message_reactions::love_face.eq(self.love_face - 1))
+                        .set(schema::message_reactions::field_5.eq(self.field_5 - 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     6 => diesel::update(self)
-                        .set(schema::message_reactions::clapping.eq(self.clapping - 1))
+                        .set(schema::message_reactions::field_6.eq(self.field_6 - 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     7 => diesel::update(self)
-                        .set(schema::message_reactions::beaming.eq(self.beaming - 1))
+                        .set(schema::message_reactions::field_7.eq(self.field_7 - 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     8 => diesel::update(self)
-                        .set(schema::message_reactions::thinking.eq(self.thinking - 1))
+                        .set(schema::message_reactions::field_8.eq(self.field_8 - 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     9 => diesel::update(self)
-                        .set(schema::message_reactions::exploding.eq(self.exploding - 1))
+                        .set(schema::message_reactions::field_9.eq(self.field_9 - 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     10 => diesel::update(self)
-                        .set(schema::message_reactions::screaming.eq(self.screaming - 1))
+                        .set(schema::message_reactions::field_10.eq(self.field_10 - 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     11 => diesel::update(self)
-                        .set(schema::message_reactions::evil.eq(self.evil - 1))
+                        .set(schema::message_reactions::field_11.eq(self.field_11 - 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     12 => diesel::update(self)
-                        .set(schema::message_reactions::crying.eq(self.crying - 1))
+                        .set(schema::message_reactions::field_12.eq(self.field_12 - 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     13 => diesel::update(self)
-                        .set(schema::message_reactions::party.eq(self.party - 1))
+                        .set(schema::message_reactions::field_13.eq(self.field_13 - 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     14 => diesel::update(self)
-                        .set(schema::message_reactions::star_face.eq(self.star_face - 1))
+                        .set(schema::message_reactions::field_14.eq(self.field_14 - 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     15 => diesel::update(self)
-                        .set(schema::message_reactions::vomiting.eq(self.vomiting - 1))
+                        .set(schema::message_reactions::field_15.eq(self.field_15 - 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     16 => diesel::update(self)
-                        .set(schema::message_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
+                        .set(schema::message_reactions::field_16.eq(self.field_16 - 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                     _ => diesel::update(self)
-                        .set(schema::message_reactions::pile_of_poo.eq(self.pile_of_poo - 1))
+                        .set(schema::message_reactions::field_16.eq(self.field_16 - 1))
                         .get_result::<MessageReaction>(&_connection)
                         .expect("Error."),
                 };
@@ -2751,22 +2785,22 @@ impl MessageReaction {
 #[table_name="message_reactions"]
 pub struct NewMessageReaction {
     pub message_id:  i32,
-    pub thumbs_up:   i32,
-    pub thumbs_down: i32,
-    pub red_heart:   i32,
-    pub fire:        i32,
-    pub love_face:   i32,
-    pub clapping:    i32,
-    pub beaming:     i32,
-    pub thinking:    i32,
-    pub exploding:   i32,
-    pub screaming:   i32,
-    pub evil:        i32,
-    pub crying:      i32,
-    pub party:       i32,
-    pub star_face:   i32,
-    pub vomiting:    i32,
-    pub pile_of_poo: i32,
+    pub field_1:  i32,
+    pub field_2:  i32,
+    pub field_3:  i32,
+    pub field_4:  i32,
+    pub field_5:  i32,
+    pub field_6:  i32,
+    pub field_7:  i32,
+    pub field_8:  i32,
+    pub field_9:  i32,
+    pub field_10: i32,
+    pub field_11: i32,
+    pub field_12: i32,
+    pub field_13: i32,
+    pub field_14: i32,
+    pub field_15: i32,
+    pub field_16: i32,
 }
 
 /////// MessageVote//////

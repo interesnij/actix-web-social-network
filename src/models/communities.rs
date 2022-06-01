@@ -79,6 +79,20 @@ impl CommunityCategory {
             .expect("Error.");
         return new_cat;
     }
+    pub fn edit_category(&self, name: String, avatar: Option<String>,
+        position: i16) -> &CommunityCategory {
+        let _connection = establish_connection();
+        let new_form = NewCommunityCategory {
+            name:        name,
+            avatar:      avatar,
+            position:    position,
+        };
+        diesel::update(self)
+            .set(new_form)
+            .get_result::<CommunityCategory>(&_connection)
+            .expect("Error.");
+        return self;
+    }
 }
 
 #[derive(Deserialize, Insertable, AsChangeset)]

@@ -18,8 +18,8 @@ use crate::diesel::RunQueryDsl;
 
 pub fn create_progs_urls(config: &mut web::ServiceConfig) {
     config.route("/admin/created/create_communities_category/", web::post().to(create_communities_category));
-    //config.route("/admin/created/create_communities_subcategory/{id}/", web::post().to(create_communities_subcategory));
-    //config.route("/admin/created/edit_communities_category/{id}/", web::post().to(edit_communities_category));
+    config.route("/admin/created/create_communities_subcategory/{id}/", web::post().to(create_communities_subcategory));
+    config.route("/admin/created/edit_communities_category/{id}/", web::post().to(edit_communities_category));
     //config.route("/admin/created/edit_communities_subcategory/{id}/", web::post().to(edit_communities_subcategory));
 
     //config.route("/admin/created/create_goods_category/", web::post().to(create_goods_category));
@@ -131,7 +131,7 @@ pub async fn create_communities_category(session: Session, mut payload: Multipar
         if _request_user.is_supermanager() {
             let form = category_form (
                 payload.borrow_mut(),
-                "communities_category".to_string(),
+                "categories".to_string(),
                 _request_user.id.to_string()
             ).await;
 
@@ -139,6 +139,113 @@ pub async fn create_communities_category(session: Session, mut payload: Multipar
 
             let new_list = CommunityCategory::create_category (
                 form.name,
+                form.image,
+                form.position,
+            );
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn edit_communities_category(session: Session, mut payload: Multipart, cat_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            use crate::schema::community_categorys::dsl::community_categorys;
+            use crate::models::CommunityCategory;
+
+            let _connection = establish_connection();
+            let category = community_categorys
+                .filter(schema::community_categorys::id.eq(*cat_id))
+                .load::<CommunityCategory>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+            let form = category_form (
+                payload.borrow_mut(),
+                "categories".to_string(),
+                _request_user.id.to_string()
+            ).await;
+
+            category.edit_category (
+                form.name,
+                form.image,
+                form.position,
+            );
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn create_communities_subcategory(session: Session, mut payload: Multipart, cat_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            use crate::schema::community_categorys::dsl::community_categorys;
+            use crate::models::CommunityCategory;
+
+            let _connection = establish_connection();
+            let category = community_categorys
+                .filter(schema::community_categorys::id.eq(*cat_id))
+                .load::<CommunityCategory>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+            let form = category_form (
+                payload.borrow_mut(),
+                "categories".to_string(),
+                _request_user.id.to_string()
+            ).await;
+
+            category.create_subcategory (
+                form.name,
+                category.id,
+                form.image,
+                form.position,
+            );
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn edit_communities_subcategory(session: Session, mut payload: Multipart, cat_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            use crate::schema::community_subcategorys::dsl::community_subcategorys;
+            use crate::models::CommunitySubcategory;
+
+            let _connection = establish_connection();
+            let category = community_subcategorys
+                .filter(schema::community_subcategorys::id.eq(*cat_id))
+                .load::<CommunitySubcategory>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+            let form = category_form (
+                payload.borrow_mut(),
+                "categories".to_string(),
+                _request_user.id.to_string()
+            ).await;
+
+            category.edit_subcategory (
+                form.name,
+                form.category_id.unwrap(),
                 form.image,
                 form.position,
             );

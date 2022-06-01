@@ -1,6 +1,32 @@
+<% if count_reactions_list == 0 { %>
+
+  в списке реакции не включены - ничего не отрисовываем
+
+<% } else { %>
+  в списке реакции включены - отрисовываем
+
+  <% if object.reactions == 0 { %>
+    у записи пока нет реакций -  выводим кнопку и окно с реакциями
+
+  <% } else { %>
+
+    <% let object_reactions_count = object.get_or_create_react_model(); %>
+
+    <% if object.is_have_user_reaction(request_user) { %>
+      пользователь реагировал
+      <% let user_reaction = object.get_user_reaction(request_user); %>
+      - выводим окно с реакциями, проверяя их на сходство с user_reaction
+
+    <% } else { %>
+      пользователь не реагировал - выводим кнопку и окно с реакциями и счетчиком
+    <% } %>
+
+  <% } %>
+<% } %>
+
 <span
   class="like
-  <% if count_reactions_list == 0 { %>
+
     hide
   <% } else if object.reactions_ids().iter().any(|&i| i==request_user.id) { %>
     btn_success
