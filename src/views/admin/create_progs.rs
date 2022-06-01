@@ -38,15 +38,15 @@ pub fn create_progs_urls(config: &mut web::ServiceConfig) {
     config.route("/admin/created/create_music_album/", web::post().to(create_music_album));
     config.route("/admin/created/edit_music_album/{id}/", web::post().to(edit_music_album));
 
-    //config.route("/admin/created/create_stickers_category/", web::post().to(create_stickers_category));
-    //config.route("/admin/created/edit_stickers_category/{id}/", web::post().to(edit_stickers_category));
-    //config.route("/admin/created/create_sticker/", web::post().to(create_sticker));
-    //config.route("/admin/created/edit_sticker/{id}/", web::post().to(edit_sticker));
+    config.route("/admin/created/create_stickers_category/", web::post().to(create_stickers_category));
+    config.route("/admin/created/edit_stickers_category/{id}/", web::post().to(edit_stickers_category));
+    config.route("/admin/created/create_sticker/", web::post().to(create_sticker));
+    config.route("/admin/created/edit_sticker/{id}/", web::post().to(edit_sticker));
 
-    //config.route("/admin/created/create_smiles_category/", web::post().to(create_smiles_category));
-    //config.route("/admin/created/edit_smiles_category/{id}/", web::post().to(edit_smiles_category));
-    //config.route("/admin/created/create_smile/", web::post().to(create_smile));
-    //config.route("/admin/created/edit_smile/{id}/", web::post().to(edit_smile));
+    config.route("/admin/created/create_smiles_category/", web::post().to(create_smiles_category));
+    config.route("/admin/created/edit_smiles_category/{id}/", web::post().to(edit_smiles_category));
+    config.route("/admin/created/create_smile/", web::post().to(create_smile));
+    config.route("/admin/created/edit_smile/{id}/", web::post().to(edit_smile));
 
     //config.route("/admin/created/create_post_category/", web::post().to(create_post_category));
     //config.route("/admin/created/edit_post_category/{id}/", web::post().to(edit_post_category));
@@ -567,6 +567,258 @@ pub async fn edit_music_album(session: Session, mut payload: Multipart, album_id
                 form.description,
                 form.image,
                 form.position.unwrap(),
+            );
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn create_stickers_category(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            let form = category_form (
+                payload.borrow_mut(),
+                "categories".to_string(),
+                _request_user.id.to_string()
+            ).await;
+
+            use crate::models::StickerCategorie;
+
+            let new_list = StickerCategorie::create_category (
+                form.name,
+                form.position.unwrap(),
+                Some(_request_user.id),
+                form.description,
+                form.image
+            );
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn edit_stickers_category(session: Session, mut payload: Multipart, cat_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            use crate::schema::sticker_categories::dsl::sticker_categories;
+            use crate::models::StickerCategorie;
+
+            let _connection = establish_connection();
+            let category = sticker_categories
+                .filter(schema::sticker_categories::id.eq(*cat_id))
+                .load::<StickerCategorie>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+            let form = category_form (
+                payload.borrow_mut(),
+                "categories".to_string(),
+                _request_user.id.to_string()
+            ).await;
+
+            category.edit_category (
+                form.name,
+                form.position.unwrap(),
+                Some(_request_user.id),
+                form.description,
+                form.image,
+            );
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn create_sticker(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            let form = category_form (
+                payload.borrow_mut(),
+                "stickers".to_string(),
+                _request_user.id.to_string()
+            ).await;
+
+            use crate::models::Sticker;
+
+            let new_list = Sticker::create_sticker (
+                form.name,
+                form.position.unwrap(),
+                category_id.unwrap(),
+                form.image
+            );
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn edit_sticker(session: Session, mut payload: Multipart, sticker_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            use crate::schema::stickers::dsl::stickers;
+            use crate::models::Sticker;
+
+            let _connection = establish_connection();
+            let sticker = stickers
+                .filter(schema::stickers::id.eq(*sticker_id))
+                .load::<Sticker>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+            let form = category_form (
+                payload.borrow_mut(),
+                "stickers".to_string(),
+                _request_user.id.to_string()
+            ).await;
+
+            sticker.edit_sticker (
+                form.name,
+                form.position.unwrap(),
+                category_id.unwrap(),
+                form.image
+            );
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn create_smiles_category(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            let form = category_form (
+                payload.borrow_mut(),
+                "categories".to_string(),
+                _request_user.id.to_string()
+            ).await;
+
+            use crate::models::SmileCategorie;
+
+            let new_list = SmileCategorie::create_category (
+                form.name,
+                form.position.unwrap(),
+                form.description,
+            );
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn edit_smiles_category(session: Session, mut payload: Multipart, cat_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            use crate::schema::smile_categories::dsl::smile_categories;
+            use crate::models::SmileCategorie;
+
+            let _connection = establish_connection();
+            let category = smile_categories
+                .filter(schema::smile_categories::id.eq(*cat_id))
+                .load::<SmileCategorie>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+            let form = category_form (
+                payload.borrow_mut(),
+                "categories".to_string(),
+                _request_user.id.to_string()
+            ).await;
+
+            category.edit_category (
+                form.name,
+                form.position.unwrap(),
+                form.description,
+            );
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn create_smile(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            let form = category_form (
+                payload.borrow_mut(),
+                "smiles".to_string(),
+                _request_user.id.to_string()
+            ).await;
+
+            use crate::models::Smile;
+
+            let new_list = Smile::create_smile (
+                form.name,
+                form.position.unwrap(),
+                category_id.unwrap(),
+                form.image
+            );
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn edit_smile(session: Session, mut payload: Multipart, smile_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            use crate::schema::smiles::dsl::smiles;
+            use crate::models::Smile;
+
+            let _connection = establish_connection();
+            let smile = smiles
+                .filter(schema::smiles::id.eq(*smile_id))
+                .load::<Smile>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+            let form = category_form (
+                payload.borrow_mut(),
+                "smiles".to_string(),
+                _request_user.id.to_string()
+            ).await;
+
+            smile.edit_smile (
+                form.name,
+                form.position.unwrap(),
+                category_id.unwrap(),
+                form.image
             );
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
         } else {
