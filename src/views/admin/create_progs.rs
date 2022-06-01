@@ -76,7 +76,7 @@ pub async fn category_form (
         description: None,
         image: None,
         category_id: None,
-        position: 0,
+        position: None,
     };
 
     while let Some(item) = payload.next().await {
@@ -119,7 +119,7 @@ pub async fn category_form (
                     }
                     else if field.name() == "position" {
                         let _int: i16 = data_string.parse().unwrap();
-                        form.position = _int;
+                        form.position = Some(_int);
                     }
                 }
             }
@@ -143,7 +143,7 @@ pub async fn create_communities_category(session: Session, mut payload: Multipar
             let new_list = CommunityCategory::create_category (
                 form.name,
                 form.image,
-                form.position,
+                form.position.unwrap(),
             );
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
         } else {
@@ -178,7 +178,7 @@ pub async fn edit_communities_category(session: Session, mut payload: Multipart,
             category.edit_category (
                 form.name,
                 form.image,
-                form.position,
+                form.position.unwrap(),
             );
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
         } else {
@@ -214,7 +214,7 @@ pub async fn create_communities_subcategory(session: Session, mut payload: Multi
                 form.name,
                 category.id,
                 form.image,
-                form.position,
+                form.position.unwrap(),
             );
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
         } else {
@@ -250,7 +250,7 @@ pub async fn edit_communities_subcategory(session: Session, mut payload: Multipa
                 form.name,
                 form.category_id.unwrap(),
                 form.image,
-                form.position,
+                form.position.unwrap(),
             );
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
         } else {
@@ -277,7 +277,7 @@ pub async fn create_goods_category(session: Session, mut payload: Multipart) -> 
             let new_list = GoodCategorie::create_category (
                 form.name,
                 form.image,
-                form.position,
+                form.position.unwrap(),
             );
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
         } else {
@@ -312,7 +312,7 @@ pub async fn edit_goods_category(session: Session, mut payload: Multipart, cat_i
             category.edit_category (
                 form.name,
                 form.image,
-                form.position,
+                form.position.unwrap(),
             );
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
         } else {
@@ -348,7 +348,7 @@ pub async fn create_goods_subcategory(session: Session, mut payload: Multipart, 
                 form.name,
                 category.id,
                 form.image,
-                form.position,
+                form.position.unwrap(),
             );
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
         } else {
@@ -384,7 +384,7 @@ pub async fn edit_goods_subcategory(session: Session, mut payload: Multipart, ca
                 form.name,
                 form.category_id.unwrap(),
                 form.image,
-                form.position,
+                form.position.unwrap(),
             );
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
         } else {
@@ -465,7 +465,7 @@ pub async fn create_artist(session: Session, mut payload: Multipart) -> actix_we
                 form.name,
                 form.description,
                 form.image,
-                form.position,
+                form.position.unwrap(),
             );
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
         } else {
@@ -501,7 +501,7 @@ pub async fn edit_artist(session: Session, mut payload: Multipart, artist_id: we
                 form.name,
                 form.description,
                 form.image,
-                form.position,
+                form.position.unwrap(),
             );
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
         } else {
