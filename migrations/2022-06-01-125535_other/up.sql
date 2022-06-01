@@ -10,7 +10,8 @@ CREATE TABLE phone_codes (
 
 CREATE TABLE custom_links (
     id   SERIAL PRIMARY KEY,
-    link VARCHAR(100) NOT NULL
+    link VARCHAR(100) NOT NULL,
+    owner SMALLINT NOT NULL DEFAULT 0
 );
 
 CREATE TABLE sticker_categories (
