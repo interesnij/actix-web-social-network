@@ -63,7 +63,7 @@ pub struct CategoryForm {
     pub description: Option<String>,
     pub image: Option<String>,
     pub category_id: Option<i32>,
-    pub position: Option<i32>,
+    pub position: Option<i16>,
 }
 
 pub async fn category_form (
