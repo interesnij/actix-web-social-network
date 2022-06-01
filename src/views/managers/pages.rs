@@ -36,9 +36,11 @@ pub async fn managers_page(session: Session, req: HttpRequest) -> actix_web::Res
                 #[template(path = "desctop/managers/main.stpl")]
                 struct Template {
                     request_user: User,
+                    title:        String,
                 }
                 let body = Template {
                     request_user: _request_user,
+                    title: "Менеджерский раздел".to_string(),
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -49,9 +51,11 @@ pub async fn managers_page(session: Session, req: HttpRequest) -> actix_web::Res
                 #[template(path = "mobile/managers/main.stpl")]
                 struct Template {
                     request_user: User,
+                    title:        String,
                 }
                 let body = Template {
                     request_user: _request_user,
+                    title: "Менеджерский раздел".to_string(),
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
