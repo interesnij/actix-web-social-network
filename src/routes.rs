@@ -14,8 +14,8 @@ use crate::views::{
     photos_routes,
     survey_routes,
     video_routes,
-    admin_routes,
     manager_routes,
+    admin_routes,
 };
 
 pub fn routes(cfg: &mut web::ServiceConfig) {
@@ -33,7 +33,7 @@ pub fn routes(cfg: &mut web::ServiceConfig) {
     .configure(survey_routes)
     .configure(video_routes)
     .configure(progs::progs_routes)
-    .configure(admin_routes)
     .configure(manager_routes)
+    .configure(admin_routes)
     ;
 }
