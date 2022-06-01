@@ -12,6 +12,7 @@ pub mod photos;
 pub mod survey;
 pub mod video;
 pub mod admin;
+pub mod managers;
 
 pub use self::{
     pages::*,
@@ -28,4 +29,5 @@ pub use self::{
     video::*,
     progs::*,
     admin::*,
+    managers::*,
 };
