@@ -561,7 +561,7 @@ pub async fn edit_music_album(session: Session, mut payload: Multipart, album_id
                 _request_user.id.to_string()
             ).await;
 
-            category.edit_artist (
+            album.edit_album (
                 form.name,
                 form.category_id,
                 form.description,
