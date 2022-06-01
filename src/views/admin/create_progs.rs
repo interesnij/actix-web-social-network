@@ -657,8 +657,8 @@ pub async fn create_sticker(session: Session, mut payload: Multipart) -> actix_w
             let new_list = Sticker::create_sticker (
                 form.name,
                 form.position.unwrap(),
-                category_id.unwrap(),
-                form.image
+                form.category_id.unwrap(),
+                form.image.unwrap()
             );
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
         } else {
@@ -693,8 +693,8 @@ pub async fn edit_sticker(session: Session, mut payload: Multipart, sticker_id: 
             sticker.edit_sticker (
                 form.name,
                 form.position.unwrap(),
-                category_id.unwrap(),
-                form.image
+                form.category_id.unwrap(),
+                form.image.unwrap()
             );
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
         } else {
@@ -781,8 +781,8 @@ pub async fn create_smile(session: Session, mut payload: Multipart) -> actix_web
             let new_list = Smile::create_smile (
                 form.name,
                 form.position.unwrap(),
-                category_id.unwrap(),
-                form.image
+                form.category_id.unwrap(),
+                form.image.unwrap()
             );
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
         } else {
@@ -817,8 +817,8 @@ pub async fn edit_smile(session: Session, mut payload: Multipart, smile_id: web:
             smile.edit_smile (
                 form.name,
                 form.position.unwrap(),
-                category_id.unwrap(),
-                form.image
+                form.category_id.unwrap(),
+                form.image.unwrap()
             );
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
         } else {
