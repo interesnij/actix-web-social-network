@@ -1,6 +1,6 @@
 use crate::schema;
 use actix_web::{
-    //HttpRequest,
+    HttpRequest,
     HttpResponse,
     web,
     error::InternalError,
@@ -19,7 +19,7 @@ use crate::models::User;
 use crate::diesel::{RunQueryDsl, QueryDsl, ExpressionMethods};
 
 
-pub fn create_pages_urls(config: &mut web::ServiceConfig) {
+pub fn pages_urls(config: &mut web::ServiceConfig) {
     config.route("/managers/", web::get().to(managers_page));
 }
 

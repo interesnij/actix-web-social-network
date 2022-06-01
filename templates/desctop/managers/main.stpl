@@ -1,4 +1,4 @@
-<% include!("../../../base_block/base_header.stpl"); %>
+<% include!("../../base_block/base_header.stpl"); %>
 
 <div class="container mt-4 main-container" data-type="manager_main">
           <div class="container mt-4 card">
@@ -148,4 +148,4 @@
   </div>
 </div>
 
-<% include!("../../../base_block/base_footer.stpl"); %>
+<% include!("../../base_block/base_footer.stpl"); %>
