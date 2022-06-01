@@ -20,12 +20,12 @@ pub fn create_progs_urls(config: &mut web::ServiceConfig) {
     config.route("/admin/created/create_communities_category/", web::post().to(create_communities_category));
     config.route("/admin/created/create_communities_subcategory/{id}/", web::post().to(create_communities_subcategory));
     config.route("/admin/created/edit_communities_category/{id}/", web::post().to(edit_communities_category));
-    //config.route("/admin/created/edit_communities_subcategory/{id}/", web::post().to(edit_communities_subcategory));
+    config.route("/admin/created/edit_communities_subcategory/{id}/", web::post().to(edit_communities_subcategory));
 
-    //config.route("/admin/created/create_goods_category/", web::post().to(create_goods_category));
-    //config.route("/admin/created/create_goods_subcategory/", web::post().to(create_goods_subcategory));
-    //config.route("/admin/created/edit_goods_category/{id}/", web::post().to(edit_goods_category));
-    //config.route("/admin/created/edit_goods_subcategory/{id}/", web::post().to(edit_goods_subcategory));
+    config.route("/admin/created/create_goods_category/", web::post().to(create_goods_category));
+    config.route("/admin/created/create_goods_subcategory/", web::post().to(create_goods_subcategory));
+    config.route("/admin/created/edit_goods_category/{id}/", web::post().to(edit_goods_category));
+    config.route("/admin/created/edit_goods_subcategory/{id}/", web::post().to(edit_goods_subcategory));
 
     //config.route("/admin/created/create_sound_genre/", web::post().to(create_sound_genre));
     //config.route("/admin/created/edit_sound_genre/{id}/", web::post().to(edit_sound_genre));
@@ -233,6 +233,140 @@ pub async fn edit_communities_subcategory(session: Session, mut payload: Multipa
             let category = community_subcategorys
                 .filter(schema::community_subcategorys::id.eq(*cat_id))
                 .load::<CommunitySubcategory>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+            let form = category_form (
+                payload.borrow_mut(),
+                "categories".to_string(),
+                _request_user.id.to_string()
+            ).await;
+
+            category.edit_subcategory (
+                form.name,
+                form.category_id.unwrap(),
+                form.image,
+                form.position,
+            );
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+
+pub async fn create_goods_category(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            let form = category_form (
+                payload.borrow_mut(),
+                "categories".to_string(),
+                _request_user.id.to_string()
+            ).await;
+
+            use crate::models::GoodCategorie;
+
+            let new_list = GoodCategorie::create_category (
+                form.name,
+                form.image,
+                form.position,
+            );
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn edit_communities_category(session: Session, mut payload: Multipart, cat_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            use crate::schema::good_categories::dsl::good_categories;
+            use crate::models::GoodCategorie;
+
+            let _connection = establish_connection();
+            let category = good_categories
+                .filter(schema::good_categories::id.eq(*cat_id))
+                .load::<GoodCategorie>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+            let form = category_form (
+                payload.borrow_mut(),
+                "categories".to_string(),
+                _request_user.id.to_string()
+            ).await;
+
+            category.edit_category (
+                form.name,
+                form.image,
+                form.position,
+            );
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn create_communities_subcategory(session: Session, mut payload: Multipart, cat_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            use crate::schema::good_categories::dsl::good_categories;
+            use crate::models::GoodCategorie;
+
+            let _connection = establish_connection();
+            let category = good_categories
+                .filter(schema::good_categories::id.eq(*cat_id))
+                .load::<GoodCategorie>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+            let form = category_form (
+                payload.borrow_mut(),
+                "categories".to_string(),
+                _request_user.id.to_string()
+            ).await;
+
+            category.create_subcategory (
+                form.name,
+                category.id,
+                form.image,
+                form.position,
+            );
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn edit_communities_subcategory(session: Session, mut payload: Multipart, cat_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            use crate::schema::good_subcategories::dsl::good_subcategories;
+            use crate::models::GoodSubcategorie;
+
+            let _connection = establish_connection();
+            let category = good_subcategories
+                .filter(schema::good_subcategories::id.eq(*cat_id))
+                .load::<GoodSubcategorie>(&_connection)
                 .expect("E")
                 .into_iter()
                 .nth(0)
