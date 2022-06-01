@@ -2991,7 +2991,7 @@ impl User {
         }
         return false;
     }
-    pub fn get_6_common_friends_of_user(&self, user: User) -> Vec<User> {
+    pub fn get_6_common_friends_of_user(&self, user: &User) -> Vec<User> {
         use crate::schema::users::dsl::users;
 
         let _connection = establish_connection();
