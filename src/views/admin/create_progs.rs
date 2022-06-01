@@ -54,8 +54,8 @@ pub fn create_progs_urls(config: &mut web::ServiceConfig) {
     config.route("/admin/created/create_video_category/", web::post().to(create_video_category));
     config.route("/admin/created/edit_video_category/{id}/", web::post().to(edit_video_category));
 
-    //config.route("/admin/created/create_reaction/", web::post().to(create_reaction));
-    //config.route("/admin/created/edit_reaction/{id}/", web::post().to(edit_reaction));
+    config.route("/admin/created/create_reaction/", web::post().to(create_reaction));
+    config.route("/admin/created/edit_reaction/{id}/", web::post().to(edit_reaction));
 }
 
 #[derive(Deserialize, Serialize, Debug)]
@@ -937,6 +937,122 @@ pub async fn edit_video_category(session: Session, mut payload: Multipart, cat_i
             category.edit_category (
                 form.name,
                 form.position.unwrap().into(),
+            );
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+#[derive(Deserialize, Serialize, Debug)]
+pub struct ReactionForm {
+    pub types:     i16,
+    pub image:     String,
+    pub gif:       String,
+    pub name:      String,
+    pub is_active: bool,
+    pub position:  i16,
+}
+
+pub async fn reaction_form (payload: &mut Multipart) -> ReactionForm {
+    let mut form: ReactionForm = ReactionForm {
+        types:     0,
+        image:     "".to_string(),
+        gif:       "".to_string(),
+        name:      "".to_string(),
+        is_active: true,
+        position:  0,
+    };
+
+    while let Some(item) = payload.next().await {
+        let mut field: Field = item.expect("split_payload err");
+
+        while let Some(chunk) = field.next().await {
+            let data = chunk.expect("split_payload err chunk");
+            if let Ok(s) = str::from_utf8(&data) {
+                let data_string = s.to_string();
+                if field.name() == "types" {
+                    let _int: i32 = data_string.parse().unwrap();
+                    form.types = _int;
+                }
+                else if field.name() == "image" {
+                    form.image = data_string;
+                }
+                else if field.name() == "gif" {
+                    form.gif = data_string;
+                }
+                else if field.name() == "name" {
+                    form.name = data_string;
+                }
+                else if field.name() == "is_active" {
+                    if data_string == "on" {
+                        form.is_active = true;
+                    } else {
+                        form.is_active = false;
+                    }
+                }
+                else if field.name() == "position" {
+                    let _int: i32 = data_string.parse().unwrap();
+                    form.position = _int;
+                }
+            }
+        }
+    }
+    form
+}
+
+pub async fn create_reaction(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            let form = reaction_form(payload.borrow_mut()).await;
+
+            use crate::models::Reaction;
+
+            let new_list = Reaction::create_reaction (
+                form.types,
+                form.image,
+                form.gif,
+                form.name,
+                form.is_active,
+                form.position,
+            );
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn edit_reaction(session: Session, mut payload: Multipart, reaction_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            use crate::schema::reactions::dsl::reactions;
+            use crate::models::Reaction;
+
+            let _connection = establish_connection();
+            let category = reactions
+                .filter(schema::reactions::id.eq(*reaction_id))
+                .load::<Reaction>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+            let form = reaction_form (payload.borrow_mut()).await;
+
+            reaction.edit_reaction (
+                form.types,
+                form.image,
+                form.gif,
+                form.name,
+                form.is_active,
+                form.position,
             );
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
         } else {
