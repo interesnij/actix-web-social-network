@@ -48,11 +48,11 @@ pub fn create_progs_urls(config: &mut web::ServiceConfig) {
     config.route("/admin/created/create_smile/", web::post().to(create_smile));
     config.route("/admin/created/edit_smile/{id}/", web::post().to(edit_smile));
 
-    //config.route("/admin/created/create_post_category/", web::post().to(create_post_category));
-    //config.route("/admin/created/edit_post_category/{id}/", web::post().to(edit_post_category));
+    config.route("/admin/created/create_post_category/", web::post().to(create_post_category));
+    config.route("/admin/created/edit_post_category/{id}/", web::post().to(edit_post_category));
 
-    //config.route("/admin/created/create_video_category/", web::post().to(create_video_category));
-    //config.route("/admin/created/edit_video_category/{id}/", web::post().to(edit_video_category));
+    config.route("/admin/created/create_video_category/", web::post().to(create_video_category));
+    config.route("/admin/created/edit_video_category/{id}/", web::post().to(edit_video_category));
 
     //config.route("/admin/created/create_reaction/", web::post().to(create_reaction));
     //config.route("/admin/created/edit_reaction/{id}/", web::post().to(edit_reaction));
@@ -819,6 +819,124 @@ pub async fn edit_smile(session: Session, mut payload: Multipart, smile_id: web:
                 form.position.unwrap(),
                 form.category_id.unwrap(),
                 form.image.unwrap()
+            );
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn create_post_category(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            let form = category_form (
+                payload.borrow_mut(),
+                "categories".to_string(),
+                _request_user.id.to_string()
+            ).await;
+
+            use crate::models::PostCategorie;
+
+            let new_list = PostCategorie::create_category (
+                form.name,
+                form.position.unwrap(),
+            );
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn edit_post_category(session: Session, mut payload: Multipart, cat_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            use crate::schema::post_categories::dsl::post_categories;
+            use crate::models::PostCategorie;
+
+            let _connection = establish_connection();
+            let category = post_categories
+                .filter(schema::post_categories::id.eq(*cat_id))
+                .load::<PostCategorie>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+            let form = category_form (
+                payload.borrow_mut(),
+                "categories".to_string(),
+                _request_user.id.to_string()
+            ).await;
+
+            category.edit_category (
+                form.name,
+                form.position.unwrap(),
+            );
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn create_video_category(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            let form = category_form (
+                payload.borrow_mut(),
+                "categories".to_string(),
+                _request_user.id.to_string()
+            ).await;
+
+            use crate::models::VideoCategorie;
+
+            let new_list = VideoCategorie::create_category (
+                form.name,
+                form.position.unwrap(),
+            );
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn edit_video_category(session: Session, mut payload: Multipart, cat_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            use crate::schema::video_categories::dsl::video_categories;
+            use crate::models::VideoCategorie;
+
+            let _connection = establish_connection();
+            let category = video_categories
+                .filter(schema::video_categories::id.eq(*cat_id))
+                .load::<VideoCategorie>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+            let form = category_form (
+                payload.borrow_mut(),
+                "categories".to_string(),
+                _request_user.id.to_string()
+            ).await;
+
+            category.edit_category (
+                form.name,
+                form.position.unwrap(),
             );
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
         } else {
