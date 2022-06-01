@@ -902,7 +902,7 @@ pub async fn create_video_category(session: Session, mut payload: Multipart) -> 
 
             let new_list = VideoCategorie::create_category (
                 form.name,
-                form.position.unwrap(),
+                form.position.unwrap().into(),
             );
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
         } else {
@@ -936,7 +936,7 @@ pub async fn edit_video_category(session: Session, mut payload: Multipart, cat_i
 
             category.edit_category (
                 form.name,
-                form.position.unwrap(),
+                form.position.unwrap().into(),
             );
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
         } else {
