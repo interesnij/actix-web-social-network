@@ -319,6 +319,19 @@ function send_form_and_toast(url, form, toast) {
     ajax_link.send(form_data);
 };
 
+function send_form_and_close_window(url, form) { 
+    form_data = new FormData(form);
+    ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    ajax_link.open('POST', url, true);
+    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            close_work_fullscreen();
+        }
+    }
+    ajax_link.send(form_data);
+};
+
 function get_with_pk_and_reload(url) {
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
     link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
