@@ -27,12 +27,12 @@ pub fn create_progs_urls(config: &mut web::ServiceConfig) {
     config.route("/admin/created/edit_goods_category/{id}/", web::post().to(edit_goods_category));
     config.route("/admin/created/edit_goods_subcategory/{id}/", web::post().to(edit_goods_subcategory));
 
-    //config.route("/admin/created/create_sound_genre/", web::post().to(create_sound_genre));
-    //config.route("/admin/created/edit_sound_genre/{id}/", web::post().to(edit_sound_genre));
-    //config.route("/admin/created/create_artist/", web::post().to(create_artist));
-    //config.route("/admin/created/edit_artist/{id}/", web::post().to(edit_artist));
-    //config.route("/admin/created/create_music_album/", web::post().to(create_music_album));
-    //config.route("/admin/created/edit_music_album/{id}/", web::post().to(edit_music_album));
+    config.route("/admin/created/create_sound_genre/", web::post().to(create_sound_genre));
+    config.route("/admin/created/edit_sound_genre/{id}/", web::post().to(edit_sound_genre));
+    config.route("/admin/created/create_artist/", web::post().to(create_artist));
+    config.route("/admin/created/edit_artist/{id}/", web::post().to(edit_artist));
+    config.route("/admin/created/create_music_album/", web::post().to(create_music_album));
+    config.route("/admin/created/edit_music_album/{id}/", web::post().to(edit_music_album));
 
     //config.route("/admin/created/create_stickers_category/", web::post().to(create_stickers_category));
     //config.route("/admin/created/edit_stickers_category/{id}/", web::post().to(edit_stickers_category));
@@ -380,6 +380,123 @@ pub async fn edit_communities_subcategory(session: Session, mut payload: Multipa
             category.edit_subcategory (
                 form.name,
                 form.category_id.unwrap(),
+                form.image,
+                form.position,
+            );
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn create_sound_genre(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            let form = category_form (
+                payload.borrow_mut(),
+                "categories".to_string(),
+                _request_user.id.to_string()
+            ).await;
+
+            use crate::models::SoundGenre;
+
+            let new_genre = SoundGenre::create_genre (form.name);
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn edit_sound_genre(session: Session, mut payload: Multipart, genre_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            use crate::schema::sound_genres::dsl::sound_genres;
+            use crate::models::SoundGenre;
+
+            let _connection = establish_connection();
+            let genre = sound_genres
+                .filter(schema::sound_genres::id.eq(*genre_id))
+                .load::<SoundGenre>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+            let form = category_form (
+                payload.borrow_mut(),
+                "categories".to_string(),
+                _request_user.id.to_string()
+            ).await;
+
+            genre.edit_category(form.name);
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+
+pub async fn create_artist(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            let form = category_form (
+                payload.borrow_mut(),
+                "music_artists".to_string(),
+                _request_user.id.to_string()
+            ).await;
+
+            use crate::models::Artist;
+
+            let new_list = Artist::create_artist (
+                form.name,
+                form.description,
+                form.image,
+                form.position,
+            );
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn edit_artist(session: Session, mut payload: Multipart, artist_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            use crate::schema::artists::dsl::artists;
+            use crate::models::Artist;
+
+            let _connection = establish_connection();
+            let category = artists
+                .filter(schema::artists::id.eq(*artist_id))
+                .load::<Artist>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+            let form = category_form (
+                payload.borrow_mut(),
+                "music_artists".to_string(),
+                _request_user.id.to_string()
+            ).await;
+
+            category.edit_artist (
+                form.name,
+                form.description,
                 form.image,
                 form.position,
             );
