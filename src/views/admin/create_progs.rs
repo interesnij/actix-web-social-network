@@ -16,7 +16,8 @@ use std::str;
 use actix_multipart::{Field, Multipart};
 use futures::StreamExt;
 use std::{borrow::BorrowMut, io::Write};
-use crate::diesel::{ExpressionMethods,RunQueryDsl};
+use crate::diesel::{ExpressionMethods,RunQueryDsl, QueryDsl};
+
 
 pub fn create_progs_urls(config: &mut web::ServiceConfig) {
     config.route("/admin/created/create_communities_category/", web::post().to(create_communities_category));
