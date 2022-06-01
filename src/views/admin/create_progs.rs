@@ -346,7 +346,6 @@ pub async fn create_goods_subcategory(session: Session, mut payload: Multipart, 
 
             category.create_subcategory (
                 form.name,
-                category.id,
                 form.image,
                 form.position.unwrap(),
             );
