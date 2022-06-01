@@ -1,3 +1,4 @@
+use crate::schema;
 use actix_web::{
     HttpResponse,
     web,
@@ -212,7 +213,6 @@ pub async fn create_communities_subcategory(session: Session, mut payload: Multi
 
             category.create_subcategory (
                 form.name,
-                category.id,
                 form.image,
                 form.position.unwrap(),
             );
@@ -438,7 +438,7 @@ pub async fn edit_sound_genre(session: Session, mut payload: Multipart, genre_id
                 _request_user.id.to_string()
             ).await;
 
-            genre.edit_category(form.name);
+            genre.edit_genre(form.name);
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
         } else {
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
@@ -499,6 +499,72 @@ pub async fn edit_artist(session: Session, mut payload: Multipart, artist_id: we
 
             category.edit_artist (
                 form.name,
+                form.description,
+                form.image,
+                form.position.unwrap(),
+            );
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn create_music_album(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            let form = category_form (
+                payload.borrow_mut(),
+                "music_albums".to_string(),
+                _request_user.id.to_string()
+            ).await;
+
+            use crate::models::MusicAlbum;
+
+            let new_list = MusicAlbum::create_album (
+                form.name,
+                form.category_id.unwrap(),
+                _request_user.id,
+                form.description,
+                form.image,
+                form.position.unwrap(),
+            );
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        } else {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn edit_music_album(session: Session, mut payload: Multipart, album_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(session);
+        if _request_user.is_supermanager() {
+            use crate::schema::music_albums::dsl::music_albums;
+            use crate::models::MusicAlbum;
+
+            let _connection = establish_connection();
+            let album = music_albums
+                .filter(schema::music_albums::id.eq(*album_id))
+                .load::<MusicAlbum>(&_connection)
+                .expect("E")
+                .into_iter()
+                .nth(0)
+                .unwrap();
+            let form = category_form (
+                payload.borrow_mut(),
+                "music_albums".to_string(),
+                _request_user.id.to_string()
+            ).await;
+
+            category.edit_artist (
+                form.name,
+                form.category_id.unwrap(),
                 form.description,
                 form.image,
                 form.position.unwrap(),

@@ -11,7 +11,7 @@
               </div>
               <div class="form-group">
                 <label>Исполнитель</label>
-                <select name="artist_id" class="form-control" id="category_id" data-live-search="true" tabindex="-1" aria-hidden="true">
+                <select name="category_id" class="form-control" id="category_id" data-live-search="true" tabindex="-1" aria-hidden="true">
                   <option value="">Выберите исполнителя</option>
                   <% for object in all_artists.iter() { %>
                     <option value="<%= object.id %>"><%= object.name %></option>
