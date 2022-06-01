@@ -6,6 +6,7 @@ use actix_web::{
 use crate::utils::{
     is_signed_in,
     get_request_user_data,
+    establish_connection,
 };
 use actix_session::Session;
 use serde::{Deserialize, Serialize};
@@ -285,7 +286,7 @@ pub async fn create_goods_category(session: Session, mut payload: Multipart) -> 
     }
 }
 
-pub async fn edit_communities_category(session: Session, mut payload: Multipart, cat_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn edit_goods_category(session: Session, mut payload: Multipart, cat_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
         if _request_user.is_supermanager() {
