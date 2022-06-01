@@ -7,6 +7,7 @@ use crate::utils::{
     is_signed_in,
     get_request_user_data,
     establish_connection,
+    UploadedFiles,
 };
 use actix_session::Session;
 use serde::{Deserialize, Serialize};
