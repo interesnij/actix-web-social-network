@@ -545,7 +545,8 @@ pub async fn create_music_album_page(session: Session) -> actix_web::Result<Http
 
         if _request_user.is_supermanager() {
             use crate::schema::artists::dsl::artists;
-            use crate::models::Artist;
+            use crate::schema::music_albums::dsl::music_albums;
+            use crate::models::{Artist,MusicAlbum};
 
             let _connection = establish_connection();
             let all_artists = artists
@@ -566,7 +567,7 @@ pub async fn create_music_album_page(session: Session) -> actix_web::Result<Http
             let body = Template {
                 request_user: _request_user,
                 all_artists:  all_artists,
-                all_albums:   all_albums, 
+                all_albums:   all_albums,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
