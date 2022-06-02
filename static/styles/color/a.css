@@ -3,7 +3,9 @@
 ::-webkit-scrollbar-thumb {
     background: #E2E2E2 !important;
 }
-
+.switch:not(:checked) + label {
+  background-color: #ccc !important;
+}
 .switch:not(:checked) + label {
   background-color: #fff !important;
 }
