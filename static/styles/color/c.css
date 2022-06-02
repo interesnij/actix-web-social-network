@@ -83,9 +83,7 @@ a.media:hover {
 .switch + label {
   background-color: #190d1f;
 }
-.switch:not(:checked) + label {
-  background-color: #190d1f !important;
-}
+
 .checkbox-user-check.active {
   background: #7979ff;
 }

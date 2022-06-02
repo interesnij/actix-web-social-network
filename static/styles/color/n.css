@@ -90,9 +90,7 @@ a.media:hover {
 .switch + label {
   background-color: #573c33;
 }
-.switch:not(:checked) + label {
-  background-color: #573c33 !important;
-}
+
 .form-control, select {
   background-color: #714e42;
   border-color: rgba(255, 255, 255, 0.2);
