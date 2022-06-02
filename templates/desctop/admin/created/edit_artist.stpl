@@ -43,7 +43,7 @@
     <% for artist in all_artists.iter() { %>
     <p><%= artist.name %>
         | <a class="ajax" href="/edit_artist/<%= artist.id %>/">~</a>
-        | <a class="pointer delete_communities_category" data-pk="<%= cat.id %>">x</a>
+        | <a class="pointer delete_communities_category" data-pk="<%= artist.id %>">x</a>
     </p>
     <% } %>
   </div>
