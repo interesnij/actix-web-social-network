@@ -23,7 +23,13 @@
             </div>
         </div>
     </form>
-    <div class="col-md-5">
-
-    </div>
-    </div>
+  <div class="col-md-5">
+    <h4>Категории записей</h4>
+    <% for cat in all_categories.iter() { %>
+    <p><%= cat.name %>
+        | <a class="ajax" href="/edit_post_category/<%= cat.id %>/">~</a>
+        | <a class="pointer delete_post_category" data-pk="<%= cat.id %>"">x</a>
+    </p>
+    <% } %>
+  </div>
+</div>

@@ -36,7 +36,13 @@
             </div>
         </div>
     </form>
-    <div class="col-md-5">
-
-    </div>
-    </div>
+  <div class="col-md-5">
+    <h4>Стикеры</h4>
+    <% for st in all_stickers.iter() { %>
+    <p><%= st.name %>
+      | <a class="ajax" href="/edit_sticker/<%= st.id %>/">~</a>
+      | <a class="pointer delete_sticker" data-pk="<%= st.id %>">x</a>
+    </p>
+    <% } %>
+  </div>
+</div>

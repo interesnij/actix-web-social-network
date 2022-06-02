@@ -36,7 +36,13 @@
             </div>
         </div>
     </form>
-    <div class="col-md-5">
-
-    </div>
-    </div>
+  <div class="col-md-5">
+    <h4>Смайлы</h4>
+    <% for sm in all_smiles.iter() { %>
+    <p><%= sm.name %>
+      | <a class="ajax" href="/edit_smile/<%= sm.id %>/">~</a>
+      | <a class="pointer delete_smile" data-pk="<%= sm.id %>">x</a>
+    </p>
+    <% } %>
+  </div>
+</div>
