@@ -1,11 +1,11 @@
 <div class="mb-1 form_group">
-    <a class="pb-1 i_link menu_drop_2 pointer ">Выбрано 2 реакции из 16ти</a>
+    <a class="pb-1 i_link menu_drop_2 pointer ">Выбрано <span class="reactions_count_ru">2 реакции</span> из 16ти</a>
     <span class="collector"></span>
     <div class="">
       <% for reaction in reaction_list.iter() { %>
         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
           <img style="width:25px" src="/static/images/reactions/<%= reaction.image %>.png" alt="img" />
-          <span>
+          <span style="vertical-align: <% if reaction.position == 1 { %>bottom<% } else { %>middle<% } %>;">
             <%= reaction.name %>
           </span>
           <input value="<%= reaction.position %>" type="checkbox"
