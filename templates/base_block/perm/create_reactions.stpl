@@ -6,8 +6,8 @@
         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
           <img src="/static/images/reactions/<%= reaction.image %>.png" alt="img" />
           <%= reaction.name %>
-          <input value="<%= reaction.image %>" type="checkbox"
-           <% if reaction.image < 3 { %>checked<% } %>
+          <input value="<%= reaction.position %>" type="checkbox"
+           <% if reaction.position < 3 { %>checked<% } %>
            name="reaction" id="react_<%= reaction.id %>" class="switch switch-sm">
           <label style="margin-right:12px;bottom: 5px;" for="react_<%= reaction.id %>" class="bg_success mb-2 border float-right"></label>
         </p>
