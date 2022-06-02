@@ -264,7 +264,7 @@ pub async fn edit_goods_category_page(session: Session, cat_id: web::Path<i32>) 
 
             let _connection = establish_connection();
             let category = good_categories
-                .filter(schema::good_categories::id.eq(*subcat_id))
+                .filter(schema::good_categories::id.eq(*cat_id))
                 .load::<GoodCategorie>(&_connection)
                 .expect("E.")
                 .into_iter()
