@@ -124,21 +124,23 @@
         <div class="card mb-2 box-shadow-large">
           <div class="text-center">
             <h5 class="content-color-primary">Создать объект</h5>
-            <a class="pointer btn-link create_communities_category">Категория сообществ</a>
-            <a class="pointer btn-link create_goods_category">Категория товаров</a>
-            <a class="pointer btn-link create_sound_genre">Муз жанр</a>
-            <a class="pointer btn-link create_artist">Муз исполнитель</a>
-            <a class="pointer btn-link create_music_album">Муз альбом</a>
-            <a class="pointer btn-link create_post_category">Категория записей</a>
-            <a class="pointer btn-link create_video_category">Категория видео</a>
-            <a class="pointer btn-link create_stickers_category">Категория стикеров</a>
-            <a class="pointer btn-link create_sticker">Стикер</a>
-            <a class="pointer btn-link create_smiles_category">Категория смайлов</a>
-            <a class="pointer btn-link create_smile">Смайл</a>
-            <a class="pointer btn-link create_reaction">Реакция</a>
-            <a class="pointer btn-link">Техподдержка</a>
-            <a class="pointer btn-link">Категория вопросов</a>
-            <a class="pointer btn-link">Вопрос-ответ</a>
+            <a class="pointer create_communities_category border">Категория сообществ</a>
+            <a class="pointer create_communities_subcategory border">ПодКатегория сообществ</a>
+            <a class="pointer create_goods_category border">Категория товаров</a>
+            <a class="pointer create_goods_subcategory border">ПодКатегория товаров</a>
+            <a class="pointer create_sound_genre border">Муз жанр</a>
+            <a class="pointer create_artist border">Муз исполнитель</a>
+            <a class="pointer create_music_album border">Муз альбом</a>
+            <a class="pointer create_post_category border">Категория записей</a>
+            <a class="pointer create_video_category border">Категория видео</a>
+            <a class="pointer create_stickers_category border">Категория стикеров</a>
+            <a class="pointer create_sticker border">Стикер</a>
+            <a class="pointer create_smiles_category border">Категория смайлов</a>
+            <a class="pointer create_smile border">Смайл</a>
+            <a class="pointer create_reaction border">Реакция</a>
+            <a class="pointer border">Техподдержка</a>
+            <a class="pointer border">Категория вопросов</a>
+            <a class="pointer border">Вопрос-ответ</a>
           </div>
         </div>
       </div>

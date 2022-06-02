@@ -20,7 +20,7 @@ use crate::diesel::{RunQueryDsl, QueryDsl, ExpressionMethods};
 
 pub fn create_pages_urls(config: &mut web::ServiceConfig) {
     config.route("/admin/created/create_communities_category/", web::get().to(create_communities_category_page));
-    config.route("/admin/created/create_communities_subcategory/{id}/", web::get().to(create_communities_subcategory_page));
+    config.route("/admin/created/create_communities_subcategory/", web::get().to(create_communities_subcategory_page));
     config.route("/admin/created/edit_communities_category/{id}/", web::get().to(edit_communities_category_page));
     config.route("/admin/created/edit_communities_subcategory/{id}/", web::get().to(edit_communities_subcategory_page));
 

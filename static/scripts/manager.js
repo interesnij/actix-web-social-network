@@ -6,8 +6,14 @@ on('#ajax', 'click', '.send_manager_messages', function() {
 on('#ajax', 'click', '.create_communities_category', function() {
   create_fullscreen("/admin/created/create_communities_category/", "item_fullscreen");
 });
+on('#ajax', 'click', '.create_communities_subcategory', function() {
+  create_fullscreen("/admin/created/create_communities_subcategory/", "item_fullscreen");
+});
 on('#ajax', 'click', '.create_goods_category', function() {
   create_fullscreen("/admin/created/create_goods_category/", "item_fullscreen");
+});
+on('#ajax', 'click', '.create_goods_subcategory', function() {
+  create_fullscreen("/admin/created/create_goods_subcategory/", "item_fullscreen");
 });
 on('#ajax', 'click', '.create_sound_genre', function() {
   create_fullscreen("/admin/created/create_sound_genre/", "item_fullscreen");
@@ -43,8 +49,14 @@ on('#ajax', 'click', '.create_reaction', function() {
 on('#ajax', 'click', '.create_communities_category_btn', function() {
   send_form_and_close_window("/admin/created/create_communities_category/", this.parentElement.parentElement.parentElement);
 });
-on('#ajax', 'click', '.create_goods_category', function() {
+on('#ajax', 'click', '.create_communities_subcategory_btn', function() {
+  send_form_and_close_window("/admin/created/create_communities_subcategory/", this.parentElement.parentElement.parentElement);
+});
+on('#ajax', 'click', '.create_goods_category_btn', function() {
   send_form_and_close_window("/admin/created/create_goods_category/", this.parentElement.parentElement.parentElement);
+});
+on('#ajax', 'click', '.create_goods_subcategory_btn', function() {
+  send_form_and_close_window("/admin/created/create_goods_subcategory_btn/", this.parentElement.parentElement.parentElement);
 });
 on('#ajax', 'click', '.create_sound_genre_btn', function() {
   send_form_and_close_window("/admin/created/create_sound_genre/", this.parentElement.parentElement.parentElement);
