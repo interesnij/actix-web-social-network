@@ -2399,7 +2399,9 @@ impl Post {
                 return self.content.as_ref().unwrap().to_string();
             }
             else {
-                let new_str = unwrap[..100].to_owned() + &"<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + &unwrap[101..].to_string() + &"</span>";
+                let first_str = &unwrap[..100].to_string();
+                let last_str = &unwrap[101..].to_string();
+                let new_str = first_str + &"<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + &last_str + &"</span>";
                 return new_str;
             }
         } else { return "".to_string(); }
