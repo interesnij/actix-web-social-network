@@ -40,7 +40,7 @@
     <h4>Реакции</h4>
     <% for react in all_reactions.iter() { %>
     <p><%= react.name %>
-      | <a class="ajax" href="/edit_reaction/<%= react.id %>/">~</a>
+      | <a class="ajax" href="/admin/created/edit_reaction/<%= react.id %>/">~</a>
       | <a class="pointer delete_reaction" data-pk="<%= react.id %>">x</a>
     </p>
     <% } %>

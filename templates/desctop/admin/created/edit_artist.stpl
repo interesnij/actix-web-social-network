@@ -38,12 +38,12 @@
             </div>
         </div>
     </form>
-  </div> 
+  </div>
   <div class="col-md-5">
     <h4>Исполнители</h4>
     <% for artist in all_artists.iter() { %>
     <p><%= artist.name %>
-        | <a class="ajax" href="/edit_artist/<%= artist.id %>/">~</a>
+        | <a class="ajax" href="/admin/created/edit_artist/<%= artist.id %>/">~</a>
         | <a class="pointer delete_communities_category" data-pk="<%= artist.id %>">x</a>
     </p>
     <% } %>

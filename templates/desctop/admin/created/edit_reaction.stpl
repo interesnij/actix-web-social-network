@@ -35,12 +35,12 @@
             </div>
         </div>
     </form>
-  </div> 
+  </div>
   <div class="col-md-5">
     <h4>Реакции</h4>
     <% for react in all_reactions.iter() { %>
     <p><%= react.name %>
-      | <a class="ajax" href="/edit_react/<%= react.id %>/">~</a>
+      | <a class="ajax" href="/admin/created/edit_react/<%= react.id %>/">~</a>
       | <a class="pointer delete_reaction" data-pk="<%= react.id %>">x</a>
     </p>
     <% } %>
