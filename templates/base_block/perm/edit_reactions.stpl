@@ -7,6 +7,8 @@
       &nbsp;из&nbsp;16
   </a>
     <div class="hide">
+    <let list_reat_is_some = list.reactions.is_some(); %>
+
       <% for reaction in reaction_list.iter() { %>
         <p class="select_item_reaction pointer page-sub-title-small mt-1" style="line-height: 18px;">
           <img style="width:22px" src="/static/images/reactions/<%= reaction.image %>.png" alt="img" />
@@ -14,7 +16,7 @@
             <%= reaction.name %>
           </span>
           <input value="<%= reaction.position %>" type="checkbox"
-           <% if list.reactions.contains(reaction.position) { %>checked<% } %>
+           <% if list_reat_is_some && list.reactions.unwrap().contains(&reaction.position) { %>checked<% } %>
            name="reaction" class="switch switch-sm">
           <label style="margin-right:12px;" class="bg_success mb-2 border float-right"></label>
         </p>
