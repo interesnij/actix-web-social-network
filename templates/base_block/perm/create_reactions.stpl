@@ -5,9 +5,9 @@
       <div class="hide">
         <% for reaction in reaction_list.iter() { %>
           <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
-            <img src="/static/images/reactions/<%= reaction.types %>.png" alt="img" />
+            <img src="/static/images/reactions/<%= reaction.image %>.png" alt="img" />
             <%= reaction.name %>
-            <input value="<%= reaction.types %>" type="checkbox"
+            <input value="<%= reaction.image %>" type="checkbox"
              <% if reaction.types < 3 { %>checked<% } %>
              name="reaction" id="react_22" class="switch switch-sm">
             <label style="margin-right:12px;bottom: 5px;" for="react_22" class="bg_success mb-2 border float-right"></label>
