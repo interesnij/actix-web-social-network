@@ -40,14 +40,23 @@ pub async fn add_user_list_page(session: Session) -> actix_web::Result<HttpRespo
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
+        use crate::schema::reactions::dsl::reactions;
+        use crate::models::Reaction;
+
         let _request_user = get_request_user_data(session);
+        let _connection = establish_connection();
+        let reaction_list = reactions
+            .load::<Reaction>(&_connection)
+            .expect("E.");
         #[derive(TemplateOnce)]
         #[template(path = "desctop/posts/user/add_list.stpl")]
         struct Template {
-            request_user: User,
+            request_user:  User,
+            reaction_list: Vec<Reaction>,
         }
         let body = Template {
-            request_user: _request_user,
+            request_user:  _request_user,
+            reaction_list: reaction_list,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -61,6 +70,14 @@ pub async fn edit_user_list_page(session: Session, _id: web::Path<i32>) -> actix
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
+        use crate::schema::reactions::dsl::reactions;
+        use crate::models::Reaction;
+
+        let _connection = establish_connection();
+        let reaction_list = reactions
+            .load::<Reaction>(&_connection)
+            .expect("E.");
+
         let _request_user = get_request_user_data(session);
         let _list_id : i32 = *_id;
         let list = get_post_list(_list_id);
@@ -74,12 +91,14 @@ pub async fn edit_user_list_page(session: Session, _id: web::Path<i32>) -> actix
             #[derive(TemplateOnce)]
             #[template(path = "desctop/posts/user/edit_list.stpl")]
             struct YTemplate {
-                request_user: User,
-                list: PostList,
+                request_user:  User,
+                list:          PostList,
+                reaction_list: Vec<Reaction>,
             }
             let body = YTemplate {
-                request_user: _request_user,
-                list: list,
+                request_user:  _request_user,
+                list:          list,
+                reaction_list: reaction_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -91,18 +110,28 @@ pub async fn edit_user_list_page(session: Session, _id: web::Path<i32>) -> actix
 }
 pub async fn add_community_list_page(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
+        use crate::schema::reactions::dsl::reactions;
+        use crate::models::Reaction;
+
+        let _connection = establish_connection();
+        let reaction_list = reactions
+            .load::<Reaction>(&_connection)
+            .expect("E.");
+
         let _request_user = get_request_user_data(session);
         let community = get_community(*_id);
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/posts/community/add_list.stpl")]
         struct Template {
-            request_user: User,
-            community: Community,
+            request_user:  User,
+            community:     Community,
+            reaction_list: Vec<Reaction>,
         }
         let body = Template {
-            request_user: _request_user,
-            community: community,
+            request_user:  _request_user,
+            community:     community,
+            reaction_list: reaction_list,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -115,6 +144,14 @@ pub async fn add_community_list_page(session: Session, _id: web::Path<i32>) -> a
 }
 pub async fn edit_community_list_page(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
+        use crate::schema::reactions::dsl::reactions;
+        use crate::models::Reaction;
+
+        let _connection = establish_connection();
+        let reaction_list = reactions
+            .load::<Reaction>(&_connection)
+            .expect("E.");
+
         let _request_user = get_request_user_data(session);
         let list = get_post_list(*_id);
         let community = get_community(list.community_id.unwrap());
@@ -122,14 +159,16 @@ pub async fn edit_community_list_page(session: Session, _id: web::Path<i32>) -> 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/posts/community/edit_list.stpl")]
         struct Template {
-            request_user: User,
-            community: Community,
-            list: PostList,
+            request_user:  User,
+            community:     Community,
+            list:          PostList,
+            reaction_list: Vec<Reaction>,
         }
         let body = Template {
-            request_user: _request_user,
-            community: community,
-            list: list,
+            request_user:  _request_user,
+            community:     community,
+            list:          list,
+            reaction_list: reaction_list
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

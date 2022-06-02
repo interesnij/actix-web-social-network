@@ -190,14 +190,16 @@ pub async fn add_user_list_page(session: Session) -> actix_web::Result<HttpRespo
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
+
         let _request_user = get_request_user_data(session);
+
         #[derive(TemplateOnce)]
         #[template(path = "desctop/docs/user/add_list.stpl")]
         struct Template {
             request_user: User,
         }
         let body = Template {
-            request_user: _request_user,
+            request_user:  _request_user,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
