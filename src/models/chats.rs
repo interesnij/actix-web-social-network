@@ -138,6 +138,16 @@ impl Chat {
     pub fn count_reactions_list(&self) -> usize {
         return self.get_reactions_list().len();
     }
+    pub fn count_reactions_list_ru_alt(&self) -> String {
+        use crate::utils::get_count_for_ru_alt;
+
+        return get_count_for_ru_alt(
+            self.count_reactions_list(),
+            " реакция".to_string(),
+            " реакции".to_string(),
+            " реакций".to_string(),
+        );
+    }
     pub fn liked_manager(&self, user_id: i32) -> bool {
         use crate::schema::support_user_votes::dsl::support_user_votes;
         use crate::models::SupportUserVote;

@@ -264,7 +264,7 @@ impl GoodList {
     pub fn count_reactions_list(&self) -> usize {
         return self.get_reactions_list().len();
     }
-    pub fn count_reactions_list_ru_alt(&self) -> usize {
+    pub fn count_reactions_list_ru_alt(&self) -> String {
         use crate::utils::get_count_for_ru_alt;
 
         return get_count_for_ru_alt(
