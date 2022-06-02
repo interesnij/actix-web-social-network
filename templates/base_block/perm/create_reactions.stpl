@@ -4,7 +4,7 @@
       Выбрано&nbsp;
       <span class="reactions_count">2</span>
       <span class="reactions_count_ru">&nbsp;реакции</span>
-      из 16ти
+      &nbsp;из&nbsp;16ти
   </a>
     <div class="hide">
       <% for reaction in reaction_list.iter() { %>
