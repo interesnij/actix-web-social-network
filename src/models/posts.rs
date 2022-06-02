@@ -2405,7 +2405,7 @@ impl Post {
                     if i == 20 {
                         string.push_str("<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>");
                     }
-                    string.push_str(word);
+                    string.push_str(word + &" ".to_string());
                 }
                 return string;
             }
