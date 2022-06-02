@@ -2400,7 +2400,7 @@ impl Post {
             }
             else {
                 let first_str = &unwrap[..100].to_string();
-                let last_str = &unwrap[101..].to_string();
+                let last_str = &unwrap[100..].to_string();
                 let new_str = first_str.to_owned() + &"<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + &last_str + &"</span>";
                 return new_str;
             }
