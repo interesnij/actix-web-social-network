@@ -596,17 +596,23 @@ pub async fn edit_music_album_page(session: Session, cat_id: web::Path<i32>) -> 
                 .load::<Artist>(&_connection)
                 .expect("E.");
 
+            let all_albums = music_albums
+                .load::<MusicAlbum>(&_connection)
+                .expect("E.");
+
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_music_album.stpl")]
             struct Template {
                 request_user: User,
                 music_album:  MusicAlbum,
                 all_artists:  Vec<Artist>,
+                all_albums:   Vec<MusicAlbum>,
             }
             let body = Template {
                 request_user: _request_user,
                 music_album:  music_album,
                 all_artists:  all_artists,
+                all_albums:   all_albums, 
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
