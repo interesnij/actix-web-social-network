@@ -1,5 +1,5 @@
-<div class="row mb-1 form_group_flex">
-    <a class="i_link menu_drop_2 pointer">Выбрано 2 реакции из 16ти</a>
+<div class="mb-1 form_group">
+    <p class="i_link menu_drop_2 pointer">Выбрано 2 реакции из 16ти</p>
     <span class="collector"></span>
     <div class="hide">
       <% for reaction in reaction_list.iter() { %>
