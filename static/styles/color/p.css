@@ -10,6 +10,9 @@ a:hover{
 a {
   color: rgba(255, 255, 255, 0.7) !important;
 }
+.switch:not(:checked) + label {
+  background-color: #cccccc !important;
+}
 .slides_arrows label {
   box-shadow: inset 2px -2px 0 1px rgba(255, 255, 255, 0.7) !important;
 }
