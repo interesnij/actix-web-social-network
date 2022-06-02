@@ -1,7 +1,7 @@
 <div class="mb-1 form_group">
     <a class="pb-1 i_link menu_drop_2 pointer ">Выбрано 2 реакции из 16ти</a>
     <span class="collector"></span>
-    <div class="hide">
+    <div class="">
       <% for reaction in reaction_list.iter() { %>
         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
           <img src="/static/images/reactions/<%= reaction.image %>.png" alt="img" />
