@@ -1,4 +1,6 @@
 
+<div class="row">
+  <div class="col-md-7">
     <form>
         <div class="card mb-3">
             <div class="card-header border-bottom">
@@ -13,7 +15,7 @@
               <div class="form-group">
                 <select name="sticker_categorie_id" class="form-control" id="smile_categorie_id" data-live-search="true" tabindex="-1" aria-hidden="true">
                   <option value="">Выберите категорию</option>
-                  <% for object in categories.iter() { %>
+                  <% for object in all_categories.iter() { %>
                     <option value="<%= object.id %>"><%= object.name %></option>
                   <% } %>
                 </select>
@@ -34,3 +36,7 @@
             </div>
         </div>
     </form>
+    <div class="col-md-5">
+
+    </div>
+    </div>

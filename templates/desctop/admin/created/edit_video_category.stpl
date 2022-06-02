@@ -1,4 +1,6 @@
 
+<div class="row">
+  <div class="col-md-7">
     <form data-pk="<%= category.id %>">
         <div class="card mb-3">
             <div class="card-header border-bottom">
@@ -21,3 +23,7 @@
             </div>
         </div>
     </form>
+    <div class="col-md-5">
+
+    </div>
+    </div>

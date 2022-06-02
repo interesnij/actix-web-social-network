@@ -63,13 +63,23 @@ pub async fn create_communities_category_page(session: Session) -> actix_web::Re
     else {
         let _request_user = get_request_user_data(session);
         if _request_user.is_supermanager() {
+            use crate::schema::community_categorys::dsl::community_categorys;
+            use crate::models::CommunityCategory;
+
+            let _connection = establish_connection();
+            let all_categories = community_categorys
+                .load::<CommunityCategory>(&_connection)
+                .expect("E.");
+
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_communities_category.stpl")]
             struct Template {
-                request_user: User,
+                request_user:   User,
+                all_categories: Vec<CommunityCategory>,
             }
             let body = Template {
-                request_user: _request_user,
+                request_user:   _request_user,
+                all_categories: all_categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -100,15 +110,21 @@ pub async fn edit_communities_category_page(session: Session, cat_id: web::Path<
                 .nth(0)
                 .unwrap();
 
+            let all_categories = community_categorys
+                .load::<CommunityCategory>(&_connection)
+                .expect("E.");
+
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_communities_category.stpl")]
             struct Template {
-                request_user: User,
-                category:     CommunityCategory,
+                request_user:   User,
+                category:       CommunityCategory,
+                all_categories: Vec<CommunityCategory>,
             }
             let body = Template {
-                request_user: _request_user,
-                category:     category,
+                request_user:   _request_user,
+                category:       category,
+                all_categories: all_categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -120,7 +136,7 @@ pub async fn edit_communities_category_page(session: Session, cat_id: web::Path<
     }
 }
 
-pub async fn create_communities_subcategory_page(session: Session, cat_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn create_communities_subcategory_page(session: Session) -> actix_web::Result<HttpResponse> {
     if !is_signed_in(&session) {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
@@ -131,29 +147,19 @@ pub async fn create_communities_subcategory_page(session: Session, cat_id: web::
             use crate::models::CommunityCategory;
 
             let _connection = establish_connection();
-            let category = community_categorys
-                .filter(schema::community_categorys::id.eq(*cat_id))
-                .load::<CommunityCategory>(&_connection)
-                .expect("E.")
-                .into_iter()
-                .nth(0)
-                .unwrap();
-
-            let categories = community_categorys
+            let all_categories = community_categorys
                 .load::<CommunityCategory>(&_connection)
                 .expect("E.");
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_communities_subcategory.stpl")]
             struct Template {
-                request_user: User,
-                category:     CommunityCategory,
-                categories:   Vec<CommunityCategory>,
+                request_user:   User,
+                all_categories: Vec<CommunityCategory>,
             }
             let body = Template {
-                request_user: _request_user,
-                category:     category,
-                categories:   categories,
+                request_user:   _request_user,
+                all_categories: all_categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -185,21 +191,21 @@ pub async fn edit_communities_subcategory_page(session: Session, subcat_id: web:
                 .nth(0)
                 .unwrap();
 
-            let categories = community_categorys
+            let all_categories = community_categorys
                 .load::<CommunityCategory>(&_connection)
                 .expect("E.");
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_communities_subcategory.stpl")]
             struct Template {
-                request_user: User,
-                subcategory:  CommunitySubcategory,
-                categories:   Vec<CommunityCategory>,
+                request_user:   User,
+                subcategory:    CommunitySubcategory,
+                all_categories: Vec<CommunityCategory>,
             }
             let body = Template {
-                request_user: _request_user,
-                subcategory:  subcategory,
-                categories:   categories,
+                request_user:   _request_user,
+                subcategory:    subcategory,
+                all_categories: all_categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -219,13 +225,22 @@ pub async fn create_goods_category_page(session: Session) -> actix_web::Result<H
     else {
         let _request_user = get_request_user_data(session);
         if _request_user.is_supermanager() {
+            use crate::schema::good_categories::dsl::good_categories;
+            use crate::models::GoodCategorie;
+
+            let _connection = establish_connection();
+            let all_categories = good_categories
+                .load::<GoodCategorie>(&_connection)
+                .expect("E.");
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_goods_category.stpl")]
             struct Template {
-                request_user: User,
+                request_user:   User,
+                all_categories: Vec<GoodCategorie>,
             }
             let body = Template {
-                request_user: _request_user,
+                request_user:   _request_user,
+                all_categories: all_categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -248,23 +263,19 @@ pub async fn edit_goods_category_page(session: Session, cat_id: web::Path<i32>) 
             use crate::models::GoodCategorie;
 
             let _connection = establish_connection();
-            let category = good_categories
-                .filter(schema::good_categories::id.eq(*cat_id))
+            let all_categories = good_categories
                 .load::<GoodCategorie>(&_connection)
-                .expect("E.")
-                .into_iter()
-                .nth(0)
-                .unwrap();
+                .expect("E.");
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_goods_category.stpl")]
             struct Template {
-                request_user: User,
-                category:     GoodCategorie,
+                request_user:   User,
+                all_categories: Vec<GoodCategorie>,
             }
             let body = Template {
-                request_user: _request_user,
-                category:     category,
+                request_user:   _request_user,
+                all_categories: all_categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -276,7 +287,7 @@ pub async fn edit_goods_category_page(session: Session, cat_id: web::Path<i32>) 
     }
 }
 
-pub async fn create_goods_subcategory_page(session: Session, cat_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn create_goods_subcategory_page(session: Session) -> actix_web::Result<HttpResponse> {
     if !is_signed_in(&session) {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
@@ -287,29 +298,19 @@ pub async fn create_goods_subcategory_page(session: Session, cat_id: web::Path<i
             use crate::models::GoodCategorie;
 
             let _connection = establish_connection();
-            let category = good_categories
-                .filter(schema::good_categories::id.eq(*cat_id))
-                .load::<GoodCategorie>(&_connection)
-                .expect("E.")
-                .into_iter()
-                .nth(0)
-                .unwrap();
-
-            let categories = good_categories
+            let all_categories = good_categories
                 .load::<GoodCategorie>(&_connection)
                 .expect("E.");
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_goods_subcategory.stpl")]
             struct Template {
-                request_user: User,
-                category:     GoodCategorie,
-                categories:   Vec<GoodCategorie>,
+                request_user:   User,
+                all_categories: Vec<GoodCategorie>,
             }
             let body = Template {
-                request_user: _request_user,
-                category:     category,
-                categories:   categories,
+                request_user:   _request_user,
+                all_categories: all_categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -341,21 +342,21 @@ pub async fn edit_goods_subcategory_page(session: Session, subcat_id: web::Path<
                 .nth(0)
                 .unwrap();
 
-            let categories = good_categories
+            let all_categories = good_categories
                 .load::<GoodCategorie>(&_connection)
                 .expect("E.");
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_goods_subcategory.stpl")]
             struct Template {
-                request_user: User,
-                subcategory:  GoodSubcategorie,
-                categories:   Vec<GoodCategorie>,
+                request_user:   User,
+                subcategory:    GoodSubcategorie,
+                all_categories: Vec<GoodCategorie>,
             }
             let body = Template {
-                request_user: _request_user,
-                subcategory:  subcategory,
-                categories:   categories,
+                request_user:   _request_user,
+                subcategory:    subcategory,
+                all_categories: all_categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -367,7 +368,6 @@ pub async fn edit_goods_subcategory_page(session: Session, subcat_id: web::Path<
     }
 }
 
-
 pub async fn create_sound_genre_page(session: Session) -> actix_web::Result<HttpResponse> {
     if !is_signed_in(&session) {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
@@ -375,13 +375,23 @@ pub async fn create_sound_genre_page(session: Session) -> actix_web::Result<Http
     else {
         let _request_user = get_request_user_data(session);
         if _request_user.is_supermanager() {
+            use crate::schema::sound_genres::dsl::sound_genres;
+            use crate::models::SoundGenre;
+
+            let _connection = establish_connection();
+            let all_sound_genres = sound_genres
+                .load::<SoundGenre>(&_connection)
+                .expect("E.");
+
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_sound_genre.stpl")]
             struct Template {
-                request_user: User,
+                request_user:     User,
+                all_sound_genres: Vec<SoundGenre>,
             }
             let body = Template {
-                request_user: _request_user,
+                request_user:     _request_user,
+                all_sound_genres: all_sound_genres,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -404,6 +414,9 @@ pub async fn edit_sound_genre_page(session: Session, cat_id: web::Path<i32>) -> 
             use crate::models::SoundGenre;
 
             let _connection = establish_connection();
+            let all_sound_genres = sound_genres
+                .load::<SoundGenre>(&_connection)
+                .expect("E.");
             let sound_genre = sound_genres
                 .filter(schema::sound_genres::id.eq(*cat_id))
                 .load::<SoundGenre>(&_connection)
@@ -415,12 +428,14 @@ pub async fn edit_sound_genre_page(session: Session, cat_id: web::Path<i32>) -> 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_sound_genre.stpl")]
             struct Template {
-                request_user: User,
-                sound_genre:  SoundGenre,
+                request_user:     User,
+                sound_genre:      SoundGenre,
+                all_sound_genres: Vec<SoundGenre>,
             }
             let body = Template {
-                request_user: _request_user,
-                sound_genre:  sound_genre,
+                request_user:     _request_user,
+                sound_genre:      sound_genre,
+                all_sound_genres: all_sound_genres,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -439,13 +454,23 @@ pub async fn create_artist_page(session: Session) -> actix_web::Result<HttpRespo
     else {
         let _request_user = get_request_user_data(session);
         if _request_user.is_supermanager() {
+            use crate::schema::artists::dsl::artists;
+            use crate::models::Artist;
+
+            let _connection = establish_connection();
+            let all_artists = sound_genres
+                .load::<Artist>(&_connection)
+                .expect("E.");
+
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_artist.stpl")]
             struct Template {
                 request_user: User,
+                all_artists:  Vec<Artist>,
             }
             let body = Template {
                 request_user: _request_user,
+                all_artists:  all_artists,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -476,15 +501,21 @@ pub async fn edit_artist_page(session: Session, cat_id: web::Path<i32>) -> actix
                 .nth(0)
                 .unwrap();
 
+            let all_artists = sound_genres
+                .load::<Artist>(&_connection)
+                .expect("E.");
+
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_artist.stpl")]
             struct Template {
                 request_user: User,
-                artist:     Artist,
+                artist:       Artist,
+                all_artists:  Vec<Artist>,
             }
             let body = Template {
                 request_user: _request_user,
                 artist:       artist,
+                all_artists:  all_artists,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -585,13 +616,23 @@ pub async fn create_stickers_category_page(session: Session) -> actix_web::Resul
     else {
         let _request_user = get_request_user_data(session);
         if _request_user.is_supermanager() {
+            use crate::schema::sticker_categories::dsl::sticker_categories;
+            use crate::models::StickerCategorie;
+
+            let _connection = establish_connection();
+            let all_categories = sticker_categories
+                .load::<StickerCategorie>(&_connection)
+                .expect("E.");
+
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_stickers_category.stpl")]
             struct Template {
                 request_user: User,
+                all_categories:  Vec<StickerCategorie>,
             }
             let body = Template {
-                request_user: _request_user,
+                request_user:   _request_user,
+                all_categories: all_categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -622,15 +663,21 @@ pub async fn edit_stickers_category_page(session: Session, cat_id: web::Path<i32
                 .nth(0)
                 .unwrap();
 
+            let all_categories = sticker_categories
+                .load::<StickerCategorie>(&_connection)
+                .expect("E.");
+
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_stickers_category.stpl")]
             struct Template {
-                request_user: User,
-                category:     StickerCategorie,
+                request_user:   User,
+                category:       StickerCategorie,
+                all_categories: Vec<StickerCategorie>,
             }
             let body = Template {
-                request_user: _request_user,
-                category:     category,
+                request_user:   _request_user,
+                category:       category,
+                all_categories: all_categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -653,19 +700,19 @@ pub async fn create_sticker_page(session: Session) -> actix_web::Result<HttpResp
             use crate::models::StickerCategorie;
 
             let _connection = establish_connection();
-            let categories = sticker_categories
+            let all_categories = sticker_categories
                 .load::<StickerCategorie>(&_connection)
                 .expect("E.");
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_sticker.stpl")]
             struct Template {
-                request_user: User,
-                categories:   Vec<StickerCategorie>,
+                request_user:   User,
+                all_categories: Vec<StickerCategorie>,
             }
             let body = Template {
-                request_user: _request_user,
-                categories:   categories,
+                request_user:   _request_user,
+                all_categories: all_categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -697,21 +744,21 @@ pub async fn edit_sticker_page(session: Session, cat_id: web::Path<i32>) -> acti
                 .nth(0)
                 .unwrap();
 
-            let categories = sticker_categories
+            let all_categories = sticker_categories
                 .load::<StickerCategorie>(&_connection)
                 .expect("E.");
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_sticker.stpl")]
             struct Template {
-                request_user: User,
-                sticker:      Sticker,
-                categories:   Vec<StickerCategorie>,
+                request_user:   User,
+                sticker:        Sticker,
+                all_categories: Vec<StickerCategorie>,
             }
             let body = Template {
-                request_user: _request_user,
-                sticker:      sticker,
-                categories:   categories,
+                request_user:   _request_user,
+                sticker:        sticker,
+                all_categories: all_categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -732,13 +779,23 @@ pub async fn create_smiles_category_page(session: Session) -> actix_web::Result<
         let _request_user = get_request_user_data(session);
         if _request_user.is_supermanager() {
 
+            use crate::schema::smile_categories::dsl::smile_categories;
+            use crate::models::SmileCategorie;
+
+            let _connection = establish_connection();
+            let all_categories = smile_categories
+                .load::<SmileCategorie>(&_connection)
+                .expect("E.");
+
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_smiles_category.stpl")]
             struct Template {
-                request_user: User,
+                request_user:   User,
+                all_categories: Vec<SmileCategorie>,
             }
             let body = Template {
                 request_user: _request_user,
+                all_categories: all_categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -769,15 +826,21 @@ pub async fn edit_smiles_category_page(session: Session, cat_id: web::Path<i32>)
                 .nth(0)
                 .unwrap();
 
+            let all_categories = smile_categories
+                .load::<SmileCategorie>(&_connection)
+                .expect("E.");
+
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_smiles_category.stpl")]
             struct Template {
-                request_user: User,
-                category:     SmileCategorie,
+                request_user:   User,
+                category:       SmileCategorie,
+                all_categories: Vec<SmileCategorie>,
             }
             let body = Template {
-                request_user: _request_user,
-                category:     category,
+                request_user:   _request_user,
+                category:       category,
+                all_categories: all_categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -800,19 +863,19 @@ pub async fn create_smile_page(session: Session) -> actix_web::Result<HttpRespon
             use crate::models::SmileCategorie;
 
             let _connection = establish_connection();
-            let categories = smile_categories
+            let all_categories = smile_categories
                 .load::<SmileCategorie>(&_connection)
                 .expect("E.");
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_smile.stpl")]
             struct Template {
-                request_user: User,
-                categories:   Vec<SmileCategorie>
+                request_user:   User,
+                all_categories: Vec<SmileCategorie>
             }
             let body = Template {
-                request_user: _request_user,
-                categories:   categories,
+                request_user:   _request_user,
+                all_categories: all_categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -844,21 +907,21 @@ pub async fn edit_smile_page(session: Session, cat_id: web::Path<i32>) -> actix_
                 .nth(0)
                 .unwrap();
 
-            let categories = smile_categories
+            let all_categories = smile_categories
                 .load::<SmileCategorie>(&_connection)
                 .expect("E.");
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_smile.stpl")]
             struct Template {
-                request_user: User,
-                smile:        Smile,
-                categories:   Vec<SmileCategorie>
+                request_user:   User,
+                smile:          Smile,
+                all_categories: Vec<SmileCategorie>
             }
             let body = Template {
-                request_user: _request_user,
-                smile:        smile,
-                categories:   categories,
+                request_user:   _request_user,
+                smile:          smile,
+                all_categories: all_categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -877,13 +940,23 @@ pub async fn create_post_category_page(session: Session) -> actix_web::Result<Ht
     else {
         let _request_user = get_request_user_data(session);
         if _request_user.is_supermanager() {
+            use crate::schema::post_categories::dsl::post_categories;
+            use crate::models::PostCategorie;
+
+            let _connection = establish_connection();
+            let all_categories = post_categories
+                .load::<PostCategorie>(&_connection)
+                .expect("E.");
+
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_post_category.stpl")]
             struct Template {
                 request_user: User,
+                all_categories: Vec<PostCategorie>
             }
             let body = Template {
                 request_user: _request_user,
+                all_categories: all_categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -914,21 +987,21 @@ pub async fn edit_post_category_page(session: Session, cat_id: web::Path<i32>) -
                 .nth(0)
                 .unwrap();
 
-            let categories = post_categories
+            let all_categories = post_categories
                 .load::<PostCategorie>(&_connection)
                 .expect("E.");
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_post_category.stpl")]
             struct Template {
-                request_user: User,
-                category:     PostCategorie,
-                categories:   Vec<PostCategorie>
+                request_user:   User,
+                category:       PostCategorie,
+                all_categories: Vec<PostCategorie>
             }
             let body = Template {
-                request_user: _request_user,
-                category:     category,
-                categories:   categories,
+                request_user:   _request_user,
+                category:       category,
+                all_categories: all_categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -947,13 +1020,23 @@ pub async fn create_video_category_page(session: Session) -> actix_web::Result<H
     else {
         let _request_user = get_request_user_data(session);
         if _request_user.is_supermanager() {
+            use crate::schema::video_categories::dsl::video_categories;
+            use crate::models::VideoCategorie;
+
+            let _connection = establish_connection();
+            let categories = video_categories
+                .load::<VideoCategorie>(&_connection)
+                .expect("E.");
+
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_video_category.stpl")]
             struct Template {
-                request_user: User,
+                request_user:   User,
+                all_categories: Vec<VideoCategorie>,
             }
             let body = Template {
-                request_user: _request_user,
+                request_user:   _request_user,
+                all_categories: all_categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -984,21 +1067,21 @@ pub async fn edit_video_category_page(session: Session, cat_id: web::Path<i32>) 
                 .nth(0)
                 .unwrap();
 
-            let categories = video_categories
+            let all_categories = video_categories
                 .load::<VideoCategorie>(&_connection)
                 .expect("E.");
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_video_category.stpl")]
             struct Template {
-                request_user: User,
-                category:     VideoCategorie,
-                categories:   Vec<VideoCategorie>,
+                request_user:   User,
+                category:       VideoCategorie,
+                all_categories: Vec<VideoCategorie>,
             }
             let body = Template {
-                request_user: _request_user,
-                category:     category,
-                categories:   categories,
+                request_user:   _request_user,
+                category:       category,
+                all_categories: all_categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1017,13 +1100,23 @@ pub async fn create_reaction_page(session: Session) -> actix_web::Result<HttpRes
     else {
         let _request_user = get_request_user_data(session);
         if _request_user.is_supermanager() {
+            use crate::schema::reactions::dsl::reactions;
+            use crate::models::Reaction;
+
+            let _connection = establish_connection();
+            let all_reactions = reactions
+                .load::<Reaction>(&_connection)
+                .expect("E.");
+
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_reaction.stpl")]
             struct Template {
-                request_user: User,
+                request_user:  User,
+                all_reactions: Vec<Reaction>,
             }
             let body = Template {
-                request_user: _request_user,
+                request_user:  _request_user,
+                all_reactions: all_reactions,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1054,15 +1147,21 @@ pub async fn edit_reaction_page(session: Session, cat_id: web::Path<i32>) -> act
                 .nth(0)
                 .unwrap();
 
+            let all_reactions = reactions
+                .load::<Reaction>(&_connection)
+                .expect("E.");
+
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_reaction.stpl")]
             struct Template {
-                request_user: User,
-                reaction:     Reaction,
+                request_user:  User,
+                reaction:      Reaction,
+                all_reactions: Vec<Reaction>,
             }
             let body = Template {
-                request_user: _request_user,
-                reaction:     reaction,
+                request_user:  _request_user,
+                reaction:      reaction,
+                all_reactions: all_reactions,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
