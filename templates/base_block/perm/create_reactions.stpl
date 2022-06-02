@@ -3,7 +3,7 @@
     <span class="col-md-6">
       <a class="i_link menu_drop_2 pointer">2 реакции из 16ти</a>
       <div class="hide">
-        <% for reaction.name in reaction_list.iter() { %>
+        <% for reaction in reaction_list.iter() { %>
           <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
             <img src="/static/images/reactions/<%= reaction.types %>.png" alt="img" />
             <%= reaction.name %>
