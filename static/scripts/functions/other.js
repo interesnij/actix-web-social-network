@@ -12,6 +12,32 @@ function format_text(text) {
   }
   return text
 };
+
+function get_count_ru(count, word_1, word_2, word_3) {
+  a = count % 10, b = count % 100;
+  if (a == 1 && b != 11){
+    return count + " сообщение"
+  }
+  else if (a >= 2 && a <= 4 && (b < 10 || b >= 20)) {
+    return count + " сообщения"
+  }
+  else {
+    return count + " сообщений"
+  };
+};
+function get_count_ru_alt(count, word_1, word_2, word_3) {
+  a = count % 10, b = count % 100;
+  if (a == 1 && b != 11){
+    return " сообщение"
+  }
+  else if (a >= 2 && a <= 4 && (b < 10 || b >= 20)) {
+    return " сообщения"
+  }
+  else {
+    return " сообщений"
+  };
+};
+
 function phone_check() {
     if (document.getElementById('phone').value.length > 9)
         document.getElementById("phone_send").removeAttribute('disabled');
@@ -319,7 +345,7 @@ function send_form_and_toast(url, form, toast) {
     ajax_link.send(form_data);
 };
 
-function send_form_and_close_window(url, form) { 
+function send_form_and_close_window(url, form) {
     form_data = new FormData(form);
     ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     ajax_link.open('POST', url, true);

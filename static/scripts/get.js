@@ -75,6 +75,27 @@ on('#ajax', 'resize', '#fullscreen_loader', function() {
 on('#ajax', 'click', '.next_shower_btn', function() {
   this.nextElementSibling.classList.toggle("hide");
 });
+on('#ajax', 'click', '.select_item_reaction', function() {
+  btn = this.parentElement.previousElementSibling;
+  counter_ru = btn.querySelector(".reactions_count_ru");
+  counter = btn.querySelector(".reactions_count");
+  count = counter.innerHTML*1;
+  react_input = this.querySelector(".switch-sm");
+  reactions_input = btn.previousElementSibling;
+  if (react_input.checked == 1){
+      count -= 1;
+      counter.innerHTML = count;
+      counter_ru.innerHTML = get_count_ru_alt(count, "реакция", "реакции", "реакций");
+      react_input.removeAttribute('checked');
+      reactions_input.value = reactions_input.value.replace(react_input.value + ", ", "");
+    } else {
+      count += 1;
+      counter.innerHTML = count;
+      counter_ru.innerHTML = get_count_ru_alt(count, "реакция", "реакции", "реакций");
+      react_input.setyAttribute('checked', 'true');
+      reactions_input.value = reactions_input.value + react_input.value + ", ";
+    }
+});
 
 on('#ajax', 'click', '.smile_dropdown', function() {
   block = this.nextElementSibling;

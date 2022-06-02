@@ -1,10 +1,16 @@
 <div class="mb-1 form_group">
-    <a class="pb-1 i_link next_shower_btn pointer ">Выбрано <span class="reactions_count_ru">2 реакции</span> из 16ти</a>
+  <input class="reactions_collector" value="" type="hidden" />
+  <a class="pb-1 i_link next_shower_btn pointer ">
+      Выбрано
+      <span class="reactions_count">2</span>
+      <span class="reactions_count_ru"> реакции</span>
+      из 16ти
+  </a>
     <div class="hide">
       <% for reaction in reaction_list.iter() { %>
-        <p class="content-color-primary pointer page-sub-title-small mt-2" style="line-height: 18px;">
-          <img style="width:25px" src="/static/images/reactions/<%= reaction.image %>.png" alt="img" />
-          <span style="vertical-align: <% if reaction.position == 1 { %>bottom<% } else { %>middle<% } %>;">
+        <p class="select_item_reaction pointer page-sub-title-small mt-1" style="line-height: 18px;">
+          <img style="width:22px" src="/static/images/reactions/<%= reaction.image %>.png" alt="img" />
+          <span style="padding-left:7px;vertical-align: <% if reaction.position == 1 { %>bottom<% } else { %>middle<% } %>;">
             <%= reaction.name %>
           </span>
           <input value="<%= reaction.position %>" type="checkbox"
