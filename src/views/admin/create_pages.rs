@@ -1033,7 +1033,7 @@ pub async fn create_video_category_page(session: Session) -> actix_web::Result<H
             use crate::models::VideoCategorie;
 
             let _connection = establish_connection();
-            let categories = video_categories
+            let all_categories = video_categories
                 .load::<VideoCategorie>(&_connection)
                 .expect("E.");
 
