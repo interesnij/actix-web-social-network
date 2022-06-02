@@ -264,6 +264,16 @@ impl GoodList {
     pub fn count_reactions_list(&self) -> usize {
         return self.get_reactions_list().len();
     }
+    pub fn count_reactions_list_ru_alt(&self) -> usize {
+        use crate::utils::get_count_for_ru_alt;
+
+        return get_count_for_ru_alt(
+            self.count_reactions_list(),
+            " реакция".to_string(),
+            " реакции".to_string(),
+            " реакций".to_string(),
+        );
+    }
     pub fn get_longest_penalties(&self) -> String {
         use crate::schema::moderated_penalties::dsl::moderated_penalties;
         use crate::models::ModeratedPenaltie;
