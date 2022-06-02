@@ -705,23 +705,23 @@ pub async fn create_sticker_page(session: Session) -> actix_web::Result<HttpResp
     else {
         let _request_user = get_request_user_data(session);
         if _request_user.is_supermanager() {
-            use crate::schema::sticker_categories::dsl::sticker_categories;
-            use crate::models::StickerCategorie;
+            use crate::schema::stickers::dsl::stickers;
+            use crate::models::Sticker;
 
             let _connection = establish_connection();
-            let all_categories = sticker_categories
-                .load::<StickerCategorie>(&_connection)
+            let all_stickers = stickers
+                .load::<Sticker>(&_connection)
                 .expect("E.");
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_sticker.stpl")]
             struct Template {
                 request_user:   User,
-                all_categories: Vec<StickerCategorie>,
+                all_stickers: Vec<Sticker>,
             }
             let body = Template {
                 request_user:   _request_user,
-                all_categories: all_categories,
+                all_stickers: all_stickers,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -741,8 +741,7 @@ pub async fn edit_sticker_page(session: Session, cat_id: web::Path<i32>) -> acti
         let _request_user = get_request_user_data(session);
         if _request_user.is_supermanager() {
             use crate::schema::stickers::dsl::stickers;
-            use crate::schema::sticker_categories::dsl::sticker_categories;
-            use crate::models::{Sticker,StickerCategorie};
+            use crate::models::Sticker;
 
             let _connection = establish_connection();
             let sticker = stickers
@@ -753,21 +752,21 @@ pub async fn edit_sticker_page(session: Session, cat_id: web::Path<i32>) -> acti
                 .nth(0)
                 .unwrap();
 
-            let all_categories = sticker_categories
-                .load::<StickerCategorie>(&_connection)
+            let all_stickers = stickers
+                .load::<Sticker>(&_connection)
                 .expect("E.");
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_sticker.stpl")]
             struct Template {
-                request_user:   User,
-                sticker:        Sticker,
-                all_categories: Vec<StickerCategorie>,
+                request_user: User,
+                sticker:      Sticker,
+                all_stickers: Vec<Sticker>,
             }
             let body = Template {
-                request_user:   _request_user,
-                sticker:        sticker,
-                all_categories: all_categories,
+                request_user: _request_user,
+                sticker:      sticker,
+                all_stickers: all_stickers,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -868,23 +867,23 @@ pub async fn create_smile_page(session: Session) -> actix_web::Result<HttpRespon
     else {
         let _request_user = get_request_user_data(session);
         if _request_user.is_supermanager() {
-            use crate::schema::smile_categories::dsl::smile_categories;
-            use crate::models::SmileCategorie;
+            use crate::schema::smiles::dsl::smiles;
+            use crate::models::Smile;
 
             let _connection = establish_connection();
-            let all_categories = smile_categories
-                .load::<SmileCategorie>(&_connection)
+            let all_smiles = smiles
+                .load::<Smile>(&_connection)
                 .expect("E.");
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_smile.stpl")]
             struct Template {
-                request_user:   User,
-                all_categories: Vec<SmileCategorie>
+                request_user: User,
+                all_smiles:   Vec<Smile>
             }
             let body = Template {
-                request_user:   _request_user,
-                all_categories: all_categories,
+                request_user: _request_user,
+                all_smiles:   all_smiles,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -904,8 +903,7 @@ pub async fn edit_smile_page(session: Session, cat_id: web::Path<i32>) -> actix_
         let _request_user = get_request_user_data(session);
         if _request_user.is_supermanager() {
             use crate::schema::smiles::dsl::smiles;
-            use crate::schema::smile_categories::dsl::smile_categories;
-            use crate::models::{Smile,SmileCategorie};
+            use crate::models::Smile;
 
             let _connection = establish_connection();
             let smile = smiles
@@ -916,21 +914,21 @@ pub async fn edit_smile_page(session: Session, cat_id: web::Path<i32>) -> actix_
                 .nth(0)
                 .unwrap();
 
-            let all_categories = smile_categories
-                .load::<SmileCategorie>(&_connection)
+            let all_smiles = smiles
+                .load::<Smile>(&_connection)
                 .expect("E.");
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_smile.stpl")]
             struct Template {
-                request_user:   User,
-                smile:          Smile,
-                all_categories: Vec<SmileCategorie>
+                request_user: User,
+                smile:        Smile,
+                all_smiles:   Vec<Smile>
             }
             let body = Template {
-                request_user:   _request_user,
-                smile:          smile,
-                all_categories: all_categories,
+                request_user: _request_user,
+                smile:        smile,
+                all_smiles:   all_smiles,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
