@@ -72,6 +72,10 @@ on('#ajax', 'resize', '#fullscreen_loader', function() {
   console.log("resize!");
 });
 
+on('#ajax', 'click', '.next_shower_btn', function() {
+  this.nextElementSibling.classList.toggle("hide");
+});
+
 on('#ajax', 'click', '.smile_dropdown', function() {
   block = this.nextElementSibling;
   if (!block.querySelector(".card")) {
