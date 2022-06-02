@@ -263,6 +263,13 @@ pub async fn edit_goods_category_page(session: Session, cat_id: web::Path<i32>) 
             use crate::models::GoodCategorie;
 
             let _connection = establish_connection();
+            let category = good_categories
+                .filter(schema::good_categories::id.eq(*subcat_id))
+                .load::<GoodCategorie>(&_connection)
+                .expect("E.")
+                .into_iter()
+                .nth(0)
+                .unwrap();
             let all_categories = good_categories
                 .load::<GoodCategorie>(&_connection)
                 .expect("E.");
@@ -272,10 +279,12 @@ pub async fn edit_goods_category_page(session: Session, cat_id: web::Path<i32>) 
             struct Template {
                 request_user:   User,
                 all_categories: Vec<GoodCategorie>,
+                category:       GoodCategorie,
             }
             let body = Template {
                 request_user:   _request_user,
                 all_categories: all_categories,
+                category:       category,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -458,7 +467,7 @@ pub async fn create_artist_page(session: Session) -> actix_web::Result<HttpRespo
             use crate::models::Artist;
 
             let _connection = establish_connection();
-            let all_artists = sound_genres
+            let all_artists = artists
                 .load::<Artist>(&_connection)
                 .expect("E.");
 
@@ -501,7 +510,7 @@ pub async fn edit_artist_page(session: Session, cat_id: web::Path<i32>) -> actix
                 .nth(0)
                 .unwrap();
 
-            let all_artists = sound_genres
+            let all_artists = artists
                 .load::<Artist>(&_connection)
                 .expect("E.");
 
