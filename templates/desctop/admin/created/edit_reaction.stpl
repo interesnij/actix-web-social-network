@@ -35,6 +35,7 @@
             </div>
         </div>
     </form>
+  </div> 
   <div class="col-md-5">
     <h4>Реакции</h4>
     <% for react in all_reactions.iter() { %>

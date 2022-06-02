@@ -46,47 +46,47 @@ on('#ajax', 'click', '.create_reaction', function() {
   create_fullscreen("/admin/created/create_reaction/", "item_fullscreen");
 });
 
-on('#ajax', 'click', '.create_communities_category_btn', function() {
+on('#ajax', 'click', '#create_communities_category_btn', function() {
   send_form_and_close_window("/admin/created/create_communities_category/", this.parentElement.parentElement.parentElement);
 });
-on('#ajax', 'click', '.create_communities_subcategory_btn', function() {
+on('#ajax', 'click', '#create_communities_subcategory_btn', function() {
   send_form_and_close_window("/admin/created/create_communities_subcategory/", this.parentElement.parentElement.parentElement);
 });
-on('#ajax', 'click', '.create_goods_category_btn', function() {
+on('#ajax', 'click', '#create_goods_category_btn', function() {
   send_form_and_close_window("/admin/created/create_goods_category/", this.parentElement.parentElement.parentElement);
 });
-on('#ajax', 'click', '.create_goods_subcategory_btn', function() {
+on('#ajax', 'click', '#create_goods_subcategory_btn', function() {
   send_form_and_close_window("/admin/created/create_goods_subcategory_btn/", this.parentElement.parentElement.parentElement);
 });
 on('#ajax', 'click', '.create_sound_genre_btn', function() {
   send_form_and_close_window("/admin/created/create_sound_genre/", this.parentElement.parentElement.parentElement);
 });
-on('#ajax', 'click', '.create_artist_btn', function() {
+on('#ajax', 'click', '#create_artist_btn', function() {
   send_form_and_close_window("/admin/created/create_artist/", this.parentElement.parentElement.parentElement);
 });
-on('#ajax', 'click', '.create_music_album_btn', function() {
+on('#ajax', 'click', '#create_music_album_btn', function() {
   send_form_and_close_window("/admin/created/create_music_album/", this.parentElement.parentElement.parentElement);
 });
-on('#ajax', 'click', '.create_post_category_btn', function() {
+on('#ajax', 'click', '#create_post_category_btn', function() {
   send_form_and_close_window("/admin/created/create_post_category/", this.parentElement.parentElement.parentElement);
 });
-on('#ajax', 'click', '.create_video_category_btn', function() {
+on('#ajax', 'click', '#create_video_category_btn', function() {
   send_form_and_close_window("/admin/created/create_video_category/", this.parentElement.parentElement.parentElement);
 });
-on('#ajax', 'click', '.create_stickers_category_btn', function() {
+on('#ajax', 'click', '#create_stickers_category_btn', function() {
   send_form_and_close_window("/admin/created/create_stickers_category/", this.parentElement.parentElement.parentElement);
 });
-on('#ajax', 'click', '.create_sticker_btn', function() {
+on('#ajax', 'click', '#create_sticker_btn', function() {
   send_form_and_close_window("/admin/created/create_sticker/", this.parentElement.parentElement.parentElement);
 });
-on('#ajax', 'click', '.create_smiles_category_btn', function() {
+on('#ajax', 'click', '#create_smiles_category_btn', function() {
   send_form_and_close_window("/admin/created/create_smiles_category/", this.parentElement.parentElement.parentElement);
 });
 
-on('#ajax', 'click', '.create_smile_btn', function() {
+on('#ajax', 'click', '#create_smile_btn', function() {
   send_form_and_close_window("/admin/created/create_smile/", this.parentElement.parentElement.parentElement);
 });
-on('#ajax', 'click', '.create_reaction_btn', function() {
+on('#ajax', 'click', '#create_reaction_btn', function() {
   send_form_and_close_window("/admin/created/create_reaction/", this.parentElement.parentElement.parentElement);
 });
 ///////////////////////////////////////////

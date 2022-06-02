@@ -36,6 +36,7 @@
             </div>
         </div>
     </form>
+  </div> 
   <div class="col-md-5">
     <h4>Смайлы</h4>
     <% for sm in all_smiles.iter() { %>
