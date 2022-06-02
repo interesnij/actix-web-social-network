@@ -2407,8 +2407,8 @@ impl Post {
                     }
                     string.push_str(word);
                 }
+                return string;
             }
-            return string;
         } else { return "".to_string(); }
     }
 
