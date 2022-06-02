@@ -2395,12 +2395,13 @@ impl Post {
     pub fn get_format_text(&self) -> String {
         if self.content.is_some() {
             let unwrap = self.content.as_ref().unwrap();
-            if unwrap.len() <= 101 {
+            let split_unwrap: Vec<&str> = unwrap.split(" ").collect();
+            if split_unwrap.len() <= 20 {
                 return self.content.as_ref().unwrap().to_string();
             }
             else {
-                let first_str = &unwrap[..100].to_string();
-                let last_str = &unwrap[100..].to_string();
+                let first_str = &split_unwrap[..20].to_string();
+                let last_str = &split_unwrap[20..].to_string();
                 let new_str = first_str.to_owned() + &"<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + &last_str + &"</span>";
                 return new_str;
             }
