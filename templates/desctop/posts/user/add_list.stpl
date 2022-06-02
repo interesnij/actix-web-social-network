@@ -13,6 +13,8 @@
                   <label>Описание</label>
                   <input name="description" class="form-control">
               </div>
+              <% include!("../../../base_block/perm/create_reactions.stpl"); %>
+
               <% include!("../../../base_block/perm/create_user_list_comment_perm.stpl"); %>
 
             </div>

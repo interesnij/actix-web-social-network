@@ -19,6 +19,7 @@
               <% } %>
               " name="description" class="form-control">
           </div>
+          <% include!("../../../base_block/perm/edit_reactions.stpl"); %>
           <% include!("../../../base_block/perm/edit_user_list_comment_perm.stpl"); %>
 
         </div>
