@@ -133,6 +133,6 @@ a.media:hover {
   background-color: #67473C !important;
 }
 
-.like_window, .dislike_window, .repost_window, .custom_color {
+.like_window, .repost_window, .custom_color, .switch.switch-sm + label:before {
   background: #6d4b40 !important; color: rgba(255, 255, 255, 0.9) !important;
 }

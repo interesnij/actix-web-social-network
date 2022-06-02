@@ -126,6 +126,6 @@ a.media:hover {
 .progress2:before{
   background-color: #400E1D !important;
 }
-.like_window, .dislike_window, .repost_window, .custom_color {
+.like_window, .repost_window, .custom_color, .switch.switch-sm + label:before {
   background: #481021 !important; color: rgba(255, 255, 255, 0.6) !important;
 }

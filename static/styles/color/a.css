@@ -123,7 +123,7 @@ a.media:hover {
 }
 
 .svg_default_30, .svg_default_40, .svg_default_50, .svg_default_80{border: #6C757D solid 1px;}
-.like_window, .dislike_window, .repost_window, .custom_color {
+.like_window, .repost_window, .custom_color, .switch.switch-sm + label:before {
   background: #D6DAE1 !important; color: rgba(0, 0, 0, 0.8) !important;
 }
 .dropdown-menu {color:rgba(0, 0, 0, 0.9) !important; background-color: #f0f2f6 !important}
