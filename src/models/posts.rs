@@ -206,7 +206,7 @@ impl PostList {
         use crate::utils::get_count_for_ru_alt;
 
         return get_count_for_ru_alt(
-            self.count_reactions_list(),
+            self.count_reactions_list().try_into().unwrap(),
             " реакция".to_string(),
             " реакции".to_string(),
             " реакций".to_string(),
