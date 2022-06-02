@@ -2400,11 +2400,15 @@ impl Post {
                 return self.content.as_ref().unwrap().to_string();
             }
             else {
-                let first_str = &split_unwrap[..20].to_string();
-                let last_str = &split_unwrap[20..].to_string();
-                let new_str = first_str.to_owned() + &"<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + &last_str + &"</span>";
-                return new_str;
+                let mut string = String::new();
+                for (i, word) in split_unwrap.iter().enumerate() {
+                    if i == 20 {
+                        string.push_str("<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>");
+                    }
+                    string.push_str(word);
+                }
             }
+            return string;
         } else { return "".to_string(); }
     }
 
