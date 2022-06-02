@@ -16,25 +16,25 @@ function format_text(text) {
 function get_count_ru(count, word_1, word_2, word_3) {
   a = count % 10, b = count % 100;
   if (a == 1 && b != 11){
-    return count + " сообщение"
+    return count + " " + word_1
   }
   else if (a >= 2 && a <= 4 && (b < 10 || b >= 20)) {
-    return count + " сообщения"
+    return count + " " + word_2
   }
   else {
-    return count + " сообщений"
+    return count + " " + word_3
   };
 };
 function get_count_ru_alt(count, word_1, word_2, word_3) {
   a = count % 10, b = count % 100;
   if (a == 1 && b != 11){
-    return " сообщение"
+    return " " + word_1
   }
   else if (a >= 2 && a <= 4 && (b < 10 || b >= 20)) {
-    return " сообщения"
+    return " " + word_2
   }
   else {
-    return " сообщений"
+    return " " + word_3
   };
 };
 

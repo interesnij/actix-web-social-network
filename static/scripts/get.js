@@ -92,7 +92,7 @@ on('#ajax', 'click', '.select_item_reaction', function() {
       count += 1;
       counter.innerHTML = count;
       counter_ru.innerHTML = get_count_ru_alt(count, "реакция", "реакции", "реакций");
-      react_input.setyAttribute('checked', 'true');
+      react_input.setAttribute('checked', 'true');
       reactions_input.value = reactions_input.value + react_input.value + ", ";
     }
 });
