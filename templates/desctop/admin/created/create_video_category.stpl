@@ -28,7 +28,7 @@
     <h4>Категории роликов</h4>
     <% for cat in all_categories.iter() { %>
     <p><%= cat.name %>
-        | <a class="ajax" href="/admin/created/edit_video_category/<%= cat.id %>/">~</a>
+        | <a class="pointer edit_video_category" data-pk="<%= cat.id %>">~</a>
         | <a class="pointer delete_video_category" data-pk="<%= cat.id %>">x</a>
     </p>
     <% } %>

@@ -36,7 +36,7 @@
     <h4>Категории стикеров</h4>
     <% for cat in all_categories.iter() { %>
     <p><%= cat.name %>
-        | <a class="ajax" href="/admin/created/edit_stickers_category/<%= cat.id %>/">~</a>
+        | <a class="pointer edit_stickers_category" data-pk="<%= cat.id %>">~</a>
         | <a class="pointer delete_stickers_category" data-pk="<%= cat.id %>">x</a>
     </p>
     <% } %>

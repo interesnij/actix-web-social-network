@@ -41,7 +41,7 @@
     <h4>Смайлы</h4>
     <% for sm in all_smiles.iter() { %>
     <p><%= sm.name %>
-      | <a class="ajax" href="/admin/created/edit_smile/<%= sm.id %>/">~</a>
+      | <a class="pointer edit_smile" data-pk="<%= sm.id %>">~</a>
       | <a class="pointer delete_smile" data-pk="<%= sm.id %>">x</a>
     </p>
     <% } %>

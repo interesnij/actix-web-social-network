@@ -6,88 +6,198 @@ on('#ajax', 'click', '.send_manager_messages', function() {
 on('#ajax', 'click', '.create_communities_category', function() {
   create_fullscreen("/admin/created/create_communities_category/", "item_fullscreen");
 });
+on('#ajax', 'click', '.edit_communities_category', function() {
+  create_fullscreen("/admin/created/edit_communities_category/" + this.getAttribute("data-pk") + "/", "item_fullscreen");
+});
+
 on('#ajax', 'click', '.create_communities_subcategory', function() {
   create_fullscreen("/admin/created/create_communities_subcategory/", "item_fullscreen");
 });
+on('#ajax', 'click', '.edit_communities_subcategory', function() {
+  create_fullscreen("/admin/created/edit_communities_subcategory/" + this.getAttribute("data-pk") + "/", "item_fullscreen");
+});
+
 on('#ajax', 'click', '.create_goods_category', function() {
   create_fullscreen("/admin/created/create_goods_category/", "item_fullscreen");
 });
+on('#ajax', 'click', '.edit_goods_category', function() {
+  create_fullscreen("/admin/created/edit_goods_category/" + this.getAttribute("data-pk") + "/", "item_fullscreen");
+});
+
 on('#ajax', 'click', '.create_goods_subcategory', function() {
   create_fullscreen("/admin/created/create_goods_subcategory/", "item_fullscreen");
 });
+on('#ajax', 'click', '.edit_goods_subcategory', function() {
+  create_fullscreen("/admin/created/edit_goods_subcategory/" + this.getAttribute("data-pk") + "/", "item_fullscreen");
+});
+
 on('#ajax', 'click', '.create_sound_genre', function() {
   create_fullscreen("/admin/created/create_sound_genre/", "item_fullscreen");
 });
+on('#ajax', 'click', '.edit_sound_genre', function() {
+  create_fullscreen("/admin/created/edit_sound_genre/" + this.getAttribute("data-pk") + "/", "item_fullscreen");
+});
+
 on('#ajax', 'click', '.create_artist', function() {
   create_fullscreen("/admin/created/create_artist/", "item_fullscreen");
 });
+on('#ajax', 'click', '.edit_artist', function() {
+  create_fullscreen("/admin/created/edit_artist/" + this.getAttribute("data-pk") + "/", "item_fullscreen");
+});
+
 on('#ajax', 'click', '.create_music_album', function() {
   create_fullscreen("/admin/created/create_music_album/", "item_fullscreen");
 });
+on('#ajax', 'click', '.edit_music_album', function() {
+  create_fullscreen("/admin/created/edit_music_album/" + this.getAttribute("data-pk") + "/", "item_fullscreen");
+});
+
 on('#ajax', 'click', '.create_post_category', function() {
   create_fullscreen("/admin/created/create_post_category/", "item_fullscreen");
 });
+on('#ajax', 'click', '.edit_post_category', function() {
+  create_fullscreen("/admin/created/edit_post_category/" + this.getAttribute("data-pk") + "/", "item_fullscreen");
+});
+
 on('#ajax', 'click', '.create_video_category', function() {
   create_fullscreen("/admin/created/create_video_category/", "item_fullscreen");
 });
+on('#ajax', 'click', '.edit_video_category', function() {
+  create_fullscreen("/admin/created/edit_video_category/" + this.getAttribute("data-pk") + "/", "item_fullscreen");
+});
+
 on('#ajax', 'click', '.create_stickers_category', function() {
   create_fullscreen("/admin/created/create_stickers_category/", "item_fullscreen");
 });
+on('#ajax', 'click', '.edit_stickers_category', function() {
+  create_fullscreen("/admin/created/edit_stickers_category/" + this.getAttribute("data-pk") + "/", "item_fullscreen");
+});
+
 on('#ajax', 'click', '.create_sticker', function() {
   create_fullscreen("/admin/created/create_sticker/", "item_fullscreen");
 });
+on('#ajax', 'click', '.edit_sticker', function() {
+  create_fullscreen("/admin/created/edit_sticker/" + this.getAttribute("data-pk") + "/", "item_fullscreen");
+});
+
 on('#ajax', 'click', '.create_smiles_category', function() {
   create_fullscreen("/admin/created/create_smiles_category/", "item_fullscreen");
 });
+on('#ajax', 'click', '.edit_smiles_category', function() {
+  create_fullscreen("/admin/created/edit_smiles_category/" + this.getAttribute("data-pk") + "/", "item_fullscreen");
+});
+
 on('#ajax', 'click', '.create_smile', function() {
   create_fullscreen("/admin/created/create_smile/", "item_fullscreen");
 });
+on('#ajax', 'click', '.edit_smile', function() {
+  create_fullscreen("/admin/created/edit_smile/" + this.getAttribute("data-pk") + "/", "item_fullscreen");
+});
+
 on('#ajax', 'click', '.create_reaction', function() {
   create_fullscreen("/admin/created/create_reaction/", "item_fullscreen");
 });
-
+on('#ajax', 'click', '.edit_reaction', function() {
+  create_fullscreen("/admin/created/edit_reaction/" + this.getAttribute("data-pk") + "/", "item_fullscreen");
+});
+/////
+////
 on('#ajax', 'click', '#create_communities_category_btn', function() {
   send_form_and_close_window("/admin/created/create_communities_category/", this.parentElement.parentElement.parentElement);
 });
+on('#ajax', 'click', '#edit_communities_category_btn', function() {
+  send_form_and_close_window("/admin/created/edit_communities_category/" + this.getAttribute("data-pk") + "/", this.parentElement.parentElement.parentElement);
+});
+
 on('#ajax', 'click', '#create_communities_subcategory_btn', function() {
   send_form_and_close_window("/admin/created/create_communities_subcategory/", this.parentElement.parentElement.parentElement);
 });
+on('#ajax', 'click', '#edit_communities_subcategory_btn', function() {
+  send_form_and_close_window("/admin/created/edit_communities_subcategory/" + this.getAttribute("data-pk") + "/", this.parentElement.parentElement.parentElement);
+});
+
 on('#ajax', 'click', '#create_goods_category_btn', function() {
   send_form_and_close_window("/admin/created/create_goods_category/", this.parentElement.parentElement.parentElement);
 });
+on('#ajax', 'click', '#edit_goods_category_btn', function() {
+  send_form_and_close_window("/admin/created/edit_goods_category/" + this.getAttribute("data-pk") + "/", this.parentElement.parentElement.parentElement);
+});
+
 on('#ajax', 'click', '#create_goods_subcategory_btn', function() {
   send_form_and_close_window("/admin/created/create_goods_subcategory_btn/", this.parentElement.parentElement.parentElement);
 });
+on('#ajax', 'click', '#edit_goods_subcategory_btn', function() {
+  send_form_and_close_window("/admin/created/edit_goods_subcategory_btn/" + this.getAttribute("data-pk") + "/", this.parentElement.parentElement.parentElement);
+});
+
 on('#ajax', 'click', '.create_sound_genre_btn', function() {
   send_form_and_close_window("/admin/created/create_sound_genre/", this.parentElement.parentElement.parentElement);
 });
+on('#ajax', 'click', '.edit_sound_genre_btn', function() {
+  send_form_and_close_window("/admin/created/edit_sound_genre/" + this.getAttribute("data-pk") + "/", this.parentElement.parentElement.parentElement);
+});
+
 on('#ajax', 'click', '#create_artist_btn', function() {
   send_form_and_close_window("/admin/created/create_artist/", this.parentElement.parentElement.parentElement);
 });
+on('#ajax', 'click', '#edit_artist_btn', function() {
+  send_form_and_close_window("/admin/created/edit_artist/" + this.getAttribute("data-pk") + "/", this.parentElement.parentElement.parentElement);
+});
+
 on('#ajax', 'click', '#create_music_album_btn', function() {
   send_form_and_close_window("/admin/created/create_music_album/", this.parentElement.parentElement.parentElement);
 });
+on('#ajax', 'click', '#edit_music_album_btn', function() {
+  send_form_and_close_window("/admin/created/edit_music_album/" + this.getAttribute("data-pk") + "/", this.parentElement.parentElement.parentElement);
+});
+
 on('#ajax', 'click', '#create_post_category_btn', function() {
   send_form_and_close_window("/admin/created/create_post_category/", this.parentElement.parentElement.parentElement);
 });
+on('#ajax', 'click', '#edit_post_category_btn', function() {
+  send_form_and_close_window("/admin/created/edit_post_category/" + this.getAttribute("data-pk") + "/", this.parentElement.parentElement.parentElement);
+});
+
 on('#ajax', 'click', '#create_video_category_btn', function() {
   send_form_and_close_window("/admin/created/create_video_category/", this.parentElement.parentElement.parentElement);
 });
+on('#ajax', 'click', '#edit_video_category_btn', function() {
+  send_form_and_close_window("/admin/created/edit_video_category/" + this.getAttribute("data-pk") + "/", this.parentElement.parentElement.parentElement);
+});
+
 on('#ajax', 'click', '#create_stickers_category_btn', function() {
   send_form_and_close_window("/admin/created/create_stickers_category/", this.parentElement.parentElement.parentElement);
 });
+on('#ajax', 'click', '#edit_stickers_category_btn', function() {
+  send_form_and_close_window("/admin/created/edit_stickers_category/" + this.getAttribute("data-pk") + "/", this.parentElement.parentElement.parentElement);
+});
+
 on('#ajax', 'click', '#create_sticker_btn', function() {
   send_form_and_close_window("/admin/created/create_sticker/", this.parentElement.parentElement.parentElement);
 });
+on('#ajax', 'click', '#edit_sticker_btn', function() {
+  send_form_and_close_window("/admin/created/edit_sticker/" + this.getAttribute("data-pk") + "/", this.parentElement.parentElement.parentElement);
+});
+
 on('#ajax', 'click', '#create_smiles_category_btn', function() {
   send_form_and_close_window("/admin/created/create_smiles_category/", this.parentElement.parentElement.parentElement);
+});
+on('#ajax', 'click', '#edit_smiles_category_btn', function() {
+  send_form_and_close_window("/admin/created/edit_smiles_category/" + this.getAttribute("data-pk") + "/", this.parentElement.parentElement.parentElement);
 });
 
 on('#ajax', 'click', '#create_smile_btn', function() {
   send_form_and_close_window("/admin/created/create_smile/", this.parentElement.parentElement.parentElement);
 });
+on('#ajax', 'click', '#edit_smile_btn', function() {
+  send_form_and_close_window("/admin/created/edit_smile/" + this.getAttribute("data-pk") + "/", this.parentElement.parentElement.parentElement);
+});
+
 on('#ajax', 'click', '#create_reaction_btn', function() {
   send_form_and_close_window("/admin/created/create_reaction/", this.parentElement.parentElement.parentElement);
+});
+on('#ajax', 'click', '#edit_reaction_btn', function() {
+  send_form_and_close_window("/admin/created/edit_reaction/" + this.getAttribute("data-pk") + "/", this.parentElement.parentElement.parentElement);
 });
 ///////////////////////////////////////////
 

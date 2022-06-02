@@ -32,7 +32,7 @@
     <h4>Категории сообществ</h4>
     <% for cat in all_categories.iter() { %>
     <p><%= cat.name %>
-        | <a class="ajax" href="/admin/created/edit_communities_category/<%= cat.id %>/">~</a>
+        | <a class="pointer edit_communities_category" data-pk="<%= cat.id %>">~</a>
         | <a class="pointer delete_communities_category" data-pk="<%= cat.id %>">x</a>
     </p>
     <% } %>

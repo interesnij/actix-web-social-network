@@ -1,7 +1,7 @@
 
 <div class="row no-gutters">
   <div class="col-md-7">
-    <form data-pk="<%= subcategory.id %>">
+    <form>
         <div class="card mb-3">
             <div class="card-header border-bottom">
                 <h5 class="content-color-primary mb-0">Изменение подкатегории сообществ</h5>
@@ -34,7 +34,7 @@
 
             </div>
             <div class="card-footer">
-                <button class="btn btn-sm border item_fullscreen_hide">Отмена</button>
+                <button data-pk="<%= subcategory.id %>" class="btn btn-sm border item_fullscreen_hide">Отмена</button>
                 <button type="button" class="btn btn-sm btn-success float-right" id="edit_communities_subcategory_btn">Изменить</button>
             </div>
         </div>
@@ -44,7 +44,7 @@
     <h4>ПодКатегории сообществ</h4>
     <% for cat in all_categories.iter() { %>
     <p><%= cat.name %>
-        | <a class="ajax" href="/admin/created/edit_communities_subcategory/<%= cat.id %>/">~</a>
+        | <a class="pointer edit_communities_subcategory" data-pk="<%= cat.id %>">~</a>
         | <a class="pointer delete_communities_subcategory" data-pk="<%= cat.id %>">x</a>
     </p>
     <% } %>

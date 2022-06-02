@@ -45,7 +45,7 @@
     <h4>Муз альбомы</h4>
     <% for album in all_albums.iter() { %>
     <p><%= album.name %>
-        | <a class="ajax" href="/admin/created/edit_music_album/<%= album.id %>/">~</a>
+        | <a class="pointer edit_music_album" data-pk="<%= album.id %>">~</a>
         | <a class="pointer delete_music_album" data-pk="<%= album.id %>">x</a>
     </p>
     <% } %>

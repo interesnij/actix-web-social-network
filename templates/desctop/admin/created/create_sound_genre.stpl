@@ -23,7 +23,7 @@
     <h4>Муз жанры</h4>
     <% for genre in all_sound_genres.iter() { %>
     <p><%= genre.name %>
-        | <a class="ajax" href="/admin/created/edit_sound_genre/<%= genre.id %>/">~</a>
+        | <a class="pointer edit_sound_genre" data-pk="<%= genre.id %>">~</a>
         | <a class="pointer delete_sound_genre" data-pk="<%= genre.id %>">x</a>
     </p>
     <% } %>

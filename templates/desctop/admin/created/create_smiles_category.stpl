@@ -32,7 +32,7 @@
     <h4>Категории смайлов</h4>
     <% for cat in all_categories.iter() { %>
     <p><%= cat.name %>
-        | <a class="ajax" href="/admin/created/edit_smiles_category/<%= cat.id %>/">~</a>
+        | <a class="pointer edit_smiles_category" data-pk="<%= cat.id %>">~</a>
         | <a class="pointer delete_smiles_category" data-pk="<%= cat.id %>">x</a>
     </p>
     <% } %>

@@ -1,7 +1,7 @@
 
 <div class="row no-gutters">
   <div class="col-md-7">
-    <form data-pk="<%= reaction.id %>">
+    <form>
         <div class="card mb-3">
             <div class="card-header border-bottom">
                 <h5 class="content-color-primary mb-0">Изменение реакции</h5>
@@ -31,7 +31,7 @@
             </div>
             <div class="card-footer">
                 <button class="btn btn-sm border item_fullscreen_hide">Отмена</button>
-                <button type="button" class="btn btn-sm btn-success float-right" id="edit_reaction_btn">Изменить</button>
+                <button data-pk="<%= reaction.id %>" type="button" class="btn btn-sm btn-success float-right" id="edit_reaction_btn">Изменить</button>
             </div>
         </div>
     </form>
@@ -40,7 +40,7 @@
     <h4>Реакции</h4>
     <% for react in all_reactions.iter() { %>
     <p><%= react.name %>
-      | <a class="ajax" href="/admin/created/edit_react/<%= react.id %>/">~</a>
+      | <a class="pointer edit_reaction" data-pk="<%= react.id %>">~</a>
       | <a class="pointer delete_reaction" data-pk="<%= react.id %>">x</a>
     </p>
     <% } %>
