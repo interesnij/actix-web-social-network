@@ -3,7 +3,7 @@
   <a class="mt-1 mb-2 i_link next_shower_btn pointer">
       Выбрано&nbsp;
       <span class="reactions_count"><%= list.count_reactions_list() %></span>
-      <span class="reactions_count_ru">&nbsp;<%= list.count_reactions_list_ru_alt()</span>
+      <span class="reactions_count_ru">&nbsp;<%= list.count_reactions_list_ru_alt() %></span>
       &nbsp;из&nbsp;16
   </a>
     <div class="hide">
