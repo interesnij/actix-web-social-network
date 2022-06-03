@@ -1,8 +1,8 @@
 <div class="mb-1 form_group">
   <input name="reactions" class="reactions_collector"
     <% if list.reactions.is_some() { %>
-      <% let reactions = list.reactions.as_ref().unwrap(); %>
-      value="<%= reactions %><% if reactions.is_empty() { %>, <% } %>"
+      <% let u_reactions = list.reactions.as_ref().unwrap(); %>
+      value="<%= u_reactions %><% if u_reactions.is_empty() { %>, <% } %>"
     <% } else { %>
       value=""
     <% } %>
