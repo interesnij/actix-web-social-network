@@ -1091,8 +1091,8 @@ impl VideoList {
         let _connection = establish_connection();
         println!("model_description {:?}", description);
         println!("model_reactions {:?}", reactions);
-        let mut descr = "".to_string();
-        let mut react = "".to_string();
+        let mut descr: Option<String> = Some("".to_string());
+        let mut react: Option<String> = Some("".to_string());
         if description.is_some() {
             descr = description;
         }
@@ -1102,14 +1102,14 @@ impl VideoList {
 
         let edit_video_list = EditVideoList {
             name: name,
-            description: Some(descr),
+            description: descr,
             image: image,
             can_see_el: can_see_el.clone(),
             can_see_comment: can_see_comment.clone(),
             create_el: create_el.clone(),
             create_comment: create_comment.clone(),
             copy_el: copy_el.clone(),
-            reactions: Some(react),
+            reactions: react,
         };
         diesel::update(self)
             .set(edit_video_list)
