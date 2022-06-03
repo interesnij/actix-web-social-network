@@ -15,7 +15,7 @@
           </span>
           <input value="<%= reaction.position %>" type="checkbox"
            <% if reaction.position < 3 { %>checked<% } %>
-           name="reaction" class="switch switch-sm">
+           class="switch switch-sm">
           <label style="margin-right:12px;" class="bg_success mb-2 border float-right"></label>
         </p>
       <% } %>

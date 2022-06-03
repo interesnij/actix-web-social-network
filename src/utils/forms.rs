@@ -163,7 +163,8 @@ pub async fn post_list_form(
                     }
                     else if field.name() == "copy_el" {
                         form.copy_el = data_string
-                    } else if field.name() == "reactions" {
+                    }
+                    else if field.name() == "reactions" {
                         form.reactions = Some(data_string)
                     }
                 }

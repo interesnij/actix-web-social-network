@@ -24,7 +24,7 @@
           </span>
           <input value="<%= reaction.position %>" type="checkbox"
            <% if list_reations_list.iter().any(|&i| i==reaction.position) { %>checked<% } %>
-           name="reaction" class="switch switch-sm">
+           class="switch switch-sm">
           <label style="margin-right:12px;" class="bg_success mb-2 border float-right"></label>
         </p>
       <% } %>
