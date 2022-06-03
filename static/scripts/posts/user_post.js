@@ -848,11 +848,12 @@ on('#ajax', 'click', '#edit_list_btn', function() {
   form = this.parentElement.parentElement.parentElement;
   react_value = form.querySelector(".reactions_collector");
 
-  _value = react_value.value;
-  if (_value.slice(-1) == " ") {
-    console.log(true);
-    react_value.value = _value.slice(0, -2);
-  }
+  //_value = react_value.value;
+  //if (_value.slice(-1) == " ") {
+  //  console.log(true);
+  //  react_value.value = _value.slice(0, -2);
+  //}
+  react_value.value = "";
   form_data = new FormData(form);
   if (!form.querySelector("#id_name").value){
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
