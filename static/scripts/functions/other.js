@@ -772,11 +772,11 @@ function post_update_votes(post, uuid) {
   link_.send();
 };
 
-function send_reaction(item, pk, link) { 
+function send_reaction(item, pk, _link) {
     reactions_block = item.querySelector(".react_items");
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     link.overrideMimeType("application/json");
-    link.open('GET', link, true);
+    link.open('GET', _link, true); 
     link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     link.onreadystatechange = function() {
         if (link.readyState == 4 && link.status == 200) {
