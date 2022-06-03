@@ -1,7 +1,7 @@
 <div class="mb-1 form_group">
   <input name="reactions" class="reactions_collector"
     <% if list.reactions.is_some() { %>
-      value="<%= list.reactions.unwrap() %>"
+      value="<%= list.reactions.as_ref().unwrap() %>"
     <% } else { %>
       value=""
     <% } %>
