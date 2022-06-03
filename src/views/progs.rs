@@ -282,6 +282,25 @@ pub async fn send_reaction(session: Session, req: HttpRequest) -> web::Json<Json
         let mut code = "".to_string();
         let mut reaction: i16 = 0;
 
+        let data: Vec<i32> = Vec::new();
+        data.push(self.reactions);
+        data.push(self.field_1);
+        data.push(self.field_2);
+        data.push(self.field_3);
+        data.push(self.field_4);
+        data.push(self.field_5);
+        data.push(self.field_6);
+        data.push(self.field_7);
+        data.push(self.field_8);
+        data.push(self.field_9);
+        data.push(self.field_10);
+        data.push(self.field_11);
+        data.push(self.field_12);
+        data.push(self.field_13);
+        data.push(self.field_14);
+        data.push(self.field_15);
+        data.push(self.field_16);
+
         let params_some = web::Query::<TypesParams>::from_query(&req.query_string());
         if params_some.is_ok() {
             let params = params_some.unwrap();
@@ -346,46 +365,10 @@ pub async fn send_reaction(session: Session, req: HttpRequest) -> web::Json<Json
             item.send_reaction(_request_user.id, reaction)
         }
         else {
-            return Json(JsonItemReactions {
-                reactions: 0,
-                field_1:  0,
-                field_2:  0,
-                field_3:  0,
-                field_4:  0,
-                field_5:  0,
-                field_6:  0,
-                field_7:  0,
-                field_8:  0,
-                field_9:  0,
-                field_10: 0,
-                field_11: 0,
-                field_12: 0,
-                field_13: 0,
-                field_14: 0,
-                field_15: 0,
-                field_16: 0,
-            });
+            return Json(JsonItemReactions {data});
         }
     }
     else {
-        return Json(JsonItemReactions {
-            reactions: 0,
-            field_1:  0,
-            field_2:  0,
-            field_3:  0,
-            field_4:  0,
-            field_5:  0,
-            field_6:  0,
-            field_7:  0,
-            field_8:  0,
-            field_9:  0,
-            field_10: 0,
-            field_11: 0,
-            field_12: 0,
-            field_13: 0,
-            field_14: 0,
-            field_15: 0,
-            field_16: 0,
-        });
+        return Json(JsonItemReactions {data});
     }
 }

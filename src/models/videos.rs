@@ -2061,25 +2061,26 @@ impl Video {
             }
         }
 
-        return Json(JsonItemReactions {
-            reactions: self.reactions,
-            field_1:  react_model.field_1,
-            field_2:  react_model.field_2,
-            field_3:  react_model.field_3,
-            field_4:  react_model.field_4,
-            field_5:  react_model.field_5,
-            field_6:  react_model.field_6,
-            field_7:  react_model.field_7,
-            field_8:  react_model.field_8,
-            field_9:  react_model.field_9,
-            field_10: react_model.field_10,
-            field_11: react_model.field_11,
-            field_12: react_model.field_12,
-            field_13: react_model.field_13,
-            field_14: react_model.field_14,
-            field_15: react_model.field_15,
-            field_16: react_model.field_16,
-        });
+        let data: Vec<i32> = Vec::new();
+        data.push(self.reactions);
+        data.push(self.field_1);
+        data.push(self.field_2);
+        data.push(self.field_3);
+        data.push(self.field_4);
+        data.push(self.field_5);
+        data.push(self.field_6);
+        data.push(self.field_7);
+        data.push(self.field_8);
+        data.push(self.field_9);
+        data.push(self.field_10);
+        data.push(self.field_11);
+        data.push(self.field_12);
+        data.push(self.field_13);
+        data.push(self.field_14);
+        data.push(self.field_15);
+        data.push(self.field_16);
+
+        return Json(JsonItemReactions {data});
     }
 
     pub fn get_community(&self) -> Community {
@@ -3195,25 +3196,26 @@ impl VideoComment {
             }
         }
 
-        return Json(JsonItemReactions {
-            reactions: self.reactions,
-            field_1:  react_model.field_1,
-            field_2:  react_model.field_2,
-            field_3:  react_model.field_3,
-            field_4:  react_model.field_4,
-            field_5:  react_model.field_5,
-            field_6:  react_model.field_6,
-            field_7:  react_model.field_7,
-            field_8:  react_model.field_8,
-            field_9:  react_model.field_9,
-            field_10: react_model.field_10,
-            field_11: react_model.field_11,
-            field_12: react_model.field_12,
-            field_13: react_model.field_13,
-            field_14: react_model.field_14,
-            field_15: react_model.field_15,
-            field_16: react_model.field_16,
-        });
+        let data: Vec<i32> = Vec::new();
+        data.push(self.reactions);
+        data.push(self.field_1);
+        data.push(self.field_2);
+        data.push(self.field_3);
+        data.push(self.field_4);
+        data.push(self.field_5);
+        data.push(self.field_6);
+        data.push(self.field_7);
+        data.push(self.field_8);
+        data.push(self.field_9);
+        data.push(self.field_10);
+        data.push(self.field_11);
+        data.push(self.field_12);
+        data.push(self.field_13);
+        data.push(self.field_14);
+        data.push(self.field_15);
+        data.push(self.field_16);
+
+        return Json(JsonItemReactions {data});
     }
 
     pub fn count_reactions_of_types(&self, types: i16) -> i32 {

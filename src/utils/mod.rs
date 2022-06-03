@@ -40,23 +40,7 @@ pub struct JsonPosition {
 
 #[derive(Deserialize,Serialize)]
 pub struct JsonItemReactions {
-    pub reactions: i32,
-    pub field_1:   i32,
-    pub field_2:   i32,
-    pub field_3:   i32,
-    pub field_4:   i32,
-    pub field_5:   i32,
-    pub field_6:   i32,
-    pub field_7:   i32,
-    pub field_8:   i32,
-    pub field_9:   i32,
-    pub field_10:  i32,
-    pub field_11:  i32,
-    pub field_12:  i32,
-    pub field_13:  i32,
-    pub field_14:  i32,
-    pub field_15:  i32,
-    pub field_16:  i32,
+    pub data: Vec<i32>,
 }
 
 #[derive(Deserialize)]
