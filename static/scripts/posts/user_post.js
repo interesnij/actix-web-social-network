@@ -396,7 +396,7 @@ on('#ajax', 'click', '.post_on_comment', function() {
 on('body', 'click', '.react_window_toggle', function() {
   react_section = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   pk = this.getAttribute("data-pk");
-  send_like(
+  send_reaction(
     react_section,
     pk,
     "/users/progs/send_reaction/?types=" + react_section.getAttribute("data-type") + "&reaction=" + pk);
