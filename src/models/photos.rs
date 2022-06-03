@@ -1118,22 +1118,30 @@ impl PhotoList {
         use crate::schema::photo_list_perms::dsl::photo_list_perms;
 
         let _connection = establish_connection();
+        let mut descr: Option<String> = Some("".to_string());
+        let mut react: Option<String> = Some("".to_string());
+        if description.is_some() {
+            descr = description;
+        }
+        if reactions.is_some() {
+            react = reactions;
+        }
 
-            let edit_photo_list = EditPhotoList{
-                name: name,
-                description: description,
-                cover_photo: image,
-                can_see_el: can_see_el.clone(),
-                can_see_comment: can_see_comment.clone(),
-                create_el: create_el.clone(),
-                create_comment: create_comment.clone(),
-                copy_el: copy_el.clone(),
-                reactions: reactions,
-            };
-            diesel::update(self)
-                .set(edit_photo_list)
-                .get_result::<PhotoList>(&_connection)
-                .expect("Error.");
+        let edit_photo_list = EditPhotoList{
+            name: name,
+            description: descr,
+            cover_photo: image,
+            can_see_el: can_see_el.clone(),
+            can_see_comment: can_see_comment.clone(),
+            create_el: create_el.clone(),
+            create_comment: create_comment.clone(),
+            copy_el: copy_el.clone(),
+            reactions: react,
+        };
+        diesel::update(self)
+            .set(edit_photo_list)
+            .get_result::<PhotoList>(&_connection)
+            .expect("Error.");
 
         if can_see_el == "d".to_string() && can_see_el == "i".to_string() {
             if can_see_el_users.is_some() {

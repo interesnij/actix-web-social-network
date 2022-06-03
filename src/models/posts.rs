@@ -1093,22 +1093,30 @@ impl PostList {
         use crate::schema::post_list_perms::dsl::post_list_perms;
 
         let _connection = establish_connection();
+        let mut descr: Option<String> = Some("".to_string());
+        let mut react: Option<String> = Some("".to_string());
+        if description.is_some() {
+            descr = description;
+        }
+        if reactions.is_some() {
+            react = reactions;
+        }
 
-            let edit_post_list = EditPostList{
-                name: name,
-                description: description,
-                image: image,
-                can_see_el: can_see_el.clone(),
-                can_see_comment: can_see_comment.clone(),
-                create_el: create_el.clone(),
-                create_comment: create_comment.clone(),
-                copy_el: copy_el.clone(),
-                reactions: reactions,
-            };
-            diesel::update(self)
-                .set(edit_post_list)
-                .get_result::<PostList>(&_connection)
-                .expect("Error.");
+        let edit_post_list = EditPostList{
+            name: name,
+            description: descr,
+            image: image,
+            can_see_el: can_see_el.clone(),
+            can_see_comment: can_see_comment.clone(),
+            create_el: create_el.clone(),
+            create_comment: create_comment.clone(),
+            copy_el: copy_el.clone(),
+            reactions: react,
+        };
+        diesel::update(self)
+            .set(edit_post_list)
+            .get_result::<PostList>(&_connection)
+            .expect("Error.");
 
         if can_see_el == "d".to_string() && can_see_el == "i".to_string() {
             if can_see_el_users.is_some() {

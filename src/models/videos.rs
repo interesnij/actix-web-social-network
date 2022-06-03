@@ -1093,8 +1093,7 @@ impl VideoList {
         use crate::schema::video_list_perms::dsl::video_list_perms;
 
         let _connection = establish_connection();
-        println!("model_description {:?}", description);
-        println!("model_reactions {:?}", reactions);
+
         let mut descr: Option<String> = Some("".to_string());
         let mut react: Option<String> = Some("".to_string());
         if description.is_some() {
