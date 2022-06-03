@@ -851,7 +851,7 @@ on('#ajax', 'click', '#edit_list_btn', function() {
   if (_value.slice(-1) == " ") {
     react_value.value = _value.slice(0, -2);
   }
-  if (_value.slice(0) == " ") {
+  if (_value.slice(0) == ",") {
     react_value.value = _value.slice(0, 2);
   }
 
