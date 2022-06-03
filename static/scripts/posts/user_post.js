@@ -849,8 +849,10 @@ on('#ajax', 'click', '#edit_list_btn', function() {
 
   _value = react_value.value;
   if (_value.slice(-1) == " ") {
-    console.log(true);
     react_value.value = _value.slice(0, -2);
+  }
+  if (_value.slice(0) == " ") {
+    react_value.value = _value.slice(0, 2);
   }
 
   form_data = new FormData(form);
