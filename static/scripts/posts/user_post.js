@@ -847,9 +847,11 @@ on('#ajax', 'click', '#create_list_btn', function() {
 on('#ajax', 'click', '#edit_list_btn', function() {
   form = this.parentElement.parentElement.parentElement;
   react_value = form.querySelector(".reactions_collector");
-  if (react_value.value.slice(-1) == " ") {
+
+  _value = react_value.value;
+  if (_value.slice(-1) == " ") {
     console.log(true);
-    react_value.value = react_value.value.substring(react_value.length-2);
+    react_value.value = _value.substring(_value.length-2);
   }
   form_data = new FormData(form);
   if (!form.querySelector("#id_name").value){
