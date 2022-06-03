@@ -282,8 +282,6 @@ pub async fn send_reaction(session: Session, req: HttpRequest) -> web::Json<Json
         let mut code = "".to_string();
         let mut reaction: i16 = 0;
 
-        let data: Vec<i32> = Vec::new();
-
         let params_some = web::Query::<TypesParams>::from_query(&req.query_string());
         if params_some.is_ok() {
             let params = params_some.unwrap();
@@ -348,10 +346,12 @@ pub async fn send_reaction(session: Session, req: HttpRequest) -> web::Json<Json
             item.send_reaction(_request_user.id, reaction)
         }
         else {
+            let data: Vec<i32> = Vec::new();
             return Json(JsonItemReactions {data});
         }
     }
     else {
+        let data: Vec<i32> = Vec::new();
         return Json(JsonItemReactions {data});
     }
 }
