@@ -847,7 +847,7 @@ on('#ajax', 'click', '#create_list_btn', function() {
 on('#ajax', 'click', '#edit_list_btn', function() {
   form = this.parentElement.parentElement.parentElement;
   react_value = form.querySelector(".reactions_collector");
-  if react_value.slice(-1) == " " {
+  if (react_value.slice(-1) == " ") {
     console.log(true);
     react_value.value = react_value.value.substring(react_value.length-2);
   }
