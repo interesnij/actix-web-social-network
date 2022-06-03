@@ -7,7 +7,7 @@
       &nbsp;из&nbsp;16
   </a>
     <div class="hide">
-    <let list_reat_is_some = list.reactions.is_some(); %>
+    <let list_reations_list = list.get_reactions_list(); %>
 
       <% for reaction in reaction_list.iter() { %>
         <p class="select_item_reaction pointer page-sub-title-small mt-1" style="line-height: 18px;">
@@ -16,7 +16,7 @@
             <%= reaction.name %>
           </span>
           <input value="<%= reaction.position %>" type="checkbox"
-           <% if list_reat_is_some && list.reactions.unwrap().contains(&reaction.position) { %>checked<% } %>
+           <% if list_reations_list.iter().any(|&i| i==reaction.position) { %>checked<% } %>
            name="reaction" class="switch switch-sm">
           <label style="margin-right:12px;" class="bg_success mb-2 border float-right"></label>
         </p>
