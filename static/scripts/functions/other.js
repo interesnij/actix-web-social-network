@@ -774,6 +774,7 @@ function post_update_votes(post, uuid) {
 
 function send_reaction(item, pk, _link) {
     reactions_block = item.querySelector(".react_items");
+    console.log(reactions_block);
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     link.overrideMimeType("application/json");
     link.open('GET', _link, true);
