@@ -817,57 +817,58 @@ function send_reaction(item, pk, _link) {
                     }
                 }
               }
-              if (!react_clock_exists) {
-                // если такой реакции еще нет у объекта...
-                console.log("создаем блок реакций");
+            }
 
-                // создаем главный блок react
-                $react = document.createElement("div");
-                $react.classList.add("react");
-                $react.setAttribute("data-react", pk);
+            if (!react_clock_exists) {
+              // если такой реакции еще нет у объекта...
+              console.log("создаем блок реакций");
+              count = jsonResponse[pk];
+              // создаем главный блок react
+              $react = document.createElement("div");
+              $react.classList.add("react");
+              $react.setAttribute("data-react", pk);
 
-                // создаем иконку и счетчик
-                $like = document.createElement("div");
-                $like.classList.add("like", "active");
-                $like_img = document.createElement("img");
-                $like_img.src = "/static/images/reactions/" + pk + ".png";
-                $like_img.style.width = "22px";
-                $like_img.style.marginRight = "7px";
-                $like_span = document.createElement("span");
-                $like_span.innerHTML = "<span class='reactions_count'>" + count + "</span>"
-                $like.append($like_img);
-                $like.append($like_span);
+              // создаем иконку и счетчик
+              $like = document.createElement("div");
+              $like.classList.add("like", "active");
+              $like_img = document.createElement("img");
+              $like_img.src = "/static/images/reactions/" + pk + ".png";
+              $like_img.style.width = "22px";
+              $like_img.style.marginRight = "7px";
+              $like_span = document.createElement("span");
+              $like_span.innerHTML = "<span class='reactions_count'>" + count + "</span>"
+              $like.append($like_img);
+              $like.append($like_span);
 
-                // создаем сегмент like_window
-                $like_window = document.createElement("div");
-                $like_window.classList.add("like_window");
-                $div = document.createElement("div");
-                $div.classList.add("like_pop");
+              // создаем сегмент like_window
+              $like_window = document.createElement("div");
+              $like_window.classList.add("like_window");
+              $div = document.createElement("div");
+              $div.classList.add("like_pop");
 
-                $a = document.createElement("a");
-                $a.style.paddingRight = "10px";
-                $a.setAttribute("data-pk", user_pk);
-                $span1 = document.createElement("span");
-                $span1.classList.add("item_reactions", "pointer");
-                $span1.innerHTML = "Отреагировал 1 человек";
-                $span2 = document.createElement("span");
-                $span2.style.display = "flex";
-                $span2.style.marginTop = "10px";
-                $figure = document.createElement("figure");
-                $figure.style.margin = "0";
-                $figure.title = user_name;
-                $figure.append($img)
-                $a.append($figure);
-                $span2.append($a);
-                $div.append($span1);
-                $div.append($span2);
-                $div.style.margin = "15px";
-                $like_window.append($div);
+              $a = document.createElement("a");
+              $a.style.paddingRight = "10px";
+              $a.setAttribute("data-pk", user_pk);
+              $span1 = document.createElement("span");
+              $span1.classList.add("item_reactions", "pointer");
+              $span1.innerHTML = "Отреагировал 1 человек";
+              $span2 = document.createElement("span");
+              $span2.style.display = "flex";
+              $span2.style.marginTop = "10px";
+              $figure = document.createElement("figure");
+              $figure.style.margin = "0";
+              $figure.title = user_name;
+              $figure.append($img)
+              $a.append($figure);
+              $span2.append($a);
+              $div.append($span1);
+              $div.append($span2);
+              $div.style.margin = "15px";
+              $like_window.append($div);
 
-                $react.append($like);
-                $react.append($like_window);
-                reactions_block.append($react);
-              }
+              $react.append($like);
+              $react.append($like_window);
+              reactions_block.append($react);
             }
         }
     };
