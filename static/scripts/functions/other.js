@@ -848,7 +848,7 @@ function send_reaction(item, pk, _link) {
 
               $a = document.createElement("a");
               $a.style.paddingRight = "10px";
-              $a.setAttribute("data-pk", user_pk);
+              $a.setAttribute("href", user_pk);
               $span1 = document.createElement("span");
               $span1.classList.add("item_reactions", "pointer");
               $span1.innerHTML = "Отреагировал <span data-count='like'>1</span> человек";
