@@ -774,7 +774,7 @@ function post_update_votes(post, uuid) {
 
 function send_reaction(item, pk, _link) {
     reactions_block = item.querySelector(".react_items");
-    console.log(reactions_block);
+
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     link.overrideMimeType("application/json");
     link.open('GET', _link, true);
@@ -782,10 +782,12 @@ function send_reaction(item, pk, _link) {
     link.onreadystatechange = function() {
         if (link.readyState == 4 && link.status == 200) {
           jsonResponse = JSON.parse(link.responseText);
+          console.log(jsonResponse);
             userpic = document.body.querySelector(".userpic");
             userpic.querySelector("img") ? (user_src = userpic.querySelector("img").getAttribute("src"),$img = document.createElement("img"),$img.src = user_src,$img.style.borderRadius = "50%",$img.style.width = "50px") : $img = document.createElement("span"), $img.innerHTML = '<svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
             user_name = userpic.getAttribute("data-name");
             user_pk = document.body.querySelector(".userpic").getAttribute("data-pk");
+            react_clock_exists = false;
 
             react_list = item.querySelectorAll(".react_window_toggle");
             // пройдемся по всему списку допустимых реакций списка.
@@ -795,6 +797,7 @@ function send_reaction(item, pk, _link) {
               // если такая реакция уже есть у объекта
               if (reactions_block.querySelector('[data-react=' + '"' + id + '"' + ']')) {
                  cur_block = reactions_block.querySelector('[data-react=' + '"' + id + '"' + ']');
+                 react_clock_exists = true;
 
                  if (count == 0) {
                    cur_block.querySelector(".reactions_count").innerHTML = "";
@@ -814,7 +817,7 @@ function send_reaction(item, pk, _link) {
                     }
                 }
               }
-              else {
+              if (!react_clock_exists) {
                 // если такой реакции еще нет у объекта...
                 console.log("создаем блок реакций");
 
