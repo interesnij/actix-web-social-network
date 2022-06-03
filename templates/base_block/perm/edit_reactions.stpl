@@ -1,5 +1,12 @@
 <div class="mb-1 form_group">
-  <input name="reactions" class="reactions_collector" value="<%= list.reactions %>" type="hidden" />
+  <input name="reactions" class="reactions_collector"
+    <% if list.reactions.is_some() { %>
+      value="<%= list.reactions.unwrap() %>"
+    <% } else { %>
+      value=""
+    <% } %>
+    type="hidden"
+  />
   <a class="mt-1 mb-2 i_link next_shower_btn pointer">
       Выбрано&nbsp;
       <span class="reactions_count"><%= list.count_reactions_list() %></span>
