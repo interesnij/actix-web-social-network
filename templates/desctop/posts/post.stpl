@@ -1,4 +1,4 @@
-<div class="card mb-3 u_post pag" data-type="user_post" data-pk="<%= object.id %>">
+<div class="card mb-3 react_style u_post pag" data-type="user_post" data-pk="<%= object.id %>">
     <% include!("card_header.stpl"); %>
     <% if object.content.is_some() { %>
       <div class="fullscreen text_support pointer">
