@@ -775,6 +775,7 @@ on('#ajax', 'click', '#create_list_btn', function() {
         react_value.value = react_value.value + react_input[i].value + ", ";
       }
     };
+    react_value.value = react_value.value.slice(0, -2);
   }
 
   form_data = new FormData(form_post);
@@ -860,7 +861,8 @@ on('#ajax', 'click', '#edit_list_btn', function() {
       if (react_input[i].checked == 1){
         react_value.value = react_value.value + react_input[i].value + ", ";
       }
-    };
+    }
+    react_value.value = react_value.value.slice(0, -2);
   }
 
   form_data = new FormData(form);
