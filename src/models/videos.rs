@@ -1090,6 +1090,7 @@ impl VideoList {
 
         let _connection = establish_connection();
         println!("model_description {:?}", description);
+        println!("model_reactions {:?}", reactions);
 
         let edit_video_list = EditVideoList {
             name: name,
