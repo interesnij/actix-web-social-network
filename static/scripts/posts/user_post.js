@@ -830,7 +830,6 @@ on('#ajax', 'click', '#create_list_btn', function() {
       document.body.querySelector(".date-list").prepend(li);
     }
     else {
-
       ajax = new_post.querySelector("#reload_block");
       rtr = document.getElementById('ajax');
       rtr.innerHTML = ajax.innerHTML;
