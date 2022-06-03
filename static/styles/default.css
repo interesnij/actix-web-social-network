@@ -3227,9 +3227,7 @@ opacity:0;
 }
 
 .like_window,
-.comment_dislike_window,
 .comment_like_window,
-.dislike_window,
 .repost_window {
   opacity: 0;
   visibility: hidden;
@@ -3243,17 +3241,21 @@ opacity:0;
 
 .like_window:hover,
 .comment_like_window:hover,
-.comment_dislike_window:hover,
-.dislike_window:hover,
 .repost_window:hover { z-index: 10; opacity: 1; visibility: visible;}
-
+.react_window {
+  right: -280px;
+  width: -webkit-fill-available;
+}
+.react_window img {
+  width:   22px;
+  padding: 5px;
+  cursor:  pointer;
+}
 .like:hover~.like_window,
-.dislike:hover~.dislike_window,
 .repost:hover~.repost_window{ z-index: 10; opacity: 1; visibility: visible;}
 
 .like2:hover~.comment_like_window,
-.dislike2:hover~.comment_dislike_window{ z-index: 10; opacity: 1; visibility: visible;}
-.like, .dislike, .like2, .dislike2, .post_comment, .repost, .art_comment{ font-size:15px; cursor:pointer; margin-right: 7px;}
+.like, .like2, .post_comment, .repost, .art_comment{ font-size:15px; cursor:pointer; margin-right: 7px;}
 
 .svg_default_25 { width: 25px; height: 25px;border-radius: 50%; padding: 3px; }
 .svg_default_30 { width: 30px; height: 30px;border-radius: 50%; padding: 3px; }
