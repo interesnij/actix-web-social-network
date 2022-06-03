@@ -768,7 +768,7 @@ on('#ajax', 'click', '#create_list_btn', function() {
     url = folder + "/add_user_list/";
   }
   react_value = form_post.querySelector(".reactions_collector");
-  react_value.value = react_value.value.substring(0, react_value.length-2);
+  react_value.value = react_value.value.substring(react_value.length-2);
 
   form_data = new FormData(form_post);
 
@@ -847,7 +847,7 @@ on('#ajax', 'click', '#create_list_btn', function() {
 on('#ajax', 'click', '#edit_list_btn', function() {
   form = this.parentElement.parentElement.parentElement;
   react_value = form.querySelector(".reactions_collector");
-  if react_value[-1] == " " {
+  if react_value.slice(-1) == " " {
     console.log(true);
     react_value.value = react_value.value.substring(react_value.length-2);
   }
