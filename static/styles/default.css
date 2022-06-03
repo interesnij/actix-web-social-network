@@ -380,6 +380,10 @@ p .small_badge {
   top: 5px;
   background: black;
 }
+.react_style:hover .react_shower{
+  display: block !important;
+  transition-delay:1s;
+}
 .hide_shower:hover .handle{
   display: block !important;
   position: absolute;
