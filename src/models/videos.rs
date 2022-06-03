@@ -192,10 +192,12 @@ impl VideoList {
         let mut stack = Vec::new();
         if self.reactions.is_some() {
             let react_scring = self.reactions.as_ref().unwrap().to_string();
-            let v: Vec<&str> = react_scring.split(", ").collect();
-            for item in v.iter() {
-                let pk: i16 = item.parse().unwrap();
-                stack.push(pk);
+            if !react_scring.is_empty() {
+                let v: Vec<&str> = react_scring.split(", ").collect();
+                for item in v.iter() {
+                    let pk: i16 = item.parse().unwrap();
+                    stack.push(pk);
+                }
             }
         }
         return stack;
