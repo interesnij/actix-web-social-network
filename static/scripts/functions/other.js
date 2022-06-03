@@ -772,71 +772,75 @@ function post_update_votes(post, uuid) {
   link_.send();
 };
 
-function send_like(item, link) {
-    like = item.querySelector(".like");
-    dislike = item.querySelector(".dislike");
-    link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    link__.overrideMimeType("application/json");
-    link__.open('GET', link, true);
-    link__.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    link__.onreadystatechange = function() {
-        if (link__.readyState == 4 && link__.status == 200) {
-            jsonResponse = JSON.parse(link__.responseText);
-            likes_count = item.querySelector(".likes_count");
-            dislikes_count = item.querySelector(".dislikes_count");
+function send_like(item, pk, link) {
+    reactions_block = item.querySelector(".react_items");
+    link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    link.overrideMimeType("application/json");
+    link.open('GET', link, true);
+    link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    link.onreadystatechange = function() {
+        if (link.readyState == 4 && link.status == 200) {
+            userpic = document.body.querySelector(".userpic");
+            userpic.querySelector("img") ? (user_src = userpic.querySelector("img").getAttribute("src"),$img = document.createElement("img"),$img.src = user_src,$img.style.borderRadius = "50%",$img.style.width = "50px") : $img = document.createElement("span"), $img.innerHTML = '<svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+            user_name = userpic.getAttribute("data-name");
+            user_pk = document.body.querySelector(".userpic").getAttribute("data-pk");
 
-            resp_like_count = jsonResponse.like_count;
-            resp_dislike_count = jsonResponse.dislike_count;
-            console.log(resp_like_count);
-            console.log(resp_dislike_count);
-            if (resp_like_count == 0) {
-              resp_like_count = ""
-            };
-            if (resp_dislike_count == 0) {
-              resp_dislike_count = ""
-            };
-            likes_count.innerHTML = resp_like_count;
-            dislikes_count.innerHTML = resp_dislike_count;
-            like.classList.toggle("btn_success");
-            like.classList.toggle("btn_default");
-            dislike.classList.add("btn_default");
-            dislike.classList.remove("btn_danger")
+            react_list = item.querySelectorAll(".react_window_toggle");
+            // пройдемся по всему списку допустимых реакций списка.
+            for (var i = 0; i < react_list.length; i++) {
+              id = react_list[i].getAttribute("data-pk");
+
+              // если такая реакция уже есть у объекта
+              if (reactions_block.querySelector('[data-react=' + '"' + id + '"' + ']')) {
+                 cur_block = reactions_block.querySelector('[data-react=' + '"' + id + '"' + ']');
+                 count = jsonResponse[id];
+                 if (count == 0) {
+                   cur_block.querySelector(".reactions_count").innerHTML = "";
+                   cur_block.querySelector(".like_window").innerHTML = "";
+                 }
+                 else {
+                   cur_block.querySelector(".reactions_count").innerHTML = count;
+                   cur_block.querySelector('[data-count="like"]').innerHTML = count;
+                }
+
+                // если пользователь уже ставил эту реакцию
+                if (cur_block.querySelector(".active")) {
+                  cur_block.querySelector(".like").classList.remove("active");
+                  if (cur_block.querySelector(".like_pop")) {
+                      pop = cur_block.querySelector(".like_pop");
+                      pop.querySelector('[href=' + '"' + user_pk + '"' + ']').remove();
+                    }
+                }
+              }
+              else {
+                // если такой реакции еще нет у объекта...
+                console.log("создаем блок реакций");
+                $div = document.createElement("div");
+                $div.classList.add("like_pop");
+                $a = document.createElement("a");
+                $a.style.paddingRight = "10px";
+                $a.setAttribute("data-pk", user_pk);
+                $span1 = document.createElement("span");
+                $span1.classList.add("item_reactions", "pointer");
+                $span1.innerHTML = "Отреагировал 1 человек";
+                $span2 = document.createElement("span");
+                $span2.style.display = "flex";
+                $span2.style.marginTop = "10px";
+                $figure = document.createElement("figure");
+                $figure.style.margin = "0";
+                $figure.title = user_name;
+                $figure.append($img)
+                $a.append($figure);
+                $span2.append($a);
+                $div.append($span1);
+                $div.append($span2);
+                $div.style.margin = "15px";
+                cur_block.querySelector(".like_window").append($div);
+              }
+            }
         }
     };
-    link__.send(null)
-};
-
-function send_dislike(item, link) {
-    like = item.querySelector(".like");
-    dislike = item.querySelector(".dislike");
-    link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    link__.overrideMimeType("application/json");
-    link__.open('GET', link, true);
-    link__.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    link__.onreadystatechange = function() {
-        if (link__.readyState == 4 && link__.status == 200) {
-            jsonResponse = JSON.parse(link__.responseText);
-            likes_count = item.querySelector(".likes_count");
-            dislikes_count = item.querySelector(".dislikes_count");
-            resp_like_count = jsonResponse.like_count;
-            resp_dislike_count = jsonResponse.dislike_count;
-            console.log(resp_like_count);
-            console.log(resp_dislike_count);
-            if (resp_like_count == 0) {
-              resp_like_count = ""
-            };
-            if (resp_dislike_count == 0) {
-              resp_dislike_count = ""
-            };
-            likes_count.innerHTML = resp_like_count;
-            dislikes_count.innerHTML = resp_dislike_count;
-            dislike.classList.toggle("btn_danger");
-            dislike.classList.toggle("btn_default");
-            like.classList.add("btn_default");
-            like.classList.remove("btn_success")
-        }
-    };
-    link__.send(null)
+    link.send(null)
 };
 
 function get_image_priview(ggg, img) {

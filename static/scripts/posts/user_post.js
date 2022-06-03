@@ -393,27 +393,14 @@ on('#ajax', 'click', '.post_on_comment', function() {
   add_list_in_all_stat("on_comment_user_post",post.getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 
-on('#ajax', 'click', '.post_off_votes', function() {
-  send_change(this, "/posts/off_votes/", "post_on_votes", "Вкл. реакции");
-  post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".like").style.display = "none";
-  post.querySelector(".dislike").style.display = "none";
-  main_container = document.body.querySelector(".main-container");
-  add_list_in_all_stat("off_votes_user_post",post.getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
-});
-on('#ajax', 'click', '.post_on_votes', function() {
-  send_change(this, "/posts/on_votes/", "post_off_votes", "Выкл. реакции");
-  post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".like").style.display = "unset";
-  post.querySelector(".dislike").style.display = "unset";
-  main_container = document.body.querySelector(".main-container");
-  add_list_in_all_stat("on_votes_user_post",post.getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
-});
+on('body', 'click', '.react_window_toggle', function() {
+  react_section = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  pk = this.getAttribute("data-pk");
+  send_like(
+    react_section,
+    pk,
+    "/users/progs/send_reaction/?types=" + react_section.getAttribute("data-type") + "&reaction=" + pk);
 
-on('body', 'click', '.like_item', function() {
-  _this = this;
-  item = _this.parentElement;
-  send_like(item, "/users/progs/like_item/?types=" + item.getAttribute("data-type"));
   like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "item_likes")
   main_container = document.body.querySelector(".main-container");
   //add_list_in_all_stat("dislike_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));

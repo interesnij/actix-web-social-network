@@ -11,10 +11,11 @@
       <% user_reaction = object.get_user_reaction(request_user.id); %>
     <% } %>
 
+    <span class="react_items">
     <% for reaction in reactions_list.iter() { %>
       <% let count = object_reactions_count.count_reactions_of_types(*reaction); %>
       <span class="react" data-react="<%= reaction %>">
-        <span class="like">
+        <span class="like <% if user_reaction != 0 { %>active<% } %>">
           <img style="width:22px" src="/static/images/reactions/<%= reaction %>.png" alt="img" />
           <span class="reactions_count"><%= count %></span>
         </span>
@@ -33,6 +34,7 @@
         </span>
       </span>
     <% } %>
+    </span>
   <% } %>
 <% } %>
 
@@ -98,7 +100,7 @@
         <div class="like_pop">
           <span style="display: flex;flex-wrap:wrap;">
             <% for reaction in reactions_list.iter() { %>
-              <img src="/static/images/reactions/<%= reaction %>.png" data-pk="<%= reaction %>" alt="img" />
+              <img class="react_window_toggle" src="/static/images/reactions/<%= reaction %>.png" data-pk="<%= reaction %>" alt="img" />
             <% } %>
           </span>
         </div>
