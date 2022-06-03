@@ -851,7 +851,7 @@ function send_reaction(item, pk, _link) {
               $a.setAttribute("data-pk", user_pk);
               $span1 = document.createElement("span");
               $span1.classList.add("item_reactions", "pointer");
-              $span1.innerHTML = "Отреагировал 1 человек";
+              $span1.innerHTML = "Отреагировал <span data-count='like'>1</span> человек";
               $span2 = document.createElement("span");
               $span2.style.display = "flex";
               $span2.style.marginTop = "10px";
