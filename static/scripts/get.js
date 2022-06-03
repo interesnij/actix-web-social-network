@@ -87,6 +87,7 @@ on('#ajax', 'click', '.select_item_reaction', function() {
       counter.innerHTML = count;
       counter_ru.innerHTML = get_count_ru_alt(count, "реакция", "реакции", "реакций");
       react_input.removeAttribute('checked');
+      console.log(reactions_input.length);
       if (reactions_input.length == 1) {
         reactions_input.value = "";
       }
