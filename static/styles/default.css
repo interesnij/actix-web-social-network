@@ -381,8 +381,8 @@ p .small_badge {
   background: black;
 }
 .react_style:hover .react_shower{
-  display: block !important;
-  transition-delay:1s;
+  display: unset !important;
+  transition-delay: 1s;
 }
 .hide_shower:hover .handle{
   display: block !important;
