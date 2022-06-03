@@ -2063,22 +2063,22 @@ impl Video {
 
         let data: Vec<i32> = Vec::new();
         data.push(self.reactions);
-        data.push(self.field_1);
-        data.push(self.field_2);
-        data.push(self.field_3);
-        data.push(self.field_4);
-        data.push(self.field_5);
-        data.push(self.field_6);
-        data.push(self.field_7);
-        data.push(self.field_8);
-        data.push(self.field_9);
-        data.push(self.field_10);
-        data.push(self.field_11);
-        data.push(self.field_12);
-        data.push(self.field_13);
-        data.push(self.field_14);
-        data.push(self.field_15);
-        data.push(self.field_16);
+        data.push(react_model.field_1);
+        data.push(react_model.field_2);
+        data.push(react_model.field_3);
+        data.push(react_model.field_4);
+        data.push(react_model.field_5);
+        data.push(react_model.field_6);
+        data.push(react_model.field_7);
+        data.push(react_model.field_8);
+        data.push(react_model.field_9);
+        data.push(react_model.field_10);
+        data.push(react_model.field_11);
+        data.push(react_model.field_12);
+        data.push(react_model.field_13);
+        data.push(react_model.field_14);
+        data.push(react_model.field_15);
+        data.push(react_model.field_16);
 
         return Json(JsonItemReactions {data});
     }
@@ -3198,22 +3198,22 @@ impl VideoComment {
 
         let data: Vec<i32> = Vec::new();
         data.push(self.reactions);
-        data.push(self.field_1);
-        data.push(self.field_2);
-        data.push(self.field_3);
-        data.push(self.field_4);
-        data.push(self.field_5);
-        data.push(self.field_6);
-        data.push(self.field_7);
-        data.push(self.field_8);
-        data.push(self.field_9);
-        data.push(self.field_10);
-        data.push(self.field_11);
-        data.push(self.field_12);
-        data.push(self.field_13);
-        data.push(self.field_14);
-        data.push(self.field_15);
-        data.push(self.field_16);
+        data.push(react_model.field_1);
+        data.push(react_model.field_2);
+        data.push(react_model.field_3);
+        data.push(react_model.field_4);
+        data.push(react_model.field_5);
+        data.push(react_model.field_6);
+        data.push(react_model.field_7);
+        data.push(react_model.field_8);
+        data.push(react_model.field_9);
+        data.push(react_model.field_10);
+        data.push(react_model.field_11);
+        data.push(react_model.field_12);
+        data.push(react_model.field_13);
+        data.push(react_model.field_14);
+        data.push(react_model.field_15);
+        data.push(react_model.field_16);
 
         return Json(JsonItemReactions {data});
     }
