@@ -99,11 +99,12 @@ on('#ajax', 'click', '.select_item_reaction', function() {
       counter.innerHTML = count;
       counter_ru.innerHTML = get_count_ru_alt(count, "реакция", "реакции", "реакций");
       react_input.setAttribute('checked', 'true');
-      if (reactions_input.value.slice(-1) == " ") {
-        reactions_input.value = reactions_input.value + react_input.value + ", "
+      if (reactions_input.value.slice(-1) != " ") {
+        reactions_input.value = ", " + reactions_input.value + react_input.value + ", "
+
       }
       else {
-        reactions_input.value = ", " + reactions_input.value + react_input.value + ", "
+        reactions_input.value = reactions_input.value + react_input.value + ", "
       }
     }
 });
