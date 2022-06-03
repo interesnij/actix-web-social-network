@@ -195,8 +195,10 @@ impl VideoList {
             if !react_scring.is_empty() {
                 let v: Vec<&str> = react_scring.split(", ").collect();
                 for item in v.iter() {
-                    let pk: i16 = item.parse().unwrap();
-                    stack.push(pk);
+                    if !item.is_empty() {
+                        let pk: i16 = item.parse().unwrap();
+                        stack.push(pk);
+                    }
                 }
             }
         }
