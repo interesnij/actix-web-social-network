@@ -853,7 +853,7 @@ on('#ajax', 'click', '#edit_list_btn', function() {
   //  console.log(true);
   //  react_value.value = _value.slice(0, -2);
   //}
-  react_value.value = "";
+  react_value.remove(); 
   form_data = new FormData(form);
   if (!form.querySelector("#id_name").value){
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
