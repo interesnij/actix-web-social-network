@@ -3247,9 +3247,13 @@ opacity:0;
   width: -webkit-fill-available;
 }
 .react_window img {
-  width:   22px;
-  padding: 5px;
-  cursor:  pointer;
+  width:  22px;
+  margin: 2px;
+  cursor: pointer;
+}
+.react_window img:hover {
+  width:  24px;
+  transition: 1s;
 }
 .like:hover~.like_window,
 .repost:hover~.repost_window{ z-index: 10; opacity: 1; visibility: visible;}
