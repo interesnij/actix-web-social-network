@@ -1102,14 +1102,14 @@ impl VideoList {
 
         let edit_video_list = EditVideoList {
             name: name,
-            description: descr,
+            description: Some(descr),
             image: image,
             can_see_el: can_see_el.clone(),
             can_see_comment: can_see_comment.clone(),
             create_el: create_el.clone(),
             create_comment: create_comment.clone(),
             copy_el: copy_el.clone(),
-            reactions: react,
+            reactions: Some(react),
         };
         diesel::update(self)
             .set(edit_video_list)
