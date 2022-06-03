@@ -165,9 +165,7 @@ pub async fn post_list_form(
                         form.copy_el = data_string
                     }
                     else if field.name() == "reactions" {
-                        if data_string != "".to_string() {
-                            form.reactions = Some(data_string);
-                        }
+                        form.reactions = Some(data_string);
                     }
                 }
             }
