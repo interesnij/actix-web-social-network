@@ -1,7 +1,7 @@
 
 <% if reactions_list.len() != 0 { %>
   <% if object.reactions == 0 { %>
-
+    <span class="react_items"></span> 
   <% } else { %>
 
     <% let object_reactions_count = object.get_or_create_react_model(); %>
@@ -13,6 +13,7 @@
 
     <span class="react_items">
     <% for reaction in reactions_list.iter() { %>
+
       <% let count = object_reactions_count.count_reactions_of_types(*reaction); %>
       <span class="react" data-react="<%= reaction %>">
         <span class="like <% if user_reaction != 0 { %>active<% } %>">
@@ -33,6 +34,7 @@
           <% } %>
         </span>
       </span>
+
     <% } %>
     </span>
   <% } %>
