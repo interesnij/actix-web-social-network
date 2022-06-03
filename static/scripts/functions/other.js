@@ -781,7 +781,7 @@ function send_reaction(item, pk, _link) {
     link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     link.onreadystatechange = function() {
         if (link.readyState == 4 && link.status == 200) {
-          jsonResponse = JSON.parse(link.responseText);
+          jsonResponse = JSON.parse(link.responseText).data;
           console.log(jsonResponse);
             userpic = document.body.querySelector(".userpic");
             userpic.querySelector("img") ? (user_src = userpic.querySelector("img").getAttribute("src"),$img = document.createElement("img"),$img.src = user_src,$img.style.borderRadius = "50%",$img.style.width = "50px") : $img = document.createElement("span"), $img.innerHTML = '<svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
