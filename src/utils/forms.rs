@@ -145,26 +145,26 @@ pub async fn post_list_form(
                 if let Ok(s) = str::from_utf8(&data) {
                     let data_string = s.to_string();
                     if field.name() == "name" {
-                        form.name = data_string
+                        form.name = data_string;
                         println!("name {:?}", form.description);
                     } else if field.name() == "description" {
                         form.description = Some(data_string);
                         println!("description {:?}", form.description);
                     }
                     else if field.name() == "can_see_el" {
-                        form.can_see_el = data_string
+                        form.can_see_el = data_string;
                     }
                     else if field.name() == "can_see_comment" {
-                        form.can_see_comment = data_string
+                        form.can_see_comment = data_string;
                     }
                     else if field.name() == "create_el" {
-                        form.create_el = data_string
+                        form.create_el = data_string;
                     }
                     else if field.name() == "create_comment" {
-                        form.create_comment = data_string
+                        form.create_comment = data_string;
                     }
                     else if field.name() == "copy_el" {
-                        form.copy_el = data_string
+                        form.copy_el = data_string;
                     }
                     else if field.name() == "reactions" {
                         form.reactions = Some(data_string);
