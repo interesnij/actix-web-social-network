@@ -143,36 +143,33 @@ pub async fn post_list_form(
             while let Some(chunk) = field.next().await {
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
+                    let data_string = s.to_string();
                     if field.name() == "name" {
-                        let data_string = s.to_string();
                         form.name = data_string
                     } else if field.name() == "description" {
-                        if s.is_some() {
-                            form.description = Some(s);
+                        if !data_string.is_empty() {
+                            form.description = Some(data_string);
+                        }
+                        else {
+                            form.description = None;
                         }
                     }
                     else if field.name() == "can_see_el" {
-                        let data_string = s.to_string();
                         form.can_see_el = data_string
                     }
                     else if field.name() == "can_see_comment" {
-                        let data_string = s.to_string();
                         form.can_see_comment = data_string
                     }
                     else if field.name() == "create_el" {
-                        let data_string = s.to_string();
                         form.create_el = data_string
                     }
                     else if field.name() == "create_comment" {
-                        let data_string = s.to_string();
                         form.create_comment = data_string
                     }
                     else if field.name() == "copy_el" {
-                        let data_string = s.to_string();
                         form.copy_el = data_string
                     }
                     else if field.name() == "reactions" {
-                        let data_string = s.to_string();
                         form.reactions = Some(data_string);
                     }
                 }
