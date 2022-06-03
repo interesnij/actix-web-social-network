@@ -146,9 +146,10 @@ pub async fn post_list_form(
                     let data_string = s.to_string();
                     if field.name() == "name" {
                         form.name = data_string
+                        println!("name {:?}", form.description);
                     } else if field.name() == "description" {
                         form.description = Some(data_string);
-                        println!("{:?}", form.description);
+                        println!("description {:?}", form.description);
                     }
                     else if field.name() == "can_see_el" {
                         form.can_see_el = data_string

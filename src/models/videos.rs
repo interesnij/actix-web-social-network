@@ -1092,7 +1092,7 @@ impl VideoList {
 
         let edit_video_list = EditVideoList {
             name: name,
-            description: description,
+            description: None,
             image: image,
             can_see_el: can_see_el.clone(),
             can_see_comment: can_see_comment.clone(),
