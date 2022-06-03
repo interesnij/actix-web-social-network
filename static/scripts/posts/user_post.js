@@ -771,8 +771,8 @@ on('#ajax', 'click', '#create_list_btn', function() {
     react_value = form_post.querySelector(".reactions_collector");
     react_inputs = form_post.querySelectorAll(".switch-sm");
     for (var i = 0; i < react_inputs.length; i++) {
-      if (react_input[i].checked == 1){
-        react_value.value = react_value.value + react_input[i].value + ", ";
+      if (react_inputs[i].checked == 1){
+        react_value.value = react_value.value + react_inputs[i].value + ", ";
       }
     };
     react_value.value = react_value.value.slice(0, -2);
@@ -858,8 +858,8 @@ on('#ajax', 'click', '#edit_list_btn', function() {
     react_value = form.querySelector(".reactions_collector");
     react_inputs = form.querySelectorAll(".switch-sm");
     for (var i = 0; i < react_inputs.length; i++) {
-      if (react_input[i].checked == 1){
-        react_value.value = react_value.value + react_input[i].value + ", ";
+      if (react_inputs[i].checked == 1){
+        react_value.value = react_value.value + react_inputs[i].value + ", ";
       }
     }
     react_value.value = react_value.value.slice(0, -2);
