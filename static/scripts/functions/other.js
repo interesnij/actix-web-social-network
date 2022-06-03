@@ -863,6 +863,7 @@ function send_reaction(item, pk, _link) {
 
                 $react.append($like);
                 $react.append($like_window);
+                reactions_block.append($react);
               }
             }
         }
