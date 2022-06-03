@@ -1089,10 +1089,11 @@ impl VideoList {
         use crate::schema::video_list_perms::dsl::video_list_perms;
 
         let _connection = establish_connection();
+        println!("model_description {:?}", description);
 
         let edit_video_list = EditVideoList {
             name: name,
-            description: None,
+            description: description,
             image: image,
             can_see_el: can_see_el.clone(),
             can_see_comment: can_see_comment.clone(),
