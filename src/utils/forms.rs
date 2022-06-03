@@ -147,12 +147,7 @@ pub async fn post_list_form(
                     if field.name() == "name" {
                         form.name = data_string
                     } else if field.name() == "description" {
-                        if !data_string.is_empty() {
-                            form.description = Some(data_string);
-                        }
-                        else {
-                            form.description = None;
-                        }
+                        form.description = Some(data_string);
                     }
                     else if field.name() == "can_see_el" {
                         form.can_see_el = data_string

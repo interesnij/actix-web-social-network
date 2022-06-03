@@ -1089,22 +1089,26 @@ impl VideoList {
         use crate::schema::video_list_perms::dsl::video_list_perms;
 
         let _connection = establish_connection();
+        let mut descr: Option<String> = None;
+        if description.is_some() {
+            descr = description;
+        }
 
-            let edit_video_list = EditVideoList{
-                name: name,
-                description: description,
-                image: image,
-                can_see_el: can_see_el.clone(),
-                can_see_comment: can_see_comment.clone(),
-                create_el: create_el.clone(),
-                create_comment: create_comment.clone(),
-                copy_el: copy_el.clone(),
-                reactions: reactions,
-            };
-            diesel::update(self)
-                .set(edit_video_list)
-                .get_result::<VideoList>(&_connection)
-                .expect("Error.");
+        let edit_video_list = EditVideoList{
+            name: name,
+            description: descr,
+            image: image,
+            can_see_el: can_see_el.clone(),
+            can_see_comment: can_see_comment.clone(),
+            create_el: create_el.clone(),
+            create_comment: create_comment.clone(),
+            copy_el: copy_el.clone(),
+            reactions: reactions,
+        };
+        diesel::update(self)
+            .set(edit_video_list)
+            .get_result::<VideoList>(&_connection)
+            .expect("Error.");
 
         if can_see_el == "d".to_string() && can_see_el == "i".to_string() {
             if can_see_el_users.is_some() {
