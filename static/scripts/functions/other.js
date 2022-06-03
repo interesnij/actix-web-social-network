@@ -772,7 +772,7 @@ function post_update_votes(post, uuid) {
   link_.send();
 };
 
-function send_reaction(item, pk, link) {
+function send_reaction(item, pk, link) { 
     reactions_block = item.querySelector(".react_items");
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     link.overrideMimeType("application/json");
