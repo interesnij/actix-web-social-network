@@ -3251,11 +3251,7 @@ opacity:0;
   margin: 2px;
   cursor: pointer;
 }
-.react_window img:hover {
-  width:      24px;
-  margin:     3px;
-  transition: 0.5s;
-}
+
 .like:hover~.like_window,
 .repost:hover~.repost_window{ z-index: 10; opacity: 1; visibility: visible;}
 
