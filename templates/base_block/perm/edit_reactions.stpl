@@ -2,7 +2,7 @@
   <input name="reactions" class="reactions_collector"
     <% if list.reactions.is_some() { %>
       <% let u_reactions = list.reactions.as_ref().unwrap(); %>
-      value="<%= u_reactions %><% if u_reactions.is_empty() { %>, <% } %>"
+      value="<%= u_reactions %><% if !u_reactions.is_empty() { %>, <% } %>"
     <% } else { %>
       value=""
     <% } %>
