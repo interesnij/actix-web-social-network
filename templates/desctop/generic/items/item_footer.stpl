@@ -1,32 +1,38 @@
-<% if count_reactions_list == 0 { %>
 
-  в списке реакции не включены - ничего не отрисовываем
-
-<% } else { %>
-  в списке реакции включены - отрисовываем
-
+<% if reactions_list.len() != 0 { %>
   <% if object.reactions == 0 { %>
-    у записи пока нет реакций -  выводим кнопку и окно с реакциями
 
   <% } else { %>
 
     <% let object_reactions_count = object.get_or_create_react_model(); %>
+    <% let mut user_reaction = 0; %>
 
     <% if object.is_have_user_reaction(request_user.id) { %>
-      пользователь реагировал
-      <% let user_reaction = object.get_user_reaction(request_user.id); %>
-      - выводим окно с реакциями, проверяя их на сходство с user_reaction
-
-    <% } else { %>
-      пользователь не реагировал - выводим кнопку и окно с реакциями и счетчиком
+      <% user_reaction = object.get_user_reaction(request_user.id).position; %>
     <% } %>
 
+    <% for reaction in reactions_list.iter() { %>
+      <% let count = object_reactions_count.count_reactions_of_types(reaction.position); %>
+      <span class="like">
+        <img style="width:22px" src="/static/images/reactions/<%= reaction.image %>.png" alt="img" />
+        <span class="reactions_count"><%= count %></span>
+      </span>
+
+      <span class="like_window">
+        <% if count != 0 { %>
+        <div class="like_pop">
+        <span class="item_reactions pointer">Отреагировали: <span data-count="like">count</span></span>
+        <span style="display: flex;margin-top: 10px;">
+          <% for user in object.get_6_reactions_users_of_types(reaction.position).iter() { %>
+            <% include!("../../generic/user/voter.stpl"); %>
+          <% } %>
+  </span>
+      </div>
+    <% } %>
   <% } %>
 <% } %>
 
-<span
-  class="like hide btn_success btn_default"
->
+<span class="like">
 
   <svg class="svg_info" viewBox="0 0 24 24" fill="currentColor"><path d="M0 0h24v24H0V0zm0 0h24v24H0V0z" fill="none"/><path d="M9 21h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.58 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2zM9 9l4.34-4.34L12 10h9v2l-3 7H9V9zM1 9h4v12H1z"/></svg>
   <span class="reactions_count"><%= object.count_reactions() %></span>
