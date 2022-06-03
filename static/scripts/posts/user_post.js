@@ -767,8 +767,15 @@ on('#ajax', 'click', '#create_list_btn', function() {
   } else {
     url = folder + "/add_user_list/";
   }
-  react_value = form_post.querySelector(".reactions_collector");
-  react_value.value = react_value.value.substring(react_value.length-2);
+  if (form_post.querySelector(".reactions_collector")) {
+    react_value = form_post.querySelector(".reactions_collector");
+    react_inputs = form_post.querySelectorAll(".switch-sm");
+    for (var i = 0; i < react_inputs.length; i++) {
+      if (react_input[i].checked == 1){
+        react_value.value = react_value.value + react_input[i].value + ", ";
+      }
+    };
+  }
 
   form_data = new FormData(form_post);
 
@@ -845,14 +852,15 @@ on('#ajax', 'click', '#create_list_btn', function() {
 
 on('#ajax', 'click', '#edit_list_btn', function() {
   form = this.parentElement.parentElement.parentElement;
-  react_value = form.querySelector(".reactions_collector");
 
-  _value = react_value.value;
-  if (_value.slice(-1) == " ") {
-    react_value.value = _value.slice(0, -2);
-  }
-  if (_value.slice(0) == ",") {
-    react_value.value = _value.slice(0, 2);
+  if (form.querySelector(".reactions_collector")) {
+    react_value = form.querySelector(".reactions_collector");
+    react_inputs = form.querySelectorAll(".switch-sm");
+    for (var i = 0; i < react_inputs.length; i++) {
+      if (react_input[i].checked == 1){
+        react_value.value = react_value.value + react_input[i].value + ", ";
+      }
+    };
   }
 
   form_data = new FormData(form);

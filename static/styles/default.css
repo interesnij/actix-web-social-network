@@ -3244,7 +3244,7 @@ opacity:0;
 .repost_window:hover { z-index: 10; opacity: 1; visibility: visible;}
 .react_window {
   right: -20px;
-  width: -160px;
+  width: 160px;
 }
 .react_window img {
   width:  22px;
