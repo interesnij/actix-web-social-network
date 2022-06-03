@@ -401,7 +401,6 @@ on('body', 'click', '.react_window_toggle', function() {
     pk,
     "/users/progs/send_reaction/?types=" + react_section.getAttribute("data-type") + "&reaction=" + pk);
 
-  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "item_likes")
   main_container = document.body.querySelector(".main-container");
   //add_list_in_all_stat("dislike_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
