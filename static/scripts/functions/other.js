@@ -772,7 +772,7 @@ function post_update_votes(post, uuid) {
   link_.send();
 };
 
-function send_like(item, pk, link) {
+function send_reaction(item, pk, link) {
     reactions_block = item.querySelector(".react_items");
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     link.overrideMimeType("application/json");
@@ -789,11 +789,11 @@ function send_like(item, pk, link) {
             // пройдемся по всему списку допустимых реакций списка.
             for (var i = 0; i < react_list.length; i++) {
               id = react_list[i].getAttribute("data-pk");
-
+              count = jsonResponse[id];
               // если такая реакция уже есть у объекта
               if (reactions_block.querySelector('[data-react=' + '"' + id + '"' + ']')) {
                  cur_block = reactions_block.querySelector('[data-react=' + '"' + id + '"' + ']');
-                 count = jsonResponse[id];
+
                  if (count == 0) {
                    cur_block.querySelector(".reactions_count").innerHTML = "";
                    cur_block.querySelector(".like_window").innerHTML = "";
@@ -815,8 +815,30 @@ function send_like(item, pk, link) {
               else {
                 // если такой реакции еще нет у объекта...
                 console.log("создаем блок реакций");
+
+                // создаем главный блок react
+                $react = document.createElement("div");
+                $react.classList.add("react");
+                $react.setAttribute("data-react", pk);
+
+                // создаем иконку и счетчик
+                $like = document.createElement("div");
+                $like.classList.add("like", "active");
+                $like_img = document.createElement("img");
+                $like_img.src = "/static/images/reactions/" + pk + ".png";
+                $like_img.style.width = "22px";
+                $like_img.style.marginRight = "7px";
+                $like_span = document.createElement("span");
+                $like_span.innerHTML = "<span class='reactions_count'>" + count + "</span>"
+                $like.append($like_img);
+                $like.append($like_span);
+
+                // создаем сегмент like_window
+                $like_window = document.createElement("div");
+                $like_window.classList.add("like_window");
                 $div = document.createElement("div");
                 $div.classList.add("like_pop");
+
                 $a = document.createElement("a");
                 $a.style.paddingRight = "10px";
                 $a.setAttribute("data-pk", user_pk);
@@ -835,7 +857,10 @@ function send_like(item, pk, link) {
                 $div.append($span1);
                 $div.append($span2);
                 $div.style.margin = "15px";
-                cur_block.querySelector(".like_window").append($div);
+                $like_window.append($div);
+
+                $react.append($like);
+                $react.append($like_window);
               }
             }
         }
