@@ -2061,7 +2061,7 @@ impl Video {
             }
         }
 
-        let data: Vec<i32> = Vec::new();
+        let mut data: Vec<i32> = Vec::new();
         data.push(self.reactions);
         data.push(react_model.field_1);
         data.push(react_model.field_2);
@@ -3196,7 +3196,7 @@ impl VideoComment {
             }
         }
 
-        let data: Vec<i32> = Vec::new();
+        let mut data: Vec<i32> = Vec::new();
         data.push(self.reactions);
         data.push(react_model.field_1);
         data.push(react_model.field_2);

@@ -2231,7 +2231,7 @@ impl Message {
                 self.plus_reactions(1);
             }
         }
-        let data: Vec<i32> = Vec::new();
+        let mut data: Vec<i32> = Vec::new();
         data.push(self.reactions);
         data.push(react_model.field_1);
         data.push(react_model.field_2);
