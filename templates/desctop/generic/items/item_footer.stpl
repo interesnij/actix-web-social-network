@@ -8,7 +8,7 @@
     <% let mut user_reaction = 0; %>
 
     <% if object.is_have_user_reaction(request_user.id) { %>
-      <% user_reaction = object.get_user_reaction(request_user.id).position; %>
+      <% user_reaction = object.get_user_reaction(request_user.id); %>
     <% } %>
 
     <% for reaction in reactions_list.iter() { %>
