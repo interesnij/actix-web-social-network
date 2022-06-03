@@ -147,7 +147,9 @@ pub async fn post_list_form(
                     if field.name() == "name" {
                         form.name = data_string
                     } else if field.name() == "description" {
-                        form.description = Some(data_string)
+                        if data_string {
+                            form.description = Some(data_string);
+                        }
                     }
                     else if field.name() == "can_see_el" {
                         form.can_see_el = data_string
