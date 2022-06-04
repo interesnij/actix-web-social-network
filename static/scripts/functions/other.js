@@ -813,6 +813,7 @@ function send_reaction(item, pk, _link) {
                  console.log("count item", count);
                  if (count == 0) {
                    cur_block.remove();
+                     react_block_exists = true;
                  }
                  else {
                    cur_block.querySelector(".reactions_count").innerHTML = count;
