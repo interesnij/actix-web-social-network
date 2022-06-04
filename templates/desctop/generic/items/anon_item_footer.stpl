@@ -11,7 +11,7 @@
         <% let count = object_reactions_count.count_reactions_of_types(*reaction); %>
         <% if count != 0 { %>
           <span class="react" data-react="<%= reaction %>">
-            <span>
+            <span class="like">
               <img style="width:22px" src="/static/images/reactions/<%= reaction %>.png" alt="img" />
               <span class="reactions_count"><%= count %></span>
             </span>
