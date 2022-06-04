@@ -291,7 +291,7 @@ pub async fn send_reaction(session: Session, req: HttpRequest) -> web::Json<Json
                 code = item[..3].to_string();
             }
             if params.reaction.is_some() {
-                reaction: i16 = params.reaction.unwrap();
+                reaction = params.reaction.unwrap();
             }
         }
 
