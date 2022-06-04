@@ -52,8 +52,8 @@
                             <% if count != 0 { %>
                               <span class="react" data-react="<%= reaction %>">
                                 <span class="like send_react <% if &user_reaction == reaction { %>border_radius<% } %>">
-                                  <img style="width:19px" src="/static/images/reactions/<%= reaction %>.png" alt="img" />
-                                  <span class="reactions_count"><%= count %></span>
+                                  <img style="width:16px" src="/static/images/reactions/<%= reaction %>.png" alt="img" />
+                                  <span class="small reactions_count"><%= count %></span>
                                 </span>
 
                                 <span class="like_window">
