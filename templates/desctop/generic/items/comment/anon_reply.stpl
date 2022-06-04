@@ -31,7 +31,40 @@
         <div class="">
             <div class="row">
                 <div class="col" data-type="<%= reply.get_code() %>" data-subtype="comment">
-                    Реакции
+                <% if c_reactions_list.len() != 0 { %>
+                  <% if item.reactions == 0 { %>
+                    <span class="react_items comments" data-type="<%= reply.get_code() %>" style="display: inline-flex"></span>
+                  <% } else { %>
+
+                    <% let reply_reactions_count = reply.get_or_create_react_model(); %>
+
+                    <span class="react_items comments" data-type="<%= reply.get_code() %>" style="display: inline-flex">
+                      <% for reaction in c_reactions_list.iter() { %>
+
+                        <% let count = reply_reactions_count.count_reactions_of_types(*reaction); %>
+                        <% if count != 0 { %>
+                          <span class="react" data-react="<%= reaction %>">
+                            <span class="like">
+                              <img style="width:16px" src="/static/images/reactions/<%= reaction %>.png" alt="img" />
+                              <span class="small reactions_count"><%= count %></span>
+                            </span>
+
+                            <span class="like_window">
+                              <div class="like_pop">
+                                <span class="item_reactions pointer">Отреагировали: <span data-count="like"><%= count %></span></span>
+                                <span class="like_list" style="display:flex;flex-wrap:wrap;margin-top:10px;">
+                                  <% for user in reply.get_6_reactions_users_of_types(*reaction).iter() { %>
+                                    <% include!("../../../generic/user/voter.stpl"); %>
+                                  <% } %>
+                                </span>
+                              </div>
+                            </span>
+                          </span>
+                        <% } %>
+                      <% } %>
+                    </span>
+                  <% } %>
+                <% } %>
                 </div>
             </div>
         </div>
