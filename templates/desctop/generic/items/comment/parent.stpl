@@ -35,7 +35,7 @@
 
                     <% if reactions_list.len() != 0 { %>
                       <% if item.reactions == 0 { %>
-                        <span class="react_items" data-type="<%= comment.get_code() %>" style="display: inline-flex"></span>
+                        <span class="react_items comments" data-type="<%= comment.get_code() %>" style="display: inline-flex"></span>
                       <% } else { %>
 
                         <% let comment_reactions_count = comment.get_or_create_react_model(); %>
@@ -45,7 +45,7 @@
                           <% user_reaction = comment.get_user_reaction(request_user.id); %>
                         <% } %>
 
-                        <span class="react_items" data-type="<%= comment.get_code() %>" style="display: inline-flex">
+                        <span class="react_items comments" data-type="<%= comment.get_code() %>" style="display: inline-flex">
                           <% for reaction in reactions_list.iter() { %>
 
                             <% let count = comment_reactions_count.count_reactions_of_types(*reaction); %>

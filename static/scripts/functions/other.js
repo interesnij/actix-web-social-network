@@ -855,8 +855,14 @@ function send_reaction(item, pk, _link) {
                 $like.classList.add("like", "border_radius", "send_react");
                 $like_img = document.createElement("img");
                 $like_img.src = "/static/images/reactions/" + pk + ".png";
-                $like_img.style.width = "22px";
-                $like_img.style.marginRight = "7px";
+                if (reactions_block.classList.contains("comments")) {
+                  $like_img.style.width = "16px";
+                  $like_img.style.marginRight = "4px";
+                }
+                else {
+                  $like_img.style.width = "22px";
+                  $like_img.style.marginRight = "7px";
+                }
                 $like_span = document.createElement("span");
                 $like_span.innerHTML = "<span class='reactions_count'>" + count + "</span>"
                 $like.append($like_img);

@@ -2060,6 +2060,7 @@ impl Video {
 
                 react_model.update_model(types, None, true);
                 self.plus_reactions(1);
+                new_plus = true;
             }
         }
 
@@ -3212,6 +3213,7 @@ impl VideoComment {
 
                 react_model.update_model(types, None, true);
                 self.plus_reactions(1);
+                new_plus = true;
             }
         }
 

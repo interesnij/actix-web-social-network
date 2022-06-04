@@ -2231,6 +2231,7 @@ impl Message {
 
                 react_model.update_model(types, None, true);
                 self.plus_reactions(1);
+                new_plus = true;
             }
         }
         let mut data: Vec<i32> = Vec::new();
