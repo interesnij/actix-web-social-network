@@ -808,7 +808,7 @@ function send_reaction(item, pk, _link) {
                        pop.querySelector('[href=' + '"' + user_pk + '"' + ']').remove();
                      }
                  }
-                 else {
+                 else if (pk == id){
                    cur_block.querySelector(".like").classList.add("border_radius");
                  }
 
