@@ -810,7 +810,7 @@ function send_reaction(item, pk, _link) {
 
                  // если пользователь уже ставил эту реакцию
                  if (cur_block.querySelector(".border_radius")) {
-                   cur_block.querySelector(".send_react").classList.remove("border_radius");
+                   cur_block.querySelector(".like").classList.remove("border_radius");
 
                    if (cur_block.querySelector(".like_pop")) {
                        pop = cur_block.querySelector(".like_pop");
