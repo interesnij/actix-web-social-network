@@ -817,7 +817,7 @@ function send_reaction(item, pk, _link) {
                    $figure.style.margin = "0";
                    $figure.title = user_name;
                    $figure.append($img)
-                   $a.append($figure);
+                   $a.append($figure); 
                    cur_block.querySelector(".like_list").append($a);
                  }
 

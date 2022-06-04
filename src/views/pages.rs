@@ -1038,7 +1038,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
                 permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
             }
             else {
-                permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                permission_check =  get_user_permission(&list.get_creator(), &_request_user).0;
             }
             if permission_check {
                 object_list = item.get_reactions_users_of_types(20, step.into(), reaction);
