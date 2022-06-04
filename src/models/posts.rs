@@ -2001,9 +2001,10 @@ impl Post {
         let list = self.get_list();
         let reactions_of_list = list.get_reactions_list();
         let react_model = self.get_or_create_react_model();
+        let mut new_plus = false;
+        let mut old_type = 0;
 
         if reactions_of_list.iter().any(|&i| i==types) && list.is_user_can_see_el(user_id) {
-
             let votes = post_votes
                 .filter(schema::post_votes::user_id.eq(user_id))
                 .filter(schema::post_votes::post_id.eq(self.id))
@@ -2027,7 +2028,7 @@ impl Post {
                 }
                 // если пользователь уже реагировал другой реакцией на этот товар
                 else {
-                    let old_type = vote.reaction;
+                    old_type = vote.reaction;
                     diesel::update(&vote)
                         .set(schema::post_votes::reaction.eq(types))
                         .get_result::<PostVote>(&_connection)
@@ -2052,6 +2053,7 @@ impl Post {
 
                 react_model.update_model(types, None, true);
                 self.plus_reactions(1);
+                new_plus = true;
             }
         }
 
@@ -2073,6 +2075,17 @@ impl Post {
         data.push(react_model.field_14);
         data.push(react_model.field_15);
         data.push(react_model.field_16);
+        if old_type != 0 {
+            data[types] = data[types] + 1
+            data[old_type] = data[old_type] - 1
+        }
+        else if new_plus {
+            data[types] = data[types] + 1
+        }
+        else {
+            data[types] = data[types] - 1
+        }
+
 
         return Json(JsonItemReactions {data});
     }
