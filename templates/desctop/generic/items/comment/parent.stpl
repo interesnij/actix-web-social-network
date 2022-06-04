@@ -61,7 +61,7 @@
                                     <span class="item_reactions pointer">Отреагировали: <span data-count="like"><%= count %></span></span>
                                     <span class="like_list" style="display:flex;flex-wrap:wrap;margin-top:10px;">
                                       <% for user in comment.get_6_reactions_users_of_types(*reaction).iter() { %>
-                                        <% include!("../../generic/user/voter.stpl"); %>
+                                        <% include!("../../../generic/user/voter.stpl"); %>
                                       <% } %>
                                     </span>
                                   </div>
