@@ -66,7 +66,7 @@ on('#ajax', 'click', '.select_tab_content_universal', function() {
     return
   }
 
-  load_block = _this.parentElement.nextElementSibling;
+  load_block = _this.parentElement.parentElement.nextElementSibling;
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
   ajax_link.open('GET', _this.getAttribute("data-link"), true);
