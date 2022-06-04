@@ -14,6 +14,7 @@
       <% for reaction in reactions_list.iter() { %>
 
         <% let count = object_reactions_count.count_reactions_of_types(*reaction); %>
+        <% if count != 0 { %>
         <span class="react" data-react="<%= reaction %>">
         <span class="like <% if user_reaction != 0 { %>active<% } %>">
           <img style="width:22px" src="/static/images/reactions/<%= reaction %>.png" alt="img" />
@@ -21,7 +22,6 @@
         </span>
 
         <span class="like_window">
-          <% if count != 0 { %>
             <div class="like_pop">
               <span class="item_reactions pointer">Отреагировали: <span data-count="like"><%= count %></span></span>
               <span style="display:flex;flex-wrap:wrap;">
@@ -30,9 +30,9 @@
                 <% } %>
               </span>
             </div>
-          <% } %>
         </span>
       </span>
+      <% } %>
     <% } %>
   </span>
 <% } %>
