@@ -180,9 +180,9 @@ on('body', 'click', '.item_reactions', function() {
   react = this.parentElement.parentElement.parentElement;
   create_fullscreen(
     "/load/reactions/?types="
-    + react.getAttribute("data-type")
+    + react.parentElement.getAttribute("data-type")
     + "&reaction="
-    + react.parentElement.getAttribute("data-react")
+    + react.getAttribute("data-react")
     , "worker_fullscreen"
   );
 });
