@@ -60,6 +60,29 @@ on('#ajax', 'click', '.show_post_text', function() {
   shower.remove();
 });
 
+on('#ajax', 'click', '.select_tab_content_universal', function() {
+  _this = this;
+  if (_this.classList.contains("active")) {
+    return
+  }
+
+  load_block = _this.parentElement.nextElementSibling;
+
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+  ajax_link.open('GET', _this.getAttribute("data-link"), true);
+  ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  ajax_link.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          elem_ = document.createElement('span');
+          elem_.innerHTML = ajax_link.responseText;
+
+          load_block.innerHTML = elem_.querySelector(".load_block").innerHTML;
+          _this.classList.add("active");
+      }
+  }
+  ajax_link.send();
+});
+
 on('#ajax', 'click', '.hide_comment_form', function() {
   block = this.parentElement.parentElement.parentElement.parentElement.parentElement
   block.querySelector(".col").style.display = "block";

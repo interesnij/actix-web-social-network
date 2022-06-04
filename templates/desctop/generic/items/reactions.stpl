@@ -2,7 +2,7 @@
 <ul class="nav nav-tabs justify-content-center">
   <% for react in reaction_list.iter() { %>
     <li class="nav-item">
-        <a class="nav-link <% if react == &reaction { %>active<% } %> pointer" data-href="/load/reactions/?types=<%= types %>&reaction=<%= react %>">
+        <a class="nav-link select_tab_content_universal <% if react == &reaction { %>active<% } %> pointer" data-link="/load/reactions/?types=<%= types %>&reaction=<%= react %>">
           <img src="/static/images/reactions/<%= react %>.png" alt="img" />
         </a>
     </li>
