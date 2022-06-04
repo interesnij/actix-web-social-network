@@ -1,4 +1,6 @@
 <% let creator = comment.get_commenter(); %>
+<% let react_list = comment.get_list().get_reactions_list(); %>
+
 <div class="comment">
     <div class="media">
       <a href="<%= creator.link %>" class="ajax">
@@ -32,7 +34,7 @@
             <div class="card_footer">
                 <div class="row react_style" data-type="<%= comment.get_code() %>">
                     <div class="col" data-type="<%= comment.get_code() %>" data-subtype="comment">
-                      <% if reactions_list.len() != 0 { %>
+                      <% if react_list.len() != 0 { %>
                         <span class="react_items comments" data-type="<%= comment.get_code() %>" style="display: inline-flex"></span>
                       <% } %>
                           <% if comment.sticker_id.is_none() { %>
@@ -59,7 +61,7 @@
                         </span>
 
                         <span style="float: right;">
-                          <% if reactions_list.len() != 0 { %>
+                          <% if react_list.len() != 0 { %>
                           <span class="like react_shower" style="display:none" title="Реакция">
                             <svg fill="currentColor" class="svg_info pointer svg_default" style="width:17px;" viewBox="0 0 24 24">
                               <rect fill="none" height="24" width="24" />
@@ -72,7 +74,7 @@
                           <span class="like_window react_window">
                             <div class="like_pop">
                               <span style="display: flex;flex-wrap:wrap;">
-                                <% for reaction in reactions_list.iter() { %>
+                                <% for reaction in react_list.iter() { %>
                                 <img class="react_window_toggle" src="/static/images/reactions/<%= reaction %>.png" data-pk="<%= reaction %>" alt="img" />
                                 <% } %>
                               </span>
