@@ -2076,14 +2076,14 @@ impl Post {
         data.push(react_model.field_15);
         data.push(react_model.field_16);
         if old_type != 0 {
-            data[types] = data[types] + 1
-            data[old_type] = data[old_type] - 1
+            data[types] = data[types] + 1;
+            data[old_type] = data[old_type] - 1;
         }
         else if new_plus {
-            data[types] = data[types] + 1
+            data[types] = data[types] + 1;
         }
         else {
-            data[types] = data[types] - 1
+            data[types] = data[types] - 1;
         }
 
 
