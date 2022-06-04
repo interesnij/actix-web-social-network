@@ -65,8 +65,11 @@ on('#ajax', 'click', '.select_tab_content_universal', function() {
   if (_this.classList.contains("active")) {
     return
   }
-
-  load_block = _this.parentElement.parentElement.nextElementSibling;
+  parent = _this.parentElement.parentElement;
+  nav_items = parent.querySelectorAll(".nav-link");
+  for (var i = 0; i < nav_items.length; i++) {
+    nav_items[i].classList.remove("active");
+  }
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
   ajax_link.open('GET', _this.getAttribute("data-link"), true);
@@ -76,7 +79,7 @@ on('#ajax', 'click', '.select_tab_content_universal', function() {
           elem_ = document.createElement('span');
           elem_.innerHTML = ajax_link.responseText;
 
-          load_block.innerHTML = elem_.querySelector(".load_block").innerHTML;
+          parent.nextElementSibling.innerHTML = elem_.querySelector(".load_block").innerHTML;
           _this.classList.add("active");
       }
   }
