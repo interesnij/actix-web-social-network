@@ -1,8 +1,20 @@
+
+<ul class="nav nav-tabs justify-content-center">
+  <% for react in reaction_list.iter() { %>
+    <li class="nav-item">
+        <a class="nav-link select_tab_content_universal <% if react == &reaction { %>active<% } %> pointer" data-link="/load/reactions/?types=<%= types %>&reaction=<%= react %>">
+          <img src="/static/images/reactions/<%= react %>.png" alt="img" />
+        </a>
+    </li>
+  <% } %>
+</ul>
+
+<div class="load_block">
 <% if object_list.len() > 0 { %>
 <div class="like_pop" style="margin:15px">
-  <span><%= text %></span>
-  <br><br>
-  <span style="display: flex;">
+  <span> <img src="/static/images/reactions/<%= reaction %>.png" alt="img" />
+   Всего <%= text %></span>
+  <span style="display:flex;flex-wrap:wrap;margin-top:10px;">
     <% for user in object_list.iter() { %>
       <% include!("../user/voter.stpl"); %>
     <% } %>
@@ -13,4 +25,7 @@
     <% } %>
   </span>
 </div>
+<% } else { %>
+  Реакций пока нет...
 <% } %>
+</div>

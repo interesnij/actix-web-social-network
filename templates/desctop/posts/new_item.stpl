@@ -44,7 +44,7 @@
 
     <div class="card-footer border-top py-2">
         <div class="row">
-            <div class="col interaction" data-type="pos<%= object.id %>">
+            <div class="col react_style interaction" data-type="pos<%= object.id %>">
 
             <% if reactions_list.len() != 0 { %>
                 <span class="react_items" data-type="<%= object.get_code() %>" style="display: inline-flex"></span>
