@@ -34,7 +34,7 @@
                     <div class="col react_style" data-type="<%= comment.get_code() %>">
 
                     <% if c_reactions_list.len() != 0 { %>
-                      <% if item.reactions == 0 { %>
+                      <% if comment.reactions == 0 { %>
                         <span class="react_items comments" data-type="<%= comment.get_code() %>" style="display: inline-flex"></span>
                       <% } else { %>
 
