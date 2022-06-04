@@ -405,7 +405,7 @@ on('body', 'click', '.react_window_toggle', function() {
   //add_list_in_all_stat("dislike_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 on('body', 'click', '.like', function() {
-  react_section = this.parentElement.parentElement;
+  react_section = this.parentElement.parentElement.parentElement;
   pk = this.parentElement.getAttribute("data-pk");
   send_reaction(
     react_section,
