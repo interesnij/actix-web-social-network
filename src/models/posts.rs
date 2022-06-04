@@ -2084,9 +2084,11 @@ impl Post {
         }
         else if new_plus {
             data[types_usize] = data[types_usize] + 1;
+            data[0] = data[0] + 1;
         }
         else {
             data[types_usize] = data[types_usize] - 1;
+            data[0] = data[0] - 1;
         }
 
 
