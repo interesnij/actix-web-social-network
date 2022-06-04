@@ -1,3 +1,7 @@
+<% for react in reaction_list.iter() { %>
+  <%= react %>
+<% } %>
+
 <% if object_list.len() > 0 { %>
 <div class="like_pop" style="margin:15px">
   <span> <img src="/static/images/reactions/<%= reaction %>.png" alt="img" />

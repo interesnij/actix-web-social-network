@@ -1024,6 +1024,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
         let mut permission_check = false;
 
         let mut object_list: Vec<User> = Vec::new();
+        let mut reaction_list: Vec<i16> = Vec::new();
 
         if page > 1 {
             step = (page - 1) * 20;
@@ -1051,6 +1052,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
                     }
                 }
                 text = item.count_reactions_of_types_ru(reaction);
+                reaction_list = list.get_reactions_list();
             }
         }
         else if code == "pho".to_string() {
@@ -1075,6 +1077,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
                     }
                 }
                 text = item.count_reactions_of_types_ru(reaction);
+                reaction_list = list.get_reactions_list();
             }
         }
         else if code == "goo".to_string() {
@@ -1099,6 +1102,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
                     }
                 }
                 text = item.count_reactions_of_types_ru(reaction);
+                reaction_list = list.get_reactions_list();
             }
         }
         else if code == "vid".to_string() {
@@ -1123,6 +1127,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
                     }
                 }
                 text = item.count_reactions_of_types_ru(reaction);
+                reaction_list = list.get_reactions_list();
             }
         }
         if permission_check == false {
@@ -1147,6 +1152,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
                 object_list:      Vec<User>,
                 next_page_number: i32,
                 reaction:         i16,
+                reaction_list:    Vec<i16>,
             }
             let body = Template {
                 text:             text,
@@ -1154,6 +1160,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 reaction:         reaction,
+                reaction_list:    reaction_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1168,6 +1175,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
                 object_list:      Vec<User>,
                 next_page_number: i32,
                 reaction:         i16,
+                reaction_list:    Vec<i16>,
             }
             let body = Template {
                 text:             text,
@@ -1175,6 +1183,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 reaction:         reaction,
+                reaction_list:    reaction_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
