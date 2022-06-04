@@ -287,7 +287,7 @@ pub async fn send_reaction(session: Session, req: HttpRequest) -> web::Json<Json
             let params = params_some.unwrap();
             if params.types.is_some() {
                 let item = params.types.as_deref().unwrap();
-                item_id: i32 = item[3..].parse().unwrap();
+                item_id = item[3..].parse().unwrap();
                 code = item[..3].to_string();
             }
             if params.reaction.is_some() {
