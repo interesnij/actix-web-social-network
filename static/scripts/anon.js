@@ -1050,3 +1050,29 @@ on('body', 'click', '.menu_drop', function() {
     all_drop[i].classList.remove("show")
   } block.classList.add("show")}
 });
+
+on('#ajax', 'click', '.select_tab_content_universal', function() {
+  _this = this;
+  if (_this.classList.contains("active")) {
+    return
+  }
+  parent = _this.parentElement.parentElement;
+  nav_items = parent.querySelectorAll(".nav-link");
+  for (var i = 0; i < nav_items.length; i++) {
+    nav_items[i].classList.remove("active");
+  }
+
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+  ajax_link.open('GET', _this.getAttribute("data-link"), true);
+  ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  ajax_link.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          elem_ = document.createElement('span');
+          elem_.innerHTML = ajax_link.responseText;
+
+          parent.nextElementSibling.innerHTML = elem_.querySelector(".load_block").innerHTML;
+          _this.classList.add("active");
+      }
+  }
+  ajax_link.send();
+});
