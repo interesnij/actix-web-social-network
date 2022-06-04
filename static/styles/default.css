@@ -2543,8 +2543,11 @@ body.dragging * {
   border-bottom: 3px solid #e625ea;
   opacity: 1;
 }
+.nav-tabs .nav-link:hover {
+  opacity: 1;
+}
 
-.nav-tabs .nav-link.active p {
+.nav-tabs .nav-link.active a {
   opacity: 1;
 }
 
