@@ -794,11 +794,27 @@ function send_reaction(item, pk, _link) {
             for (var i = 0; i < react_list.length; i++) {
               id = react_list[i].getAttribute("data-pk");
               count = jsonResponse[id];
+
               // если такая реакция уже есть у объекта
               if (reactions_block.querySelector('[data-react=' + '"' + id + '"' + ']')) {
                  cur_block = reactions_block.querySelector('[data-react=' + '"' + id + '"' + ']');
-                 react_clock_exists = true;
+                 react_block_exists = true;
 
+                 // если пользователь уже ставил эту реакцию
+                 if (cur_block.querySelector(".active")) {
+                   cur_block.querySelector(".like").classList.remove("active");
+                   count -= 1;
+                   if (cur_block.querySelector(".like_pop")) {
+                       pop = cur_block.querySelector(".like_pop");
+                       pop.querySelector('[href=' + '"' + user_pk + '"' + ']').remove();
+                     }
+                 }
+                 else {
+                   count += 1;
+                 }
+
+                 console.log("id item", id);
+                 console.log("count item", count);
                  if (count == 0) {
                    cur_block.querySelector(".reactions_count").innerHTML = "";
                    cur_block.querySelector(".like_window").innerHTML = "";
@@ -808,18 +824,10 @@ function send_reaction(item, pk, _link) {
                    cur_block.querySelector('[data-count="like"]').innerHTML = count;
                 }
 
-                // если пользователь уже ставил эту реакцию
-                if (cur_block.querySelector(".active")) {
-                  cur_block.querySelector(".like").classList.remove("active");
-                  if (cur_block.querySelector(".like_pop")) {
-                      pop = cur_block.querySelector(".like_pop");
-                      pop.querySelector('[href=' + '"' + user_pk + '"' + ']').remove();
-                    }
-                }
               }
             }
 
-            if (!react_clock_exists) {
+            if (!react_block_exists) {
               // если такой реакции еще нет у объекта...
               console.log("создаем блок реакций");
               count = jsonResponse[pk];

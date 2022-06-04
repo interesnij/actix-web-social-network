@@ -15,27 +15,27 @@
 
         <% let count = object_reactions_count.count_reactions_of_types(*reaction); %>
         <% if count != 0 { %>
-        <span class="react" data-react="<%= reaction %>">
-        <span class="like <% if user_reaction != 0 { %>active<% } %>">
-          <img style="width:22px" src="/static/images/reactions/<%= reaction %>.png" alt="img" />
-          <span class="reactions_count"><%= count %></span>
-        </span>
+          <span class="react" data-react="<%= reaction %>">
+            <span class="like <% if user_reaction != 0 { %>active<% } %>">
+              <img style="width:22px" src="/static/images/reactions/<%= reaction %>.png" alt="img" />
+              <span class="reactions_count"><%= count %></span>
+            </span>
 
-        <span class="like_window">
-            <div class="like_pop">
-              <span class="item_reactions pointer">Отреагировали: <span data-count="like"><%= count %></span></span>
-              <span style="display:flex;flex-wrap:wrap;">
-                <% for user in object.get_6_reactions_users_of_types(*reaction).iter() { %>
-                  <% include!("../../generic/user/voter.stpl"); %>
-                <% } %>
-              </span>
-            </div>
-        </span>
-      </span>
+            <span class="like_window">
+              <div class="like_pop">
+                <span class="item_reactions pointer">Отреагировали: <span data-count="like"><%= count %></span></span>
+                <span style="display:flex;flex-wrap:wrap;">
+                  <% for user in object.get_6_reactions_users_of_types(*reaction).iter() { %>
+                    <% include!("../../generic/user/voter.stpl"); %>
+                  <% } %>
+                </span>
+              </div>
+            </span>
+          </span>
+        <% } %>
       <% } %>
-    <% } %>
-  </span>
-<% } %>
+    </span>
+  <% } %>
 <% } %>
 
 <span title="Комментарий" class="load_comments_list btn_default" <% if object.comment_enabled == false { %>style="display:none" <% } %>>
