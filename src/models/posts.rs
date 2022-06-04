@@ -2075,15 +2075,18 @@ impl Post {
         data.push(react_model.field_14);
         data.push(react_model.field_15);
         data.push(react_model.field_16);
+
+        let types_usize: usize = types as usize;
         if old_type != 0 {
-            data[types] = data[types] + 1;
-            data[old_type] = data[old_type] - 1;
+            let old_type_usize: usize = old_type as usize;
+            data[types_usize] = data[types_usize] + 1;
+            data[old_type_usize] = data[old_type_usize] - 1;
         }
         else if new_plus {
-            data[types] = data[types] + 1;
+            data[types_usize] = data[types_usize] + 1;
         }
         else {
-            data[types] = data[types] - 1;
+            data[types_usize] = data[types_usize] - 1;
         }
 
 
