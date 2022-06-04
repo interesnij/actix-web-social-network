@@ -802,23 +802,16 @@ function send_reaction(item, pk, _link) {
                  // если пользователь уже ставил эту реакцию
                  if (cur_block.querySelector(".active")) {
                    cur_block.querySelector(".like").classList.remove("active");
-                   count -= 1;
 
                    if (cur_block.querySelector(".like_pop")) {
                        pop = cur_block.querySelector(".like_pop");
                        pop.querySelector('[href=' + '"' + user_pk + '"' + ']').remove();
                      }
                  }
-                 else {
-                   count += 1;
-                 }
-                 if (count > 0) {
-                   react_block_exists = true;
-                 }
 
                  console.log("id item", id);
                  console.log("count item", count);
-                 if (count < 2) {
+                 if (count == 0) {
                    cur_block.remove();
                  }
                  else {
@@ -832,7 +825,7 @@ function send_reaction(item, pk, _link) {
             if (!react_block_exists) {
               // если такой реакции еще нет у объекта...
               console.log("создаем блок реакций");
-              count = jsonResponse[pk] + 1;
+              count = jsonResponse[pk];
               // создаем главный блок react
               $react = document.createElement("div");
               $react.classList.add("react");
