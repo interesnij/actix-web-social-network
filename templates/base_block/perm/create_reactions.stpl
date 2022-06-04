@@ -9,7 +9,7 @@
     <div class="hide">
       <% for reaction in reaction_list.iter() { %>
         <p class="select_item_reaction pointer page-sub-title-small mt-1" style="line-height: 18px;">
-          <img style="width:22px" src="/static/images/reactions/<%= reaction.image %>.png" alt="img" />
+          <img style="width:19px" src="/static/images/reactions/<%= reaction.image %>.png" alt="img" />
           <span style="padding-left:7px;vertical-align: <% if reaction.position == 1 { %>bottom<% } else { %>middle<% } %>;">
             <%= reaction.name %>
           </span>

@@ -800,8 +800,8 @@ function send_reaction(item, pk, _link) {
                  cur_block = reactions_block.querySelector('[data-react=' + '"' + id + '"' + ']');
 
                  // если пользователь уже ставил эту реакцию
-                 if (cur_block.querySelector(".active")) {
-                   cur_block.querySelector(".like").classList.remove("active");
+                 if (cur_block.querySelector(".border_radius")) {
+                   cur_block.querySelector(".like").classList.remove("border_radius");
 
                    if (cur_block.querySelector(".like_pop")) {
                        pop = cur_block.querySelector(".like_pop");
@@ -831,7 +831,7 @@ function send_reaction(item, pk, _link) {
 
                 // создаем иконку и счетчик
                 $like = document.createElement("div");
-                $like.classList.add("like", "active");
+                $like.classList.add("like", "border_radius");
                 $like_img = document.createElement("img");
                 $like_img.src = "/static/images/reactions/" + pk + ".png";
                 $like_img.style.width = "22px";

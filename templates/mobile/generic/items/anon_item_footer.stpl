@@ -12,7 +12,7 @@
         <% if count != 0 { %>
           <span class="react" data-react="<%= reaction %>">
             <span class="like">
-              <img style="width:22px" src="/static/images/reactions/<%= reaction %>.png" alt="img" />
+              <img style="width:19px" src="/static/images/reactions/<%= reaction %>.png" alt="img" />
               <span class="reactions_count"><%= count %></span>
             </span>
 
