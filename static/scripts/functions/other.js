@@ -816,8 +816,7 @@ function send_reaction(item, pk, _link) {
                  console.log("id item", id);
                  console.log("count item", count);
                  if (count < 2) {
-                   cur_block.querySelector(".reactions_count").innerHTML = "";
-                   cur_block.querySelector(".like_window").innerHTML = "";
+                   cur_block.remove();
                  }
                  else {
                    cur_block.querySelector(".reactions_count").innerHTML = count;
