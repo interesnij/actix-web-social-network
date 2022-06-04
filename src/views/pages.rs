@@ -990,206 +990,229 @@ pub async fn create_claim_page(session: Session, req: HttpRequest) -> actix_web:
 }
 
 pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    if is_signed_in(&session) {
-        use crate::utils::{get_user_permission, get_community_permission};
+    use crate::utils::{
+        get_user_permission,
+        get_community_permission,
+        get_anon_user_permission,
+        get_anon_community_permission,
+    };
 
-        #[derive(Debug, Deserialize)]
-        pub struct TypesParams2 {
-            pub types:    Option<String>,
-            pub reaction: Option<i16>,
+    #[derive(Debug, Deserialize)]
+    pub struct TypesParams2 {
+        pub types:    Option<String>,
+        pub reaction: Option<i16>,
+    }
+    let mut item_id: i32 = 0;
+    let mut code = "".to_string();
+    let mut reaction: i16 = 0;
+
+    let params_some = web::Query::<TypesParams2>::from_query(&req.query_string());
+    if params_some.is_ok() {
+        let params = params_some.unwrap();
+        if params.types.is_some() {
+            let item = params.types.as_deref().unwrap();
+            item_id = item[3..].parse().unwrap();
+            code = item[..3].to_string();
         }
-        let mut item_id: i32 = 0;
-        let mut code = "".to_string();
-        let mut reaction: i16 = 0;
-
-        let params_some = web::Query::<TypesParams2>::from_query(&req.query_string());
-        if params_some.is_ok() {
-            let params = params_some.unwrap();
-            if params.types.is_some() {
-                let item = params.types.as_deref().unwrap();
-                item_id = item[3..].parse().unwrap();
-                code = item[..3].to_string();
-            }
-            if params.reaction.is_some() {
-                reaction = params.reaction.unwrap();
-            }
+        if params.reaction.is_some() {
+            reaction = params.reaction.unwrap();
         }
-
-        let (is_desctop, page) = get_list_variables(req);
-        let mut next_page_number = 0;
-        let mut step = 0;
+    }
+    let is_auth = is_signed_in(&session);
+    let (is_desctop, page) = get_list_variables(req);
+    let mut next_page_number = 0;
+    let mut step = 0;
+    let mut _request_user_id = 0;
+    if is_auth {
         let _request_user = get_request_user_data(session);
-        let _request_user_id = &_request_user.id;
-        let mut text = "".to_string();
-        let mut permission_check = false;
+        _request_user_id = _request_user.id;
+    }
+    let mut text = "".to_string();
+    let mut permission_check = false;
 
-        let mut object_list: Vec<User> = Vec::new();
-        let mut reaction_list: Vec<i16> = Vec::new();
+    let mut object_list: Vec<User> = Vec::new();
+    let mut reaction_list: Vec<i16> = Vec::new();
 
-        if page > 1 {
-            step = (page - 1) * 20;
-        }
+    if page > 1 {
+        step = (page - 1) * 20;
+    }
 
-        if code == "pos".to_string() {
-            use crate::utils::get_post;
+    if code == "pos".to_string() {
+        use crate::utils::get_post;
 
-            let item = get_post(item_id);
-            let list = item.get_list();
-            if list.community_id.is_some() {
+        let item = get_post(item_id);
+        let list = item.get_list();
+        if list.community_id.is_some() {
+            if is_auth {
                 permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
             }
             else {
-                permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                permission_check = list.is_anon_user_can_see_el() && get_anon_community_permission(&list.get_community()).0;
             }
-            if permission_check {
-                object_list = item.get_reactions_users_of_types(20, step.into(), reaction);
-                if page > 1 && item.reactions > (page * 20) {
-                    next_page_number = page + 1;
-                }
-                else {
-                    if item.reactions > 20 {
-                        next_page_number = 2;
-                    }
-                }
-                text = item.count_reactions_of_types_ru(reaction);
-                reaction_list = list.get_reactions_list();
-            }
-        }
-        else if code == "pho".to_string() {
-            use crate::utils::get_photo;
-
-            let item = get_photo(item_id);
-            let list = item.get_list();
-            if list.community_id.is_some() {
-                permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
-            }
-            else {
-                permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
-            }
-            if permission_check {
-                object_list = item.get_reactions_users_of_types(20, step.into(), reaction);
-                if page > 1 && item.reactions > (page * 20) {
-                    next_page_number = page + 1;
-                }
-                else {
-                    if item.reactions > 20 {
-                        next_page_number = 2;
-                    }
-                }
-                text = item.count_reactions_of_types_ru(reaction);
-                reaction_list = list.get_reactions_list();
-            }
-        }
-        else if code == "goo".to_string() {
-            use crate::utils::get_good;
-
-            let item = get_good(item_id);
-            let list = item.get_list();
-            if list.community_id.is_some() {
-                permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
-            }
-            else {
-                permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
-            }
-            if permission_check {
-                object_list = item.get_reactions_users_of_types(20, step.into(), reaction);
-                if page > 1 && item.reactions > (page * 20) {
-                    next_page_number = page + 1;
-                }
-                else {
-                    if item.reactions > 20 {
-                        next_page_number = 2;
-                    }
-                }
-                text = item.count_reactions_of_types_ru(reaction);
-                reaction_list = list.get_reactions_list();
-            }
-        }
-        else if code == "vid".to_string() {
-            use crate::utils::get_video;
-
-            let item = get_video(item_id);
-            let list = item.get_list();
-            if list.community_id.is_some() {
-                permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
-            }
-            else {
-                permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
-            }
-            if permission_check {
-                object_list = item.get_reactions_users_of_types(20, step.into(), reaction);
-                if page > 1 && item.reactions > (page * 20) {
-                    next_page_number = page + 1;
-                }
-                else {
-                    if item.reactions > 20 {
-                        next_page_number = 2;
-                    }
-                }
-                text = item.count_reactions_of_types_ru(reaction);
-                reaction_list = list.get_reactions_list();
-            }
-        }
-        if permission_check == false {
-            #[derive(TemplateOnce)]
-            #[template(path = "base_block/close/close_item.stpl")]
-            struct Template {
-                text: String,
-            }
-            let body = Template {
-                text:  "Permission Denied.".to_string(),
-            }
-            .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
-        }
-        else if is_desctop {
-            #[derive(TemplateOnce)]
-            #[template(path = "desctop/generic/items/reactions.stpl")]
-            struct Template {
-                text:             String,
-                types:            String,
-                object_list:      Vec<User>,
-                next_page_number: i32,
-                reaction:         i16,
-                reaction_list:    Vec<i16>,
-            }
-            let body = Template {
-                text:             text,
-                types:            code + &item_id.to_string(),
-                object_list:      object_list,
-                next_page_number: next_page_number,
-                reaction:         reaction,
-                reaction_list:    reaction_list,
-            }
-            .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
         else {
-            #[derive(TemplateOnce)]
-            #[template(path = "desctop/generic/items/anon_reactions.stpl")]
-            struct Template {
-                text:             String,
-                types:            String,
-                object_list:      Vec<User>,
-                next_page_number: i32,
-                reaction:         i16,
-                reaction_list:    Vec<i16>,
+            if is_auth {
+                permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
             }
-            let body = Template {
-                text:             text,
-                types:            code + &item_id.to_string(),
-                object_list:      object_list,
-                next_page_number: next_page_number,
-                reaction:         reaction,
-                reaction_list:    reaction_list,
+            else {
+                permission_check = list.is_anon_user_can_see_el() && get_anon_user_permission(&list.get_community()).0;
             }
-            .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
-    } else {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+
+        if permission_check {
+            object_list = item.get_reactions_users_of_types(20, step.into(), reaction);
+            if page > 1 && item.reactions > (page * 20) {
+                next_page_number = page + 1;
+            }
+            else {
+                if item.reactions > 20 {
+                    next_page_number = 2;
+                }
+            }
+            text = item.count_reactions_of_types_ru(reaction);
+            reaction_list = list.get_reactions_list();
+        }
+    }
+    else if code == "pho".to_string() {
+        use crate::utils::get_photo;
+
+        let item = get_photo(item_id);
+        let list = item.get_list();
+        if list.community_id.is_some() {
+            if is_auth {
+                permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
+            }
+            else {
+                permission_check = list.is_anon_user_can_see_el() && get_anon_community_permission(&list.get_community()).0;
+            }
+        }
+        else {
+            if is_auth {
+                permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+            }
+            else {
+                permission_check = list.is_anon_user_can_see_el() && get_anon_user_permission(&list.get_community()).0;
+            }
+        }
+        if permission_check {
+            object_list = item.get_reactions_users_of_types(20, step.into(), reaction);
+            if page > 1 && item.reactions > (page * 20) {
+                next_page_number = page + 1;
+            }
+            else {
+                if item.reactions > 20 {
+                    next_page_number = 2;
+                }
+            }
+            text = item.count_reactions_of_types_ru(reaction);
+            reaction_list = list.get_reactions_list();
+        }
+    }
+    else if code == "goo".to_string() {
+        use crate::utils::get_good;
+
+        let item = get_good(item_id);
+        let list = item.get_list();
+        if list.community_id.is_some() {
+            if is_auth {
+                permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
+            }
+            else {
+                permission_check = list.is_anon_user_can_see_el() && get_anon_community_permission(&list.get_community()).0;
+            }
+        }
+        else {
+            if is_auth {
+                permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+            }
+            else {
+                permission_check = list.is_anon_user_can_see_el() && get_anon_user_permission(&list.get_community()).0;
+            }
+        }
+        if permission_check {
+            object_list = item.get_reactions_users_of_types(20, step.into(), reaction);
+            if page > 1 && item.reactions > (page * 20) {
+                next_page_number = page + 1;
+            }
+            else {
+                if item.reactions > 20 {
+                    next_page_number = 2;
+                }
+            }
+            text = item.count_reactions_of_types_ru(reaction);
+            reaction_list = list.get_reactions_list();
+        }
+    }
+    else if code == "vid".to_string() {
+        use crate::utils::get_video;
+
+        let item = get_video(item_id);
+        let list = item.get_list();
+        if list.community_id.is_some() {
+            if is_auth {
+                permission_check = list.is_user_can_see_el(*_request_user_id) && get_community_permission(&list.get_community(), &_request_user).0;
+            }
+            else {
+                permission_check = list.is_anon_user_can_see_el() && get_anon_community_permission(&list.get_community()).0;
+            }
+        }
+        else {
+            if is_auth {
+                permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+            }
+            else {
+                permission_check = list.is_anon_user_can_see_el() && get_anon_user_permission(&list.get_community()).0;
+            }
+        }
+        if permission_check {
+            object_list = item.get_reactions_users_of_types(20, step.into(), reaction);
+            if page > 1 && item.reactions > (page * 20) {
+                next_page_number = page + 1;
+            }
+            else {
+                if item.reactions > 20 {
+                    next_page_number = 2;
+                }
+            }
+            text = item.count_reactions_of_types_ru(reaction);
+            reaction_list = list.get_reactions_list();
+        }
+    }
+
+    if permission_check == false {
+        #[derive(TemplateOnce)]
+        #[template(path = "base_block/close/close_item.stpl")]
+        struct Template {
+            text: String,
+        }
+        let body = Template {
+            text:  "Permission Denied.".to_string(),
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+    else {
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/generic/items/reactions.stpl")]
+        struct Template {
+            text:             String,
+            types:            String,
+            object_list:      Vec<User>,
+            next_page_number: i32,
+            reaction:         i16,
+            reaction_list:    Vec<i16>,
+        }
+        let body = Template {
+            text:             text,
+            types:            code + &item_id.to_string(),
+            object_list:      object_list,
+            next_page_number: next_page_number,
+            reaction:         reaction,
+            reaction_list:    reaction_list,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
 }
