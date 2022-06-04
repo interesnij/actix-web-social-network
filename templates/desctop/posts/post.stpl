@@ -1,4 +1,4 @@
-<div class="card mb-3 react_style u_post pag" data-type="user_post" data-pk="<%= object.id %>">
+<div class="card mb-3 u_post pag" data-type="user_post" data-pk="<%= object.id %>">
     <% include!("card_header.stpl"); %>
     <% if object.content.is_some() { %>
       <div class="fullscreen text_support pointer">
@@ -10,7 +10,7 @@
 
     <div class="card-footer border-top py-2">
         <div class="row">
-            <div class="col interaction" data-type="pos<%= object.id %>">
+            <div class="col react_style interaction" data-type="pos<%= object.id %>">
               <% include!("../generic/items/item_footer.stpl"); %>
             </div>
         </div>

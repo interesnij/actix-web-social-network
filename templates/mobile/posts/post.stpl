@@ -10,7 +10,7 @@
 
     <div class="card-footer border-top py-2">
         <div class="row">
-            <div class="col interaction" data-type="pos<%= object.id %>">
+            <div class="col react_style interaction" data-type="pos<%= object.id %>">
               <% include!("../generic/items/item_footer.stpl"); %>
             </div>
         </div>

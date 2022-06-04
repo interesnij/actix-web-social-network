@@ -1,6 +1,5 @@
 <% let is_staff = list.is_user_can_create_el(request_user.id); %>
 <% let reactions_list = list.get_reactions_list(); %>
-<% let count_reactions_list = list.count_reactions_list(); %>
 <% let is_moderator = request_user.is_moderator(); %>
 
 <div id="video_player"></div>

@@ -1,7 +1,6 @@
 <div class="card mb-3 u_post pag react_style" data-type="user_post" data-pk="<%= object.id %>">
   <% let is_staff = list.is_user_can_create_el(request_user.id); %>
   <% let reactions_list = list.get_reactions_list(); %>
-  <% let count_reactions_list = list.count_reactions_list(); %>
   <% let is_manager = request_user.is_moderator(); %>
 
   <% include!("card_header.stpl"); %>
@@ -15,7 +14,7 @@
 
     <div class="card-footer border-top py-2">
         <div class="row">
-            <div class="col interaction" data-type="pos<%= object.id %>">
+            <div class="col react_style interaction" data-type="pos<%= object.id %>">
               <% include!("../generic/items/item_footer.stpl"); %>
             </div>
         </div>

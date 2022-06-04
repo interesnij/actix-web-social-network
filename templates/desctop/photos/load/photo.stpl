@@ -1,6 +1,5 @@
 <% let is_staff = list.is_user_can_create_el(request_user.id); %>
 <% let reactions_list = list.get_reactions_list(); %>
-<% let count_reactions_list = list.count_reactions_list(); %>
 <% let is_moderator = request_user.is_moderator(); %>
 
 <span class="text-hide-xs">
@@ -42,7 +41,7 @@
       <br><br>
 
       <div class="border-top py-2">
-          <div class="col interaction" data-type="pho<%= object.id %>">
+          <div class="col interaction react_style" data-type="pho<%= object.id %>">
             <% include!("../../generic/items/item_footer.stpl"); %>
           </div>
           <div class="load_comments" style="max-height: 500px"></div>
