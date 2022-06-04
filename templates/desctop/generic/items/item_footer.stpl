@@ -1,6 +1,6 @@
 <% if reactions_list.len() != 0 { %>
   <% if object.reactions == 0 { %>
-    <span class="react_items" style="display: inline-flex"></span>
+    <span class="react_items" data-type="<%= object.get_code() %>" style="display: inline-flex"></span>
   <% } else { %>
 
     <% let object_reactions_count = object.get_or_create_react_model(); %>
@@ -10,12 +10,12 @@
       <% user_reaction = object.get_user_reaction(request_user.id); %>
     <% } %>
 
-    <span class="react_items" style="display: inline-flex">
+    <span class="react_items" data-type="<%= object.get_code() %>" style="display: inline-flex">
       <% for reaction in reactions_list.iter() { %>
 
         <% let count = object_reactions_count.count_reactions_of_types(*reaction); %>
         <% if count != 0 { %>
-          <span class="react" data-type="<%= object.get_code() %>" data-react="<%= reaction %>">
+          <span class="react" data-react="<%= reaction %>">
             <span class="like <% if user_reaction != 0 { %>active<% } %>">
               <img style="width:22px" src="/static/images/reactions/<%= reaction %>.png" alt="img" />
               <span class="reactions_count"><%= count %></span>

@@ -182,7 +182,7 @@ on('body', 'click', '.item_reactions', function() {
     "/load/reactions/?types="
     + react.getAttribute("data-type")
     + "&reaction="
-    + react.getAttribute("data-react")
+    + react.parentElement.getAttribute("data-react")
     , "worker_fullscreen"
   );
 });
