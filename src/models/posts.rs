@@ -2090,8 +2090,6 @@ impl Post {
             data[types_usize] = data[types_usize] - 1;
             data[0] = data[0] - 1;
         }
-
-
         return Json(JsonItemReactions {data});
     }
 
@@ -3302,6 +3300,8 @@ impl PostComment {
         let list = self.get_list();
         let reactions_of_list = list.get_reactions_list();
         let react_model = self.get_or_create_react_model();
+        let mut new_plus = false;
+        let mut old_type = 0;
 
         if reactions_of_list.iter().any(|&i| i==types) && list.is_user_can_see_el(user_id) && list.is_user_can_see_comment(user_id) {
 
@@ -3328,7 +3328,7 @@ impl PostComment {
                 }
                 // если пользователь уже реагировал другой реакцией на этот товар
                 else {
-                    let old_type = vote.reaction;
+                    old_type = vote.reaction;
                     diesel::update(&vote)
                         .set(schema::post_comment_votes::reaction.eq(types))
                         .get_result::<PostCommentVote>(&_connection)
@@ -3374,6 +3374,21 @@ impl PostComment {
         data.push(react_model.field_14);
         data.push(react_model.field_15);
         data.push(react_model.field_16);
+
+        let types_usize: usize = types as usize;
+        if old_type != 0 {
+            let old_type_usize: usize = old_type as usize;
+            data[types_usize] = data[types_usize] + 1;
+            data[old_type_usize] = data[old_type_usize] - 1;
+        }
+        else if new_plus {
+            data[types_usize] = data[types_usize] + 1;
+            data[0] = data[0] + 1;
+        }
+        else {
+            data[types_usize] = data[types_usize] - 1;
+            data[0] = data[0] - 1;
+        }
 
         return Json(JsonItemReactions {data});
     }
