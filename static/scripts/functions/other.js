@@ -829,7 +829,7 @@ function send_reaction(item, pk, _link) {
             if (!react_block_exists) {
               // если такой реакции еще нет у объекта...
               console.log("создаем блок реакций");
-              count = jsonResponse[pk];
+              count = jsonResponse[pk] + 1;
               // создаем главный блок react
               $react = document.createElement("div");
               $react.classList.add("react");
