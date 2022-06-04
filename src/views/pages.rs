@@ -1031,6 +1031,159 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
         step = (page - 1) * 20;
     }
 
+    let pre_types = &code[..1];
+    if code == "c".to_string() {
+        if code == "cpo".to_string() {
+            use crate::utils::get_post_comment;
+
+            let comment = get_post_comment(item_id);
+            let list = comment.get_list();
+            if is_auth {
+                let _request_user = get_request_user_data(session);
+                if list.community_id.is_some() {
+                    permission_check = list.is_user_can_see_el(_request_user.id) && get_community_permission(&list.get_community(), &_request_user).0;
+                }
+                else {
+                    permission_check = list.is_user_can_see_el(_request_user.id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                }
+            }
+            else {
+                if list.community_id.is_some() {
+                    permission_check = list.is_anon_user_can_see_el() && get_anon_community_permission(&list.get_community()).0;
+                }
+                else {
+                    permission_check = list.is_anon_user_can_see_el() && get_anon_user_permission(&list.get_creator()).0;
+                }
+            }
+
+            if permission_check {
+                object_list = comment.get_reactions_users_of_types(20, step.into(), reaction);
+                if page > 1 && comment.reactions > (page * 20) {
+                    next_page_number = page + 1;
+                }
+                else {
+                    if comment.reactions > 20 {
+                        next_page_number = 2;
+                    }
+                }
+                text = comment.count_reactions_of_types_ru(reaction);
+                reaction_list = list.get_reactions_list();
+            }
+        }
+        else if code == "cph".to_string() {
+            use crate::utils::get_photo_comment;
+
+            let comment = get_photo_comment(item_id);
+            let list = comment.get_list();
+            if is_auth {
+                let _request_user = get_request_user_data(session);
+                if list.community_id.is_some() {
+                    permission_check = list.is_user_can_see_el(_request_user.id) && get_community_permission(&list.get_community(), &_request_user).0;
+                }
+                else {
+                    permission_check = list.is_user_can_see_el(_request_user.id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                }
+            }
+            else {
+                if list.community_id.is_some() {
+                    permission_check = list.is_anon_user_can_see_el() && get_anon_community_permission(&list.get_community()).0;
+                }
+                else {
+                    permission_check = list.is_anon_user_can_see_el() && get_anon_user_permission(&list.get_creator()).0;
+                }
+            }
+
+            if permission_check {
+                object_list = comment.get_reactions_users_of_types(20, step.into(), reaction);
+                if page > 1 && comment.reactions > (page * 20) {
+                    next_page_number = page + 1;
+                }
+                else {
+                    if comment.reactions > 20 {
+                        next_page_number = 2;
+                    }
+                }
+                text = comment.count_reactions_of_types_ru(reaction);
+                reaction_list = list.get_reactions_list();
+            }
+        }
+        else if code == "cgo".to_string() {
+            use crate::utils::get_good_comment;
+
+            let comment = get_good_comment(item_id);
+            let list = comment.get_list();
+            if is_auth {
+                let _request_user = get_request_user_data(session);
+                if list.community_id.is_some() {
+                    permission_check = list.is_user_can_see_el(_request_user.id) && get_community_permission(&list.get_community(), &_request_user).0;
+                }
+                else {
+                    permission_check = list.is_user_can_see_el(_request_user.id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                }
+            }
+            else {
+                if list.community_id.is_some() {
+                    permission_check = list.is_anon_user_can_see_el() && get_anon_community_permission(&list.get_community()).0;
+                }
+                else {
+                    permission_check = list.is_anon_user_can_see_el() && get_anon_user_permission(&list.get_creator()).0;
+                }
+            }
+
+            if permission_check {
+                object_list = comment.get_reactions_users_of_types(20, step.into(), reaction);
+                if page > 1 && comment.reactions > (page * 20) {
+                    next_page_number = page + 1;
+                }
+                else {
+                    if comment.reactions > 20 {
+                        next_page_number = 2;
+                    }
+                }
+                text = comment.count_reactions_of_types_ru(reaction);
+                reaction_list = list.get_reactions_list();
+            }
+        }
+        else if code == "cvi".to_string() {
+            use crate::utils::get_video_comment;
+
+            let comment = get_video_comment(item_id);
+            let list = comment.get_list();
+            if is_auth {
+                let _request_user = get_request_user_data(session);
+                if list.community_id.is_some() {
+                    permission_check = list.is_user_can_see_el(_request_user.id) && get_community_permission(&list.get_community(), &_request_user).0;
+                }
+                else {
+                    permission_check = list.is_user_can_see_el(_request_user.id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                }
+            }
+            else {
+                if list.community_id.is_some() {
+                    permission_check = list.is_anon_user_can_see_el() && get_anon_community_permission(&list.get_community()).0;
+                }
+                else {
+                    permission_check = list.is_anon_user_can_see_el() && get_anon_user_permission(&list.get_creator()).0;
+                }
+            }
+
+            if permission_check {
+                object_list = comment.get_reactions_users_of_types(20, step.into(), reaction);
+                if page > 1 && comment.reactions > (page * 20) {
+                    next_page_number = page + 1;
+                }
+                else {
+                    if comment.reactions > 20 {
+                        next_page_number = 2;
+                    }
+                }
+                text = comment.count_reactions_of_types_ru(reaction);
+                reaction_list = list.get_reactions_list();
+            }
+        }
+    }
+    else {
+
     if code == "pos".to_string() {
         use crate::utils::get_post;
 
@@ -1175,6 +1328,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
             text = item.count_reactions_of_types_ru(reaction);
             reaction_list = list.get_reactions_list();
         }
+    }
     }
 
     if permission_check == false {
