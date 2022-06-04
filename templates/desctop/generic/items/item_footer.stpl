@@ -15,7 +15,7 @@
 
         <% let count = object_reactions_count.count_reactions_of_types(*reaction); %>
         <% if count != 0 { %>
-          <span class="react" data-react="<%= reaction %>">
+          <span class="react" data-type="<%= object.get_code() %>" data-react="<%= reaction %>">
             <span class="like <% if user_reaction != 0 { %>active<% } %>">
               <img style="width:22px" src="/static/images/reactions/<%= reaction %>.png" alt="img" />
               <span class="reactions_count"><%= count %></span>
@@ -24,7 +24,7 @@
             <span class="like_window">
               <div class="like_pop">
                 <span class="item_reactions pointer">Отреагировали: <span data-count="like"><%= count %></span></span>
-                <span style="display:flex;flex-wrap:wrap;">
+                <span style="display:flex;flex-wrap:wrap;margin-top:10px;">
                   <% for user in object.get_6_reactions_users_of_types(*reaction).iter() { %>
                     <% include!("../../generic/user/voter.stpl"); %>
                   <% } %>

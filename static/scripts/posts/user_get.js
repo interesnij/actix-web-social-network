@@ -176,18 +176,15 @@ on('body', 'click', '.edit_list', function() {
   create_fullscreen(url + pk + "/", "worker_fullscreen");
 });
 
-on('body', 'click', '.comment_likes', function() {
-  create_fullscreen("/comments/likes/?types=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
-});
-on('#ajax', 'click', '.comment_dislikes', function() {
-  create_fullscreen("/comments/dislikes/?types=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
-});
-
-on('body', 'click', '.item_likes', function() {
-  create_fullscreen("/load/likes/?types=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
-});
-on('body', 'click', '.item_dislikes', function() {
-  create_fullscreen("/load/dislikes/?types=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
+on('body', 'click', '.item_reactions', function() {
+  react = this.parentElement.parentElement.parentElement;
+  create_fullscreen(
+    "/load/reactions/?types="
+    + react.getAttribute("data-type")
+    + "&reaction="
+    + react.getAttribute("data-react")
+    , "worker_fullscreen"
+  );
 });
 
 on('#ajax', 'click', '.input_new_post_in_list', function() {
