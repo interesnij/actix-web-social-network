@@ -812,7 +812,7 @@ function send_reaction(item, pk, _link) {
                  else {
                    count += 1;
                  }
-                 if count > 0 {
+                 if (count > 0) {
                    react_block_exists = true;
                  }
 
