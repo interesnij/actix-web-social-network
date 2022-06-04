@@ -1,11 +1,12 @@
 <div class="form-group">
   <div class="row">
     <div class="col-md-6">
+      <% let full_type = types + &item_id.to_string(); %>
       <% if request_user.id == creator_id { %>
       <div class="" style="margin-bottom:10px">
         <label>Это Ваш список</label>
       </div>
-      <% } else if request_user.is_list_in_collection(&types) { %>
+      <% } else if request_user.is_list_in_collection(&full_type) { %>
       <div class="" style="margin-bottom:10px">
         <label>Список в коллекции - <a class="pointer remove_list_in_user_collections" data-pk="<%= request_user.id %>">удалить</a></label>
       </div>
