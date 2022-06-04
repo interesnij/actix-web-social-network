@@ -852,7 +852,7 @@ function send_reaction(item, pk, _link) {
 
                 // создаем иконку и счетчик
                 $like = document.createElement("div");
-                $like.classList.add("like", "border_radius");
+                $like.classList.add("like", "border_radius", "send_react");
                 $like_img = document.createElement("img");
                 $like_img.src = "/static/images/reactions/" + pk + ".png";
                 $like_img.style.width = "22px";
