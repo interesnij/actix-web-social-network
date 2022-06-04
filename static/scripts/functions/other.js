@@ -798,12 +798,12 @@ function send_reaction(item, pk, _link) {
               // если такая реакция уже есть у объекта
               if (reactions_block.querySelector('[data-react=' + '"' + id + '"' + ']')) {
                  cur_block = reactions_block.querySelector('[data-react=' + '"' + id + '"' + ']');
-                 react_block_exists = true;
 
                  // если пользователь уже ставил эту реакцию
                  if (cur_block.querySelector(".active")) {
                    cur_block.querySelector(".like").classList.remove("active");
                    count -= 1;
+
                    if (cur_block.querySelector(".like_pop")) {
                        pop = cur_block.querySelector(".like_pop");
                        pop.querySelector('[href=' + '"' + user_pk + '"' + ']').remove();
@@ -811,6 +811,9 @@ function send_reaction(item, pk, _link) {
                  }
                  else {
                    count += 1;
+                 }
+                 if count > 0 {
+                   react_block_exists = true;
                  }
 
                  console.log("id item", id);
