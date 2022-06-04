@@ -404,13 +404,15 @@ on('body', 'click', '.react_window_toggle', function() {
   main_container = document.body.querySelector(".main-container");
   //add_list_in_all_stat("dislike_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
-on('body', 'click', '.dislike_item', function() {
-  _this = this;
-  item = _this.parentElement;
-  send_dislike(item, "/users/progs/dislike_item/?types=" + item.getAttribute("data-type"));
-  dislike_reload(this.previousElementSibling, this.nextElementSibling, "item_dislikes");
+on('body', 'click', '.like', function() {
+  react_section = this.parentElement.parentElement;
+  pk = this.parentElement.getAttribute("data-pk");
+  send_reaction(
+    react_section,
+    pk,
+    "/users/progs/send_reaction/?types=" + react_section.getAttribute("data-type") + "&reaction=" + pk);
 
-  //main_container = document.body.querySelector(".main-container");
+  main_container = document.body.querySelector(".main-container");
   //add_list_in_all_stat("dislike_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 
