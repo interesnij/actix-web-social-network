@@ -30,7 +30,7 @@
 
         <div class="">
             <div class="row">
-                <div class="col" data-type="<%= reply.get_code() %>" data-subtype="comment">
+                <div class="col react_style" data-type="<%= reply.get_code() %>" data-subtype="comment">
                 Реакции
 
                     <% if request_user.id == reply_creator.id { %>

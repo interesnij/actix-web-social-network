@@ -1,3 +1,5 @@
+<% let reactions_list = list.get_reactions_list(); %>
+
 <span class="stream_comments comments_block_container">
   <% for comment in object_list.iter() { %>
     <% if comment.is_deleted() { %>
