@@ -1039,10 +1039,10 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
         if is_auth {
             let _request_user = get_request_user_data(session);
             if list.community_id.is_some() {
-                permission_check = list.is_user_can_see_el(*_request_user.id) && get_community_permission(&list.get_community(), &_request_user).0;
+                permission_check = list.is_user_can_see_el(_request_user.id) && get_community_permission(&list.get_community(), &_request_user).0;
             }
             else {
-                permission_check = list.is_user_can_see_el(*_request_user.id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                permission_check = list.is_user_can_see_el(_request_user.id) && get_user_permission(&list.get_creator(), &_request_user).0;
             }
         }
         else {
@@ -1050,7 +1050,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
                 permission_check = list.is_anon_user_can_see_el() && get_anon_community_permission(&list.get_community()).0;
             }
             else {
-                permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                permission_check = list.is_anon_user_can_see_el() && get_anon_user_permission(&list.get_creator()).0;
             }
         }
 
@@ -1076,10 +1076,10 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
         if is_auth {
             let _request_user = get_request_user_data(session);
             if list.community_id.is_some() {
-                permission_check = list.is_user_can_see_el(*_request_user.id) && get_community_permission(&list.get_community(), &_request_user).0;
+                permission_check = list.is_user_can_see_el(_request_user.id) && get_community_permission(&list.get_community(), &_request_user).0;
             }
             else {
-                permission_check = list.is_user_can_see_el(*_request_user.id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                permission_check = list.is_user_can_see_el(_request_user.id) && get_user_permission(&list.get_creator(), &_request_user).0;
             }
         }
         else {
@@ -1087,7 +1087,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
                 permission_check = list.is_anon_user_can_see_el() && get_anon_community_permission(&list.get_community()).0;
             }
             else {
-                permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                permission_check = list.is_anon_user_can_see_el() && get_anon_user_permission(&list.get_creator()).0;
             }
         }
         if permission_check {
@@ -1112,10 +1112,10 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
         if is_auth {
             let _request_user = get_request_user_data(session);
             if list.community_id.is_some() {
-                permission_check = list.is_user_can_see_el(*_request_user.id) && get_community_permission(&list.get_community(), &_request_user).0;
+                permission_check = list.is_user_can_see_el(_request_user.id) && get_community_permission(&list.get_community(), &_request_user).0;
             }
             else {
-                permission_check = list.is_user_can_see_el(*_request_user.id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                permission_check = list.is_user_can_see_el(_request_user.id) && get_user_permission(&list.get_creator(), &_request_user).0;
             }
         }
         else {
@@ -1123,7 +1123,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
                 permission_check = list.is_anon_user_can_see_el() && get_anon_community_permission(&list.get_community()).0;
             }
             else {
-                permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                permission_check = list.is_anon_user_can_see_el() && get_anon_user_permission(&list.get_creator()).0;
             }
         }
         if permission_check {
@@ -1148,10 +1148,10 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
         if is_auth {
             let _request_user = get_request_user_data(session);
             if list.community_id.is_some() {
-                permission_check = list.is_user_can_see_el(*_request_user.id) && get_community_permission(&list.get_community(), &_request_user).0;
+                permission_check = list.is_user_can_see_el(_request_user.id) && get_community_permission(&list.get_community(), &_request_user).0;
             }
             else {
-                permission_check = list.is_user_can_see_el(*_request_user.id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                permission_check = list.is_user_can_see_el(_request_user.id) && get_user_permission(&list.get_creator(), &_request_user).0;
             }
         }
         else {
@@ -1159,7 +1159,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
                 permission_check = list.is_anon_user_can_see_el() && get_anon_community_permission(&list.get_community()).0;
             }
             else {
-                permission_check = list.is_user_can_see_el(*_request_user_id) && get_user_permission(&list.get_creator(), &_request_user).0;
+                permission_check = list.is_anon_user_can_see_el() && get_anon_user_permission(&list.get_creator()).0;
             }
         }
         if permission_check {
