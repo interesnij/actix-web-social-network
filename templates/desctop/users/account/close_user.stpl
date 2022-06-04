@@ -35,7 +35,7 @@
             </div>
             <div class="col-md-6">
             <span><%= user.birthday.to_string() %></span><br>
-            <span><%= user.gender %></span><br>
+            <span><%= user.get_gender() %></span><br>
             </div>
           </div>
       </div>

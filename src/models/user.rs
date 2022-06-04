@@ -5294,6 +5294,12 @@ impl User {
         }
         return "".to_string();
     }
+    pub fn get_gender(&self) -> String {
+        if self.gender == "b" {
+            return "Женский".to_string();
+        }
+        return "Мужской".to_string();
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
