@@ -810,6 +810,15 @@ function send_reaction(item, pk, _link) {
                  }
                  else if (pk == id){
                    cur_block.querySelector(".like").classList.add("border_radius");
+                   $a = document.createElement("a");
+                   $a.style.paddingRight = "10px";
+                   $a.setAttribute("href", user_pk);
+                   $figure = document.createElement("figure");
+                   $figure.style.margin = "0";
+                   $figure.title = user_name;
+                   $figure.append($img)
+                   $a.append($figure);
+                   cur_block.querySelector(".like_pop").append($a);
                  }
 
                  console.log("id item", id);
