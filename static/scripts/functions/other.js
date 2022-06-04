@@ -818,7 +818,7 @@ function send_reaction(item, pk, _link) {
                    $figure.title = user_name;
                    $figure.append($img)
                    $a.append($figure);
-                   cur_block.querySelector(".like_pop").append($a);
+                   cur_block.querySelector(".like_list").append($a);
                  }
 
                  console.log("id item", id);
