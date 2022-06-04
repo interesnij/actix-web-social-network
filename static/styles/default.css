@@ -6,6 +6,10 @@
 .t_f {
   cursor: pointer;
 }
+.border_radius {
+  border-radius: 10px;
+  padding: 1px 3px;
+}
 .load_comments_list {
   cursor: pointer;
 }

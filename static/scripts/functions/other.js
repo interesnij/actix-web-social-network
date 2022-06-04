@@ -808,6 +808,9 @@ function send_reaction(item, pk, _link) {
                        pop.querySelector('[href=' + '"' + user_pk + '"' + ']').remove();
                      }
                  }
+                 else {
+                   cur_block.querySelector(".like").classList.add("border_radius");
+                 }
 
                  console.log("id item", id);
                  console.log("count item", count);

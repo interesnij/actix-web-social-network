@@ -27,8 +27,6 @@ a:hover{
 }
 .border_radius{
   border: 1px solid rgba(255, 255, 255, 0.7) !important;
-  border-radius: 20px;
-  padding: 2px;
 }
 
 .border-right {

@@ -33,8 +33,6 @@ a {
 }
 .border_radius{
   border: 1px solid rgba(127,127,127, 0.7) !important;
-  border-radius: 20px;
-  padding: 2px;
 }
 .border-right {
   border-right: 1px solid rgba(127, 127, 127, 0.7) !important;
