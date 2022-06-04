@@ -406,7 +406,7 @@ on('body', 'click', '.react_window_toggle', function() {
 });
 on('body', 'click', '.like', function() {
   react_section = this.parentElement.parentElement.parentElement;
-  pk = this.parentElement.getAttribute("data-pk");
+  pk = this.parentElement.getAttribute("data-react");
   send_reaction(
     react_section,
     pk,
