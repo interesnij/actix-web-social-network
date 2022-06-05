@@ -1,4 +1,4 @@
-pub mod chat_pages;
+pub mod pages;
 use actix_web::web::ServiceConfig;
 
 pub use self::{
