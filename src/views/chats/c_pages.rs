@@ -922,7 +922,7 @@ pub async fn chat_info_page(session: Session, req: HttpRequest, _id: web::Path<i
     }
 }
 
-pub async fn favourite_messages_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+pub async fn favourites_messages_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         use crate::utils::PaginationParams;
 
@@ -982,7 +982,7 @@ pub async fn favourite_messages_page(session: Session, req: HttpRequest) -> acti
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         } else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/chats/chat/fixed_list.stpl")]
+            #[template(path = "mobile/chats/chat/favourites_list.stpl")]
             struct Template {
                 title:        String,
                 request_user: User,
