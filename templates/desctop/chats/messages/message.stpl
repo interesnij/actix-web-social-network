@@ -22,8 +22,8 @@
     </figure>
     <div class="media-body t_f">
       <h5 class="time-title mb-0">
-        <a href="<%= object.link %>" class="ajax creator_link">
-          <span class="creator_name"><%= object.get_full_name() %></span>
+        <a href="<%= creator.link %>" class="ajax creator_link">
+          <span class="creator_name"><%= creator.get_full_name() %></span>
         </a>
         <span class="favourite_icon">
           <% if object.is_favourite(request_user.id) { %>
@@ -107,14 +107,14 @@
             <% } %>
           <% } %>
 
-          <% if parent.content.is_some() { %>
+          <% if repost.content.is_some() { %>
             <div class="fullscreen text_support pointer">
-              <%- parent.get_format_text() %>
+              <%- repost.get_format_text() %>
             </div>
           <% } %>
 
-          <% if parent.attach.is_some() { %>
-            <%- parent.get_attach(request_user.id) %>
+          <% if repost.attach.is_some() { %>
+            <%- repost.get_attach(request_user.id) %>
           <% } %>
         </div>
 
@@ -125,6 +125,7 @@
 
         <div class="transfers_container border-left">
           <% for message in object.get_transfers().iter() { %>
+
             <% let transfer_creator = message.get_creator(); %>
         <div class="media p-1">
             <figure>
@@ -134,8 +135,8 @@
             </figure>
             <div class="media-body">
               <h5 class="time-title mb-0">
-                <a href="<%= object.link %>" class="ajax creator_link">
-                  <span class="creator_name"><%= object.get_full_name() %></span>
+                <a href="<%= transfer_creator.link %>" class="ajax creator_link">
+                  <span class="creator_name"><%= transfer_creator.get_full_name() %></span>
                 </a>
                 <span class="favourite_icon">
                   <% if object.is_favourite(request_user.id) { %>
@@ -182,6 +183,7 @@
             </div>
         </div>
         <% } %>
+
         </div>
 
         <% } %>
