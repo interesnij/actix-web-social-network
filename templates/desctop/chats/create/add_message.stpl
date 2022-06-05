@@ -9,7 +9,7 @@
             </div>
             <div class="card-footer">
                 <button class="btn border this_mob_fullscreen_hide">Отмена</button>
-                <button type="button" class="btn btn-success float-right" id="send_page_message_btn" data-pk="<%= member.pk %>">Отправить</button>
+                <button type="button" class="btn btn-success float-right" id="send_page_message_btn" data-pk="<%= recipient.id %>">Отправить</button>
             </div>
         </div>
     </form>

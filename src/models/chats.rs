@@ -685,7 +685,7 @@ impl Chat {
             .load::<Message>(&_connection)
             .expect("E");
     }
-    pub fn read_messages(&self, user_id: &i32 ) -> Vec<Message> {
+    pub fn read_messages(&self, user_id: &i32 ) -> bool {
         use crate::schema::messages::dsl::messages;
 
         let _connection = establish_connection();
@@ -696,10 +696,12 @@ impl Chat {
             .load::<Message>(&_connection)
             .expect("E");
 
-        diesel::update(unread_messages)
-            .set(schema::messages::unread.eq(false))
-            .get_result::<Message>(&_connection)
-            .expect("Error.");
+        for message in unread_messages.iter() {
+            diesel::update(&message)
+                .set(schema::messages::unread.eq(false))
+                .get_result::<Message>(&_connection)
+                .expect("Error.");
+        }
     }
     pub fn is_empty(&self, user_id: i32) -> bool {
         use crate::schema::messages::dsl::messages;
