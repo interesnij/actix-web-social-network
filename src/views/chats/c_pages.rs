@@ -270,7 +270,7 @@ pub async fn load_message_page(session: Session, _id: web::Path<i32>) -> actix_w
         let _chat = _message.get_chat();
 
         #[derive(TemplateOnce)]
-        #[template(path = "desctop/chats/create/add_message.stpl")]
+        #[template(path = "desctop/chats/create/create_chat.stpl")]
         struct Template {
             request_user: User,
             object:       Chat,
@@ -297,7 +297,7 @@ pub async fn load_chat_message_page(session: Session, _id: web::Path<i32>) -> ac
         //_message.get_chat().read_messages(&_request_user.id);
 
         #[derive(TemplateOnce)]
-        #[template(path = "desctop/chats/create/add_message.stpl")]
+        #[template(path = "desctop/chats/create/create_chat.stpl")]
         struct Template {
             request_user: User,
             object:       Message,
