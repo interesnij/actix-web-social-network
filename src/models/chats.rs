@@ -324,9 +324,27 @@ impl Chat {
             .load::<ChatUser>(&_connection)
             .expect("E");
     }
-    pub fn get_members(&self) -> Vec<User> {
-        use crate::utils::get_users_from_ids;
-        return get_users_from_ids(self.get_members_ids());
+    pub fn get_members(&self, limit: i64, offset: i64) -> Vec<User> {
+        use crate::schema::chat_users::dsl::chat_users;
+        use crate::schema::users::dsl::users;
+
+        let _connection = establish_connection();
+        let items = chat_users
+            .filter(schema::chat_users::chat_id.eq(self.id))
+            .filter(schema::chat_users::types.eq("a"))
+            .limit(limit)
+            .offset(offset)
+            .load::<ChatUser>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in items.iter() {
+            stack.push(_item.user_id);
+        };
+        return users
+            .filter(schema::users::id.eq_any(stack))
+            .load::<User>(&_connection)
+            .expect("E.");
     }
     pub fn is_muted(&self, user_id: i32) -> bool {
         use crate::schema::chat_users::dsl::chat_users;

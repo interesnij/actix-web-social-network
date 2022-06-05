@@ -1,0 +1,38 @@
+<form class="is_stat_list" data-pk="<%= chat.id %>" data-type="change_user_chat">
+   <div class="card">
+     <div class="card-header border-bottom">
+       <h5 class="content-color-primary mb-0">Редактирование чата</h5>
+     </div>
+     <div class="card-body">
+       <div class="form-group">
+         <label>Название</label>
+         <input type="text" name="name" class="form-control" id="id_name"
+         <% if chat.name.is_some() { %>
+           value="<%= chat.name.as_deref().unwrap() %>"
+         <% } else { %>
+           value=""
+         <% } %>
+         >
+       </div>
+       <div class="form-group">
+         <label>Обложка</label>
+         <div class="hide_image">
+           <input type="file" name="image" accept="image/*" id="id_image">
+         </div>
+         <div id="video_holder" class="border pointer">
+           <% if chat.image.is_some() { %>
+             <img style="width: 100%;" src="<%= chat.image.as_deref().unwrap() %>" />
+           <% } else { %>
+             <h6>Обложка</h6>
+             <i>(не обязательно)</i>
+           <% } %>
+         </div>
+       </div>
+
+     </div>
+     <div class="card-footer">
+       <button class="btn btn-sm border item_fullscreen_hide">Отмена</button>
+       <button type="button" class="btn btn-sm btn-success float-right" id="u_chat_settings_btn">Сохранить</button>
+     </div>
+   </div>
+</form>
