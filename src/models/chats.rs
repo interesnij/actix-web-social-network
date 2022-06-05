@@ -1124,7 +1124,7 @@ impl Chat {
         use crate::schema::messages::dsl::messages;
 
         let _connection = establish_connection();
-        let _q_standalone = "%".to_owned() + &_q + &"%".to_string();
+        let _q_standalone = "%".to_owned() + &q + &"%".to_string();
 
         return messages
             .filter(schema::messages::chat_id.eq(self.id))
@@ -1140,7 +1140,7 @@ impl Chat {
         use crate::schema::messages::dsl::messages;
 
         let _connection = establish_connection();
-        let _q_standalone = "%".to_owned() + &_q + &"%".to_string();
+        let _q_standalone = "%".to_owned() + &q + &"%".to_string();
 
         return messages
             .filter(schema::messages::chat_id.eq(self.id))

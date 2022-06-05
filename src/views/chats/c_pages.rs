@@ -1031,7 +1031,7 @@ pub async fn chat_search_page(session: Session, req: HttpRequest, _id: web::Path
                 page = params.page.unwrap();
             }
             if params.q.is_some() {
-                q = params.q.as_deref().unwrap();
+                q = params.q.as_deref().unwrap().to_string();
             }
         }
 
@@ -1041,7 +1041,7 @@ pub async fn chat_search_page(session: Session, req: HttpRequest, _id: web::Path
             if page > 1 {
                 let step = (page - 1) * 20;
                 object_list = _chat.get_search_list(q, 20, step.into());
-                if count > (page * 20) {
+                if count > ((page * 20)).try_into().unwrap() {
                     next_page_number = page + 1;
                 }
             }
