@@ -222,7 +222,7 @@
 
                   <% if transfer_repost.content.is_some() { %>
                     <div class="fullscreen text_support pointer">
-                      <%- parent.get_format_text() %>
+                      <%- transfer_repost.get_format_text() %>
                     </div>
                   <% } %>
 
