@@ -38,7 +38,7 @@
                 <% } else if object.sticker_id.is_some() { %>
                   <% let sticker = object.get_sticker(); %>
                 <div class="message_sticker mt-1 t_f">
-                  <img src="<%= sticker.image.as_deref().unwrap() %>" style="width: 128px;" tooltip="<%= sticker.name %>" flow="up">
+                  <img src="<%= sticker.image %>" style="width: 128px;" tooltip="<%= sticker.name %>" flow="up">
                 </div>
                 <% } else { %>
 
@@ -61,7 +61,7 @@
               </div>
             </div>
             <p class="small">
-              <% if chat.is_user_can_fix_item(request_user.id) { %>
+              <% if chat.is_user_can_add_fix(request_user.id) { %>
                 <span class="u_message_unfixed pointer underline">Открепить</span>
               <% } %>
             </p>
