@@ -146,7 +146,7 @@
                  &nbsp;
                <% } %>
                <% } else if chat.can_mention == "d" && chat.get_can_send_mention_include_users_ids().len() > 0 { %>:
-               <% for object in chat.get_can_send_mention_include_users_ids().iter() { %>
+               <% for object in chat.get_can_send_mention_include_users().iter() { %>
                  <a href="<%= object.link %>" target="_blank">
                    <%= object.get_full_name() %>
                  </a>

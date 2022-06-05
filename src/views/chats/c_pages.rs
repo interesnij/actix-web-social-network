@@ -456,7 +456,7 @@ pub async fn chat_exclude_users_load(session: Session, req: HttpRequest, _id: we
         }
         else if types == "can_fix_item".to_string() {
             text = "закреплять сообщения".to_string();
-            users_list = _chat.get_can_fix_item_exclude_users()
+            users_list = _chat.get_can_add_fix_exclude_users()
         }
         else if types == "can_mention".to_string() {
             text = "упоминать о чате".to_string();
@@ -484,6 +484,7 @@ pub async fn chat_exclude_users_load(session: Session, req: HttpRequest, _id: we
             #[template(path = "desctop/chats/chat/info/exclude_users.stpl")]
             struct Template {
                 request_user:     User,
+                chat:             Chat,
                 object_list:      Vec<User>,
                 users:            Vec<User>,
                 next_page_number: i32,
@@ -508,21 +509,23 @@ pub async fn chat_exclude_users_load(session: Session, req: HttpRequest, _id: we
             #[derive(TemplateOnce)]
             #[template(path = "mobile/chats/chat/info/exclude_users.stpl")]
             struct Template {
-                request_user:        User,
-                object_list:         Vec<User>,
-                users:               Vec<User>,
-                next_page_number:    i32,
-                types:               String,
-                count:               i32,
+                request_user:     User,
+                chat:             Chat,
+                object_list:      Vec<User>,
+                users:            Vec<User>,
+                next_page_number: i32,
+                types:            String,
+                count:            i32,
             }
 
             let body = Template {
-                request_user:        _request_user,
-                object_list:         object_list,
-                users:               users_list,
-                next_page_number:    next_page_number,
-                types:               types,
-                count:               count,
+                request_user:     _request_user,
+                object_list:      object_list,
+                users:            users_list,
+                next_page_number: next_page_number,
+                types:            types,
+                count:            count,
+                chat:             chat,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
