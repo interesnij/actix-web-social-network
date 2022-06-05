@@ -1,0 +1,5 @@
+<span class="dropdown-item select_perm_dropdown" data-value="a">Все участники</span>
+<span class="dropdown-item select_perm_dropdown" data-value="b">Создатель</span>
+<span class="dropdown-item select_perm_dropdown" data-value="c">Создатель и админы</span>
+<span class="dropdown-item select_perm_dropdown" data-value="d">Участники, кроме</span>
+<span class="dropdown-item select_perm_dropdown" data-value="e">Некоторые участники</span>
