@@ -23,10 +23,11 @@ pub fn routes(cfg: &mut web::ServiceConfig) {
     .configure(auth::auth_routes)
     .configure(manager_routes)
     .configure(pages::pages_routes)
+    .configure(chat_routes)
     .configure(user_routes)
     .configure(community_routes)
     .configure(post_routes)
-    .configure(chat_routes)
+
     .configure(docs_routes)
     .configure(goods_routes)
     .configure(music_routes)
