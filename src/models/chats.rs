@@ -1923,13 +1923,22 @@ impl Message {
             .load::<MessageTransfer>(&_connection)
             .expect("E").len() > 0;
     }
-    pub fn get_transfers(&self) -> Vec<MessageTransfer> {
+    pub fn get_transfers(&self) -> Vec<Message> {
         use crate::schema::message_transfers::dsl::message_transfers;
 
         let _connection = establish_connection();
-        return message_transfers
+        let transfers = message_transfers
             .filter(schema::message_transfers::message_id.eq(self.id))
             .load::<MessageTransfer>(&_connection)
+            .expect("E");
+
+        let mut stack = Vec::new();
+        for _item in transfers.iter() {
+            stack.push(_item.transfer_id);
+        };
+        return messages
+            .filter(schema::messages::id.eq_any(stack))
+            .load::<Message>(&_connection)
             .expect("E");
     }
     pub fn get_draft_transfers_block(&self) -> String {
