@@ -12,14 +12,9 @@
         </figure>
         <div class="media-body">
           <h6>
-            <% if chat.name.is_some() { %>
-              <%= chat.name %>
-            <% } else { %>
-              Групповой чат
-            <% } %>
-            &nbsp;
+            <%= chat.get_name(request_user.id) %>
           </h6>
-          <% if is_can_see_settings { %>
+          <% if chat.is_user_can_see_settings(request_user.id) { %>
               <span class="mb-0 user_chat_settings pointer">
                 Настройки
               </span>
@@ -29,7 +24,7 @@
               </span>
           <% } %>
 
-          <% if is_can_see_log { %>
+          <% if chat.is_user_can_see_log(request_user.id) { %>
               <span class="mb-0 user_chat_logs pointer">
               |  Журнал действий
               </span>
@@ -43,7 +38,7 @@
   </div>
   <div class="card-body">
 
-     <% if is_user_can_add_members { %>
+     <% if chat.is_user_can_add_in_chat(request_user.id) { %>
     <div class="list-group-item border-top pointer u_add_members_in_chat mb-2" chat-pk="<%= chat.id %>">
       <div class="media">
           <figure>
@@ -61,8 +56,8 @@
 <p class="mb-0">
   <%= chat.get_members_count_ru() %>
 </p>
-<% for object in object_list { %>
-<li class="list-group-item border-top pag" data-pk="{{ object.pk }}">
+<% for object in object_list.iter() { %>
+<li class="list-group-item border-top pag" data-pk="<%= object.id %>">
   <div class="media">
       <a href="<%= object.link %>" target="_blank">
           <figure>
@@ -88,7 +83,7 @@
             <% if request_user.is_administrator_of_chat(chat.id) { %>
               <span class="dropdown-item remove_user_from_chat">Удалить из беседы</span>
             <% } %>
-            <% if is_can_add_admin { %>
+            <% if chat.is_user_can_add_admin(request_user.id) { %>
               <span class="dropdown-item remove_perm_user_chat">Расжаловать</span>
             <% } %>
           </div>
@@ -100,7 +95,7 @@
             <% if request_user.is_administrator_of_chat(chat.id) { %>
               <span class="dropdown-item remove_user_from_chat">Удалить из беседы</span>
             <% } %>
-            <% if is_can_add_admin { %>
+            <% if chat.is_user_can_add_admin(request_user.id) { %>
               <span class="dropdown-item add_perm_user_chat">Сделать админом</span>
             <% } %>
           </div>

@@ -6,7 +6,7 @@
       </div>
     </div>
     <button class="btn btn-sm mb-2 border user_create_chat" data-pk="<%= request_user.id %>" style="width:100%;">Создать чат</button>
-    <div class="card mt-2 <% if favourite_messages_count == 0 { %>hidden<% } %>">
+    <div class="card mt-2 <% if request_user.favourite_messages_count() == 0 { %>hidden<% } %>">
       <div class="card-header">
         <div class="media favourite_block">
           <a class="favourite_messages_list pointer">Избранное (<span class="favourite_messages_count"><%= favourite_messages_count %></span>)</a>
@@ -20,7 +20,7 @@
         </div>
       </div>
     </div>
-    <% if request_user.get_deleted_support_chats().len() > 0 { %>
+    <% if request_user.count_deleted_support_chats() > 0 { %>
     <div class="card mt-2">
       <div class="card-header">
         <div class="media">

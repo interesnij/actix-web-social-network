@@ -539,13 +539,15 @@ impl Chat {
         }
         return false;
     }
-    pub fn get_fixed_messages(&self) -> Vec<Message> {
+    pub fn get_fixed_messages(&self, limit: i64, offset: i64) -> Vec<Message> {
         use crate::schema::messages::dsl::messages;
 
         let _connection = establish_connection();
         return messages
             .filter(schema::messages::chat_id.eq(self.id))
             .filter(schema::messages::types.eq_any(vec![7,8]))
+            .limit(limit)
+            .offset(offset)
             .load::<Message>(&_connection)
             .expect("E");
     }

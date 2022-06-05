@@ -61,7 +61,7 @@
               </div>
             </div>
             <p class="small">
-              <% if is_user_can_fix_item { %>
+              <% if chat.is_user_can_fix_item(request_user_pk) { %>
                 <span class="u_message_unfixed pointer underline">Открепить</span>
               <% } %>
             </p>
