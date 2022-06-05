@@ -260,7 +260,32 @@ pub async fn create_message_page(session: Session, _id: web::Path<i32>) -> actix
         .body(body))
     }
 }
+pub async fn load_message_page(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if !is_signed_in(&session) {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        let _request_user = get_request_user_data(session);
+        let _message = get_message(*_id);
+        let _chat = _message.get_chat();
 
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/chats/create/add_message.stpl")]
+        struct Template {
+            request_user: User,
+            object:       Chat,
+        }
+        let body = Template {
+            request_user: _request_user,
+            object:       _chat,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok()
+        .content_type("text/html; charset=utf-8")
+        .body(body))
+    }
+}
 
 pub async fn load_chat_message_page(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if !is_signed_in(&session) {
@@ -272,7 +297,7 @@ pub async fn load_chat_message_page(session: Session, _id: web::Path<i32>) -> ac
         //_message.get_chat().read_messages(&_request_user.id);
 
         #[derive(TemplateOnce)]
-        #[template(path = "desctop/chats/create/load_chat_message.stpl")]
+        #[template(path = "desctop/chats/create/add_message.stpl")]
         struct Template {
             request_user: User,
             object:       Message,
