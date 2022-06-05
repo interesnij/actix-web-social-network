@@ -685,25 +685,25 @@ impl Chat {
             .load::<Message>(&_connection)
             .expect("E");
     }
-    pub fn read_messages(&self, user_id: &i32 ) -> bool {
-        use crate::schema::messages::dsl::messages;
+    //pub fn read_messages(&self, user_id: &i32 ) -> bool {
+    //    use crate::schema::messages::dsl::messages;
+//
+    //    let _connection = establish_connection();
+    //    let unread_messages = messages
+    //        .filter(schema::messages::chat_id.eq(self.id))
+    //        .filter(schema::messages::unread.eq(true))
+    //        .filter(schema::messages::user_id.ne(user_id))
+    //        .load::<Message>(&_connection)
+    //        .expect("E");
 
-        let _connection = establish_connection();
-        let unread_messages = messages
-            .filter(schema::messages::chat_id.eq(self.id))
-            .filter(schema::messages::unread.eq(true))
-            .filter(schema::messages::user_id.ne(user_id))
-            .load::<Message>(&_connection)
-            .expect("E");
-
-        for message in unread_messages.iter() {
-            diesel::update(message)
-                .set(schema::messages::unread.eq(false))
-                .get_result::<Message>(&_connection)
-                .expect("Error.");
-        }
-        return true;
-    }
+    //    for message in unread_messages.iter() {
+    //        diesel::update(message)
+    //            .set(schema::messages::unread.eq(false))
+    //            .get_result::<Message>(&_connection)
+    //            .expect("Error.");
+    //    }
+    //    return true;
+    //}
     pub fn is_empty(&self, user_id: i32) -> bool {
         use crate::schema::messages::dsl::messages;
 

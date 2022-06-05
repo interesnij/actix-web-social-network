@@ -21,8 +21,8 @@ use crate::models::{User, Chat, Message};
 pub fn pages_urls(config: &mut web::ServiceConfig) {
     config.route("/chats_list/", web::get().to(chats_list_page));
     config.route("/chat/{id}/", web::get().to(chat_page));
-    config.route("/create_chat/", web::get().to(create_chat_page));
-    config.route("/create_message/{id}/", web::get().to(create_message_page));
+    //config.route("/create_chat/", web::get().to(create_chat_page));
+    //config.route("/create_message/{id}/", web::get().to(create_message_page));
     //config.route("/load_chat_message/{id}/", web::get().to(load_chat_message_page));
     //config.route("/load_message/{id}/", web::get().to(load_message_page));
 }
@@ -299,7 +299,7 @@ pub async fn load_chat_message_page(session: Session, _id: web::Path<i32>) -> ac
 
         let _request_user = get_request_user_data(session);
         let _message = get_message(*_id);
-        _message.get_chat().read_messages(&_request_user.id);
+        //_message.get_chat().read_messages(&_request_user.id);
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/chats/create/load_chat_message.stpl")]
