@@ -1925,6 +1925,7 @@ impl Message {
     }
     pub fn get_transfers(&self) -> Vec<Message> {
         use crate::schema::message_transfers::dsl::message_transfers;
+        use crate::schema::messages::dsl::messages;
 
         let _connection = establish_connection();
         let transfers = message_transfers
