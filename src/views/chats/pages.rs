@@ -299,7 +299,7 @@ pub async fn load_chat_message_page(session: Session, _id: web::Path<i32>) -> ac
 
         let _request_user = get_request_user_data(session);
         let _message = get_message(*_id);
-        _message.get_chat().read_messages(&_request_user.id);
+        //_message.get_chat().read_messages(&_request_user.id);
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/chats/create/load_chat_message.stpl")]
