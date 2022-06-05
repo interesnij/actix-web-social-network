@@ -697,11 +697,12 @@ impl Chat {
             .expect("E");
 
         for message in unread_messages.iter() {
-            diesel::update(&message)
+            diesel::update(message)
                 .set(schema::messages::unread.eq(false))
                 .get_result::<Message>(&_connection)
                 .expect("Error.");
         }
+        return true;
     }
     pub fn is_empty(&self, user_id: i32) -> bool {
         use crate::schema::messages::dsl::messages;

@@ -1,1 +1,1 @@
-<% include!("message.stpl"); %>
+<% include!("../messages/message.stpl"); %>
