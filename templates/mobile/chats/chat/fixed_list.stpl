@@ -51,10 +51,10 @@
                 <% } %>
 
                 <% if object.post_id.is_some() { %>
-                  <% include!("../../messages/repost.stpl"); %>
+                  <% include!("../messages/repost.stpl"); %>
                 <% } %>
                 <% if object.is_have_transfer() { %>
-                  <% include!("../../messages/transfers.stpl"); %>
+                  <% include!("../messages/transfers.stpl"); %>
                 <% } %>
 
                 <% } %>

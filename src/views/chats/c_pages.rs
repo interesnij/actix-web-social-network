@@ -846,7 +846,6 @@ pub async fn chat_include_users_load(session: Session, req: HttpRequest, _id: we
 }
 
 pub async fn chat_info_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    let params_some = web::Query::<ZParams>::from_query(&req.query_string());
     let (is_desctop, page) = get_list_variables(req);
 
     if is_signed_in(&session) {
