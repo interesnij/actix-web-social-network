@@ -45,13 +45,13 @@
     <% } %>
   <% } %>
 
-  <% if parent.content.is_some() { %>
+  <% if repost.content.is_some() { %>
     <div class="fullscreen text_support pointer">
-      <%- parent.get_format_text() %>
+      <%- repost.get_format_text() %>
     </div>
   <% } %>
 
-  <% if parent.attach.is_some() { %>
-    <%- parent.get_attach(request_user.id) %>
+  <% if repost.attach.is_some() { %>
+    <%- repost.get_attach(request_user.id) %>
   <% } %>
 </div>
