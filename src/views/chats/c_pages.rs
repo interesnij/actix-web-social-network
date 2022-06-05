@@ -490,15 +490,18 @@ pub async fn chat_exclude_users_load(session: Session, req: HttpRequest, _id: we
                 next_page_number: i32,
                 types:            String,
                 count:            i32,
+                text:             String,
             }
 
             let body = Template {
                 request_user:     _request_user,
+                chat:             chat,
                 object_list:      object_list,
                 users:            users_list,
                 next_page_number: next_page_number,
                 types:            types,
                 count:            count,
+                text:             text,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -516,16 +519,18 @@ pub async fn chat_exclude_users_load(session: Session, req: HttpRequest, _id: we
                 next_page_number: i32,
                 types:            String,
                 count:            i32,
+                text:             String,
             }
 
             let body = Template {
                 request_user:     _request_user,
+                chat:             chat,
                 object_list:      object_list,
                 users:            users_list,
                 next_page_number: next_page_number,
                 types:            types,
                 count:            count,
-                chat:             chat,
+                text:             text,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
