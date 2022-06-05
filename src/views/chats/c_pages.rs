@@ -495,7 +495,7 @@ pub async fn chat_exclude_users_load(session: Session, req: HttpRequest, _id: we
 
             let body = Template {
                 request_user:     _request_user,
-                chat:             chat,
+                chat:             _chat,
                 object_list:      object_list,
                 users:            users_list,
                 next_page_number: next_page_number,
@@ -524,7 +524,7 @@ pub async fn chat_exclude_users_load(session: Session, req: HttpRequest, _id: we
 
             let body = Template {
                 request_user:     _request_user,
-                chat:             chat,
+                chat:             _chat,
                 object_list:      object_list,
                 users:            users_list,
                 next_page_number: next_page_number,
