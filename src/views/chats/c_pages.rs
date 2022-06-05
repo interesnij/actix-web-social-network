@@ -21,9 +21,10 @@ use crate::models::{User, Chat, Message};
 
 pub fn c_pages_urls(config: &mut web::ServiceConfig) {
     config.route("/chats_list/", web::get().to(chats_list_page));
-    config.route("/fixed_messages/{id}/", web::get().to(fixed_messages_page));
+    config.route("/chat/fixed_messages/{id}/", web::get().to(fixed_messages_page));
+    config.route("/chat/favourites_messages/", web::get().to(favourites_messages_page));
     config.route("/chat/{id}/", web::get().to(chat_page));
-    config.route("/closed_support_chats/", web::get().to(closed_support_chats_page));
+    config.route("/chat/closed_support_chats/", web::get().to(closed_support_chats_page));
     config.route("/chat/create_chat/", web::get().to(create_chat_page));
     config.route("/chat/edit_chat/{id}/", web::get().to(edit_chat_page));
     config.route("/chat/create_message/{id}/", web::get().to(create_message_page));
@@ -911,6 +912,90 @@ pub async fn chat_info_page(session: Session, req: HttpRequest, _id: web::Path<i
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 count:            count,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn favourite_messages_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        use crate::utils::PaginationParams;
+
+        let params_some = web::Query::<PaginationParams>::from_query(&req.query_string());
+        let is_desctop = is_desctop(req);
+        let mut page: i32 = 0;
+        if params_some.is_ok() {
+            let params = params_some.unwrap();
+            if params.page.is_some() {
+                page = params.page.unwrap();
+            }
+            else {
+                page = 1;
+            }
+        }
+        else {
+            page = 1;
+        }
+        let mut next_page_number = 0;
+        let object_list: Vec<Message>;
+
+        let _request_user = get_request_user_data(session);
+        let count = _request_user.favourite_messages_count();
+
+        if page > 1 {
+            let step = (page - 1) * 20;
+            object_list = _request_user.get_favourite_messages(20, step.into());
+            if count > (page * 20).try_into().unwrap() {
+                next_page_number = page + 1;
+            }
+        }
+        else {
+            object_list = _request_user.get_favourite_messages(20, 0);
+            if count > 20.try_into().unwrap() {
+                next_page_number = 2;
+            }
+        }
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/chats/chat/favourites_list.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+                count:        usize,
+                next_page_number: i32,
+                object_list: Vec<Message>,
+            }
+            let body = Template {
+                title:        "Избранные сообщения".to_string(),
+                request_user: _request_user,
+                count: count,
+                next_page_number: next_page_number,
+                object_list: object_list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/chats/chat/fixed_list.stpl")]
+            struct Template {
+                title:        String,
+                request_user: User,
+                count: usize,
+                next_page_number: i32,
+                object_list: Vec<Message>,
+            }
+            let body = Template {
+                title:        "Избранные сообщения".to_string(),
+                request_user: _request_user,
+                count: count,
+                next_page_number: next_page_number,
+                object_list: object_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
