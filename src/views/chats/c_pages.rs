@@ -434,7 +434,7 @@ pub async fn chat_exclude_users_load(session: Session, req: HttpRequest, _id: we
         let mut users_list: Vec<User> = Vec::new();
         let mut object_list: Vec<User> = Vec::new();
 
-        count = _chat.members;
+        let count = _chat.members;
             if page > 1 {
                 let step = (page - 1) * 20;
                 object_list = _chat.get_members(20, step.into());
