@@ -844,7 +844,7 @@ impl Chat {
                  use crate::models::SupportUser;
 
                  let _connection = establish_connection();
-                 for user in self.get_members() {
+                 for user in self.get_members(10, 0) {
                      if user.id != self.user_id {
                         let supports = support_users
                              .filter(schema::support_users::manager_id.eq(user.id))

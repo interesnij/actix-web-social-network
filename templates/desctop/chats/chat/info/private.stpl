@@ -22,14 +22,14 @@
              </a>
              <span class="collector">
                <% if chat.can_add_members == "d" && chat.get_can_add_in_chat_exclude_users().len() > 0 { %>:
-               <% for object in chat.get_can_add_members_exclude_users().iter() { %>
+               <% for object in chat.get_can_add_in_chat_exclude_users().iter() { %>
                  <a href="<%= object.link %>" target="_blank">
                    <%= object.get_full_name() %>
                  </a>
                  &nbsp;
                <% } %>
                <% } else if chat.can_add_members == "d" && chat.get_can_add_in_chat_include_users().len() > 0 { %>:
-               <% for object in chat.get_can_add_members_include_users().iter() { %>
+               <% for object in chat.get_can_add_in_chat_include_users().iter() { %>
                  <a href="<%= object.link %>" target="_blank">
                    <%= object.get_full_name() %>
                  </a>
@@ -61,14 +61,14 @@
              </a>
              <span class="collector">
                <% if chat.can_fix_item == "d" && chat.get_can_add_fix_exclude_users_ids().len() > 0 { %>:
-               <% for object in chat.get_can_fix_item_exclude_users().iter() { %>
+               <% for object in chat.get_can_add_fix_exclude_users().iter() { %>
                  <a href="<%= object.link %>" target="_blank">
                    <%= object.get_full_name() %>
                  </a>
                  &nbsp;
                <% } %>
                <% } else if chat.can_fix_item == "d" && chat.get_can_add_fix_include_users_ids().len() > 0 { %>:
-               <% for object in chat.get_can_fix_item_include_users().iter() { %>
+               <% for object in chat.get_can_add_fix_include_users().iter() { %>
                  <a href="<%= object.link %>" target="_blank">
                    <%= object.get_full_name() %>
                  </a>

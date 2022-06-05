@@ -452,7 +452,7 @@ pub async fn chat_exclude_users_load(session: Session, req: HttpRequest, _id: we
 
         if types == "can_add_members".to_string() {
             text = "добавлять участников".to_string();
-            users_list = _chat.get_can_add_members_exclude_users()
+            users_list = _chat.get_can_add_in_chat_exclude_users()
         }
         else if types == "can_fix_item".to_string() {
             text = "закреплять сообщения".to_string();
@@ -460,7 +460,7 @@ pub async fn chat_exclude_users_load(session: Session, req: HttpRequest, _id: we
         }
         else if types == "can_mention".to_string() {
             text = "упоминать о чате".to_string();
-            users_list = _chat.get_can_mention_exclude_users()
+            users_list = _chat.get_can_send_mention_exclude_users()
         }
         else if types == "can_add_admin".to_string() {
             text = "добавлять админов".to_string();
@@ -484,7 +484,7 @@ pub async fn chat_exclude_users_load(session: Session, req: HttpRequest, _id: we
             #[template(path = "desctop/chats/chat/info/exclude_users.stpl")]
             struct Template {
                 request_user:     User,
-                object_list:      User,
+                object_list:      Vec<User>,
                 users:            Vec<User>,
                 next_page_number: i32,
                 types:            String,
