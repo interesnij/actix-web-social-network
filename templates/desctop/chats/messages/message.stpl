@@ -56,7 +56,7 @@
         </span>
 
         <% if object.attach.is_some() { %>
-          <%- object.get_attach() %>
+          <%- object.get_attach(request_user.id) %>
         <% } %>
 
         <% if object.post_id.is_some() { %>
@@ -168,7 +168,7 @@
                 </span>
 
                 <% if object.attach.is_some() { %>
-                  <%- object.get_attach() %>
+                  <%- object.get_attach(request_user.id) %>
                 <% } %>
 
                 <% if object.post_id.is_some() { %>
