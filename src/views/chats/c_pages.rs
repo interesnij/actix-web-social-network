@@ -1021,6 +1021,7 @@ pub async fn chat_search_page(session: Session, req: HttpRequest, _id: web::Path
         let mut page: i32 = 1;
         let mut q = "".to_string();
         let mut next_page_number: i32 = 0;
+        let mut count: usize = 0;
         let _chat = get_chat(*_id);
         let mut object_list: Vec<Message> = Vec::new();
 
@@ -1036,7 +1037,7 @@ pub async fn chat_search_page(session: Session, req: HttpRequest, _id: web::Path
 
         let _request_user = get_request_user_data(session);
         if q != "".to_string() {
-            let count = self.members;
+            count = _chat.count_search_list(q);
             if page > 1 {
                 let step = (page - 1) * 20;
                 object_list = _chat.get_search_list(q, 20, step.into());
@@ -1060,7 +1061,7 @@ pub async fn chat_search_page(session: Session, req: HttpRequest, _id: web::Path
                 object_list:      Vec<Message>,
                 next_page_number: i32,
                 q:                String,
-                count:            i32,
+                count:            usize,
             }
 
             let body = Template {
@@ -1086,7 +1087,7 @@ pub async fn chat_search_page(session: Session, req: HttpRequest, _id: web::Path
                 object_list:      Vec<Message>,
                 next_page_number: i32,
                 q:                String,
-                count:            i32,
+                count:            usize,
             }
 
             let body = Template {

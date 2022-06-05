@@ -1136,6 +1136,21 @@ impl Chat {
             .load::<Message>(&_connection)
             .expect("E");
     }
+    pub fn count_search_list(&self, q: String) -> usize {
+        use crate::schema::messages::dsl::messages;
+
+        let _connection = establish_connection();
+        let _q_standalone = "%".to_owned() + &_q + &"%".to_string();
+
+        return messages
+            .filter(schema::messages::chat_id.eq(self.id))
+            .filter(schema::messages::types.lt(10))
+            .filter(schema::messages::content.ilike(&_q_standalone))
+            .order(schema::messages::created.desc())
+            .load::<Message>(&_connection)
+            .expect("E")
+            .len();
+    }
     pub fn count_messages_for_user(&self, user_id: i32) -> usize {
         use crate::schema::messages::dsl::messages;
         use crate::schema::message_options::dsl::message_options;
