@@ -7,8 +7,7 @@
 <% } else { %>
 
 <% let creator = object.get_creator(); %>
-<div class="
-    message toggle_message t_f media p-1
+<div class="message toggle_message t_f media p-1
     <% if request_user.id == object.user_id { %>
       <% if object.unread { %>
         bg-light-secondary

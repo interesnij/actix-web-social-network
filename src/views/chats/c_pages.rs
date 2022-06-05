@@ -21,10 +21,11 @@ use crate::models::{User, Chat, Message};
 pub fn c_pages_urls(config: &mut web::ServiceConfig) {
     config.route("/chats_list/", web::get().to(chats_list_page));
     config.route("/chat/{id}/", web::get().to(chat_page));
-    config.route("/create_chat/", web::get().to(create_chat_page));
-    config.route("/create_message/{id}/", web::get().to(create_message_page));
-    config.route("/load_chat_message/{id}/", web::get().to(load_chat_message_page));
-    config.route("/load_message/{id}/", web::get().to(load_message_page));
+    config.route("/chat/create_chat/", web::get().to(create_chat_page));
+    config.route("/chat/create_message/{id}/", web::get().to(create_message_page));
+    config.route("/chat/load_chat_message/{id}/", web::get().to(load_chat_message_page));
+    config.route("/chat/load_message/{id}/", web::get().to(load_message_page));
+    config.route("/chat/edit_message/{id}/", web::get().to(edit_message_page));
 }
 
 pub async fn chats_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
@@ -270,7 +271,7 @@ pub async fn load_message_page(session: Session, _id: web::Path<i32>) -> actix_w
         let _chat = _message.get_chat();
 
         #[derive(TemplateOnce)]
-        #[template(path = "desctop/chats/create/create_chat.stpl")]
+        #[template(path = "desctop/chats/create/load_message.stpl")]
         struct Template {
             request_user: User,
             object:       Chat,
@@ -311,5 +312,35 @@ pub async fn load_chat_message_page(session: Session, _id: web::Path<i32>) -> ac
         Ok(HttpResponse::Ok()
         .content_type("text/html; charset=utf-8")
         .body(body))
+    }
+}
+
+pub async fn edit_message_page(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    if !is_signed_in(&session) {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        let _request_user = get_request_user_data(session);
+        let _message = get_message(*_id);
+        let _chat = _message.get_chat();
+        if (_chat.is_private() && _message.user_id != _request_user.id)
+            || (_chat.is_group() || _chat.is_public()) && !_request_user.is_administrator_of_chat(_chat.id) {
+                Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("Permission denied."))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/chats/create/edit_message.stpl")]
+            struct Template {
+                request_user: User,
+                object:       Message,
+            }
+            let body = Template {
+                request_user: _request_user,
+                object:       _message,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
     }
 }
