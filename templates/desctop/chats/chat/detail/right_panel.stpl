@@ -9,7 +9,7 @@
     <div class="card mt-2 <% if request_user.favourite_messages_count() == 0 { %>hidden<% } %>">
       <div class="card-header">
         <div class="media favourite_block">
-          <a class="favourite_messages_list pointer">Избранное (<span class="favourite_messages_count"><%= favourite_messages_count %></span>)</a>
+          <a class="favourite_messages_list pointer">Избранное (<span class="favourite_messages_count"><%= request_user.favourite_messages_count() %></span>)</a>
         </div>
       </div>
     </div>
