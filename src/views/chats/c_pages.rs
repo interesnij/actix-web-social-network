@@ -1057,7 +1057,7 @@ pub async fn chat_search_page(session: Session, req: HttpRequest, _id: web::Path
             struct Template {
                 request_user:     User,
                 chat:             Chat,
-                object_list:      Vec<User>,
+                object_list:      Vec<Message>,
                 next_page_number: i32,
                 q:                String,
                 count:            i32,
@@ -1083,7 +1083,7 @@ pub async fn chat_search_page(session: Session, req: HttpRequest, _id: web::Path
             struct Template {
                 request_user:     User,
                 chat:             Chat,
-                object_list:      Vec<User>,
+                object_list:      Vec<Message>,
                 next_page_number: i32,
                 q:                String,
                 count:            i32,
