@@ -1,6 +1,6 @@
 
     <form>
-      <input type="hidden" name="type" value="<%= type %>" class="item_type">
+      <input type="hidden" name="types" value="<%= types %>" class="item_type">
             <div class="card-header border-bottom">
               <h6 class="content-color-primary mb-0">
                 <span style="font-weight:bold">Добавить <%- object.get_description() %></span>
