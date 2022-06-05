@@ -1,5 +1,5 @@
 <div class="px-0 card no-shadow main-container" chat-pk="<%= chat.id %>" data-pk="none" data-type="none" style="min-height: 600px;">
-    <form data-type="<%= type %>" class="cool_private_form">
+    <form data-type="<%= types %>" class="cool_private_form">
       <input type="hidden" name="type" value="<%= type %>">
       <div class="card-header" style="min-height: 100px;">
         <% if users.len() > 0 { %>

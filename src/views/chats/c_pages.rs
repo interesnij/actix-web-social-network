@@ -444,7 +444,7 @@ pub async fn chat_exclude_users_load(session: Session, req: HttpRequest, _id: we
                 }
             }
             else {
-                object_list = _request_user.get_members(20, 0);
+                object_list = _chat.get_members(20, 0);
                 if count > 20.try_into().unwrap() {
                     next_page_number = 2;
                 }
