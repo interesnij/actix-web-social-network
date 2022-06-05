@@ -28,7 +28,7 @@
                  </a>
                  &nbsp;
                <% } %>
-               <% } else if chat.can_add_members == "d" && chat.get_can_add_members_include_users.len() > 0 { %>:
+               <% } else if chat.can_add_members == "d" && chat.get_can_add_members_include_users().len() > 0 { %>:
                <% for object in chat.get_can_add_members_include_users().iter() { %>
                  <a href="<%= object.link %>" target="_blank">
                    <%= object.get_full_name() %>
@@ -67,7 +67,7 @@
                  </a>
                  &nbsp;
                <% } %>
-               <% } else if chat.can_fix_item == "d" && chat.get_can_fix_item_include_users.len() > 0 { %>:
+               <% } else if chat.can_fix_item == "d" && chat.get_can_fix_item_include_users().len() > 0 { %>:
                <% for object in chat.get_can_fix_item_include_users().iter() { %>
                  <a href="<%= object.link %>" target="_blank">
                    <%= object.get_full_name() %>
@@ -106,7 +106,7 @@
                  </a>
                  &nbsp;
                <% } %>
-               <% } else if chat.can_add_admin == "d" && chat.get_can_add_admin_include_users.len() > 0 { %>:
+               <% } else if chat.can_add_admin == "d" && chat.get_can_add_admin_include_users().len() > 0 { %>:
                <% for object in chat.get_can_add_admin_include_users().iter() { %>
                  <a href="<%= object.link %>" target="_blank">
                    <%= object.get_full_name() %>
@@ -145,7 +145,7 @@
                  </a>
                  &nbsp;
                <% } %>
-               <% } else if chat.can_mention == "d" && chat.get_can_mention_include_users.len() > 0 { %>:
+               <% } else if chat.can_mention == "d" && chat.get_can_mention_include_users().len() > 0 { %>:
                <% for object in chat.get_can_mention_include_users().iter() { %>
                  <a href="<%= object.link %>" target="_blank">
                    <%= object.get_full_name() %>
@@ -184,7 +184,7 @@
                  </a>
                  &nbsp;
                <% } %>
-               <% } else if chat.can_add_design == "d" && chat.get_can_add_design_include_users.len() > 0 { %>:
+               <% } else if chat.can_add_design == "d" && chat.get_can_add_design_include_users().len() > 0 { %>:
                <% for object in chat.get_can_add_design_include_users().iter() { %>
                  <a href="<%= object.link %>" target="_blank">
                    <%= object.get_full_name() %>
@@ -223,7 +223,7 @@
                  </a>
                  &nbsp;
                <% } %>
-               <% } else if chat.can_see_settings == "d" && chat.get_can_see_settings_include_users.len() > 0 { %>:
+               <% } else if chat.can_see_settings == "d" && chat.get_can_see_settings_include_users().len() > 0 { %>:
                <% for object in chat.get_can_see_settings_include_users().iter() { %>
                  <a href="<%= object.link %>" target="_blank">
                    <%= object.get_full_name() %>
@@ -262,7 +262,7 @@
                  </a>
                  &nbsp;
                <% } %>
-               <% } else if chat.can_see_log == "d" && chat.get_can_see_log_include_users.len() > 0 { %>:
+               <% } else if chat.can_see_log == "d" && chat.get_can_see_log_include_users().len() > 0 { %>:
                <% for object in chat.get_can_see_log_include_users().iter() { %>
                  <a href="<%= object.link %>" target="_blank">
                    <%= object.get_full_name() %>
