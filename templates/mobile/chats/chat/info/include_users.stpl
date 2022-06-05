@@ -3,7 +3,7 @@
       <input type="hidden" name="types" value="<%= types %>">
       <div class="card-header" style="min-height: 100px;">
         <% if users.len() > 0 { %>
-        <span class="header_title" style="display:none">Выберите тех, кому нельзя <%= text %></span>
+        <span class="header_title" style="display:none">Выберите тех, кто может <%= text %></span>
           <% for object in users.iter() { %>
             <span data-pk="<%= object.id %>" class="btn btn-sm custom_color" style="margin: 2px;">
               <a href="<%= object.link %>" target="_blank">
@@ -35,7 +35,7 @@
                 <%= object.get_full_name() %>
               </h6>
             </div>
-            <span class="custom_color border item_attach_circle friends_chat_load_several <% if users.iter().any(|&i| &i==object) { %>active_svg<% } %>" tooltip="Выбрать друга" flow="up">
+            <span class="custom_color border item_attach_circle friends_chat_load_several <% if users.iter().any(|i| i.id==object.id) { %>active_svg<% } %>" tooltip="Выбрать друга" flow="up">
               <svg class="svg_default" fill="currentColor" viewBox="2 2 20 20">
                 <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"/>
               </svg>
