@@ -10,8 +10,8 @@
     </figure>
     <div class="media-body">
       <h5 class="time-title mb-0">
-        <a href="<%= object.link %>" class="ajax creator_link">
-          <span class="creator_name"><%= object.get_full_name() %></span>
+        <a href="<%= transfer_creator.link %>" class="ajax creator_link">
+          <span class="creator_name"><%= transfer_creator.get_full_name() %></span>
         </a>
         <span class="favourite_icon">
           <% if object.is_favourite(request_user.id) { %>
@@ -35,7 +35,7 @@
       <% } else if object.sticker_id.is_some() { %>
         <% let sticker = object.get_sticker(); %>
       <div class="message_sticker mt-1 t_f">
-        <img src="<%= sticker.image.as_deref().unwrap() %>" style="width: 128px;" tooltip="<%= sticker.name %>" flow="up">
+        <img src="<%= sticker.image %>" style="width: 128px;" tooltip="<%= sticker.name %>" flow="up">
       </div>
       <% } else { %>
 
@@ -44,14 +44,11 @@
         </span>
 
         <% if object.attach.is_some() { %>
-          <%- object.get_attach() %>
+          <%- object.get_attach(request_user.id) %>
         <% } %>
 
         <% if object.post_id.is_some() { %>
           <% include!("repost.stpl"); %>
-        <% } %>
-        <% if object.is_have_transfer() { %>
-          <% include!("transfers.stpl"); %>
         <% } %>
 
         <% } %>
