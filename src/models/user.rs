@@ -494,7 +494,20 @@ impl User {
             return manager_chat.id;
         }
     }
-    pub fn get_deleted_support_chats(&self) -> Vec<Chat> {
+    pub fn get_deleted_support_chats(&self, limit: i64, offset: i64) -> Vec<Chat> { 
+        use crate::schema::chats::dsl::chats;
+
+        let _connection = establish_connection();
+        return chats
+            .filter(schema::chats::user_id.eq(self.id))
+            .filter(schema::chats::types.between(40,46))
+            .order(schema::chats::id.desc())
+            .limit(limit)
+            .offset(offset)
+            .load::<Chat>(&_connection)
+            .expect("E");
+    }
+    pub fn count_deleted_support_chats(&self) -> usize {
         use crate::schema::chats::dsl::chats;
 
         let _connection = establish_connection();
@@ -503,7 +516,8 @@ impl User {
             .filter(schema::chats::types.between(40,46))
             .order(schema::chats::id.desc())
             .load::<Chat>(&_connection)
-            .expect("E");
+            .expect("E")
+            .len();
     }
     pub fn get_last_location(&self) -> UserLocation {
         use crate::schema::user_locations::dsl::user_locations;
@@ -518,7 +532,7 @@ impl User {
             .nth(0)
             .unwrap();
     }
-    pub fn get_favourite_messages(&self) -> Vec<Message> {
+    pub fn get_favourite_messages(&self, limit: i64, offset: i64) -> Vec<Message> {
         use crate::schema::messages::dsl::messages;
         use crate::schema::message_options::dsl::message_options;
         use crate::models::MessageOption;
@@ -528,6 +542,8 @@ impl User {
             .filter(schema::message_options::user_id.eq(self.id))
             .filter(schema::message_options::is_favourite.eq(true))
             .order(schema::message_options::id.desc())
+            .limit(limit)
+            .offset(offset)
             .load::<MessageOption>(&_connection)
             .expect("E");
         let mut stack = Vec::new();
