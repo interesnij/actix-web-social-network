@@ -5,12 +5,12 @@ use actix_web::{
     error::InternalError,
     http::StatusCode,
 };
-
 use crate::utils::{
     is_signed_in,
     is_desctop,
     get_request_user_data,
     get_chat,
+    get_message,
 };
 
 use actix_session::Session;
@@ -265,8 +265,6 @@ pub async fn load_message_page(session: Session, _id: web::Path<i32>) -> actix_w
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        use crate::utils::get_message;
-
         let _request_user = get_request_user_data(session);
         let _message = get_message(*_id);
         let _chat = _message.get_chat();
@@ -294,8 +292,6 @@ pub async fn load_chat_message_page(session: Session, _id: web::Path<i32>) -> ac
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        use crate::utils::get_message;
-
         let _request_user = get_request_user_data(session);
         let _message = get_message(*_id);
         //_message.get_chat().read_messages(&_request_user.id);
