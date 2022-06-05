@@ -1037,16 +1037,16 @@ pub async fn chat_search_page(session: Session, req: HttpRequest, _id: web::Path
 
         let _request_user = get_request_user_data(session);
         if q != "".to_string() {
-            count = _chat.count_search_list(q);
+            count = _chat.count_search_list(&q);
             if page > 1 {
                 let step = (page - 1) * 20;
-                object_list = _chat.get_search_list(q, 20, step.into());
+                object_list = _chat.get_search_list(&q, 20, step.into());
                 if count > ((page * 20)).try_into().unwrap() {
                     next_page_number = page + 1;
                 }
             }
             else {
-                object_list = _chat.get_search_list(q, 20, 0);
+                object_list = _chat.get_search_list(&q, 20, 0);
                 if count > 20 {
                     next_page_number = 2;
                 }

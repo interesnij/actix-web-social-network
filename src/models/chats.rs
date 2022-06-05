@@ -1120,11 +1120,11 @@ impl Chat {
             .load::<Message>(&_connection)
             .expect("E");
     }
-    pub fn get_search_list(&self, q: String, limit: i64, offset: i64) -> Vec<Message> {
+    pub fn get_search_list(&self, q: &str, limit: i64, offset: i64) -> Vec<Message> {
         use crate::schema::messages::dsl::messages;
 
         let _connection = establish_connection();
-        let _q_standalone = "%".to_owned() + &q + &"%".to_string();
+        let _q_standalone = "%".to_owned() + q + &"%".to_string();
 
         return messages
             .filter(schema::messages::chat_id.eq(self.id))
@@ -1136,11 +1136,11 @@ impl Chat {
             .load::<Message>(&_connection)
             .expect("E");
     }
-    pub fn count_search_list(&self, q: String) -> usize {
+    pub fn count_search_list(&self, q: &str) -> usize {
         use crate::schema::messages::dsl::messages;
 
         let _connection = establish_connection();
-        let _q_standalone = "%".to_owned() + &q + &"%".to_string();
+        let _q_standalone = "%".to_owned() + q + &"%".to_string();
 
         return messages
             .filter(schema::messages::chat_id.eq(self.id))
