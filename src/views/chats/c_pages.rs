@@ -34,6 +34,7 @@ pub fn c_pages_urls(config: &mut web::ServiceConfig) {
     config.route("/chat/exclude_users/{id}/", web::get().to(chat_exclude_users_load));
     config.route("/chat/include_users/{id}/", web::get().to(chat_include_users_load));
     config.route("/chat/{id}/info/", web::get().to(chat_info_page));
+    config.route("/chat/{id}/search/", web::get().to(chat_search_page));
 }
 
 pub async fn chats_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
@@ -996,6 +997,106 @@ pub async fn favourites_messages_page(session: Session, req: HttpRequest) -> act
                 count: count,
                 next_page_number: next_page_number,
                 object_list: object_list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn chat_search_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    #[derive(Debug, Deserialize)]
+    pub struct ZParams {
+        pub page: Option<i32>,
+        pub q:    Option<String>,
+    }
+
+    let params_some = web::Query::<ZParams>::from_query(&req.query_string());
+    let is_desctop = is_desctop(req);
+
+    if is_signed_in(&session) {
+        let mut page: i32 = 1;
+        let mut q = "".to_string();
+        let mut next_page_number: i32 = 0;
+        let _chat = get_chat(*_id);
+        let mut object_list: Vec<Message> = Vec::new();
+
+        if params_some.is_ok() {
+            let params = params_some.unwrap();
+            if params.page.is_some() {
+                page = params.page.unwrap();
+            }
+            if params.q.is_some() {
+                q = params.q.as_deref().unwrap();
+            }
+        }
+
+        let _request_user = get_request_user_data(session);
+        if q != "".to_string() {
+            let count = self.members;
+            if page > 1 {
+                let step = (page - 1) * 20;
+                object_list = _chat.get_search_list(q, 20, step.into());
+                if count > (page * 20) {
+                    next_page_number = page + 1;
+                }
+            }
+            else {
+                object_list = _chat.get_search_list(q, 20, 0);
+                if count > 20 {
+                    next_page_number = 2;
+                }
+            }
+        }
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/chats/chat/detail/search.stpl")]
+            struct Template {
+                request_user:     User,
+                chat:             Chat,
+                object_list:      Vec<User>,
+                next_page_number: i32,
+                q:                String,
+                count:            i32,
+            }
+
+            let body = Template {
+                request_user:     _request_user,
+                chat:             _chat,
+                object_list:      object_list,
+                users:            users_list,
+                next_page_number: next_page_number,
+                q:                q,
+                count:            count,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/chats/chat/detail/search.stpl")]
+            struct Template {
+                request_user:     User,
+                chat:             Chat,
+                object_list:      Vec<User>,
+                next_page_number: i32,
+                q:                String,
+                count:            i32,
+            }
+
+            let body = Template {
+                request_user:     _request_user,
+                chat:             _chat,
+                object_list:      object_list,
+                users:            users_list,
+                next_page_number: next_page_number,
+                q:                q,
+                count:            count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

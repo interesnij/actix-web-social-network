@@ -494,7 +494,7 @@ impl User {
             return manager_chat.id;
         }
     }
-    pub fn get_deleted_support_chats(&self, limit: i64, offset: i64) -> Vec<Chat> { 
+    pub fn get_deleted_support_chats(&self, limit: i64, offset: i64) -> Vec<Chat> {
         use crate::schema::chats::dsl::chats;
 
         let _connection = establish_connection();
