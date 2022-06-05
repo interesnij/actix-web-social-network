@@ -21,9 +21,8 @@ use crate::views::{
 pub fn routes(cfg: &mut web::ServiceConfig) {
     cfg
     .configure(auth::auth_routes)
-    .configure(manager_routes)
-    .configure(pages::pages_routes)
     .configure(chat_routes)
+    .configure(manager_routes)
     .configure(user_routes)
     .configure(community_routes)
     .configure(post_routes)
@@ -36,5 +35,6 @@ pub fn routes(cfg: &mut web::ServiceConfig) {
     .configure(video_routes)
     .configure(progs::progs_routes)
     .configure(admin_routes)
+    .configure(pages::pages_routes)
     ;
 }
