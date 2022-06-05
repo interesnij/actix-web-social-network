@@ -50,9 +50,6 @@
         <% if object.post_id.is_some() { %>
           <% include!("repost.stpl"); %>
         <% } %>
-        <% if object.is_have_transfer() { %>
-          <% include!("transfers.stpl"); %>
-        <% } %>
 
         <% } %>
     </div>
