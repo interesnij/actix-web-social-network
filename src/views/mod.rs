@@ -22,7 +22,7 @@ pub use self::{
     posts::*,
     chats::*,
     docs::*,
-    //goods::*,
+    goods::*,
     music::*,
     photos::*,
     survey::*,
