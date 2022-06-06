@@ -134,6 +134,12 @@ impl Chat {
             .expect("Error.");
 
         new_chat.create_membership(&creator, false);
+        let _messages = new_chat.invite_users_in_chat(&creator, users_ids);
+        return new_chat;
+    }
+    pub fn invite_users_in_chat(self, creator: &User, users_ids: Option<Vec<i32>>) ->
+        Vec<Message> {
+        let _connection = establish_connection();
 
         if users_ids.is_some() {
             use crate::schema::users::dsl::users;
@@ -184,18 +190,18 @@ impl Chat {
                         voice:      None,
                         reactions:  0,
                     };
-                    diesel::insert_into(schema::messages::table)
+                    let new_message = diesel::insert_into(schema::messages::table)
                         .values(&new_message_form)
                         .get_result::<Message>(&_connection)
                         .expect("Error.");
                     for recipient in new_chat.get_recipients_2(creator.id).iter() {
                         println!("Socket!!");
                     }
-                    return new_chat;
+                    info_messages.push(new_message);
                 }
             }
         }
-        return new_chat;
+        return info_messages;
     }
     pub fn get_name(&self, user_id: i32) -> String {
         if self.name.is_some() {

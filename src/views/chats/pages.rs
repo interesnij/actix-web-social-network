@@ -19,7 +19,7 @@ use sailfish::TemplateOnce;
 use crate::models::{User, Chat, Message};
 
 
-pub fn c_pages_urls(config: &mut web::ServiceConfig) {
+pub fn pages_urls(config: &mut web::ServiceConfig) {
     config.route("/chats_list/", web::get().to(chats_list_page));
     config.route("/chat/fixed_messages/{id}/", web::get().to(fixed_messages_page));
     config.route("/chat/favourites_messages/", web::get().to(favourites_messages_page));
