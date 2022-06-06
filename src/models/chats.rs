@@ -256,7 +256,7 @@ impl Chat {
             .expect("Error.");
         return self;
     }
-    pub fn invite_users_in_chat(self, creator: &User, users_ids: Option<String>) ->
+    pub fn invite_users_in_chat(&self, creator: &User, users_ids: Option<String>) ->
         Vec<Message> {
         let _connection = establish_connection();
         let mut info_messages: Vec<Message> = Vec::new();
