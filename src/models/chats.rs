@@ -133,7 +133,7 @@ impl Chat {
             .get_result::<Chat>(&_connection)
             .expect("Error.");
 
-        new_chat.create_membership(creator, false);
+        new_chat.create_membership(&creator, false);
 
         if users_ids.is_some() {
             use crate::schema::users::dsl::users;
