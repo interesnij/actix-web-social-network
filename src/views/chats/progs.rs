@@ -90,7 +90,6 @@ pub async fn chat_form (
         name:             None,
         image:            None,
         description:      None,
-        image:            None,
         can_add_members:  "".to_string(),
         can_fix_item:     "".to_string(),
         can_mention:      "".to_string(),
@@ -169,7 +168,7 @@ pub async fn chat_form (
                     }
                     else if field.name() == "types" {
                         let _int: i16 = data_string.parse().unwrap();
-                        form.users = _int;
+                        form.types = _int;
                     }
                     else if field.name() == "reactions" {
                         form.reactions = Some(data_string);
@@ -190,32 +189,35 @@ pub async fn create_chat(session: Session, mut payload: Multipart) -> actix_web:
             _request_user.id.to_string()
         ).await;
         let new_chat = Chat::create_group_chat (
-            &_request_user, 
+            &_request_user,
             form.name,
             None,
             form.types,
             form.users,
         );
 
+        let object_list: Vec<Message> = Vec::new();
         #[derive(TemplateOnce)]
         #[template(path = "desctop/chats/chat/detail/chat.stpl")]
         struct Template {
-            chat:         Chat,
-            request_user: User,
+            title:            String,
+            chat:             Chat,
+            request_user:     User,
+            object_list:      Vec<Message>,
+            next_page_number: i32,
         }
         let body = Template {
-            chat:         new_chat,
-            request_user: _request_user,
+            title:            new_chat.get_name(),
+            chat:             new_chat,
+            request_user:     _request_user,
+            object_list:      object_list,
+            next_page_number: 0,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(body))
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     } else {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(""))
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
 }
 
