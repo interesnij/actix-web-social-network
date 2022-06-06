@@ -106,8 +106,8 @@ impl Chat {
     pub fn get_str_id(&self) -> String {
         return self.id.to_string();
     }
-    pub fn create_group_chat(creator: User, name: String,
-        community_id: Option<i32>, types: String,
+    pub fn create_group_chat(creator: User, name: Option<String>,
+        community_id: Option<i32>, types: i16,
         users_ids: Option<Vec<i32>>) -> Chat {
 
         let _connection = establish_connection();
@@ -133,9 +133,9 @@ impl Chat {
             .get_result::<Chat>(&_connection)
             .expect("Error.");
         let new_chat_user_form = NewChatUser {
-            user_id:          creator,
+            user_id:          creator.id,
             chat_id:          new_chat.id,
-            types:            "a",
+            types:            "a".to_string(),
             is_administrator: true,
             created:          chrono::Local::now().naive_utc(),
             no_disturb:       None,
@@ -153,7 +153,7 @@ impl Chat {
             let unwrap_users_ids = users_ids.unwrap();
             let mut m_word = "пригласил".to_string();
             if creator.gender == "b".to_string() {
-                f_word = "пригласила".to_string();
+                m_word = "пригласила".to_string();
             }
             let info_messages: Vec<Message> = Vec::new();
             let users_list = users
@@ -175,7 +175,7 @@ impl Chat {
                         "<a target='_blank' href='",
                         creator.link, "'>",
                         creator.get_full_name(),
-                        "</a>&nbsp;", f_word,
+                        "</a>&nbsp;", m_word,
                         "&nbsp; пользователя&nbsp;<a target='_blank' href='",
                         user.link, "'>",
                         user.get_full_name(), "</a>");
