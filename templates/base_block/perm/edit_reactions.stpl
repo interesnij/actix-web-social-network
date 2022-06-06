@@ -1,7 +1,7 @@
 <div class="mb-3 form_group">
   <input name="reactions" class="reactions_collector" value="" type="hidden" />
   <a class="mt-1 mb-2 i_link next_shower_btn pointer">
-      Выбрано
+      Вы выбрали 
       <span class="reactions_count"><%= list.count_reactions_list() %></span>
       <span class="reactions_count_ru"><%= list.count_reactions_list_ru_alt() %></span>
       из 16

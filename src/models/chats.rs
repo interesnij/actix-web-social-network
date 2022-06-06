@@ -106,6 +106,107 @@ impl Chat {
     pub fn get_str_id(&self) -> String {
         return self.id.to_string();
     }
+    pub fn create_group_chat(creator: User, name: String,
+        community_id: Option<i32>, types: String,
+        users_ids: Option<Vec<i32>>) -> Chat {
+
+        let _connection = establish_connection();
+        let new_chat_form = NewChat {
+            name: name,
+            types: types,
+            community_id: community_id,
+            user_id: creator.id,
+            position: 0,
+            members: 1,
+            created: chrono::Local::now().naive_utc(),
+            can_add_members: "a".to_string(),
+            can_fix_item: "c".to_string(),
+            can_mention: "a".to_string(),
+            can_add_admin: "b".to_string(),
+            can_add_design: "b".to_string(),
+            can_see_settings: "b".to_string(),
+            can_see_log: "b".to_string(),
+            reactions: None,
+        };
+        let new_chat = diesel::insert_into(schema::chats::table)
+            .values(&new_chat_form)
+            .get_result::<Chat>(&_connection)
+            .expect("Error.");
+        let new_chat_user_form = NewChatUser {
+            user_id:          creator,
+            chat_id:          new_chat.id,
+            types:            "a",
+            is_administrator: true,
+            created:          chrono::Local::now().naive_utc(),
+            no_disturb:       None,
+        }
+        diesel::insert_into(schema::chat_users::table)
+            .values(&new_chat_user_form)
+            .get_result::<ChatUser>(&_connection)
+            .expect("Error.");
+
+        if users_ids.is_some() {
+            use crate::schema::users::dsl::users;
+            use crate::schema::chat_users::dsl::chat_users;
+            use crate::schema::messages::dsl::messages;
+
+            let unwrap_users_ids = users_ids.unwrap();
+            let mut m_word = "пригласил".to_string();
+            if creator.gender == "b".to_string() {
+                f_word = "пригласила".to_string();
+            }
+            let info_messages: Vec<Message> = Vec::new();
+            let users_list = users
+                .filter(schema::users::id.eq_any(unwrap_users_ids))
+                .filter(schema::users::types.lt(10))
+                .load::<User>(&_connection)
+                .expect("E.");
+            for user in users_list.iter() {
+                if chat_users
+                    .filter(schema::chat_users::user_id.eq(user.id))
+                    .filter(schema::chat_users::chat_id.eq(new_chat.id))
+                    .filter(schema::chat_users::types.ne("c"))
+                    .load::<ChatUser>(&_connection)
+                    .expect("E.")
+                    .len() == 0 {
+
+                    let member = ChatUsers::create_membership(user, new_chat);
+                    let text = concat_string!(
+                        "<a target='_blank' href='",
+                        creator.link, "'>",
+                        creator.get_full_name(),
+                        "</a>&nbsp;", f_word,
+                        "&nbsp; пользователя&nbsp;<a target='_blank' href='",
+                        user.link, "'>",
+                        user.get_full_name(), "</a>");
+
+                    let new_message_form = NewMessage {
+                        user_id:    creator.id,
+                        chat_id:    new_chat.id,
+                        parent_id:  None,
+                        sticker_id: None,
+                        post_id:    None,
+                        created:    chrono::Local::now().naive_utc(),
+                        content:    Some(text),
+                        unread:     true,
+                        types:      6,
+                        attach:     None,
+                        voice:      None,
+                        reactions:  0,
+                    }
+                    diesel::insert_into(schema::messages::table)
+                        .values(&new_message_form)
+                        .get_result::<Message>(&_connection)
+                        .expect("Error.");
+                    for recipient in new_chat.get_recipients_2(creator.id).iter() {
+                        println!("Socket!!");
+                    }
+                    return new_chat;
+                }
+            }
+        }
+        return new_chat;
+    }
     pub fn get_name(&self, user_id: i32) -> String {
         if self.name.is_some() {
             return self.name.as_ref().unwrap().to_string();
