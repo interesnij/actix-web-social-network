@@ -259,6 +259,7 @@ impl Chat {
     pub fn invite_users_in_chat(self, creator: &User, users_ids: Option<String>) ->
         Vec<Message> {
         let _connection = establish_connection();
+        let mut info_messages: Vec<Message> = Vec::new();
 
         if users_ids.is_some() {
             use crate::schema::users::dsl::users;
@@ -281,7 +282,7 @@ impl Chat {
             if creator.gender == "b".to_string() {
                 m_word = "пригласила".to_string();
             }
-            let mut info_messages: Vec<Message> = Vec::new();
+
             let users_list = users
                 .filter(schema::users::id.eq_any(stack))
                 .filter(schema::users::types.lt(10))
