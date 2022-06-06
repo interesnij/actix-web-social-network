@@ -139,7 +139,7 @@ impl Chat {
             is_administrator: true,
             created:          chrono::Local::now().naive_utc(),
             no_disturb:       None,
-        }
+        };
         diesel::insert_into(schema::chat_users::table)
             .values(&new_chat_user_form)
             .get_result::<ChatUser>(&_connection)
@@ -193,7 +193,7 @@ impl Chat {
                         attach:     None,
                         voice:      None,
                         reactions:  0,
-                    }
+                    };
                     diesel::insert_into(schema::messages::table)
                         .values(&new_message_form)
                         .get_result::<Message>(&_connection)
