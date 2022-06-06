@@ -211,7 +211,7 @@ impl Chat {
     }
     pub fn create_group_chat(creator: User, name: Option<String>,
         community_id: Option<i32>, types: i16,
-        users_ids: Option<Vec<i32>>) -> Chat {
+        users_ids: Option<String>) -> Chat {
 
         let _connection = establish_connection();
         let new_chat_form = NewChat {
@@ -240,7 +240,7 @@ impl Chat {
         let _messages = new_chat.invite_users_in_chat(&creator, users_ids);
         return new_chat;
     }
-    pub fn edit_chat(&self, name: String, image: Option<String>,
+    pub fn edit_chat(&self, name: Option<String>, image: Option<String>,
         description: Option<String>, reactions: Option<String>) -> &Chat {
         let _connection = establish_connection();
 
@@ -256,7 +256,7 @@ impl Chat {
             .expect("Error.");
         return self;
     }
-    pub fn invite_users_in_chat(self, creator: &User, users_ids: Option<Vec<i32>>) ->
+    pub fn invite_users_in_chat(self, creator: &User, users_ids: Option<String>) ->
         Vec<Message> {
         let _connection = establish_connection();
 
@@ -265,14 +265,25 @@ impl Chat {
             use crate::schema::chat_users::dsl::chat_users;
             use crate::schema::messages::dsl::messages;
 
-            let unwrap_users_ids = users_ids.unwrap();
+            let mut stack = Vec::new();
+            let unwrap_users_ids = users_ids.as_ref().unwrap().to_string();
+            if !unwrap_users_ids.is_empty() {
+                let v: Vec<&str> = unwrap_users_ids.split(", ").collect();
+                for item in v.iter() {
+                    if !item.is_empty() {
+                        let pk: i16 = item.parse().unwrap();
+                        stack.push(pk);
+                    }
+                }
+            }
+
             let mut m_word = "пригласил".to_string();
             if creator.gender == "b".to_string() {
                 m_word = "пригласила".to_string();
             }
             let info_messages: Vec<Message> = Vec::new();
             let users_list = users
-                .filter(schema::users::id.eq_any(unwrap_users_ids))
+                .filter(schema::users::id.eq_any(stack))
                 .filter(schema::users::types.lt(10))
                 .load::<User>(&_connection)
                 .expect("E.");
