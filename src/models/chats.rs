@@ -677,7 +677,7 @@ impl Chat {
             .nth(0);
     }
 
-    pub fn create_membership(&self, user: User, is_administrator: bool) -> ChatUser {
+    pub fn create_membership(&self, user: &User, is_administrator: bool) -> ChatUser {
         use crate::schema::chat_users::dsl::chat_users;
 
         let _connection = establish_connection();
