@@ -281,7 +281,7 @@ impl Chat {
             if creator.gender == "b".to_string() {
                 m_word = "пригласила".to_string();
             }
-            let info_messages: Vec<Message> = Vec::new();
+            let mut info_messages: Vec<Message> = Vec::new();
             let users_list = users
                 .filter(schema::users::id.eq_any(stack))
                 .filter(schema::users::types.lt(10))
@@ -290,13 +290,13 @@ impl Chat {
             for user in users_list.iter() {
                 if chat_users
                     .filter(schema::chat_users::user_id.eq(user.id))
-                    .filter(schema::chat_users::chat_id.eq(new_chat.id))
+                    .filter(schema::chat_users::chat_id.eq(self.id))
                     .filter(schema::chat_users::types.ne("c"))
                     .load::<ChatUser>(&_connection)
                     .expect("E.")
                     .len() == 0 {
 
-                    let member = new_chat.create_membership(user, false);
+                    let member = self.create_membership(user, false);
                     let text = concat_string!(
                         "<a target='_blank' href='",
                         creator.link, "'>",
@@ -308,7 +308,7 @@ impl Chat {
 
                     let new_message_form = NewMessage {
                         user_id:    creator.id,
-                        chat_id:    new_chat.id,
+                        chat_id:    self.id,
                         parent_id:  None,
                         sticker_id: None,
                         post_id:    None,
@@ -324,7 +324,7 @@ impl Chat {
                         .values(&new_message_form)
                         .get_result::<Message>(&_connection)
                         .expect("Error.");
-                    for recipient in new_chat.get_recipients_2(creator.id).iter() {
+                    for recipient in self.get_recipients_2(creator.id).iter() {
                         println!("Socket!!");
                     }
                     info_messages.push(new_message);
