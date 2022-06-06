@@ -241,7 +241,7 @@ pub async fn edit_chat(session: Session, mut payload: Multipart, _id: web::Path<
 pub async fn delete_chat(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
 
-        let chat = get_chat_list(*_id);
+        let chat = get_chat(*_id);
         let _request_user = get_request_user_data(session);
         if _request_user.is_administrator_of_chat(chat.id) {
             chat.delete_item();
@@ -257,7 +257,7 @@ pub async fn delete_chat(session: Session, _id: web::Path<i32>) -> actix_web::Re
 pub async fn restore_chat(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
 
-        let chat = get_chat_list(*_id);
+        let chat = get_chat(*_id);
         let _request_user = get_request_user_data(session);
         if _request_user.is_administrator_of_chat(chat.id) {
             chat.restore_item();
