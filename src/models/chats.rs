@@ -102,7 +102,110 @@ pub struct NewChat {
     pub can_see_log:      String,
     pub reactions:        Option<String>,
 }
+#[derive(Deserialize, Insertable)]
+#[table_name="chats"]
+pub struct EditChat {
+    pub name:        Option<String>,
+    pub image:       Option<String>,
+    pub description: Option<String>,
+    pub reactions:   Option<String>,
+}
 impl Chat {
+    // 1 публичный чат
+    // 2 приватный
+    // 3 менеджерский
+    // 4 групповой
+    // 11 Техподдержка 1 уровня
+    // 12 Техподдержка 2 уровня
+    // 13 Техподдержка 3 уровня
+    // 14 Техподдержка 4 уровня
+    // 15 Техподдержка 5 уровня
+
+    // 21 удаленный публичный
+    // 22 удаленный приватный
+    // 23 удаленный менеджерский
+    // 24 удаленный групповой
+
+    // 41 удаленная техподдержка 1 уровня
+    // 42 удаленная техподдержка 2 уровня
+    // 43 удаленная техподдержка 3 уровня
+    // 44 удаленная техподдержка 4 уровня
+    // 45 удаленная техподдержка 5 уровня
+    pub fn delete_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = self.types;
+        let close_case = match user_types {
+            1 => 21,
+            2 => 22,
+            3 => 23,
+            4 => 24,
+            11 => 41,
+            12 => 42,
+            13 => 43,
+            14 => 44,
+            15 => 45,
+            _ => self.types,
+        };
+        diesel::update(self)
+            .set(schema::chats::types.eq(close_case))
+            .get_result::<Chat>(&_connection)
+            .expect("E");
+       return true;
+    }
+    pub fn restore_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = self.types;
+        let close_case = match user_types {
+            21 => 1,
+            22 => 2,
+            23 => 3,
+            24 => 4,
+            41 => 11,
+            42 => 12,
+            43 => 13,
+            44 => 14,
+            45 => 15,
+            _ => self.types,
+        };
+        diesel::update(self)
+            .set(schema::chats::types.eq(close_case))
+            .get_result::<Chat>(&_connection)
+            .expect("E");
+       return true;
+    }
+
+    pub fn close_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = self.types;
+        let close_case = match user_types {
+            1 => 31,
+            2 => 32,
+            3 => 33,
+            4 => 34,
+            _ => self.types,
+        };
+        diesel::update(self)
+            .set(schema::chats::types.eq(close_case))
+            .get_result::<Chat>(&_connection)
+            .expect("E");
+       return true;
+    }
+    pub fn unclose_item(&self) -> bool {
+        let _connection = establish_connection();
+        let user_types = self.types;
+        let close_case = match user_types {
+            31 => 1,
+            32 => 2,
+            33 => 3,
+            34 => 4,
+            _ => self.types,
+        };
+        diesel::update(self)
+            .set(schema::chats::types.eq(close_case))
+            .get_result::<Chat>(&_connection)
+            .expect("E");
+       return true;
+    }
     pub fn get_str_id(&self) -> String {
         return self.id.to_string();
     }
@@ -136,6 +239,22 @@ impl Chat {
         new_chat.create_membership(&creator, false);
         let _messages = new_chat.invite_users_in_chat(&creator, users_ids);
         return new_chat;
+    }
+    pub fn edit_chat(&self, name: String, image: Option<String>,
+        description: Option<String>, reactions: Option<String>) -> &Chat {
+        let _connection = establish_connection();
+
+        let edit_chat_form = EditChat {
+            name: name,
+            image: image,
+            description: description,
+            reactions: reactions,
+        };
+        diesel::update(self)
+            .set(edit_chat_form)
+            .get_result::<Chat>(&_connection)
+            .expect("Error.");
+        return self;
     }
     pub fn invite_users_in_chat(self, creator: &User, users_ids: Option<Vec<i32>>) ->
         Vec<Message> {

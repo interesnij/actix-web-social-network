@@ -21,20 +21,22 @@ use crate::models::{User, Chat, Message};
 
 pub fn pages_urls(config: &mut web::ServiceConfig) {
     config.route("/chats_list/", web::get().to(chats_list_page));
-    config.route("/chat/fixed_messages/{id}/", web::get().to(fixed_messages_page));
-    config.route("/chat/favourites_messages/", web::get().to(favourites_messages_page));
-    config.route("/chat/{id}/", web::get().to(chat_page));
-    config.route("/chat/closed_support_chats/", web::get().to(closed_support_chats_page));
-    config.route("/chat/create_chat/", web::get().to(create_chat_page));
-    config.route("/chat/edit_chat/{id}/", web::get().to(edit_chat_page));
-    config.route("/chat/create_message/{id}/", web::get().to(create_message_page));
-    config.route("/chat/load_chat_message/{id}/", web::get().to(load_chat_message_page));
-    config.route("/chat/load_message/{id}/", web::get().to(load_message_page));
-    config.route("/chat/edit_message/{id}/", web::get().to(edit_message_page));
-    config.route("/chat/exclude_users/{id}/", web::get().to(chat_exclude_users_load));
-    config.route("/chat/include_users/{id}/", web::get().to(chat_include_users_load));
-    config.route("/chat/{id}/info/", web::get().to(chat_info_page));
-    config.route("/chat/{id}/search/", web::get().to(chat_search_page));
+    config.route("/chats/fixed_messages/{id}/", web::get().to(fixed_messages_page));
+    config.route("/chats/favourites_messages/", web::get().to(favourites_messages_page));
+    config.route("/chats/{id}/", web::get().to(chat_page));
+    config.route("/chats/closed_support_chats/", web::get().to(closed_support_chats_page));
+    config.route("/chats/create_chat/", web::get().to(create_chat_page));
+    config.route("/chats/edit_chat/{id}/", web::get().to(edit_chat_page));
+    config.route("/chats/create_message/{id}/", web::get().to(create_message_page));
+    config.route("/chats/load_chat_message/{id}/", web::get().to(load_chat_message_page));
+    config.route("/chats/load_message/{id}/", web::get().to(load_message_page));
+    config.route("/chats/edit_message/{id}/", web::get().to(edit_message_page));
+    config.route("/chats/exclude_users/{id}/", web::get().to(chat_exclude_users_load));
+    config.route("/chats/include_users/{id}/", web::get().to(chat_include_users_load));
+    config.route("/chats/{id}/info/", web::get().to(chat_info_page));
+    config.route("/chats/{id}/search/", web::get().to(chat_search_page));
+    config.route("/chats/invite_members/{id}/", web::get().to(invite_members_page));
+    config.route("/chats/private_chat_page/{id}/", web::get().to(private_page));
 }
 
 pub async fn chats_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
