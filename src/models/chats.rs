@@ -102,7 +102,7 @@ pub struct NewChat {
     pub can_see_log:      String,
     pub reactions:        Option<String>,
 }
-#[derive(Deserialize, Insertable)]
+#[derive(Deserialize, Insertable, AsChangeset)]
 #[table_name="chats"]
 pub struct EditChat {
     pub name:        Option<String>,
@@ -209,7 +209,7 @@ impl Chat {
     pub fn get_str_id(&self) -> String {
         return self.id.to_string();
     }
-    pub fn create_group_chat(creator: User, name: Option<String>,
+    pub fn create_group_chat(creator: &User, name: Option<String>,
         community_id: Option<i32>, types: i16,
         users_ids: Option<String>) -> Chat {
 
@@ -271,7 +271,7 @@ impl Chat {
                 let v: Vec<&str> = unwrap_users_ids.split(", ").collect();
                 for item in v.iter() {
                     if !item.is_empty() {
-                        let pk: i16 = item.parse().unwrap();
+                        let pk: i32 = item.parse().unwrap();
                         stack.push(pk);
                     }
                 }

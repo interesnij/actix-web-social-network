@@ -190,7 +190,7 @@ pub async fn create_chat(session: Session, mut payload: Multipart) -> actix_web:
             _request_user.id.to_string()
         ).await;
         let new_chat = Chat::create_group_chat (
-            _request_user,
+            &_request_user, 
             form.name,
             None,
             form.types,
