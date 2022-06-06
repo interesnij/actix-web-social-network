@@ -132,18 +132,8 @@ impl Chat {
             .values(&new_chat_form)
             .get_result::<Chat>(&_connection)
             .expect("Error.");
-        let new_chat_user_form = NewChatUser {
-            user_id:          creator.id,
-            chat_id:          new_chat.id,
-            types:            "a".to_string(),
-            is_administrator: true,
-            created:          chrono::Local::now().naive_utc(),
-            no_disturb:       None,
-        };
-        diesel::insert_into(schema::chat_users::table)
-            .values(&new_chat_user_form)
-            .get_result::<ChatUser>(&_connection)
-            .expect("Error.");
+
+        new_chat.create_membership(creator, false);
 
         if users_ids.is_some() {
             use crate::schema::users::dsl::users;
@@ -170,7 +160,7 @@ impl Chat {
                     .expect("E.")
                     .len() == 0 {
 
-                    let member = new_chat.create_membership(user, new_chat);
+                    let member = new_chat.create_membership(user, false);
                     let text = concat_string!(
                         "<a target='_blank' href='",
                         creator.link, "'>",
