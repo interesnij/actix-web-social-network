@@ -207,7 +207,7 @@ pub async fn create_chat(session: Session, mut payload: Multipart) -> actix_web:
             next_page_number: i32,
         }
         let body = Template {
-            title:            new_chat.get_name(),
+            title:            new_chat.get_name(_request_user.id),
             chat:             new_chat,
             request_user:     _request_user,
             object_list:      object_list,

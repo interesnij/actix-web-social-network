@@ -35,8 +35,8 @@ pub fn pages_urls(config: &mut web::ServiceConfig) {
     config.route("/chats/include_users/{id}/", web::get().to(chat_include_users_load));
     config.route("/chats/{id}/info/", web::get().to(chat_info_page));
     config.route("/chats/{id}/search/", web::get().to(chat_search_page));
-    config.route("/chats/invite_members/{id}/", web::get().to(invite_members_page));
-    config.route("/chats/private_chat_page/{id}/", web::get().to(private_page));
+    //config.route("/chats/invite_members/{id}/", web::get().to(invite_members_page));
+    config.route("/chats/private_chat_page/{id}/", web::get().to(private_chat_page));
 }
 
 pub async fn chats_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
