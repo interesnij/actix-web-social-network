@@ -170,7 +170,7 @@ impl Chat {
                     .expect("E.")
                     .len() == 0 {
 
-                    let member = ChatUser::create_membership(user, new_chat);
+                    let member = new_chat.create_membership(user, new_chat);
                     let text = concat_string!(
                         "<a target='_blank' href='",
                         creator.link, "'>",
