@@ -200,10 +200,12 @@ pub async fn create_chat(session: Session, mut payload: Multipart) -> actix_web:
         #[derive(TemplateOnce)]
         #[template(path = "desctop/chats/chat/detail/chat.stpl")]
         struct Template {
-            chat: Chat,
+            chat:         Chat,
+            request_user: User,
         }
         let body = Template {
-            chat: new_chat,
+            chat:         new_chat,
+            request_user: _request_user,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -220,7 +222,7 @@ pub async fn create_chat(session: Session, mut payload: Multipart) -> actix_web:
 pub async fn edit_chat(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(session);
-        let chat = get_chat(*_id)
+        let chat = get_chat(*_id);
         let form = chat_form (
             payload.borrow_mut(),
             "users".to_string(),
