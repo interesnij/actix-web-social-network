@@ -392,7 +392,7 @@ impl User {
 
     pub fn get_plus_or_create_populate_smile(&self, smile_id: i32) {
         use crate::schema::user_populate_smiles::dsl::user_populate_smiles;
-        use crate::models::NewUserPopulateSmile;
+        use crate::models::{UserPopulateSmile, NewUserPopulateSmile};
 
         let _connection = establish_connection();
 
@@ -421,7 +421,7 @@ impl User {
     }
     pub fn get_plus_or_create_populate_sticker(&self, sticker_id: i32) {
         use crate::schema::user_populate_stickers::dsl::user_populate_stickers;
-        use crate::models::NewUserPopulateSticker;
+        use crate::models::{UserPopulateSticker, NewUserPopulateSticker};
 
         let _connection = establish_connection();
 
