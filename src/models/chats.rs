@@ -2154,36 +2154,51 @@ impl Message {
 
         let _connection = establish_connection();
         let chat_list = creator.get_all_chats(200, 0);
-        let mut current_chat: Option<&Chat> = None;
+        let mut chat_exists = false;
         for chat in chat_list.iter() {
             if user.is_member_of_chat(chat.id) {
-                current_chat = Some(chat);
+                let message_form = NewMessage {
+                    user_id:    creator.id,
+                    chat_id:    chat.id,
+                    parent_id:  None,
+                    sticker_id: sticker_id,
+                    post_id:    repost_id,
+                    created:    chrono::Local::now().naive_utc(),
+                    content:    content,
+                    unread:     true,
+                    types:      1,
+                    attach:     attach,
+                    voice:      voice,
+                    reactions:  0,
+                };
+                diesel::insert_into(schema::messages::table)
+                    .values(&message_form)
+                    .get_result::<Message>(&_connection)
+                    .expect("Error.");
+                chat_exists = true;
             }
         }
-        if current_chat.is_none() {
-            current_chat = Some(&Chat::create_private_chat(&creator, user, None));
+        if chat_exists == false {
+            let chat = Chat::create_private_chat(&creator, user, None));
+            let message_form = NewMessage {
+                user_id:    creator.id,
+                chat_id:    chat.id,
+                parent_id:  None,
+                sticker_id: sticker_id,
+                post_id:    repost_id,
+                created:    chrono::Local::now().naive_utc(),
+                content:    content,
+                unread:     true,
+                types:      1,
+                attach:     attach,
+                voice:      voice,
+                reactions:  0,
+            };
+            diesel::insert_into(schema::messages::table)
+                .values(&message_form)
+                .get_result::<Message>(&_connection)
+                .expect("Error.");
         }
-        let chat = current_chat.unwrap();
-
-        let message_form = NewMessage {
-            user_id:    creator.id,
-            chat_id:    chat.id,
-            parent_id:  None,
-            sticker_id: sticker_id,
-            post_id:    repost_id,
-            created:    chrono::Local::now().naive_utc(),
-            content:    content,
-            unread:     true,
-            types:      1,
-            attach:     attach,
-            voice:      voice,
-            reactions:  0,
-        };
-
-        diesel::insert_into(schema::messages::table)
-            .values(&message_form)
-            .get_result::<Message>(&_connection)
-            .expect("Error.");
         return true;
     }
     pub fn get_attach(&self, user_id: i32) -> String {
