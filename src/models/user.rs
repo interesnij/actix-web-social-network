@@ -402,7 +402,7 @@ impl User {
             .load::<UserPopulateSmile>(&_connection)
             .expect("E");
         if populate_smiles.len() > 0 {
-            populate_smile = populate_smiles.into_iter().nth(0).unwrap();
+            let populate_smile = populate_smiles.into_iter().nth(0).unwrap();
             diesel::update(&populate_smile)
                 .set(schema::user_populate_smiles::count.eq(populate_smile.count + 1))
                 .get_result::<UserPopulateSmile>(&_connection)
@@ -431,7 +431,7 @@ impl User {
             .load::<UserPopulateSticker>(&_connection)
             .expect("E");
         if populate_stickers.len() > 0 {
-            populate_sticker = populate_stickers.into_iter().nth(0).unwrap();
+            let populate_sticker = populate_stickers.into_iter().nth(0).unwrap();
             diesel::update(&populate_sticker)
                 .set(schema::user_populate_stickers::count.eq(populate_sticker.count + 1))
                 .get_result::<UserPopulateSticker>(&_connection)
