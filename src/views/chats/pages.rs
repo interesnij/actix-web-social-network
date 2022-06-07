@@ -1108,9 +1108,7 @@ pub async fn chat_search_page(session: Session, req: HttpRequest, _id: web::Path
     }
 }
 
-pub async fn invite_members(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-
-    let params_some = web::Query::<ZParams>::from_query(&req.query_string());
+pub async fn invite_members_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, page) = get_list_variables(req);
 
     if is_signed_in(&session) {
