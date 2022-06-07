@@ -2179,7 +2179,7 @@ impl Message {
             }
         }
         if chat_exists == false {
-            let chat = Chat::create_private_chat(&creator, user, None));
+            let chat = Chat::create_private_chat(&creator, user, None);
             let message_form = NewMessage {
                 user_id:    creator.id,
                 chat_id:    chat.id,
