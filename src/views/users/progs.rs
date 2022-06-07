@@ -27,7 +27,7 @@ pub async fn user_friend(session: Session, user_id: web::Path<i32>) -> actix_web
         use crate::utils::post_list_form;
 
         let _request_user = get_request_user_data(session);
-        let _user = get_user(*_id);
+        let _user = get_user(*user_id);
         _request_user.frend_user(_user);
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
     } else {
@@ -40,7 +40,7 @@ pub async fn user_unfriend(session: Session, user_id: web::Path<i32>) -> actix_w
         use crate::utils::post_list_form;
 
         let _request_user = get_request_user_data(session);
-        let _user = get_user(*_id);
+        let _user = get_user(*user_id);
         _request_user.unfrend_user(_user);
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
     } else {
@@ -53,7 +53,7 @@ pub async fn user_follow(session: Session, user_id: web::Path<i32>) -> actix_web
         use crate::utils::post_list_form;
 
         let _request_user = get_request_user_data(session);
-        let _user = get_user(*_id);
+        let _user = get_user(*user_id);
         _request_user.follow_user(_user);
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
     } else {
@@ -66,7 +66,7 @@ pub async fn user_unfollow(session: Session, user_id: web::Path<i32>) -> actix_w
         use crate::utils::post_list_form;
 
         let _request_user = get_request_user_data(session);
-        let _user = get_user(*_id);
+        let _user = get_user(*user_id);
         _request_user.unfollow_user(_user);
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
     } else {
@@ -79,7 +79,7 @@ pub async fn user_block(session: Session, user_id: web::Path<i32>) -> actix_web:
         use crate::utils::post_list_form;
 
         let _request_user = get_request_user_data(session);
-        let _user = get_user(*_id);
+        let _user = get_user(*user_id);
         _request_user.block_user(_user);
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
     } else {
@@ -92,7 +92,7 @@ pub async fn user_unblock(session: Session, user_id: web::Path<i32>) -> actix_we
         use crate::utils::post_list_form;
 
         let _request_user = get_request_user_data(session);
-        let _user = get_user(*_id);
+        let _user = get_user(*user_id);
         _request_user.unblock_user(_user);
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
     } else {
