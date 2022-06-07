@@ -141,7 +141,7 @@ pub async fn create_communities_category(session: Session, mut payload: Multipar
 
             use crate::models::CommunityCategory;
 
-            let new_list = CommunityCategory::create_category (
+            CommunityCategory::create_category (
                 form.name,
                 form.image,
                 form.position.unwrap(),
@@ -274,7 +274,7 @@ pub async fn create_goods_category(session: Session, mut payload: Multipart) -> 
 
             use crate::models::GoodCategorie;
 
-            let new_list = GoodCategorie::create_category (
+            GoodCategorie::create_category (
                 form.name,
                 form.image,
                 form.position.unwrap(),
@@ -460,7 +460,7 @@ pub async fn create_artist(session: Session, mut payload: Multipart) -> actix_we
 
             use crate::models::Artist;
 
-            let new_list = Artist::create_artist (
+            Artist::create_artist (
                 form.name,
                 form.description,
                 form.image,
@@ -523,7 +523,7 @@ pub async fn create_music_album(session: Session, mut payload: Multipart) -> act
 
             use crate::models::MusicAlbum;
 
-            let new_list = MusicAlbum::create_album (
+            MusicAlbum::create_album (
                 form.name,
                 form.category_id,
                 _request_user.id,
@@ -589,7 +589,7 @@ pub async fn create_stickers_category(session: Session, mut payload: Multipart) 
 
             use crate::models::StickerCategorie;
 
-            let new_list = StickerCategorie::create_category (
+            StickerCategorie::create_category (
                 form.name,
                 form.position.unwrap(),
                 Some(_request_user.id),
@@ -654,7 +654,7 @@ pub async fn create_sticker(session: Session, mut payload: Multipart) -> actix_w
 
             use crate::models::Sticker;
 
-            let new_list = Sticker::create_sticker (
+            Sticker::create_sticker (
                 form.name,
                 form.position.unwrap(),
                 form.category_id.unwrap(),
@@ -717,7 +717,7 @@ pub async fn create_smiles_category(session: Session, mut payload: Multipart) ->
 
             use crate::models::SmileCategorie;
 
-            let new_list = SmileCategorie::create_category (
+            SmileCategorie::create_category (
                 form.name,
                 form.position.unwrap(),
                 form.description,
@@ -778,7 +778,7 @@ pub async fn create_smile(session: Session, mut payload: Multipart) -> actix_web
 
             use crate::models::Smile;
 
-            let new_list = Smile::create_smile (
+            Smile::create_smile (
                 form.name,
                 form.position.unwrap(),
                 form.category_id.unwrap(),
@@ -841,7 +841,7 @@ pub async fn create_post_category(session: Session, mut payload: Multipart) -> a
 
             use crate::models::PostCategorie;
 
-            let new_list = PostCategorie::create_category (
+            PostCategorie::create_category (
                 form.name,
                 form.position.unwrap(),
             );
@@ -900,7 +900,7 @@ pub async fn create_video_category(session: Session, mut payload: Multipart) -> 
 
             use crate::models::VideoCategorie;
 
-            let new_list = VideoCategorie::create_category (
+            VideoCategorie::create_category (
                 form.name,
                 form.position.unwrap().into(),
             );
@@ -1012,7 +1012,7 @@ pub async fn create_reaction(session: Session, mut payload: Multipart) -> actix_
 
             use crate::models::Reaction;
 
-            let new_list = Reaction::create_reaction (
+            Reaction::create_reaction (
                 form.types,
                 form.image,
                 form.gif,

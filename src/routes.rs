@@ -7,6 +7,7 @@ use crate::views::{
     auth,
     user_routes,
     community_routes,
+    user_routes,
     post_routes,
     chat_routes,
     docs_routes,
@@ -22,8 +23,8 @@ pub fn routes(cfg: &mut web::ServiceConfig) {
     cfg
     .configure(auth::auth_routes)
     .configure(chat_routes)
-    .configure(manager_routes)
     .configure(user_routes)
+    .configure(manager_routes)
     .configure(community_routes)
     .configure(post_routes)
 

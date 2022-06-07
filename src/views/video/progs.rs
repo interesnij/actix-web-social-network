@@ -60,7 +60,7 @@ pub async fn add_user_list(session: Session, mut payload: Multipart) -> actix_we
             "users".to_string(),
             _request_user.id.to_string()
         ).await;
-        let new_list = VideoList::create_list (
+        VideoList::create_list (
             _request_user,
             form.name,
             form.description,
@@ -165,7 +165,7 @@ pub async fn add_community_list(session: Session, mut payload: Multipart, _id: w
                 "communities".to_string(),
                 community.id.to_string()
             ).await;
-            let new_list = VideoList::create_list (
+            VideoList::create_list (
                 _request_user,
                 form.name,
                 form.description,

@@ -61,7 +61,7 @@ pub async fn add_user_post_list(session: Session, mut payload: Multipart) -> act
             "users".to_string(),
             _request_user.id.to_string()
         ).await;
-        let new_list = PostList::create_list (
+        PostList::create_list (
             _request_user,
             form.name,
             form.description,
@@ -166,7 +166,7 @@ pub async fn add_community_post_list(session: Session, mut payload: Multipart, _
                 "communities".to_string(),
                 community.id.to_string()
             ).await;
-            let new_list = PostList::create_list (
+            PostList::create_list (
                 _request_user,
                 form.name,
                 form.description,
