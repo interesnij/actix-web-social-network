@@ -129,6 +129,7 @@
     </div>
   <span style="margin-bottom: 10px;position:relative" class="centered">
     <button class="btn btn-sm border follow_create" style="width: -webkit-fill-available">Добавить в друзья</button>
+    <span class="dropdown">
     <button style="margin-left:5px;" type="button" class="btn btn-sm border dropdown">
       <svg style="width: 17px;height: 17px; "fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
     </button>
@@ -141,7 +142,8 @@
       <% } else { %>
         <a class="dropdown-item create_claim pointer">Пожаловаться</a>
       <% } %>
-      </div>
+  </div>
+  </span>
   </span>
   <% } %>
 
