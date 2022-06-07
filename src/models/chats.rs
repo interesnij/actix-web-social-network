@@ -2152,6 +2152,7 @@ impl Message {
         attach: Option<String>, voice: Option<String>,
         sticker_id: Option<i32>) -> bool {
 
+        let _connection = establish_connection();
         let chat_list = creator.get_all_chats(200, 0);
         let mut current_chat: Option<&Chat> = None;
         for chat in chat_list.iter() {
