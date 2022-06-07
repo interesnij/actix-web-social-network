@@ -2164,11 +2164,11 @@ impl Message {
                     sticker_id: sticker_id,
                     post_id:    repost_id,
                     created:    chrono::Local::now().naive_utc(),
-                    content:    content,
+                    content:    content.clone(),
                     unread:     true,
                     types:      1,
-                    attach:     attach,
-                    voice:      voice,
+                    attach:     attach.clone(),
+                    voice:      voice.clone(),
                     reactions:  0,
                 };
                 diesel::insert_into(schema::messages::table)
@@ -2187,11 +2187,11 @@ impl Message {
                 sticker_id: sticker_id,
                 post_id:    repost_id,
                 created:    chrono::Local::now().naive_utc(),
-                content:    content,
+                content:    content.clone(),
                 unread:     true,
                 types:      1,
-                attach:     attach,
-                voice:      voice,
+                attach:     attach.clone(),
+                voice:      voice.clone(),
                 reactions:  0,
             };
             diesel::insert_into(schema::messages::table)
