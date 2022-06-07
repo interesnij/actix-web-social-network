@@ -1,5 +1,6 @@
 use actix_web::{
     HttpResponse,
+    HttpRequest,
     web,
     web::Json,
     error::InternalError,
@@ -58,7 +59,7 @@ pub async fn create_community(session: Session, req: HttpRequest, mut payload: M
                         form.category_id = _int;
                     }
                     else if field.name() == "types" {
-                        let _int: i32 = data_string.parse().unwrap();
+                        let _int: i16 = data_string.parse().unwrap();
                         form.types = _int;
                     }
                     else if field.name() == "name" {
