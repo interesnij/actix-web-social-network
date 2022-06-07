@@ -243,7 +243,7 @@ impl Chat {
     pub fn create_private_chat(creator: &User, recipient: &User, community_id: Option<i32>) -> Chat {
         let _connection = establish_connection();
         let new_chat_form = NewChat {
-            name: name,
+            name: None,
             types: 2,
             community_id: community_id,
             user_id: creator.id,
@@ -2150,7 +2150,7 @@ impl Message {
     pub fn get_or_create_chat_and_send_message(&self, creator: User,
         user: &User, repost_id: Option<i32>, content: Option<String>,
         attach: Option<String>, voice: Option<String>,
-        sticker_id: Option<String>) -> bool {
+        sticker_id: Option<i32>) -> bool {
 
         let chat_list = creator.get_all_chats(200, 0);
         let mut current_chat: Option<&Chat> = None;
@@ -2160,7 +2160,7 @@ impl Message {
             }
         }
         if current_chat.is_none() {
-            current_chat = Some(Chat::create_private_chat(creator, user, None));
+            current_chat = Some(Chat::create_private_chat(&creator, user, None));
         }
         let chat = current_chat.unwrap();
 
