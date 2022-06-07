@@ -55,11 +55,11 @@ pub async fn create_community(session: Session, req: HttpRequest, mut payload: M
                     let data_string = s.to_string();
                     if field.name() == "category_id" {
                         let _int: i32 = data_string.parse().unwrap();
-                        form.category_id = Some(_int);
+                        form.category_id = _int;
                     }
                     else if field.name() == "types" {
                         let _int: i32 = data_string.parse().unwrap();
-                        form.types = Some(_int);
+                        form.types = _int;
                     }
                     else if field.name() == "name" {
                         form.name = data_string;
@@ -68,14 +68,14 @@ pub async fn create_community(session: Session, req: HttpRequest, mut payload: M
             }
         }
 
-        let _request_user = get_request_user_data(&session);
+        let _request_user = get_request_user_data(session);
         let new_community = Community::create_community (
             form.name,
             form.category_id,
-            _request_user,
+            &_request_user,
             form.types,
         );
-        return community_page(session, reg, new_community.link);
+        return community_page(session, reg, new_community.link).await;
 
     } else {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))

@@ -1031,7 +1031,7 @@ impl Community {
 
         let community_id = new_community.id;
 
-        CommunitiesMembership::create_membership(user, new_community, true, false, false, false);
+        CommunitiesMembership::create_membership(&user, new_community, true, false, false, false);
 
         // записываем профиль нового пользователя
         let _community_info = NewCommunityInfo {
@@ -3842,7 +3842,7 @@ pub struct NewCommunitiesMembership {
     pub visited:          i32,
 }
 impl CommunitiesMembership {
-    pub fn create_membership(user: User, community: Community, is_administrator: bool, is_editor: bool, is_advertiser: bool, is_moderator: bool) -> CommunitiesMembership {
+    pub fn create_membership(user: &User, community: Community, is_administrator: bool, is_editor: bool, is_advertiser: bool, is_moderator: bool) -> CommunitiesMembership {
         let _connection = establish_connection();
 
         let new_member_form = NewCommunitiesMembership {
