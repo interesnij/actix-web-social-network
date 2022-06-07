@@ -341,10 +341,9 @@ function remove_voice_console(form) {
     link_2.onreadystatechange = function () {
     if ( this.readyState == 4 && this.status == 200 ) {
       jsonResponse = JSON.parse(link_2.responseText);
-      uuid = jsonResponse.uuid;
+      id = jsonResponse.id;
       message = message_load.querySelector(".new_message");
-      message.setAttribute("data-pk", uuid);
-      message.setAttribute("data-uuid", uuid);
+      message.setAttribute("data-pk", id);
       message.classList.add("toggle_message", "is_have_edited");
       message.classList.remove("new_message");
       message.querySelector(".favourite_icon").innerHTML = "";
@@ -435,7 +434,7 @@ function edit_favourite_count(count, type) {
 on('#ajax', 'click', '.u_message_unfixed', function() {
   message = this.parentElement.parentElement;
   ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'GET', "/chat/user_progs/unfixed_message/" + message.getAttribute("data-uuid") + "/", true );
+    ajax_link.open( 'GET', "/chat/user_progs/unfixed_message/" + message.getAttribute("data-pk") + "/", true );
 		ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
@@ -478,14 +477,14 @@ on('#ajax', 'click', '.chat_search_btn', function() {
 });
 
 on('#ajax', 'click', '.delete_favourite_message', function() {
-  uuid = this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid")
+  pk = this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk")
   ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'GET', "/chat/user_progs/unfavorite_messages/?list=" + [uuid], true );
+    ajax_link.open( 'GET', "/chat/user_progs/unfavorite_messages/?list=" + [pk], true );
 		ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         edit_favourite_count(1, "minus");
-        messages = document.body.querySelectorAll( '[data-pk=' + '"' + uuid + '"' + ']' );
+        messages = document.body.querySelectorAll( '[data-pk=' + '"' + pk + '"' + ']' );
         for (var i = 0; i < messages.length; i++){
           messages[i].querySelector(".favourite_icon").innerHTML = ""
         }
@@ -499,7 +498,7 @@ on('#ajax', 'click', '.create_favourite_messages', function() {
   list = get_toggle_messages();
   for (var i = 0; i < list.length; i++){
     if (!list[i].querySelector(".delete_favourite_message")) {
-        messages.push(list[i].getAttribute("data-uuid"));
+        messages.push(list[i].getAttribute("data-pk"));
         list[i].querySelector(".favourite_icon").innerHTML = '<svg width="18" height="18" class="delete_favourite_message pointer" fill="currentColor" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M12 7.13l.97 2.29.47 1.11 1.2.1 2.47.21-1.88 1.63-.91.79.27 1.18.56 2.41-2.12-1.28-1.03-.64-1.03.62-2.12 1.28.56-2.41.27-1.18-.91-.79-1.88-1.63 2.47-.21 1.2-.1.47-1.11.97-2.27M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/></svg>'
     };
     list[i].classList.remove("custom_color", "target_message")
@@ -521,7 +520,7 @@ on('#ajax', 'click', '.remove_favourite_messages', function() {
   list = get_toggle_messages();
   for (var i = 0; i < list.length; i++){
     if (list[i].querySelector(".delete_favourite_message")) {
-        messages.push(list[i].getAttribute("data-uuid"));
+        messages.push(list[i].getAttribute("data-pk"));
         list[i].querySelector(".favourite_icon").innerHTML = ''
     };
     list[i].classList.remove("custom_color", "target_message")
@@ -1029,10 +1028,10 @@ function send_message_sticker(url, value) {
 };
 
 on('#ajax', 'click', '.user_create_chat', function() {
-  create_fullscreen("/chat/user_progs/create_chat/" + this.getAttribute("data-pk") + "/", "worker_fullscreen");
+  create_fullscreen("/chats/create_chat/" + this.getAttribute("data-pk") + "/", "worker_fullscreen");
 });
 on('#ajax', 'click', '.user_send_page_message', function() {
-  create_fullscreen("/chat/user_progs/send_page_message/" + this.getAttribute("data-pk") + "/", "worker_fullscreen");
+  create_fullscreen("/chats/create_message/" + this.getAttribute("data-pk") + "/", "worker_fullscreen");
 });
 
 on('#ajax', 'click', '.u_chat_photo', function() {
@@ -1181,10 +1180,10 @@ function send_message (form_post, url) {
 on('#ajax', 'click', '.u_message_fixed', function() {
   message = document.body.querySelector(".target_message");
   hide_chat_console();
-  uuid = message.getAttribute("data-uuid");
+  pk = message.getAttribute("data-pk");
 
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/chat/user_progs/fixed_message/" + uuid + "/", true );
+  link.open( 'GET', "/chat/user_progs/fixed_message/" + pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
@@ -1241,7 +1240,7 @@ on('#ajax', 'click', '.u_message_edit', function() {
   message.style.display = "none";
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/chat/user_progs/edit_message/" + message.getAttribute("data-uuid") + "/", true );
+  link_.open( 'GET', "/chat/user_progs/edit_message/" + message.getAttribute("data-pk") + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
@@ -1385,10 +1384,10 @@ on('#ajax', 'click', '.remove_parent_block', function() {
 
 on('#ajax', 'click', '.u_message_restore', function() {
   item = this.parentElement.nextElementSibling;
-  uuid = this.getAttribute("data-pk");
+  pk = this.getAttribute("data-pk");
   block = this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/chat/user_progs/restore_message/" + uuid + "/", true );
+  link.open( 'GET', "/chat/user_progs/restore_message/" + pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
@@ -1463,7 +1462,7 @@ on('#ajax', 'click', '.edit_message_post_btn', function() {
   message = form_post.parentElement.previousElementSibling;
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/chat/user_progs/edit_message/" + message.getAttribute("data-uuid") + "/", true );
+  link_.open( 'POST', "/chat/user_progs/edit_message/" + message.getAttribute("data-pk") + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -1494,7 +1493,7 @@ on('#ajax', 'click', '.go_transfer_messages', function() {
     $input = document.createElement("input");
     $input.setAttribute("type", "hidden");
     $input.setAttribute("name", "transfer");
-    $input.setAttribute("value", list[i].getAttribute("data-uuid"));
+    $input.setAttribute("value", list[i].getAttribute("data-pk"));
     $input.classList.add("transfer");
     saver.append($input)
   };

@@ -13,7 +13,7 @@
         bg-light-secondary
       <% } %>
       is_have_edited
-    <% } %>" data-uuid="<%= object.id %>" data-pk="<%= object.id %>">
+    <% } %>" data-pk="<%= object.id %>">
     <figure>
       <a href="<%= creator.link %>" class="ajax no_select">
         <%- creator.get_40_avatar() %>
