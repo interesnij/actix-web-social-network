@@ -2175,6 +2175,11 @@ impl Message {
                     .values(&message_form)
                     .get_result::<Message>(&_connection)
                     .expect("Error.");
+
+                diesel::update(&_category)
+                    .set(schema::chats::created.eq(chrono::Local::now().naive_utc()))
+                    .get_result::<Chat>(&_connection)
+                    .expect("Error.");
                 chat_exists = true;
             }
         }

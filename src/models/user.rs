@@ -390,6 +390,65 @@ impl User {
        return true;
     }
 
+    pub fn get_plus_or_create_populate_smile(&self, smile_id: i32) {
+        use crate::schema::user_populate_smiles::dsl::user_populate_smiles;
+        use crate::models::NewUserPopulateSmile;
+
+        let _connection = establish_connection();
+
+        let populate_smiles = user_populate_smiles
+            .filter(schema::user_populate_smiles::user_id.eq(self.id))
+            .filter(schema::user_populate_smiles::smile_id.eq(smile_id))
+            .load::<UserPopulateSmile>(&_connection)
+            .expect("E");
+        if populate_smiles.len() > 0 {
+            populate_smile = populate_smiles.into_iter().nth(0).unwrap();
+            diesel::update(&populate_smile)
+                .set(schema::user_populate_smiles::count.eq(populate_smile.count + 1))
+                .get_result::<UserPopulateSmile>(&_connection)
+                .expect("Error.");
+        } else {
+            let new_smile = NewUserPopulateSmile {
+                user_id:  self.id,
+                smile_id: smile_id,
+                count:    1,
+            };
+            diesel::insert_into(schema::user_populate_smiles::table)
+                .values(&new_smile)
+                .get_result::<UserPopulateSmile>(&_connection)
+                .expect("Error.");
+        }
+    }
+    pub fn get_plus_or_create_populate_sticker(&self, sticker_id: i32) {
+        use crate::schema::user_populate_stickers::dsl::user_populate_stickers;
+        use crate::models::NewUserPopulateSticker;
+
+        let _connection = establish_connection();
+
+        let populate_stickers = user_populate_stickers
+            .filter(schema::user_populate_stickers::user_id.eq(self.id))
+            .filter(schema::user_populate_stickers::sticker_id.eq(sticker_id))
+            .load::<UserPopulateSticker>(&_connection)
+            .expect("E");
+        if populate_stickers.len() > 0 {
+            populate_sticker = populate_stickers.into_iter().nth(0).unwrap();
+            diesel::update(&populate_sticker)
+                .set(schema::user_populate_stickers::count.eq(populate_sticker.count + 1))
+                .get_result::<UserPopulateSticker>(&_connection)
+                .expect("Error.");
+        } else {
+            let new_sticker = NewUserPopulateSticker {
+                user_id:    self.id,
+                sticker_id: sticker_id,
+                count:      1,
+            };
+            diesel::insert_into(schema::user_populate_stickers::table)
+                .values(&new_sticker)
+                .get_result::<UserPopulateSticker>(&_connection)
+                .expect("Error.");
+        }
+    }
+
     pub fn get_or_create_manager_chat_pk(&self) -> i32 {
         use crate::schema::chats::dsl::chats;
 
