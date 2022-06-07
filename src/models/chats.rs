@@ -2148,12 +2148,12 @@ pub struct NewMessage {
 
 impl Message {
     pub fn get_or_create_chat_and_send_message(&self, creator: User,
-        user: &User, repost_id: i32, content: Option<String>,
+        user: &User, repost_id: Option<i32>, content: Option<String>,
         attach: Option<String>, voice: Option<String>,
         sticker_id: Option<String>) -> bool {
 
-        let chat_list = creator.get_all_chats();
-        let mut current_chat: Option<Chat> = None;
+        let chat_list = creator.get_all_chats(200, 0);
+        let mut current_chat: Option<&Chat> = None;
         for chat in chat_list.iter() {
             if user.is_member_of_chat(chat.id) {
                 current_chat = Some(chat);
