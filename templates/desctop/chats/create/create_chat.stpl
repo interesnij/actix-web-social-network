@@ -13,14 +13,14 @@
                 <div class="form-group">
                   <h6 class="font-weight-normal mb-2 mt-4">Выберите тип чата</h6>
                   <div class="custom-control custom-radio">
-                    <input checked type="radio" value="GRO" name="type" class="custom-control-input" id="feedback1">
+                    <input checked type="radio" value="4" name="types" class="custom-control-input" id="feedback1">
                     <label class="custom-control-label" for="feedback1">
                       Групповой - любое кол-во участников, продвинутая приватность и назначение прав.
                       Можно упоминать чат в соцсети.
                     </label>
                   </div>
                   <div class="custom-control custom-radio mt-2">
-                    <input type="radio" value="PUB" name="type" class="custom-control-input" id="feedback2">
+                    <input type="radio" value="1" name="types" class="custom-control-input" id="feedback2">
                     <label class="custom-control-label" for="feedback2">
                       Публичный - любое кол-во участников, продвинутая приватность и назначение прав.
                       Чат можно найти через поиск и вступить в него без приглашения.
