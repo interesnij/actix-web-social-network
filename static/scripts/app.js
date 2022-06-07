@@ -5,8 +5,6 @@ loadScripts('/static/scripts/functions/post_attach.js?ver3');
 loadScripts('/static/scripts/functions/message_attach.js?ver3');
 loadScripts('/static/scripts/functions/reload.js?ver3');
 
-loadScripts('/static/scripts/community/get.js?ver3');
-loadScripts('/static/scripts/community/post.js?ver3');
 loadScripts('/static/scripts/community/manage.js');
 
 loadScripts('/static/scripts/docs/get.js?ver3');
