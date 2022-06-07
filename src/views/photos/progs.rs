@@ -172,7 +172,7 @@ pub async fn add_user_photo_list(session: Session, mut payload: Multipart) -> ac
             "users".to_string(),
             _request_user.id.to_string()
         ).await;
-        PhotoList::create_list (
+        let new_list = PhotoList::create_list (
             _request_user,
             form.name,
             form.description,
@@ -277,7 +277,7 @@ pub async fn add_community_photo_list(session: Session, mut payload: Multipart, 
                 "communities".to_string(),
                 community.id.to_string()
             ).await;
-            PhotoList::create_list (
+            let new_list = PhotoList::create_list (
                 _request_user,
                 form.name,
                 form.description,
