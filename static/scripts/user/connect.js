@@ -3,7 +3,7 @@ on('#ajax', 'click', '.follow_create', function() {
   document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : pk = _this.parentElement.parentElement.parentElement.getAttribute("data-pk");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.timeout = 30000;
-  link_.open( 'GET', "/follows/add/" + pk + "/", true );
+  link_.open( 'GET', "/users/progs/follow/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
@@ -19,7 +19,7 @@ on('#ajax', 'click', '.follow_delete', function() {
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.timeout = 30000;
   link_.addEventListener('loadstart', _loadstart);
-  link_.open( 'GET', "/follows/delete/" + pk + "/", true );
+  link_.open( 'GET', "/users/progs/unfollow/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
@@ -35,7 +35,7 @@ on('#ajax', 'click', '.follow_view', function() {
   _this = this;
   document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : null
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/follows/view/" + pk + "/", true );
+  link_.open( 'GET', "/users/progs/follow_view/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
@@ -52,7 +52,7 @@ on('#ajax', 'click', '.connect_create', function() {
                                            : pk = this.parentElement.parentElement.parentElement.getAttribute("data-pk");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
 
-  link_.open( 'GET', "/friends/add/" + pk + "/", true );
+  link_.open( 'GET', "/users/progs/friend/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
@@ -66,7 +66,7 @@ on('#ajax', 'click', '.connect_delete', function() {
   _this = this;
   document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : pk = this.parentElement.parentElement.parentElement.getAttribute("data-pk");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/friends/delete/" + pk + "/", true );
+  link_.open( 'GET', "/users/progs/unfriend/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
@@ -92,7 +92,7 @@ on('#ajax', 'click', '.user_unblock', function() {
   _this = this;
   document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : pk = this.parentElement.parentElement.parentElement.getAttribute("data-pk");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/users/progs/unblock/" + pk + "/", true );
+  link_.open( 'GET', "/users/progs/block/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {

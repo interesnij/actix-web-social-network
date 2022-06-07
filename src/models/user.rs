@@ -4975,6 +4975,25 @@ impl User {
         }
         return true;
     }
+    pub fn follow_view_user(&self, user: User) -> bool {
+        if self.id == user.id || !self.is_followers_user_with_id(user.id) {
+            return false;
+        }
+        use crate::schema::follows::dsl::follows;
+
+        let _connection = establish_connection();
+
+        let _follow = follows
+            .filter(schema::follows::user_id.eq(self.id))
+            .filter(schema::follows::followed_user.eq(user.id))
+            .load::<Follow>(&_connection)
+            .expect("E");
+        diesel::update(&_follow[0])
+            .set(schema::follows::view.eq(true))
+            .get_result::<Follow>(&_connection)
+            .expect("Error.");
+        return true;
+    }
 
     pub fn unfollow_user(&self, user: User) -> bool {
         if self.id == user.id || !self.is_following_user_with_id(user.id) {
