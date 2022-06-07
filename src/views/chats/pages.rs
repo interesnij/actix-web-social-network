@@ -35,7 +35,7 @@ pub fn pages_urls(config: &mut web::ServiceConfig) {
     config.route("/chats/include_users/{id}/", web::get().to(chat_include_users_load));
     config.route("/chats/{id}/info/", web::get().to(chat_info_page));
     config.route("/chats/{id}/search/", web::get().to(chat_search_page));
-    //config.route("/chats/invite_members/{id}/", web::get().to(invite_members_page));
+    config.route("/chats/invite_members/{id}/", web::get().to(invite_members_page));
     config.route("/chats/private_chat_page/{id}/", web::get().to(private_chat_page));
 }
 
@@ -1097,6 +1097,83 @@ pub async fn chat_search_page(session: Session, req: HttpRequest, _id: web::Path
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 q:                q,
+                count:            count,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn invite_members(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+
+    let params_some = web::Query::<ZParams>::from_query(&req.query_string());
+    let (is_desctop, page) = get_list_variables(req);
+
+    if is_signed_in(&session) {
+        let mut next_page_number: i32 = 0;
+        let _chat = get_chat(*_id);
+
+        let _request_user = get_request_user_data(session);
+        let mut object_list: Vec<User> = Vec::new();
+
+        let count = _request_user.count_friends();
+            if page > 1 {
+                let step = (page - 1) * 20;
+                object_list = _request_user.get_friends(20, step.into());
+                if count > (page * 20) {
+                    next_page_number = page + 1;
+                }
+            }
+            else {
+                object_list = _request_user.get_friends(20, 0);
+                if count > 20 {
+                    next_page_number = 2;
+                }
+        }
+
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/chats/chat/append_friends.stpl")]
+            struct Template {
+                request_user:     User,
+                chat:             Chat,
+                object_list:      Vec<User>,
+                next_page_number: i32,
+                count:            i32,
+            }
+
+            let body = Template {
+                request_user:     _request_user,
+                chat:             _chat,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                count:            count,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/chats/chat/append_friends.stpl")]
+            struct Template {
+                request_user:     User,
+                chat:             Chat,
+                object_list:      Vec<User>,
+                next_page_number: i32,
+                count:            i32,
+            }
+
+            let body = Template {
+                request_user:     _request_user,
+                chat:             _chat,
+                object_list:      object_list,
+                next_page_number: next_page_number,
                 count:            count,
             }
             .render_once()

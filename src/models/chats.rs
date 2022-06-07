@@ -220,7 +220,35 @@ impl Chat {
             community_id: community_id,
             user_id: creator.id,
             position: 0,
-            members: 1,
+            members: 0,
+            created: chrono::Local::now().naive_utc(),
+            can_add_members: "a".to_string(),
+            can_fix_item: "c".to_string(),
+            can_mention: "a".to_string(),
+            can_add_admin: "b".to_string(),
+            can_add_design: "b".to_string(),
+            can_see_settings: "b".to_string(),
+            can_see_log: "b".to_string(),
+            reactions: None,
+        };
+        let new_chat = diesel::insert_into(schema::chats::table)
+            .values(&new_chat_form)
+            .get_result::<Chat>(&_connection)
+            .expect("Error.");
+
+        new_chat.create_membership(&creator, true);
+        let _messages = new_chat.invite_users_in_chat(&creator, users_ids);
+        return new_chat;
+    }
+    pub fn create_private_chat(creator: &User, recipient: &User, community_id: Option<i32>) -> Chat {
+        let _connection = establish_connection();
+        let new_chat_form = NewChat {
+            name: name,
+            types: 2,
+            community_id: community_id,
+            user_id: creator.id,
+            position: 0,
+            members: 0,
             created: chrono::Local::now().naive_utc(),
             can_add_members: "a".to_string(),
             can_fix_item: "c".to_string(),
@@ -237,7 +265,7 @@ impl Chat {
             .expect("Error.");
 
         new_chat.create_membership(&creator, false);
-        let _messages = new_chat.invite_users_in_chat(&creator, users_ids);
+        new_chat.create_membership(&recipient, false);
         return new_chat;
     }
     pub fn edit_chat(&self, name: Option<String>, image: Option<String>,
@@ -2119,6 +2147,44 @@ pub struct NewMessage {
 }
 
 impl Message {
+    pub fn get_or_create_chat_and_send_message(&self, creator: User,
+        user: &User, repost_id: i32, content: Option<String>,
+        attach: Option<String>, voice: Option<String>,
+        sticker_id: Option<String>) -> bool {
+
+        let chat_list = creator.get_all_chats();
+        let mut current_chat: Option<Chat> = None;
+        for chat in chat_list.iter() {
+            if user.is_member_of_chat(chat.id) {
+                current_chat = Some(chat);
+            }
+        }
+        if current_chat.is_none() {
+            current_chat = Some(Chat::create_private_chat(creator, user, None));
+        }
+        let chat = current_chat.unwrap();
+
+        let message_form = NewMessage {
+            user_id:    creator.id,
+            chat_id:    chat.id,
+            parent_id:  None,
+            sticker_id: sticker_id,
+            post_id:    repost_id,
+            created:    chrono::Local::now().naive_utc(),
+            content:    content,
+            unread:     true,
+            types:      1,
+            attach:     attach,
+            voice:      voice,
+            reactions:  0,
+        }
+
+        diesel::insert_into(schema::messages::table)
+            .values(&message_form)
+            .get_result::<Message>(&_connection)
+            .expect("Error.");
+        return true;
+    }
     pub fn get_attach(&self, user_id: i32) -> String {
         if self.attach.is_some() {
             use crate::utils::message_elements;
