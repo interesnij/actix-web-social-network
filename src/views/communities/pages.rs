@@ -38,6 +38,7 @@ pub fn community_urls(config: &mut web::ServiceConfig) {
     config.route("/communities/{community_id}/surveys_list/{list_id}/", web::get().to(community_surveys_list_page));
     config.route("/communities/{community_id}/video_list/{list_id}/", web::get().to(community_video_list_page));
     config.route("/communities/{community_id}/docs_list/{list_id}/", web::get().to(community_docs_list_page));
+    config.route("/communities/create_community/", web::get().to(create_community_page));
 }
 
 pub async fn community_docs_page(session: Session, req: HttpRequest, community_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
@@ -1927,5 +1928,29 @@ pub fn anon_private_community(is_desctop: bool, community: Community) -> actix_w
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+
+pub async fn create_community_page(session: Session) -> actix_web::Result<HttpResponse> {
+    if !is_signed_in(&session) {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+
+        let _request_user = get_request_user_data(session);
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/communities/manage/create_community.stpl")]
+        struct Template {
+            request_user: User,
+        }
+        let body = Template {
+            request_user:  _request_user,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok()
+        .content_type("text/html; charset=utf-8")
+        .body(body))
     }
 }

@@ -1007,7 +1007,7 @@ impl Community {
             }
         return false;
     }
-    pub fn create_community(name: String, category: i32, user: User, types: i16) -> i32 {
+    pub fn create_community(name: String, category_id: i32, user: &User, types: i16) -> i32 {
         let user_id = user.id;
 
         let _connection = establish_connection();
@@ -1020,7 +1020,7 @@ impl Community {
                 link:                     link,
                 perm:                     "a".to_string(),
                 level:                    100,
-                community_subcategory_id: category,
+                community_subcategory_id: category_id,
                 user_id:                  user_id,
                 created:                  chrono::Local::now().naive_utc(),
             };

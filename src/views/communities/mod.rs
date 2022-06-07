@@ -1,15 +1,15 @@
-pub mod community_pages;
-//pub mod community_settings;
+pub mod pages;
+pub mod progs;
 use actix_web::web::ServiceConfig;
 
 pub use self::{
-    community_pages::*,
-    //community_settings::*,
+    pages::*,
+    progs::*,
 };
 
 pub fn community_routes(cfg: &mut ServiceConfig) {
     cfg
     .configure(community_urls)
-    //.configure(community_settings_urls)
+    .configure(progs_urls)
     ;
 }
