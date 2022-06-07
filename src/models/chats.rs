@@ -2177,7 +2177,7 @@ impl Message {
             attach:     attach,
             voice:      voice,
             reactions:  0,
-        }
+        };
 
         diesel::insert_into(schema::messages::table)
             .values(&message_form)
