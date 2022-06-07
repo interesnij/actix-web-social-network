@@ -5004,7 +5004,7 @@ impl User {
     }
 
     pub fn frend_user(&self, user: User) -> bool {
-        if self.id == user.id || self.is_followers_user_with_id(user.id) || !self.is_following_user_with_id(user.id) {
+        if self.id == user.id || !self.is_followers_user_with_id(user.id) {
             return false;
         }
         use crate::models::NewFriend;
