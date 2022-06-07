@@ -7,7 +7,6 @@ use crate::views::{
     auth,
     user_routes,
     community_routes,
-    user_routes,
     post_routes,
     chat_routes,
     docs_routes,
