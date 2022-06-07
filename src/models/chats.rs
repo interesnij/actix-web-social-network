@@ -2161,7 +2161,7 @@ impl Message {
             }
         }
         if current_chat.is_none() {
-            current_chat = Some(Chat::create_private_chat(&creator, user, None));
+            current_chat = Some(&Chat::create_private_chat(&creator, user, None));
         }
         let chat = current_chat.unwrap();
 
