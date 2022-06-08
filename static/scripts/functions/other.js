@@ -860,7 +860,7 @@ function send_reaction(item, pk, _link) {
                   $like_img.style.marginRight = "4px";
                 }
                 else {
-                  $like_img.style.width = "22px";
+                  $like_img.style.width = "18px";
                   $like_img.style.marginRight = "7px";
                 }
                 $like_span = document.createElement("span");
