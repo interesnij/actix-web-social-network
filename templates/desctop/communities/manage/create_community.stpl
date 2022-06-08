@@ -14,7 +14,7 @@
         <select class="form-control" id="sub_category" data-live-search="true" tabindex="-1" aria-hidden="true">
           <option value="">Выберите тематику</option>
           <% for object in categories.iter() { %>
-            <option data-order="<%= object.order %>" value="<%= object.order %>"><%= object.name %></option>
+            <option value="<%= object.position %>"><%= object.name %></option>
           <% } %>
         </select>
         <div id="subcat"></div>

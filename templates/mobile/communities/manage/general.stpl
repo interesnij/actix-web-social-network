@@ -25,8 +25,7 @@
                                     <label>Категория</label>
                                     <% for object in categories.iter() { %>
                                       <option
-                                        data-order="<%= object.order %>"
-                                        value="<%= object.order %>"
+                                        value="<%= object.position %>"
                                         <% if community.community_subcategory_id == object.id { %>
                                           selected=""
                                         <% } %>
