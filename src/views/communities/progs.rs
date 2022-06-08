@@ -76,7 +76,7 @@ pub async fn create_community(session: Session, req: HttpRequest, mut payload: M
             &_request_user,
             form.types,
         );
-        return community_page(session, reg, new_community.link).await;
+        return community_page(session, req, new_community.link).await;
 
     } else {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))

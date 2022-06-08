@@ -1936,16 +1936,24 @@ pub async fn create_community_page(session: Session) -> actix_web::Result<HttpRe
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
+        use crate::schema::community_categorys::dsl::community_categorys;
+        use crate::models::CommunityCategory;
 
         let _request_user = get_request_user_data(session);
+        let _connection = establish_connection();
+        let categories = community_categorys
+            .load::<CommunityCategory>(&_connection)
+            .expect("E.");
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/manage/create_community.stpl")]
         struct Template {
             request_user: User,
+            categories:   Vec<CommunityCategory>,
         }
         let body = Template {
             request_user:  _request_user,
+            categories:    categories,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
