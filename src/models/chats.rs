@@ -292,7 +292,6 @@ impl Chat {
         if users_ids.is_some() {
             use crate::schema::users::dsl::users;
             use crate::schema::chat_users::dsl::chat_users;
-            use crate::schema::messages::dsl::messages;
 
             let mut stack = Vec::new();
             let unwrap_users_ids = users_ids.as_ref().unwrap().to_string();
