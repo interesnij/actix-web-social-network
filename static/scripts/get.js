@@ -423,8 +423,10 @@ on('#ajax', 'click', '.music_list_comment', function() {
   }
 });
 
-function private_users_send(form_post, url) {
+function private_users_send(form_post, url, action, val) {
   form = new FormData(form_post);
+  form.append("action", action);
+  form.append("value", val);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', url, true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -467,7 +469,7 @@ on('#ajax', 'click', '.select_perm_dropdown', function() {
       }
       else {
         if (is_new_value) {
-          private_users_send(form_post, "/chat/user_progs/private/" + form_post.getAttribute("data-pk") + "/?action=" + action + "&value=" + val)
+          private_users_send(form_post, "/chat/user_progs/private/" + form_post.getAttribute("data-pk") + "/", action, val)
         }
       }
   }
@@ -481,7 +483,7 @@ on('#ajax', 'click', '.select_perm_dropdown', function() {
     }
     else {
       if (is_new_value) {
-        private_users_send(form_post, "/users/settings/private/?action=" + action + "&value=" + val)
+        private_users_send(form_post, "/users/settings/private/", action, val)
       }
     }
   }
@@ -496,7 +498,7 @@ on('#ajax', 'click', '.select_perm_dropdown', function() {
     }
     else {
       if (is_new_value) {
-        private_users_send(form_post, "/communities/manage/private/" + c_pk + "/?action=" + action + "&value=" + val)
+        private_users_send(form_post, "/communities/manage/private/" + c_pk + "/", action, val)
       }
     }
   }
