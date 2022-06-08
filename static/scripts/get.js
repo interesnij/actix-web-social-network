@@ -473,10 +473,10 @@ on('#ajax', 'click', '.select_perm_dropdown', function() {
   }
   else if (form_post.classList.contains("type_profile")) {
     // работаем с приватностью профиля пользователя
-    if (val == 'd') {
+    if (val == 'e') {
       create_fullscreen("/users/settings/load_exclude_users/?action=" + action, "worker_fullscreen");
     }
-    else if (val == 'e') {
+    else if (val == 'f') {
       create_fullscreen("/users/settings/load_include_users/?action=" + action, "worker_fullscreen");
     }
     else {
@@ -488,10 +488,10 @@ on('#ajax', 'click', '.select_perm_dropdown', function() {
   else if (form_post.classList.contains("type_community")) {
     // работаем с приватностью профиля пользователя
     c_pk = form_post.getAttribute("data-pk");
-    if (val == 'i') {
+    if (val == 'h') {
       create_fullscreen("/communities/manage/load_exclude_users/" + c_pk + "/?action=" + action, "worker_fullscreen");
     }
-    else if (val == 'j') {
+    else if (val == 'i') {
       create_fullscreen("/communities/manage/load_include_users/" + c_pk + "/?action=" + action, "worker_fullscreen");
     }
     else {
