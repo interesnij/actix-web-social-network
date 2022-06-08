@@ -856,11 +856,11 @@ function send_reaction(item, pk, _link) {
                 $like_img = document.createElement("img");
                 $like_img.src = "/static/images/reactions/" + pk + ".png";
                 if (reactions_block.classList.contains("comments")) {
-                  $like_img.style.width = "16px";
+                  $like_img.style.width = "15px";
                   $like_img.style.marginRight = "4px";
                 }
                 else {
-                  $like_img.style.width = "18px";
+                  $like_img.style.width = "17px";
                   $like_img.style.marginRight = "7px";
                 }
                 $like_span = document.createElement("span");

@@ -3910,8 +3910,8 @@ pub struct NewCommunityInfo {
     // 'c' Персонал
     // 'd' Администраторы
     // 'e' Владелец сообщества
-    // 'f' Подписчики, кроме
-    // 'g' Некоторые подписчики
+    // 'h' Подписчики, кроме 
+    // 'i' Некоторые подписчики
 
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
 #[belongs_to(Community)]

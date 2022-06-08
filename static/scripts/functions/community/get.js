@@ -18,8 +18,6 @@ on('#ajax', 'change', '#sub_category', function() {
   };
 });
 
-on('#ajax', 'click', '.user_community_create_window', function(e) {
-  e.preventDefault();
-  pk = this.getAttribute("data-pk");
-  create_fullscreen("/communities/progs/add/", "worker_fullscreen");
+on('#ajax', 'click', '.user_community_create_window', function() {
+  create_fullscreen("/communities/create_community/", "worker_fullscreen");
 });

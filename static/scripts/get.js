@@ -459,10 +459,10 @@ on('#ajax', 'click', '.select_perm_dropdown', function() {
 
     if (form_post.classList.contains("chat_edit")) {
       // работаем с приватностью пользовательского чата
-      if (val == '4') {
+      if (val == 'd') {
         create_fullscreen("/chat/user_progs/load_exclude_users/" + form_post.getAttribute("data-pk") + "/?action=" + action, "worker_fullscreen");
       }
-      else if (val == '5') {
+      else if (val == 'e') {
         create_fullscreen("/chat/user_progs/load_include_users/" + form_post.getAttribute("data-pk") + "/?action=" + action, "worker_fullscreen");
       }
       else {
@@ -473,10 +473,10 @@ on('#ajax', 'click', '.select_perm_dropdown', function() {
   }
   else if (form_post.classList.contains("type_profile")) {
     // работаем с приватностью профиля пользователя
-    if (val == '17') {
+    if (val == 'd') {
       create_fullscreen("/users/settings/load_exclude_users/?action=" + action, "worker_fullscreen");
     }
-    else if (val == '18') {
+    else if (val == 'e') {
       create_fullscreen("/users/settings/load_include_users/?action=" + action, "worker_fullscreen");
     }
     else {
@@ -488,10 +488,10 @@ on('#ajax', 'click', '.select_perm_dropdown', function() {
   else if (form_post.classList.contains("type_community")) {
     // работаем с приватностью профиля пользователя
     c_pk = form_post.getAttribute("data-pk");
-    if (val == '5') {
+    if (val == 'i') {
       create_fullscreen("/communities/manage/load_exclude_users/" + c_pk + "/?action=" + action, "worker_fullscreen");
     }
-    else if (val == '6') {
+    else if (val == 'j') {
       create_fullscreen("/communities/manage/load_include_users/" + c_pk + "/?action=" + action, "worker_fullscreen");
     }
     else {
@@ -513,16 +513,16 @@ on('#ajax', 'click', '.select_perm_dropdown', function() {
     };
     input.setAttribute("value", val);
 
-      if (val == '4') {
+      if (val == 'e') {
         create_fullscreen("/users/load/list_exclude_users/?action=" + action + "&target=user&list=" + form_post.getAttribute("data-list"), "worker_fullscreen")
       }
-      else if (val == '5') {
+      else if (val == 'f') {
         create_fullscreen("/users/load/list_include_users/?action=" + action + "&target=user&list=" + form_post.getAttribute("data-list"), "worker_fullscreen")
       }
-      else if (val == '9') {
+      else if (val == 'h') {
         create_fullscreen("/users/load/list_exclude_users/?action=" + action + "&community_pk=" + form_post.getAttribute("community-pk") + "&list=" + form_post.getAttribute("data-list"), "worker_fullscreen")
       }
-      else if (val == '10') {
+      else if (val == 'i') {
         create_fullscreen("/users/load/list_include_users/?action=" + action + "&community_pk=" + form_post.getAttribute("community-pk") + "&list=" + form_post.getAttribute("data-list"), "worker_fullscreen")
       }
       else {
