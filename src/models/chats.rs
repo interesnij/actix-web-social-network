@@ -1787,8 +1787,8 @@ impl Chat {
             "a" => self.get_members_ids().iter().any(|&i| i==user_id),
             "b" => self.user_id == user_id,
             "c" => self.get_administrators_ids().iter().any(|&i| i==user_id),
-            "d" => !self.get_can_add_in_chat_exclude_users_ids().iter().any(|&i| i==user_id),
-            "f" => self.get_can_add_in_chat_include_users_ids().iter().any(|&i| i==user_id),
+            "h" => !self.get_can_add_in_chat_exclude_users_ids().iter().any(|&i| i==user_id),
+            "i" => self.get_can_add_in_chat_include_users_ids().iter().any(|&i| i==user_id),
             _ => false,
         };
     }
@@ -1798,8 +1798,8 @@ impl Chat {
             "a" => self.get_members_ids().iter().any(|&i| i==user_id),
             "b" => self.user_id == user_id,
             "c" => self.get_administrators_ids().iter().any(|&i| i==user_id),
-            "d" => !self.get_can_add_fix_exclude_users_ids().iter().any(|&i| i==user_id),
-            "f" => self.get_can_add_fix_include_users_ids().iter().any(|&i| i==user_id),
+            "h" => !self.get_can_add_fix_exclude_users_ids().iter().any(|&i| i==user_id),
+            "i" => self.get_can_add_fix_include_users_ids().iter().any(|&i| i==user_id),
             _ => false,
         };
     }
@@ -1809,8 +1809,8 @@ impl Chat {
             "a" => self.get_members_ids().iter().any(|&i| i==user_id),
             "b" => self.user_id == user_id,
             "c" => self.get_administrators_ids().iter().any(|&i| i==user_id),
-            "d" => !self.get_can_send_mention_exclude_users_ids().iter().any(|&i| i==user_id),
-            "f" => self.get_can_send_mention_include_users_ids().iter().any(|&i| i==user_id),
+            "h" => !self.get_can_send_mention_exclude_users_ids().iter().any(|&i| i==user_id),
+            "i" => self.get_can_send_mention_include_users_ids().iter().any(|&i| i==user_id),
             _ => false,
         };
     }
@@ -1820,8 +1820,8 @@ impl Chat {
             "a" => self.get_members_ids().iter().any(|&i| i==user_id),
             "b" => self.user_id == user_id,
             "c" => self.get_administrators_ids().iter().any(|&i| i==user_id),
-            "d" => !self.get_can_add_admin_exclude_users_ids().iter().any(|&i| i==user_id),
-            "f" => self.get_can_add_admin_include_users_ids().iter().any(|&i| i==user_id),
+            "h" => !self.get_can_add_admin_exclude_users_ids().iter().any(|&i| i==user_id),
+            "i" => self.get_can_add_admin_include_users_ids().iter().any(|&i| i==user_id),
             _ => false,
         };
     }
@@ -1831,8 +1831,8 @@ impl Chat {
             "a" => self.get_members_ids().iter().any(|&i| i==user_id),
             "b" => self.user_id == user_id,
             "c" => self.get_administrators_ids().iter().any(|&i| i==user_id),
-            "d" => !self.get_can_add_design_exclude_users_ids().iter().any(|&i| i==user_id),
-            "f" => self.get_can_add_design_include_users_ids().iter().any(|&i| i==user_id),
+            "h" => !self.get_can_add_design_exclude_users_ids().iter().any(|&i| i==user_id),
+            "i" => self.get_can_add_design_include_users_ids().iter().any(|&i| i==user_id),
             _ => false,
         };
     }
@@ -1842,8 +1842,8 @@ impl Chat {
             "a" => self.get_members_ids().iter().any(|&i| i==user_id),
             "b" => self.user_id == user_id,
             "c" => self.get_administrators_ids().iter().any(|&i| i==user_id),
-            "d" => !self.get_can_see_settings_exclude_users_ids().iter().any(|&i| i==user_id),
-            "f" => self.get_can_see_settings_include_users_ids().iter().any(|&i| i==user_id),
+            "h" => !self.get_can_see_settings_exclude_users_ids().iter().any(|&i| i==user_id),
+            "i" => self.get_can_see_settings_include_users_ids().iter().any(|&i| i==user_id),
             _ => false,
         };
     }
@@ -1853,8 +1853,8 @@ impl Chat {
             "a" => self.get_members_ids().iter().any(|&i| i==user_id),
             "b" => self.user_id == user_id,
             "c" => self.get_administrators_ids().iter().any(|&i| i==user_id),
-            "d" => !self.get_can_see_log_exclude_users_ids().iter().any(|&i| i==user_id),
-            "f" => self.get_can_see_log_include_users_ids().iter().any(|&i| i==user_id),
+            "h" => !self.get_can_see_log_exclude_users_ids().iter().any(|&i| i==user_id),
+            "i" => self.get_can_see_log_include_users_ids().iter().any(|&i| i==user_id),
             _ => false,
         };
     }
