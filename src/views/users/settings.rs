@@ -47,6 +47,7 @@ pub fn settings_urls(config: &mut web::ServiceConfig) {
     config.route("/users/settings/edit_phone/", web::post().to(edit_phone));
 
     config.route("/users/settings/remove_profile/", web::post().to(remove_profile));
+    config.route("/users/settings/private/", web::post().to(private_settings));
 }
 
 pub async fn followings_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
@@ -879,4 +880,98 @@ pub async fn change_phone_verify(session: Session, param: web::Path<(String,i32)
     }
 
     HttpResponse::Ok().body(response_text)
+}
+
+pub async fn private_settings(session: Session, mut payload: Multipart) -> impl Responder {
+
+    if is_signed_in(&session) {
+        use crate::models::UserPrivate;
+
+        struct PrivateForm {
+            pub action: String,
+            pub value:  String,
+        }
+        let mut form: PrivateForm = PrivateForm {
+            action: "".to_string(),
+            value: "".to_string(),
+        };
+
+        while let Some(item) = payload.next().await {
+            let mut field: Field = item.expect("split_payload err");
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let data_string = s.to_string();
+                    if field.name() == "action" {
+                        form.action = data_string;
+                    }
+                    else if field.name() == "value" {
+                        form.value = data_string;
+                    }
+                }
+            }
+        }
+        let _connection = establish_connection();
+        let _request_user = get_request_user_data(&session);
+
+        let user_private = _request_user.get_private_model();
+        let action_9 = form.action[..3];
+        if action_9 == "can" {
+            let _var = match form.action.as_str() {
+                "can_see_all" => diesel::update(&user_private)
+                    .set(schema::user_privates::can_see_all.eq(form.value))
+                    .get_result::<UserPrivate>(&_connection)
+                    .expect("Error."),
+                "can_see_community" => diesel::update(&user_private)
+                    .set(schema::user_privates::can_see_community.eq(form.value))
+                    .get_result::<UserPrivate>(&_connection)
+                    .expect("Error."),
+                "can_see_info" => diesel::update(&user_private)
+                    .set(schema::user_privates::can_see_info.eq(form.value))
+                    .get_result::<UserPrivate>(&_connection)
+                    .expect("Error."),
+                "can_see_friend" => diesel::update(&user_private)
+                    .set(schema::user_privates::can_see_friend.eq(form.value))
+                    .get_result::<UserPrivate>(&_connection)
+                    .expect("Error."),
+                "can_send_message" => diesel::update(&user_private)
+                    .set(schema::user_privates::can_send_message.eq(form.value))
+                    .get_result::<UserPrivate>(&_connection)
+                    .expect("Error."),
+                "can_add_in_chat" => diesel::update(&user_private)
+                    .set(schema::user_privates::can_add_in_chat.eq(form.value))
+                    .get_result::<UserPrivate>(&_connection)
+                    .expect("Error."),
+                "can_see_post" => diesel::update(&user_private)
+                    .set(schema::user_privates::can_see_post.eq(form.value))
+                    .get_result::<UserPrivate>(&_connection)
+                    .expect("Error."),
+                "can_see_photo" => diesel::update(&user_private)
+                    .set(schema::user_privates::can_see_photo.eq(form.value))
+                    .get_result::<UserPrivate>(&_connection)
+                    .expect("Error."),
+                "can_see_good" => diesel::update(&user_private)
+                    .set(schema::user_privates::can_see_good.eq(form.value))
+                    .get_result::<UserPrivate>(&_connection)
+                    .expect("Error."),
+                "can_see_video" => diesel::update(&user_private)
+                    .set(schema::user_privates::can_see_video.eq(form.value))
+                    .get_result::<UserPrivate>(&_connection)
+                    .expect("Error."),
+                "can_see_music" => diesel::update(&user_private)
+                    .set(schema::user_privates::can_see_music.eq(form.value))
+                    .get_result::<UserPrivate>(&_connection)
+                    .expect("Error."),
+                "can_see_planner" => diesel::update(&user_private)
+                    .set(schema::user_privates::can_see_planner.eq(form.value))
+                    .get_result::<UserPrivate>(&_connection)
+                    .expect("Error."),
+                "can_see_doc" => diesel::update(&user_private)
+                    .set(schema::user_privates::can_see_doc.eq(form.value))
+                    .get_result::<UserPrivate>(&_connection)
+                    .expect("Error."),
+            };
+        }
+    }
+    HttpResponse::Ok().body("")
 }
