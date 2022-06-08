@@ -26,7 +26,7 @@
 <div class="row mb-1 form_group_flex">
     <label class="col-md-6">Кто создает элементы</label>
     <span class="col-md-6">
-      <input class="input" name="create_el" type="hidden" value="g" />
+      <input class="input" name="create_el" type="hidden" value="o" />
       <a class="i_link menu_drop_2 pointer">Только я</a>
       <span class="collector"></span>
       <div class="dropdown-menu" data-action="create_el" style="top: 30px;">

@@ -168,16 +168,16 @@ pub struct NewGoodSubcategorie {
     // 35 замороженный Фото со стены
 
 //////////// Приватность списка
-    // 'a' Все пользователи
-    // 'b' Друзья
-    // 'c' Друзья и друзья друзей
-    // 'd' Друзья, кроме
-    // 'e' Некоторые друзья
-    // 'f' Подписчики
-    // 'g' Только я / владелец сообщества
-    // 'h' Администраторы
-    // 'i' Подписчики, кроме
-    // 'j' Некоторые подписчики
+// 'a' Все пользователи
+// 'b' Друзья
+// 'c' Друзья и друзья друзей
+// 'e' Друзья, кроме
+// 'f' Некоторые друзья
+// 'g' Подписчики
+// 'o' Только я / владелец сообщества
+// 'p' Администраторы
+// 'h' Подписчики, кроме
+// 'i' Некоторые подписчики
 
 /////// GoodList //////
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]
@@ -728,8 +728,8 @@ impl GoodList {
                 "f" => community.get_members_ids().iter().any(|&i| i==user_id),
                 "h" => community.get_administrators_ids().iter().any(|&i| i==user_id),
                 "g" => community.user_id == user_id,
-                "i" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
-                "j" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
+                "h" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
+                "i" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
                 _ => false,
             };
         }
@@ -739,8 +739,8 @@ impl GoodList {
                 "b" => creator.get_friends_ids().iter().any(|&i| i==user_id),
                 "c" => creator.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
                 "g" => creator.id == user_id,
-                "d" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
-                "e" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
+                "e" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
+                "f" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
                 _ => false,
             };
         }
@@ -758,8 +758,8 @@ impl GoodList {
                 "f" => community.get_members_ids().iter().any(|&i| i==user_id),
                 "h" => community.get_administrators_ids().iter().any(|&i| i==user_id),
                 "g" => community.user_id == user_id,
-                "i" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
-                "j" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
+                "h" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
+                "i" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
                 _ => false,
             };
         }
@@ -769,8 +769,8 @@ impl GoodList {
                 "b" => creator.get_friends_ids().iter().any(|&i| i==user_id),
                 "c" => creator.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
                 "g" => creator.id == user_id,
-                "d" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
-                "e" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
+                "e" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
+                "f" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
                 _ => false,
             };
         }
@@ -787,8 +787,8 @@ impl GoodList {
                 "f" => community.get_members_ids().iter().any(|&i| i==user_id),
                 "h" => community.get_administrators_ids().iter().any(|&i| i==user_id),
                 "g" => community.user_id == user_id,
-                "i" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
-                "j" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
+                "h" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
+                "i" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
                 _ => false,
             };
         }
@@ -798,8 +798,8 @@ impl GoodList {
                 "b" => creator.get_friends_ids().iter().any(|&i| i==user_id),
                 "c" => creator.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
                 "g" => creator.id == user_id,
-                "d" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
-                "e" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
+                "e" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
+                "f" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
                 _ => false,
             };
         }
@@ -813,8 +813,8 @@ impl GoodList {
         if self.community_id.is_some() {
             let community = self.get_community();
             return match char.as_str() {
-                "f" => community.get_members_ids().iter().any(|&i| i==user_id),
-                "h" => community.get_administrators_ids().iter().any(|&i| i==user_id),
+                "h" => community.get_members_ids().iter().any(|&i| i==user_id),
+                "i" => community.get_administrators_ids().iter().any(|&i| i==user_id),
                 "g" => community.user_id == user_id,
                 "i" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
                 "j" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
@@ -827,8 +827,8 @@ impl GoodList {
                 "b" => creator.get_friends_ids().iter().any(|&i| i==user_id),
                 "c" => creator.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
                 "g" => creator.id == user_id,
-                "d" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
-                "e" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
+                "e" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
+                "f" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
                 _ => false,
             };
         }
@@ -845,8 +845,8 @@ impl GoodList {
                 "f" => community.get_members_ids().iter().any(|&i| i==user_id),
                 "h" => community.get_administrators_ids().iter().any(|&i| i==user_id),
                 "g" => community.user_id == user_id,
-                "i" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
-                "j" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
+                "h" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
+                "i" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
                 _ => false,
             };
         }
@@ -856,8 +856,8 @@ impl GoodList {
                 "b" => creator.get_friends_ids().iter().any(|&i| i==user_id),
                 "c" => creator.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
                 "g" => creator.id == user_id,
-                "d" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
-                "e" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
+                "e" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
+                "f" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
                 _ => false,
             };
         }
@@ -949,7 +949,7 @@ impl GoodList {
                 .expect("Error saving good_list_position.");
         }
 
-        if can_see_el == "d".to_string() && can_see_el == "i".to_string() {
+        if can_see_el == "e".to_string() && can_see_el == "h".to_string() {
             if can_see_el_users.is_some() {
                 for user_id in can_see_el_users.unwrap() {
                     let _new_exclude = NewGoodListPerm {
@@ -968,7 +968,7 @@ impl GoodList {
                 }
             }
         }
-        else if can_see_el == "e".to_string() && can_see_el == "j".to_string() {
+        else if can_see_el == "f".to_string() && can_see_el == "i".to_string() {
             if can_see_el_users.is_some() {
                 for user_id in can_see_el_users.unwrap() {
                     let _new_include = NewGoodListPerm {
@@ -988,7 +988,7 @@ impl GoodList {
             }
         }
 
-        if can_see_comment == "d".to_string() && can_see_comment == "i".to_string() {
+        if can_see_comment == "e".to_string() && can_see_comment == "h".to_string() {
             if can_see_comment_users.is_some() {
                 for user_id in can_see_comment_users.unwrap() {
                     let _new_exclude = NewGoodListPerm {
@@ -1007,7 +1007,7 @@ impl GoodList {
                 }
             }
         }
-        else if can_see_comment == "e".to_string() && can_see_comment == "j".to_string() {
+        else if can_see_comment == "f".to_string() && can_see_comment == "i".to_string() {
             if can_see_comment_users.is_some() {
                 for user_id in can_see_comment_users.unwrap() {
                     let _new_include = NewGoodListPerm {
@@ -1027,7 +1027,7 @@ impl GoodList {
             }
         }
 
-        if create_el == "d".to_string() && create_el == "i".to_string() {
+        if create_el == "e".to_string() && create_el == "h".to_string() {
             if create_el_users.is_some() {
                 for user_id in create_el_users.unwrap() {
                     let _new_exclude = NewGoodListPerm {
@@ -1046,7 +1046,7 @@ impl GoodList {
                 }
             }
         }
-        else if create_el == "e".to_string() && create_el == "j".to_string() {
+        else if create_el == "f".to_string() && create_el == "i".to_string() {
             if create_el_users.is_some() {
                 for user_id in create_el_users.unwrap() {
                     let _new_include = NewGoodListPerm {
@@ -1066,7 +1066,7 @@ impl GoodList {
             }
         }
 
-        if create_comment == "d".to_string() && create_comment == "i".to_string() {
+        if create_comment == "e".to_string() && create_comment == "h".to_string() {
             if create_comment_users.is_some() {
                 for user_id in create_comment_users.unwrap() {
                     let _new_exclude = NewGoodListPerm {
@@ -1085,7 +1085,7 @@ impl GoodList {
                 }
             }
         }
-        else if create_comment == "e".to_string() && create_comment == "j".to_string() {
+        else if create_comment == "f".to_string() && create_comment == "i".to_string() {
             if create_comment_users.is_some() {
                 for user_id in create_comment_users.unwrap() {
                     let _new_include = NewGoodListPerm {
@@ -1105,7 +1105,7 @@ impl GoodList {
             }
         }
 
-        if copy_el == "d".to_string() && copy_el == "i".to_string() {
+        if copy_el == "e".to_string() && copy_el == "h".to_string() {
             if copy_el_users.is_some() {
                 for user_id in copy_el_users.unwrap() {
                     let _new_exclude = NewGoodListPerm {
@@ -1124,7 +1124,7 @@ impl GoodList {
                 }
             }
         }
-        else if copy_el == "e".to_string() && copy_el == "j".to_string() {
+        else if copy_el == "f".to_string() && copy_el == "i".to_string() {
             if copy_el_users.is_some() {
                 for user_id in copy_el_users.unwrap() {
                     let _new_include = NewGoodListPerm {
@@ -1180,7 +1180,7 @@ impl GoodList {
             .get_result::<GoodList>(&_connection)
             .expect("Error.");
 
-        if can_see_el == "d".to_string() && can_see_el == "i".to_string() {
+        if can_see_el == "e".to_string() && can_see_el == "h".to_string() {
             if can_see_el_users.is_some() {
                 diesel::delete (
                   good_list_perms
@@ -1206,7 +1206,7 @@ impl GoodList {
                 }
             }
         }
-        else if can_see_el == "e".to_string() && can_see_el == "j".to_string() {
+        else if can_see_el == "f".to_string() && can_see_el == "i".to_string() {
             if can_see_el_users.is_some() {
                 for user_id in can_see_el_users.unwrap() {
                     let _new_include = NewGoodListPerm {
@@ -1226,7 +1226,7 @@ impl GoodList {
             }
         }
 
-        if can_see_comment == "d".to_string() && can_see_comment == "i".to_string() {
+        if can_see_comment == "e".to_string() && can_see_comment == "h".to_string() {
             if can_see_comment_users.is_some() {
                 for user_id in can_see_comment_users.unwrap() {
                     let _new_exclude = NewGoodListPerm {
@@ -1245,7 +1245,7 @@ impl GoodList {
                 }
             }
         }
-        else if can_see_comment == "e".to_string() && can_see_comment == "j".to_string() {
+        else if can_see_comment == "f".to_string() && can_see_comment == "i".to_string() {
             if can_see_comment_users.is_some() {
                 for user_id in can_see_comment_users.unwrap() {
                     let _new_include = NewGoodListPerm {
@@ -1265,7 +1265,7 @@ impl GoodList {
             }
         }
 
-        if create_el == "d".to_string() && create_el == "i".to_string() {
+        if create_el == "e".to_string() && create_el == "h".to_string() {
             if create_el_users.is_some() {
                 for user_id in create_el_users.unwrap() {
                     let _new_exclude = NewGoodListPerm {
@@ -1284,7 +1284,7 @@ impl GoodList {
                 }
             }
         }
-        else if create_el == "e".to_string() && create_el == "j".to_string() {
+        else if create_el == "f".to_string() && create_el == "i".to_string() {
             if create_el_users.is_some() {
                 for user_id in create_el_users.unwrap() {
                     let _new_include = NewGoodListPerm {
@@ -1304,7 +1304,7 @@ impl GoodList {
             }
         }
 
-        if create_comment == "d".to_string() && create_comment == "i".to_string() {
+        if create_comment == "e".to_string() && create_comment == "h".to_string() {
             if create_comment_users.is_some() {
                 for user_id in create_comment_users.unwrap() {
                     let _new_exclude = NewGoodListPerm {
@@ -1323,7 +1323,7 @@ impl GoodList {
                 }
             }
         }
-        else if create_comment == "e".to_string() && create_comment == "j".to_string() {
+        else if create_comment == "f".to_string() && create_comment == "i".to_string() {
             if create_comment_users.is_some() {
                 for user_id in create_comment_users.unwrap() {
                     let _new_include = NewGoodListPerm {
@@ -1343,7 +1343,7 @@ impl GoodList {
             }
         }
 
-        if copy_el == "d".to_string() && copy_el == "i".to_string() {
+        if copy_el == "e".to_string() && copy_el == "h".to_string() {
             if copy_el_users.is_some() {
                 for user_id in copy_el_users.unwrap() {
                     let _new_exclude = NewGoodListPerm {
@@ -1362,7 +1362,7 @@ impl GoodList {
                 }
             }
         }
-        else if copy_el == "e".to_string() && copy_el == "j".to_string() {
+        else if copy_el == "f".to_string() && copy_el == "i".to_string() {
             if copy_el_users.is_some() {
                 for user_id in copy_el_users.unwrap() {
                     let _new_include = NewGoodListPerm {

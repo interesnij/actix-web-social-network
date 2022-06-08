@@ -6,23 +6,23 @@
       <a class="i_link menu_drop_2 pointer">Все пользователи</a>
       <span class="collector"></span>
 
-      <% } else if list.can_see_el == "f" { %>
-      <input class="input" name="can_see_el" type="hidden" value="f" />
+      <% } else if list.can_see_el == "g" { %>
+      <input class="input" name="can_see_el" type="hidden" value="g" />
       <a class="i_link menu_drop_2 pointer">Подписчики</a>
+      <span class="collector"></span>
+
+      <% } else if list.can_see_el == "p" { %>
+      <input class="input" name="can_see_el" type="hidden" value="p" />
+      <a class="i_link menu_drop_2 pointer">Администраторы</a>
+      <span class="collector"></span>
+
+      <% } else if list.can_see_el == "o" { %>
+      <input class="input" name="can_see_el" type="hidden" value="o" />
+      <a class="i_link menu_drop_2 pointer">Владелец сообщества</a>
       <span class="collector"></span>
 
       <% } else if list.can_see_el == "h" { %>
       <input class="input" name="can_see_el" type="hidden" value="h" />
-      <a class="i_link menu_drop_2 pointer">Администраторы</a>
-      <span class="collector"></span>
-
-      <% } else if list.can_see_el == "g" { %>
-      <input class="input" name="can_see_el" type="hidden" value="g" />
-      <a class="i_link menu_drop_2 pointer">Владелец сообщества</a>
-      <span class="collector"></span>
-
-      <% } else if list.can_see_el == "i" { %>
-      <input class="input" name="can_see_el" type="hidden" value="i" />
       <a class="i_link menu_drop_2 pointer">Подписчики, кроме</a>
       <span class="collector">:
         <% for object in list.get_can_see_el_exclude_users().iter() { %>
@@ -30,8 +30,8 @@
         <% } %>
       </span>
 
-      <% } else if list.can_see_el == "j" { %>
-      <input class="input" name="can_see_el" type="hidden" value="j" />
+      <% } else if list.can_see_el == "i" { %>
+      <input class="input" name="can_see_el" type="hidden" value="i" />
       <a class="i_link menu_drop_2 pointer">Некоторые подписчики</a>
       <span class="collector">:
         <% for object in list.get_can_see_el_include_users().iter() {  %>
@@ -53,23 +53,23 @@
       <a class="i_link menu_drop_2 pointer">Все пользователи</a>
       <span class="collector"></span>
 
-      <% } else if list.can_see_comment == "f" { %>
-      <input class="input" name="can_see_comment" type="hidden" value="f" />
+      <% } else if list.can_see_comment == "g" { %>
+      <input class="input" name="can_see_comment" type="hidden" value="g" />
       <a class="i_link menu_drop_2 pointer">Подписчики</a>
+      <span class="collector"></span>
+
+      <% } else if list.can_see_comment == "p" { %>
+      <input class="input" name="can_see_comment" type="hidden" value="p" />
+      <a class="i_link menu_drop_2 pointer">Администраторы</a>
+      <span class="collector"></span>
+
+      <% } else if list.can_see_comment == "o" { %>
+      <input class="input" name="can_see_comment" type="hidden" value="o" />
+      <a class="i_link menu_drop_2 pointer">Владелец сообщества</a>
       <span class="collector"></span>
 
       <% } else if list.can_see_comment == "h" { %>
       <input class="input" name="can_see_comment" type="hidden" value="h" />
-      <a class="i_link menu_drop_2 pointer">Администраторы</a>
-      <span class="collector"></span>
-
-      <% } else if list.can_see_comment == "g" { %>
-      <input class="input" name="can_see_comment" type="hidden" value="g" />
-      <a class="i_link menu_drop_2 pointer">Владелец сообщества</a>
-      <span class="collector"></span>
-
-      <% } else if list.can_see_comment == "i" { %>
-      <input class="input" name="can_see_comment" type="hidden" value="i" />
       <a class="i_link menu_drop_2 pointer">Подписчики, кроме</a>
       <span class="collector">:
         <% for object in list.get_can_see_comment_exclude_users().iter() { %>
@@ -77,8 +77,8 @@
         <% } %>
       </span>
 
-      <% } else if list.can_see_comment == "j" { %>
-      <input class="input" name="can_see_comment" type="hidden" value="j" />
+      <% } else if list.can_see_comment == "i" { %>
+      <input class="input" name="can_see_comment" type="hidden" value="i" />
       <a class="i_link menu_drop_2 pointer">Некоторые подписчики</a>
       <span class="collector">:
         <% for object in list.get_can_see_comment_include_users().iter() {  %>
@@ -100,23 +100,23 @@
       <a class="i_link menu_drop_2 pointer">Все пользователи</a>
       <span class="collector"></span>
 
-      <% } else if list.create_el == "f" { %>
-      <input class="input" name="create_el" type="hidden" value="f" />
+      <% } else if list.create_el == "g" { %>
+      <input class="input" name="create_el" type="hidden" value="g" />
       <a class="i_link menu_drop_2 pointer">Подписчики</a>
+      <span class="collector"></span>
+
+      <% } else if list.create_el == "p" { %>
+      <input class="input" name="create_el" type="hidden" value="p" />
+      <a class="i_link menu_drop_2 pointer">Администраторы</a>
+      <span class="collector"></span>
+
+      <% } else if list.create_el == "o" { %>
+      <input class="input" name="create_el" type="hidden" value="o" />
+      <a class="i_link menu_drop_2 pointer">Владелец сообщества</a>
       <span class="collector"></span>
 
       <% } else if list.create_el == "h" { %>
       <input class="input" name="create_el" type="hidden" value="h" />
-      <a class="i_link menu_drop_2 pointer">Администраторы</a>
-      <span class="collector"></span>
-
-      <% } else if list.create_el == "g" { %>
-      <input class="input" name="create_el" type="hidden" value="g" />
-      <a class="i_link menu_drop_2 pointer">Владелец сообщества</a>
-      <span class="collector"></span>
-
-      <% } else if list.create_el == "i" { %>
-      <input class="input" name="create_el" type="hidden" value="i" />
       <a class="i_link menu_drop_2 pointer">Подписчики, кроме</a>
       <span class="collector">:
         <% for object in list.get_create_el_exclude_users().iter() { %>
@@ -124,8 +124,8 @@
         <% } %>
       </span>
 
-      <% } else if list.create_el == "j" { %>
-      <input class="input" name="create_el" type="hidden" value="j" />
+      <% } else if list.create_el == "i" { %>
+      <input class="input" name="create_el" type="hidden" value="i" />
       <a class="i_link menu_drop_2 pointer">Некоторые подписчики</a>
       <span class="collector">:
         <% for object in list.get_create_el_include_users().iter() {  %>
@@ -147,23 +147,23 @@
       <a class="i_link menu_drop_2 pointer">Все пользователи</a>
       <span class="collector"></span>
 
-      <% } else if list.create_comment == "f" { %>
-      <input class="input" name="create_comment" type="hidden" value="f" />
+      <% } else if list.create_comment == "g" { %>
+      <input class="input" name="create_comment" type="hidden" value="g" />
       <a class="i_link menu_drop_2 pointer">Подписчики</a>
+      <span class="collector"></span>
+
+      <% } else if list.create_comment == "p" { %>
+      <input class="input" name="create_comment" type="hidden" value="p" />
+      <a class="i_link menu_drop_2 pointer">Администраторы</a>
+      <span class="collector"></span>
+
+      <% } else if list.create_comment == "o" { %>
+      <input class="input" name="create_comment" type="hidden" value="o" />
+      <a class="i_link menu_drop_2 pointer">Владелец сообщества</a>
       <span class="collector"></span>
 
       <% } else if list.create_comment == "h" { %>
       <input class="input" name="create_comment" type="hidden" value="h" />
-      <a class="i_link menu_drop_2 pointer">Администраторы</a>
-      <span class="collector"></span>
-
-      <% } else if list.create_comment == "g" { %>
-      <input class="input" name="create_comment" type="hidden" value="g" />
-      <a class="i_link menu_drop_2 pointer">Владелец сообщества</a>
-      <span class="collector"></span>
-
-      <% } else if list.create_comment == "i" { %>
-      <input class="input" name="create_comment" type="hidden" value="i" />
       <a class="i_link menu_drop_2 pointer">Подписчики, кроме</a>
       <span class="collector">:
         <% for object in list.get_create_comment_exclude_users().iter() { %>
@@ -171,8 +171,8 @@
         <% } %>
       </span>
 
-      <% } else if list.create_comment == "j" { %>
-      <input class="input" name="create_comment" type="hidden" value="j" />
+      <% } else if list.create_comment == "i" { %>
+      <input class="input" name="create_comment" type="hidden" value="i" />
       <a class="i_link menu_drop_2 pointer">Некоторые подписчики</a>
       <span class="collector">:
         <% for object in list.get_create_comment_include_users().iter() {  %>
@@ -194,23 +194,23 @@
           <a class="i_link menu_drop_2 pointer">Все пользователи</a>
           <span class="collector"></span>
 
-          <% } else if list.copy_el == "f" { %>
-          <input class="input" name="copy_el" type="hidden" value="f" />
+          <% } else if list.copy_el == "g" { %>
+          <input class="input" name="copy_el" type="hidden" value="g" />
           <a class="i_link menu_drop_2 pointer">Подписчики</a>
+          <span class="collector"></span>
+
+          <% } else if list.copy_el == "p" { %>
+          <input class="input" name="copy_el" type="hidden" value="p" />
+          <a class="i_link menu_drop_2 pointer">Администраторы</a>
+          <span class="collector"></span>
+
+          <% } else if list.copy_el == "o" { %>
+          <input class="input" name="copy_el" type="hidden" value="o" />
+          <a class="i_link menu_drop_2 pointer">Владелец сообщества</a>
           <span class="collector"></span>
 
           <% } else if list.copy_el == "h" { %>
           <input class="input" name="copy_el" type="hidden" value="h" />
-          <a class="i_link menu_drop_2 pointer">Администраторы</a>
-          <span class="collector"></span>
-
-          <% } else if list.copy_el == "g" { %>
-          <input class="input" name="copy_el" type="hidden" value="g" />
-          <a class="i_link menu_drop_2 pointer">Владелец сообщества</a>
-          <span class="collector"></span>
-
-          <% } else if list.copy_el == "i" { %>
-          <input class="input" name="copy_el" type="hidden" value="i" />
           <a class="i_link menu_drop_2 pointer">Подписчики, кроме</a>
           <span class="collector">:
             <% for object in list.get_copy_el_exclude_users().iter() { %>
@@ -218,8 +218,8 @@
             <% } %>
           </span>
 
-          <% } else if list.copy_el == "j" { %>
-          <input class="input" name="copy_el" type="hidden" value="j" />
+          <% } else if list.copy_el == "i" { %>
+          <input class="input" name="copy_el" type="hidden" value="i" />
           <a class="i_link menu_drop_2 pointer">Некоторые подписчики</a>
           <span class="collector">:
             <% for object in list.get_copy_el_include_users().iter() {  %>

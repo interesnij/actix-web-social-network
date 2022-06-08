@@ -3031,8 +3031,8 @@ impl Community {
             "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
             "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
             "e" => self.user_id == user_id,
-            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
-            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            "h" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "i" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
             _ => false,
         };
     }
@@ -3045,8 +3045,8 @@ impl Community {
             "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
             "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
             "e" => self.user_id == user_id,
-            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
-            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            "h" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "i" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
             _ => false,
         };
     }
@@ -3059,8 +3059,8 @@ impl Community {
             "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
             "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
             "e" => self.user_id == user_id,
-            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
-            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            "h" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "i" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
             _ => false,
         };
     }
@@ -3073,8 +3073,8 @@ impl Community {
             "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
             "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
             "e" => self.user_id == user_id,
-            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
-            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            "h" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "i" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
             _ => false,
         };
     }
@@ -3087,8 +3087,8 @@ impl Community {
             "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
             "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
             "e" => self.user_id == user_id,
-            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
-            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            "h" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "i" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
             _ => false,
         };
     }
@@ -3101,8 +3101,8 @@ impl Community {
             "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
             "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
             "e" => self.user_id == user_id,
-            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
-            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            "h" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "i" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
             _ => false,
         };
     }
@@ -3115,8 +3115,8 @@ impl Community {
             "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
             "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
             "e" => self.user_id == user_id,
-            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
-            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            "h" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "i" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
             _ => false,
         };
     }
@@ -3129,8 +3129,8 @@ impl Community {
             "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
             "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
             "e" => self.user_id == user_id,
-            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
-            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            "h" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "i" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
             _ => false,
         };
     }
@@ -3144,8 +3144,8 @@ impl Community {
             "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
             "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
             "e" => self.user_id == user_id,
-            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
-            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            "h" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "i" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
             _ => false,
         };
     }
@@ -3159,8 +3159,8 @@ impl Community {
             "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
             "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
             "e" => self.user_id == user_id,
-            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
-            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            "h" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "i" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
             _ => false,
         };
     }
@@ -3173,8 +3173,8 @@ impl Community {
             "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
             "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
             "e" => self.user_id == user_id,
-            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
-            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            "h" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "i" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
             _ => false,
         };
     }
@@ -3188,8 +3188,8 @@ impl Community {
             "c" => self.get_staff_users_ids().iter().any(|&i| i==user_id),
             "d" => self.get_administrators_ids().iter().any(|&i| i==user_id),
             "e" => self.user_id == user_id,
-            "f" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
-            "g" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
+            "h" => !self.get_can_see_info_exclude_users_ids().iter().any(|&i| i==user_id),
+            "i" => self.get_can_see_info_include_users_ids().iter().any(|&i| i==user_id),
             _ => false,
         };
     }
@@ -3910,7 +3910,7 @@ pub struct NewCommunityInfo {
     // 'c' Персонал
     // 'd' Администраторы
     // 'e' Владелец сообщества
-    // 'h' Подписчики, кроме 
+    // 'h' Подписчики, кроме
     // 'i' Некоторые подписчики
 
 #[derive(Debug, Queryable, Serialize, Identifiable, Associations)]

@@ -28,7 +28,7 @@
 <div class="row mb-1 form_group_flex">
     <label class="col-md-6">Кто создает элементы</label>
     <span class="col-md-6">
-      <input class="input" name="create_el" type="hidden" value="h" />
+      <input class="input" name="create_el" type="hidden" value="p" />
       <a class="i_link menu_drop_2 pointer">Администраторы</a>
       <span class="collector"></span>
 
@@ -42,7 +42,7 @@
     <label class="col-md-6">Кто пишет комментарии</label>
     <span class="col-md-6">
 
-      <input class="input" name="create_comment" type="hidden" value="h" />
+      <input class="input" name="create_comment" type="hidden" value="a" />
       <a class="i_link menu_drop_2 pointer">Все пользователи</a>
       <span class="collector"></span>
 
