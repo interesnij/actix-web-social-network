@@ -4,6 +4,7 @@
 
   <div class="row">
     <div class="col-md-9 mt-3">
+    <form class="type_profile case_edit">
       <div class="media" style="padding-left: 7px;">
         <h5 style="flex: 1;">
           Настройки приватности
@@ -592,6 +593,7 @@
           </div>
         </div>
       </div>
+      </form>
     </div>
 
     <div class="col-12 col-md-3">
