@@ -56,7 +56,7 @@ pub async fn followings_page(session: Session, req: HttpRequest) -> actix_web::R
     let object_list: Vec<User>;
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let count = _request_user.count_followers();
 
         if page > 1 {
@@ -131,7 +131,7 @@ pub async fn blacklist_page(session: Session, req: HttpRequest) -> actix_web::Re
     let object_list: Vec<User>;
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let count = _request_user.count_blacklist();
 
         if page > 1 {
@@ -203,7 +203,7 @@ pub async fn settings_page(session: Session, req: HttpRequest) -> actix_web::Res
     let is_desctop = is_desctop(req);
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if is_desctop {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/settings/settings.stpl")]
@@ -245,7 +245,7 @@ pub async fn design_settings_page(session: Session, req: HttpRequest) -> actix_w
         use crate::schema::design_settings::dsl::design_settings;
         use crate::models::DesignSetting;
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
 
         let _connection = establish_connection();
         let _designs = design_settings
@@ -297,7 +297,7 @@ pub async fn private_settings_page(session: Session, req: HttpRequest) -> actix_
         use crate::schema::user_privates::dsl::user_privates;
         use crate::models::UserPrivate;
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
 
         let _connection = establish_connection();
         let _private = user_privates
@@ -350,7 +350,7 @@ pub async fn edit_link_page(session: Session, req: HttpRequest) -> actix_web::Re
     let is_desctop = is_desctop(req);
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
 
         if is_desctop {
             #[derive(TemplateOnce)]
@@ -389,7 +389,7 @@ pub async fn edit_name_page(session: Session, req: HttpRequest) -> actix_web::Re
     let is_desctop = is_desctop(req);
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
 
         if is_desctop {
             #[derive(TemplateOnce)]
@@ -428,7 +428,7 @@ pub async fn edit_password_page(session: Session, req: HttpRequest) -> actix_web
     let is_desctop = is_desctop(req);
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
 
         if is_desctop {
             #[derive(TemplateOnce)]
@@ -467,7 +467,7 @@ pub async fn edit_phone_page(session: Session, req: HttpRequest) -> actix_web::R
     let is_desctop = is_desctop(req);
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
 
         if is_desctop {
             #[derive(TemplateOnce)]
@@ -506,7 +506,7 @@ pub async fn remove_profile_page(session: Session, req: HttpRequest) -> actix_we
     let is_desctop = is_desctop(req);
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
 
         if is_desctop {
             #[derive(TemplateOnce)]
@@ -547,7 +547,7 @@ pub async fn get_background(session: Session, color: web::Path<String>) -> actix
     if is_signed_in(&session) {
         use crate::schema::design_settings::dsl::design_settings;
         use crate::models::{DesignSetting, EditDesignSetting};
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _connection = establish_connection();
         let backgrounds = design_settings
             .filter(schema::design_settings::user_id.eq(_request_user.id))
@@ -578,7 +578,7 @@ pub async fn edit_link(session: Session, mut payload: Multipart) -> actix_web::R
         use crate::schema::custom_links::dsl::custom_links;
         use crate::models::{EditLinkUser, CustomLink, NewCustomLink};
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _connection = establish_connection();
 
         let mut form: EditLinkUser = EditLinkUser {
@@ -631,7 +631,7 @@ pub async fn edit_name(session: Session, mut payload: Multipart) -> actix_web::R
     if is_signed_in(&session) {
         use crate::models::EditNameUser;
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _connection = establish_connection();
 
         let mut form: EditNameUser = EditNameUser {
@@ -672,7 +672,7 @@ pub async fn edit_password(session: Session, mut payload: Multipart) -> actix_we
         use crate::models::EditPasswordUser;
         use crate::utils::hash_password;
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _connection = establish_connection();
 
         let mut form: EditPasswordUser = EditPasswordUser {
@@ -705,7 +705,7 @@ pub async fn edit_phone(session: Session, mut payload: Multipart) -> actix_web::
     if is_signed_in(&session) {
         use crate::models::EditPhoneUser;
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _connection = establish_connection();
 
         let mut form: EditPhoneUser = EditPhoneUser {
@@ -739,7 +739,7 @@ pub async fn remove_profile(session: Session, mut payload: Multipart) -> actix_w
     if is_signed_in(&session) {
         use crate::models::{UserDeleteAnketa, NewUserDeleteAnketa};
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _connection = establish_connection();
 
         let mut form: NewUserDeleteAnketa = NewUserDeleteAnketa {
@@ -847,7 +847,7 @@ pub async fn change_phone_verify(session: Session, param: web::Path<(String,i32)
 
     if is_signed_in(&session) {
         let _connection = establish_connection();
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _phone = param.0.to_string();
         let _code = param.1;
 

@@ -69,7 +69,7 @@ pub async fn user_communities_page(session: Session, req: HttpRequest, user_id: 
     }
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _request_user_id = &_request_user.id;
         let (is_open, text) = get_user_permission(&_user, &_request_user);
         let is_user_can_see_communities = _user.is_user_can_see_community(*_request_user_id);
@@ -194,7 +194,7 @@ pub async fn user_staff_communities_page(session: Session, req: HttpRequest) -> 
     let mut next_page_number = 0;
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _request_user_id = &_request_user.id;
 
         let object_list: Vec<Community>;
@@ -286,7 +286,7 @@ pub async fn user_friends_page(session: Session, req: HttpRequest, user_id: web:
     }
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _request_user_id = &_request_user.id;
         let (is_open, text) = get_user_permission(&_user, &_request_user);
         let is_user_can_see_friends = _user.is_user_can_see_friend(*_request_user_id);
@@ -428,7 +428,7 @@ pub async fn user_friends_online_page(session: Session, req: HttpRequest, user_i
     }
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _request_user_id = &_request_user.id;
         let (is_open, text) = get_user_permission(&_user, &_request_user);
         let is_user_can_see_friends = _user.is_user_can_see_friend(*_request_user_id);
@@ -556,7 +556,7 @@ pub async fn user_friends_common_page(session: Session, req: HttpRequest, user_i
     let object_list: Vec<User>;
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_user_permission(&_user, &_request_user);
         let count = _user.count_common_friends_of_user(&_request_user);
 
@@ -657,7 +657,7 @@ pub async fn user_follows_page(session: Session, req: HttpRequest, user_id: web:
     }
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_user_permission(&_user, &_request_user);
 
         if is_open == false {
@@ -777,7 +777,7 @@ pub async fn user_docs_page(session: Session, req: HttpRequest, user_id: web::Pa
     let _list = get_doc_list(_user.get_selected_doc_list_pk());
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_user_permission(&_user, &_request_user);
 
         if is_open == false {
@@ -880,7 +880,7 @@ pub async fn user_video_page(session: Session, req: HttpRequest, user_id: web::P
     let _list = get_video_list(_user.get_selected_video_list_pk());
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_user_permission(&_user, &_request_user);
 
         if is_open == false {
@@ -983,7 +983,7 @@ pub async fn user_surveys_page(session: Session, req: HttpRequest, user_id: web:
     let _list = get_survey_list(_user.get_selected_survey_list_pk());
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_user_permission(&_user, &_request_user);
 
         if is_open == false {
@@ -1086,7 +1086,7 @@ pub async fn user_music_page(session: Session, req: HttpRequest, user_id: web::P
     let _list = get_music_list(_user.get_selected_music_list_pk());
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_user_permission(&_user, &_request_user);
 
         if is_open == false {
@@ -1189,7 +1189,7 @@ pub async fn user_goods_page(session: Session, req: HttpRequest, user_id: web::P
     let _list = get_good_list(_user.get_selected_good_list_pk());
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_user_permission(&_user, &_request_user);
 
         if is_open == false {
@@ -1292,7 +1292,7 @@ pub async fn user_photos_page(session: Session, req: HttpRequest, user_id: web::
     let _list = get_photo_list(_user.get_selected_photo_list_pk());
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_user_permission(&_user, &_request_user);
 
         if is_open == false {
@@ -1396,7 +1396,7 @@ pub async fn user_docs_list_page(session: Session, req: HttpRequest, param: web:
     let _list = get_doc_list(list_id);
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_user_permission(&_user, &_request_user);
 
         if is_open == false {
@@ -1500,7 +1500,7 @@ pub async fn user_video_list_page(session: Session, req: HttpRequest, param: web
     let _list = get_video_list(list_id);
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_user_permission(&_user, &_request_user);
 
         if is_open == false {
@@ -1604,7 +1604,7 @@ pub async fn user_surveys_list_page(session: Session, req: HttpRequest, param: w
     let _list = get_survey_list(list_id);
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_user_permission(&_user, &_request_user);
 
         if is_open == false {
@@ -1708,7 +1708,7 @@ pub async fn user_music_list_page(session: Session, req: HttpRequest, param: web
     let _list = get_music_list(list_id);
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_user_permission(&_user, &_request_user);
 
         if is_open == false {
@@ -1812,7 +1812,7 @@ pub async fn user_goods_list_page(session: Session, req: HttpRequest, param: web
     let _list = get_good_list(list_id);
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_user_permission(&_user, &_request_user);
 
         if is_open == false {
@@ -1916,7 +1916,7 @@ pub async fn user_photos_list_page(session: Session, req: HttpRequest, param: we
     let _list = get_photo_list(list_id);
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_user_permission(&_user, &_request_user);
 
         if is_open == false {

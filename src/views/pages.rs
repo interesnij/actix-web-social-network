@@ -117,7 +117,7 @@ pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result
     let is_desctop = is_desctop(req);
     if is_signed_in(&session) {
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
 
         if is_desctop {
             let body = DesctopNewsListTemplate {
@@ -183,7 +183,7 @@ pub async fn featured_list_page(session: Session, req: HttpRequest) -> actix_web
     let _connection = establish_connection();
     let is_desctop = is_desctop(req);
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
 
         if is_desctop {
             let body = DesctopFeaturedListTemplate {
@@ -220,7 +220,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
 
     let _connection = establish_connection();
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let count = _request_user.get_all_users_count();
         if page > 1 {
             let step = (page - 1) * 20;
@@ -357,7 +357,7 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
 
     let _connection = establish_connection();
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let count = User::get_all_communities_count();
         if page > 1 {
             let step = (page - 1) * 20;
@@ -501,7 +501,7 @@ pub async fn create_repost_page(session: Session, req: HttpRequest) -> actix_web
         use crate::utils::{get_user_permission,get_community_permission};
 
         let (type_exists, item_id, types) = get_type(&req);
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _request_user_id = &_request_user.id;
         let mut text = "".to_string();
         let mut creator_id = 0;
@@ -743,7 +743,7 @@ pub async fn create_claim_page(session: Session, req: HttpRequest) -> actix_web:
         use crate::utils::{get_user_permission,get_community_permission};
 
         let (type_exists, item_id, types) = get_type(&req);
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _request_user_id = &_request_user.id;
         let mut text = "".to_string();
         let mut permission_check = false;
@@ -1039,7 +1039,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
             let comment = get_post_comment(item_id);
             let list = comment.get_list();
             if is_auth {
-                let _request_user = get_request_user_data(session);
+                let _request_user = get_request_user_data(&session);
                 if list.community_id.is_some() {
                     permission_check = list.is_user_can_see_el(_request_user.id) && get_community_permission(&list.get_community(), &_request_user).0;
                 }
@@ -1076,7 +1076,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
             let comment = get_photo_comment(item_id);
             let list = comment.get_list();
             if is_auth {
-                let _request_user = get_request_user_data(session);
+                let _request_user = get_request_user_data(&session);
                 if list.community_id.is_some() {
                     permission_check = list.is_user_can_see_el(_request_user.id) && get_community_permission(&list.get_community(), &_request_user).0;
                 }
@@ -1113,7 +1113,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
             let comment = get_good_comment(item_id);
             let list = comment.get_list();
             if is_auth {
-                let _request_user = get_request_user_data(session);
+                let _request_user = get_request_user_data(&session);
                 if list.community_id.is_some() {
                     permission_check = list.is_user_can_see_el(_request_user.id) && get_community_permission(&list.get_community(), &_request_user).0;
                 }
@@ -1150,7 +1150,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
             let comment = get_video_comment(item_id);
             let list = comment.get_list();
             if is_auth {
-                let _request_user = get_request_user_data(session);
+                let _request_user = get_request_user_data(&session);
                 if list.community_id.is_some() {
                     permission_check = list.is_user_can_see_el(_request_user.id) && get_community_permission(&list.get_community(), &_request_user).0;
                 }
@@ -1190,7 +1190,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
         let item = get_post(item_id);
         let list = item.get_list();
         if is_auth {
-            let _request_user = get_request_user_data(session);
+            let _request_user = get_request_user_data(&session);
             if list.community_id.is_some() {
                 permission_check = list.is_user_can_see_el(_request_user.id) && get_community_permission(&list.get_community(), &_request_user).0;
             }
@@ -1227,7 +1227,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
         let item = get_photo(item_id);
         let list = item.get_list();
         if is_auth {
-            let _request_user = get_request_user_data(session);
+            let _request_user = get_request_user_data(&session);
             if list.community_id.is_some() {
                 permission_check = list.is_user_can_see_el(_request_user.id) && get_community_permission(&list.get_community(), &_request_user).0;
             }
@@ -1263,7 +1263,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
         let item = get_good(item_id);
         let list = item.get_list();
         if is_auth {
-            let _request_user = get_request_user_data(session);
+            let _request_user = get_request_user_data(&session);
             if list.community_id.is_some() {
                 permission_check = list.is_user_can_see_el(_request_user.id) && get_community_permission(&list.get_community(), &_request_user).0;
             }
@@ -1299,7 +1299,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
         let item = get_video(item_id);
         let list = item.get_list();
         if is_auth {
-            let _request_user = get_request_user_data(session);
+            let _request_user = get_request_user_data(&session);
             if list.community_id.is_some() {
                 permission_check = list.is_user_can_see_el(_request_user.id) && get_community_permission(&list.get_community(), &_request_user).0;
             }

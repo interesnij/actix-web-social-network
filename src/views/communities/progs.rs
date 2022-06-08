@@ -69,7 +69,7 @@ pub async fn create_community(session: Session, req: HttpRequest, mut payload: M
             }
         }
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let new_community = Community::create_community (
             form.name,
             form.category_id,

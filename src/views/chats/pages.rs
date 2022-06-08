@@ -61,7 +61,7 @@ pub async fn chats_list_page(session: Session, req: HttpRequest) -> actix_web::R
         let mut next_page_number = 0;
         let object_list: Vec<Chat>;
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let count = _request_user.get_all_chats_count();
 
         if page > 1 {
@@ -146,7 +146,7 @@ pub async fn fixed_messages_page(session: Session, req: HttpRequest, _id: web::P
         let mut next_page_number = 0;
         let object_list: Vec<Message>;
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let count = _chat.get_fix_message_count();
 
         if page > 1 {
@@ -234,7 +234,7 @@ pub async fn closed_support_chats_page(session: Session, req: HttpRequest) -> ac
         let mut next_page_number = 0;
         let object_list: Vec<Chat>;
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let count = _request_user.count_deleted_support_chats();
 
         if page > 1 {
@@ -320,7 +320,7 @@ pub async fn chat_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
         let mut next_page_number = 0;
         let object_list: Vec<Message>;
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let count = _chat.count_messages_for_user(_request_user.id);
 
         if page > 1 {
@@ -390,7 +390,7 @@ pub async fn create_chat_page(session: Session) -> actix_web::Result<HttpRespons
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/chats/create/create_chat.stpl")]
@@ -415,7 +415,7 @@ pub async fn create_message_page(session: Session, _id: web::Path<i32>) -> actix
     else {
         use crate::utils::get_user;
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _recipient = get_user(*_id);
 
         #[derive(TemplateOnce)]
@@ -440,7 +440,7 @@ pub async fn load_message_page(session: Session, _id: web::Path<i32>) -> actix_w
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _message = get_message(*_id);
         let _chat = _message.get_chat();
 
@@ -467,7 +467,7 @@ pub async fn load_chat_message_page(session: Session, _id: web::Path<i32>) -> ac
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _message = get_message(*_id);
         _message.get_chat().read_messages(&_request_user.id);
 
@@ -494,7 +494,7 @@ pub async fn edit_message_page(session: Session, _id: web::Path<i32>) -> actix_w
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _message = get_message(*_id);
         let _chat = _message.get_chat();
         if (_chat.is_private() && _message.user_id != _request_user.id)
@@ -524,7 +524,7 @@ pub async fn edit_chat_page(session: Session, _id: web::Path<i32>) -> actix_web:
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _chat = get_chat(*_id);
         if (_chat.is_group() || _chat.is_public()) && !_chat.is_user_can_see_settings(_request_user.id) {
                 Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("Permission denied."))
@@ -552,7 +552,7 @@ pub async fn private_chat_page(session: Session, _id: web::Path<i32>) -> actix_w
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _chat = get_chat(*_id);
         if (_chat.is_group() || _chat.is_public()) && !_chat.is_user_can_see_settings(_request_user.id) {
                 Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("Permission denied."))
@@ -602,7 +602,7 @@ pub async fn chat_exclude_users_load(session: Session, req: HttpRequest, _id: we
             }
         }
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let mut users_list: Vec<User> = Vec::new();
         let mut object_list: Vec<User> = Vec::new();
 
@@ -739,7 +739,7 @@ pub async fn chat_include_users_load(session: Session, req: HttpRequest, _id: we
             }
         }
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let mut users_list: Vec<User> = Vec::new();
         let mut object_list: Vec<User> = Vec::new();
 
@@ -857,7 +857,7 @@ pub async fn chat_info_page(session: Session, req: HttpRequest, _id: web::Path<i
         let mut next_page_number: i32 = 0;
         let _chat = get_chat(*_id);
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let mut object_list: Vec<User> = Vec::new();
 
         let count = _chat.members;
@@ -947,7 +947,7 @@ pub async fn favourites_messages_page(session: Session, req: HttpRequest) -> act
         let mut next_page_number = 0;
         let object_list: Vec<Message>;
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let count = _request_user.favourite_messages_count();
 
         if page > 1 {
@@ -1037,7 +1037,7 @@ pub async fn chat_search_page(session: Session, req: HttpRequest, _id: web::Path
             }
         }
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if q != "".to_string() {
             count = _chat.count_search_list(&q);
             if page > 1 {
@@ -1115,7 +1115,7 @@ pub async fn invite_members_page(session: Session, req: HttpRequest, _id: web::P
         let mut next_page_number: i32 = 0;
         let _chat = get_chat(*_id);
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let mut object_list: Vec<User> = Vec::new();
 
         let count = _request_user.count_friends();

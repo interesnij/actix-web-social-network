@@ -60,7 +60,7 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
     }
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _list.community_id.is_some() {
             let _tuple = get_community_permission(&_list.get_community(), &_request_user);
             is_open = _tuple.0;
@@ -191,7 +191,7 @@ pub async fn add_user_list_page(session: Session) -> actix_web::Result<HttpRespo
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         #[derive(TemplateOnce)]
         #[template(path = "desctop/surveys/user/add_list.stpl")]
         struct Template {
@@ -212,7 +212,7 @@ pub async fn edit_user_list_page(session: Session, _id: web::Path<i32>) -> actix
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _list_id : i32 = *_id;
         let list = get_survey_list(_list_id);
         if list.user_id != _request_user.id {
@@ -242,7 +242,7 @@ pub async fn edit_user_list_page(session: Session, _id: web::Path<i32>) -> actix
 }
 pub async fn add_community_list_page(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let community = get_community(*_id);
 
         #[derive(TemplateOnce)]
@@ -266,7 +266,7 @@ pub async fn add_community_list_page(session: Session, _id: web::Path<i32>) -> a
 }
 pub async fn edit_community_list_page(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let list = get_survey_list(*_id);
         let community = get_community(list.community_id.unwrap());
 
@@ -295,7 +295,7 @@ pub async fn edit_community_list_page(session: Session, _id: web::Path<i32>) -> 
 
 pub async fn add_survey_in_list_page(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let list = get_survey_list(*_id);
         if list.is_user_can_edit_delete_item(_request_user.id) {
             #[derive(TemplateOnce)]
@@ -322,7 +322,7 @@ pub async fn add_survey_in_list_page(session: Session, _id: web::Path<i32>) -> a
 
 pub async fn edit_survey_page(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let survey = get_survey(*_id);
         if survey.is_user_can_edit_delete_item(_request_user.id) {
             #[derive(TemplateOnce)]

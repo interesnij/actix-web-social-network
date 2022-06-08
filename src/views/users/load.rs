@@ -58,7 +58,7 @@ pub async fn photos_load(session: Session, req: HttpRequest) -> actix_web::Resul
     let mut next_page_number = 0;
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _request_user_id = &_request_user.id;
 
         let object_list: Vec<Photo>;
@@ -132,7 +132,7 @@ pub async fn photos_list_load(session: Session, req: HttpRequest, list_id: web::
     let mut next_page_number = 0;
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _request_user_id = &_request_user.id;
 
         let object_list: Vec<Photo>;
@@ -209,7 +209,7 @@ pub async fn video_load(session: Session, req: HttpRequest) -> actix_web::Result
     let mut next_page_number = 0;
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _request_user_id = &_request_user.id;
 
         let object_list: Vec<Video>;
@@ -283,7 +283,7 @@ pub async fn video_list_load(session: Session, req: HttpRequest, list_id: web::P
     let mut next_page_number = 0;
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _request_user_id = &_request_user.id;
 
         let object_list: Vec<Video>;
@@ -360,7 +360,7 @@ pub async fn docs_load(session: Session, req: HttpRequest) -> actix_web::Result<
     let mut next_page_number = 0;
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _request_user_id = &_request_user.id;
 
         let object_list: Vec<Doc>;
@@ -434,7 +434,7 @@ pub async fn docs_list_load(session: Session, req: HttpRequest, list_id: web::Pa
     let mut next_page_number = 0;
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _request_user_id = &_request_user.id;
 
         let object_list: Vec<Doc>;
@@ -512,7 +512,7 @@ pub async fn surveys_load(session: Session, req: HttpRequest) -> actix_web::Resu
     let mut next_page_number = 0;
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _request_user_id = &_request_user.id;
 
         let object_list: Vec<Survey>;
@@ -586,7 +586,7 @@ pub async fn surveys_list_load(session: Session, req: HttpRequest, list_id: web:
     let mut next_page_number = 0;
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _request_user_id = &_request_user.id;
 
         let object_list: Vec<Survey>;
@@ -664,7 +664,7 @@ pub async fn music_load(session: Session, req: HttpRequest) -> actix_web::Result
     let mut next_page_number = 0;
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _request_user_id = &_request_user.id;
 
         let object_list: Vec<Music>;
@@ -738,7 +738,7 @@ pub async fn music_list_load(session: Session, req: HttpRequest, list_id: web::P
     let mut next_page_number = 0;
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _request_user_id = &_request_user.id;
 
         let object_list: Vec<Music>;
@@ -816,7 +816,7 @@ pub async fn goods_load(session: Session, req: HttpRequest) -> actix_web::Result
     let mut next_page_number = 0;
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _request_user_id = &_request_user.id;
 
         let object_list: Vec<Good>;
@@ -890,7 +890,7 @@ pub async fn goods_list_load(session: Session, req: HttpRequest, list_id: web::P
     let mut next_page_number = 0;
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _request_user_id = &_request_user.id;
 
         let object_list: Vec<Good>;
@@ -964,7 +964,7 @@ pub async fn lists_for_copy_load(session: Session, req: HttpRequest) -> actix_we
     let (type_exists, comment_id, types) = get_type(&req);
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
 
         if types == "pos".to_string() {
             use crate::models::PostList;
@@ -1056,7 +1056,7 @@ pub async fn communities_lists_for_copy_load(session: Session, req: HttpRequest)
     let (type_exists, comment_id, types) = get_type(&req);
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
 
         if types == "pos".to_string() {
             use crate::models::PostList;
@@ -1176,7 +1176,7 @@ pub async fn chat_items_load(session: Session, req: HttpRequest) -> actix_web::R
             friends_page = 1;
         }
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _request_user_id = &_request_user.id;
 
         let chats_list: Vec<Chat>;
@@ -1276,7 +1276,7 @@ pub async fn friends_load(session: Session, req: HttpRequest) -> actix_web::Resu
     let mut next_page_number = 0;
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
 
         let object_list: Vec<User>;
         let count = _request_user.count_friends();
@@ -1345,7 +1345,7 @@ pub async fn smiles_stickers_load(session: Session, req: HttpRequest) -> actix_w
         use crate::models::{StickerCategorie,SmileCategorie};
 
         let (is_desctop, page) = get_list_variables(req);
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
 
         let categories = User::get_sticker_categories(30, 0);
 
@@ -1409,7 +1409,7 @@ pub async fn smiles_load(session: Session, req: HttpRequest) -> actix_web::Resul
         let (is_desctop, page) = get_list_variables(req);
         let mut current_category = 1;
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
 
         let s_categories = User::get_smilies_categories();
         if page > 1 {
@@ -1465,7 +1465,7 @@ pub async fn chats_load(session: Session, req: HttpRequest) -> actix_web::Result
 
         let (is_desctop, page) = get_list_variables(req);
         let mut next_page_number = 0;
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
 
         let object_list: Vec<Chat>;
         let count = _request_user.get_all_chats_count();
@@ -1548,7 +1548,7 @@ pub async fn communities_load(session: Session, req: HttpRequest) -> actix_web::
 
         let (is_desctop, page) = get_list_variables(req);
         let mut next_page_number = 0;
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
 
         let object_list: Vec<Community>;
         let count = _request_user.get_all_chats_count();
@@ -1652,7 +1652,7 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
             }
         }
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let mut object_list: Vec<User> = Vec::new();
         let mut users_list: Vec<User> = Vec::new();
 
@@ -1932,7 +1932,7 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
             }
         }
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let mut object_list: Vec<User> = Vec::new();
         let mut users_list: Vec<User> = Vec::new();
 

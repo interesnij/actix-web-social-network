@@ -61,7 +61,7 @@ pub async fn create_communities_category_page(session: Session) -> actix_web::Re
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::community_categorys::dsl::community_categorys;
             use crate::models::CommunityCategory;
@@ -96,7 +96,7 @@ pub async fn edit_communities_category_page(session: Session, cat_id: web::Path<
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::community_categorys::dsl::community_categorys;
             use crate::models::CommunityCategory;
@@ -141,7 +141,7 @@ pub async fn create_communities_subcategory_page(session: Session) -> actix_web:
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::community_categorys::dsl::community_categorys;
             use crate::models::CommunityCategory;
@@ -176,7 +176,7 @@ pub async fn edit_communities_subcategory_page(session: Session, subcat_id: web:
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::community_categorys::dsl::community_categorys;
             use crate::schema::community_subcategorys::dsl::community_subcategorys;
@@ -223,7 +223,7 @@ pub async fn create_goods_category_page(session: Session) -> actix_web::Result<H
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::good_categories::dsl::good_categories;
             use crate::models::GoodCategorie;
@@ -257,7 +257,7 @@ pub async fn edit_goods_category_page(session: Session, cat_id: web::Path<i32>) 
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::good_categories::dsl::good_categories;
             use crate::models::GoodCategorie;
@@ -301,7 +301,7 @@ pub async fn create_goods_subcategory_page(session: Session) -> actix_web::Resul
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::good_categories::dsl::good_categories;
             use crate::models::GoodCategorie;
@@ -336,7 +336,7 @@ pub async fn edit_goods_subcategory_page(session: Session, subcat_id: web::Path<
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::good_categories::dsl::good_categories;
             use crate::schema::good_subcategories::dsl::good_subcategories;
@@ -382,7 +382,7 @@ pub async fn create_sound_genre_page(session: Session) -> actix_web::Result<Http
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::sound_genres::dsl::sound_genres;
             use crate::models::SoundGenre;
@@ -417,7 +417,7 @@ pub async fn edit_sound_genre_page(session: Session, cat_id: web::Path<i32>) -> 
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::sound_genres::dsl::sound_genres;
             use crate::models::SoundGenre;
@@ -461,7 +461,7 @@ pub async fn create_artist_page(session: Session) -> actix_web::Result<HttpRespo
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::artists::dsl::artists;
             use crate::models::Artist;
@@ -496,7 +496,7 @@ pub async fn edit_artist_page(session: Session, cat_id: web::Path<i32>) -> actix
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::artists::dsl::artists;
             use crate::models::Artist;
@@ -541,7 +541,7 @@ pub async fn create_music_album_page(session: Session) -> actix_web::Result<Http
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
 
         if _request_user.is_supermanager() {
             use crate::schema::artists::dsl::artists;
@@ -584,7 +584,7 @@ pub async fn edit_music_album_page(session: Session, cat_id: web::Path<i32>) -> 
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::music_albums::dsl::music_albums;
             use crate::schema::artists::dsl::artists;
@@ -636,7 +636,7 @@ pub async fn create_stickers_category_page(session: Session) -> actix_web::Resul
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::sticker_categories::dsl::sticker_categories;
             use crate::models::StickerCategorie;
@@ -671,7 +671,7 @@ pub async fn edit_stickers_category_page(session: Session, cat_id: web::Path<i32
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::sticker_categories::dsl::sticker_categories;
             use crate::models::StickerCategorie;
@@ -716,7 +716,7 @@ pub async fn create_sticker_page(session: Session) -> actix_web::Result<HttpResp
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::stickers::dsl::stickers;
             use crate::schema::sticker_categories::dsl::sticker_categories;
@@ -758,7 +758,7 @@ pub async fn edit_sticker_page(session: Session, cat_id: web::Path<i32>) -> acti
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::stickers::dsl::stickers;
             use crate::schema::sticker_categories::dsl::sticker_categories;
@@ -811,7 +811,7 @@ pub async fn create_smiles_category_page(session: Session) -> actix_web::Result<
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
 
             use crate::schema::smile_categories::dsl::smile_categories;
@@ -847,7 +847,7 @@ pub async fn edit_smiles_category_page(session: Session, cat_id: web::Path<i32>)
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::smile_categories::dsl::smile_categories;
             use crate::models::SmileCategorie;
@@ -892,7 +892,7 @@ pub async fn create_smile_page(session: Session) -> actix_web::Result<HttpRespon
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::smiles::dsl::smiles;
             use crate::schema::smile_categories::dsl::smile_categories;
@@ -934,7 +934,7 @@ pub async fn edit_smile_page(session: Session, cat_id: web::Path<i32>) -> actix_
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::smiles::dsl::smiles;
             use crate::schema::smile_categories::dsl::smile_categories;
@@ -986,7 +986,7 @@ pub async fn create_post_category_page(session: Session) -> actix_web::Result<Ht
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::post_categories::dsl::post_categories;
             use crate::models::PostCategorie;
@@ -1021,7 +1021,7 @@ pub async fn edit_post_category_page(session: Session, cat_id: web::Path<i32>) -
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::post_categories::dsl::post_categories;
             use crate::models::PostCategorie;
@@ -1066,7 +1066,7 @@ pub async fn create_video_category_page(session: Session) -> actix_web::Result<H
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::video_categories::dsl::video_categories;
             use crate::models::VideoCategorie;
@@ -1101,7 +1101,7 @@ pub async fn edit_video_category_page(session: Session, cat_id: web::Path<i32>) 
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::video_categories::dsl::video_categories;
             use crate::models::VideoCategorie;
@@ -1146,7 +1146,7 @@ pub async fn create_reaction_page(session: Session) -> actix_web::Result<HttpRes
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::reactions::dsl::reactions;
             use crate::models::Reaction;
@@ -1181,7 +1181,7 @@ pub async fn edit_reaction_page(session: Session, cat_id: web::Path<i32>) -> act
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::reactions::dsl::reactions;
             use crate::models::Reaction;

@@ -53,7 +53,7 @@ pub async fn community_docs_page(session: Session, req: HttpRequest, community_i
     let _list = get_doc_list(_community.get_selected_doc_list_pk());
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_community_permission(&_community, &_request_user);
 
         if is_open == false {
@@ -156,7 +156,7 @@ pub async fn community_video_page(session: Session, req: HttpRequest, community_
     let _list = get_video_list(_community.get_selected_video_list_pk());
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_community_permission(&_community, &_request_user);
 
         if is_open == false {
@@ -259,7 +259,7 @@ pub async fn community_surveys_page(session: Session, req: HttpRequest, communit
     let _list = get_survey_list(_community.get_selected_survey_list_pk());
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_community_permission(&_community, &_request_user);
 
         if is_open == false {
@@ -362,7 +362,7 @@ pub async fn community_music_page(session: Session, req: HttpRequest, community_
     let _list = get_music_list(_community.get_selected_music_list_pk());
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_community_permission(&_community, &_request_user);
 
         if is_open == false {
@@ -465,7 +465,7 @@ pub async fn community_goods_page(session: Session, req: HttpRequest, community_
     let _list = get_good_list(_community.get_selected_good_list_pk());
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_community_permission(&_community, &_request_user);
 
         if is_open == false {
@@ -568,7 +568,7 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
     let _list = get_photo_list(_community.get_selected_photo_list_pk());
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_community_permission(&_community, &_request_user);
 
         if is_open == false {
@@ -672,7 +672,7 @@ pub async fn community_docs_list_page(session: Session, req: HttpRequest, param:
     let _list = get_doc_list(list_id);
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_community_permission(&_community, &_request_user);
 
         if is_open == false {
@@ -776,7 +776,7 @@ pub async fn community_video_list_page(session: Session, req: HttpRequest, param
     let _list = get_video_list(list_id);
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_community_permission(&_community, &_request_user);
 
         if is_open == false {
@@ -880,7 +880,7 @@ pub async fn community_surveys_list_page(session: Session, req: HttpRequest, par
     let _list = get_survey_list(list_id);
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_community_permission(&_community, &_request_user);
 
         if is_open == false {
@@ -984,7 +984,7 @@ pub async fn community_music_list_page(session: Session, req: HttpRequest, param
     let _list = get_music_list(list_id);
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_community_permission(&_community, &_request_user);
 
         if is_open == false {
@@ -1088,7 +1088,7 @@ pub async fn community_goods_list_page(session: Session, req: HttpRequest, param
     let _list = get_good_list(list_id);
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_community_permission(&_community, &_request_user);
 
         if is_open == false {
@@ -1192,7 +1192,7 @@ pub async fn community_photos_list_page(session: Session, req: HttpRequest, para
     let _list = get_photo_list(list_id);
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_community_permission(&_community, &_request_user);
 
         if is_open == false {
@@ -1312,7 +1312,7 @@ pub async fn community_wall_page(session: Session, req: HttpRequest, param: web:
     }
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_community_permission(&_community, &_request_user);
         let _request_user_id = &_request_user.id;
         let is_user_can_see_post_list = _list.is_user_can_see_el(*_request_user_id);
@@ -1432,7 +1432,7 @@ pub async fn community_page(session: Session, req: HttpRequest, link: String) ->
     let _community = get_community_with_link(link);
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.types > 10 {
             use crate::views::my_bad_account;
             return my_bad_account(is_desctop, _request_user)
@@ -1940,7 +1940,7 @@ pub async fn create_community_page(session: Session) -> actix_web::Result<HttpRe
         use crate::schema::community_categorys::dsl::community_categorys;
         use crate::models::CommunityCategory;
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _connection = establish_connection();
         let categories = community_categorys
             .load::<CommunityCategory>(&_connection)

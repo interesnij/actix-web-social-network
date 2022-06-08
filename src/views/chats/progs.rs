@@ -182,7 +182,7 @@ pub async fn chat_form (
 
 pub async fn create_chat(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let form = chat_form (
             payload.borrow_mut(),
             "users".to_string(),
@@ -223,7 +223,7 @@ pub async fn create_chat(session: Session, mut payload: Multipart) -> actix_web:
 
 pub async fn edit_chat(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let chat = get_chat(*_id);
         let form = chat_form (
             payload.borrow_mut(),
@@ -246,7 +246,7 @@ pub async fn delete_chat(session: Session, _id: web::Path<i32>) -> actix_web::Re
     if is_signed_in(&session) {
 
         let chat = get_chat(*_id);
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_administrator_of_chat(chat.id) {
             chat.delete_item();
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
@@ -262,7 +262,7 @@ pub async fn restore_chat(session: Session, _id: web::Path<i32>) -> actix_web::R
     if is_signed_in(&session) {
 
         let chat = get_chat(*_id);
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_administrator_of_chat(chat.id) {
             chat.restore_item();
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))

@@ -28,7 +28,7 @@ pub async fn managers_page(session: Session, req: HttpRequest) -> actix_web::Res
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("anon"))
     }
     else {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_moderator() {
             let is_desctop = is_desctop(req);
             if is_desctop {

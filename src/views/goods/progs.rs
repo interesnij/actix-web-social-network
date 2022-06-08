@@ -53,7 +53,7 @@ pub async fn add_user_list(session: Session, mut payload: Multipart) -> actix_we
     if is_signed_in(&session) {
         use crate::utils::post_list_form;
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let form = post_list_form(
             payload.borrow_mut(),
             "users".to_string(),
@@ -103,7 +103,7 @@ pub async fn edit_user_list(session: Session, mut payload: Multipart, _id: web::
         use crate::utils::post_list_form;
 
         let list = get_good_list(*_id);
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if list.user_id == _request_user.id {
             let form = post_list_form(
                 payload.borrow_mut(),
@@ -157,7 +157,7 @@ pub async fn add_community_list(session: Session, mut payload: Multipart, _id: w
         use crate::utils::post_list_form;
 
         let community = get_community(*_id);
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if community.get_administrators_ids().iter().any(|&i| i==_request_user.id) {
             let form = post_list_form(
                 payload.borrow_mut(),
@@ -215,7 +215,7 @@ pub async fn edit_community_list(session: Session, mut payload: Multipart, _id: 
 
         let list = get_good_list(*_id);
         let community = get_community(list.community_id.unwrap());
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if community.get_administrators_ids().iter().any(|&i| i==_request_user.id) {
             let form = post_list_form(
                 payload.borrow_mut(),
@@ -269,7 +269,7 @@ pub async fn delete_user_list(session: Session, _id: web::Path<i32>) -> actix_we
     if is_signed_in(&session) {
 
         let list = get_good_list(*_id);
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if list.user_id == _request_user.id {
             let res = list.delete_item();
             Ok(HttpResponse::Ok()
@@ -291,7 +291,7 @@ pub async fn recover_user_list(session: Session, _id: web::Path<i32>) -> actix_w
     if is_signed_in(&session) {
 
         let list = get_good_list(*_id);
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if list.user_id == _request_user.id {
             list.restore_item();
             Ok(HttpResponse::Ok()
@@ -313,7 +313,7 @@ pub async fn delete_community_list(session: Session, _id: web::Path<i32>) -> act
     if is_signed_in(&session) {
 
         let list = get_good_list(*_id);
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_administrator_of_community(list.community_id.unwrap()) {
             let res = list.delete_item();
             Ok(HttpResponse::Ok()
@@ -335,7 +335,7 @@ pub async fn recover_community_list(session: Session, _id: web::Path<i32>) -> ac
     if is_signed_in(&session) {
 
         let list = get_good_list(*_id);
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_administrator_of_community(list.community_id.unwrap()) {
             list.restore_item();
             Ok(HttpResponse::Ok()
@@ -456,7 +456,7 @@ pub async fn good_form(
 }
 pub async fn add_good_in_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let user_id = _request_user.id;
         let _list = get_good_list(*_id);
         let mut owner_path = "".to_string();
@@ -526,7 +526,7 @@ pub async fn add_good_in_list(session: Session, mut payload: Multipart, _id: web
 
 pub async fn edit_good(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let user_id = _request_user.id;
         let _good = get_good(*_id);
         let _list = _good.get_list();
@@ -594,7 +594,7 @@ pub async fn edit_good(session: Session, mut payload: Multipart, _id: web::Path<
 
 pub async fn add_comment(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _request_user_id = &_request_user.id;
         let item = get_good(*_id);
         let list = item.get_list();
@@ -651,7 +651,7 @@ pub async fn add_comment(session: Session, mut payload: Multipart, _id: web::Pat
 
 pub async fn add_reply(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _request_user_id = &_request_user.id;
         let comment = get_good_comment(*_id);
         let item = get_good(comment.good_id);
@@ -712,7 +712,7 @@ pub async fn delete_good(session: Session, _id: web::Path<i32>) -> actix_web::Re
     if is_signed_in(&session) {
 
         let good = get_good(*_id);
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if good.is_user_can_edit_delete_item(_request_user.id) {
             good.delete_item();
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
@@ -728,7 +728,7 @@ pub async fn recover_good(session: Session, _id: web::Path<i32>) -> actix_web::R
     if is_signed_in(&session) {
 
         let good = get_good(*_id);
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if good.is_user_can_edit_delete_item(_request_user.id) {
             good.restore_item();
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
@@ -743,7 +743,7 @@ pub async fn recover_good(session: Session, _id: web::Path<i32>) -> actix_web::R
 pub async fn on_comment(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         let good = get_good(*_id);
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if good.is_user_can_edit_delete_item(_request_user.id) {
             let _connection = establish_connection();
 
@@ -763,7 +763,7 @@ pub async fn on_comment(session: Session, _id: web::Path<i32>) -> actix_web::Res
 pub async fn off_comment(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         let good = get_good(*_id);
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if good.is_user_can_edit_delete_item(_request_user.id) {
 
             let _connection = establish_connection();

@@ -50,7 +50,7 @@ pub fn get_list_variables(req: HttpRequest) -> (bool, i32) {
     (is_desctop, page)
 }
 
-pub fn get_request_user_data(session: Session) -> User {
+pub fn get_request_user_data(session: &Session) -> User {
     use crate::models::SessionUser;
     use crate::schema::users::dsl::users;
 

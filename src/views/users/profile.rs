@@ -55,7 +55,7 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, param: web::Path
     }
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (is_open, text) = get_user_permission(&_user, &_request_user);
         let _request_user_id = &_request_user.id;
         let is_user_can_see_post_list = _list.is_user_can_see_el(*_request_user_id);
@@ -174,7 +174,7 @@ pub async fn user_page(session: Session, req: HttpRequest, link: String) -> acti
     let _user = get_user_with_link(link);
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if &_user.id == &_request_user.id {
             if _user.types > 10 {
                 return my_bad_account(is_desctop, _request_user)

@@ -64,7 +64,7 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
     }
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _list.community_id.is_some() {
             let _tuple = get_community_permission(&_list.get_community(), &_request_user);
             is_open = _tuple.0;
@@ -203,7 +203,7 @@ pub async fn add_user_list_page(session: Session) -> actix_web::Result<HttpRespo
             .load::<Reaction>(&_connection)
             .expect("E.");
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         #[derive(TemplateOnce)]
         #[template(path = "desctop/goods/user/add_list.stpl")]
         struct Template {
@@ -234,7 +234,7 @@ pub async fn edit_user_list_page(session: Session, _id: web::Path<i32>) -> actix
             .load::<Reaction>(&_connection)
             .expect("E.");
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _list_id : i32 = *_id;
         let list = get_good_list(_list_id);
         if list.user_id != _request_user.id {
@@ -269,7 +269,7 @@ pub async fn add_community_list_page(session: Session, _id: web::Path<i32>) -> a
         use crate::schema::reactions::dsl::reactions;
         use crate::models::Reaction;
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let community = get_community(*_id);
 
         let _connection = establish_connection();
@@ -303,7 +303,7 @@ pub async fn edit_community_list_page(session: Session, _id: web::Path<i32>) -> 
         use crate::schema::reactions::dsl::reactions;
         use crate::models::Reaction;
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let list = get_good_list(*_id);
         let community = get_community(list.community_id.unwrap());
 
@@ -377,7 +377,7 @@ pub async fn load_good_page(session: Session, req: HttpRequest, good_id: web::Pa
     }
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _good.community_id.is_some() {
             let _tuple = get_community_permission(&_good.get_community(), &_request_user);
             is_open = _tuple.0;
@@ -561,7 +561,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, good_id: web
     }
 
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _good.community_id.is_some() {
             let _tuple = get_community_permission(&_good.get_community(), &_request_user);
             is_open = _tuple.0;
@@ -706,7 +706,7 @@ pub async fn add_good_in_list_page(session: Session, req: HttpRequest, _id: web:
             .load::<GoodSubcategorie>(&_connection)
             .expect("E.");
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let list = get_good_list(*_id);
         if list.is_user_can_edit_delete_item(_request_user.id) {
             #[derive(TemplateOnce)]
@@ -747,7 +747,7 @@ pub async fn edit_good_page(session: Session, req: HttpRequest, _id: web::Path<i
             .load::<GoodSubcategorie>(&_connection)
             .expect("E.");
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let good = get_good(*_id);
         let list = good.get_list();
         if list.is_user_can_edit_delete_item(_request_user.id) {

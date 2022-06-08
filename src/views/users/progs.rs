@@ -25,7 +25,7 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
 
 pub async fn user_friend(session: Session, user_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _user = get_user(*user_id);
         _request_user.frend_user(_user);
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
@@ -36,7 +36,7 @@ pub async fn user_friend(session: Session, user_id: web::Path<i32>) -> actix_web
 
 pub async fn user_unfriend(session: Session, user_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _user = get_user(*user_id);
         _request_user.unfrend_user(_user);
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
@@ -47,7 +47,7 @@ pub async fn user_unfriend(session: Session, user_id: web::Path<i32>) -> actix_w
 
 pub async fn user_follow(session: Session, user_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _user = get_user(*user_id);
         _request_user.follow_user(_user);
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
@@ -57,7 +57,7 @@ pub async fn user_follow(session: Session, user_id: web::Path<i32>) -> actix_web
 }
 pub async fn user_follow_view(session: Session, user_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _user = get_user(*user_id);
         _request_user.follow_view_user(_user);
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
@@ -68,7 +68,7 @@ pub async fn user_follow_view(session: Session, user_id: web::Path<i32>) -> acti
 
 pub async fn user_unfollow(session: Session, user_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _user = get_user(*user_id);
         _request_user.unfollow_user(_user);
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
@@ -79,7 +79,7 @@ pub async fn user_unfollow(session: Session, user_id: web::Path<i32>) -> actix_w
 
 pub async fn user_block(session: Session, user_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _user = get_user(*user_id);
         _request_user.block_user(_user);
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
@@ -90,7 +90,7 @@ pub async fn user_block(session: Session, user_id: web::Path<i32>) -> actix_web:
 
 pub async fn user_unblock(session: Session, user_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let _user = get_user(*user_id);
         _request_user.unblock_user(_user);
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))

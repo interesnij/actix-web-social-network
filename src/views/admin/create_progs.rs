@@ -131,7 +131,7 @@ pub async fn category_form (
 
 pub async fn create_communities_category(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             let form = category_form (
                 payload.borrow_mut(),
@@ -157,7 +157,7 @@ pub async fn create_communities_category(session: Session, mut payload: Multipar
 
 pub async fn edit_communities_category(session: Session, mut payload: Multipart, cat_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::community_categorys::dsl::community_categorys;
             use crate::models::CommunityCategory;
@@ -192,7 +192,7 @@ pub async fn edit_communities_category(session: Session, mut payload: Multipart,
 
 pub async fn create_communities_subcategory(session: Session, mut payload: Multipart, cat_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::community_categorys::dsl::community_categorys;
             use crate::models::CommunityCategory;
@@ -227,7 +227,7 @@ pub async fn create_communities_subcategory(session: Session, mut payload: Multi
 
 pub async fn edit_communities_subcategory(session: Session, mut payload: Multipart, cat_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::community_subcategorys::dsl::community_subcategorys;
             use crate::models::CommunitySubcategory;
@@ -264,7 +264,7 @@ pub async fn edit_communities_subcategory(session: Session, mut payload: Multipa
 
 pub async fn create_goods_category(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             let form = category_form (
                 payload.borrow_mut(),
@@ -290,7 +290,7 @@ pub async fn create_goods_category(session: Session, mut payload: Multipart) -> 
 
 pub async fn edit_goods_category(session: Session, mut payload: Multipart, cat_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::good_categories::dsl::good_categories;
             use crate::models::GoodCategorie;
@@ -325,7 +325,7 @@ pub async fn edit_goods_category(session: Session, mut payload: Multipart, cat_i
 
 pub async fn create_goods_subcategory(session: Session, mut payload: Multipart, cat_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::good_categories::dsl::good_categories;
             use crate::models::GoodCategorie;
@@ -360,7 +360,7 @@ pub async fn create_goods_subcategory(session: Session, mut payload: Multipart, 
 
 pub async fn edit_goods_subcategory(session: Session, mut payload: Multipart, cat_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::good_subcategories::dsl::good_subcategories;
             use crate::models::GoodSubcategorie;
@@ -396,7 +396,7 @@ pub async fn edit_goods_subcategory(session: Session, mut payload: Multipart, ca
 
 pub async fn create_sound_genre(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             let form = category_form (
                 payload.borrow_mut(),
@@ -418,7 +418,7 @@ pub async fn create_sound_genre(session: Session, mut payload: Multipart) -> act
 
 pub async fn edit_sound_genre(session: Session, mut payload: Multipart, genre_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::sound_genres::dsl::sound_genres;
             use crate::models::SoundGenre;
@@ -450,7 +450,7 @@ pub async fn edit_sound_genre(session: Session, mut payload: Multipart, genre_id
 
 pub async fn create_artist(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             let form = category_form (
                 payload.borrow_mut(),
@@ -477,7 +477,7 @@ pub async fn create_artist(session: Session, mut payload: Multipart) -> actix_we
 
 pub async fn edit_artist(session: Session, mut payload: Multipart, artist_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::artists::dsl::artists;
             use crate::models::Artist;
@@ -513,7 +513,7 @@ pub async fn edit_artist(session: Session, mut payload: Multipart, artist_id: we
 
 pub async fn create_music_album(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             let form = category_form (
                 payload.borrow_mut(),
@@ -542,7 +542,7 @@ pub async fn create_music_album(session: Session, mut payload: Multipart) -> act
 
 pub async fn edit_music_album(session: Session, mut payload: Multipart, album_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::music_albums::dsl::music_albums;
             use crate::models::MusicAlbum;
@@ -579,7 +579,7 @@ pub async fn edit_music_album(session: Session, mut payload: Multipart, album_id
 
 pub async fn create_stickers_category(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             let form = category_form (
                 payload.borrow_mut(),
@@ -607,7 +607,7 @@ pub async fn create_stickers_category(session: Session, mut payload: Multipart) 
 
 pub async fn edit_stickers_category(session: Session, mut payload: Multipart, cat_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::sticker_categories::dsl::sticker_categories;
             use crate::models::StickerCategorie;
@@ -644,7 +644,7 @@ pub async fn edit_stickers_category(session: Session, mut payload: Multipart, ca
 
 pub async fn create_sticker(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             let form = category_form (
                 payload.borrow_mut(),
@@ -671,7 +671,7 @@ pub async fn create_sticker(session: Session, mut payload: Multipart) -> actix_w
 
 pub async fn edit_sticker(session: Session, mut payload: Multipart, sticker_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::stickers::dsl::stickers;
             use crate::models::Sticker;
@@ -707,7 +707,7 @@ pub async fn edit_sticker(session: Session, mut payload: Multipart, sticker_id: 
 
 pub async fn create_smiles_category(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             let form = category_form (
                 payload.borrow_mut(),
@@ -733,7 +733,7 @@ pub async fn create_smiles_category(session: Session, mut payload: Multipart) ->
 
 pub async fn edit_smiles_category(session: Session, mut payload: Multipart, cat_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::smile_categories::dsl::smile_categories;
             use crate::models::SmileCategorie;
@@ -768,7 +768,7 @@ pub async fn edit_smiles_category(session: Session, mut payload: Multipart, cat_
 
 pub async fn create_smile(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             let form = category_form (
                 payload.borrow_mut(),
@@ -795,7 +795,7 @@ pub async fn create_smile(session: Session, mut payload: Multipart) -> actix_web
 
 pub async fn edit_smile(session: Session, mut payload: Multipart, smile_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::smiles::dsl::smiles;
             use crate::models::Smile;
@@ -831,7 +831,7 @@ pub async fn edit_smile(session: Session, mut payload: Multipart, smile_id: web:
 
 pub async fn create_post_category(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             let form = category_form (
                 payload.borrow_mut(),
@@ -856,7 +856,7 @@ pub async fn create_post_category(session: Session, mut payload: Multipart) -> a
 
 pub async fn edit_post_category(session: Session, mut payload: Multipart, cat_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::post_categories::dsl::post_categories;
             use crate::models::PostCategorie;
@@ -890,7 +890,7 @@ pub async fn edit_post_category(session: Session, mut payload: Multipart, cat_id
 
 pub async fn create_video_category(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             let form = category_form (
                 payload.borrow_mut(),
@@ -915,7 +915,7 @@ pub async fn create_video_category(session: Session, mut payload: Multipart) -> 
 
 pub async fn edit_video_category(session: Session, mut payload: Multipart, cat_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::video_categories::dsl::video_categories;
             use crate::models::VideoCategorie;
@@ -1006,7 +1006,7 @@ pub async fn reaction_form (payload: &mut Multipart) -> ReactionForm {
 
 pub async fn create_reaction(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             let form = reaction_form(payload.borrow_mut()).await;
 
@@ -1031,7 +1031,7 @@ pub async fn create_reaction(session: Session, mut payload: Multipart) -> actix_
 
 pub async fn edit_reaction(session: Session, mut payload: Multipart, reaction_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             use crate::schema::reactions::dsl::reactions;
             use crate::models::Reaction;

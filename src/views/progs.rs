@@ -39,7 +39,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
         use crate::utils::comment_form;
         let _connection = establish_connection();
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let form = comment_form(payload.borrow_mut()).await;
 
         let (type_exists, comment_id, types) = get_type(&req);
@@ -151,7 +151,7 @@ pub async fn edit_comment(session: Session, req: HttpRequest, mut payload: Multi
 
 pub async fn delete_comment(session: Session, req: HttpRequest) -> web::Json<JsonResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (type_exists, comment_id, types) = get_type(&req);
         if type_exists == false {
             return Json(JsonResponse {info: "Ошибка доступа".to_string()})
@@ -212,7 +212,7 @@ pub async fn delete_comment(session: Session, req: HttpRequest) -> web::Json<Jso
 
 pub async fn recover_comment(session: Session, req: HttpRequest) -> web::Json<JsonResponse> {
     if is_signed_in(&session) {
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
         let (type_exists, comment_id, types) = get_type(&req);
         if type_exists == false {
             return Json(JsonResponse {info: "Ошибка доступа".to_string()})
@@ -295,7 +295,7 @@ pub async fn send_reaction(session: Session, req: HttpRequest) -> web::Json<Json
             }
         }
 
-        let _request_user = get_request_user_data(session);
+        let _request_user = get_request_user_data(&session);
 
         if code == "cpo".to_string() {
             use crate::utils::get_post_comment;
