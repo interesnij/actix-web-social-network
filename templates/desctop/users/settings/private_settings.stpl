@@ -4,7 +4,7 @@
 
   <div class="row">
     <div class="col-md-9 mt-3">
-    <form class="type_profile case_edit">
+
       <div class="media" style="padding-left: 7px;">
         <h5 style="flex: 1;">
           Настройки приватности
@@ -12,6 +12,7 @@
       </div>
       <div class="card mb-2">
         <div class="col-12 col-md-12">
+          <form class="type_profile case_edit">
           <div class="card">
             <div class="card-body hot_perm_post">
 
@@ -591,9 +592,10 @@
 
             </div>
           </div>
+          </form>
         </div>
       </div>
-      </form>
+
     </div>
 
     <div class="col-12 col-md-3">
