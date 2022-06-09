@@ -83,14 +83,14 @@ pub async fn photos_load(session: Session, req: HttpRequest) -> actix_web::Resul
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/photos.stpl")]
             struct Template {
-                request_user:                User,
+                //request_user:                User,
                 object_list:                 Vec<Photo>,
                 next_page_number:            i32,
                 //count:                       i32,
             }
 
             let body = Template {
-                request_user:                _request_user,
+                //request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
                 //count:                       count,
@@ -103,14 +103,14 @@ pub async fn photos_load(session: Session, req: HttpRequest) -> actix_web::Resul
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/photos.stpl")]
             struct Template {
-                request_user:                User,
+                //request_user:                User,
                 object_list:                 Vec<Photo>,
                 next_page_number:            i32,
                 //count:                       i32,
             }
 
             let body = Template {
-                request_user:                _request_user,
+                //request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
                 //count:                       count,
@@ -157,19 +157,19 @@ pub async fn photos_list_load(session: Session, req: HttpRequest, list_id: web::
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/photos_list.stpl")]
             struct Template {
-                request_user:     User,
+                //request_user:     User,
                 object_list:      Vec<Photo>,
                 next_page_number: i32,
                 //count:            i32,
-                list:             PhotoList,
+                //list:             PhotoList,
             }
 
             let body = Template {
-                request_user:     _request_user,
+                //request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 //count:            count,
-                list:             list,
+                //list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -179,19 +179,19 @@ pub async fn photos_list_load(session: Session, req: HttpRequest, list_id: web::
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/photos_list.stpl")]
             struct Template {
-                request_user:     User,
+                //request_user:     User,
                 object_list:      Vec<Photo>,
                 next_page_number: i32,
                 //count:            i32,
-                list:             PhotoList,
+                //list:             PhotoList,
             }
 
             let body = Template {
-                request_user:     _request_user,
+                //request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 //count:            count,
-                list:             list,
+                //list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -234,14 +234,14 @@ pub async fn video_load(session: Session, req: HttpRequest) -> actix_web::Result
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/video.stpl")]
             struct Template {
-                request_user:                User,
+                //request_user:                User,
                 object_list:                 Vec<Video>,
                 next_page_number:            i32,
                 //count:                       i32,
             }
 
             let body = Template {
-                request_user:                _request_user,
+                //request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
                 //count:                       count,
@@ -254,14 +254,14 @@ pub async fn video_load(session: Session, req: HttpRequest) -> actix_web::Result
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/video.stpl")]
             struct Template {
-                request_user:                User,
+                //request_user:                User,
                 object_list:                 Vec<Video>,
                 next_page_number:            i32,
                 //count:                       i32,
             }
 
             let body = Template {
-                request_user:                _request_user,
+                //request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
                 //count:                       count,
@@ -308,19 +308,19 @@ pub async fn video_list_load(session: Session, req: HttpRequest, list_id: web::P
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/video_list.stpl")]
             struct Template {
-                request_user:     User,
+                //request_user:     User,
                 object_list:      Vec<Video>,
                 next_page_number: i32,
                 //count:            i32,
-                list:             VideoList,
+                //list:             VideoList,
             }
 
             let body = Template {
-                request_user:     _request_user,
+                //request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 //count:            count,
-                list:             list,
+                //list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -330,19 +330,19 @@ pub async fn video_list_load(session: Session, req: HttpRequest, list_id: web::P
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/video_list.stpl")]
             struct Template {
-                request_user:     User,
+                //request_user:     User,
                 object_list:      Vec<Video>,
                 next_page_number: i32,
                 //count:            i32,
-                list:             VideoList,
+                //list:             VideoList,
             }
 
             let body = Template {
-                request_user:     _request_user,
+                //request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 //count:            count,
-                list:             list,
+                //list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -385,14 +385,14 @@ pub async fn docs_load(session: Session, req: HttpRequest) -> actix_web::Result<
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/docs.stpl")]
             struct Template {
-                request_user:                User,
+                //request_user:                User,
                 object_list:                 Vec<Doc>,
                 next_page_number:            i32,
                 //count:                       i32,
             }
 
             let body = Template {
-                request_user:                _request_user,
+                //request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
                 //count:                       count,
@@ -405,14 +405,14 @@ pub async fn docs_load(session: Session, req: HttpRequest) -> actix_web::Result<
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/docs.stpl")]
             struct Template {
-                request_user:                User,
+                //request_user:                User,
                 object_list:                 Vec<Doc>,
                 next_page_number:            i32,
                 //count:                       i32,
             }
 
             let body = Template {
-                request_user:                _request_user,
+                //request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
                 //count:                       count,
@@ -459,19 +459,19 @@ pub async fn docs_list_load(session: Session, req: HttpRequest, list_id: web::Pa
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/docs_list.stpl")]
             struct Template {
-                request_user:     User,
+                //request_user:     User,
                 object_list:      Vec<Doc>,
                 next_page_number: i32,
                 //count:            i32,
-                list:             DocList,
+                //list:             DocList,
             }
 
             let body = Template {
-                request_user:     _request_user,
+                //request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 //count:            count,
-                list:             list,
+                //list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -481,19 +481,19 @@ pub async fn docs_list_load(session: Session, req: HttpRequest, list_id: web::Pa
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/docs_list.stpl")]
             struct Template {
-                request_user:     User,
+                //request_user:     User,
                 object_list:      Vec<Doc>,
                 next_page_number: i32,
                 //count:            i32,
-                list:             DocList,
+                //list:             DocList,
             }
 
             let body = Template {
-                request_user:     _request_user,
+                //request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 //count:            count,
-                list:             list,
+                //list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -537,14 +537,14 @@ pub async fn surveys_load(session: Session, req: HttpRequest) -> actix_web::Resu
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/surveys.stpl")]
             struct Template {
-                request_user:                User,
+                //request_user:                User,
                 object_list:                 Vec<Survey>,
                 next_page_number:            i32,
                 //count:                       i32,
             }
 
             let body = Template {
-                request_user:                _request_user,
+                //request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
                 //count:                       count,
@@ -557,14 +557,14 @@ pub async fn surveys_load(session: Session, req: HttpRequest) -> actix_web::Resu
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/surveys.stpl")]
             struct Template {
-                request_user:                User,
+                //request_user:                User,
                 object_list:                 Vec<Survey>,
                 next_page_number:            i32,
                 //count:                       i32,
             }
 
             let body = Template {
-                request_user:                _request_user,
+                //request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
                 //count:                       count,
@@ -611,19 +611,19 @@ pub async fn surveys_list_load(session: Session, req: HttpRequest, list_id: web:
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/surveys_list.stpl")]
             struct Template {
-                request_user:     User,
+                //request_user:     User,
                 object_list:      Vec<Survey>,
                 next_page_number: i32,
                 //count:            i32,
-                list:             SurveyList,
+                //list:             SurveyList,
             }
 
             let body = Template {
-                request_user:     _request_user,
+                //request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 //count:            count,
-                list:             list,
+                //list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -633,19 +633,19 @@ pub async fn surveys_list_load(session: Session, req: HttpRequest, list_id: web:
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/surveys_list.stpl")]
             struct Template {
-                request_user:     User,
+                //request_user:     User,
                 object_list:      Vec<Survey>,
                 next_page_number: i32,
                 //count:            i32,
-                list:             SurveyList,
+                //list:             SurveyList,
             }
 
             let body = Template {
-                request_user:     _request_user,
+                //request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 //count:            count,
-                list:             list,
+                //list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -689,14 +689,14 @@ pub async fn music_load(session: Session, req: HttpRequest) -> actix_web::Result
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/music.stpl")]
             struct Template {
-                request_user:                User,
+                //request_user:                User,
                 object_list:                 Vec<Music>,
                 next_page_number:            i32,
                 //count:                       i32,
             }
 
             let body = Template {
-                request_user:                _request_user,
+                //request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
                 //count:                       count,
@@ -709,14 +709,14 @@ pub async fn music_load(session: Session, req: HttpRequest) -> actix_web::Result
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/music.stpl")]
             struct Template {
-                request_user:                User,
+                //request_user:                User,
                 object_list:                 Vec<Music>,
                 next_page_number:            i32,
                 //count:                       i32,
             }
 
             let body = Template {
-                request_user:                _request_user,
+                //request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
                 //count:                       count,
@@ -763,19 +763,19 @@ pub async fn music_list_load(session: Session, req: HttpRequest, list_id: web::P
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/music_list.stpl")]
             struct Template {
-                request_user:     User,
+                //request_user:     User,
                 object_list:      Vec<Music>,
                 next_page_number: i32,
                 //count:            i32,
-                list:             MusicList,
+                //list:             MusicList,
             }
 
             let body = Template {
-                request_user:     _request_user,
+                //request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 //count:            count,
-                list:             list,
+                //list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -785,19 +785,19 @@ pub async fn music_list_load(session: Session, req: HttpRequest, list_id: web::P
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/music_list.stpl")]
             struct Template {
-                request_user:     User,
+                //request_user:     User,
                 object_list:      Vec<Music>,
                 next_page_number: i32,
                 //count:            i32,
-                list:             MusicList,
+                //list:             MusicList,
             }
 
             let body = Template {
-                request_user:     _request_user,
+                //request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 //count:            count,
-                list:             list,
+                //list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -841,14 +841,14 @@ pub async fn goods_load(session: Session, req: HttpRequest) -> actix_web::Result
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/goods.stpl")]
             struct Template {
-                request_user:                User,
+                //request_user:                User,
                 object_list:                 Vec<Good>,
                 next_page_number:            i32,
                 //count:                       i32,
             }
 
             let body = Template {
-                request_user:                _request_user,
+                //request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
                 //count:                       count,
@@ -861,14 +861,14 @@ pub async fn goods_load(session: Session, req: HttpRequest) -> actix_web::Result
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/goods.stpl")]
             struct Template {
-                request_user:                User,
+                //request_user:                User,
                 object_list:                 Vec<Good>,
                 next_page_number:            i32,
                 //count:                       i32,
             }
 
             let body = Template {
-                request_user:                _request_user,
+                //request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
                 //count:                       count,
@@ -915,19 +915,19 @@ pub async fn goods_list_load(session: Session, req: HttpRequest, list_id: web::P
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/goods_list.stpl")]
             struct Template {
-                request_user:     User,
+                //request_user:     User,
                 object_list:      Vec<Good>,
                 next_page_number: i32,
                 //count:            i32,
-                list:             GoodList,
+                //list:             GoodList,
             }
 
             let body = Template {
-                request_user:     _request_user,
+                //request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 //count:            count,
-                list:             list,
+                //list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -937,7 +937,7 @@ pub async fn goods_list_load(session: Session, req: HttpRequest, list_id: web::P
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/goods_list.stpl")]
             struct Template {
-                request_user:     User,
+                //request_user:     User,
                 object_list:      Vec<Good>,
                 next_page_number: i32,
                 //count:            i32,
@@ -945,7 +945,7 @@ pub async fn goods_list_load(session: Session, req: HttpRequest, list_id: web::P
             }
 
             let body = Template {
-                request_user:     _request_user,
+                //request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 //count:            count,
