@@ -1,5 +1,47 @@
 <% include!("../../../base_block/anon_base_mobile_header.stpl"); %>
 <div class="container main-container mt-3" data-type="user_follows" data-pk="<%= user.id %>">
+<div class="card-header p-0">
+  <div class="row no-gutters">
+    <div style="flex: 0 0 100%;max-width:100%;padding:5px;">
+        <button class="btn btn-sm border dropdown-toggle menu_drop" style="width: -webkit-fill-available;">
+            <%= user.first_name %> | Подписчики
+        </button>
+        <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
+          <a class="dropdown-item ajax" href="/id<%= user.id %>/friends/"><%= user.first_name %> - друзья (<%= user.count_friends() %>)</a>
 
+          <a class="dropdown-item ajax" href="/all-users/">Список пользователей</a>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="card mb-2">
+    <div class="card">
+        <div class="card-body">
+            <div class="input-group mb-3" style="display:flex">
+                <input type="text" class="form-control form-control-sm" placeholder="Поиск пользователей">
+                <div class="input-group-append">
+                    <button class="btn btn-sm border" type="button">Искать</button>
+                </div>
+            </div>
+            <ul class="list-group is_paginate">
+                <% if count > 0 { %>
+                <% for object in object_list.iter() { %>
+                  <li class="list-group-item border-top pag">
+                    <% include!("../../generic/user/card_go_profile.stpl"); %>
+                  </li>
+                <% } %>
+                <% if next_page_number > 0 { %>
+                <div class="load centered m-1 next_page_list" data-link="/id<%= user.id %>/follows/?page=<%= next_page_number %>">
+                    <img src="/static/images/preloader.gif">
+                </div>
+                <% } %>
+
+                <% } else { %>
+                  <% include!("no_items.stpl"); %>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+</div>
 </div>
 <% include!("../../../base_block/anon_base_mobile_footer.stpl"); %>

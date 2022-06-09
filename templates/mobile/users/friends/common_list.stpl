@@ -37,7 +37,7 @@
                 <% if count > 0 { %>
                 <% for object in object_list.iter() { %>
                   <li class="list-group-item border-top pag">
-                    {% include 'mobile/generic/user/card_send_message.html' %}
+                    <% include!("../../generic/user/card_send_message.stpl"); %>
                   </li>
                 <% } %>
                 <% if next_page_number > 0 { %>
