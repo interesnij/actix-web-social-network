@@ -17,6 +17,7 @@
           <span class="header_title">Выберите тех, кому нельзя <%= text %></span>
       <% } %>
       </div>
+      <%= count %>
       <div class="card-body">
         <div class="is_block_paginate">
           <% for object in object_list.iter() { %>

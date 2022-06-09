@@ -4,7 +4,7 @@
     <div class="col-md-8 chat_list_container" data-pk="<%= request_user.id %>" style="min-height: 800px;">
         <div class="card">
             <div class="card-body px-0 py-0">
-              <% if object_list.len() > 0 { %>
+              <% if count > 0 { %>
 
               <ul class="list-group is_paginate">
                 <% for object in object_list { %>

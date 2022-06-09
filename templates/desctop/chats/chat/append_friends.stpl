@@ -5,7 +5,7 @@
       </div>
       <div class="card-body">
         <div class="is_block_paginate">
-          <% if object_list.len() > 0 { %>
+          <% if count > 0 { %>
           <% for object in object_list.iter() { %>
           <div class="media pointer add_member_chat_toggle border-bottom" data-link="<%= object.link %>" data-pk="<%= object.id %>" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
             <figure>
