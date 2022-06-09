@@ -50,7 +50,7 @@
                 </li>
                 <% } %>
                 <% if next_page_number > 0 { %>
-                <div class="load centered m-1 next_page_list" data-link="/id<%= user.id %>/communities/?page=<%= next_page_number %>">
+                <div class="load centered m-1 next_page_list" data-link="/id<%= request_user.id %>/staff-communities/?page=<%= next_page_number %>">
                   <img src="/static/images/preloader.gif">
                 </div>
                 <% } %>
