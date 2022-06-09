@@ -83,14 +83,14 @@ pub async fn chats_list_page(session: Session, req: HttpRequest) -> actix_web::R
             struct Template {
                 title:        String,
                 request_user: User,
-                count_chats: usize,
+                count: usize,
                 next_page_number: i32,
                 object_list: Vec<Chat>,
             }
             let body = Template {
                 title:        "Сообщения".to_string(),
                 request_user: _request_user,
-                count_chats: count,
+                count: count,
                 next_page_number: next_page_number,
                 object_list: object_list,
             }
@@ -103,14 +103,14 @@ pub async fn chats_list_page(session: Session, req: HttpRequest) -> actix_web::R
             struct Template {
                 title:        String,
                 request_user: User,
-                count_chats: usize,
+                count: usize,
                 next_page_number: i32,
                 object_list: Vec<Chat>,
             }
             let body = Template {
                 title:        "Сообщения".to_string(),
                 request_user: _request_user,
-                count_chats: count,
+                count: count,
                 next_page_number: next_page_number,
                 object_list: object_list,
             }

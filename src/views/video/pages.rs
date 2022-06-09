@@ -719,12 +719,8 @@ pub async fn edit_new_video_page(session: Session) -> actix_web::Result<HttpResp
         let _request_user = get_request_user_data(&session);
         #[derive(TemplateOnce)]
         #[template(path = "desctop/video/edit_new_video.stpl")]
-        struct Template {
-            request_user: User,
-        }
-        let body = Template {
-            request_user: _request_user,
-        }
+        struct Template {}
+        let body = Template {}
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
@@ -742,11 +738,9 @@ pub async fn edit_video_page(session: Session, _id: web::Path<i32>) -> actix_web
             #[derive(TemplateOnce)]
             #[template(path = "desctop/video/edit_video.stpl")]
             struct Template {
-                request_user: User,
                 object: Video,
             }
             let body = Template {
-                request_user: _request_user,
                 object: video,
             }
             .render_once()
