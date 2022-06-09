@@ -108,7 +108,7 @@ pub async fn edit_user_list(session: Session, mut payload: Multipart, _id: web::
             return Json(NewListValues {
                 pk: edit_list.id,
                 name: edit_list.name,
-                image: edit_list.image.as_ref(),
+                image: edit_list.image.clone(),
             })
         } else {
             return Json(NewListValues {
@@ -202,7 +202,7 @@ pub async fn edit_community_list(session: Session, mut payload: Multipart, _id: 
             return Json(NewListValues {
                 pk: edit_list.id,
                 name: edit_list.name,
-                image: edit_list.image.as_ref(),
+                image: edit_list.image.clone(),
             })
         }
         else {
