@@ -78,7 +78,7 @@
         <div class="border-top py-2">
             <div class="row">
               <div class="col interaction" data-type="goo<%= object.id %>">
-                <% include!("../generic/items/item_footer.stpl"); %>
+                <% include!("../../generic/items/item_footer.stpl"); %>
               </div>
             </div>
 
