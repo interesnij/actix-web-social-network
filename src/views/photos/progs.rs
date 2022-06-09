@@ -384,7 +384,7 @@ pub async fn delete_user_photo_list(session: Session, _id: web::Path<i32>) -> ac
         let list = get_photo_list(*_id);
         let _request_user = get_request_user_data(&session);
         if list.user_id == _request_user.id {
-            let res = list.delete_item();
+            list.delete_item();
             Ok(HttpResponse::Ok()
                 .content_type("text/html; charset=utf-8")
                 .body("ok"))
@@ -428,7 +428,7 @@ pub async fn delete_community_photo_list(session: Session, _id: web::Path<i32>) 
         let list = get_photo_list(*_id);
         let _request_user = get_request_user_data(&session);
         if _request_user.is_administrator_of_community(list.community_id.unwrap()) {
-            let res = list.delete_item();
+            list.delete_item();
             Ok(HttpResponse::Ok()
                 .content_type("text/html; charset=utf-8")
                 .body("ok"))
