@@ -21,7 +21,7 @@
                     <button class="btn border user_community_create_window">Создать</button>
                 </div>
             </div>
-            <% if is_user_can_see_community { %>
+            <% if is_user_can_see_communities { %>
             <% if count > 0 { %>
 
             <ul class="list-group is_paginate">

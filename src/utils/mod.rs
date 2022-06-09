@@ -73,8 +73,8 @@ pub fn hash_password(password: &str) -> String {
       //.map_err(|_| AuthError::AuthenticationError(String::from("Не удалось хэшировать пароль")))
 }
 
+#[warn(deprecated)]
 pub fn to_home() -> HttpResponse {
-  #[warn(deprecated)]
   HttpResponse::Found().header(LOCATION, "/").finish()
 }
 
