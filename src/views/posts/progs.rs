@@ -2,7 +2,7 @@ use crate::schema;
 use actix_web::{
     HttpResponse,
     web,
-    //web::Json,
+    web::Json,
     error::InternalError,
     http::StatusCode,
 };
@@ -16,6 +16,7 @@ use crate::utils::{
     get_community_permission,
     get_user_permission,
     establish_connection,
+    NewListValues,
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
@@ -51,7 +52,7 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
     config.route("/posts/add_reply/{id}/", web::post().to(add_reply));
 }
 
-pub async fn add_user_post_list(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
+pub async fn add_user_post_list(session: Session, mut payload: Multipart) -> web::Json<NewListValues> {
     if is_signed_in(&session) {
         use crate::utils::post_list_form;
 
@@ -79,28 +80,22 @@ pub async fn add_user_post_list(session: Session, mut payload: Multipart) -> act
             Some(form.copy_el_users),
             form.reactions,
         );
+        return Json(NewListValues {
+            pk: new_list.id,
+            name: new_list.name,
+            image: new_list.image,
+        })
 
-        #[derive(TemplateOnce)]
-        #[template(path = "desctop/users/lenta/new_list.stpl")]
-        struct Template {
-            list: PostList,
-        }
-        let body = Template {
-            list: new_list,
-        }
-        .render_once()
-        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(body))
     } else {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(""))
+        return Json(NewListValues {
+            pk: 0,
+            name: "".to_string(),
+            image: "".to_string(),
+        })
     }
 }
 
-pub async fn edit_user_post_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn edit_user_post_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> web::Json<NewListValues> {
     if is_signed_in(&session) {
         use crate::utils::post_list_form;
 
@@ -112,7 +107,7 @@ pub async fn edit_user_post_list(session: Session, mut payload: Multipart, _id: 
                 "users".to_string(),
                 _request_user.id.to_string()
             ).await;
-            list.edit_list (
+            let edit_list = list.edit_list (
                 form.name,
                 form.description,
                 form.image,
@@ -129,32 +124,28 @@ pub async fn edit_user_post_list(session: Session, mut payload: Multipart, _id: 
                 form.reactions,
             );
 
-            #[derive(TemplateOnce)]
-            #[template(path = "desctop/users/lenta/new_list.stpl")]
-            struct Template {
-                list: PostList,
-            }
-            let body = Template {
-                list: list,
-            }
-            .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+            return Json(NewListValues {
+                pk: edit_list.id,
+                name: edit_list.name,
+                image: edit_list.image,
+            })
         } else {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(""))
+            return Json(NewListValues {
+                pk: 0,
+                name: "".to_string(),
+                image: "".to_string(),
+            })
         }
     } else {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(""))
+        return Json(NewListValues {
+            pk: 0,
+            name: "".to_string(),
+            image: "".to_string(),
+        })
     }
 }
 
-pub async fn add_community_post_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn add_community_post_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> web::Json<NewListValues> {
     if is_signed_in(&session) {
         use crate::utils::post_list_form;
 
@@ -185,33 +176,29 @@ pub async fn add_community_post_list(session: Session, mut payload: Multipart, _
                 form.reactions,
             );
 
-            #[derive(TemplateOnce)]
-            #[template(path = "desctop/communities/lenta/new_list.stpl")]
-            struct Template {
-                list: PostList,
-            }
-            let body = Template {
-                list: new_list,
-            }
-            .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
-    } else {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(""))
-    }
+            return Json(NewListValues {
+                pk: new_list.id,
+                name: new_list.name,
+                image: new_list.image,
+            })
+        } else {
+            return Json(NewListValues {
+                pk: 0,
+                name: "".to_string(),
+                image: "".to_string(),
+            })
+        }
 
-} else {
-    Ok(HttpResponse::Ok()
-        .content_type("text/html; charset=utf-8")
-        .body(""))
+    } else {
+        return Json(NewListValues {
+            pk: 0,
+            name: "".to_string(),
+            image: "".to_string(),
+        })
     }
 }
 
-pub async fn edit_community_post_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn edit_community_post_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> web::Json<NewListValues> {
     if is_signed_in(&session) {
         use crate::utils::post_list_form;
 
@@ -224,7 +211,7 @@ pub async fn edit_community_post_list(session: Session, mut payload: Multipart, 
                 "communities".to_string(),
                 community.id.to_string()
             ).await;
-            list.edit_list (
+            let edit_list = list.edit_list (
                 form.name,
                 form.description,
                 form.image,
@@ -241,29 +228,25 @@ pub async fn edit_community_post_list(session: Session, mut payload: Multipart, 
                 form.reactions,
             );
 
-        #[derive(TemplateOnce)]
-        #[template(path = "desctop/communities/lenta/new_list.stpl")]
-        struct Template {
-            list: PostList,
-        }
-        let body = Template {
-            list: list,
-        }
-        .render_once()
-        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(body))
+            return Json(NewListValues {
+                pk: edit_list.id,
+                name: edit_list.name,
+                image: edit_list.image,
+            })
         } else {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(""))
+            return Json(NewListValues {
+                pk: 0,
+                name: "".to_string(),
+                image: "".to_string(),
+            })
+        }
+    } else {
+        return Json(NewListValues {
+            pk: 0,
+            name: "".to_string(),
+            image: "".to_string(),
+        })
     }
-} else {
-    Ok(HttpResponse::Ok()
-        .content_type("text/html; charset=utf-8")
-        .body(""))
-}
 }
 
 pub async fn delete_user_post_list(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {

@@ -1,6 +1,7 @@
 use actix_web::{
     HttpResponse,
     web,
+    web::Json,
     error::InternalError,
     http::StatusCode,
 };
@@ -12,6 +13,7 @@ use crate::utils::{
     get_survey,
     get_community_permission,
     get_user_permission,
+    NewListValues,
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
@@ -39,7 +41,7 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
     config.route("/surveys/recover_survey/{id}/", web::get().to(recover_survey));
 }
 
-pub async fn add_user_list(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
+pub async fn add_user_list(session: Session, mut payload: Multipart) -> web::Json<NewListValues> {
     if is_signed_in(&session) {
         use crate::utils::post_list_form;
 
@@ -63,27 +65,21 @@ pub async fn add_user_list(session: Session, mut payload: Multipart) -> actix_we
             Some(form.copy_el_users),
         );
 
-        #[derive(TemplateOnce)]
-        #[template(path = "desctop/surveys/user/new_list.stpl")]
-        struct Template {
-            list: SurveyList,
-        }
-        let body = Template {
-            list: new_list,
-        }
-        .render_once()
-        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(body))
+        return Json(NewListValues {
+            pk: new_list.id,
+            name: new_list.name,
+            image: new_list.image,
+        })
     } else {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(""))
+        return Json(NewListValues {
+            pk: 0,
+            name: "".to_string(),
+            image: "".to_string(),
+        })
     }
 }
 
-pub async fn edit_user_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn edit_user_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> web::Json<NewListValues> {
     if is_signed_in(&session) {
         use crate::utils::post_list_form;
 
@@ -95,7 +91,7 @@ pub async fn edit_user_list(session: Session, mut payload: Multipart, _id: web::
                 "users".to_string(),
                 _request_user.id.to_string()
             ).await;
-            list.edit_list (
+            let edit_list = list.edit_list (
                 form.name,
                 form.description,
                 form.image,
@@ -107,32 +103,28 @@ pub async fn edit_user_list(session: Session, mut payload: Multipart, _id: web::
                 Some(form.copy_el_users),
             );
 
-            #[derive(TemplateOnce)]
-            #[template(path = "desctop/surveys/user/new_list.stpl")]
-            struct Template {
-                list: SurveyList,
-            }
-            let body = Template {
-                list: list,
-            }
-            .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+            return Json(NewListValues {
+                pk: edit_list.id,
+                name: edit_list.name,
+                image: edit_list.image,
+            })
         } else {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(""))
+            return Json(NewListValues {
+                pk: 0,
+                name: "".to_string(),
+                image: "".to_string(),
+            })
         }
     } else {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(""))
+        return Json(NewListValues {
+            pk: 0,
+            name: "".to_string(),
+            image: "".to_string(),
+        })
     }
 }
 
-pub async fn add_community_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn add_community_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> web::Json<NewListValues> {
     if is_signed_in(&session) {
         use crate::utils::post_list_form;
 
@@ -157,34 +149,30 @@ pub async fn add_community_list(session: Session, mut payload: Multipart, _id: w
                 Some(form.create_el_users),
                 Some(form.copy_el_users),
             );
+            return Json(NewListValues {
+                pk: new_list.id,
+                name: new_list.name,
+                image: new_list.image,
+            })
 
-            #[derive(TemplateOnce)]
-            #[template(path = "desctop/surveys/community/new_list.stpl")]
-            struct Template {
-                list: SurveyList,
-            }
-            let body = Template {
-                list: new_list,
-            }
-            .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+        } else {
+            return Json(NewListValues {
+                pk: 0,
+                name: "".to_string(),
+                image: "".to_string(),
+            })
+        }
+
     } else {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(""))
-    }
-
-} else {
-    Ok(HttpResponse::Ok()
-        .content_type("text/html; charset=utf-8")
-        .body(""))
+        return Json(NewListValues {
+            pk: 0,
+            name: "".to_string(),
+            image: "".to_string(),
+        })
     }
 }
 
-pub async fn edit_community_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn edit_community_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> web::Json<NewListValues> {
     if is_signed_in(&session) {
         use crate::utils::post_list_form;
 
@@ -197,7 +185,7 @@ pub async fn edit_community_list(session: Session, mut payload: Multipart, _id: 
                 "communities".to_string(),
                 community.id.to_string()
             ).await;
-            list.edit_list (
+            let edit_list = list.edit_list (
                 form.name,
                 form.description,
                 form.image,
@@ -208,30 +196,26 @@ pub async fn edit_community_list(session: Session, mut payload: Multipart, _id: 
                 Some(form.create_el_users),
                 Some(form.copy_el_users),
             );
+            return Json(NewListValues {
+                pk: edit_list.id,
+                name: edit_list.name,
+                image: edit_list.image,
+            })
 
-        #[derive(TemplateOnce)]
-        #[template(path = "desctop/surveys/community/new_list.stpl")]
-        struct Template {
-            list: SurveyList,
-        }
-        let body = Template {
-            list: list,
-        }
-        .render_once()
-        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(body))
         } else {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(""))
+            return Json(NewListValues {
+                pk: 0,
+                name: "".to_string(),
+                image: "".to_string(),
+            })
+        }
+    } else {
+        return Json(NewListValues {
+            pk: 0,
+            name: "".to_string(),
+            image: "".to_string(),
+        })
     }
-} else {
-    Ok(HttpResponse::Ok()
-        .content_type("text/html; charset=utf-8")
-        .body(""))
-}
 }
 
 

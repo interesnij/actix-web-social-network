@@ -37,7 +37,12 @@ pub struct JsonPosition {
     pub key:   i32,
     pub value: i16,
 }
-
+#[derive(Deserialize)]
+pub struct NewListValues {
+    pub pk:    i32,
+    pub name:  String,
+    pub image: Option<String>, 
+}
 #[derive(Deserialize,Serialize)]
 pub struct JsonItemReactions {
     pub data: Vec<i32>,

@@ -16,6 +16,7 @@ use crate::utils::{
     get_user_permission,
     get_community_permission,
     establish_connection,
+    NewListValues,
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
@@ -62,7 +63,6 @@ pub async fn images_form (
     owner_id: String
 ) -> ImageForm {
     use crate::utils::UploadedFiles;
-    //use uuid::Uuid;
 
     let mut form: ImageForm = ImageForm {
         images: Vec::new(),
@@ -162,7 +162,7 @@ pub async fn add_photos_in_list(session: Session, mut payload: Multipart, _id: w
     }
 }
 
-pub async fn add_user_photo_list(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
+pub async fn add_user_photo_list(session: Session, mut payload: Multipart) -> web::Json<NewListValues> {
     if is_signed_in(&session) {
         use crate::utils::post_list_form;
 
@@ -190,28 +190,22 @@ pub async fn add_user_photo_list(session: Session, mut payload: Multipart) -> ac
             Some(form.copy_el_users),
             form.reactions,
         );
+        return Json(NewListValues {
+            pk: new_list.id,
+            name: new_list.name,
+            image: new_list.cover_photo,
+        })
 
-        #[derive(TemplateOnce)]
-        #[template(path = "desctop/photos/user/new_list.stpl")]
-        struct Template {
-            list: PhotoList,
-        }
-        let body = Template {
-            list: new_list,
-        }
-        .render_once()
-        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(body))
     } else {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(""))
+        return Json(NewListValues {
+            pk: 0,
+            name: "".to_string(),
+            image: "".to_string(),
+        })
     }
 }
 
-pub async fn edit_user_photo_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn edit_user_photo_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> web::Json<NewListValues> {
     if is_signed_in(&session) {
         use crate::utils::post_list_form;
 
@@ -223,7 +217,7 @@ pub async fn edit_user_photo_list(session: Session, mut payload: Multipart, _id:
                 "users".to_string(),
                 _request_user.id.to_string()
             ).await;
-            list.edit_list (
+            let edit_list = list.edit_list (
                 form.name,
                 form.description,
                 form.image,
@@ -240,32 +234,28 @@ pub async fn edit_user_photo_list(session: Session, mut payload: Multipart, _id:
                 form.reactions,
             );
 
-            #[derive(TemplateOnce)]
-            #[template(path = "desctop/photos/user/new_list.stpl")]
-            struct Template {
-                list: PhotoList,
-            }
-            let body = Template {
-                list: list,
-            }
-            .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+            return Json(NewListValues {
+                pk: edit_list.id,
+                name: edit_list.name,
+                image: edit_list.cover_photo,
+            })
         } else {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(""))
+            return Json(NewListValues {
+                pk: 0,
+                name: "".to_string(),
+                image: "".to_string(),
+            })
         }
     } else {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(""))
+        return Json(NewListValues {
+            pk: 0,
+            name: "".to_string(),
+            image: "".to_string(),
+        })
     }
 }
 
-pub async fn add_community_photo_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn add_community_photo_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> web::Json<NewListValues> {
     if is_signed_in(&session) {
         use crate::utils::post_list_form;
 
@@ -296,33 +286,29 @@ pub async fn add_community_photo_list(session: Session, mut payload: Multipart, 
                 form.reactions,
             );
 
-            #[derive(TemplateOnce)]
-            #[template(path = "desctop/photos/community/new_list.stpl")]
-            struct Template {
-                list: PhotoList,
-            }
-            let body = Template {
-                list: new_list,
-            }
-            .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
-    } else {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(""))
-    }
+            return Json(NewListValues {
+                pk: new_list.id,
+                name: new_list.name,
+                image: new_list.cover_photo,
+            })
+        } else {
+            return Json(NewListValues {
+                pk: 0,
+                name: "".to_string(),
+                image: "".to_string(),
+            })
+        }
 
-} else {
-    Ok(HttpResponse::Ok()
-        .content_type("text/html; charset=utf-8")
-        .body(""))
+    } else {
+        return Json(NewListValues {
+            pk: 0,
+            name: "".to_string(),
+            image: "".to_string(),
+        })
     }
 }
 
-pub async fn edit_community_photo_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn edit_community_photo_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> web::Json<NewListValues> {
     if is_signed_in(&session) {
         use crate::utils::post_list_form;
 
@@ -352,29 +338,25 @@ pub async fn edit_community_photo_list(session: Session, mut payload: Multipart,
                 form.reactions,
             );
 
-        #[derive(TemplateOnce)]
-        #[template(path = "desctop/photos/community/new_list.stpl")]
-        struct Template {
-            list: PhotoList,
-        }
-        let body = Template {
-            list: list,
-        }
-        .render_once()
-        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(body))
+            return Json(NewListValues {
+                pk: edit_list.id,
+                name: edit_list.name,
+                image: edit_list.cover_photo,
+            })
         } else {
-        Ok(HttpResponse::Ok()
-            .content_type("text/html; charset=utf-8")
-            .body(""))
+            return Json(NewListValues {
+                pk: 0,
+                name: "".to_string(),
+                image: "".to_string(),
+            })
+        }
+    } else {
+        return Json(NewListValues {
+            pk: 0,
+            name: "".to_string(),
+            image: "".to_string(),
+        })
     }
-} else {
-    Ok(HttpResponse::Ok()
-        .content_type("text/html; charset=utf-8")
-        .body(""))
-}
 }
 
 
