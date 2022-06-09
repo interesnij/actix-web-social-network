@@ -36,7 +36,7 @@ pub fn add_post(pk: i32, user_id: i32, is_staff: bool) -> String {
                 }
                 let mut users_html = "".to_string();
                 for user in users.iter() {
-                    users_html.concat_string!(
+                    users_html = concat_string!(
                         "<a href='", user.link, "' target='_blank' tooltip='",
                         user.get_full_name(),
                         "' flow='up' style='padding-right:10px' data-pk='",
@@ -44,7 +44,7 @@ pub fn add_post(pk: i32, user_id: i32, is_staff: bool) -> String {
                         user.get_s_avatar(), "</figure></a>"
                     );
                 }
-                reacts.concat_string!(
+                reacts = concat_string!(
                     reacts, "<span class='react' data-react='", reaction,
                     "'><span class='like send_react ", border_radius,
                     "<img style='width:17px' src='/static/images/reactions/",

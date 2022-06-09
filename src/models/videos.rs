@@ -2191,7 +2191,6 @@ impl Video {
                 item.file.clone(),
                 None,
                 true,
-                true,
                 item.category_id,
             );
         }
