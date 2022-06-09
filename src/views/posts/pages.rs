@@ -234,6 +234,7 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
         }
 
         let _request_user_id = &_request_user.id;
+        let is_user_can_see_post_list = _list.is_user_can_see_el(*_request_user_id);
         let is_user_can_see_comments = _list.is_user_can_see_comment(*_request_user_id);
         let is_user_can_create_comments = _list.is_user_can_create_comment(*_request_user_id);
 
@@ -255,6 +256,7 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
                 request_user:                User,
                 is_user_can_see_comments:    bool,
                 is_user_can_create_comments: bool,
+                is_user_can_see_post_list:   bool,
                 object_list:                 Vec<PostComment>,
                 next_page_number:            i32,
                 prev:                        Option<i32>,
@@ -266,6 +268,7 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
                 request_user:               _request_user,
                 is_user_can_see_comments:    is_user_can_see_comments,
                 is_user_can_create_comments: is_user_can_create_comments,
+                is_user_can_see_post_list:   is_user_can_see_post_list,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
                 prev:                        prev,
@@ -284,6 +287,7 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
                 request_user:                User,
                 is_user_can_see_comments:    bool,
                 is_user_can_create_comments: bool,
+                is_user_can_see_post_list:   bool,
                 object_list:                 Vec<PostComment>,
                 next_page_number:            i32,
                 prev:                        Option<i32>,
@@ -295,6 +299,7 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
                 request_user:                _request_user,
                 is_user_can_see_comments:    is_user_can_see_comments,
                 is_user_can_create_comments: is_user_can_create_comments,
+                is_user_can_see_post_list:   is_user_can_see_post_list,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
                 prev:                        prev,

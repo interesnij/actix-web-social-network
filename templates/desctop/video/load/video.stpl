@@ -1,3 +1,5 @@
+<% if is_user_can_see_video_list { %>
+
 <% let is_staff = list.is_user_can_create_el(request_user.id); %>
 <% let reactions_list = list.get_reactions_list(); %>
 <% let is_moderator = request_user.is_moderator(); %>
@@ -90,3 +92,7 @@
 </div>
 
 <% include!("list.stpl"); %>
+
+<% } else { %>
+  <% include!("../../generic/centered/private_list.stpl"); %>
+<% } %>
