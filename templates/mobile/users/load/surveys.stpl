@@ -1,0 +1,137 @@
+
+<div class="card mb-4">
+  <div class="card-body">
+    <div class="media mt-3" style="padding-left: 7px;">
+        <h5 class="mt-1" style="flex: 1;">Списки опросов</h5>
+    </div>
+    <div class="row no-gutters mb-2" style="overflow-x: auto;">
+        <div class="col-12">
+            <ul style="width:max-content;list-style: none;">
+                <% for object in request_user.get_survey_lists().iter() { %>
+                <li class="list_item">
+                    <div class="card file-manager-item folder cover_block border" data-uuid="<%= object.id %>">
+                        <div class="card-img-top file-logo-wrapper">
+                          <span>
+                          <svg class="load_attach_survey_list pointer list_toggle list_svg svg_default" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder">
+                            <path d="M0 0h24v24H0V0z" fill="none"></path>
+                            <path d="M18 9l-1.41-1.42L10 14.17l-2.59-2.58L6 13l4 4zm1-6h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-.14 0-.27.01-.4.04-.39.08-.74.28-1.01.55-.18.18-.33.4-.43.64-.1.23-.16.49-.16.77v14c0 .27.06.54.16.78s.25.45.43.64c.27.27.62.47 1.01.55.13.02.26.03.4.03h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7-.25c.41 0 .75.34.75.75s-.34.75-.75.75-.75-.34-.75-.75.34-.75.75-.75zM19 19H5V5h14v14z"></path>
+                          </svg>
+                          </span>
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="content-wrapper">
+                                <p class="card-text file-name mb-0 list_name load_attach_survey_list pointer list_toggle" style="text-align: left;" data-name="<%= object.name %>"><%= object.name %></p>
+                                <p class="card-text file-size mb-0 count"><%= object.count_items() %></p>
+                            </div>
+                            <% if object.count > 0 { %>
+                            <small class="file-accessed pointer underline survey_attach_list" data-pk="<%= object.id %>">Прикрепить список</small>
+                            <% } else { %>
+                              <p style="margin-bottom: 18px;"></p>
+                            <% } %>
+                        </div>
+                    </div>
+                </li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+
+
+<span class="load_block">
+<% if object_list.len() > 0 { %>
+
+<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_block_paginate">
+<% for object in object_list.iter() { %>
+
+<div class="card pag mb-3 attach_survey pointer" style="flex: 0 0 100%;" data-pk="<%= object.id %>">
+  <div class="mb-3 border text-center has-background-img position-relative box-shadow">
+      <figure class="background-img">
+        <img src="<%- object.get_image() %>" alt="img">
+      </figure>
+      <div class="container" style="list-style-type:none">
+        <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none border-bottom"></i>
+        <br>
+        <h4><%= object.title %></h4>
+        <p class="position-relative">
+          <% if object.community_id.is_some() { %>
+            <% let _community = object.get_community(); %>
+            <a href="<%= _community.link %>" class="underline ajax">
+              <%= _community.name %>
+            </a>
+          <% } else { %>
+          <% let _creator = object.get_creator(); %>
+          <a href="<%= _creator.link %>" class="underline ajax">
+            <%= _creator.get_full_name() %>
+          </a>
+          <% } %>
+        </p>
+        <%- object.get_time_description() %>
+        <br>
+        {% for answer in object.get_answers %}
+        <% for answer in object.get_answers().iter() { %>
+          <% let get_procent = answer.get_procent(); %>
+
+          <% if object.is_user_voted(request_user.id) { %>
+          <div class="lite_color answer_style" data-pk="<%= answer.id %>">
+            <div class="progress2" style="width:<%= get_procent %> %;"></div>
+            <span class="progress_span_r"><%= answer.content %>
+              <span class="count text-muted small"><%= answer.vote %></span>
+            </span>
+            <span class="progress_span_l" style="margin-left: auto;">
+
+              <span class="vote_svg">
+                <% if answer.is_user_voted(request_user.id) { %>
+                  <svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>
+                <% } %>
+              </span>
+              <span class="procent"><%= get_procent %> %</span>
+            </span>
+          </div>
+
+          <% } else { %>
+
+          <div class="lite_color answer_style <% if !object.is_time_end() { %>pointer survey_vote<% } %>" data-pk="<%= answer.id %>">
+            <div class="progress2" style="width:<%= get_procent %> %;"></div>
+            <span class="progress_span_r"><%= answer.content %>
+              <span class="count text-muted"><%= answer.vote %></span>
+            </span>
+            <span class="progress_span_l" style="margin-left: auto;">
+              <span class="vote_svg"></span>
+              <span class="procent"><%= get_procent %> %</span>
+            </span>
+          </div>
+          <% } %>
+
+        <% } %>
+
+        <% if object.is_have_votes() { %>
+          <% if object.is_anonymous { %>
+            Это анонимный опрос.
+          <% } else { %>
+          <a class="i_link survey_info pointer position-relative"><%= object.get_users_ru() %></a>
+
+          <%- object.get_6_users() %>
+          <% } %>
+        <% } else { %>
+          Пока никто не голосовал.
+        <% } %>
+      </div>
+  </div>
+</div>
+
+<% } %>
+<% if next_page_number > 0 { %>
+  <div class="load centered m-1 next_page_list" data-link="/users/load/surveys/?page=<%= next_page_number %>">
+      <img src="/static/images/preloader.gif">
+  </div>
+<% } %>
+
+</div>
+<% } else { %>
+<div class="card mb-3 centered">
+  <h5 style="text-align: center;margin: 20px;"> Список опросов пустой.</h5>
+</div>
+<% } %>
+</span>
+</div>
+</div>

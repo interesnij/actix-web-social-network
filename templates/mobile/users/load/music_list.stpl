@@ -1,0 +1,40 @@
+<span class="load_block">
+<% if object_list.len() > 0 { %>
+
+<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_block_paginate">
+<% for object in object_list.iter() { %>
+<div class="list-group-item">
+  <div style="display:flex" music-pk="<%= object.id %>" music-counter="">
+      <figure>
+        <a class="pointer music_list_item">
+          <%- object.get_image() %>
+        </a>
+      </figure>
+      <div class="media-body" style="padding-top: 5px; padding-left: 5px;margin-right:40px">
+          <h6 class="music_list_item pointer">
+            <a style="white-space: nowrap;"><%= object.title %></a>
+          </h6>
+      </div>
+  </div>
+  <span class="custom_color border item_attach_circle music_load_several"
+       tooltip="Выбрать несколько"
+       flow="up">
+       <svg class="svg_default" fill="currentColor" viewBox="2 2 20 20">
+         <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"/>
+       </svg>
+  </span>
+</div>
+<% } %>
+  <% if next_page_number > 0 { %>
+  <div class="load centered m-1 next_page_list" data-link="/users/load/music_list/<%= list.id %>/?page=<%= next_page_number %>">
+      <img src="/static/images/preloader.gif">
+  </div>
+  <% } %>
+
+</div>
+<% } else { %>
+<div class="card mb-3 centered">
+  <h5 style="text-align: center;margin: 20px;"> Плейлист пустой.</h5>
+</div>
+<% } %>
+</span>

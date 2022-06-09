@@ -1,0 +1,76 @@
+
+<div class="card mb-4">
+  <div class="card-body">
+    <div class="media mt-3" style="padding-left: 7px;">
+        <h5 class="mt-1" style="flex: 1;">Фотоальбомы</h5>
+    </div>
+    <div class="row no-gutters mb-2" style="overflow-x: auto;">
+        <div class="col-12">
+            <ul style="width:max-content;list-style: none;">
+                <% for object in request_user.get_photo_lists().iter() { %>
+                <li class="list_item">
+                    <div class="text-center bg-dark position-relative border" data-uuid="<%= object.id %>">
+                        <figure class="background-img">
+                            <img class="image_fit_200"
+                            src="
+                            <% if object.cover_photo.is_some() { %>
+                              <%= object.cover_photo.as_deref().unwrap() %>
+                            <% } else { %>
+                              /static/images/no_img/list.jpg
+                            <% } %>
+                            ">
+                        </figure>
+                        <div class="container p-3">
+                            <h6 class="text-white pointer">
+                                <span class="pointer nowrap list_toggle load_attach_photo_list"><%= object.name %></span>
+                            </h6>
+                            <span class="text-white count"><%= object.count_items_ru() %></span>
+
+                            <hr style="margin-bottom: 3rem !important">
+                            <% if object.count > 0 { %>
+                              <small class="file-accessed pointer underline photo_attach_list" data-pk="<%= object.id %>">Прикрепить список</small>
+                            <% } else { %>
+                              <p style="margin-bottom: 64px;"></p>
+                            <% } %>
+                        </div>
+                    </div>
+                </li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+
+
+<span class="load_block">
+<% if object_list.len() > 0 { %>
+
+<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_block_paginate">
+<% for object in object_list.iter() { %>
+<div class="pointer u_load_photo_detail">
+  <div class="progressive replace" data-href="<%= object.file %>" photo-pk="<%= object.id %>" data-pk="<%= request_user.id %>">
+      <img class="image_fit_200 photo_load_one preview pointer" src="<%= object.preview %>" alt="img">
+  </div>
+    <span class="custom_color border item_attach_circle photo_load_several"
+         tooltip="Выбрать несколько"
+         flow="up">
+         <svg class="svg_default" fill="currentColor" viewBox="2 2 20 20">
+           <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"/>
+         </svg>
+    </span>
+</div>
+<% } %>
+<% if next_page_number > 0 { %>
+  <div class="load centered m-1 next_page_list" data-link="/users/load/photos/?page=<%= next_page_number %>">
+      <img src="/static/images/preloader.gif">
+  </div>
+<% } %>
+
+</div>
+<% } else { %>
+<div class="card mb-3 centered">
+  <h5 style="text-align: center;margin: 20px;"> Фотоальбом пустой.</h5>
+</div>
+<% } %>
+</span>
+</div>
+</div>
