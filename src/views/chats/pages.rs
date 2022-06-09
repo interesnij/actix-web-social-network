@@ -574,7 +574,6 @@ pub async fn private_chat_page(session: Session, _id: web::Path<i32>) -> actix_w
 pub async fn chat_exclude_users_load(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     #[derive(Debug, Deserialize)]
     pub struct ZParams {
-        pub page:  Option<i32>,
         pub types: Option<String>,
     }
 
@@ -589,9 +588,6 @@ pub async fn chat_exclude_users_load(session: Session, req: HttpRequest, _id: we
 
         if params_some.is_ok() {
             let params = params_some.unwrap();
-            if params.page.is_some() {
-                page = params.page.unwrap();
-            }
             if params.types.is_some() {
                 types = params.types.as_ref().unwrap().to_string();
             }
@@ -710,7 +706,6 @@ pub async fn chat_exclude_users_load(session: Session, req: HttpRequest, _id: we
 pub async fn chat_include_users_load(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     #[derive(Debug, Deserialize)]
     pub struct ZParams {
-        pub page:  Option<i32>,
         pub types: Option<String>,
     }
 
@@ -725,9 +720,6 @@ pub async fn chat_include_users_load(session: Session, req: HttpRequest, _id: we
 
         if params_some.is_ok() {
             let params = params_some.unwrap();
-            if params.page.is_some() {
-                page = params.page.unwrap();
-            }
             if params.types.is_some() {
                 types = params.types.as_ref().unwrap().to_string();
             }
