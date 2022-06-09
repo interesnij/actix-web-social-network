@@ -74,11 +74,9 @@ pub async fn create_communities_category_page(session: Session) -> actix_web::Re
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_communities_category.stpl")]
             struct Template {
-                request_user:   User,
                 all_categories: Vec<CommunityCategory>,
             }
             let body = Template {
-                request_user:   _request_user,
                 all_categories: all_categories,
             }
             .render_once()
@@ -117,12 +115,10 @@ pub async fn edit_communities_category_page(session: Session, cat_id: web::Path<
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_communities_category.stpl")]
             struct Template {
-                request_user:   User,
                 category:       CommunityCategory,
                 all_categories: Vec<CommunityCategory>,
             }
             let body = Template {
-                request_user:   _request_user,
                 category:       category,
                 all_categories: all_categories,
             }
@@ -154,11 +150,9 @@ pub async fn create_communities_subcategory_page(session: Session) -> actix_web:
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_communities_subcategory.stpl")]
             struct Template {
-                request_user:   User,
                 all_categories: Vec<CommunityCategory>,
             }
             let body = Template {
-                request_user:   _request_user,
                 all_categories: all_categories,
             }
             .render_once()
@@ -198,12 +192,10 @@ pub async fn edit_communities_subcategory_page(session: Session, subcat_id: web:
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_communities_subcategory.stpl")]
             struct Template {
-                request_user:   User,
                 subcategory:    CommunitySubcategory,
                 all_categories: Vec<CommunityCategory>,
             }
             let body = Template {
-                request_user:   _request_user,
                 subcategory:    subcategory,
                 all_categories: all_categories,
             }
@@ -235,11 +227,9 @@ pub async fn create_goods_category_page(session: Session) -> actix_web::Result<H
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_goods_category.stpl")]
             struct Template {
-                request_user:   User,
                 all_categories: Vec<GoodCategorie>,
             }
             let body = Template {
-                request_user:   _request_user,
                 all_categories: all_categories,
             }
             .render_once()
@@ -277,12 +267,10 @@ pub async fn edit_goods_category_page(session: Session, cat_id: web::Path<i32>) 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_goods_category.stpl")]
             struct Template {
-                request_user:   User,
                 all_categories: Vec<GoodCategorie>,
                 category:       GoodCategorie,
             }
             let body = Template {
-                request_user:   _request_user,
                 all_categories: all_categories,
                 category:       category,
             }
@@ -314,11 +302,9 @@ pub async fn create_goods_subcategory_page(session: Session) -> actix_web::Resul
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_goods_subcategory.stpl")]
             struct Template {
-                request_user:   User,
                 all_categories: Vec<GoodCategorie>,
             }
             let body = Template {
-                request_user:   _request_user,
                 all_categories: all_categories,
             }
             .render_once()
@@ -358,12 +344,10 @@ pub async fn edit_goods_subcategory_page(session: Session, subcat_id: web::Path<
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_goods_subcategory.stpl")]
             struct Template {
-                request_user:   User,
                 subcategory:    GoodSubcategorie,
                 all_categories: Vec<GoodCategorie>,
             }
             let body = Template {
-                request_user:   _request_user,
                 subcategory:    subcategory,
                 all_categories: all_categories,
             }
@@ -395,11 +379,9 @@ pub async fn create_sound_genre_page(session: Session) -> actix_web::Result<Http
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_sound_genre.stpl")]
             struct Template {
-                request_user:     User,
                 all_sound_genres: Vec<SoundGenre>,
             }
             let body = Template {
-                request_user:     _request_user,
                 all_sound_genres: all_sound_genres,
             }
             .render_once()
@@ -437,12 +419,10 @@ pub async fn edit_sound_genre_page(session: Session, cat_id: web::Path<i32>) -> 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_sound_genre.stpl")]
             struct Template {
-                request_user:     User,
                 sound_genre:      SoundGenre,
                 all_sound_genres: Vec<SoundGenre>,
             }
             let body = Template {
-                request_user:     _request_user,
                 sound_genre:      sound_genre,
                 all_sound_genres: all_sound_genres,
             }
@@ -474,11 +454,9 @@ pub async fn create_artist_page(session: Session) -> actix_web::Result<HttpRespo
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_artist.stpl")]
             struct Template {
-                request_user: User,
                 all_artists:  Vec<Artist>,
             }
             let body = Template {
-                request_user: _request_user,
                 all_artists:  all_artists,
             }
             .render_once()
@@ -517,12 +495,10 @@ pub async fn edit_artist_page(session: Session, cat_id: web::Path<i32>) -> actix
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_artist.stpl")]
             struct Template {
-                request_user: User,
                 artist:       Artist,
                 all_artists:  Vec<Artist>,
             }
             let body = Template {
-                request_user: _request_user,
                 artist:       artist,
                 all_artists:  all_artists,
             }
@@ -560,12 +536,10 @@ pub async fn create_music_album_page(session: Session) -> actix_web::Result<Http
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_music_album.stpl")]
             struct Template {
-                request_user: User,
                 all_artists:  Vec<Artist>,
                 all_albums:   Vec<MusicAlbum>,
             }
             let body = Template {
-                request_user: _request_user,
                 all_artists:  all_artists,
                 all_albums:   all_albums,
             }
@@ -610,13 +584,11 @@ pub async fn edit_music_album_page(session: Session, cat_id: web::Path<i32>) -> 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_music_album.stpl")]
             struct Template {
-                request_user: User,
                 music_album:  MusicAlbum,
                 all_artists:  Vec<Artist>,
                 all_albums:   Vec<MusicAlbum>,
             }
             let body = Template {
-                request_user: _request_user,
                 music_album:  music_album,
                 all_artists:  all_artists,
                 all_albums:   all_albums,
@@ -649,11 +621,9 @@ pub async fn create_stickers_category_page(session: Session) -> actix_web::Resul
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_stickers_category.stpl")]
             struct Template {
-                request_user: User,
                 all_categories:  Vec<StickerCategorie>,
             }
             let body = Template {
-                request_user:   _request_user,
                 all_categories: all_categories,
             }
             .render_once()
@@ -692,12 +662,10 @@ pub async fn edit_stickers_category_page(session: Session, cat_id: web::Path<i32
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_stickers_category.stpl")]
             struct Template {
-                request_user:   User,
                 category:       StickerCategorie,
                 all_categories: Vec<StickerCategorie>,
             }
             let body = Template {
-                request_user:   _request_user,
                 category:       category,
                 all_categories: all_categories,
             }
@@ -734,12 +702,10 @@ pub async fn create_sticker_page(session: Session) -> actix_web::Result<HttpResp
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_sticker.stpl")]
             struct Template {
-                request_user:   User,
                 all_stickers:   Vec<Sticker>,
                 all_categories: Vec<StickerCategorie>,
             }
             let body = Template {
-                request_user:   _request_user,
                 all_stickers:   all_stickers,
                 all_categories: all_categories,
             }
@@ -784,13 +750,11 @@ pub async fn edit_sticker_page(session: Session, cat_id: web::Path<i32>) -> acti
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_sticker.stpl")]
             struct Template {
-                request_user: User,
                 sticker:      Sticker,
                 all_stickers: Vec<Sticker>,
                 all_categories: Vec<StickerCategorie>,
             }
             let body = Template {
-                request_user:   _request_user,
                 sticker:        sticker,
                 all_stickers:   all_stickers,
                 all_categories: all_categories,
@@ -825,11 +789,9 @@ pub async fn create_smiles_category_page(session: Session) -> actix_web::Result<
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_smiles_category.stpl")]
             struct Template {
-                request_user:   User,
                 all_categories: Vec<SmileCategorie>,
             }
             let body = Template {
-                request_user: _request_user,
                 all_categories: all_categories,
             }
             .render_once()
@@ -868,12 +830,10 @@ pub async fn edit_smiles_category_page(session: Session, cat_id: web::Path<i32>)
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_smiles_category.stpl")]
             struct Template {
-                request_user:   User,
                 category:       SmileCategorie,
                 all_categories: Vec<SmileCategorie>,
             }
             let body = Template {
-                request_user:   _request_user,
                 category:       category,
                 all_categories: all_categories,
             }
@@ -910,12 +870,10 @@ pub async fn create_smile_page(session: Session) -> actix_web::Result<HttpRespon
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_smile.stpl")]
             struct Template {
-                request_user:   User,
                 all_smiles:     Vec<Smile>,
                 all_categories: Vec<SmileCategorie>,
             }
             let body = Template {
-                request_user:   _request_user,
                 all_smiles:     all_smiles,
                 all_categories: all_categories,
             }
@@ -960,13 +918,11 @@ pub async fn edit_smile_page(session: Session, cat_id: web::Path<i32>) -> actix_
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_smile.stpl")]
             struct Template {
-                request_user:   User,
                 smile:          Smile,
                 all_smiles:     Vec<Smile>,
                 all_categories: Vec<SmileCategorie>,
             }
             let body = Template {
-                request_user:   _request_user,
                 smile:          smile,
                 all_smiles:     all_smiles,
                 all_categories: all_categories,
@@ -999,11 +955,9 @@ pub async fn create_post_category_page(session: Session) -> actix_web::Result<Ht
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_post_category.stpl")]
             struct Template {
-                request_user: User,
                 all_categories: Vec<PostCategorie>
             }
             let body = Template {
-                request_user: _request_user,
                 all_categories: all_categories,
             }
             .render_once()
@@ -1042,12 +996,10 @@ pub async fn edit_post_category_page(session: Session, cat_id: web::Path<i32>) -
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_post_category.stpl")]
             struct Template {
-                request_user:   User,
                 category:       PostCategorie,
                 all_categories: Vec<PostCategorie>
             }
             let body = Template {
-                request_user:   _request_user,
                 category:       category,
                 all_categories: all_categories,
             }
@@ -1079,11 +1031,9 @@ pub async fn create_video_category_page(session: Session) -> actix_web::Result<H
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_video_category.stpl")]
             struct Template {
-                request_user:   User,
                 all_categories: Vec<VideoCategorie>,
             }
             let body = Template {
-                request_user:   _request_user,
                 all_categories: all_categories,
             }
             .render_once()
@@ -1122,12 +1072,10 @@ pub async fn edit_video_category_page(session: Session, cat_id: web::Path<i32>) 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_video_category.stpl")]
             struct Template {
-                request_user:   User,
                 category:       VideoCategorie,
                 all_categories: Vec<VideoCategorie>,
             }
             let body = Template {
-                request_user:   _request_user,
                 category:       category,
                 all_categories: all_categories,
             }
@@ -1159,11 +1107,9 @@ pub async fn create_reaction_page(session: Session) -> actix_web::Result<HttpRes
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_reaction.stpl")]
             struct Template {
-                request_user:  User,
                 all_reactions: Vec<Reaction>,
             }
             let body = Template {
-                request_user:  _request_user,
                 all_reactions: all_reactions,
             }
             .render_once()
@@ -1202,12 +1148,10 @@ pub async fn edit_reaction_page(session: Session, cat_id: web::Path<i32>) -> act
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_reaction.stpl")]
             struct Template {
-                request_user:  User,
                 reaction:      Reaction,
                 all_reactions: Vec<Reaction>,
             }
             let body = Template {
-                request_user:  _request_user,
                 reaction:      reaction,
                 all_reactions: all_reactions,
             }
