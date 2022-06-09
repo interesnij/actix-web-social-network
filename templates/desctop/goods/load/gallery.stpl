@@ -8,7 +8,7 @@
           <% } %>
           <% for img in object.get_images().iter() { %>
             <li>
-              <img src="<%= img.image %>" class="image_fit_50" alt="img">
+              <img src="<%= img.src %>" class="image_fit_50" alt="img">
             </li>
           <% } %>
         </ol>
