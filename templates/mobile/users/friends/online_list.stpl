@@ -19,7 +19,7 @@
             </a>
           <% } %>
 
-          <a class="dropdown-item ajax" href="/followings/>Заявки в друзья (<%= user.count_followings() %>)</a>
+          <a class="dropdown-item ajax" href="/followings/>Заявки в друзья (<%= user.count_following() %>)</a>
           <a class="dropdown-item ajax" href="/all-users/">Найти друзей</a>
         </div>
       </div>
