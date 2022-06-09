@@ -93,7 +93,7 @@ pub async fn edit_user_list(session: Session, mut payload: Multipart, _id: web::
                 "users".to_string(),
                 _request_user.id.to_string()
             ).await;
-            let edit list = list.edit_list (
+            let edit_list = list.edit_list (
                 form.name,
                 form.description,
                 form.image,

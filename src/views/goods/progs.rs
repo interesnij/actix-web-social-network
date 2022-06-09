@@ -210,7 +210,7 @@ pub async fn edit_community_list(session: Session, mut payload: Multipart, _id: 
                 "communities".to_string(),
                 community.id.to_string()
             ).await;
-            let edit list = list.edit_list (
+            let edit_list = list.edit_list (
                 form.name,
                 form.description,
                 form.image,
