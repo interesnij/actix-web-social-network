@@ -234,14 +234,14 @@ pub async fn video_load(session: Session, req: HttpRequest) -> actix_web::Result
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/video.stpl")]
             struct Template {
-                //request_user:                User,
+                request_user:                User,
                 object_list:                 Vec<Video>,
                 next_page_number:            i32,
                 //count:                       i32,
             }
 
             let body = Template {
-                //request_user:                _request_user,
+                request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
                 //count:                       count,
@@ -254,14 +254,14 @@ pub async fn video_load(session: Session, req: HttpRequest) -> actix_web::Result
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/video.stpl")]
             struct Template {
-                //request_user:                User,
+                request_user:                User,
                 object_list:                 Vec<Video>,
                 next_page_number:            i32,
                 //count:                       i32,
             }
 
             let body = Template {
-                //request_user:                _request_user,
+                request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
                 //count:                       count,
@@ -385,14 +385,14 @@ pub async fn docs_load(session: Session, req: HttpRequest) -> actix_web::Result<
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/docs.stpl")]
             struct Template {
-                //request_user:                User,
+                request_user:                User,
                 object_list:                 Vec<Doc>,
                 next_page_number:            i32,
                 //count:                       i32,
             }
 
             let body = Template {
-                //request_user:                _request_user,
+                request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
                 //count:                       count,
@@ -405,14 +405,14 @@ pub async fn docs_load(session: Session, req: HttpRequest) -> actix_web::Result<
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/docs.stpl")]
             struct Template {
-                //request_user:                User,
+                request_user:                User,
                 object_list:                 Vec<Doc>,
                 next_page_number:            i32,
                 //count:                       i32,
             }
 
             let body = Template {
-                //request_user:                _request_user,
+                request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
                 //count:                       count,
@@ -689,14 +689,14 @@ pub async fn music_load(session: Session, req: HttpRequest) -> actix_web::Result
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/music.stpl")]
             struct Template {
-                //request_user:                User,
+                request_user:                User,
                 object_list:                 Vec<Music>,
                 next_page_number:            i32,
                 //count:                       i32,
             }
 
             let body = Template {
-                //request_user:                _request_user,
+                request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
                 //count:                       count,
@@ -709,14 +709,14 @@ pub async fn music_load(session: Session, req: HttpRequest) -> actix_web::Result
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/music.stpl")]
             struct Template {
-                //request_user:                User,
+                request_user:                User,
                 object_list:                 Vec<Music>,
                 next_page_number:            i32,
                 //count:                       i32,
             }
 
             let body = Template {
-                //request_user:                _request_user,
+                request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
                 //count:                       count,
@@ -841,14 +841,14 @@ pub async fn goods_load(session: Session, req: HttpRequest) -> actix_web::Result
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/goods.stpl")]
             struct Template {
-                //request_user:                User,
+                request_user:                User,
                 object_list:                 Vec<Good>,
                 next_page_number:            i32,
                 //count:                       i32,
             }
 
             let body = Template {
-                //request_user:                _request_user,
+                request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
                 //count:                       count,
@@ -861,14 +861,14 @@ pub async fn goods_load(session: Session, req: HttpRequest) -> actix_web::Result
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/goods.stpl")]
             struct Template {
-                //request_user:                User,
+                request_user:                User,
                 object_list:                 Vec<Good>,
                 next_page_number:            i32,
                 //count:                       i32,
             }
 
             let body = Template {
-                //request_user:                _request_user,
+                request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
                 //count:                       count,
