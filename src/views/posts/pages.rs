@@ -507,7 +507,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, post_id: web
             }
             let body = Template {
                 list:                      _list,
-                item:                      _post,
+                object:                    _post,
                 object_list:               object_list,
                 next_page_number:          next_page_number,
             }
