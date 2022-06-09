@@ -4,7 +4,7 @@
     <div class="media mt-3" style="padding-left: 7px;">
       <h5 class="mt-1">
         <p>
-          Избранных сообщений: <%= request_user.favourite_messages_count() %>
+          Избранных сообщений: <%= count %>
         </p>
       </h5>
     </div>

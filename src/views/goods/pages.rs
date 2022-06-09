@@ -735,7 +735,7 @@ pub async fn add_good_in_list_page(session: Session, _id: web::Path<i32>) -> act
     }
 }
 
-pub async fn edit_good_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn edit_good_page(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         use crate::models::GoodSubcategorie;
         use crate::schema::good_subcategories::dsl::good_subcategories;

@@ -1137,7 +1137,6 @@ pub async fn invite_members_page(session: Session, req: HttpRequest, _id: web::P
             #[derive(TemplateOnce)]
             #[template(path = "desctop/chats/chat/append_friends.stpl")]
             struct Template {
-                request_user:     User,
                 chat:             Chat,
                 object_list:      Vec<User>,
                 next_page_number: i32,
@@ -1145,7 +1144,6 @@ pub async fn invite_members_page(session: Session, req: HttpRequest, _id: web::P
             }
 
             let body = Template {
-                request_user:     _request_user,
                 chat:             _chat,
                 object_list:      object_list,
                 next_page_number: next_page_number,
@@ -1160,7 +1158,6 @@ pub async fn invite_members_page(session: Session, req: HttpRequest, _id: web::P
             #[derive(TemplateOnce)]
             #[template(path = "mobile/chats/chat/append_friends.stpl")]
             struct Template {
-                request_user:     User,
                 chat:             Chat,
                 object_list:      Vec<User>,
                 next_page_number: i32,
@@ -1168,7 +1165,6 @@ pub async fn invite_members_page(session: Session, req: HttpRequest, _id: web::P
             }
 
             let body = Template {
-                request_user:     _request_user,
                 chat:             _chat,
                 object_list:      object_list,
                 next_page_number: next_page_number,

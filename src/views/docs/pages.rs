@@ -274,12 +274,10 @@ pub async fn edit_community_list_page(session: Session, _id: web::Path<i32>) -> 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/docs/community/edit_list.stpl")]
         struct Template {
-            request_user: User,
             community: Community,
             list: DocList,
         }
         let body = Template {
-            request_user: _request_user,
             community: community,
             list: list,
         }
@@ -302,11 +300,9 @@ pub async fn edit_doc_page(session: Session, _id: web::Path<i32>) -> actix_web::
             #[derive(TemplateOnce)]
             #[template(path = "desctop/docs/edit_doc.stpl")]
             struct Template {
-                request_user: User,
                 object: Doc,
             }
             let body = Template {
-                request_user: _request_user,
                 object: doc,
             }
             .render_once()
