@@ -321,7 +321,7 @@ pub async fn edit_community_photo_list(session: Session, mut payload: Multipart,
                 "communities".to_string(),
                 community.id.to_string()
             ).await;
-            list.edit_list (
+            let edit_list = list.edit_list (
                 form.name,
                 form.description,
                 form.image,
