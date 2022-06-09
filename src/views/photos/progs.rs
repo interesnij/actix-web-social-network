@@ -451,23 +451,19 @@ pub async fn recover_community_photo_list(session: Session, _id: web::Path<i32>)
 pub async fn edit_photo_description(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> web::Json<EditPhotoDescription> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(&session);
-        let user_id = _request_user.id;
         let _photo = get_photo(*_id);
         let _list = _photo.get_list();
 
         let is_open : bool;
-        let text : String;
         let community_id = _list.community_id;
 
         if community_id.is_some() {
             let _tuple = get_community_permission(&_list.get_community(), &_request_user);
             is_open = _tuple.0;
-            text = _tuple.1;
         }
         else {
             let _tuple = get_user_permission(&_list.get_creator(), &_request_user);
             is_open = _tuple.0;
-            text = _tuple.1;
         }
         if is_open == false {
             return Json(EditPhotoDescription {

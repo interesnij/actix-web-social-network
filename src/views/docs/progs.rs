@@ -443,17 +443,14 @@ pub async fn edit_doc(session: Session, mut payload: Multipart, _id: web::Path<i
         let _list = _doc.get_list();
         let community_id = _doc.community_id;
         let is_open : bool;
-        let text : String;
 
         if community_id.is_some() {
             let _tuple = get_community_permission(&_list.get_community(), &_request_user);
             is_open = _tuple.0;
-            text = _tuple.1;
         }
         else {
             let _tuple = get_user_permission(&_list.get_creator(), &_request_user);
             is_open = _tuple.0;
-            text = _tuple.1;
         }
 
         if is_open == false {

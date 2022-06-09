@@ -405,19 +405,16 @@ pub async fn edit_track(session: Session, mut payload: Multipart, _id: web::Path
         let owner_path : String;
         let owner_id: i32;
         let is_open : bool;
-        let text : String;
 
         if community_id.is_some() {
             let _tuple = get_community_permission(&_list.get_community(), &_request_user);
             is_open = _tuple.0;
-            text = _tuple.1;
             owner_path = "communities".to_string();
             owner_id = community_id.unwrap();
         }
         else {
             let _tuple = get_user_permission(&_list.get_creator(), &_request_user);
             is_open = _tuple.0;
-            text = _tuple.1;
             owner_path = "users".to_string();
             owner_id = _request_user.id;
         }
