@@ -13,13 +13,6 @@
   <a class="dropdown-item mob_u_photo_on_comment pointer">Вкл. комментарии</a>
 <% } %>
 </span>
-<span>
-<% if object.votes_on { %>
-  <a class="dropdown-item mob_u_photo_off_votes pointer">Выкл. реакции</a>
-<% } else { %>
-  <a class="dropdown-item mob_u_photo_on_votes pointer">Вкл. реакции</a>
-<% } %>
-</span>
 
 <% } elif request_user.is_moderator() { %>
 

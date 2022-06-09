@@ -1765,7 +1765,7 @@ impl PostList {
 
     pub fn create_post(&self, user_id: i32, content: Option<String>, category_id: Option<i32>,
         attach: Option<String>, parent_id: Option<i32>,
-        comment_enabled: bool, is_signature: bool, votes_on: bool,
+        comment_enabled: bool, is_signature: bool,
         types: Option<String>) -> Post {
 
         let _connection = establish_connection();
@@ -1791,7 +1791,6 @@ impl PostList {
           types: _types,
           attach: attach,
           comment_enabled: comment_enabled,
-          votes_on: votes_on,
           created: chrono::Local::now().naive_utc(),
           comment: 0,
           view: 0,
@@ -1853,7 +1852,6 @@ pub struct Post {
     pub types:             String,
     pub attach:            Option<String>,
     pub comment_enabled:   bool,
-    pub votes_on:          bool,
     pub created:           chrono::NaiveDateTime,
     pub comment:           i32,
     pub view:              i32,
@@ -1875,7 +1873,6 @@ pub struct NewPost {
     pub types:             String,
     pub attach:            Option<String>,
     pub comment_enabled:   bool,
-    pub votes_on:          bool,
     pub created:           chrono::NaiveDateTime,
     pub comment:           i32,
     pub view:              i32,
@@ -1893,7 +1890,6 @@ pub struct EditPost {
     pub post_categorie_id:     Option<i32>,
     pub attach:          Option<String>,
     pub comment_enabled: bool,
-    pub votes_on:        bool,
     pub is_signature:    bool,
 }
 #[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
@@ -2173,7 +2169,6 @@ impl Post {
             types: "r".to_string(),
             attach: new_attach,
             comment_enabled: false,
-            votes_on: false,
             created: chrono::Local::now().naive_utc(),
             comment: 0,
             view: 0,
@@ -2223,7 +2218,6 @@ impl Post {
                 item.parent_id.clone(),
                 item.comment_enabled.clone(),
                 item.is_signature.clone(),
-                item.votes_on.clone(),
                 None,
             );
         }
@@ -2244,7 +2238,7 @@ impl Post {
     }
 
     pub fn edit_post(&self, content: Option<String>, post_categorie_id: Option<i32>,
-        attach: Option<String>, comment_enabled: bool, votes_on: bool,
+        attach: Option<String>, comment_enabled: bool,
         is_signature: bool) -> &Post {
 
         let _connection = establish_connection();
@@ -2254,7 +2248,6 @@ impl Post {
             post_categorie_id: post_categorie_id,
             attach: attach,
             comment_enabled: comment_enabled,
-            votes_on: votes_on,
             is_signature: is_signature,
         };
         diesel::update(self)

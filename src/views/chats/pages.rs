@@ -730,18 +730,18 @@ pub async fn chat_include_users_load(session: Session, req: HttpRequest, _id: we
         let mut object_list: Vec<User> = Vec::new();
 
         let count = _chat.members;
-            if page > 1 {
-                let step = (page - 1) * 20;
-                object_list = _chat.get_members(20, step.into());
-                if count > (page * 20).try_into().unwrap() {
-                    next_page_number = page + 1;
-                }
+        if page > 1 {
+            let step = (page - 1) * 20;
+            object_list = _chat.get_members(20, step.into());
+            if count > (page * 20).try_into().unwrap() {
+                next_page_number = page + 1;
             }
-            else {
-                object_list = _chat.get_members(20, 0);
-                if count > 20.try_into().unwrap() {
-                    next_page_number = 2;
-                }
+        }
+        else {
+            object_list = _chat.get_members(20, 0);
+            if count > 20.try_into().unwrap() {
+                next_page_number = 2;
+            }
         }
 
         if types == "can_add_members".to_string() {
@@ -802,7 +802,6 @@ pub async fn chat_include_users_load(session: Session, req: HttpRequest, _id: we
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
 
         } else {
-
             #[derive(TemplateOnce)]
             #[template(path = "mobile/chats/chat/info/include_users.stpl")]
             struct Template {

@@ -66,12 +66,6 @@
                   <label class="custom-control-label" for="id_comments_enabled" style="padding-top: 5px;">Комментарии включены</label>
                 </div>
               </a>
-              <a class="dropdown-item">
-                <div class="custom-control custom-checkbox">
-                  <input type="checkbox" name="votes_on" class="custom-control-input" <% if object.votes_on { %> checked <% } %> id="id_votes_on">
-                  <label class="custom-control-label" for="id_votes_on" style="padding-top: 5px;">Реакции включены</label>
-                </div>
-              </a>
           </div>
             <button type="button" id="edit_post_btn" class="btn btn-sm text-uppercase pl-3">
               <svg class="svg_default" fill="currentColor" width="24" height="24" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>

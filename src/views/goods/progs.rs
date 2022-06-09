@@ -345,7 +345,6 @@ pub struct GoodForm {
     pub description: Option<String>,
     pub image: Option<String>,
     pub comment_enabled: bool,
-    pub votes_on: bool,
     pub images: Vec<String>,
 }
 
@@ -364,7 +363,6 @@ pub async fn good_form(
         description: None,
         image: None,
         comment_enabled: true,
-        votes_on: true,
         images: Vec::new(),
     };
 
@@ -425,13 +423,6 @@ pub async fn good_form(
                             form.comment_enabled = false;
                         }
                     }
-                    else if field.name() == "votes_on" {
-                        if data_string == "on" {
-                            form.votes_on = true;
-                        } else {
-                            form.votes_on = false;
-                        }
-                    }
                 }
             }
         }
@@ -483,7 +474,6 @@ pub async fn add_good_in_list(session: Session, mut payload: Multipart, _id: web
                 form.description,
                 form.image,
                 form.comment_enabled,
-                form.votes_on,
                 form.images,
             );
 
@@ -551,7 +541,6 @@ pub async fn edit_good(session: Session, mut payload: Multipart, _id: web::Path<
                 form.description,
                 form.image,
                 form.comment_enabled,
-                form.votes_on,
                 form.images,
             );
 

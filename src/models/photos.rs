@@ -325,7 +325,6 @@ impl PhotoList {
           file: file,
           description: None,
           comment_enabled: true,
-          votes_on: true,
 
           created: chrono::Local::now().naive_utc(),
           comment: 0,
@@ -1817,7 +1816,6 @@ pub struct Photo {
     pub file:            String,
     pub description:     Option<String>,
     pub comment_enabled: bool,
-    pub votes_on:        bool,
     pub created:         chrono::NaiveDateTime,
 
     pub comment:         i32,
@@ -1838,7 +1836,6 @@ pub struct NewPhoto {
     pub file:            String,
     pub description:     Option<String>,
     pub comment_enabled: bool,
-    pub votes_on:        bool,
     pub created:         chrono::NaiveDateTime,
 
     pub comment:         i32,

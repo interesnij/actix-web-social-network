@@ -60,13 +60,6 @@
                     <span class="dropdown-item post_on_comment">Вкл. комментарии</span>
                   <% } %>
                 </span>
-                <span>
-                  <% if object.votes_on { %>
-                    <span class="dropdown-item post_off_votes">Выкл. реакции</span>
-                  <% } else { %>
-                    <span class="dropdown-item post_on_votes">Вкл. реакции</span>
-                  <% } %>
-                </span>
                 <span class="dropdown-item item_stat_f">Статистика записи</span>
 
               <% } else if request_user.is_moderator() { %>

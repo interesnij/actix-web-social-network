@@ -343,7 +343,6 @@ pub struct PostForm {
     pub cat:             Option<i32>,
     pub attach:          Option<String>,
     pub comment_enabled: bool,
-    pub votes_on:        bool,
     pub is_signature:    bool,
 }
 
@@ -353,7 +352,6 @@ pub async fn post_form(payload: &mut Multipart) -> PostForm {
         cat: None,
         attach: None,
         comment_enabled: true,
-        votes_on: true,
         is_signature: false,
     };
 
@@ -412,18 +410,6 @@ pub async fn post_form(payload: &mut Multipart) -> PostForm {
                 }
             }
         }
-        else if field.name() == "votes_on" {
-            while let Some(chunk) = field.next().await {
-                let data = chunk.expect("split_payload err chunk");
-                if let Ok(s) = str::from_utf8(&data) {
-                    if s.to_string() == "on" {
-                        form.votes_on = true;
-                    } else {
-                        form.votes_on = false;
-                    }
-                }
-            }
-        }
     }
     form
 }
@@ -462,7 +448,6 @@ pub async fn add_post_in_list(session: Session, mut payload: Multipart, _id: web
                 None,
                 form.comment_enabled,
                 form.is_signature,
-                form.votes_on,
                 Some("a".to_string()),
             );
 
@@ -520,7 +505,6 @@ pub async fn edit_post(session: Session, mut payload: Multipart, _id: web::Path<
                 form.cat,
                 form.attach,
                 form.comment_enabled,
-                form.votes_on,
                 form.is_signature,
             );
 

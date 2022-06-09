@@ -1827,7 +1827,7 @@ impl GoodList {
     }
     pub fn create_good(&self, title: String, community_id: Option<i32>, category_id: Option<i32>,
         user_id: i32, price: Option<i32>, description: Option<String>,
-        image: Option<String>, comment_enabled: bool, votes_on: bool,
+        image: Option<String>, comment_enabled: bool,
         images: Vec<String>) -> Good {
 
         let _connection = establish_connection();
@@ -1848,7 +1848,6 @@ impl GoodList {
             description: description,
             image: image,
             comment_enabled: comment_enabled,
-            votes_on: votes_on,
 
             created: chrono::Local::now().naive_utc(),
             comment: 0,
@@ -1920,7 +1919,6 @@ pub struct Good {
     pub description:     Option<String>,
     pub image:           Option<String>,
     pub comment_enabled: bool,
-    pub votes_on:        bool,
     pub created:         chrono::NaiveDateTime,
 
     pub comment:         i32,
@@ -1943,7 +1941,6 @@ pub struct NewGood {
     pub description:     Option<String>,
     pub image:           Option<String>,
     pub comment_enabled: bool,
-    pub votes_on:        bool,
     pub created:         chrono::NaiveDateTime,
 
     pub comment:         i32,
@@ -1961,7 +1958,6 @@ pub struct EditGood {
     pub description:     Option<String>,
     pub image:           Option<String>,
     pub comment_enabled: bool,
-    pub votes_on:        bool,
 }
 #[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
 #[table_name="goods"]
@@ -2035,7 +2031,6 @@ impl Good {
                 item.description.clone(),
                 item.image.clone(),
                 item.comment_enabled,
-                item.votes_on,
                 item.get_images_str(),
             );
         }
@@ -2057,7 +2052,7 @@ impl Good {
     }
 
     pub fn edit_good(&self, title: String, price: Option<i32>, description: Option<String>,
-        image: Option<String>, comment_enabled: bool, votes_on: bool,
+        image: Option<String>, comment_enabled: bool,
         images: Vec<String>) -> &Good {
 
         use crate::schema::good_images::dsl::good_images;
@@ -2070,7 +2065,6 @@ impl Good {
             description: description,
             image: image,
             comment_enabled: comment_enabled,
-            votes_on: votes_on,
         };
         diesel::update(self)
             .set(edit_good)

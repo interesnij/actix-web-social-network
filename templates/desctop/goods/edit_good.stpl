@@ -118,12 +118,6 @@
             <label class="custom-control-label" for="id_222">Разрешить комментарии</label>
         </div>
     </div>
-    <div class="form-group">
-        <div class="custom-control custom-checkbox">
-            <input type="checkbox" <% if object.votes_on { %> checked <% } %> class="custom-control-input" name="votes_on" id="id_333">
-            <label class="custom-control-label" for="id_333">Разрешить реакции</label>
-        </div>
-    </div>
 
     <div class="card-footer">
         <button class="btn btn-sm border border item_fullscreen_hide">Отмена</button>

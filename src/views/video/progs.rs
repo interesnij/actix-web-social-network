@@ -21,7 +21,7 @@ use crate::utils::{
 use actix_session::Session;
 use sailfish::TemplateOnce;
 use crate::models::{
-    //User, 
+    //User,
     VideoList,
     Video,
     VideoComment};
@@ -349,7 +349,6 @@ pub struct VideoForm {
     pub file: String,
     pub description: Option<String>,
     pub comment_enabled: bool,
-    pub votes_on: bool,
     pub category_id: Option<i32>,
 }
 
@@ -368,7 +367,6 @@ pub async fn video_form(
         file: "".to_string(),
         description: None,
         comment_enabled: true,
-        votes_on: true,
         category_id: None,
     };
 
@@ -445,14 +443,6 @@ pub async fn video_form(
                             form.comment_enabled = false;
                         }
                     }
-                    else if field.name() == "votes_on" {
-                        let data_string = s.to_string();
-                        if data_string == "on" {
-                            form.votes_on = true;
-                        } else {
-                            form.votes_on = false;
-                        }
-                    }
                 }
             }
         }
@@ -510,7 +500,6 @@ pub async fn add_video_in_list(session: Session, mut payload: Multipart, _id: we
                 form.file,
                 form.description,
                 form.comment_enabled,
-                form.votes_on,
                 form.category_id,
             );
             return Json(NewVideoResponse {
@@ -571,7 +560,6 @@ pub async fn edit_video(session: Session, mut payload: Multipart, _id: web::Path
                 form.image,
                 form.description,
                 form.comment_enabled,
-                form.votes_on,
                 form.category_id,
             );
 

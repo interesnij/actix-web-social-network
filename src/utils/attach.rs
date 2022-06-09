@@ -10,8 +10,57 @@ pub fn add_post(pk: i32, user_id: i32, is_staff: bool) -> String {
     let mut name = "".to_string();
     let mut link = "".to_string();
     let mut image = "".to_string();
+    let mut react_container = "".to_string();
 
     let post = get_post(pk);
+    let post_list = post.get_list();
+    let reactions_list = post_list.get_reactions_list();
+    if post.reactions == 0 {
+        react_container = "<span class='react_items' data-type='pos".to_owned() + &post.id.to_string() &"' style='display: inline-flex'></span>".to_string();
+    }
+    else {
+        let object_reactions_count = post.get_or_create_react_model();
+        let mut user_reaction = 0;
+        if post.is_have_user_reaction(user_id) {
+            user_reaction = post.get_user_reaction(user_id);
+        }
+        let mut reacts = "".to_string();
+        for reaction in reactions_list.iter() {
+            let count = object_reactions_count.count_reactions_of_types(*reaction);
+            let mut border_radius = "".to_string();
+            if count != 0 {
+                let count_str = count.to_string();
+                let users = post.get_6_reactions_users_of_types(*reaction);
+                if &user_reaction == reaction {
+                    border_radius = "border_radius".to_string();
+                }
+                let mut users_html = "".to_string();
+                for user in users.iter() {
+                    users_html.concat_string!(
+                        "<a href='", user.link, "' target='_blank' tooltip='",
+                        user.get_full_name(),
+                        "' flow='up' style='padding-right:10px' data-pk='",
+                        user.id.to_string(), "'><figure style='margin: 0;'>",
+                        user.get_s_avatar(), "</figure></a>"
+                    );
+                }
+                reacts.concat_string!(
+                    reacts, "<span class='react' data-react='", reaction,
+                    "'><span class='like send_react ", border_radius,
+                    "<img style='width:17px' src='/static/images/reactions/",
+                    reaction, ".png' alt='img' /><span class='reactions_count'>",
+                    count_str, "</span></span><span class='like_window'><div class='like_pop'>
+                    <span class='item_reactions pointer'>Отреагировали: <span data-count='like'>",
+                    count_str, "<span class='like_list' style='display:flex;flex-wrap:wrap;margin-top:10px;'>",
+                    users_html, "</span></div></span></span>"
+                );
+            }
+        }
+        react_container = concat_string!(
+            "<span class='react_items' data-type='pos",
+            post.id.to_string(),
+            "' style='display: inline-flex'>", reacts, "</span>");
+    }
 
     if post.community_id.is_some() {
         let community = post.get_community();
@@ -27,31 +76,10 @@ pub fn add_post(pk: i32, user_id: i32, is_staff: bool) -> String {
     }
 
     let mut comment_enabled = "".to_string();
-    let mut window_reactions = "".to_string();
-    let mut user_reactions = "btn_default".to_string();
-    let mut drops = "".to_string();
     if !post.comment_enabled {
         comment_enabled = "style='display:none'".to_string();
     }
-    //if post.is_have_reactions() {
-    //    if post.reactions_ids().iter().any(|&i| i==user_id) {
-    //        user_likes = "btn_success".to_string();
-    //    }
-    //    window_likes = "<div class='like_pop'><span class='item_likes pointer'>Оценили: ".to_owned() + &post.likes_count_ru() + &"</span><span style='display: flex;margin-top: 10px;'>".to_string();
-    //    for user in post.window_likes() {
-    //        window_likes = concat_string!(
-    //            window_likes, "<a href='",
-    //            user.link,
-    //            "class='ajax' style='padding-right:10px' data-pk='",
-    //            user.id.to_string(),
-    //            "'><figure style='margin: 0;' title='",
-    //            user.get_full_name(),
-    //            "'>", user.get_50_avatar(),
-    //            "</figure></a>"
-    //        );
-    //        window_likes += &"</span></div>".to_string();
-    //    }
-    //}
+
 
     let mut drops = "<span class='dropdown-item create_repost'>Добавить</span><span class='dropdown-item copy_link'>Копировать ссылку</span>".to_string();
     if post.is_user_can_edit_delete_item(user_id) {
@@ -81,19 +109,9 @@ pub fn add_post(pk: i32, user_id: i32, is_staff: bool) -> String {
         post.get_format_text(), "</div>", post.get_attach(user_id),
         "<div class='card-footer border-top py-2'><div class='row'>
         <div class='col interaction' data-type='pos'",
-        post.id.to_string(), "'><span ",
-        //" class='like like_item ",
-        //user_reactions, "'>
-        //<svg class='svg_info' viewBox='0 0 24 24' fill='currentColor'>
-        //<path d='M0 0h24v24H0V0zm0 0h24v24H0V0z' fill='none'></path><path d='M9 21h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.58 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2zM9 9l4.34-4.34L12 10h9v2l-3 7H9V9zM1 9h4v12H1z'></path></svg><span class='likes_count' data-count='like'>",
-        //post.likes_count().to_string(),
-        //"</span></span><span class='like_window'>", window_likes,
-        //"</span><span ", votes_on, " class='dislike dislike_item ",
-        //user_dislikes, "' title='Не нравится'>
-        //<svg viewBox='0 0 24 24' class='svg_info' fill='currentColor'><path d='M0 0h24v24H0V0zm0 0h24v24H0V0z' fill='none'></path><path d='M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm0 12l-4.34 4.34L12 14H3v-2l3-7h9v10zm4-12h4v12h-4z'></path></svg><span class='dislikes_count'>",
-        //post.dislikes_count().to_string(),
-        //"</span></span><span class='dislike_window'>", window_dislikes,
-        "</span><span title='Комментарий' class='pointer load_comments_list btn_default'
+        post.id.to_string(), "'>",
+        react_container,
+        "<span title='Комментарий' class='pointer load_comments_list btn_default'
         style='margin-right: 5px;",
         comment_enabled, "'>
         <svg viewBox='0 0 24 24' class='svg_info' fill='currentColor'>
@@ -159,8 +177,8 @@ pub fn add_edited_post_list(pk: i32) -> String {
     use crate::models::PostList;
     let _connection = establish_connection();
 
-    let mut link = "".to_string();
-    let mut image = "".to_string();
+    //let mut link = "".to_string();
+    //let mut image = "".to_string();
     let mut owner = "".to_string();
 
     let list = post_lists

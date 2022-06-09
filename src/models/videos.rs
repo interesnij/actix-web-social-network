@@ -1766,7 +1766,7 @@ impl VideoList {
     }
     pub fn create_video(&self, title: String, community_id: Option<i32>, user_id: i32,
         preview: Option<String>, image: Option<String>, file: String,
-        description: Option<String>, comment_enabled: bool, votes_on: bool,
+        description: Option<String>, comment_enabled: bool,
         category_id: Option<i32>
     ) -> Video {
 
@@ -1788,7 +1788,6 @@ impl VideoList {
           file: file,
           description: description,
           comment_enabled: comment_enabled,
-          votes_on: votes_on,
           created: chrono::Local::now().naive_utc(),
 
           comment: 0,
@@ -1848,7 +1847,6 @@ pub struct Video {
     pub file:            String,
     pub description:     Option<String>,
     pub comment_enabled: bool,
-    pub votes_on:        bool,
     pub created:         chrono::NaiveDateTime,
 
     pub comment:         i32,
@@ -1872,7 +1870,6 @@ pub struct NewVideo {
     pub file:            String,
     pub description:     Option<String>,
     pub comment_enabled: bool,
-    pub votes_on:        bool,
     pub created:         chrono::NaiveDateTime,
 
     pub comment:         i32,
@@ -1892,7 +1889,6 @@ pub struct EditVideo {
     pub image:           Option<String>,
     pub description:     Option<String>,
     pub comment_enabled: bool,
-    pub votes_on:        bool,
     pub category_id:     Option<i32>,
 }
 #[derive(Queryable, Serialize, Deserialize, AsChangeset, Debug)]
@@ -2217,7 +2213,7 @@ impl Video {
 
     pub fn edit_video(self, title: String, preview: Option<String>,
         image: Option<String>, description: Option<String>,
-        comment_enabled: bool, votes_on: bool, category_id: Option<i32>) -> Video {
+        comment_enabled: bool, category_id: Option<i32>) -> Video {
 
         let _connection = establish_connection();
 
@@ -2227,7 +2223,6 @@ impl Video {
             image: image,
             description: description,
             comment_enabled: comment_enabled,
-            votes_on: votes_on,
             category_id: category_id,
         };
         diesel::update(&self)

@@ -40,7 +40,6 @@ CREATE TABLE photos (
     file            VARCHAR(500) NOT NULL,
     description     VARCHAR(500),
     comment_enabled BOOLEAN NOT NULL DEFAULT true,
-    votes_on        BOOLEAN NOT NULL DEFAULT true,
     created         TIMESTAMP NOT NULL,
 
     comment         INT NOT NULL,

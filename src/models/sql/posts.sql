@@ -44,7 +44,6 @@ CREATE TABLE posts (
     types           "char" NOT NULL,
     attach          VARCHAR(200),
     comment_enabled BOOLEAN NOT NULL DEFAULT true,
-    votes_on        BOOLEAN NOT NULL DEFAULT true,
     created         TIMESTAMP NOT NULL,
 
     comment         INT NOT NULL,
