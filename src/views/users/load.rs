@@ -11,6 +11,7 @@ use crate::utils::{
     get_request_user_data,
     get_list_variables,
     get_type,
+    is_desctop,
 };
 
 use actix_session::Session;
