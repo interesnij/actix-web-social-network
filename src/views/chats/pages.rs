@@ -218,7 +218,7 @@ pub async fn closed_support_chats_page(session: Session, req: HttpRequest) -> ac
 
         let params_some = web::Query::<PaginationParams>::from_query(&req.query_string());
         let is_desctop = is_desctop(req);
-        let mut page: i32;
+        let page: i32;
         if params_some.is_ok() {
             let params = params_some.unwrap();
             if params.page.is_some() {
@@ -915,7 +915,7 @@ pub async fn favourites_messages_page(session: Session, req: HttpRequest) -> act
 
         let params_some = web::Query::<PaginationParams>::from_query(&req.query_string());
         let is_desctop = is_desctop(req);
-        let mut page: i32 = 0;
+        let page: i32;
         if params_some.is_ok() {
             let params = params_some.unwrap();
             if params.page.is_some() {
@@ -1004,7 +1004,7 @@ pub async fn chat_search_page(session: Session, req: HttpRequest, _id: web::Path
     let is_desctop = is_desctop(req);
 
     if is_signed_in(&session) {
-        let mut page: i32 = 1;
+        let page: i32;
         let mut q = "".to_string();
         let mut next_page_number: i32 = 0;
         let mut count: usize = 0;

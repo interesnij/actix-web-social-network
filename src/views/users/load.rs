@@ -1629,7 +1629,7 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
     let (is_desctop, page) = get_list_variables(req);
 
     if is_signed_in(&session) {
-        let mut page: i32 = 1;
+        let page: i32;
         let mut count: i32 = 0;
         let mut next_page_number: i32 = 0;
         let mut community_id: Option<i32> = None;
@@ -1909,7 +1909,7 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
     let (is_desctop, page) = get_list_variables(req);
 
     if is_signed_in(&session) {
-        let mut page: i32 = 1;
+        let page: i32;
         let mut next_page_number: i32 = 0;
         let mut count: i32 = 0;
         let mut community_id: Option<i32> = None;
