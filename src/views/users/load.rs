@@ -161,7 +161,7 @@ pub async fn photos_list_load(session: Session, req: HttpRequest, list_id: web::
                 object_list:      Vec<Photo>,
                 next_page_number: i32,
                 //count:            i32,
-                //list:             PhotoList,
+                list:             PhotoList,
             }
 
             let body = Template {
@@ -169,7 +169,7 @@ pub async fn photos_list_load(session: Session, req: HttpRequest, list_id: web::
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 //count:            count,
-                //list:             list,
+                list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -183,7 +183,7 @@ pub async fn photos_list_load(session: Session, req: HttpRequest, list_id: web::
                 object_list:      Vec<Photo>,
                 next_page_number: i32,
                 //count:            i32,
-                //list:             PhotoList,
+                list:             PhotoList,
             }
 
             let body = Template {
@@ -191,7 +191,7 @@ pub async fn photos_list_load(session: Session, req: HttpRequest, list_id: web::
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 //count:            count,
-                //list:             list,
+                list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -312,7 +312,7 @@ pub async fn video_list_load(session: Session, req: HttpRequest, list_id: web::P
                 object_list:      Vec<Video>,
                 next_page_number: i32,
                 //count:            i32,
-                //list:             VideoList,
+                list:             VideoList,
             }
 
             let body = Template {
@@ -320,7 +320,7 @@ pub async fn video_list_load(session: Session, req: HttpRequest, list_id: web::P
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 //count:            count,
-                //list:             list,
+                list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -334,7 +334,7 @@ pub async fn video_list_load(session: Session, req: HttpRequest, list_id: web::P
                 object_list:      Vec<Video>,
                 next_page_number: i32,
                 //count:            i32,
-                //list:             VideoList,
+                list:             VideoList,
             }
 
             let body = Template {
@@ -342,7 +342,7 @@ pub async fn video_list_load(session: Session, req: HttpRequest, list_id: web::P
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 //count:            count,
-                //list:             list,
+                list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -463,7 +463,7 @@ pub async fn docs_list_load(session: Session, req: HttpRequest, list_id: web::Pa
                 object_list:      Vec<Doc>,
                 next_page_number: i32,
                 //count:            i32,
-                //list:             DocList,
+                list:             DocList,
             }
 
             let body = Template {
@@ -471,7 +471,7 @@ pub async fn docs_list_load(session: Session, req: HttpRequest, list_id: web::Pa
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 //count:            count,
-                //list:             list,
+                list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -485,7 +485,7 @@ pub async fn docs_list_load(session: Session, req: HttpRequest, list_id: web::Pa
                 object_list:      Vec<Doc>,
                 next_page_number: i32,
                 //count:            i32,
-                //list:             DocList,
+                list:             DocList,
             }
 
             let body = Template {
@@ -493,7 +493,7 @@ pub async fn docs_list_load(session: Session, req: HttpRequest, list_id: web::Pa
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 //count:            count,
-                //list:             list,
+                list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -615,7 +615,7 @@ pub async fn surveys_list_load(session: Session, req: HttpRequest, list_id: web:
                 object_list:      Vec<Survey>,
                 next_page_number: i32,
                 //count:            i32,
-                //list:             SurveyList,
+                list:             SurveyList,
             }
 
             let body = Template {
@@ -623,7 +623,7 @@ pub async fn surveys_list_load(session: Session, req: HttpRequest, list_id: web:
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 //count:            count,
-                //list:             list,
+                list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -637,7 +637,7 @@ pub async fn surveys_list_load(session: Session, req: HttpRequest, list_id: web:
                 object_list:      Vec<Survey>,
                 next_page_number: i32,
                 //count:            i32,
-                //list:             SurveyList,
+                list:             SurveyList,
             }
 
             let body = Template {
@@ -645,7 +645,7 @@ pub async fn surveys_list_load(session: Session, req: HttpRequest, list_id: web:
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 //count:            count,
-                //list:             list,
+                list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -767,7 +767,7 @@ pub async fn music_list_load(session: Session, req: HttpRequest, list_id: web::P
                 object_list:      Vec<Music>,
                 next_page_number: i32,
                 //count:            i32,
-                //list:             MusicList,
+                list:             MusicList,
             }
 
             let body = Template {
@@ -775,7 +775,7 @@ pub async fn music_list_load(session: Session, req: HttpRequest, list_id: web::P
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 //count:            count,
-                //list:             list,
+                list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -789,7 +789,7 @@ pub async fn music_list_load(session: Session, req: HttpRequest, list_id: web::P
                 object_list:      Vec<Music>,
                 next_page_number: i32,
                 //count:            i32,
-                //list:             MusicList,
+                list:             MusicList,
             }
 
             let body = Template {
@@ -797,7 +797,7 @@ pub async fn music_list_load(session: Session, req: HttpRequest, list_id: web::P
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 //count:            count,
-                //list:             list,
+                list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -919,7 +919,7 @@ pub async fn goods_list_load(session: Session, req: HttpRequest, list_id: web::P
                 object_list:      Vec<Good>,
                 next_page_number: i32,
                 //count:            i32,
-                //list:             GoodList,
+                list:             GoodList,
             }
 
             let body = Template {
@@ -927,7 +927,7 @@ pub async fn goods_list_load(session: Session, req: HttpRequest, list_id: web::P
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 //count:            count,
-                //list:             list,
+                list:             list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
