@@ -16,7 +16,7 @@ pub fn add_post(pk: i32, user_id: i32, is_staff: bool) -> String {
     let post_list = post.get_list();
     let reactions_list = post_list.get_reactions_list();
     if post.reactions == 0 {
-        react_container = "<span class='react_items' data-type='pos".to_owned() + &post.id.to_string() &"' style='display: inline-flex'></span>".to_string();
+        react_container = "<span class='react_items' data-type='pos".to_owned() + &post.id.to_string() + &"' style='display: inline-flex'></span>".to_string();
     }
     else {
         let object_reactions_count = post.get_or_create_react_model();
