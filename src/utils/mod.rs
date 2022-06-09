@@ -74,6 +74,7 @@ pub fn hash_password(password: &str) -> String {
 }
 
 pub fn to_home() -> HttpResponse {
+  #[warn(deprecated)]
   HttpResponse::Found().header(LOCATION, "/").finish()
 }
 
