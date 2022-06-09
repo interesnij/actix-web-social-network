@@ -237,7 +237,7 @@ pub async fn edit_user_photo_list(session: Session, mut payload: Multipart, _id:
             return Json(NewListValues {
                 pk: edit_list.id,
                 name: edit_list.name,
-                image: edit_list.cover_photo.as_ref(),
+                image: edit_list.cover_photo,
             })
         } else {
             return Json(NewListValues {
@@ -341,7 +341,7 @@ pub async fn edit_community_photo_list(session: Session, mut payload: Multipart,
             return Json(NewListValues {
                 pk: edit_list.id,
                 name: edit_list.name,
-                image: edit_list.cover_photo.as_ref(),
+                image: edit_list.cover_photo,
             })
         } else {
             return Json(NewListValues {
