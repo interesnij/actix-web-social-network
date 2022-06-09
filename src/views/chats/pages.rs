@@ -45,7 +45,7 @@ pub async fn chats_list_page(session: Session, req: HttpRequest) -> actix_web::R
 
         let params_some = web::Query::<PaginationParams>::from_query(&req.query_string());
         let is_desctop = is_desctop(req);
-        let mut page: i32;
+        let page: i32;
         if params_some.is_ok() {
             let params = params_some.unwrap();
             if params.page.is_some() {
@@ -130,7 +130,7 @@ pub async fn fixed_messages_page(session: Session, req: HttpRequest, _id: web::P
         let _chat = get_chat(*_id);
         let params_some = web::Query::<PaginationParams>::from_query(&req.query_string());
         let is_desctop = is_desctop(req);
-        let mut page: i32;
+        let page: i32;
         if params_some.is_ok() {
             let params = params_some.unwrap();
             if params.page.is_some() {
@@ -304,7 +304,7 @@ pub async fn chat_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
 
         let params_some = web::Query::<PaginationParams>::from_query(&req.query_string());
         let is_desctop = is_desctop(req);
-        let mut page: i32;
+        let page: i32;
         if params_some.is_ok() {
             let params = params_some.unwrap();
             if params.page.is_some() {
