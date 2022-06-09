@@ -26,10 +26,10 @@
                 </div>
             </div>
             <% if is_user_can_see_community { %>
-            <% if count { %>
+            <% if count > 0 { %>
 
             <ul class="list-group is_paginate">
-                {% for community in object_list %}
+                <% for community in object_list.iter() { %>
                 <li class="list-group-item">
                   <div class="media">
                     <a href="<%= community.link %>" class="ajax">
