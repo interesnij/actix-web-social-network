@@ -8,17 +8,11 @@
             Мои заявки в друзья
         </button>
         <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
-          <a class="dropdown-item ajax" href="/id<%= user.id %>/friends/"><%= user.first_name %> - друзья (<%= user.count_friends() %>)</a>
+          <a class="dropdown-item ajax" href="/id<%= request_user.id %>/friends/">Мои друзья (<%= request_user.count_friends() %>)</a>
 
-          <% let online_friends_count = user.get_online_friends_count(); %>
+          <% let online_friends_count = request_user.get_online_friends_count(); %>
           <% if online_friends_count > 0 { %>
-            <a class="dropdown-item ajax" href="/id<%= user.id %>/friends-online/"><%= user.first_name %> - друзья онлайн (<%= online_friends_count %>)</a>
-          <% } %>
-
-          <% if user.id != request_user.id && user.is_have_common_friends_of_user(&request_user) { %>
-            <a class="dropdown-item ajax" href="/id<%= user.id %>/friends-common/">
-              Общие друзья
-            </a>
+            <a class="dropdown-item ajax" href="/id<%= request_user.id %>/friends-online/">Мои друзья в сети (<%= online_friends_count %>)</a>
           <% } %>
 
           <a class="dropdown-item ajax" href="/all-users/">Найти друзей</a>
