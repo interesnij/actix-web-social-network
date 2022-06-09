@@ -323,6 +323,7 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
         }
 
         let is_user_can_see_comments = _list.is_anon_user_can_see_comment();
+        let is_user_can_see_post_list = _list.is_anon_user_can_see_el();
         if is_open == false {
             use crate::views::close_item;
             return close_item(text)
@@ -338,6 +339,7 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
                 list:                      PostList,
                 object:                    Post,
                 is_user_can_see_comments:  bool,
+                is_user_can_see_post_list: bool,
                 object_list:               Vec<PostComment>,
                 next_page_number:          i32,
                 prev:                      Option<i32>,
@@ -347,6 +349,7 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
                 list:                      _list,
                 object:                    _post,
                 is_user_can_see_comments:  is_user_can_see_comments,
+                is_user_can_see_post_list: is_user_can_see_post_list,
                 object_list:               object_list,
                 next_page_number:          next_page_number,
                 prev:                      prev,
