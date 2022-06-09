@@ -133,10 +133,10 @@ pub fn add_post_list(pk: i32) -> String {
     use crate::models::PostList;
     let _connection = establish_connection();
 
-    let mut name = "".to_string();
-    let mut link = "".to_string();
-    let mut image = "".to_string();
-    let mut owner = "".to_string();
+    let name : String;
+    let link : String;
+    let image : String;
+    let owner : String;
 
     let list = post_lists
         .filter(schema::post_lists::id.eq(pk))
@@ -181,7 +181,7 @@ pub fn add_edited_post_list(pk: i32) -> String {
 
     //let mut link = "".to_string();
     //let mut image = "".to_string();
-    let mut owner = "".to_string();
+    let owner : String;
 
     let list = post_lists
         .filter(schema::post_lists::id.eq(pk))
@@ -224,9 +224,9 @@ pub fn add_music_list(pk: i32) -> String {
     use crate::models::MusicList;
     let _connection = establish_connection();
 
-    let mut name = "".to_string();
-    let mut link = "".to_string();
-    let mut owner = "".to_string();
+    let name : String;
+    let link : String;
+    let owner : String;
 
     let list = music_lists
         .filter(schema::music_lists::id.eq(pk))
@@ -273,7 +273,7 @@ pub fn add_edited_music_list(pk: i32) -> String {
     use crate::models::MusicList;
     let _connection = establish_connection();
 
-    let mut owner = "".to_string();
+    let owner : String;
 
     let list = music_lists
         .filter(schema::music_lists::id.eq(pk))
@@ -315,9 +315,9 @@ pub fn add_doc_list(pk: i32) -> String {
     use crate::models::DocList;
     let _connection = establish_connection();
 
-    let mut name = "".to_string();
-    let mut link = "".to_string();
-    let mut owner = "".to_string();
+    let name : String;
+    let link : String;
+    let owner : String;
 
     let list = doc_lists
         .filter(schema::doc_lists::id.eq(pk))
@@ -357,7 +357,7 @@ pub fn add_edited_doc_list(pk: i32) -> String {
     use crate::models::DocList;
     let _connection = establish_connection();
 
-    let mut owner = "".to_string();
+    let owner : String;
 
     let list = doc_lists
         .filter(schema::doc_lists::id.eq(pk))
@@ -397,9 +397,9 @@ pub fn add_video_list(pk: i32) -> String {
     use crate::models::VideoList;
     let _connection = establish_connection();
 
-    let mut name = "".to_string();
-    let mut link = "".to_string();
-    let mut owner = "".to_string();
+    let name : String;
+    let link : String;
+    let owner : String;
 
     let list = video_lists
         .filter(schema::video_lists::id.eq(pk))
@@ -439,7 +439,7 @@ pub fn add_edited_video_list(pk: i32) -> String {
     use crate::models::VideoList;
     let _connection = establish_connection();
 
-    let mut owner = "".to_string();
+    let owner : String;
 
     let list = video_lists
         .filter(schema::video_lists::id.eq(pk))
@@ -479,9 +479,9 @@ pub fn add_photo_list(pk: i32) -> String {
     use crate::models::PhotoList;
     let _connection = establish_connection();
 
-    let mut name = "".to_string();
-    let mut link = "".to_string();
-    let mut owner = "".to_string();
+    let name : String;
+    let link : String;
+    let owner : String;
 
     let list = photo_lists
         .filter(schema::photo_lists::id.eq(pk))
@@ -523,7 +523,7 @@ pub fn add_edited_photo_list(pk: i32) -> String {
     use crate::models::PhotoList;
     let _connection = establish_connection();
 
-    let mut owner = "".to_string();
+    let owner : String;
 
     let list = photo_lists
         .filter(schema::photo_lists::id.eq(pk))
@@ -563,9 +563,9 @@ pub fn add_good_list(pk: i32) -> String {
     use crate::models::GoodList;
     let _connection = establish_connection();
 
-    let mut name = "".to_string();
-    let mut link = "".to_string();
-    let mut image = "".to_string();
+    let name : String;
+    let link : String;
+    let image : String;
 
     let list = good_lists
         .filter(schema::good_lists::id.eq(pk))
@@ -607,7 +607,7 @@ pub fn add_edited_good_list(pk: i32) -> String {
     use crate::models::GoodList;
     let _connection = establish_connection();
 
-    let mut owner = "".to_string();
+    let owner : String;
 
     let list = good_lists
         .filter(schema::good_lists::id.eq(pk))

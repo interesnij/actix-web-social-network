@@ -590,7 +590,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, good_id: web
             #[template(path = "desctop/generic/items/comment/comments.stpl")]
             struct Template {
                 list:                        GoodList,
-                item:                        Good,
+                object:                      Good,
                 request_user:                User,
                 is_user_can_create_comments: bool,
                 object_list:                 Vec<GoodComment>,
@@ -598,7 +598,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, good_id: web
             }
             let body = Template {
                 list:                        _list,
-                item:                        _good,
+                object:                      _good,
                 request_user:                _request_user,
                 is_user_can_create_comments: is_user_can_create_comments,
                 object_list:                 object_list,
@@ -613,7 +613,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, good_id: web
             #[template(path = "mobile/generic/items/comment/comments.stpl")]
             struct Template {
                 list:                        GoodList,
-                item:                        Good,
+                object:                      Good,
                 request_user:                User,
                 is_user_can_create_comments: bool,
                 object_list:                 Vec<GoodComment>,
@@ -621,7 +621,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, good_id: web
             }
             let body = Template {
                 list:                        _list,
-                item:                        _good,
+                object:                      _good,
                 request_user:                _request_user,
                 is_user_can_create_comments: is_user_can_create_comments,
                 object_list:                 object_list,
@@ -658,13 +658,13 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, good_id: web
             #[template(path = "desctop/generic/items/comment/anon_comments.stpl")]
             struct Template {
                 list:                      GoodList,
-                item:                      Good,
+                object:                    Good,
                 object_list:               Vec<GoodComment>,
                 next_page_number:          i32,
             }
             let body = Template {
                 list:                      _list,
-                item:                      _good,
+                object:                    _good,
                 object_list:               object_list,
                 next_page_number:          next_page_number,
             }
@@ -677,13 +677,13 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, good_id: web
             #[template(path = "mobile/generic/items/comment/anon_comments.stpl")]
             struct Template {
                 list:                      GoodList,
-                item:                      Good,
+                object:                    Good,
                 object_list:               Vec<GoodComment>,
                 next_page_number:          i32,
             }
             let body = Template {
                 list:                      _list,
-                item:                      _good,
+                object:                    _good,
                 object_list:               object_list,
                 next_page_number:          next_page_number,
             }

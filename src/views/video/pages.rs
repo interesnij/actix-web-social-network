@@ -570,7 +570,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, video_id: we
             #[template(path = "desctop/generic/items/comment/comments.stpl")]
             struct Template {
                 list:                        VideoList,
-                item:                        Video,
+                object:                      Video,
                 request_user:                User,
                 is_user_can_create_comments: bool,
                 object_list:                 Vec<VideoComment>,
@@ -578,7 +578,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, video_id: we
             }
             let body = Template {
                 list:                        _list,
-                item:                        _video,
+                object:                      _video,
                 request_user:                _request_user,
                 is_user_can_create_comments: is_user_can_create_comments,
                 object_list:                 object_list,
@@ -593,7 +593,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, video_id: we
             #[template(path = "mobile/generic/items/comment/comments.stpl")]
             struct Template {
                 list:                        VideoList,
-                item:                        Video,
+                object:                      Video,
                 request_user:                User,
                 is_user_can_create_comments: bool,
                 object_list:                 Vec<VideoComment>,
@@ -601,7 +601,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, video_id: we
             }
             let body = Template {
                 list:                        _list,
-                item:                        _video,
+                object:                      _video,
                 request_user:                _request_user,
                 is_user_can_create_comments: is_user_can_create_comments,
                 object_list:                 object_list,
@@ -638,13 +638,13 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, video_id: we
             #[template(path = "desctop/generic/items/comment/anon_comments.stpl")]
             struct Template {
                 list:                      VideoList,
-                item:                      Video,
+                object:                    Video,
                 object_list:               Vec<VideoComment>,
                 next_page_number:          i32,
             }
             let body = Template {
                 list:                      _list,
-                item:                      _video,
+                object:                    _video,
                 object_list:               object_list,
                 next_page_number:          next_page_number,
             }
@@ -657,13 +657,13 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, video_id: we
             #[template(path = "mobile/generic/items/comment/anon_comments.stpl")]
             struct Template {
                 list:                      VideoList,
-                item:                      Video,
+                object:                    Video,
                 object_list:               Vec<VideoComment>,
                 next_page_number:          i32,
             }
             let body = Template {
                 list:                      _list,
-                item:                      _video,
+                object:                    _video,
                 object_list:               object_list,
                 next_page_number:          next_page_number,
             }
@@ -676,14 +676,14 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, video_id: we
 
 pub async fn add_video_in_list_page(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        use crate::models::VideoCategorie;
-        use crate::schema::video_categories::dsl::video_categories;
+        //use crate::models::VideoCategorie;
+        //use crate::schema::video_categories::dsl::video_categories;
 
-        let _connection = establish_connection();
+        //let _connection = establish_connection();
 
-        let categories = video_categories
-            .load::<VideoCategorie>(&_connection)
-            .expect("E.");
+        //let categories = video_categories
+        //    .load::<VideoCategorie>(&_connection)
+        //    .expect("E.");
 
         let _request_user = get_request_user_data(&session);
         let list = get_video_list(*_id);
@@ -693,12 +693,12 @@ pub async fn add_video_in_list_page(session: Session, _id: web::Path<i32>) -> ac
             struct Template {
                 request_user: User,
                 list:         VideoList,
-                categories:   Vec<VideoCategorie>,
+                //categories:   Vec<VideoCategorie>,
             }
             let body = Template {
                 request_user: _request_user,
                 list:         list,
-                categories:   categories,
+                //categories:   categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

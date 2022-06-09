@@ -582,7 +582,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, photo_id: we
             #[template(path = "desctop/generic/items/comment/comments.stpl")]
             struct Template {
                 list:                        PhotoList,
-                item:                        Photo,
+                object:                      Photo,
                 request_user:                User,
                 is_user_can_create_comments: bool,
                 object_list:                 Vec<PhotoComment>,
@@ -590,7 +590,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, photo_id: we
             }
             let body = Template {
                 list:                        _list,
-                item:                        _photo,
+                object:                      _photo,
                 request_user:                _request_user,
                 is_user_can_create_comments: is_user_can_create_comments,
                 object_list:                 object_list,
@@ -605,7 +605,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, photo_id: we
             #[template(path = "mobile/generic/items/comment/comments.stpl")]
             struct Template {
                 list:                        PhotoList,
-                item:                        Photo,
+                object:                      Photo,
                 request_user:                User,
                 is_user_can_create_comments: bool,
                 object_list:                 Vec<PhotoComment>,
@@ -613,7 +613,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, photo_id: we
             }
             let body = Template {
                 list:                        _list,
-                item:                        _photo,
+                object:                      _photo,
                 request_user:                _request_user,
                 is_user_can_create_comments: is_user_can_create_comments,
                 object_list:                 object_list,
@@ -650,13 +650,13 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, photo_id: we
             #[template(path = "desctop/generic/items/comment/anon_comments.stpl")]
             struct Template {
                 list:                      PhotoList,
-                item:                      Photo,
+                object:                    Photo,
                 object_list:               Vec<PhotoComment>,
                 next_page_number:          i32,
             }
             let body = Template {
                 list:                      _list,
-                item:                      _photo,
+                object:                    _photo,
                 object_list:               object_list,
                 next_page_number:          next_page_number,
             }
@@ -669,13 +669,13 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, photo_id: we
             #[template(path = "mobile/generic/items/comment/anon_comments.stpl")]
             struct Template {
                 list:                      PhotoList,
-                item:                      Photo,
+                object:                    Photo,
                 object_list:               Vec<PhotoComment>,
                 next_page_number:          i32,
             }
             let body = Template {
                 list:                      _list,
-                item:                      _photo,
+                object:                    _photo,
                 object_list:               object_list,
                 next_page_number:          next_page_number,
             }
