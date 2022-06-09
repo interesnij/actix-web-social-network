@@ -475,7 +475,6 @@ pub async fn add_post_in_list(session: Session, mut payload: Multipart, _id: web
 pub async fn edit_post(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(&session);
-        let user_id = _request_user.id;
         let _post = get_post(*_id);
         let _list = _post.get_list();
         let community_id = _list.community_id;

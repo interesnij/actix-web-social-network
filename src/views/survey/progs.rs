@@ -399,7 +399,6 @@ pub async fn survey_form(
 pub async fn add_survey_in_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(&session);
-        let user_id = _request_user.id;
         let _list = get_survey_list(*_id);
 
         let owner_path : String;
@@ -467,7 +466,6 @@ pub async fn add_survey_in_list(session: Session, mut payload: Multipart, _id: w
 pub async fn edit_survey(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(&session);
-        let user_id = _request_user.id;
         let _survey = get_survey(*_id);
         let _list = _survey.get_list();
 

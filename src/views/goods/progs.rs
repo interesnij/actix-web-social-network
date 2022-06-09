@@ -432,7 +432,6 @@ pub async fn good_form(
 pub async fn add_good_in_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(&session);
-        let user_id = _request_user.id;
         let _list = get_good_list(*_id);
         let owner_path : String;
         let owner_id: i32;
@@ -501,7 +500,6 @@ pub async fn add_good_in_list(session: Session, mut payload: Multipart, _id: web
 pub async fn edit_good(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(&session);
-        let user_id = _request_user.id;
         let _good = get_good(*_id);
         let _list = _good.get_list();
         let owner_path : String;

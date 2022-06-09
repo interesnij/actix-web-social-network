@@ -289,7 +289,6 @@ pub async fn recover_community_list(session: Session, _id: web::Path<i32>) -> ac
 pub async fn add_tracks_in_list(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(&session);
-        let user_id = _request_user.id;
         let _list = get_music_list(*_id);
         let owner_path : String;
         let owner_id: i32;
@@ -398,7 +397,6 @@ pub struct EditTrackResponse {
 pub async fn edit_track(session: Session, mut payload: Multipart, _id: web::Path<i32>) -> web::Json<EditTrackResponse> {
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(&session);
-        let user_id = _request_user.id;
         let _track = get_music(*_id);
         let _list = _track.get_list();
         let community_id = _track.community_id;

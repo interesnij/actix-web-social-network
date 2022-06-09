@@ -7,10 +7,10 @@ use crate::models::User;
 pub fn add_post(pk: i32, user_id: i32, is_staff: bool) -> String {
     use crate::utils::get_post;
 
-    let mut name = "".to_string();
-    let mut link = "".to_string();
-    let mut image = "".to_string();
-    let mut react_container = "".to_string();
+    let name : String;
+    let link : String;
+    let image : String;
+    let react_container : String;
 
     let post = get_post(pk);
     let post_list = post.get_list();
