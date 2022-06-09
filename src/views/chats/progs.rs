@@ -1,17 +1,17 @@
 use actix_web::{
     HttpResponse,
     web,
-    web::Json,
+    //web::Json,
     error::InternalError,
     http::StatusCode,
 };
 use crate::utils::{
     is_signed_in,
     get_request_user_data,
-    get_community_permission,
-    get_user_permission,
+    //get_community_permission,
+    //get_user_permission,
     get_chat,
-    get_message,
+    //get_message,
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
@@ -22,7 +22,7 @@ use std::str;
 use actix_multipart::{Field, Multipart};
 use futures::StreamExt;
 use std::{borrow::BorrowMut, io::Write};
-use crate::diesel::RunQueryDsl;
+//use crate::diesel::RunQueryDsl;
 
 
 pub fn progs_urls(config: &mut web::ServiceConfig) {

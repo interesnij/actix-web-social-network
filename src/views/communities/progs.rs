@@ -9,12 +9,12 @@ use actix_web::{
 use crate::utils::{
     is_signed_in,
     get_request_user_data,
-    get_community,
+    //get_community,
     //get_community_permission,
     //get_user_permission,
 };
 use actix_session::Session;
-use sailfish::TemplateOnce;
+//use sailfish::TemplateOnce;
 use crate::models::{
     Community,
     //User
