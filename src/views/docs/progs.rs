@@ -76,7 +76,7 @@ pub async fn add_user_list(session: Session, mut payload: Multipart) -> web::Jso
         return Json(NewListValues {
             pk: 0,
             name: "".to_string(),
-            image: "".to_string(),
+            image: None,
         })
     }
 }
@@ -115,7 +115,7 @@ pub async fn edit_user_list(session: Session, mut payload: Multipart, _id: web::
             return Json(NewListValues {
                 pk: 0,
                 name: "".to_string(),
-                image: "".to_string(),
+                image: None,
             })
         }
     }
@@ -123,7 +123,7 @@ pub async fn edit_user_list(session: Session, mut payload: Multipart, _id: web::
         return Json(NewListValues {
             pk: 0,
             name: "".to_string(),
-            image: "".to_string(),
+            image: None,
         })
     }
 }
@@ -163,7 +163,7 @@ pub async fn add_community_list(session: Session, mut payload: Multipart, _id: w
             return Json(NewListValues {
                 pk: 0,
                 name: "".to_string(),
-                image: "".to_string(),
+                image: None,
             })
         }
 
@@ -171,7 +171,7 @@ pub async fn add_community_list(session: Session, mut payload: Multipart, _id: w
         return Json(NewListValues {
             pk: 0,
             name: "".to_string(),
-            image: "".to_string(),
+            image: None,
         })
     }
 }
@@ -211,14 +211,14 @@ pub async fn edit_community_list(session: Session, mut payload: Multipart, _id: 
             return Json(NewListValues {
                 pk: 0,
                 name: "".to_string(),
-                image: "".to_string(),
+                image: None,
             })
         }
     } else {
         return Json(NewListValues {
             pk: 0,
             name: "".to_string(),
-            image: "".to_string(),
+            image: None,
         })
     }
 }

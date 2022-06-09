@@ -200,7 +200,7 @@ pub async fn add_user_photo_list(session: Session, mut payload: Multipart) -> we
         return Json(NewListValues {
             pk: 0,
             name: "".to_string(),
-            image: "".to_string(),
+            image: None,
         })
     }
 }
@@ -243,14 +243,14 @@ pub async fn edit_user_photo_list(session: Session, mut payload: Multipart, _id:
             return Json(NewListValues {
                 pk: 0,
                 name: "".to_string(),
-                image: "".to_string(),
+                image: None,
             })
         }
     } else {
         return Json(NewListValues {
             pk: 0,
             name: "".to_string(),
-            image: "".to_string(),
+            image: None,
         })
     }
 }
@@ -295,7 +295,7 @@ pub async fn add_community_photo_list(session: Session, mut payload: Multipart, 
             return Json(NewListValues {
                 pk: 0,
                 name: "".to_string(),
-                image: "".to_string(),
+                image: None,
             })
         }
 
@@ -303,7 +303,7 @@ pub async fn add_community_photo_list(session: Session, mut payload: Multipart, 
         return Json(NewListValues {
             pk: 0,
             name: "".to_string(),
-            image: "".to_string(),
+            image: None,
         })
     }
 }
@@ -347,14 +347,14 @@ pub async fn edit_community_photo_list(session: Session, mut payload: Multipart,
             return Json(NewListValues {
                 pk: 0,
                 name: "".to_string(),
-                image: "".to_string(),
+                image: None,
             })
         }
     } else {
         return Json(NewListValues {
             pk: 0,
             name: "".to_string(),
-            image: "".to_string(),
+            image: None,
         })
     }
 }
