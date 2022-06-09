@@ -1,6 +1,6 @@
 <% include!("../../../base_block/anon_base_header.stpl"); %>
 
-<div class="main-container" data-pk="<%= request_user.id %>" data-type="user_follows">
+<div class="main-container" data-pk="" data-type="user_follows">
 
   <div class="row">
     <div class="col-md-9 mt-3">
@@ -53,7 +53,7 @@
 
     <div class="col-12 col-md-3">
       <div class="p-1">
-        <% include!("../../generic/user/card_go_user.stpl"); %>
+        <% include!("../../generic/user/anon_card_go_user.stpl"); %>
       </div>
 
     </div>
