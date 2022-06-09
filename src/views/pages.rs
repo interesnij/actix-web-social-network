@@ -503,7 +503,7 @@ pub async fn create_repost_page(session: Session, req: HttpRequest) -> actix_web
         let (type_exists, item_id, types) = get_type(&req);
         let _request_user = get_request_user_data(&session);
         let _request_user_id = &_request_user.id;
-        //let mut text = "".to_string();
+        let text = "".to_string();
         let mut creator_id = 0;
         let mut is_list = false;
         let mut can_copy_item = false;
@@ -713,7 +713,7 @@ pub async fn create_repost_page(session: Session, req: HttpRequest) -> actix_web
             #[template(path = "desctop/generic/repost/repost.stpl")]
             struct Template {
                 request_user:  User,
-                //text:          String,
+                text:          String,
                 types:         String,
                 creator_id:    i32,
                 item_id:       i32,
@@ -722,7 +722,7 @@ pub async fn create_repost_page(session: Session, req: HttpRequest) -> actix_web
             }
             let body = Template {
                 request_user:  _request_user,
-                //text:          text,
+                text:          text,
                 types:         types,
                 creator_id:    creator_id,
                 item_id:       item_id,
@@ -745,7 +745,7 @@ pub async fn create_claim_page(session: Session, req: HttpRequest) -> actix_web:
         let (type_exists, item_id, types) = get_type(&req);
         let _request_user = get_request_user_data(&session);
         let _request_user_id = &_request_user.id;
-        //let mut text = "".to_string();
+        let text = "".to_string();
         let mut permission_check = false;
         let pre_types = &types[..1];
 
@@ -972,12 +972,12 @@ pub async fn create_claim_page(session: Session, req: HttpRequest) -> actix_web:
             #[template(path = "desctop/generic/user/report.stpl")]
             struct Template {
                 request_user:  User,
-                //text:          String,
+                text:          String,
                 types:         String,
             }
             let body = Template {
                 request_user:  _request_user,
-                //text:          text,
+                text:          text,
                 types:         types,
             }
             .render_once()
