@@ -421,11 +421,9 @@ pub async fn create_message_page(session: Session, _id: web::Path<i32>) -> actix
         #[derive(TemplateOnce)]
         #[template(path = "desctop/chats/create/add_message.stpl")]
         struct Template {
-            request_user: User,
             recipient:    User,
         }
         let body = Template {
-            request_user: _request_user,
             recipient:    _recipient,
         }
         .render_once()
@@ -533,11 +531,9 @@ pub async fn edit_chat_page(session: Session, _id: web::Path<i32>) -> actix_web:
             #[derive(TemplateOnce)]
             #[template(path = "desctop/chats/create/edit_chat.stpl")]
             struct Template {
-                request_user: User,
                 chat:         Chat,
             }
             let body = Template {
-                request_user: _request_user,
                 chat:         _chat,
             }
             .render_once()
@@ -586,7 +582,6 @@ pub async fn chat_exclude_users_load(session: Session, req: HttpRequest, _id: we
     let (is_desctop, page) = get_list_variables(req);
 
     if is_signed_in(&session) {
-        let mut page: i32 = 1;
         let mut next_page_number: i32 = 0;
         let mut text =  "".to_string();
         let mut types = "".to_string();
@@ -723,7 +718,6 @@ pub async fn chat_include_users_load(session: Session, req: HttpRequest, _id: we
     let (is_desctop, page) = get_list_variables(req);
 
     if is_signed_in(&session) {
-        let mut page: i32 = 1;
         let mut next_page_number: i32 = 0;
         let mut text =  "".to_string();
         let mut types = "".to_string();
@@ -853,7 +847,6 @@ pub async fn chat_info_page(session: Session, req: HttpRequest, _id: web::Path<i
     let (is_desctop, page) = get_list_variables(req);
 
     if is_signed_in(&session) {
-        let mut page: i32 = 1;
         let mut next_page_number: i32 = 0;
         let _chat = get_chat(*_id);
 
