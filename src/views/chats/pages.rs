@@ -1004,7 +1004,7 @@ pub async fn chat_search_page(session: Session, req: HttpRequest, _id: web::Path
     let is_desctop = is_desctop(req);
 
     if is_signed_in(&session) {
-        let page: i32;
+        let mut page: i32 = 0;
         let mut q = "".to_string();
         let mut next_page_number: i32 = 0;
         let mut count: usize = 0;
