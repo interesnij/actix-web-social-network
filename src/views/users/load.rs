@@ -85,14 +85,14 @@ pub async fn photos_load(session: Session, req: HttpRequest) -> actix_web::Resul
                 request_user:                User,
                 object_list:                 Vec<Photo>,
                 next_page_number:            i32,
-                count:                       i32,
+                //count:                       i32,
             }
 
             let body = Template {
                 request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
-                count:                       count,
+                //count:                       count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -105,14 +105,14 @@ pub async fn photos_load(session: Session, req: HttpRequest) -> actix_web::Resul
                 request_user:                User,
                 object_list:                 Vec<Photo>,
                 next_page_number:            i32,
-                count:                       i32,
+                //count:                       i32,
             }
 
             let body = Template {
                 request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
-                count:                       count,
+                //count:                       count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -159,7 +159,7 @@ pub async fn photos_list_load(session: Session, req: HttpRequest, list_id: web::
                 request_user:     User,
                 object_list:      Vec<Photo>,
                 next_page_number: i32,
-                count:            i32,
+                //count:            i32,
                 list:             PhotoList,
             }
 
@@ -167,7 +167,7 @@ pub async fn photos_list_load(session: Session, req: HttpRequest, list_id: web::
                 request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
-                count:            count,
+                //count:            count,
                 list:             list,
             }
             .render_once()
@@ -181,7 +181,7 @@ pub async fn photos_list_load(session: Session, req: HttpRequest, list_id: web::
                 request_user:     User,
                 object_list:      Vec<Photo>,
                 next_page_number: i32,
-                count:            i32,
+                //count:            i32,
                 list:             PhotoList,
             }
 
@@ -189,7 +189,7 @@ pub async fn photos_list_load(session: Session, req: HttpRequest, list_id: web::
                 request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
-                count:            count,
+                //count:            count,
                 list:             list,
             }
             .render_once()
@@ -236,14 +236,14 @@ pub async fn video_load(session: Session, req: HttpRequest) -> actix_web::Result
                 request_user:                User,
                 object_list:                 Vec<Video>,
                 next_page_number:            i32,
-                count:                       i32,
+                //count:                       i32,
             }
 
             let body = Template {
                 request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
-                count:                       count,
+                //count:                       count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -256,14 +256,14 @@ pub async fn video_load(session: Session, req: HttpRequest) -> actix_web::Result
                 request_user:                User,
                 object_list:                 Vec<Video>,
                 next_page_number:            i32,
-                count:                       i32,
+                //count:                       i32,
             }
 
             let body = Template {
                 request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
-                count:                       count,
+                //count:                       count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -310,7 +310,7 @@ pub async fn video_list_load(session: Session, req: HttpRequest, list_id: web::P
                 request_user:     User,
                 object_list:      Vec<Video>,
                 next_page_number: i32,
-                count:            i32,
+                //count:            i32,
                 list:             VideoList,
             }
 
@@ -318,7 +318,7 @@ pub async fn video_list_load(session: Session, req: HttpRequest, list_id: web::P
                 request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
-                count:            count,
+                //count:            count,
                 list:             list,
             }
             .render_once()
@@ -332,7 +332,7 @@ pub async fn video_list_load(session: Session, req: HttpRequest, list_id: web::P
                 request_user:     User,
                 object_list:      Vec<Video>,
                 next_page_number: i32,
-                count:            i32,
+                //count:            i32,
                 list:             VideoList,
             }
 
@@ -340,7 +340,7 @@ pub async fn video_list_load(session: Session, req: HttpRequest, list_id: web::P
                 request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
-                count:            count,
+                //count:            count,
                 list:             list,
             }
             .render_once()
@@ -387,14 +387,14 @@ pub async fn docs_load(session: Session, req: HttpRequest) -> actix_web::Result<
                 request_user:                User,
                 object_list:                 Vec<Doc>,
                 next_page_number:            i32,
-                count:                       i32,
+                //count:                       i32,
             }
 
             let body = Template {
                 request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
-                count:                       count,
+                //count:                       count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -407,14 +407,14 @@ pub async fn docs_load(session: Session, req: HttpRequest) -> actix_web::Result<
                 request_user:                User,
                 object_list:                 Vec<Doc>,
                 next_page_number:            i32,
-                count:                       i32,
+                //count:                       i32,
             }
 
             let body = Template {
                 request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
-                count:                       count,
+                //count:                       count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -461,7 +461,7 @@ pub async fn docs_list_load(session: Session, req: HttpRequest, list_id: web::Pa
                 request_user:     User,
                 object_list:      Vec<Doc>,
                 next_page_number: i32,
-                count:            i32,
+                //count:            i32,
                 list:             DocList,
             }
 
@@ -469,7 +469,7 @@ pub async fn docs_list_load(session: Session, req: HttpRequest, list_id: web::Pa
                 request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
-                count:            count,
+                //count:            count,
                 list:             list,
             }
             .render_once()
@@ -483,7 +483,7 @@ pub async fn docs_list_load(session: Session, req: HttpRequest, list_id: web::Pa
                 request_user:     User,
                 object_list:      Vec<Doc>,
                 next_page_number: i32,
-                count:            i32,
+                //count:            i32,
                 list:             DocList,
             }
 
@@ -491,7 +491,7 @@ pub async fn docs_list_load(session: Session, req: HttpRequest, list_id: web::Pa
                 request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
-                count:            count,
+                //count:            count,
                 list:             list,
             }
             .render_once()
@@ -539,14 +539,14 @@ pub async fn surveys_load(session: Session, req: HttpRequest) -> actix_web::Resu
                 request_user:                User,
                 object_list:                 Vec<Survey>,
                 next_page_number:            i32,
-                count:                       i32,
+                //count:                       i32,
             }
 
             let body = Template {
                 request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
-                count:                       count,
+                //count:                       count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -559,14 +559,14 @@ pub async fn surveys_load(session: Session, req: HttpRequest) -> actix_web::Resu
                 request_user:                User,
                 object_list:                 Vec<Survey>,
                 next_page_number:            i32,
-                count:                       i32,
+                //count:                       i32,
             }
 
             let body = Template {
                 request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
-                count:                       count,
+                //count:                       count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -613,7 +613,7 @@ pub async fn surveys_list_load(session: Session, req: HttpRequest, list_id: web:
                 request_user:     User,
                 object_list:      Vec<Survey>,
                 next_page_number: i32,
-                count:            i32,
+                //count:            i32,
                 list:             SurveyList,
             }
 
@@ -621,7 +621,7 @@ pub async fn surveys_list_load(session: Session, req: HttpRequest, list_id: web:
                 request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
-                count:            count,
+                //count:            count,
                 list:             list,
             }
             .render_once()
@@ -635,7 +635,7 @@ pub async fn surveys_list_load(session: Session, req: HttpRequest, list_id: web:
                 request_user:     User,
                 object_list:      Vec<Survey>,
                 next_page_number: i32,
-                count:            i32,
+                //count:            i32,
                 list:             SurveyList,
             }
 
@@ -643,7 +643,7 @@ pub async fn surveys_list_load(session: Session, req: HttpRequest, list_id: web:
                 request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
-                count:            count,
+                //count:            count,
                 list:             list,
             }
             .render_once()
@@ -691,14 +691,14 @@ pub async fn music_load(session: Session, req: HttpRequest) -> actix_web::Result
                 request_user:                User,
                 object_list:                 Vec<Music>,
                 next_page_number:            i32,
-                count:                       i32,
+                //count:                       i32,
             }
 
             let body = Template {
                 request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
-                count:                       count,
+                //count:                       count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -711,14 +711,14 @@ pub async fn music_load(session: Session, req: HttpRequest) -> actix_web::Result
                 request_user:                User,
                 object_list:                 Vec<Music>,
                 next_page_number:            i32,
-                count:                       i32,
+                //count:                       i32,
             }
 
             let body = Template {
                 request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
-                count:                       count,
+                //count:                       count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -765,7 +765,7 @@ pub async fn music_list_load(session: Session, req: HttpRequest, list_id: web::P
                 request_user:     User,
                 object_list:      Vec<Music>,
                 next_page_number: i32,
-                count:            i32,
+                //count:            i32,
                 list:             MusicList,
             }
 
@@ -773,7 +773,7 @@ pub async fn music_list_load(session: Session, req: HttpRequest, list_id: web::P
                 request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
-                count:            count,
+                //count:            count,
                 list:             list,
             }
             .render_once()
@@ -787,7 +787,7 @@ pub async fn music_list_load(session: Session, req: HttpRequest, list_id: web::P
                 request_user:     User,
                 object_list:      Vec<Music>,
                 next_page_number: i32,
-                count:            i32,
+                //count:            i32,
                 list:             MusicList,
             }
 
@@ -795,7 +795,7 @@ pub async fn music_list_load(session: Session, req: HttpRequest, list_id: web::P
                 request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
-                count:            count,
+                //count:            count,
                 list:             list,
             }
             .render_once()
@@ -843,14 +843,14 @@ pub async fn goods_load(session: Session, req: HttpRequest) -> actix_web::Result
                 request_user:                User,
                 object_list:                 Vec<Good>,
                 next_page_number:            i32,
-                count:                       i32,
+                //count:                       i32,
             }
 
             let body = Template {
                 request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
-                count:                       count,
+                //count:                       count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -863,14 +863,14 @@ pub async fn goods_load(session: Session, req: HttpRequest) -> actix_web::Result
                 request_user:                User,
                 object_list:                 Vec<Good>,
                 next_page_number:            i32,
-                count:                       i32,
+                //count:                       i32,
             }
 
             let body = Template {
                 request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
-                count:                       count,
+                //count:                       count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -917,7 +917,7 @@ pub async fn goods_list_load(session: Session, req: HttpRequest, list_id: web::P
                 request_user:     User,
                 object_list:      Vec<Good>,
                 next_page_number: i32,
-                count:            i32,
+                //count:            i32,
                 list:             GoodList,
             }
 
@@ -925,7 +925,7 @@ pub async fn goods_list_load(session: Session, req: HttpRequest, list_id: web::P
                 request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
-                count:            count,
+                //count:            count,
                 list:             list,
             }
             .render_once()
@@ -939,7 +939,7 @@ pub async fn goods_list_load(session: Session, req: HttpRequest, list_id: web::P
                 request_user:     User,
                 object_list:      Vec<Good>,
                 next_page_number: i32,
-                count:            i32,
+                //count:            i32,
                 list:             GoodList,
             }
 
@@ -947,7 +947,7 @@ pub async fn goods_list_load(session: Session, req: HttpRequest, list_id: web::P
                 request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
-                count:            count,
+                //count:            count,
                 list:             list,
             }
             .render_once()
@@ -1153,7 +1153,7 @@ pub async fn chat_items_load(session: Session, req: HttpRequest) -> actix_web::R
     }
     let params_some = web::Query::<ChatItemsParams>::from_query(&req.query_string());
 
-    let (is_desctop, page) = get_list_variables(req);
+    let is_desctop = is_desctop(req);
     let mut chats_next_page_number = 0;
     let mut friends_next_page_number = 0;
 
@@ -1221,8 +1221,8 @@ pub async fn chat_items_load(session: Session, req: HttpRequest) -> actix_web::R
                 friends_list:             Vec<User>,
                 chats_next_page_number:   i32,
                 friends_next_page_number: i32,
-                chats_count:              usize,
-                friends_count:            i32,
+                //chats_count:              usize,
+                //friends_count:            i32,
             }
 
             let body = Template {
@@ -1231,8 +1231,8 @@ pub async fn chat_items_load(session: Session, req: HttpRequest) -> actix_web::R
                 friends_list:             friends_list,
                 chats_next_page_number:   chats_next_page_number,
                 friends_next_page_number: friends_next_page_number,
-                chats_count:              chats_count,
-                friends_count:            friends_count,
+                //chats_count:              chats_count,
+                //friends_count:            friends_count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1248,8 +1248,8 @@ pub async fn chat_items_load(session: Session, req: HttpRequest) -> actix_web::R
                 friends_list:             Vec<User>,
                 chats_next_page_number:   i32,
                 friends_next_page_number: i32,
-                chats_count:              usize,
-                friends_count:            i32,
+                //chats_count:              usize,
+                //friends_count:            i32,
             }
 
             let body = Template {
@@ -1258,8 +1258,8 @@ pub async fn chat_items_load(session: Session, req: HttpRequest) -> actix_web::R
                 friends_list:             friends_list,
                 chats_next_page_number:   chats_next_page_number,
                 friends_next_page_number: friends_next_page_number,
-                chats_count:              chats_count,
-                friends_count:            friends_count,
+                //chats_count:              chats_count,
+                //friends_count:            friends_count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1301,14 +1301,14 @@ pub async fn friends_load(session: Session, req: HttpRequest) -> actix_web::Resu
                 request_user:                User,
                 object_list:                 Vec<User>,
                 next_page_number:            i32,
-                count:                       i32,
+                //count:                       i32,
             }
 
             let body = Template {
                 request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
-                count:                       count,
+                //count:                       count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1321,14 +1321,14 @@ pub async fn friends_load(session: Session, req: HttpRequest) -> actix_web::Resu
                 request_user:                User,
                 object_list:                 Vec<User>,
                 next_page_number:            i32,
-                count:                       i32,
+                //count:                       i32,
             }
 
             let body = Template {
                 request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
-                count:                       count,
+                //count:                       count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1490,14 +1490,14 @@ pub async fn chats_load(session: Session, req: HttpRequest) -> actix_web::Result
                 request_user:     User,
                 object_list:      Vec<Chat>,
                 next_page_number: i32,
-                count:            usize,
+                //count:            usize,
             }
 
             let body = Template {
                 request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
-                count:            count,
+                //count:            count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1510,14 +1510,14 @@ pub async fn chats_load(session: Session, req: HttpRequest) -> actix_web::Result
                 request_user:     User,
                 object_list:      Vec<Chat>,
                 next_page_number: i32,
-                count:            usize,
+                //count:            usize,
             }
 
             let body = Template {
                 request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
-                count:            count,
+                //count:            count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1573,7 +1573,7 @@ pub async fn communities_load(session: Session, req: HttpRequest) -> actix_web::
                 request_user:     User,
                 object_list:      Vec<Community>,
                 next_page_number: i32,
-                count:            usize,
+                //count:            usize,
                 types:            String,
             }
 
@@ -1581,7 +1581,7 @@ pub async fn communities_load(session: Session, req: HttpRequest) -> actix_web::
                 request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
-                count:            count,
+                //count:            count,
                 types:            types,
             }
             .render_once()
@@ -1595,7 +1595,7 @@ pub async fn communities_load(session: Session, req: HttpRequest) -> actix_web::
                 request_user:     User,
                 object_list:      Vec<Community>,
                 next_page_number: i32,
-                count:            usize,
+                //count:            usize,
                 types:            String,
             }
 
@@ -1603,7 +1603,7 @@ pub async fn communities_load(session: Session, req: HttpRequest) -> actix_web::
                 request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
-                count:            count,
+                //count:            count,
                 types:            types,
             }
             .render_once()
@@ -1619,7 +1619,6 @@ pub async fn communities_load(session: Session, req: HttpRequest) -> actix_web::
 pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     #[derive(Debug, Deserialize)]
     pub struct ZParams {
-        pub page:         Option<i32>,
         pub action:       Option<String>,
         pub community_id: Option<i32>,
         pub list:         Option<String>,
@@ -1629,7 +1628,6 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
     let (is_desctop, page) = get_list_variables(req);
 
     if is_signed_in(&session) {
-        let mut page: i32 = 0;
         let mut count: i32 = 0;
         let mut next_page_number: i32 = 0;
         let mut community_id: Option<i32> = None;
@@ -1638,9 +1636,6 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
         let mut text =   "".to_string();
         if params_some.is_ok() {
             let params = params_some.unwrap();
-            if params.page.is_some() {
-                page = params.page.unwrap();
-            }
             if params.action.is_some() {
                 types = params.action.as_ref().unwrap().to_string();
             }
@@ -1851,7 +1846,7 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
                 users:               Vec<User>,
                 next_page_number:    i32,
                 types:               String,
-                count:               i32,
+                //count:               i32,
             }
 
             let body = Template {
@@ -1860,7 +1855,7 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
                 users:               users_list,
                 next_page_number:    next_page_number,
                 types:               types,
-                count:               count,
+                //count:               count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1876,7 +1871,7 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
                 users:               Vec<User>,
                 next_page_number:    i32,
                 types:               String,
-                count:               i32,
+                //count:               i32,
             }
 
             let body = Template {
@@ -1885,7 +1880,7 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
                 users:               users_list,
                 next_page_number:    next_page_number,
                 types:               types,
-                count:               count,
+                //count:               count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1899,7 +1894,6 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
 pub async fn list_include_users_load(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     #[derive(Debug, Deserialize)]
     pub struct ZParams {
-        pub page:         Option<i32>,
         pub action:       Option<String>,
         pub community_id: Option<i32>,
         pub list:         Option<String>,
@@ -1909,7 +1903,6 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
     let (is_desctop, page) = get_list_variables(req);
 
     if is_signed_in(&session) {
-        let mut page: i32 = 0;
         let mut next_page_number: i32 = 0;
         let mut count: i32 = 0;
         let mut community_id: Option<i32> = None;
@@ -1918,9 +1911,6 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
         let mut text =   "".to_string();
         if params_some.is_ok() {
             let params = params_some.unwrap();
-            if params.page.is_some() {
-                page = params.page.unwrap();
-            }
             if params.action.is_some() {
                 types = params.action.as_ref().unwrap().to_string();
             }
@@ -2131,7 +2121,7 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
                 users:            Vec<User>,
                 next_page_number: i32,
                 types:            String,
-                count:            i32,
+                //count:            i32,
             }
 
             let body = Template {
@@ -2140,7 +2130,7 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
                 users:            users_list,
                 next_page_number: next_page_number,
                 types:            types,
-                count:            count,
+                //count:            count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -2156,7 +2146,7 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
                 users:               Vec<User>,
                 next_page_number:    i32,
                 types:               String,
-                count:               i32,
+                //count:               i32,
             }
 
             let body = Template {
@@ -2165,7 +2155,7 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
                 users:               users_list,
                 next_page_number:    next_page_number,
                 types:               types,
-                count:               count,
+                //count:               count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

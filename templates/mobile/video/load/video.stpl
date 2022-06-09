@@ -50,8 +50,8 @@
                 <a style="cursor:pointer" class="btn_default drop">
                   <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right" data-type="pos<%= object.id %>">
-                  <% if object.get_list().is_user_can_create_el(request_user.id) { %>
+                <div class="dropdown-menu dropdown-menu-right" data-type="vid<%= object.id %>">
+                  <% if is_moderator { %>
                     <span class="dropdown-item video_remove">Удалить запись</span>
                     <span class="dropdown-item video_edit">Редактировать</span>
                     <span>
