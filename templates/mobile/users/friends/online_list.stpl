@@ -1,4 +1,5 @@
 <% include!("../../../base_block/base_mobile_header.stpl"); %>
+<div class="container main-container mt-3" data-type="user_online_friends" data-pk="<%= user.id %>">
 
-
+</div>
 <% include!("../../../base_block/base_mobile_footer.stpl"); %>
