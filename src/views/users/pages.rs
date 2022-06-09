@@ -669,21 +669,21 @@ pub async fn user_follows_page(session: Session, req: HttpRequest, user_id: web:
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/follows/list.stpl")]
             struct Template {
-                title:                   String,
-                request_user:            User,
-                user:                    User,
-                object_list:             Vec<User>,
-                next_page_number:        i32,
-                count:                   i32,
+                title:            String,
+                request_user:     User,
+                user:             User,
+                object_list:      Vec<User>,
+                next_page_number: i32,
+                count:            i32,
             }
 
             let body = Template {
-                title:                   _user.get_full_name() + &" - подписчики".to_string(),
-                request_user:            _request_user,
-                user:                    _user,
-                object_list:             object_list,
-                next_page_number:        next_page_number,
-                count:                   count,
+                title:            _user.get_full_name() + &" - подписчики".to_string(),
+                request_user:     _request_user,
+                user:             _user,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                count:            count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -693,21 +693,21 @@ pub async fn user_follows_page(session: Session, req: HttpRequest, user_id: web:
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/follows/list.stpl")]
             struct Template {
-                title:                   String,
-                request_user:            User,
-                user:                    User,
-                object_list:             Vec<User>,
-                next_page_number:        i32,
-                count:                   i32,
+                title:            String,
+                request_user:     User,
+                user:             User,
+                object_list:      Vec<User>,
+                next_page_number: i32,
+                count:            i32,
             }
 
             let body = Template {
-                title:                   _user.get_full_name() + &" - подписчики".to_string(),
-                request_user:            _request_user,
-                user:                    _user,
-                object_list:             object_list,
-                next_page_number:        next_page_number,
-                count:                   count,
+                title:            _user.get_full_name() + &" - подписчики".to_string(),
+                request_user:     _request_user,
+                user:             _user,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                count:            count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

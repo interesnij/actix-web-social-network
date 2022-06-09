@@ -1,0 +1,63 @@
+<% include!("../../../base_block/base_header.stpl"); %>
+
+<div class="main-container" data-pk="<%= request_user.id %>" data-type="user_follows">
+
+  <div class="row">
+    <div class="col-md-9 mt-3">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control form-control-sm" placeholder="Поиск пользователей">
+        <div class="input-group-append">
+          <button class="btn btn-sm border" type="button">Искать</button>
+        </div>
+      </div>
+
+      <div class="card mb-2">
+        <div class="col-12 col-md-12">
+          <div class="card">
+            <div class="card-body px-0 py-0">
+              <div class="tab-content">
+                <div class="tab-pane fade active show">
+                  <div class="media-body">
+                    <span style="vertical-align: middle;">
+                       Подписчики
+                    </span>
+                    <small class="content-color-secondary float-right mr-2 mt-1">Всего <%= count %></small>
+
+                  </div>
+
+                  <% if count > 0 { %>
+
+                  <ul class="list-group is_paginate">
+                    <% for object in object_list.iter() { %>
+                    <li class="list-group-item">
+                      <% include!("../../generic/user/card_send_message.stpl"); %>
+                    </li>
+                    <% } %>
+                    <% if next_page_number > 0 { %>
+                    <div class="load centered m-1 next_page_list" data-link="/followings/?page=<%= next_page_number %>">
+                      <img src="/static/images/preloader.gif">
+                    </div>
+                    <% } %>
+                  </ul>
+
+                  <% } else { %>
+                    <% include!("no_items.stpl"); %>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-3">
+      <div class="p-1">
+        <% include!("../../generic/user/card_go_user.stpl"); %>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<% include!("../../../base_block/base_footer.stpl"); %>
