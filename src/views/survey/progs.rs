@@ -404,8 +404,8 @@ pub async fn add_survey_in_list(session: Session, mut payload: Multipart, _id: w
 
         let mut owner_path = "".to_string();
         let mut owner_id = 0;
-        let mut is_open = false;
-        let mut text = "".to_string();
+        let is_open : bool;
+        let text : String;
         let community_id = _list.community_id;
 
         if community_id.is_some() {
@@ -473,8 +473,8 @@ pub async fn edit_survey(session: Session, mut payload: Multipart, _id: web::Pat
 
         let mut owner_path = "".to_string();
         let mut owner_id = 0;
-        let mut is_open = false;
-        let mut text = "".to_string();
+        let is_open : bool;
+        let text : String;
         let community_id = _list.community_id;
 
         if community_id.is_some() {

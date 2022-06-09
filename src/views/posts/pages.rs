@@ -184,8 +184,8 @@ pub async fn edit_community_list_page(session: Session, _id: web::Path<i32>) -> 
 pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, page) = get_list_variables(req);
     let mut next_page_number = 0;
-    let mut is_open = false;
-    let mut text = "".to_string();
+    let is_open : bool;
+    let text : String;
     let mut prev: Option<i32> = None;
     let mut next: Option<i32> = None;
 
@@ -382,8 +382,8 @@ pub async fn load_post_page(session: Session, req: HttpRequest, post_id: web::Pa
 pub async fn load_comments_page(session: Session, req: HttpRequest, post_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, page) = get_list_variables(req);
     let mut next_page_number = 0;
-    let mut is_open = false;
-    let mut text = "".to_string();
+    let is_open : bool;
+    let text : String;
 
     let _post = get_post(*post_id);
     let _list = get_post_list(_post.post_list_id);

@@ -39,8 +39,8 @@ pub fn pages_urls(config: &mut web::ServiceConfig) {
 pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, page) = get_list_variables(req);
     let mut next_page_number = 0;
-    let mut is_open = false;
-    let mut text = "".to_string();
+    let is_open : bool;
+    let text : String;
 
     let _list = get_photo_list(*list_id);
 
@@ -335,8 +335,8 @@ pub async fn edit_community_list_page(session: Session, _id: web::Path<i32>) -> 
 pub async fn load_photo_page(session: Session, req: HttpRequest, photo_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, page) = get_list_variables(req);
     let mut next_page_number = 0;
-    let mut is_open = false;
-    let mut text = "".to_string();
+    let is_open : bool;
+    let text : String;
     let mut prev: Option<i32> = None;
     let mut next: Option<i32> = None;
 
@@ -535,8 +535,8 @@ pub async fn load_photo_page(session: Session, req: HttpRequest, photo_id: web::
 pub async fn load_comments_page(session: Session, req: HttpRequest, photo_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, page) = get_list_variables(req);
     let mut next_page_number = 0;
-    let mut is_open = false;
-    let mut text = "".to_string();
+    let is_open : bool;
+    let text : String;
 
     let _photo = get_photo(*photo_id);
     let _list = get_photo_list(_photo.photo_list_id);

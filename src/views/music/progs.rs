@@ -293,8 +293,8 @@ pub async fn add_tracks_in_list(session: Session, mut payload: Multipart, _id: w
         let _list = get_music_list(*_id);
         let mut owner_path = "".to_string();
         let mut owner_id = 0;
-        let mut is_open = false;
-        let mut text = "".to_string();
+        let is_open : bool;
+        let text : String;
         let community_id = _list.community_id;
 
         if community_id.is_some() {
@@ -404,8 +404,8 @@ pub async fn edit_track(session: Session, mut payload: Multipart, _id: web::Path
         let community_id = _track.community_id;
         let mut owner_path = "".to_string();
         let mut owner_id = 0;
-        let mut is_open = false;
-        let mut text = "".to_string();
+        let is_open : bool;
+        let text : String;
 
         if community_id.is_some() {
             let _tuple = get_community_permission(&_list.get_community(), &_request_user);

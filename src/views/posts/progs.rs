@@ -419,8 +419,8 @@ pub async fn add_post_in_list(session: Session, mut payload: Multipart, _id: web
         let user_id = _request_user.id;
         let _list = get_post_list(*_id);
         let community_id = _list.community_id;
-        let mut is_open = false;
-        let mut text = "".to_string();
+        let is_open : bool;
+        let text : String;
 
         if community_id.is_some() {
             let _tuple = get_community_permission(&_list.get_community(), &_request_user);
@@ -479,8 +479,8 @@ pub async fn edit_post(session: Session, mut payload: Multipart, _id: web::Path<
         let _post = get_post(*_id);
         let _list = _post.get_list();
         let community_id = _list.community_id;
-        let mut is_open = false;
-        let mut text = "".to_string();
+        let is_open : bool;
+        let text : String;
 
         if community_id.is_some() {
             let _tuple = get_community_permission(&_list.get_community(), &_request_user);
@@ -535,8 +535,8 @@ pub async fn add_comment(session: Session, mut payload: Multipart, _id: web::Pat
         let _request_user_id = &_request_user.id;
         let item = get_post(*_id);
         let list = item.get_list();
-        let mut is_open = false;
-        let mut text = "".to_string();
+        let is_open : bool;
+        let text : String;
 
         if item.community_id.is_some() {
             let _tuple = get_community_permission(&item.get_community(), &_request_user);
@@ -593,8 +593,8 @@ pub async fn add_reply(session: Session, mut payload: Multipart, _id: web::Path<
         let comment = get_post_comment(*_id);
         let item = get_post(comment.post_id);
         let list = item.get_list();
-        let mut is_open = false;
-        let mut text = "".to_string();
+        let is_open : bool;
+        let text : String;
 
         if item.community_id.is_some() {
             let _tuple = get_community_permission(&item.get_community(), &_request_user);

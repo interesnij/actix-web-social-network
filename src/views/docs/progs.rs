@@ -363,8 +363,8 @@ pub async fn add_doc_in_list(session: Session, mut payload: Multipart, _id: web:
         let _list = get_doc_list(*_id);
         let mut owner_path = "".to_string();
         let mut owner_id = 0;
-        let mut is_open = false;
-        let mut text = "".to_string();
+        let is_open : bool;
+        let text : String;
         let community_id = _list.community_id;
 
         if community_id.is_some() {
@@ -442,8 +442,8 @@ pub async fn edit_doc(session: Session, mut payload: Multipart, _id: web::Path<i
         let _doc = get_doc(*_id);
         let _list = _doc.get_list();
         let community_id = _doc.community_id;
-        let mut is_open = false;
-        let mut text = "".to_string();
+        let is_open : bool;
+        let text : String;
 
         if community_id.is_some() {
             let _tuple = get_community_permission(&_list.get_community(), &_request_user);

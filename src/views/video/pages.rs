@@ -43,8 +43,8 @@ pub fn pages_urls(config: &mut web::ServiceConfig) {
 pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, page) = get_list_variables(req);
     let mut next_page_number = 0;
-    let mut is_open = false;
-    let mut text = "".to_string();
+    let is_open : bool;
+    let text : String;
 
     let _list = get_video_list(*list_id);
 
@@ -340,8 +340,8 @@ pub async fn edit_community_list_page(session: Session, _id: web::Path<i32>) -> 
 pub async fn load_video_page(session: Session, req: HttpRequest, video_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, page) = get_list_variables(req);
     let mut next_page_number = 0;
-    let mut is_open = false;
-    let mut text = "".to_string();
+    let is_open : bool;
+    let text : String;
 
     let _video = get_video(*video_id);
     let _list = get_video_list(_video.video_list_id);
@@ -519,8 +519,8 @@ pub async fn load_video_page(session: Session, req: HttpRequest, video_id: web::
 pub async fn load_comments_page(session: Session, req: HttpRequest, video_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, page) = get_list_variables(req);
     let mut next_page_number = 0;
-    let mut is_open = false;
-    let mut text = "".to_string();
+    let is_open : bool;
+    let text : String;
 
     let _video = get_video(*video_id);
     let _list = get_video_list(_video.video_list_id);

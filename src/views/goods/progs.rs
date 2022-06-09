@@ -436,8 +436,8 @@ pub async fn add_good_in_list(session: Session, mut payload: Multipart, _id: web
         let _list = get_good_list(*_id);
         let mut owner_path = "".to_string();
         let mut owner_id = 0;
-        let mut is_open = false;
-        let mut text = "".to_string();
+        let is_open : bool;
+        let text : String;
         let community_id = _list.community_id;
 
         if community_id.is_some() {
@@ -506,8 +506,8 @@ pub async fn edit_good(session: Session, mut payload: Multipart, _id: web::Path<
         let _list = _good.get_list();
         let mut owner_path = "".to_string();
         let mut owner_id = 0;
-        let mut is_open = false;
-        let mut text = "".to_string();
+        let is_open : bool;
+        let text : String;
         let community_id = _good.community_id;
 
         if community_id.is_some() {
@@ -571,8 +571,8 @@ pub async fn add_comment(session: Session, mut payload: Multipart, _id: web::Pat
         let _request_user_id = &_request_user.id;
         let item = get_good(*_id);
         let list = item.get_list();
-        let mut is_open = false;
-        let mut text = "".to_string();
+        let is_open : bool;
+        let text : String;
 
         if item.community_id.is_some() {
             let _tuple = get_community_permission(&item.get_community(), &_request_user);
@@ -629,8 +629,8 @@ pub async fn add_reply(session: Session, mut payload: Multipart, _id: web::Path<
         let comment = get_good_comment(*_id);
         let item = get_good(comment.good_id);
         let list = item.get_list();
-        let mut is_open = false;
-        let mut text = "".to_string();
+        let is_open : bool;
+        let text : String;
 
         if item.community_id.is_some() {
             let _tuple = get_community_permission(&item.get_community(), &_request_user);
