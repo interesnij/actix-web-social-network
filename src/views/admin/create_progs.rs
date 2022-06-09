@@ -396,6 +396,8 @@ pub async fn edit_goods_subcategory(session: Session, mut payload: Multipart, ca
 
 pub async fn create_sound_genre(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
+        use crate::models::SoundGenre;
+
         let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             let form = category_form (
@@ -404,9 +406,7 @@ pub async fn create_sound_genre(session: Session, mut payload: Multipart) -> act
                 _request_user.id.to_string()
             ).await;
 
-            use crate::models::SoundGenre;
-
-            let new_genre = SoundGenre::create_genre (form.name);
+            SoundGenre::create_genre (form.name);
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
         } else {
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
@@ -450,6 +450,8 @@ pub async fn edit_sound_genre(session: Session, mut payload: Multipart, genre_id
 
 pub async fn create_artist(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
+        use crate::models::Artist;
+
         let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             let form = category_form (
@@ -457,8 +459,6 @@ pub async fn create_artist(session: Session, mut payload: Multipart) -> actix_we
                 "music_artists".to_string(),
                 _request_user.id.to_string()
             ).await;
-
-            use crate::models::Artist;
 
             Artist::create_artist (
                 form.name,
@@ -513,6 +513,8 @@ pub async fn edit_artist(session: Session, mut payload: Multipart, artist_id: we
 
 pub async fn create_music_album(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
+        use crate::models::MusicAlbum;
+
         let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             let form = category_form (
@@ -520,8 +522,6 @@ pub async fn create_music_album(session: Session, mut payload: Multipart) -> act
                 "music_albums".to_string(),
                 _request_user.id.to_string()
             ).await;
-
-            use crate::models::MusicAlbum;
 
             MusicAlbum::create_album (
                 form.name,
@@ -579,6 +579,8 @@ pub async fn edit_music_album(session: Session, mut payload: Multipart, album_id
 
 pub async fn create_stickers_category(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
+        use crate::models::StickerCategorie;
+
         let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             let form = category_form (
@@ -586,8 +588,6 @@ pub async fn create_stickers_category(session: Session, mut payload: Multipart) 
                 "categories".to_string(),
                 _request_user.id.to_string()
             ).await;
-
-            use crate::models::StickerCategorie;
 
             StickerCategorie::create_category (
                 form.name,
@@ -644,6 +644,8 @@ pub async fn edit_stickers_category(session: Session, mut payload: Multipart, ca
 
 pub async fn create_sticker(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
+        use crate::models::Sticker;
+        
         let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             let form = category_form (
@@ -651,8 +653,6 @@ pub async fn create_sticker(session: Session, mut payload: Multipart) -> actix_w
                 "stickers".to_string(),
                 _request_user.id.to_string()
             ).await;
-
-            use crate::models::Sticker;
 
             Sticker::create_sticker (
                 form.name,

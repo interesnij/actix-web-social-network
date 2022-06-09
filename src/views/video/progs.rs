@@ -575,11 +575,9 @@ pub async fn edit_video(session: Session, mut payload: Multipart, _id: web::Path
             #[template(path = "desctop/video/video.stpl")]
             struct Template {
                 object: Video,
-                request_user: User,
             }
             let body = Template {
                 object: edited_video,
-                request_user: _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
