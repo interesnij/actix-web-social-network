@@ -831,7 +831,6 @@ table! {
         description -> Nullable<Varchar>,
         image -> Nullable<Varchar>,
         comment_enabled -> Bool,
-        votes_on -> Bool,
         created -> Timestamp,
         comment -> Int4,
         view -> Int4,
@@ -1275,7 +1274,6 @@ table! {
         file -> Varchar,
         description -> Nullable<Varchar>,
         comment_enabled -> Bool,
-        votes_on -> Bool,
         created -> Timestamp,
         comment -> Int4,
         view -> Int4,
@@ -1432,7 +1430,6 @@ table! {
         types -> Char,
         attach -> Nullable<Varchar>,
         comment_enabled -> Bool,
-        votes_on -> Bool,
         created -> Timestamp,
         comment -> Int4,
         view -> Int4,
@@ -2209,7 +2206,6 @@ table! {
         file -> Varchar,
         description -> Nullable<Varchar>,
         comment_enabled -> Bool,
-        votes_on -> Bool,
         created -> Timestamp,
         comment -> Int4,
         view -> Int4,
@@ -2236,3 +2232,416 @@ table! {
         object_set_id -> Nullable<Int4>,
     }
 }
+
+joinable!(chat_ie_settings -> chat_users (chat_user_id));
+joinable!(chat_users -> chats (chat_id));
+joinable!(chat_users -> users (user_id));
+joinable!(chats -> communitys (community_id));
+joinable!(chats -> users (user_id));
+joinable!(communities_memberships -> communitys (community_id));
+joinable!(communities_memberships -> users (user_id));
+joinable!(community_banner_users -> communitys (community_id));
+joinable!(community_banner_users -> users (user_id));
+joinable!(community_doc_list_collections -> communitys (community_id));
+joinable!(community_doc_list_collections -> doc_lists (doc_list_id));
+joinable!(community_follows -> communitys (community_id));
+joinable!(community_follows -> users (user_id));
+joinable!(community_good_list_collections -> communitys (community_id));
+joinable!(community_good_list_collections -> good_lists (good_list_id));
+joinable!(community_good_notifications -> communitys (community_id));
+joinable!(community_infos -> communitys (community_id));
+joinable!(community_invites -> communitys (community_id));
+joinable!(community_music_list_collections -> communitys (community_id));
+joinable!(community_music_list_collections -> music_lists (music_list_id));
+joinable!(community_music_notifications -> communitys (community_id));
+joinable!(community_notifications -> communitys (community_id));
+joinable!(community_photo_list_collections -> communitys (community_id));
+joinable!(community_photo_list_collections -> photo_lists (photo_list_id));
+joinable!(community_photo_notifications -> communitys (community_id));
+joinable!(community_post_list_collections -> communitys (community_id));
+joinable!(community_post_list_collections -> post_lists (post_list_id));
+joinable!(community_post_notifications -> communitys (community_id));
+joinable!(community_privates -> communitys (community_id));
+joinable!(community_reposts -> communitys (community_id));
+joinable!(community_reposts -> messages (message_id));
+joinable!(community_reposts -> posts (post_id));
+joinable!(community_subcategorys -> community_categorys (category_id));
+joinable!(community_survey_list_collections -> communitys (community_id));
+joinable!(community_survey_list_collections -> survey_lists (survey_list_id));
+joinable!(community_survey_notifications -> communitys (community_id));
+joinable!(community_video_list_collections -> communitys (community_id));
+joinable!(community_video_list_collections -> video_lists (video_list_id));
+joinable!(community_video_notifications -> communitys (community_id));
+joinable!(community_visible_perms -> users (user_id));
+joinable!(community_work_perms -> users (user_id));
+joinable!(communitys -> community_subcategorys (community_subcategory_id));
+joinable!(communitys -> users (user_id));
+joinable!(design_settings -> users (user_id));
+joinable!(doc_list_perms -> doc_lists (doc_list_id));
+joinable!(doc_list_perms -> users (user_id));
+joinable!(doc_list_reposts -> doc_lists (doc_list_id));
+joinable!(doc_list_reposts -> messages (message_id));
+joinable!(doc_list_reposts -> posts (post_id));
+joinable!(doc_lists -> communitys (community_id));
+joinable!(doc_lists -> users (user_id));
+joinable!(doc_reposts -> docs (doc_id));
+joinable!(doc_reposts -> messages (message_id));
+joinable!(doc_reposts -> posts (post_id));
+joinable!(docs -> communitys (community_id));
+joinable!(docs -> doc_lists (doc_list_id));
+joinable!(docs -> users (user_id));
+joinable!(follows_visible_perms -> users (user_id));
+joinable!(follows_work_perms -> users (user_id));
+joinable!(friends_visible_perms -> users (user_id));
+joinable!(friends_work_perms -> users (user_id));
+joinable!(good_comment_reactions -> good_comments (good_comment_id));
+joinable!(good_comment_votes -> users (user_id));
+joinable!(good_comments -> goods (good_id));
+joinable!(good_comments -> stickers (sticker_id));
+joinable!(good_comments -> users (user_id));
+joinable!(good_images -> goods (good_id));
+joinable!(good_list_perms -> good_lists (good_list_id));
+joinable!(good_list_perms -> users (user_id));
+joinable!(good_list_reposts -> good_lists (good_list_id));
+joinable!(good_list_reposts -> messages (message_id));
+joinable!(good_list_reposts -> posts (post_id));
+joinable!(good_lists -> communitys (community_id));
+joinable!(good_lists -> users (user_id));
+joinable!(good_reactions -> goods (good_id));
+joinable!(good_reposts -> goods (good_id));
+joinable!(good_reposts -> messages (message_id));
+joinable!(good_reposts -> posts (post_id));
+joinable!(good_subcategories -> good_categories (category_id));
+joinable!(good_votes -> goods (good_id));
+joinable!(good_votes -> users (user_id));
+joinable!(goods -> communitys (community_id));
+joinable!(goods -> good_lists (good_list_id));
+joinable!(goods -> good_subcategories (category_id));
+joinable!(goods -> users (user_id));
+joinable!(ip_users -> users (user_id));
+joinable!(message_options -> messages (message_id));
+joinable!(message_options -> users (user_id));
+joinable!(message_reactions -> messages (message_id));
+joinable!(message_versions -> messages (message_id));
+joinable!(message_votes -> messages (message_id));
+joinable!(message_votes -> users (user_id));
+joinable!(messages -> chats (chat_id));
+joinable!(messages -> posts (post_id));
+joinable!(messages -> stickers (sticker_id));
+joinable!(messages -> users (user_id));
+joinable!(moderated_logs -> users (user_id));
+joinable!(moderated_penalties -> moderateds (moderated_id));
+joinable!(moderated_penalties -> users (user_id));
+joinable!(moderated_reports -> moderateds (moderated_id));
+joinable!(moderated_reports -> users (user_id));
+joinable!(music_albums -> artists (artist_id));
+joinable!(music_albums -> users (user_id));
+joinable!(music_list_perms -> music_lists (music_list_id));
+joinable!(music_list_perms -> users (user_id));
+joinable!(music_list_reposts -> messages (message_id));
+joinable!(music_list_reposts -> music_lists (music_list_id));
+joinable!(music_list_reposts -> posts (post_id));
+joinable!(music_lists -> communitys (community_id));
+joinable!(music_lists -> users (user_id));
+joinable!(music_reposts -> messages (message_id));
+joinable!(music_reposts -> musics (music_id));
+joinable!(music_reposts -> posts (post_id));
+joinable!(musics -> communitys (community_id));
+joinable!(musics -> music_lists (music_list_id));
+joinable!(musics -> users (user_id));
+joinable!(photo_comment_reactions -> photo_comments (photo_comment_id));
+joinable!(photo_comment_votes -> photo_comments (photo_comment_id));
+joinable!(photo_comment_votes -> users (user_id));
+joinable!(photo_comments -> photos (photo_id));
+joinable!(photo_comments -> stickers (sticker_id));
+joinable!(photo_comments -> users (user_id));
+joinable!(photo_list_perms -> photo_lists (photo_list_id));
+joinable!(photo_list_perms -> users (user_id));
+joinable!(photo_list_reposts -> messages (message_id));
+joinable!(photo_list_reposts -> photo_lists (photo_list_id));
+joinable!(photo_list_reposts -> posts (post_id));
+joinable!(photo_lists -> communitys (community_id));
+joinable!(photo_lists -> users (user_id));
+joinable!(photo_reactions -> photos (photo_id));
+joinable!(photo_reposts -> messages (message_id));
+joinable!(photo_reposts -> photos (photo_id));
+joinable!(photo_reposts -> posts (post_id));
+joinable!(photo_votes -> photos (photo_id));
+joinable!(photo_votes -> users (user_id));
+joinable!(photos -> communitys (community_id));
+joinable!(photos -> photo_lists (photo_list_id));
+joinable!(photos -> users (user_id));
+joinable!(post_comment_reactions -> post_comments (post_comment_id));
+joinable!(post_comment_votes -> post_comments (post_comment_id));
+joinable!(post_comment_votes -> users (user_id));
+joinable!(post_comments -> posts (post_id));
+joinable!(post_comments -> stickers (sticker_id));
+joinable!(post_comments -> users (user_id));
+joinable!(post_list_perms -> post_lists (post_list_id));
+joinable!(post_list_perms -> users (user_id));
+joinable!(post_list_reposts -> messages (message_id));
+joinable!(post_list_reposts -> post_lists (post_list_id));
+joinable!(post_list_reposts -> posts (post_id));
+joinable!(post_lists -> communitys (community_id));
+joinable!(post_lists -> users (user_id));
+joinable!(post_reactions -> posts (post_id));
+joinable!(post_votes -> posts (post_id));
+joinable!(post_votes -> users (user_id));
+joinable!(posts -> communitys (community_id));
+joinable!(posts -> post_categories (post_categorie_id));
+joinable!(posts -> post_lists (post_list_id));
+joinable!(posts -> users (user_id));
+joinable!(smiles -> smile_categories (smile_categorie_id));
+joinable!(staff_logs -> users (manager_id));
+joinable!(stickers -> sticker_categories (sticker_categorie_id));
+joinable!(support_user_votes -> users (manager_id));
+joinable!(survey_answers -> surveys (survey_id));
+joinable!(survey_list_perms -> survey_lists (survey_list_id));
+joinable!(survey_list_perms -> users (user_id));
+joinable!(survey_list_reposts -> messages (message_id));
+joinable!(survey_list_reposts -> posts (post_id));
+joinable!(survey_list_reposts -> survey_lists (survey_list_id));
+joinable!(survey_lists -> communitys (community_id));
+joinable!(survey_lists -> users (user_id));
+joinable!(survey_reposts -> messages (message_id));
+joinable!(survey_reposts -> posts (post_id));
+joinable!(survey_reposts -> surveys (survey_id));
+joinable!(survey_votes -> survey_answers (survey_answer_id));
+joinable!(survey_votes -> users (user_id));
+joinable!(surveys -> communitys (community_id));
+joinable!(surveys -> survey_lists (survey_list_id));
+joinable!(surveys -> users (user_id));
+joinable!(user_anketas -> users (user_id));
+joinable!(user_delete_anketas -> users (user_id));
+joinable!(user_doc_list_collections -> doc_lists (doc_list_id));
+joinable!(user_doc_list_collections -> users (user_id));
+joinable!(user_good_list_collections -> good_lists (good_list_id));
+joinable!(user_good_list_collections -> users (user_id));
+joinable!(user_good_notifications -> users (user_id));
+joinable!(user_locations -> users (user_id));
+joinable!(user_love_statuss -> users (user_id));
+joinable!(user_music_list_collections -> music_lists (music_list_id));
+joinable!(user_music_list_collections -> users (user_id));
+joinable!(user_music_notifications -> users (user_id));
+joinable!(user_notifications -> users (user_id));
+joinable!(user_photo_list_collections -> photo_lists (photo_list_id));
+joinable!(user_photo_list_collections -> users (user_id));
+joinable!(user_photo_notifications -> users (user_id));
+joinable!(user_populate_smiles -> smiles (smile_id));
+joinable!(user_populate_smiles -> users (user_id));
+joinable!(user_populate_stickers -> stickers (sticker_id));
+joinable!(user_populate_stickers -> users (user_id));
+joinable!(user_post_list_collections -> post_lists (post_list_id));
+joinable!(user_post_list_collections -> users (user_id));
+joinable!(user_post_notifications -> users (user_id));
+joinable!(user_privates -> users (user_id));
+joinable!(user_profile_notifications -> users (user_id));
+joinable!(user_profiles -> users (user_id));
+joinable!(user_reposts -> messages (message_id));
+joinable!(user_reposts -> posts (post_id));
+joinable!(user_reposts -> users (user_id));
+joinable!(user_survey_list_collections -> survey_lists (survey_list_id));
+joinable!(user_survey_list_collections -> users (user_id));
+joinable!(user_survey_notifications -> users (user_id));
+joinable!(user_video_list_collections -> users (user_id));
+joinable!(user_video_list_collections -> video_lists (video_list_id));
+joinable!(user_video_notifications -> users (user_id));
+joinable!(video_comment_reactions -> video_comments (video_comment_id));
+joinable!(video_comment_votes -> video_comments (video_comment_id));
+joinable!(video_comments -> stickers (sticker_id));
+joinable!(video_comments -> users (user_id));
+joinable!(video_comments -> videos (video_id));
+joinable!(video_list_perms -> users (user_id));
+joinable!(video_list_perms -> video_lists (video_list_id));
+joinable!(video_list_reposts -> messages (message_id));
+joinable!(video_list_reposts -> posts (post_id));
+joinable!(video_list_reposts -> video_lists (video_list_id));
+joinable!(video_lists -> communitys (community_id));
+joinable!(video_lists -> users (user_id));
+joinable!(video_reactions -> videos (video_id));
+joinable!(video_reposts -> messages (message_id));
+joinable!(video_reposts -> posts (post_id));
+joinable!(video_reposts -> videos (video_id));
+joinable!(video_votes -> users (user_id));
+joinable!(video_votes -> videos (video_id));
+joinable!(videos -> communitys (community_id));
+joinable!(videos -> users (user_id));
+joinable!(videos -> video_lists (video_list_id));
+joinable!(wall_objects -> users (user_id));
+
+allow_tables_to_appear_in_same_query!(
+    artists,
+    chat_ie_settings,
+    chat_users,
+    chats,
+    communities_memberships,
+    community_banner_users,
+    community_categorys,
+    community_doc_list_collections,
+    community_doc_list_positions,
+    community_follows,
+    community_good_list_collections,
+    community_good_list_positions,
+    community_good_notifications,
+    community_infos,
+    community_invites,
+    community_music_list_collections,
+    community_music_list_positions,
+    community_music_notifications,
+    community_notifications,
+    community_photo_list_collections,
+    community_photo_list_positions,
+    community_photo_notifications,
+    community_post_list_collections,
+    community_post_list_positions,
+    community_post_notifications,
+    community_privates,
+    community_reposts,
+    community_subcategorys,
+    community_survey_list_collections,
+    community_survey_list_positions,
+    community_survey_notifications,
+    community_video_list_collections,
+    community_video_list_positions,
+    community_video_notifications,
+    community_visible_perms,
+    community_work_perms,
+    communitys,
+    custom_links,
+    design_settings,
+    doc_list_perms,
+    doc_list_reposts,
+    doc_lists,
+    doc_reposts,
+    docs,
+    featured_user_communities,
+    follows,
+    follows_visible_perms,
+    follows_work_perms,
+    friends,
+    friends_visible_perms,
+    friends_work_perms,
+    good_categories,
+    good_comment_reactions,
+    good_comment_votes,
+    good_comments,
+    good_images,
+    good_list_perms,
+    good_list_reposts,
+    good_lists,
+    good_reactions,
+    good_reposts,
+    good_subcategories,
+    good_votes,
+    goods,
+    ip_users,
+    list_user_communities_keys,
+    message_options,
+    message_reactions,
+    message_transfers,
+    message_versions,
+    message_votes,
+    messages,
+    moderated_logs,
+    moderated_penalties,
+    moderated_reports,
+    moderateds,
+    music_albums,
+    music_list_perms,
+    music_list_reposts,
+    music_lists,
+    music_reposts,
+    musics,
+    news_user_communities,
+    notifications,
+    notify_user_communities,
+    phone_codes,
+    photo_comment_reactions,
+    photo_comment_votes,
+    photo_comments,
+    photo_list_perms,
+    photo_list_reposts,
+    photo_lists,
+    photo_reactions,
+    photo_reposts,
+    photo_votes,
+    photos,
+    post_categories,
+    post_comment_reactions,
+    post_comment_votes,
+    post_comments,
+    post_list_perms,
+    post_list_reposts,
+    post_lists,
+    post_reactions,
+    post_votes,
+    posts,
+    reactions,
+    smile_categories,
+    smiles,
+    sound_genres,
+    staff_logs,
+    sticker_categories,
+    stickers,
+    support_user_votes,
+    support_users,
+    survey_answers,
+    survey_list_perms,
+    survey_list_reposts,
+    survey_lists,
+    survey_reposts,
+    survey_votes,
+    surveys,
+    user_anketas,
+    user_blocks,
+    user_brother_sisters,
+    user_children_ones,
+    user_colleagues_ones,
+    user_dad_ones,
+    user_delete_anketas,
+    user_doc_list_collections,
+    user_doc_list_positions,
+    user_good_list_collections,
+    user_good_list_positions,
+    user_good_notifications,
+    user_grandsons_ones,
+    user_locations,
+    user_love_statuss,
+    user_mom_ones,
+    user_music_list_collections,
+    user_music_list_positions,
+    user_music_notifications,
+    user_notifications,
+    user_partner_ones,
+    user_photo_list_collections,
+    user_photo_list_positions,
+    user_photo_notifications,
+    user_populate_smiles,
+    user_populate_stickers,
+    user_post_list_collections,
+    user_post_list_positions,
+    user_post_notifications,
+    user_privates,
+    user_profile_notifications,
+    user_profiles,
+    user_reposts,
+    user_survey_list_collections,
+    user_survey_list_positions,
+    user_survey_notifications,
+    user_video_list_collections,
+    user_video_list_positions,
+    user_video_notifications,
+    users,
+    video_categories,
+    video_comment_reactions,
+    video_comment_votes,
+    video_comments,
+    video_list_perms,
+    video_list_reposts,
+    video_lists,
+    video_reactions,
+    video_reposts,
+    video_votes,
+    videos,
+    wall_objects,
+);
