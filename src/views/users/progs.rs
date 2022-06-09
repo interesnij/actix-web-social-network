@@ -1,4 +1,4 @@
-use crate::schema;
+//use crate::schema;
 use actix_web::{
     HttpResponse,
     web,
@@ -6,7 +6,7 @@ use actix_web::{
 use crate::utils::{
     is_signed_in,
     get_request_user_data,
-    establish_connection,
+    //establish_connection,
     get_user,
 };
 use actix_session::Session;

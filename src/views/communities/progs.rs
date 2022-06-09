@@ -2,27 +2,30 @@ use actix_web::{
     HttpResponse,
     HttpRequest,
     web,
-    web::Json,
-    error::InternalError,
-    http::StatusCode,
+    //web::Json,
+    //error::InternalError,
+    //http::StatusCode,
 };
 use crate::utils::{
     is_signed_in,
     get_request_user_data,
     get_community,
-    get_community_permission,
-    get_user_permission,
+    //get_community_permission,
+    //get_user_permission,
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::{Community, User};
-use crate::diesel::RunQueryDsl;
+use crate::models::{
+    Community,
+    //User
+};
+//use crate::diesel::RunQueryDsl;
 use actix_multipart::{Field, Multipart};
 use futures::StreamExt;
 use std::{
     str,
-    io::Write,
-    borrow::BorrowMut,
+    //io::Write,
+    //borrow::BorrowMut,
 };
 use serde::{Serialize, Deserialize};
 

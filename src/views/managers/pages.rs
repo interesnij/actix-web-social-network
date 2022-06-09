@@ -1,4 +1,4 @@
-use crate::schema;
+//use crate::schema;
 use actix_web::{
     HttpRequest,
     HttpResponse,
@@ -10,13 +10,13 @@ use actix_web::{
 use crate::utils::{
     is_signed_in,
     get_request_user_data,
-    establish_connection,
+    //establish_connection,
     is_desctop,
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
 use crate::models::User;
-use crate::diesel::{RunQueryDsl, QueryDsl, ExpressionMethods};
+//use crate::diesel::{RunQueryDsl, QueryDsl, ExpressionMethods};
 
 
 pub fn pages_urls(config: &mut web::ServiceConfig) {

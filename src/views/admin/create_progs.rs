@@ -2,7 +2,7 @@ use crate::schema;
 use actix_web::{
     HttpResponse,
     web,
-    web::Json,
+    //web::Json,
 };
 use crate::utils::{
     is_signed_in,
@@ -645,7 +645,7 @@ pub async fn edit_stickers_category(session: Session, mut payload: Multipart, ca
 pub async fn create_sticker(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         use crate::models::Sticker;
-        
+
         let _request_user = get_request_user_data(&session);
         if _request_user.is_supermanager() {
             let form = category_form (

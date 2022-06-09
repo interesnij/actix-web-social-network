@@ -14,7 +14,7 @@ use crate::utils::{
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::User;
+//use crate::models::User;
 use crate::diesel::{RunQueryDsl, QueryDsl, ExpressionMethods};
 
 
