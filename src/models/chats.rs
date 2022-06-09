@@ -2510,8 +2510,7 @@ impl Message {
                 static ref RE_A: Regex = Regex::new(r"<a.*?>").unwrap();
             }
             let text = self.content.as_deref().unwrap();
-            let mut count = 60;
-            let mut link_text: Option<String> = None;
+            let mut count = 60; 
 
             let images = RE_IMG.find_iter(text).collect::<Vec<_>>();
             for image in images.iter() {
