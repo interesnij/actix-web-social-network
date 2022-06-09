@@ -361,8 +361,8 @@ pub async fn add_doc_in_list(session: Session, mut payload: Multipart, _id: web:
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(&session);
         let _list = get_doc_list(*_id);
-        let mut owner_path = "".to_string();
-        let mut owner_id = 0;
+        let owner_path : String;
+        let owner_id: i32;
         let is_open : bool;
         let text : String;
         let community_id = _list.community_id;

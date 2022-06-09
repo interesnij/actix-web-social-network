@@ -434,8 +434,8 @@ pub async fn add_good_in_list(session: Session, mut payload: Multipart, _id: web
         let _request_user = get_request_user_data(&session);
         let user_id = _request_user.id;
         let _list = get_good_list(*_id);
-        let mut owner_path = "".to_string();
-        let mut owner_id = 0;
+        let owner_path : String;
+        let owner_id: i32;
         let is_open : bool;
         let text : String;
         let community_id = _list.community_id;
@@ -504,8 +504,8 @@ pub async fn edit_good(session: Session, mut payload: Multipart, _id: web::Path<
         let user_id = _request_user.id;
         let _good = get_good(*_id);
         let _list = _good.get_list();
-        let mut owner_path = "".to_string();
-        let mut owner_id = 0;
+        let owner_path : String;
+        let owner_id: i32;
         let is_open : bool;
         let text : String;
         let community_id = _good.community_id;

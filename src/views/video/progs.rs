@@ -459,8 +459,8 @@ pub async fn add_video_in_list(session: Session, mut payload: Multipart, _id: we
         let _request_user = get_request_user_data(&session);
         let user_id = _request_user.id;
         let _list = get_video_list(*_id);
-        let mut owner_path = "".to_string();
-        let mut owner_id = 0;
+        let owner_path : String;
+        let owner_id: i32;
         let is_open : bool;
         let text : String;
         let community_id = _list.community_id;
@@ -523,8 +523,8 @@ pub async fn edit_video(session: Session, mut payload: Multipart, _id: web::Path
         let user_id = _request_user.id;
         let _video = get_video(*_id);
         let _list = _video.get_list();
-        let mut owner_path = "".to_string();
-        let mut owner_id = 0;
+        let owner_path : String;
+        let owner_id: i32;
         let is_open : bool;
         let text : String;
         let community_id = _list.community_id;
