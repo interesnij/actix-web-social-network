@@ -320,10 +320,10 @@ pub async fn edit_survey_page(session: Session, _id: web::Path<i32>) -> actix_we
             #[derive(TemplateOnce)]
             #[template(path = "desctop/surveys/edit_survey.stpl")]
             struct Template {
-                object: Survey,
+                survey: Survey,
             }
             let body = Template {
-                object: survey,
+                survey: survey,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
