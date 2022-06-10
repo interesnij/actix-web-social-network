@@ -26,7 +26,7 @@
 
           <% if count > 0 { %>
             <% for object in object_list.iter().rev() { %>
-              <% include!("../../messages/message.stpl");
+              <% include!("../../messages/message.stpl"); %>
             <% } %>
 
             <% if next_page_number > 0 { %>
