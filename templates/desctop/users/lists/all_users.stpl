@@ -18,7 +18,7 @@
                 </div>
             </div>
             <div class="card-body px-0 py-0">
-              <% if count_users > 0 { %>
+              <% if count > 0 { %>
               <ul class="list-group is_paginate">
                   <% for object in object_list.iter() { %>
                   <li class="list-group-item">

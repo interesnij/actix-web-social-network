@@ -25,7 +25,7 @@
 
                   </div>
 
-                  <% if object_list.len() > 0 { %>
+                  <% if count > 0 { %>
 
                   <ul class="list-group is_paginate">
                     <% for object in object_list.iter() { %>
@@ -34,7 +34,7 @@
                     </li>
                     <% } %>
                     <% if next_page_number > 0 { %>
-                    <div class="load centered m-1 next_page_list" data-link="/blacklist/?page=<%= next_page_number %>">
+                    <div class="load centered m-1 next_page_list" data-link="/users/blacklist/?page=<%= next_page_number %>">
                       <img src="/static/images/preloader.gif">
                     </div>
                     <% } %>

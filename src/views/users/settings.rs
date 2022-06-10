@@ -25,8 +25,8 @@ use futures::StreamExt;
 
 
 pub fn settings_urls(config: &mut web::ServiceConfig) {
-    config.route("/followings/", web::get().to(followings_page));
-    config.route("/blacklist/", web::get().to(blacklist_page));
+    config.route("/users/followings/", web::get().to(followings_page));
+    config.route("/users/blacklist/", web::get().to(blacklist_page));
     config.route("/users/settings/", web::get().to(settings_page));
     config.route("/users/settings/design/", web::get().to(design_settings_page));
     config.route("/users/settings/private/", web::get().to(private_settings_page));
