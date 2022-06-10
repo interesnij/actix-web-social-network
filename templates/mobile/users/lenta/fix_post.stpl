@@ -1,1 +1,1 @@
-<% include!("../../posts/user/post.stpl"); %>
+<% include!("../../posts/post.stpl"); %>

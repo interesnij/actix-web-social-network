@@ -38,6 +38,7 @@
 
   <span class="span_list_pk" list-pk="<%= list.id %>">
     <span class="list_pk" data-uuid="<%= list.id %>">
+
       <% if is_user_can_see_post_list { %>
       <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %>: </span>
 
@@ -48,7 +49,7 @@
           <% } else if object_list.len() > 0 { %>
 
             <% for object in object_list.iter() { %>
-                <% include!("../../posts/anon_post.stpl"); %>
+              <% include!("../../posts/anon_post.stpl"); %>
             <% } %>
             <% if next_page_number > 0 { %>
               <div class="load centered m-1 next_page_list" data-link="/communities/<%= community.id %>/wall/<%= list.id %>/?page=<%= next_page_number %>">

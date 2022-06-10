@@ -12,4 +12,4 @@
   <% } %>
 </span>
 
-<% include!("../../posts/user/anon_post_detail.stpl"); %>
+<% include!("../../posts/anon_post_detail.stpl"); %>

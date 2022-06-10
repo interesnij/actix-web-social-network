@@ -17,7 +17,7 @@
             </a>
             <div class="media-body">
               <h6 class="my-0 mt-1 list_name"><%= object.name %>
-                <% if request_user.is_administrator_of_community(community.id) { %>
+                <% if community.id == request_user.id { %>
                   (<span class="handle"><%= object.count %></span>)
                 <% } else { %>
                   (<%= object.count %>)
@@ -34,14 +34,14 @@
           <% } else { %>
             pointer post_list_change
           <% } %>"
-          data-pk="<%= community.id %>" data-type="user_post_list" list-pk="<%= object.id %>">
+          data-pk="<%= community.id %>" data-type="community_post_list" list-pk="<%= object.id %>">
             <div class="media">
               <a href="<%= creator.link %>" class="ajax">
                 <figure><%- creator.get_s_avatar() %></figure>
               </a>
               <div class="media-body">
               <h6 class="my-0 mt-1 list_name"><%= object.name %>
-                <% if request_user.is_administrator_of_community(community.id) { %>
+                <% if community.id == request_user.id { %>
                   (<span class="handle"><%= object.count %></span>)
                 <% } else { %>
                   (<%= object.count %>)
