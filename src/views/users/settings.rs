@@ -917,55 +917,55 @@ pub async fn private_settings(session: Session, mut payload: Multipart) -> impl 
         let action_9: &str = &form.action[..3];
         if action_9 == "can" {
             match form.action.as_str() {
-                "can_see_all" => diesel::update(&user_private)
+                &"can_see_all" => diesel::update(&user_private)
                     .set(schema::user_privates::can_see_all.eq(form.value))
                     .get_result::<UserPrivate>(&_connection)
                     .expect("Error."),
-                "can_see_community" => diesel::update(&user_private)
+                &"can_see_community" => diesel::update(&user_private)
                     .set(schema::user_privates::can_see_community.eq(form.value))
                     .get_result::<UserPrivate>(&_connection)
                     .expect("Error."),
-                "can_see_info" => diesel::update(&user_private)
+                &"can_see_info" => diesel::update(&user_private)
                     .set(schema::user_privates::can_see_info.eq(form.value))
                     .get_result::<UserPrivate>(&_connection)
                     .expect("Error."),
-                "can_see_friend" => diesel::update(&user_private)
+                &"can_see_friend" => diesel::update(&user_private)
                     .set(schema::user_privates::can_see_friend.eq(form.value))
                     .get_result::<UserPrivate>(&_connection)
                     .expect("Error."),
-                "can_send_message" => diesel::update(&user_private)
+                &"can_send_message" => diesel::update(&user_private)
                     .set(schema::user_privates::can_send_message.eq(form.value))
                     .get_result::<UserPrivate>(&_connection)
                     .expect("Error."),
-                "can_add_in_chat" => diesel::update(&user_private)
+                &"can_add_in_chat" => diesel::update(&user_private)
                     .set(schema::user_privates::can_add_in_chat.eq(form.value))
                     .get_result::<UserPrivate>(&_connection)
                     .expect("Error."),
-                "can_see_post" => diesel::update(&user_private)
+                &"can_see_post" => diesel::update(&user_private)
                     .set(schema::user_privates::can_see_post.eq(form.value))
                     .get_result::<UserPrivate>(&_connection)
                     .expect("Error."),
-                "can_see_photo" => diesel::update(&user_private)
+                &"can_see_photo" => diesel::update(&user_private)
                     .set(schema::user_privates::can_see_photo.eq(form.value))
                     .get_result::<UserPrivate>(&_connection)
                     .expect("Error."),
-                "can_see_good" => diesel::update(&user_private)
+                &"can_see_good" => diesel::update(&user_private)
                     .set(schema::user_privates::can_see_good.eq(form.value))
                     .get_result::<UserPrivate>(&_connection)
                     .expect("Error."),
-                "can_see_video" => diesel::update(&user_private)
+                &"can_see_video" => diesel::update(&user_private)
                     .set(schema::user_privates::can_see_video.eq(form.value))
                     .get_result::<UserPrivate>(&_connection)
                     .expect("Error."),
-                "can_see_music" => diesel::update(&user_private)
+                &"can_see_music" => diesel::update(&user_private)
                     .set(schema::user_privates::can_see_music.eq(form.value))
                     .get_result::<UserPrivate>(&_connection)
                     .expect("Error."),
-                "can_see_planner" => diesel::update(&user_private)
+                &"can_see_planner" => diesel::update(&user_private)
                     .set(schema::user_privates::can_see_planner.eq(form.value))
                     .get_result::<UserPrivate>(&_connection)
                     .expect("Error."),
-                "can_see_doc" => diesel::update(&user_private)
+                &"can_see_doc" => diesel::update(&user_private)
                     .set(schema::user_privates::can_see_doc.eq(form.value))
                     .get_result::<UserPrivate>(&_connection)
                     .expect("Error."),
