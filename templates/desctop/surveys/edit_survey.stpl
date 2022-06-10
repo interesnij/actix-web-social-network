@@ -10,7 +10,7 @@
                 </div>
                 <span id="answers_container">
 
-                  <div class="form-group answers_add_form <% if survey.is_full_answers() %>hidden<% } %>">
+                  <div class="form-group answers_add_form <% if survey.is_full_answers() { %>hidden<% } %>">
                     <div>
                       <div>
                         <span class="input-group-text add_answer pointer">Добавить вариант ответа</span>
@@ -18,7 +18,7 @@
                     </div>
                   </div>
                   <span id="answers_container" class="worker_drag_container">
-                  <% for answer in survey.get_answers() { %>
+                  <% for answer in survey.get_answers().iter() { %>
                   <div class="form-group">
                     <div class="input-group">
                       <div class="input-group-prepend"><span class="input-group-text handle">≡</span></div>
