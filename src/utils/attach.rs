@@ -179,8 +179,6 @@ pub fn add_edited_post_list(pk: i32) -> String {
     use crate::models::PostList;
     let _connection = establish_connection();
 
-    //let mut link = "".to_string();
-    //let mut image = "".to_string();
     let owner : String;
 
     let list = post_lists
@@ -250,7 +248,7 @@ pub fn add_music_list(pk: i32) -> String {
         owner = creator.id.to_string();
     }
 
-    let mut image = "".to_string();
+    let image : String;
     if list.image.is_some() {
         image = "<img src='".to_owned() + &list.image.as_ref().unwrap() + &"' style='width:120px;height:120px;' alt='image'>".to_string();
     }

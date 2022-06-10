@@ -23,7 +23,7 @@ pub fn get_list_variables(req: HttpRequest) -> (bool, i32) {
     use crate::utils::PaginationParams;
 
     let params_some = web::Query::<PaginationParams>::from_query(&req.query_string());
-    let mut page: i32 = 0;
+    let page: i32;
 
     if params_some.is_ok() {
         let params = params_some.unwrap();
