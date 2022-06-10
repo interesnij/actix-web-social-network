@@ -202,11 +202,9 @@ pub async fn add_user_list_page(session: Session) -> actix_web::Result<HttpRespo
         #[derive(TemplateOnce)]
         #[template(path = "desctop/photos/user/add_list.stpl")]
         struct Template {
-            request_user:  User,
             reaction_list: Vec<Reaction>,
         }
         let body = Template {
-            request_user: _request_user,
             reaction_list: reaction_list,
         }
         .render_once()
@@ -474,7 +472,7 @@ pub async fn load_photo_page(session: Session, req: HttpRequest, photo_id: web::
             struct Template {
                 list:                      PhotoList,
                 object:                    Photo,
-                is_user_can_see_photo_list: bool, 
+                is_user_can_see_photo_list: bool,
                 is_user_can_see_comments:  bool,
                 object_list:               Vec<PhotoComment>,
                 next_page_number:          i32,

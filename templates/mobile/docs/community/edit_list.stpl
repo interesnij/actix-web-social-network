@@ -1,5 +1,5 @@
 
-    <form id="post_list_form" data-folder="/docs" class="is_stat_list case_create" community-pk="<%= community.id %>" data-pk="<%= list.id %>" data-type="edit_community_doc_list">
+    <form id="post_list_form" data-folder="/docs" class="case_create" community-pk="<%= community.id %>" data-pk="<%= list.id %>" data-type="none">
         <div class="card mb-3">
             <div class="card-header border-bottom">
                 <h5 class="content-color-primary mb-0">Изменение списка документов</h5>

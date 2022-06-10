@@ -196,10 +196,8 @@ pub async fn add_user_list_page(session: Session) -> actix_web::Result<HttpRespo
         #[derive(TemplateOnce)]
         #[template(path = "desctop/docs/user/add_list.stpl")]
         struct Template {
-            request_user: User,
         }
         let body = Template {
-            request_user: _request_user,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -226,11 +224,9 @@ pub async fn edit_user_list_page(session: Session, _id: web::Path<i32>) -> actix
             #[derive(TemplateOnce)]
             #[template(path = "desctop/docs/user/edit_list.stpl")]
             struct YTemplate {
-                request_user: User,
                 list: DocList,
             }
             let body = YTemplate {
-                request_user: _request_user,
                 list: list,
             }
             .render_once()

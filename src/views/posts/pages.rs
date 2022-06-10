@@ -51,11 +51,9 @@ pub async fn add_user_list_page(session: Session) -> actix_web::Result<HttpRespo
         #[derive(TemplateOnce)]
         #[template(path = "desctop/posts/user/add_list.stpl")]
         struct Template {
-            request_user:  User,
             reaction_list: Vec<Reaction>,
         }
         let body = Template {
-            request_user:  _request_user,
             reaction_list: reaction_list,
         }
         .render_once()
@@ -91,12 +89,10 @@ pub async fn edit_user_list_page(session: Session, _id: web::Path<i32>) -> actix
             #[derive(TemplateOnce)]
             #[template(path = "desctop/posts/user/edit_list.stpl")]
             struct YTemplate {
-                request_user:  User,
                 list:          PostList,
                 reaction_list: Vec<Reaction>,
             }
             let body = YTemplate {
-                request_user:  _request_user,
                 list:          list,
                 reaction_list: reaction_list,
             }
