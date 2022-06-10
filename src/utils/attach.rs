@@ -1084,7 +1084,7 @@ pub fn add_anon_survey(pk: i32) -> String {
 
     let name : String;
     let link : String;
-    let answers : String;
+    let mut answers = "".to_string();
     let info : String;
     let drops = "<span class='dropdown-item copy_link'>Копировать ссылку</span>".to_string();
 
@@ -1155,7 +1155,7 @@ pub fn add_survey(pk: i32, is_staff: bool, user_id: i32) -> String {
     let name : String;
     let link : String;
     let multiple_class : String;
-    let answers : String;
+    let mut answers = "".to_string();
     let vote_svg : String;
     let info : String;
 
@@ -1241,7 +1241,7 @@ pub fn add_edited_survey(pk: i32) -> String {
 
     let name : String;
     let link : String;
-    let answers : String;
+    let mut answers = "".to_string();
     let info : String;
     let drops = "<span class='dropdown-item copy_link'>Копировать ссылку</span>".to_string();
 
