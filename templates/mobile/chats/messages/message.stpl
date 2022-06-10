@@ -17,14 +17,14 @@
       is_have_edited
     <% } %>" data-uuid="<%= object.id %>" data-pk="<%= object.id %>">
     <figure>
-      <a href="<%= object.link %>" class="ajax no_select">
+      <a href="<%= creator.link %>" class="ajax no_select">
         <%- creator.get_40_avatar() %>
       </a>
     </figure>
     <div class="media-body t_f">
       <h5 class="time-title mb-0">
-        <a href="<%= object.link %>" class="ajax creator_link">
-          <span class="creator_name"><%= object.get_full_name() %></span>
+        <a href="<%= creator.link %>" class="ajax creator_link">
+          <span class="creator_name"><%= creator.get_full_name() %></span>
         </a>
         <span class="favourite_icon">
           <% if object.is_favourite(request_user.id) { %>
