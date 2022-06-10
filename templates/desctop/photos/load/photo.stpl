@@ -45,7 +45,7 @@
             <% include!("../../generic/items/item_footer.stpl"); %>
           </div>
           <div class="load_comments" style="max-height: 500px">
-            <% include!("../generic/items/comment/comments.stpl"); %>
+            <% include!("../../generic/items/comment/comments.stpl"); %>
           </div>
       </div>
     </div>
