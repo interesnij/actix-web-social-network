@@ -495,9 +495,9 @@ impl DocList {
         if self.community_id.is_some() {
             let community = self.get_community();
             return match char.as_str() {
-                "f" => community.get_members_ids().iter().any(|&i| i==user_id),
-                "h" => community.get_administrators_ids().iter().any(|&i| i==user_id),
-                "g" => community.user_id == user_id,
+                "g" => community.get_members_ids().iter().any(|&i| i==user_id),
+                "p" => community.get_administrators_ids().iter().any(|&i| i==user_id),
+                "o" => community.user_id == user_id,
                 "h" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
                 "i" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
                 _ => false,
@@ -508,7 +508,7 @@ impl DocList {
             return match char.as_str() {
                 "b" => creator.get_friends_ids().iter().any(|&i| i==user_id),
                 "c" => creator.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
-                "g" => creator.id == user_id,
+                "o" => creator.id == user_id,
                 "e" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
                 "f" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
                 _ => false,
@@ -525,9 +525,9 @@ impl DocList {
         if self.community_id.is_some() {
             let community = self.get_community();
             return match char.as_str() {
-                "f" => community.get_members_ids().iter().any(|&i| i==user_id),
-                "h" => community.get_administrators_ids().iter().any(|&i| i==user_id),
-                "g" => community.user_id == user_id,
+                "g" => community.get_members_ids().iter().any(|&i| i==user_id),
+                "p" => community.get_administrators_ids().iter().any(|&i| i==user_id),
+                "o" => community.user_id == user_id,
                 "h" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
                 "i" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
                 _ => false,
@@ -538,7 +538,7 @@ impl DocList {
             return match char.as_str() {
                 "b" => creator.get_friends_ids().iter().any(|&i| i==user_id),
                 "c" => creator.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
-                "g" => creator.id == user_id,
+                "o" => creator.id == user_id,
                 "e" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
                 "f" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
                 _ => false,
@@ -555,9 +555,9 @@ impl DocList {
         if self.community_id.is_some() {
             let community = self.get_community();
             return match char.as_str() {
-                "f" => community.get_members_ids().iter().any(|&i| i==user_id),
-                "h" => community.get_administrators_ids().iter().any(|&i| i==user_id),
-                "g" => community.user_id == user_id,
+                "g" => community.get_members_ids().iter().any(|&i| i==user_id),
+                "p" => community.get_administrators_ids().iter().any(|&i| i==user_id),
+                "o" => community.user_id == user_id,
                 "h" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
                 "i" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
                 _ => false,
@@ -568,7 +568,7 @@ impl DocList {
             return match char.as_str() {
                 "b" => creator.get_friends_ids().iter().any(|&i| i==user_id),
                 "c" => creator.get_friend_and_friend_of_friend_ids().iter().any(|&i| i==user_id),
-                "g" => creator.id == user_id,
+                "o" => creator.id == user_id,
                 "e" => !self.get_can_see_el_exclude_users_ids().iter().any(|&i| i==user_id),
                 "f" => self.get_can_see_el_include_users_ids().iter().any(|&i| i==user_id),
                 _ => false,
