@@ -962,7 +962,7 @@ pub async fn goods_list_load(session: Session, req: HttpRequest, list_id: web::P
 }
 
 pub async fn lists_for_copy_load(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    let (type_exists, comment_id, types) = get_type(&req);
+    let (_type_exists, _comment_id, types) = get_type(&req);
 
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(&session);
@@ -1054,7 +1054,7 @@ pub async fn lists_for_copy_load(session: Session, req: HttpRequest) -> actix_we
 }
 
 pub async fn communities_lists_for_copy_load(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    let (type_exists, comment_id, types) = get_type(&req);
+    let (_type_exists, _comment_id, types) = get_type(&req);
 
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(&session);
@@ -1299,14 +1299,14 @@ pub async fn friends_load(session: Session, req: HttpRequest) -> actix_web::Resu
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/friends.stpl")]
             struct Template {
-                request_user:                User,
+                //request_user:                User,
                 object_list:                 Vec<User>,
                 next_page_number:            i32,
                 //count:                       i32,
             }
 
             let body = Template {
-                request_user:                _request_user,
+                //request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
                 //count:                       count,
@@ -1319,14 +1319,14 @@ pub async fn friends_load(session: Session, req: HttpRequest) -> actix_web::Resu
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/friends.stpl")]
             struct Template {
-                request_user:                User,
+                //request_user:                User,
                 object_list:                 Vec<User>,
                 next_page_number:            i32,
                 //count:                       i32,
             }
 
             let body = Template {
-                request_user:                _request_user,
+                //request_user:                _request_user,
                 object_list:                 object_list,
                 next_page_number:            next_page_number,
                 //count:                       count,
@@ -1361,14 +1361,14 @@ pub async fn smiles_stickers_load(session: Session, req: HttpRequest) -> actix_w
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/smiles_stickers.stpl")]
             struct Template {
-                request_user:     User,
+                //request_user:     User,
                 s_categories:     Vec<SmileCategorie>,
                 current_category: usize,
                 categories:       Vec<StickerCategorie>,
             }
 
             let body = Template {
-                request_user:     _request_user,
+                //request_user:     _request_user,
                 s_categories:     s_categories,
                 current_category: current_category,
                 categories:       categories,
@@ -1381,14 +1381,14 @@ pub async fn smiles_stickers_load(session: Session, req: HttpRequest) -> actix_w
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/smiles_stickers.stpl")]
             struct Template {
-                request_user:     User,
+                //request_user:     User,
                 s_categories:     Vec<SmileCategorie>,
                 current_category: usize,
                 categories:       Vec<StickerCategorie>,
             }
 
             let body = Template {
-                request_user:     _request_user,
+                //request_user:     _request_user,
                 s_categories:     s_categories,
                 current_category: current_category,
                 categories:       categories,
@@ -1571,7 +1571,7 @@ pub async fn communities_load(session: Session, req: HttpRequest) -> actix_web::
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/communities.stpl")]
             struct Template {
-                request_user:     User,
+                //request_user:     User,
                 object_list:      Vec<Community>,
                 next_page_number: i32,
                 //count:            usize,
@@ -1579,7 +1579,7 @@ pub async fn communities_load(session: Session, req: HttpRequest) -> actix_web::
             }
 
             let body = Template {
-                request_user:     _request_user,
+                //request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 //count:            count,
@@ -1593,7 +1593,7 @@ pub async fn communities_load(session: Session, req: HttpRequest) -> actix_web::
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/communities.stpl")]
             struct Template {
-                request_user:     User,
+                //request_user:     User,
                 object_list:      Vec<Community>,
                 next_page_number: i32,
                 //count:            usize,
@@ -1601,7 +1601,7 @@ pub async fn communities_load(session: Session, req: HttpRequest) -> actix_web::
             }
 
             let body = Template {
-                request_user:     _request_user,
+                //request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 //count:            count,
@@ -1842,7 +1842,7 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/list_exclude_users.stpl")]
             struct Template {
-                request_user:        User,
+                //request_user:        User,
                 object_list:         Vec<User>,
                 users:               Vec<User>,
                 next_page_number:    i32,
@@ -1852,7 +1852,7 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
             }
 
             let body = Template {
-                request_user:        _request_user,
+                //request_user:        _request_user,
                 object_list:         object_list,
                 users:               users_list,
                 next_page_number:    next_page_number,
@@ -1869,7 +1869,7 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/list_exclude_users.stpl")]
             struct Template {
-                request_user:        User,
+                //request_user:        User,
                 object_list:         Vec<User>,
                 users:               Vec<User>,
                 next_page_number:    i32,
@@ -1879,7 +1879,7 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
             }
 
             let body = Template {
-                request_user:        _request_user,
+                //request_user:        _request_user,
                 object_list:         object_list,
                 users:               users_list,
                 next_page_number:    next_page_number,
@@ -2121,7 +2121,7 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/list_include_users.stpl")]
             struct Template {
-                request_user:     User,
+                //request_user:     User,
                 object_list:      Vec<User>,
                 users:            Vec<User>,
                 next_page_number: i32,
@@ -2131,7 +2131,7 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
             }
 
             let body = Template {
-                request_user:     _request_user,
+                //request_user:     _request_user,
                 object_list:      object_list,
                 users:            users_list,
                 next_page_number: next_page_number,
@@ -2148,7 +2148,7 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/list_include_users.stpl")]
             struct Template {
-                request_user:        User,
+                //request_user:        User,
                 object_list:         Vec<User>,
                 users:               Vec<User>,
                 next_page_number:    i32,
@@ -2158,7 +2158,7 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
             }
 
             let body = Template {
-                request_user:        _request_user,
+                //request_user:        _request_user,
                 object_list:         object_list,
                 users:               users_list,
                 next_page_number:    next_page_number,
