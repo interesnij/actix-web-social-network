@@ -704,12 +704,10 @@ pub async fn add_good_in_list_page(session: Session, _id: web::Path<i32>) -> act
             #[derive(TemplateOnce)]
             #[template(path = "desctop/goods/create_good.stpl")]
             struct Template {
-                request_user: User,
                 list:         GoodList,
                 categories:   Vec<GoodSubcategorie>,
             }
             let body = Template {
-                request_user: _request_user,
                 list:         list,
                 categories:   categories,
             }
@@ -746,14 +744,12 @@ pub async fn edit_good_page(session: Session, _id: web::Path<i32>) -> actix_web:
             #[derive(TemplateOnce)]
             #[template(path = "desctop/goods/edit_good.stpl")]
             struct Template {
-                request_user: User,
-                object:       Good,
-                categories:   Vec<GoodSubcategorie>,
+                object:     Good,
+                categories: Vec<GoodSubcategorie>,
             }
             let body = Template {
-                request_user: _request_user,
-                object:       good,
-                categories:   categories,
+                object:     good,
+                categories: categories,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
