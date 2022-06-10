@@ -11,7 +11,7 @@
       <% if object_list.len() > 0 { %>
       <% for object in object_list { %>
         <% let creator = object.get_creator(); %>
-          <div class="message media pb-0 pt-1 border-bottom" data-uuid="<%= object.id %>" data-pk="<%= object.id %>" style="display:block">
+          <div class="message media pb-0 pt-1 border-bottom" data-pk="<%= object.id %>" style="display:block">
             <div class="media">
               <figure>
                 <a href="<%= creator.link %>" class="ajax no_select">

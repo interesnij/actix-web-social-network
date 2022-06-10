@@ -1,1 +1,37 @@
-<%= count %>
+
+<div class="container main-container mt-3" data-pk="<%= request_user.id %>" data-type="closed_chat_list">
+<div class="row">
+    <div class="col-md-8 chat_list_container" data-pk="<%= request_user.id %>" style="min-height: 800px;">
+        <div class="card">
+            <div class="card-body px-0 py-0">
+              <% if count > 0 { %>
+
+              <ul class="list-group is_paginate">
+                <% for object in object_list { %>
+                  <li class="list-group-item" data-pk="<%= object.id %>">
+                    <a class="chat_ajax" href="/chat/<%= object.id %>/">
+                      <%- object.get_preview_message(request_user.id) %>
+                    </a>
+                  </li>
+                <% } %>
+                <% if next_page_number > 0 { %>
+                <div class="load centered m-1 next_page_list" data-link="/chat/closed_support_chats/?page=<%=next_page_number %>">
+                    <img src="/static/images/preloader.gif">
+                </div>
+                <% } %>
+              </ul>
+
+              <% } else { %>
+              <div class="card message_empty centered mb-3">
+                <h6 style="margin: 20px;text-align: center;">
+                   Пока обращений в техподдержку нет.
+                </h6>
+              </div>
+              <% } %>
+            </div>
+        </div>
+    </div>
+
+    <% include!("detail/right_panel.stpl"); %>
+</div>
+</div>
