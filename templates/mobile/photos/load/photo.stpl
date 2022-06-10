@@ -59,7 +59,7 @@
   </div>
   <span class="content_block"><span>
       <div class="card image_card rounded-0 border-0 mb-3">
-        <% include!("../image.stpl"); %>
+        <img style="width: 100%;" src="<%= object.file %>" alt="image">
     </div>
     <% if object.description.is_some() { %>
       <%= object.description.as_deref().unwrap() %>
