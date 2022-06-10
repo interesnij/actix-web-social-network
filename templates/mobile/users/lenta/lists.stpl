@@ -1,0 +1,57 @@
+<div class="row overflow-x-auto no-gutters pb-2">
+  <div class="col-12">
+  <ul class="date-list border-top" style="width:max-content">
+    <% for (i, object) in user.get_post_lists().iter().enumerate() { %>
+        <% if object.community_id.is_some() { %>
+        <% let community = object.get_community(); %>
+        <div class="date community list u_list
+          <% if i == 0 { %>
+            active
+          <% } else { %>
+            pointer post_list_change
+          <% } %>"
+          data-pk="<%= community.id %>" list-pk="<%= object.id %>" data-type="community_post_list">
+          <div class="media">
+            <a href="<%= community.link %>" class="ajax">
+              <figure><%- community.get_s_avatar() %></figure>
+            </a>
+            <div class="media-body">
+              <h6 class="my-0 mt-1 list_name"><%= object.name %>
+                <% if user.id == request_user.id { %>
+                  (<span class="handle"><%= object.count %></span>)
+                <% } else { %>
+                  (<%= object.count %>)
+                <% } %>
+              </h6>
+            </div>
+          </div>
+        </div>
+        <% } else { %>
+          <% let creator = object.get_creator(); %>
+          <div class="date list u_list
+          <% if i == 0 { %>
+            active
+          <% } else { %>
+            pointer post_list_change
+          <% } %>"
+          data-pk="<%= user.id %>" data-type="user_post_list" list-pk="<%= object.id %>">
+            <div class="media">
+              <a href="<%= creator.link %>" class="ajax">
+                <figure><%- creator.get_s_avatar() %></figure>
+              </a>
+              <div class="media-body">
+              <h6 class="my-0 mt-1 list_name"><%= object.name %>
+                <% if user.id == request_user.id { %>
+                  (<span class="handle"><%= object.count %></span>)
+                <% } else { %>
+                  (<%= object.count %>)
+                <% } %>
+              </h6>
+              </div>
+            </div>
+          </div>
+        <% } %>
+    <% } %>
+  </ul>
+  </div>
+</div>

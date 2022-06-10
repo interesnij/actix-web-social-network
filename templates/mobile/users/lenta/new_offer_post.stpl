@@ -1,0 +1,61 @@
+
+<div class="card mb-3" style="border:1px solid rgba(0, 0, 0, 0.125);">
+    <form id="form_post" name="new_post">
+        <div class="card-body p-0">
+            <div style="display:inline-block" contenteditable="true" placeholder="Добавить запись в список" class="form-control new_element_text input_new_post_in_list smile_supported"></div>
+        </div>
+        <div class="card-footer border-top btn_default" style="padding: 0 15px;display:none">
+            <span class="files_0 row"></span>
+
+            <div class="row">
+                <div class="col attach_panel" style="display: flex;">
+                  <a class="btn btn-link btn-sm pointer menu_drop">
+                    медиа
+                  </a>
+                  <div class="dropdown-menu" style="">
+                      <a class="dropdown-item u_select_photo">Изображение</a>
+                      <a class="dropdown-item u_select_video">Видеозапись</a>
+                      <a class="dropdown-item u_select_music">Аудиозапись</a>
+                  </div>
+                  <a class="btn btn-link btn-sm pointer menu_drop">
+                    еще
+                  </a>
+                  <div class="dropdown-menu">
+                      <a class="dropdown-item u_select_survey">Опрос</a>
+                      <a class="dropdown-item u_select_article">Статья</a>
+                      <a class="dropdown-item u_select_doc">Документ</a>
+                      <a class="dropdown-item u_select_good">Товар</a>
+                  </div>
+                  <a class="btn btn-link btn-sm pointer menu_drop">
+                    тема
+                  </a>
+                  <div class="dropdown-menu" style="left: 100px;">
+                    <% for object in request_user.get_post_categories().iter() { %>
+                    <span data-pk="<%= object.id %>">
+                      <a class="dropdown-item cat_list_select" style="padding-left: 30px;"><%= object.name %></a>
+                    </span>
+                    <% } %>
+                  </div>
+                </div>
+
+                <div class="col-auto" style="margin-left: auto;">
+                  <svg id="settings" class="svg_info svg_default pointer menu_drop" fill="currentColor" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><g><path d="M0,0h24v24H0V0z" fill="none"/><path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/></g>
+                  </svg>
+                  <div class="dropdown-menu" style="left: -126px;">
+                      <a class="dropdown-item">
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" name="comment_enabled" class="custom-control-input" checked id="id_comment_enabled">
+                          <label class="custom-control-label" for="id_comment_enabled" style="padding-top: 5px;">Комментарии включены</label>
+                        </div>
+                      </a>
+                  </div>
+                  <svg viewBox="0 0 24 24" class="svg_default svg_info pointer smile_dropdown" fill="currentColor"><path d="M0 0h24v24H0V0z" fill="none"></path><circle cx="15.5" cy="9.5" r="1.5"></circle><circle cx="8.5" cy="9.5" r="1.5"></circle><path d="M12 16c-1.48 0-2.75-.81-3.45-2H6.88c.8 2.05 2.79 3.5 5.12 3.5s4.32-1.45 5.12-3.5h-1.67c-.7 1.19-1.97 2-3.45 2zm-.01-14C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"></path></svg>
+                  <div class="hide_block_menu dropdown-menu" style="margin-top:-185px;left:-120px;width:250px"></div>
+                    <button type="button" id="add_offer_post_btn" class="btn btn-sm">
+                      <svg class="svg_default" fill="currentColor" width="24" height="24" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
