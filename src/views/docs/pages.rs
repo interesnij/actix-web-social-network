@@ -199,7 +199,7 @@ pub async fn add_user_list_page(session: Session) -> actix_web::Result<HttpRespo
             request_user: User,
         }
         let body = Template {
-            request_user: request_user,
+            request_user: _request_user,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
