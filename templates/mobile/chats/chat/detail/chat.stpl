@@ -1,5 +1,56 @@
 <% include!("../../../../base_block/base_mobile_header.stpl"); %>
 <div class="container main-container mt-3" data-type="chat" data-pk="<%= chat.id %>">
 
+<span>
+  <span>
+  <div class="custom_color fixed_header_chat" style="top:0">
+      <div class="chat_header ml-1 media w-100">
+        <%- chat.get_header_chat(request_user.id) %>
+      </div>
+      <% include!("../search.stpl"); %>
+      <div class="fixed_messages">
+        <% if chat.get_first_fix_message().is_some() { %>
+        <% include!("fixed_message.stpl"); %>
+        <% } else if chat.is_support() { %>
+        <% include!("support_block.stpl"); %>
+        <% } %>
+      </div>
+  </div>
+    <div class="chatview" chat-pk="<%= chat.id %>">
+        <ul class="chatlist is_paginate" style="margin-bottom: 80px;">
+          <% if next_page_number > 0 { %>
+            <div class="load centered m-1 next_page_list" data-link="/chat/<%= chat.id %>/?page=<%= next_page_number %>">
+              <img src="/static/images/preloader.gif">
+            </div>
+          <% } %>
+
+          <% if count > 0 { %>
+            <% for object in object_list.iter().rev() { %>
+              <% include!("../../messages/message.stpl");
+            <% } %>
+
+            <% if next_page_number > 0 { %>
+            <div class="load centered m-1 next_page_list" data-link="/chats/<%= chat.id %>/search/?page=<%=next_page_number%>">
+                <img src="/static/images/preloader.gif">
+            </div>
+            <% } %>
+
+            <% } else { %>
+            <div class="items_empty mb-3">
+              <div class="card-body"></div>
+              <h6 style="margin: 20px;text-align: center;">
+                Пока сообщений нет.
+              </h6>
+            </div>
+            <% } %>
+
+        </ul>
+    </div>
+    <% if chat.is_manager() == false { %>
+      <% include!("../form.stpl"); %>
+    <% } %>
+    </span>
+  </span>
 </div>
+
 <% include!("../../../../base_block/base_mobile_footer.stpl"); %>

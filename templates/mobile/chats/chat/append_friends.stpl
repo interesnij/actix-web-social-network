@@ -29,6 +29,11 @@
           </span>
           </div>
           <% } %>
+          <% if next_page_number > 0 { %>
+          <div class="load centered m-1 next_page_list" data-link="/chats/invite_members/<%= chat.id %>/?page=<%=next_page_number%>">
+              <img src="/static/images/preloader.gif">
+          </div>
+          <% } %>
 
           <% } else { %>
           <div class="items_empty mb-3">

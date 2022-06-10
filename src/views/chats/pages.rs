@@ -342,7 +342,7 @@ pub async fn chat_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
             struct Template {
                 title:        String,
                 request_user: User,
-                count_messages: usize,
+                count: usize,
                 next_page_number: i32,
                 object_list: Vec<Message>,
                 chat: Chat,
@@ -350,7 +350,7 @@ pub async fn chat_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
             let body = Template {
                 title:        "Сообщения".to_string(),
                 request_user: _request_user,
-                count_messages: count,
+                count: count,
                 next_page_number: next_page_number,
                 object_list: object_list,
                 chat: _chat,
@@ -364,7 +364,7 @@ pub async fn chat_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
             struct Template {
                 title:        String,
                 request_user: User,
-                count_messages: usize,
+                count: usize,
                 next_page_number: i32,
                 object_list: Vec<Message>,
                 chat: Chat,
@@ -372,7 +372,7 @@ pub async fn chat_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
             let body = Template {
                 title:        "Сообщения".to_string(),
                 request_user: _request_user,
-                count_messages: count,
+                count: count,
                 next_page_number: next_page_number,
                 object_list: object_list,
                 chat: _chat,
@@ -557,11 +557,11 @@ pub async fn private_chat_page(session: Session, _id: web::Path<i32>) -> actix_w
             #[derive(TemplateOnce)]
             #[template(path = "desctop/chats/chat/info/private.stpl")]
             struct Template {
-                request_user: User,
+                //request_user: User,
                 chat:         Chat,
             }
             let body = Template {
-                request_user: _request_user,
+                //request_user: _request_user,
                 chat:         _chat,
             }
             .render_once()
@@ -645,7 +645,7 @@ pub async fn chat_exclude_users_load(session: Session, req: HttpRequest, _id: we
             #[derive(TemplateOnce)]
             #[template(path = "desctop/chats/chat/info/exclude_users.stpl")]
             struct Template {
-                request_user:     User,
+                //request_user:     User,
                 chat:             Chat,
                 object_list:      Vec<User>,
                 users:            Vec<User>,
@@ -656,7 +656,7 @@ pub async fn chat_exclude_users_load(session: Session, req: HttpRequest, _id: we
             }
 
             let body = Template {
-                request_user:     _request_user,
+                //request_user:     _request_user,
                 chat:             _chat,
                 object_list:      object_list,
                 users:            users_list,
@@ -674,7 +674,7 @@ pub async fn chat_exclude_users_load(session: Session, req: HttpRequest, _id: we
             #[derive(TemplateOnce)]
             #[template(path = "mobile/chats/chat/info/exclude_users.stpl")]
             struct Template {
-                request_user:     User,
+                //request_user:     User,
                 chat:             Chat,
                 object_list:      Vec<User>,
                 users:            Vec<User>,
@@ -685,7 +685,7 @@ pub async fn chat_exclude_users_load(session: Session, req: HttpRequest, _id: we
             }
 
             let body = Template {
-                request_user:     _request_user,
+                //request_user:     _request_user,
                 chat:             _chat,
                 object_list:      object_list,
                 users:            users_list,
@@ -777,7 +777,7 @@ pub async fn chat_include_users_load(session: Session, req: HttpRequest, _id: we
             #[derive(TemplateOnce)]
             #[template(path = "desctop/chats/chat/info/include_users.stpl")]
             struct Template {
-                request_user:     User,
+                //request_user:     User,
                 chat:             Chat,
                 object_list:      Vec<User>,
                 users:            Vec<User>,
@@ -788,7 +788,7 @@ pub async fn chat_include_users_load(session: Session, req: HttpRequest, _id: we
             }
 
             let body = Template {
-                request_user:     _request_user,
+                //request_user:     _request_user,
                 chat:             _chat,
                 object_list:      object_list,
                 users:            users_list,
@@ -805,7 +805,7 @@ pub async fn chat_include_users_load(session: Session, req: HttpRequest, _id: we
             #[derive(TemplateOnce)]
             #[template(path = "mobile/chats/chat/info/include_users.stpl")]
             struct Template {
-                request_user:     User,
+                //request_user:     User,
                 chat:             Chat,
                 object_list:      Vec<User>,
                 users:            Vec<User>,
@@ -816,7 +816,7 @@ pub async fn chat_include_users_load(session: Session, req: HttpRequest, _id: we
             }
 
             let body = Template {
-                request_user:     _request_user,
+                //request_user:     _request_user,
                 chat:             _chat,
                 object_list:      object_list,
                 users:            users_list,
@@ -867,7 +867,7 @@ pub async fn chat_info_page(session: Session, req: HttpRequest, _id: web::Path<i
                 chat:             Chat,
                 object_list:      Vec<User>,
                 next_page_number: i32,
-                count:            i32,
+                //count:            i32,
             }
 
             let body = Template {
@@ -875,7 +875,7 @@ pub async fn chat_info_page(session: Session, req: HttpRequest, _id: web::Path<i
                 chat:             _chat,
                 object_list:      object_list,
                 next_page_number: next_page_number,
-                count:            count,
+                //count:            count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -890,7 +890,7 @@ pub async fn chat_info_page(session: Session, req: HttpRequest, _id: web::Path<i
                 chat:             Chat,
                 object_list:      Vec<User>,
                 next_page_number: i32,
-                count:            i32,
+                //count:            i32,
             }
 
             let body = Template {
@@ -898,7 +898,7 @@ pub async fn chat_info_page(session: Session, req: HttpRequest, _id: web::Path<i
                 chat:             _chat,
                 object_list:      object_list,
                 next_page_number: next_page_number,
-                count:            count,
+                //count:            count,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -951,14 +951,14 @@ pub async fn favourites_messages_page(session: Session, req: HttpRequest) -> act
             #[derive(TemplateOnce)]
             #[template(path = "desctop/chats/chat/favourites_list.stpl")]
             struct Template {
-                title:        String,
+                //title:        String,
                 request_user: User,
                 count:        usize,
                 next_page_number: i32,
                 object_list: Vec<Message>,
             }
             let body = Template {
-                title:        "Избранные сообщения".to_string(),
+                //title:        "Избранные сообщения".to_string(),
                 request_user: _request_user,
                 count: count,
                 next_page_number: next_page_number,
@@ -971,14 +971,14 @@ pub async fn favourites_messages_page(session: Session, req: HttpRequest) -> act
             #[derive(TemplateOnce)]
             #[template(path = "mobile/chats/chat/favourites_list.stpl")]
             struct Template {
-                title:        String,
+                //title:        String,
                 request_user: User,
                 count: usize,
                 next_page_number: i32,
                 object_list: Vec<Message>,
             }
             let body = Template {
-                title:        "Избранные сообщения".to_string(),
+                //title:        "Избранные сообщения".to_string(),
                 request_user: _request_user,
                 count: count,
                 next_page_number: next_page_number,

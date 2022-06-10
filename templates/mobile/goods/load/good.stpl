@@ -21,6 +21,9 @@
       </button>
       <div class="dropdown-menu" data-type="goo<%= object.id %>">
         <% if is_staff { %>
+          <span class="good_remove">Удалить запись</span>
+          <span class="good_edit">Редактировать</span>
+        <% } else if is_moderator { %>
           <span class="create_close">Закрыть</span>
         <% } else { %>
           <span class="create_claim">Пожаловаться</span>
