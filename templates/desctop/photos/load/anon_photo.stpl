@@ -38,9 +38,12 @@
         <div class="col interaction" data-type="pho<%= object.id %>">
           <% include!("../../generic/items/anon_item_footer.stpl"); %>
         </div>
-        <div class="load_comments" style="max-height: 500px">
-          <% include!("../../generic/items/comment/anon_comments.stpl"); %>
-        </div>
+
+        <% if is_user_can_see_comments { %>
+          <div class="load_comments" style="max-height: 500px">
+            <% include!("../../generic/items/comment/anon_comments.stpl"); %>
+          </div>
+        <% } %>
       </div>
     </div>
   </div>

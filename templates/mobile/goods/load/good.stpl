@@ -84,9 +84,11 @@
               </div>
             </div>
 
-            <div class="load_comments">
-              <% include!("../../generic/items/comment/comments.stpl"); %>
-            </div>
+            <% if is_user_can_see_comments { %>
+              <div class="load_comments">
+                <% include!("../../generic/items/comment/comments.stpl"); %>
+              </div>
+            <% } %>
         </div>
       </div>
   </div>
