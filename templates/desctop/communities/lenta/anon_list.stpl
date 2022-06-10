@@ -1,6 +1,6 @@
 <span class="load_block">
   <% let reactions_list = list.get_reactions_list(); %>
-  <% let fixed_posts = list.get_fixed_posts(); %>
+  <% let fixed_posts = community.get_fixed_posts(); %>
   <% let fixed_posts_count = fixed_posts.len(); %>
 
   <% if fixed_posts_count > 1 { %>
