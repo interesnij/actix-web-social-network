@@ -1,0 +1,42 @@
+<div class="media">
+
+<% if object.community_id.is_some() { %>
+  <% let photo_community = object.get_community(); %>
+  <a href="<%= photo_community.link %>" class="ajax">
+    <figure>
+      <%- photo_community.get_50_avatar() %>
+    </figure>
+  </a>
+    <div class="media-body">
+        <h6 class="mb-0">
+          <a href="<%= photo_community.link %>" class="ajax">
+            <%= photo_community.name %>
+          </a>
+        </h6>
+        <p class="mb-0">
+          <%= object.created.format("%d-%m-%Y в %H:%M").to_string() %>
+        </p>
+    </div>
+</div>
+
+<% } else { %>
+
+  <% let photo_creator = object.get_creator(); %>
+  <a href="<%= photo_creator.link %>" class="ajax">
+    <figure>
+      <%- photo_creator.get_50_avatar() %>
+    </figure>
+  </a>
+    <div class="media-body">
+        <h6 class="mb-0">
+          <a href="<%= photo_creator.link %>" class="ajax">
+            <%= photo_creator.get_full_name() %>
+          </a>
+        </h6>
+        <p class="mb-0">
+          <%= object.created.format("%d-%m-%Y в %H:%M").to_string() %>
+        </p>
+    </div>
+</div>
+
+<% } %>
