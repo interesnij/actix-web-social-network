@@ -1632,9 +1632,9 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
         let mut count: i32 = 0;
         let mut next_page_number: i32 = 0;
         let mut community_id: Option<i32> = None;
-        let mut types =  "".to_string();
-        let mut list =   "".to_string();
-        let mut text =   "".to_string();
+        let mut types = "".to_string();
+        let mut list = "".to_string();
+        let mut text =  "".to_string();
         if params_some.is_ok() {
             let params = params_some.unwrap();
             if params.action.is_some() {
@@ -1689,152 +1689,171 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
                 }
             }
         }
-        let pk: i32 = list[3..].parse().unwrap();
-        let code = &list[..3].to_string();
+        if list != "".to_string() {
+            let pk: i32 = list[3..].parse().unwrap();
+            let code = &list[..3].to_string();
 
-        if types == "can_see_el".to_string() {
-            text = "видеть записи".to_string();
-            if code == &"pos".to_string() {
-                use crate::utils::get_post_list;
-                let current_list = get_post_list(pk);
-                users_list = current_list.get_can_see_el_exclude_users()
+            if types == "can_see_el".to_string() {
+                text = "видеть записи".to_string();
+                if code == &"pos".to_string() {
+                    use crate::utils::get_post_list;
+                    let current_list = get_post_list(pk);
+                    users_list = current_list.get_can_see_el_exclude_users()
+                }
+                else if code == &"pho".to_string() {
+                    use crate::utils::get_photo_list;
+                    let current_list = get_photo_list(pk);
+                    users_list = current_list.get_can_see_el_exclude_users()
+                }
+                else if code == &"doc".to_string() {
+                    use crate::utils::get_doc_list;
+                    let current_list = get_doc_list(pk);
+                    users_list = current_list.get_can_see_el_exclude_users()
+                }
+                else if code == &"goo".to_string() {
+                    use crate::utils::get_good_list;
+                    let current_list = get_good_list(pk);
+                    users_list = current_list.get_can_see_el_exclude_users()
+                }
+                else if code == &"vid".to_string() {
+                    use crate::utils::get_video_list;
+                    let current_list = get_video_list(pk);
+                    users_list = current_list.get_can_see_el_exclude_users()
+                }
+                else if code == &"mus".to_string() {
+                    use crate::utils::get_music_list;
+                    let current_list = get_music_list(pk);
+                    users_list = current_list.get_can_see_el_exclude_users()
+                }
             }
-            else if code == &"pho".to_string() {
-                use crate::utils::get_photo_list;
-                let current_list = get_photo_list(pk);
-                users_list = current_list.get_can_see_el_exclude_users()
+            else if types == "can_see_comment".to_string() {
+                text = "видеть комментарии".to_string();
+                if code == &"pos".to_string() {
+                    use crate::utils::get_post_list;
+                    let current_list = get_post_list(pk);
+                    users_list = current_list.get_can_see_comment_exclude_users()
+                }
+                else if code == &"pho".to_string() {
+                    use crate::utils::get_photo_list;
+                    let current_list = get_photo_list(pk);
+                    users_list = current_list.get_can_see_comment_exclude_users()
+                }
+                else if code == &"goo".to_string() {
+                    use crate::utils::get_good_list;
+                    let current_list = get_good_list(pk);
+                    users_list = current_list.get_can_see_comment_exclude_users()
+                }
+                else if code == &"vid".to_string() {
+                    use crate::utils::get_video_list;
+                    let current_list = get_video_list(pk);
+                    users_list = current_list.get_can_see_comment_exclude_users()
+                }
             }
-            else if code == &"doc".to_string() {
-                use crate::utils::get_doc_list;
-                let current_list = get_doc_list(pk);
-                users_list = current_list.get_can_see_el_exclude_users()
+            else if types == "create_el".to_string() {
+                text = "создавать элементы".to_string();
+                if code == &"pos".to_string() {
+                    use crate::utils::get_post_list;
+                    let current_list = get_post_list(pk);
+                    users_list = current_list.get_create_el_exclude_users()
+                }
+                else if code == &"pho".to_string() {
+                    use crate::utils::get_photo_list;
+                    let current_list = get_photo_list(pk);
+                    users_list = current_list.get_create_el_exclude_users()
+                }
+                else if code == &"doc".to_string() {
+                    use crate::utils::get_doc_list;
+                    let current_list = get_doc_list(pk);
+                    users_list = current_list.get_create_el_exclude_users()
+                }
+                else if code == &"goo".to_string() {
+                    use crate::utils::get_good_list;
+                    let current_list = get_good_list(pk);
+                    users_list = current_list.get_create_el_exclude_users()
+                }
+                else if code == &"vid".to_string() {
+                    use crate::utils::get_video_list;
+                    let current_list = get_video_list(pk);
+                    users_list = current_list.get_create_el_exclude_users()
+                }
+                else if code == &"mus".to_string() {
+                    use crate::utils::get_music_list;
+                    let current_list = get_music_list(pk);
+                    users_list = current_list.get_create_el_exclude_users()
+                }
             }
-            else if code == &"goo".to_string() {
-                use crate::utils::get_good_list;
-                let current_list = get_good_list(pk);
-                users_list = current_list.get_can_see_el_exclude_users()
+            else if types == "create_comment".to_string() {
+                text = "создавать комментарии".to_string();
+                if code == &"pos".to_string() {
+                    use crate::utils::get_post_list;
+                    let current_list = get_post_list(pk);
+                    users_list = current_list.get_create_comment_exclude_users()
+                }
+                else if code == &"pho".to_string() {
+                    use crate::utils::get_photo_list;
+                    let current_list = get_photo_list(pk);
+                    users_list = current_list.get_create_comment_exclude_users()
+                }
+                else if code == &"goo".to_string() {
+                    use crate::utils::get_good_list;
+                    let current_list = get_good_list(pk);
+                    users_list = current_list.get_create_comment_exclude_users()
+                }
+                else if code == &"vid".to_string() {
+                    use crate::utils::get_video_list;
+                    let current_list = get_video_list(pk);
+                    users_list = current_list.get_create_comment_exclude_users()
+                }
             }
-            else if code == &"vid".to_string() {
-                use crate::utils::get_video_list;
-                let current_list = get_video_list(pk);
-                users_list = current_list.get_can_see_el_exclude_users()
-            }
-            else if code == &"mus".to_string() {
-                use crate::utils::get_music_list;
-                let current_list = get_music_list(pk);
-                users_list = current_list.get_can_see_el_exclude_users()
+            else if types == "copy_el".to_string() {
+                text = "копировать записи и список".to_string();
+                if code == &"pos".to_string() {
+                    use crate::utils::get_post_list;
+                    let current_list = get_post_list(pk);
+                    users_list = current_list.get_copy_el_exclude_users()
+                }
+                else if code == &"pho".to_string() {
+                    use crate::utils::get_photo_list;
+                    let current_list = get_photo_list(pk);
+                    users_list = current_list.get_copy_el_exclude_users()
+                }
+                else if code == &"doc".to_string() {
+                    use crate::utils::get_doc_list;
+                    let current_list = get_doc_list(pk);
+                    users_list = current_list.get_copy_el_exclude_users()
+                }
+                else if code == &"goo".to_string() {
+                    use crate::utils::get_good_list;
+                    let current_list = get_good_list(pk);
+                    users_list = current_list.get_copy_el_exclude_users()
+                }
+                else if code == &"vid".to_string() {
+                    use crate::utils::get_video_list;
+                    let current_list = get_video_list(pk);
+                    users_list = current_list.get_copy_el_exclude_users()
+                }
+                else if code == &"mus".to_string() {
+                    use crate::utils::get_music_list;
+                    let current_list = get_music_list(pk);
+                    users_list = current_list.get_copy_el_exclude_users()
+                }
             }
         }
-        else if types == "can_see_comment".to_string() {
-            text = "видеть комментарии".to_string();
-            if code == &"pos".to_string() {
-                use crate::utils::get_post_list;
-                let current_list = get_post_list(pk);
-                users_list = current_list.get_can_see_comment_exclude_users()
+        else {
+            if types == "can_see_el".to_string() {
+                text = "видеть записи".to_string();
             }
-            else if code == &"pho".to_string() {
-                use crate::utils::get_photo_list;
-                let current_list = get_photo_list(pk);
-                users_list = current_list.get_can_see_comment_exclude_users()
+            else if types == "can_see_comment".to_string() {
+                text = "видеть комментарии".to_string();
             }
-            else if code == &"goo".to_string() {
-                use crate::utils::get_good_list;
-                let current_list = get_good_list(pk);
-                users_list = current_list.get_can_see_comment_exclude_users()
+            else if types == "create_el".to_string() {
+                text = "создавать элементы".to_string();
             }
-            else if code == &"vid".to_string() {
-                use crate::utils::get_video_list;
-                let current_list = get_video_list(pk);
-                users_list = current_list.get_can_see_comment_exclude_users()
+            else if types == "create_comment".to_string() {
+                text = "писать комментарии".to_string();
             }
-        }
-        else if types == "create_el".to_string() {
-            text = "создавать элементы".to_string();
-            if code == &"pos".to_string() {
-                use crate::utils::get_post_list;
-                let current_list = get_post_list(pk);
-                users_list = current_list.get_create_el_exclude_users()
-            }
-            else if code == &"pho".to_string() {
-                use crate::utils::get_photo_list;
-                let current_list = get_photo_list(pk);
-                users_list = current_list.get_create_el_exclude_users()
-            }
-            else if code == &"doc".to_string() {
-                use crate::utils::get_doc_list;
-                let current_list = get_doc_list(pk);
-                users_list = current_list.get_create_el_exclude_users()
-            }
-            else if code == &"goo".to_string() {
-                use crate::utils::get_good_list;
-                let current_list = get_good_list(pk);
-                users_list = current_list.get_create_el_exclude_users()
-            }
-            else if code == &"vid".to_string() {
-                use crate::utils::get_video_list;
-                let current_list = get_video_list(pk);
-                users_list = current_list.get_create_el_exclude_users()
-            }
-            else if code == &"mus".to_string() {
-                use crate::utils::get_music_list;
-                let current_list = get_music_list(pk);
-                users_list = current_list.get_create_el_exclude_users()
-            }
-        }
-        else if types == "create_comment".to_string() {
-            text = "создавать комментарии".to_string();
-            if code == &"pos".to_string() {
-                use crate::utils::get_post_list;
-                let current_list = get_post_list(pk);
-                users_list = current_list.get_create_comment_exclude_users()
-            }
-            else if code == &"pho".to_string() {
-                use crate::utils::get_photo_list;
-                let current_list = get_photo_list(pk);
-                users_list = current_list.get_create_comment_exclude_users()
-            }
-            else if code == &"goo".to_string() {
-                use crate::utils::get_good_list;
-                let current_list = get_good_list(pk);
-                users_list = current_list.get_create_comment_exclude_users()
-            }
-            else if code == &"vid".to_string() {
-                use crate::utils::get_video_list;
-                let current_list = get_video_list(pk);
-                users_list = current_list.get_create_comment_exclude_users()
-            }
-        }
-        else if types == "copy_el".to_string() {
-            text = "копировать записи и список".to_string();
-            if code == &"pos".to_string() {
-                use crate::utils::get_post_list;
-                let current_list = get_post_list(pk);
-                users_list = current_list.get_copy_el_exclude_users()
-            }
-            else if code == &"pho".to_string() {
-                use crate::utils::get_photo_list;
-                let current_list = get_photo_list(pk);
-                users_list = current_list.get_copy_el_exclude_users()
-            }
-            else if code == &"doc".to_string() {
-                use crate::utils::get_doc_list;
-                let current_list = get_doc_list(pk);
-                users_list = current_list.get_copy_el_exclude_users()
-            }
-            else if code == &"goo".to_string() {
-                use crate::utils::get_good_list;
-                let current_list = get_good_list(pk);
-                users_list = current_list.get_copy_el_exclude_users()
-            }
-            else if code == &"vid".to_string() {
-                use crate::utils::get_video_list;
-                let current_list = get_video_list(pk);
-                users_list = current_list.get_copy_el_exclude_users()
-            }
-            else if code == &"mus".to_string() {
-                use crate::utils::get_music_list;
-                let current_list = get_music_list(pk);
-                users_list = current_list.get_copy_el_exclude_users()
+            else if types == "copy_el".to_string() {
+                text = "копировать список / элементы".to_string();
             }
         }
 
@@ -1911,9 +1930,9 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
         let mut next_page_number: i32 = 0;
         let mut count: i32 = 0;
         let mut community_id: Option<i32> = None;
-        let mut types =  "".to_string();
-        let mut list =   "".to_string();
-        let mut text =   "".to_string();
+        let mut types = "".to_string();
+        let mut list =  "".to_string();
+        let mut text =  "".to_string();
         if params_some.is_ok() {
             let params = params_some.unwrap();
             if params.action.is_some() {
