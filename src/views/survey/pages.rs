@@ -293,12 +293,10 @@ pub async fn add_survey_in_list_page(session: Session, _id: web::Path<i32>) -> a
             #[derive(TemplateOnce)]
             #[template(path = "desctop/surveys/create_survey.stpl")]
             struct Template {
-                request_user: User,
-                list:         SurveyList,
+                list: SurveyList,
             }
             let body = Template {
-                request_user: _request_user,
-                list:         list,
+                list: list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

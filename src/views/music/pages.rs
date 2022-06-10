@@ -301,12 +301,10 @@ pub async fn edit_track_page(session: Session, _id: web::Path<i32>) -> actix_web
             #[derive(TemplateOnce)]
             #[template(path = "desctop/music/edit_track.stpl")]
             struct Template {
-                request_user: User,
                 object:       Music,
                 genres:       Vec<SoundGenre>,
             }
             let body = Template {
-                request_user: _request_user,
                 object:       track,
                 genres:       genres,
             }

@@ -372,11 +372,9 @@ pub async fn add_tracks_in_list(session: Session, mut payload: Multipart, _id: w
             #[template(path = "desctop/music/tracks_list.stpl")]
             struct Template {
                 object_list: Vec<Music>,
-                request_user: User,
             }
             let body = Template {
                 object_list: files_list,
-                request_user: _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
