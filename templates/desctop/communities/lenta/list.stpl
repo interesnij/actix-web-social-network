@@ -46,7 +46,12 @@
 
         <% if is_user_can_see_post_list { %>
         <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %>: </span>
+          <% include!("../../generic/items/list_meta.stpl"); %>
 
+          <% if is_user_can_create_posts { %>
+            <% include!("new_post.stpl"); %>
+          <% } %>
+          <span></span>
           <span class="post_stream is_paginate">
             <% if list.is_open() == false { %>
               not open!
