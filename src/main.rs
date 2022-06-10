@@ -25,7 +25,7 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         let static_files = Files::new("/static", "static/").show_files_listing();
         let media_files = Files::new("/media", "media/").show_files_listing();
-        let private_key = actix_web::cookie::Key::generate();
+        //let private_key = actix_web::cookie::Key::generate();
         //let cors = Cors::default()
         //    .allowed_origin("151.248.120.138:9015")
         //    .allowed_methods(vec!["GET", "POST"])
