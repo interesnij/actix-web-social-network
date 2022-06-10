@@ -1848,6 +1848,7 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
                 next_page_number:    i32,
                 types:               String,
                 //count:               i32,
+                text:                String,
             }
 
             let body = Template {
@@ -1857,6 +1858,7 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
                 next_page_number:    next_page_number,
                 types:               types,
                 //count:               count,
+                text:                text,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1873,6 +1875,7 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
                 next_page_number:    i32,
                 types:               String,
                 //count:               i32,
+                text:                String,
             }
 
             let body = Template {
@@ -1882,6 +1885,7 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
                 next_page_number:    next_page_number,
                 types:               types,
                 //count:               count,
+                text:                text,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -2117,12 +2121,13 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/list_include_users.stpl")]
             struct Template {
-                request_user:     User,
+                request_user:     User, 
                 object_list:      Vec<User>,
                 users:            Vec<User>,
                 next_page_number: i32,
                 types:            String,
                 //count:            i32,
+                text:             String,
             }
 
             let body = Template {
@@ -2132,6 +2137,7 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
                 next_page_number: next_page_number,
                 types:            types,
                 //count:            count,
+                text:             text,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -2148,6 +2154,7 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
                 next_page_number:    i32,
                 types:               String,
                 //count:               i32,
+                text:                String,
             }
 
             let body = Template {
@@ -2157,6 +2164,7 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
                 next_page_number:    next_page_number,
                 types:               types,
                 //count:               count,
+                text:                text,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
