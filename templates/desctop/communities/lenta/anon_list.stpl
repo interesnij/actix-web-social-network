@@ -18,7 +18,7 @@
       <% for object in fixed_posts.iter() { %>
         <li class="scrollable">
           <% include!("../../posts/anon_fix_post.stpl"); %>
-        </li>
+        </li> 
       <% } %>
     </ul>
     <div class="slides_arrows">

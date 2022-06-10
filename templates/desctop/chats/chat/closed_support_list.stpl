@@ -14,7 +14,7 @@
                     <a class="chat_ajax" href="/chat/<%= object.id %>/">
                       <%- object.get_preview_message(request_user.id) %>
                     </a>
-                  </li>
+                  </li> 
                 <% } %>
                 <% if next_page_number > 0 { %>
                 <div class="load centered m-1 next_page_list" data-link="/chat/closed_support_chats/?page=<%=next_page_number %>">

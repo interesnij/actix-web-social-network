@@ -274,7 +274,7 @@ pub async fn closed_support_chats_page(session: Session, req: HttpRequest) -> ac
             #[derive(TemplateOnce)]
             #[template(path = "mobile/chats/chat/closed_support_list.stpl")]
             struct Template {
-                title:            String,
+                title:            String, 
                 request_user:     User,
                 count:            usize,
                 next_page_number: i32,
