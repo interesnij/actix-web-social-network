@@ -483,7 +483,7 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
     }
 }
 
-pub async fn check_custom_link(session: Session, req: HttpRequest, slug: web::Path<String>) -> actix_web::Result<HttpResponse> {
+pub async fn check_custom_link(slug: web::Path<String>) -> actix_web::Result<HttpResponse> {
     use crate::utils::custom_link_check;
 
     let link = slug.clone();
@@ -500,7 +500,7 @@ pub async fn create_repost_page(session: Session, req: HttpRequest) -> actix_web
     if is_signed_in(&session) {
         use crate::utils::{get_user_permission,get_community_permission};
 
-        let (type_exists, item_id, types) = get_type(&req);
+        let (_type_exists, item_id, types) = get_type(&req);
         let _request_user = get_request_user_data(&session);
         let _request_user_id = &_request_user.id;
         let text = "".to_string();
@@ -742,7 +742,7 @@ pub async fn create_claim_page(session: Session, req: HttpRequest) -> actix_web:
     if is_signed_in(&session) {
         use crate::utils::{get_user_permission,get_community_permission};
 
-        let (type_exists, item_id, types) = get_type(&req);
+        let (_type_exists, item_id, types) = get_type(&req);
         let _request_user = get_request_user_data(&session);
         let _request_user_id = &_request_user.id;
         let text = "".to_string();
@@ -971,12 +971,12 @@ pub async fn create_claim_page(session: Session, req: HttpRequest) -> actix_web:
             #[derive(TemplateOnce)]
             #[template(path = "desctop/generic/user/report.stpl")]
             struct Template {
-                request_user:  User,
-                text:          String,
+                //request_user:  User,
+                text:          String, 
                 types:         String,
             }
             let body = Template {
-                request_user:  _request_user,
+                //request_user:  _request_user,
                 text:          text,
                 types:         types,
             }
@@ -1019,7 +1019,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
         }
     }
     let is_auth = is_signed_in(&session);
-    let (is_desctop, page) = get_list_variables(req);
+    let (_is_desctop, page) = get_list_variables(req);
     let mut next_page_number = 0;
     let mut step = 0;
     let mut text = "".to_string();
@@ -1031,7 +1031,7 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
         step = (page - 1) * 20;
     }
 
-    let pre_types = &code[..1];
+    //let pre_types = &code[..1];
     if code == "c".to_string() {
         if code == "cpo".to_string() {
             use crate::utils::get_post_comment;

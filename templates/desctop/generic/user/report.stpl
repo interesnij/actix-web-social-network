@@ -1,7 +1,7 @@
 <form class="mt-4" style="min-height:400px">
     <input type="hidden" name="types" value="<%= types %>">
     <div class="card-header">
-      <h4>Создание жалобы</h4>
+      <h4>Создание жалобы <%= text %></h4>
     </div>
     <div class="card-body">
       <div class="form-group">

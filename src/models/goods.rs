@@ -3787,7 +3787,7 @@ impl GoodReaction {
                     .expect("Error."),
             };
 
-            let update_model = match old_types {
+            match old_types {
                 1 => diesel::update(self)
                     .set(schema::good_reactions::field_1.eq(self.field_1 - 1))
                     .get_result::<GoodReaction>(&_connection)

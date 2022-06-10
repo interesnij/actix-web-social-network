@@ -1,4 +1,4 @@
-
+<% if is_user_can_create_posts { %>
 <div class="card mb-3" style="border:1px solid rgba(0, 0, 0, 0.125);">
     <form id="form_post" name="new_post">
         <div class="card-body p-0">
@@ -60,3 +60,4 @@
         </div>
     </form>
 </div>
+<% } %>

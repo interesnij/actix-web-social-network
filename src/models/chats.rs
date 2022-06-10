@@ -324,7 +324,7 @@ impl Chat {
                     .expect("E.")
                     .len() == 0 {
 
-                    let member = self.create_membership(user, false);
+                    self.create_membership(user, false);
                     let text = concat_string!(
                         "<a target='_blank' href='",
                         creator.link, "'>",
@@ -352,7 +352,7 @@ impl Chat {
                         .values(&new_message_form)
                         .get_result::<Message>(&_connection)
                         .expect("Error.");
-                    for recipient in self.get_recipients_2(creator.id).iter() {
+                    for _recipient in self.get_recipients_2(creator.id).iter() {
                         println!("Socket!!");
                     }
                     info_messages.push(new_message);
@@ -1135,7 +1135,7 @@ impl Chat {
         let first_message = self.get_first_message(user_id);
         let mut preview_text: String;
         let mut is_read = "".to_string();
-        let mut creator_figure: String;
+        //let mut creator_figure: String;
         let mut created = "".to_string();
         let mut beep_icon = "".to_string();
 
@@ -1163,7 +1163,7 @@ impl Chat {
             }
         }
         else {
-            preview_text = first_message.get_text_60();
+            //preview_text = first_message.get_text_60();
             if first_message.user_id == user_id {
                 preview_text = "Вы: ".to_owned() + &first_message.get_type_text();
                 if first_message.unread == true {
@@ -1271,7 +1271,7 @@ impl Chat {
             )
         }
         else if self.is_support() {
-            let member = self.get_chat_member(user_id);
+            //let member = self.get_chat_member(user_id);
             let figure = "<figure><svg fill='currentColor' class='svg_default svg_default_50' viewBox='0 0 24 24'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/><path d='M0 0h24v24H0z' fill='none'/></svg></figure>".to_string();
             let mut name = "".to_string();
             let mut status = "".to_string();
@@ -2270,7 +2270,7 @@ impl Message {
             return (&self.content.as_deref().unwrap()).to_string();
         }
     }
-    pub fn get_edit_attach(&self, user_id: i32) -> String {
+    pub fn get_edit_attach(&self, _user_id: i32) -> String {
         if self.attach.is_some() {
             use crate::utils::edit_message_elements;
             return edit_message_elements(self.attach.as_ref().unwrap().to_string());
@@ -2319,7 +2319,7 @@ impl Message {
             " сообщения".to_string(),
             " сообщений".to_string(),
         );
-        let mut text_2 = "".to_string();
+        let text_2: String;
         if count > 1 {
             text_2 = "Пересланные сообщения".to_string();
         }
