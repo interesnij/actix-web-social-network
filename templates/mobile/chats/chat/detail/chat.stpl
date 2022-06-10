@@ -10,9 +10,9 @@
       <% include!("../search_2.stpl"); %>
       <div class="fixed_messages">
         <% if chat.get_first_fix_message().is_some() { %>
-        <% include!("fixed_message.stpl"); %>
+          <% include!("fixed_message.stpl"); %>
         <% } else if chat.is_support() { %>
-        <% include!("support_block.stpl"); %>
+          <% include!("support_block.stpl"); %>
         <% } %>
       </div>
   </div>
