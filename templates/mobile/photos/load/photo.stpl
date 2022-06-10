@@ -30,7 +30,6 @@
             <a class="dropdown-item mob_u_photo_on_comment pointer">Вкл. комментарии</a>
           <% } %>
           </span>
-        <% } %>
         <% } else if is_moderator { %>
           <span class="dropdown-item create_close pointer">Закрыть</span>
         <% } else { %>
