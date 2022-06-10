@@ -883,7 +883,6 @@ pub async fn change_phone_verify(session: Session, param: web::Path<(String,i32)
 }
 
 pub async fn private_settings(session: Session, mut payload: Multipart) -> impl Responder {
-
     if is_signed_in(&session) {
         use crate::models::UserPrivate;
 
@@ -918,7 +917,7 @@ pub async fn private_settings(session: Session, mut payload: Multipart) -> impl 
         let action_9: &str = &form.action[..3];
         let action = &form.action;
         if action_9 == "can" {
-            let _var = match action.as_str() { 
+            match action.to_string() { 
                 "can_see_all" => diesel::update(&user_private)
                     .set(schema::user_privates::can_see_all.eq(form.value))
                     .get_result::<UserPrivate>(&_connection)
