@@ -1689,7 +1689,7 @@ pub async fn list_exclude_users_load(session: Session, req: HttpRequest) -> acti
                 }
             }
         }
-        if list != "".to_string() {
+        if list != "null".to_string() {
             let pk: i32 = list[3..].parse().unwrap();
             let code = &list[..3].to_string();
 
