@@ -1,5 +1,3 @@
-
-
 <% if request_user.is_support() { %>
     <a class="pointer increase level_support_chat">Повысить уровень чата</a>
 <% } else { %>

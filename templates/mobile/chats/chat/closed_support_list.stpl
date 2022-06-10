@@ -32,6 +32,5 @@
         </div>
     </div>
 
-    <% include!("detail/right_panel.stpl"); %>
 </div>
 </div>
