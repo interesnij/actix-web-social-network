@@ -15,8 +15,8 @@
       </div>
 
       <div id="big_img" style="padding: 0;">
-        <% if object.image.is_empty() { %>
-          <img src="<%= object.image" class="big_img" alt="">
+        <% if object.image.is_some() { %>
+          <img src="<%= object.image.as_deref().unwrap() %>" class="big_img" alt="">
         <% } else { %>
           <img src="/static/images/no_img/list.jpg" class="big_img" alt="">
         <% } %>

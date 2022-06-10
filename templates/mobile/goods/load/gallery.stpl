@@ -15,33 +15,8 @@
       </div>
 
       <div id="big_img" style="padding: 0;">
-        {% if object.image %}
-        <img src="{{ object.image.url }}" class="big_img" alt="">
-        {% else %}
-        <img src="/static/images/no_img/list.jpg" class="big_img" alt="">
-        {% endif %}
-      </div>
-</div>
-
-<div class="product-gallery">
-      <div class="product-gallery-thumbnails">
-        <ol class="thumb_list list-unstyled" style="margin-bottom:-1.2rem;display:flex;">
-          <% if object.image.is_some() { %>
-          <li><img src="<%= object.image.as_deref().unwrap() %>" class="image_fit_50" alt="img"></li>
-          <% } else { %>
-            <img src="/static/images/no_img/list.jpg" class="big_img image_fit_50" alt="">
-          <% } %>
-          <% for img in object.get_images().iter() { %>
-            <li>
-              <img src="<%= img.src %>" class="image_fit_50" alt="img">
-            </li>
-          <% } %>
-        </ol>
-      </div>
-
-      <div id="big_img" style="padding: 0;">
-        <% if object.image.is_empty() { %>
-          <img src="<%= object.image" class="big_img" alt="">
+        <% if object.image.is_some() { %>
+          <img src="<%= object.image.as_deref().unwrap() %>" class="big_img" alt="">
         <% } else { %>
           <img src="/static/images/no_img/list.jpg" class="big_img" alt="">
         <% } %>
