@@ -1452,6 +1452,9 @@ impl Survey {
     pub fn is_have_votes(&self) -> bool {
         return self.vote > 0;
     }
+    pub fn is_full_answers(&self) -> bool {
+        return self.get_answers_count() > 9;
+    }
     pub fn is_user_voted(&self, user_id: i32) -> bool {
         use crate::models::survey::survey_votes::dsl::survey_votes;
         let _connection = establish_connection();
