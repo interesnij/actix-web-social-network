@@ -7,7 +7,7 @@
         <div class="chat_header ml-1 media w-100">
           <%- chat.get_header_chat(request_user.id) %>
         </div>
-        <% include!("../search.stpl"); %>
+        <% include!("../search_2.stpl"); %>
         <div class="fixed_messages">
           <% if chat.get_first_fix_message().is_some() { %>
           <% include!("fixed_message.stpl"); %>
