@@ -1,10 +1,13 @@
 <span class="load_block">
   <% let reactions_list = list.get_reactions_list(); %>
+  <% let fixed_posts = user.get_fixed_posts(); %>
+  <% let fixed_posts_count = fixed_posts.len(); %>
 
-  <% if user.count_fix_items() > 1 { %>
+  <% if fixed_posts_count > 1 { %>
   <div class="csslider infinity slider_100 mt-2">
     <p>Особые записи</p>
-    <% for (i, object) in user.get_fixed_posts_ids().iter().enumerate() { %>
+
+    <% for (i, _object) in fixed_posts.iter().enumerate() { %>
       <input type="radio" name="slides"
         <% if i == 0 { %>
           checked="checked"
@@ -12,24 +15,24 @@
         id="s_<%= i %>" />
     <% } %>
     <ul>
-      <% for object in user.get_fixed_posts().iter() { %>
+      <% for object in fixed_posts.iter() { %>
         <li class="scrollable">
           <% include!("../../posts/anon_fix_post.stpl"); %>
         </li>
       <% } %>
     </ul>
     <div class="slides_arrows">
-      <% for (i, object) in user.get_fixed_posts_ids().iter().enumerate() { %>
+      <% for (i, _object) in fixed_posts.iter().enumerate() { %>
         <label for="s_<%= i %>"></label>
       <% } %>
 
       <label class="goto_first" for="s_1"></label>
-      <label class="goto_last" for="s_<%= user.count_fix_items() %>"></label>
+      <label class="goto_last" for="s_<%= fixed_posts_count %>"></label>
     </div>
   </div>
-  <% } else if user.count_fix_items() == 1 { %>
+  <% } else if fixed_posts_count == 1 { %>
 
-  <% for object in user.get_fixed_posts().iter() { %>
+  <% for object in fixed_posts.iter() { %>
     <% include!("../../posts/anon_fix_post.stpl"); %>
   <% } %>
   <% } %>
