@@ -74,7 +74,7 @@
               <div class="col interaction" data-type="goo<%= object.id %>">
                 <% include!("../../generic/items/anon_item_footer.stpl"); %>
               </div>
-            </div>
+            </div> 
 
             <% if is_user_can_see_comments { %>
               <div class="load_comments">
