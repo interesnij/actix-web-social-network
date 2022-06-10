@@ -15,10 +15,36 @@
       </div>
 
       <div id="big_img" style="padding: 0;">
-        {% if object.image %}
-        <img src="{{ object.image.url }}" class="big_img" alt="">
-        {% else %}
-        <img src="/static/images/no_img/list.jpg" class="big_img" alt="">
-        {% endif %}
+        <% if object.image.is_empty() { %>
+          <img src="<%= object.image" class="big_img" alt="">
+        <% } else { %>
+          <img src="/static/images/no_img/list.jpg" class="big_img" alt="">
+        <% } %>
       </div>
 </div>
+
+<span>
+<% if is_staff { %>
+<span>
+  <span>
+    <a class="good_remove">Удалить</a>
+  </span>
+</span>
+&nbsp;
+
+  <span class="btn_settings_good" data-type="goo<%= object.id %>">
+      <span>
+        <% if object.comment_enabled { %>
+          <a class="good_off_comment">Выкл. комментарии</a>
+        <% } else { %>
+          <a class="good_on_comment">Вкл. комментарии</a>
+        <% } %>
+      </span>
+  </span>
+  <% } else if is_moderator { %>
+    <span class="create_close pointer">Закрыть</span>
+  <% } else { %>
+    <span class="create_claim pointer">Пожаловаться</span>
+  <% } %>
+  <span class="copy_link pointer">Скопировать ссылку</span>
+</span>

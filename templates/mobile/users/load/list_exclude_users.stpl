@@ -43,6 +43,12 @@
           </span>
           </div>
           <% } %>
+          <% if next_page_number > 0 { %>
+          <div class="load centered m-1 next_page_list" data-link="/users/load/list_exclude_users/?page=<%=next_page_number%>">
+              <img src="/static/images/preloader.gif">
+          </div>
+          <% } %>
+
         </div>
       </div>
       <div class="card-footer border-top">

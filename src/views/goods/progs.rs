@@ -477,14 +477,12 @@ pub async fn add_good_in_list(session: Session, mut payload: Multipart, _id: web
             );
 
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/goods/new_item.stpl")]
+            #[template(path = "desctop/goods/good.stpl")]
             struct Template {
                 object: Good,
-                request_user: User,
             }
             let body = Template {
                 object: new_good,
-                request_user: _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
