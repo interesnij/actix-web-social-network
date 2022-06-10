@@ -1156,7 +1156,7 @@ pub fn add_survey(pk: i32, is_staff: bool, user_id: i32) -> String {
     let link : String;
     let mut multiple_class = "".to_string();
     let mut answers = "".to_string();
-    let vote_svg : String;
+    let mut vote_svg = "".to_string();
     let info : String;
 
     if survey.community_id.is_some() {
