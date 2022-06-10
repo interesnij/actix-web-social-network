@@ -76,7 +76,9 @@
               </div>
             </div>
 
-            <div class="load_comments" style="margin-right: -15px; margin-left: -15px;margin-top:25px"></div>
+            <div class="load_comments">
+              <% include!("../generic/items/comment/anon_comments.stpl"); %>
+            </div>
         </div>
       </div>
   </div>

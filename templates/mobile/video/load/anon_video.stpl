@@ -66,7 +66,9 @@
         </div>
     </div>
 
-    <div class="load_comments"></div>
+    <div class="load_comments">
+      <% include!("../generic/items/comment/anon_comments.stpl"); %>
+    </div>
 </div>
 
 <% include!("list.stpl"); %>

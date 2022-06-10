@@ -85,7 +85,9 @@
         </div>
     </div>
 
-    <div class="load_comments"></div>
+    <div class="load_comments">
+      <% include!("../generic/items/comment/comments.stpl"); %>
+    </div>
 </div>
 
 <% include!("list.stpl"); %>
