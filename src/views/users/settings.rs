@@ -915,7 +915,7 @@ pub async fn private_settings(session: Session, mut payload: Multipart) -> impl 
         let _request_user = get_request_user_data(&session);
 
         let user_private = _request_user.get_private_model();
-        let action_9 = &form.action[..3];
+        let action_9: &str = &form.action[..3];
         if action_9 == "can" {
             let _var = match form.action.as_str() {
                 "can_see_all" => diesel::update(&user_private)
