@@ -16,8 +16,11 @@
           <% include!("../generic/items/anon_item_footer.stpl"); %>
         </div>
       </div>
-      <div class="load_comments">
-        <% include!("../generic/items/comment/anon_comments.stpl"); %>
-      </div>
+
+      <% if is_user_can_see_comments { %>
+        <div class="load_comments">
+          <% include!("../generic/items/comment/anon_comments.stpl"); %>
+        </div>
+      <% } %>
   </div>
 </div>

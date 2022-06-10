@@ -166,7 +166,7 @@ pub async fn fixed_messages_page(session: Session, req: HttpRequest, _id: web::P
             #[derive(TemplateOnce)]
             #[template(path = "desctop/chats/chat/fixed_list.stpl")]
             struct Template {
-                title:        String,
+                //title:        String,
                 request_user: User,
                 count:        usize,
                 next_page_number: i32,
@@ -174,7 +174,7 @@ pub async fn fixed_messages_page(session: Session, req: HttpRequest, _id: web::P
                 chat: Chat,
             }
             let body = Template {
-                title:        "Закрепленные сообщения".to_string(),
+                //title:        "Закрепленные сообщения".to_string(),
                 request_user: _request_user,
                 count: count,
                 next_page_number: next_page_number,
@@ -188,7 +188,7 @@ pub async fn fixed_messages_page(session: Session, req: HttpRequest, _id: web::P
             #[derive(TemplateOnce)]
             #[template(path = "mobile/chats/chat/fixed_list.stpl")]
             struct Template {
-                title:        String,
+                //title:        String,
                 request_user: User,
                 count: usize,
                 next_page_number: i32,
@@ -196,7 +196,7 @@ pub async fn fixed_messages_page(session: Session, req: HttpRequest, _id: web::P
                 chat: Chat,
             }
             let body = Template {
-                title:        "Закрепленные сообщения".to_string(),
+                //title:        "Закрепленные сообщения".to_string(),
                 request_user: _request_user,
                 count: count,
                 next_page_number: next_page_number,

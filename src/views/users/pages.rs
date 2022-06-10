@@ -1826,14 +1826,14 @@ pub async fn user_goods_list_page(session: Session, req: HttpRequest, param: web
             struct Template {
                 title:        String,
                 request_user: User,
-                user:         User,
+                //user:         User,
                 list:         GoodList,
             }
 
             let body = Template {
                 title:        _user.get_full_name() + &"- подборки товаров".to_string(),
                 request_user: _request_user,
-                user:         _user,
+                //user:         _user,
                 list:         _list,
             }
             .render_once()
@@ -1846,14 +1846,14 @@ pub async fn user_goods_list_page(session: Session, req: HttpRequest, param: web
             struct Template {
                 title:        String,
                 request_user: User,
-                user:         User,
+                //user:         User,
                 list:         GoodList,
             }
 
             let body = Template {
                 title:        _user.get_full_name() + &"- подборки товаров".to_string(),
                 request_user: _request_user,
-                user:         _user,
+                //user:         _user,
                 list:         _list,
             }
             .render_once()
@@ -1872,12 +1872,12 @@ pub async fn user_goods_list_page(session: Session, req: HttpRequest, param: web
             #[template(path = "desctop/users/goods/list/anon_list.stpl")]
             struct Template {
                 title:  String,
-                user:   User,
+                //user:   User,
                 list:   GoodList,
             }
             let body = Template {
                 title:  _user.get_full_name() + &"- подборки товаров".to_string(),
-                user:   _user,
+                //user:   _user,
                 list:   _list,
             }
             .render_once()

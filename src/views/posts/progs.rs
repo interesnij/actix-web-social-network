@@ -499,7 +499,7 @@ pub async fn edit_post(session: Session, mut payload: Multipart, _id: web::Path<
 
         else if _post.is_user_can_edit_delete_item(_request_user.id) {
             let form = post_form(payload.borrow_mut()).await;
-            let edit_post = _post.edit_post (
+            _post.edit_post (
                 form.content,
                 form.cat,
                 form.attach,
