@@ -446,11 +446,9 @@ pub async fn add_survey_in_list(session: Session, mut payload: Multipart, _id: w
             #[template(path = "desctop/surveys/new_item.stpl")]
             struct Template {
                 object: Survey,
-                request_user: User,
             }
             let body = Template {
                 object: new_survey,
-                request_user: _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -512,11 +510,9 @@ pub async fn edit_survey(session: Session, mut payload: Multipart, _id: web::Pat
             #[template(path = "desctop/surveys/new_item.stpl")]
             struct Template {
                 object: Survey,
-                request_user: User,
             }
             let body = Template {
                 object: _survey,
-                request_user: _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

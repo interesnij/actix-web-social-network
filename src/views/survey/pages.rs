@@ -320,11 +320,9 @@ pub async fn edit_survey_page(session: Session, _id: web::Path<i32>) -> actix_we
             #[derive(TemplateOnce)]
             #[template(path = "desctop/surveys/edit_survey.stpl")]
             struct Template {
-                request_user: User,
                 object: Survey,
             }
             let body = Template {
-                request_user: _request_user,
                 object: survey,
             }
             .render_once()
