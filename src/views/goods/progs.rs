@@ -533,7 +533,7 @@ pub async fn edit_good(session: Session, mut payload: Multipart, _id: web::Path<
                 owner_path,
                 owner_id.to_string()
             ).await;
-            let good = _good.edit_good (
+            _good.edit_good (
                 form.title,
                 form.price,
                 form.description,
@@ -548,7 +548,7 @@ pub async fn edit_good(session: Session, mut payload: Multipart, _id: web::Path<
                 object: Good,
             }
             let body = Template {
-                object: good,
+                object: _good,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

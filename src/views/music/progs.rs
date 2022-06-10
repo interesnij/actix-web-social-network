@@ -17,7 +17,11 @@ use crate::utils::{
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::{User, MusicList, Music};
+use crate::models::{
+    //User,
+    MusicList,
+    Music
+};
 use serde::{Deserialize, Serialize};
 
 use std::str;
