@@ -124,12 +124,10 @@ pub async fn add_community_list_page(session: Session, _id: web::Path<i32>) -> a
         #[derive(TemplateOnce)]
         #[template(path = "desctop/posts/community/add_list.stpl")]
         struct Template {
-            request_user:  User,
             community:     Community,
             reaction_list: Vec<Reaction>,
         }
         let body = Template {
-            request_user:  _request_user,
             community:     community,
             reaction_list: reaction_list,
         }

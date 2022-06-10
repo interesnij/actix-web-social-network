@@ -199,7 +199,7 @@ pub async fn add_user_list_page(session: Session) -> actix_web::Result<HttpRespo
             request_user: User,
         }
         let body = Template {
-            request_user:  _request_user,
+            request_user: request_user,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -249,11 +249,9 @@ pub async fn add_community_list_page(session: Session, _id: web::Path<i32>) -> a
         #[derive(TemplateOnce)]
         #[template(path = "desctop/docs/community/add_list.stpl")]
         struct Template {
-            request_user: User,
             community: Community,
         }
         let body = Template {
-            request_user: _request_user,
             community: community,
         }
         .render_once()
