@@ -20,7 +20,12 @@ use crate::utils::{
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
-use crate::models::{User, GoodList, Good, GoodComment};
+use crate::models::{
+    //User, 
+    GoodList,
+    Good,
+    GoodComment
+};
 use serde::{Deserialize, Serialize};
 
 use std::str;

@@ -539,7 +539,7 @@ pub async fn load_comments_page(session: Session, req: HttpRequest, post_id: web
     }
 }
 
-pub async fn edit_post_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn edit_post_page(session: Session, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         use crate::models::PostCategorie;
         use crate::schema::post_categories::dsl::post_categories;
@@ -554,12 +554,10 @@ pub async fn edit_post_page(session: Session, req: HttpRequest, _id: web::Path<i
             #[derive(TemplateOnce)]
             #[template(path = "desctop/posts/edit_post.stpl")]
             struct Template {
-                request_user: User,
                 object: Post,
                 categories: Vec<PostCategorie>,
             }
             let body = Template {
-                request_user: _request_user,
                 object: post,
                 categories: categories,
             }

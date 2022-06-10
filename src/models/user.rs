@@ -630,37 +630,37 @@ impl User {
     pub fn is_list_in_collection(&self, types: &String) -> bool {
         let pk: i32 = types[3..].parse().unwrap();
         let code = &types[..3];
-        if types == &"lpo".to_string() {
+        if code == &"lpo".to_string() {
             use crate::utils::get_post_list;
             let list = get_post_list(pk);
             return list.get_users_ids().iter().any(|&i| i==self.id);
         }
-        else if types == &"lgo".to_string() {
+        else if code == &"lgo".to_string() {
             use crate::utils::get_good_list;
             let list = get_good_list(pk);
             return list.get_users_ids().iter().any(|&i| i==self.id);
         }
-        else if types == &"lph".to_string() {
+        else if code == &"lph".to_string() {
             use crate::utils::get_photo_list;
             let list = get_photo_list(pk);
             return list.get_users_ids().iter().any(|&i| i==self.id);
         }
-        else if types == &"lvi".to_string() {
+        else if code == &"lvi".to_string() {
             use crate::utils::get_video_list;
             let list = get_video_list(pk);
             return list.get_users_ids().iter().any(|&i| i==self.id);
         }
-        else if types == &"lsu".to_string() {
+        else if code == &"lsu".to_string() {
             use crate::utils::get_survey_list;
             let list = get_survey_list(pk);
             return list.get_users_ids().iter().any(|&i| i==self.id);
         }
-        else if types == &"ldo".to_string() {
+        else if code == &"ldo".to_string() {
             use crate::utils::get_doc_list;
             let list = get_doc_list(pk);
             return list.get_users_ids().iter().any(|&i| i==self.id);
         }
-        else if types == &"lmu".to_string() {
+        else if code == &"lmu".to_string() {
             use crate::utils::get_music_list;
             let list = get_music_list(pk);
             return list.get_users_ids().iter().any(|&i| i==self.id);
@@ -886,12 +886,10 @@ impl User {
         let device = match self.is_desctop() {
             true => "&nbsp;<svg style='width: 17px;' class='svg_default' fill='currentColor' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none'/><path d='M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z'/></svg>",
             false => "&nbsp;<svg style='width: 17px;' class='svg_default' fill='currentColor' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none'/><path d='M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z'/></svg>",
-            _ => "",
         };
         let gender = match self.is_men() {
             true => "<i>Был ",
             false => "<i>Была ",
-            _ => "",
         };
         if self.is_online() == true {
             return "<i>Онлайн</i>".to_string() + &device;
