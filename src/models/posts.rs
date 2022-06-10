@@ -3727,7 +3727,7 @@ impl PostReaction {
         let _connection = establish_connection();
         if old_types_option.is_some() {
             let old_types = old_types_option.unwrap();
-            let update_model = match new_types {
+            match new_types {
                 1 => diesel::update(self)
                     .set(schema::post_reactions::field_1.eq(self.field_1 + 1))
                     .get_result::<PostReaction>(&_connection)
@@ -3798,7 +3798,7 @@ impl PostReaction {
                     .expect("Error."),
             };
 
-            let update_model = match old_types {
+            match old_types {
                 1 => diesel::update(self)
                     .set(schema::post_reactions::field_1.eq(self.field_1 - 1))
                     .get_result::<PostReaction>(&_connection)
@@ -3872,7 +3872,7 @@ impl PostReaction {
         }
         else {
             if plus {
-                let update_model = match new_types {
+                match new_types {
                     1 => diesel::update(self)
                         .set(schema::post_reactions::field_1.eq(self.field_1 + 1))
                         .get_result::<PostReaction>(&_connection)
@@ -3944,7 +3944,7 @@ impl PostReaction {
                 };
             }
             else {
-                let update_model = match new_types {
+                match new_types {
                     1 => diesel::update(self)
                         .set(schema::post_reactions::field_1.eq(self.field_1 - 1))
                         .get_result::<PostReaction>(&_connection)
@@ -4109,7 +4109,7 @@ impl PostCommentReaction {
         let _connection = establish_connection();
         if old_types_option.is_some() {
             let old_types = old_types_option.unwrap();
-            let update_model = match new_types {
+            match new_types {
                 1 => diesel::update(self)
                     .set(schema::post_comment_reactions::field_1.eq(self.field_1 + 1))
                     .get_result::<PostCommentReaction>(&_connection)
@@ -4180,7 +4180,7 @@ impl PostCommentReaction {
                     .expect("Error."),
             };
 
-            let update_model = match old_types {
+            match old_types {
                 1 => diesel::update(self)
                     .set(schema::post_comment_reactions::field_1.eq(self.field_1 - 1))
                     .get_result::<PostCommentReaction>(&_connection)
@@ -4254,7 +4254,7 @@ impl PostCommentReaction {
         }
         else {
             if plus {
-                let update_model = match new_types {
+                match new_types {
                     1 => diesel::update(self)
                         .set(schema::post_comment_reactions::field_1.eq(self.field_1 + 1))
                         .get_result::<PostCommentReaction>(&_connection)
@@ -4326,7 +4326,7 @@ impl PostCommentReaction {
                 };
             }
             else {
-                let update_model = match new_types {
+                match new_types {
                     1 => diesel::update(self)
                         .set(schema::post_comment_reactions::field_1.eq(self.field_1 - 1))
                         .get_result::<PostCommentReaction>(&_connection)
