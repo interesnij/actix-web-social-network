@@ -306,13 +306,11 @@ pub async fn edit_community_list_page(session: Session, _id: web::Path<i32>) -> 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/photos/community/edit_list.stpl")]
         struct Template {
-            request_user:  User,
             community:     Community,
             list:          PhotoList,
             reaction_list: Vec<Reaction>,
         }
         let body = Template {
-            request_user:  _request_user,
             community:     community,
             list:          list,
             reaction_list: reaction_list,

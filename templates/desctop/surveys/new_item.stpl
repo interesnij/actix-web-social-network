@@ -1,0 +1,67 @@
+
+<div data-pk="<%= object.id %>" class="card mb-3 pb-1 border text-center position-relative box-shadow" style="border-radius: .3rem;">
+    <figure class="background-img">
+        <img src="<%- object.get_image() %>" alt="img">
+    </figure>
+
+      <div class="dropdown">
+          <a class="btn_default drop pointer" style="position:absolute;right:5px;top:5px;">
+              <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M0 0h24v24H0z" fill="none" />
+                  <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+              </svg>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" data-type="sur<%= object.id %>" style="top:30px;right:-10px;">
+            <span class="dropdown-item create_repost">Добавить</span>
+              <% if object.is_can_edit() { %>
+                <span class="dropdown-item survey_edit">Изменить</span>
+              <% } %>
+              <span class="dropdown-item survey_remove">Удалить</span>
+            <span class="dropdown-item copy_link">Копировать ссылку</span>
+          </div>
+      </div>
+
+      <form>
+      <div class="container answers_container <% if !object.is_multiple { %>no_multiple<% } %>">
+        <br>
+        <h4 class="m-0"><%= object.title %></h4>
+
+        <p class="position-relative">
+          <% if object.community_id.is_some() { %>
+            <% let _community = object.get_community(); %>
+            <a href="<%= _community.link %>" class="underline ajax">
+              <%= _community.name %>
+            </a>
+          <% } else { %>
+          <% let _creator = object.get_creator(); %>
+          <a href="<%= _creator.link %>" class="underline ajax">
+            <%= _creator.get_full_name() %>
+          </a>
+          <% } %>
+        </p>
+        <%- object.get_time_description() %>
+        <br>
+
+        <% for answer in object.get_answers().iter() { %>
+          <% let get_procent = 0; %>
+
+          <div class="lite_color answer_style <% if !object.is_time_end() { %>pointer survey_vote<% } %>" data-pk="<%= answer.id %>">
+            <div class="progress2" style="width:<%= get_procent %> %;"></div>
+            <span class="progress_span_r"><%= answer.content %>
+              <span class="count text-muted"><%= answer.vote %></span>
+            </span>
+            <span class="progress_span_l" style="margin-left: auto;">
+              <span class="vote_svg"></span>
+              <span class="procent"><%= get_procent %> %</span>
+            </span>
+          </div>
+
+        <% } %>
+          Пока никто не голосовал.
+      </div>
+      <div class="card-footer" style="position: relative;">
+          <button type="button" class="btn hidden btn-sm float-left border votes_remove">Отмена</button>
+          <button id="add_vote_survey_btn" type="button" class="btn hidden btn-sm btn-success float-right">Проголосовать</button>
+      </div>
+      </form>
+  </div>
