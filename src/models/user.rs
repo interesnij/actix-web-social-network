@@ -1667,6 +1667,17 @@ impl User {
     pub fn count_friends(&self) -> i32 {
         return self.get_profile().friends;
     }
+    pub fn count_friends_ru(&self) -> String {
+        use crate::utils::get_count_for_ru;
+
+        return get_count_for_ru (
+            self.count_friends(),
+            " друг".to_string(),
+            " друга".to_string(),
+            " друзей".to_string(),
+        );
+    }
+
     pub fn plus_photos(&self, count: i32) -> bool {
         let profile = self.get_profile();
         let _connection = establish_connection();
