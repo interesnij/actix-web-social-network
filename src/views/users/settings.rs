@@ -450,7 +450,7 @@ pub async fn load_exclude_users_page(session: Session, req: HttpRequest) -> acti
 
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/users/settings/list_exclude_users.stpl")]
+            #[template(path = "desctop/users/settings/perm/exclude_users.stpl")]
             struct Template {
                 //request_user:     User,
                 object_list:      Vec<User>,
@@ -477,7 +477,7 @@ pub async fn load_exclude_users_page(session: Session, req: HttpRequest) -> acti
         } else {
 
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/users/settings/list_exclude_users.stpl")]
+            #[template(path = "mobile/users/settings/perm/exclude_users.stpl")]
             struct Template {
                 //request_user:        User,
                 object_list:         Vec<User>,
@@ -600,7 +600,7 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
 
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/users/settings/list_include_users.stpl")]
+            #[template(path = "desctop/users/settings/perm/include_users.stpl")]
             struct Template {
                 //request_user:     User,
                 object_list:      Vec<User>,
@@ -627,7 +627,7 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
         } else {
 
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/users/settings/list_include_users.stpl")]
+            #[template(path = "mobile/users/settings/perm/include_users.stpl")]
             struct Template {
                 //request_user:        User,
                 object_list:         Vec<User>,
@@ -1345,7 +1345,9 @@ pub async fn post_exclude_users(session: Session, mut payload: Multipart) -> act
         let _request_user = get_request_user_data(&session);
         let _connection = establish_connection();
         let form = user_private_ie_form(payload.borrow_mut()).await;
-        _request_user.set_friends_visible_perms(form.action, form.users, "b".to_string());
+        if form.action.is_some() && form.users.is_some() {
+            _request_user.set_friends_visible_perms(form.action.as_deref().unwrap(), form.users.as_deref().unwrap(), "b".to_string());
+        }
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
     }
     else {
@@ -1358,7 +1360,9 @@ pub async fn post_include_users(session: Session, mut payload: Multipart) -> act
         let _request_user = get_request_user_data(&session);
         let _connection = establish_connection();
         let form = user_private_ie_form(payload.borrow_mut()).await;
-        _request_user.set_friends_visible_perms(form.action, form.users, "a".to_string());
+        if form.action.is_some() && form.users.is_some() {
+            _request_user.set_friends_visible_perms(form.action.as_deref().unwrap(), form.users.as_deref().unwrap(), "a".to_string());
+        }
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
     }
     else {
