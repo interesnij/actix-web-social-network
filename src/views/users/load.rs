@@ -1408,13 +1408,13 @@ pub async fn smiles_load(session: Session, req: HttpRequest) -> actix_web::Resul
         use crate::models::SmileCategorie;
 
         let (is_desctop, page) = get_list_variables(req);
-        let mut current_category = 1;
+        let mut current_category = 0;
 
         let _request_user = get_request_user_data(&session);
 
         let s_categories = User::get_smilies_categories();
         if page > 1 {
-            let count_usize: usize = page as usize;
+            let count_usize: usize = (page - 1) as usize;
             current_category = count_usize;
         }
 
