@@ -42,5 +42,7 @@
   </div>
 </div>
 
+<% include!("common_friends.stpl"); %>
+
 </div>
 <% include!("../../../base_block/base_mobile_footer.stpl"); %>

@@ -42,6 +42,7 @@
   </div>
 </div>
 
+<% include!("common_friends.stpl"); %>
 
 <% if private_bools[3] == true { %>
   <% include!("friends.stpl"); %>
