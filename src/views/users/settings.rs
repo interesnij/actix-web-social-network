@@ -367,7 +367,6 @@ pub async fn load_exclude_users_page(session: Session, req: HttpRequest) -> acti
 
     if is_signed_in(&session) {
         let mut next_page_number: i32 = 0;
-        let mut count: i32 = 0;
         let mut types = "".to_string();
         let mut text =  "".to_string();
         if params_some.is_ok() {
@@ -381,7 +380,7 @@ pub async fn load_exclude_users_page(session: Session, req: HttpRequest) -> acti
         let mut users_list: Vec<User> = Vec::new();
         let step: i32;
 
-        count = _request_user.count_friends();
+        let count = _request_user.count_friends();
         if page > 1 {
             step = (page - 1) * 20;
             if count > (page * 20) {
@@ -458,7 +457,7 @@ pub async fn load_exclude_users_page(session: Session, req: HttpRequest) -> acti
                 users:            Vec<User>,
                 next_page_number: i32,
                 types:            String,
-                count:            i32,
+                //count:            i32,
                 text:             String,
             }
 
@@ -468,7 +467,7 @@ pub async fn load_exclude_users_page(session: Session, req: HttpRequest) -> acti
                 users:            users_list,
                 next_page_number: next_page_number,
                 types:            types,
-                count:            count,
+                //count:            count,
                 text:             text,
             }
             .render_once()
@@ -485,7 +484,7 @@ pub async fn load_exclude_users_page(session: Session, req: HttpRequest) -> acti
                 users:               Vec<User>,
                 next_page_number:    i32,
                 types:               String,
-                count:               i32,
+                //count:               i32,
                 text:                String,
             }
 
@@ -495,7 +494,7 @@ pub async fn load_exclude_users_page(session: Session, req: HttpRequest) -> acti
                 users:               users_list,
                 next_page_number:    next_page_number,
                 types:               types,
-                count:               count,
+                //count:               count,
                 text:                text,
             }
             .render_once()
@@ -517,7 +516,6 @@ pub async fn load_include_users_page(session: Session, req: HttpRequest) -> acti
 
     if is_signed_in(&session) {
         let mut next_page_number: i32 = 0;
-        let mut count: i32 = 0;
         let mut types = "".to_string();
         let mut text =  "".to_string();
         if params_some.is_ok() {
@@ -531,7 +529,7 @@ pub async fn load_include_users_page(session: Session, req: HttpRequest) -> acti
         let mut users_list: Vec<User> = Vec::new();
         let step: i32;
 
-        count = _request_user.count_friends();
+        let count = _request_user.count_friends();
         if page > 1 {
             step = (page - 1) * 20;
             if count > (page * 20) {
@@ -608,7 +606,7 @@ pub async fn load_include_users_page(session: Session, req: HttpRequest) -> acti
                 users:            Vec<User>,
                 next_page_number: i32,
                 types:            String,
-                count:            i32,
+                //count:            i32,
                 text:             String,
             }
 
@@ -618,7 +616,7 @@ pub async fn load_include_users_page(session: Session, req: HttpRequest) -> acti
                 users:            users_list,
                 next_page_number: next_page_number,
                 types:            types,
-                count:            count,
+                //count:            count,
                 text:             text,
             }
             .render_once()
@@ -635,7 +633,7 @@ pub async fn load_include_users_page(session: Session, req: HttpRequest) -> acti
                 users:               Vec<User>,
                 next_page_number:    i32,
                 types:               String,
-                count:               i32,
+                //count:               i32,
                 text:                String,
             }
 
@@ -645,7 +643,7 @@ pub async fn load_include_users_page(session: Session, req: HttpRequest) -> acti
                 users:               users_list,
                 next_page_number:    next_page_number,
                 types:               types,
-                count:               count,
+                //count:               count,
                 text:                text,
             }
             .render_once()
