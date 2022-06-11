@@ -1346,7 +1346,7 @@ pub async fn post_exclude_users(session: Session, mut payload: Multipart) -> act
         let _connection = establish_connection();
         let form = user_private_ie_form(payload.borrow_mut()).await;
         if form.action.is_some() && form.users.is_some() {
-            _request_user.set_friends_visible_perms(form.action.as_deref().unwrap(), form.users.as_deref().unwrap(), "b".to_string());
+            _request_user.set_friends_visible_perms(form.action.as_deref().unwrap().to_string(), form.users.as_deref().unwrap().to_string(), "b".to_string());
         }
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
     }
@@ -1361,7 +1361,7 @@ pub async fn post_include_users(session: Session, mut payload: Multipart) -> act
         let _connection = establish_connection();
         let form = user_private_ie_form(payload.borrow_mut()).await;
         if form.action.is_some() && form.users.is_some() {
-            _request_user.set_friends_visible_perms(form.action.as_deref().unwrap(), form.users.as_deref().unwrap(), "a".to_string());
+            _request_user.set_friends_visible_perms(form.action.as_deref().unwrap().to_string(), form.users.as_deref().unwrap().to_string(), "a".to_string());
         }
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
     }
