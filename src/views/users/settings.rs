@@ -18,7 +18,7 @@ use crate::utils::{
 use actix_session::Session;
 use sailfish::TemplateOnce;
 use crate::models::User;
-use serde::Deserialize;
+use serde::{Deserialize,Serialize};
 use std::str;
 use std::borrow::BorrowMut;
 use actix_multipart::{Field, Multipart};
@@ -506,10 +506,10 @@ pub async fn load_exclude_users_page(session: Session, req: HttpRequest) -> acti
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
 }
-pub async fn list_include_users_load(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+pub async fn load_include_users_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     #[derive(Debug, Deserialize)]
     pub struct ZParams {
-        pub action:       Option<String>,
+        pub action: Option<String>,
     }
 
     let params_some = web::Query::<ZParams>::from_query(&req.query_string());
