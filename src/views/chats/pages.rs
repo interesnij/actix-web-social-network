@@ -274,7 +274,7 @@ pub async fn closed_support_chats_page(session: Session, req: HttpRequest) -> ac
             #[derive(TemplateOnce)]
             #[template(path = "mobile/chats/chat/closed_support_list.stpl")]
             struct Template {
-                title:            String, 
+                title:            String,
                 request_user:     User,
                 count:            usize,
                 next_page_number: i32,
@@ -1100,24 +1100,25 @@ pub async fn invite_members_page(session: Session, req: HttpRequest, _id: web::P
         let _chat = get_chat(*_id);
 
         let _request_user = get_request_user_data(&session);
-        let mut object_list: Vec<User> = Vec::new();
+        let step: usize;
 
         let count = _request_user.count_friends();
-            if page > 1 {
-                let step = (page - 1) * 20;
-                object_list = _request_user.get_friends(20, step.into());
-                if count > (page * 20) {
-                    next_page_number = page + 1;
-                }
+        if page > 1 {
+            step = (page - 1) * 20;
+            if count > (page * 20) {
+                next_page_number = page + 1;
             }
-            else {
-                object_list = _request_user.get_friends(20, 0);
-                if count > 20 {
-                    next_page_number = 2;
-                }
         }
+        else {
+            step = 0;
+            if count > 20 {
+                next_page_number = 2;
+            }
+        }
+        let object_list = _request_user.get_friends(20, step);
 
         if is_desctop {
+
             #[derive(TemplateOnce)]
             #[template(path = "desctop/chats/chat/append_friends.stpl")]
             struct Template {
