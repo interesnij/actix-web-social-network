@@ -1,6 +1,6 @@
 <% include!("../../../../base_block/anon_base_header.stpl"); %>
 
-<div class="main-container pk_saver mt-3" data-pk="<%= community.id %>" data-type="community_video">
+<div class="main-container pk_saver mt-3" data-type="community_video">
           <div class="input-group mb-3">
             <input type="text" class="form-control form-control-sm" placeholder="Поиск видео">
             <div class="input-group-append">

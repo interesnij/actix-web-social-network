@@ -837,12 +837,12 @@ pub async fn user_docs_page(session: Session, req: HttpRequest, user_id: web::Pa
             #[template(path = "desctop/users/docs/main_list/anon_list.stpl")]
             struct Template {
                 title: String,
-                user:  User,
+                //user:  User,
                 list:  DocList,
             }
             let body = Template {
                 title:  _user.get_full_name() + &"- список документов".to_string(),
-                user:   _user,
+                //user:   _user,
                 list:   _list,
             }
             .render_once()
@@ -854,12 +854,12 @@ pub async fn user_docs_page(session: Session, req: HttpRequest, user_id: web::Pa
             #[template(path = "mobile/users/docs/main_list/anon_list.stpl")]
             struct Template {
                 title: String,
-                user:  User,
+                //user:  User,
                 list:  DocList,
             }
             let body = Template {
                 title: _user.get_full_name() + &"- список документов".to_string(),
-                user:  _user,
+                //user:  _user,
                 list:  _list,
             }
             .render_once()
@@ -940,12 +940,12 @@ pub async fn user_video_page(session: Session, req: HttpRequest, user_id: web::P
             #[template(path = "desctop/users/video/main_list/anon_list.stpl")]
             struct Template {
                 title: String,
-                user:  User,
+                //user:  User,
                 list:  VideoList,
             }
             let body = Template {
                 title: _user.get_full_name() + &"- видеоальбомы".to_string(),
-                user:  _user,
+                //user:  _user,
                 list:  _list,
             }
             .render_once()
@@ -957,12 +957,12 @@ pub async fn user_video_page(session: Session, req: HttpRequest, user_id: web::P
             #[template(path = "mobile/users/video/main_list/anon_list.stpl")]
             struct Template {
                 title: String,
-                user:  User,
+                //user:  User,
                 list:  VideoList,
             }
             let body = Template {
                 title: _user.get_full_name() + &"- видеоальбомы".to_string(),
-                user:  _user,
+                //user:  _user,
                 list:  _list,
             }
             .render_once()
@@ -1043,12 +1043,12 @@ pub async fn user_surveys_page(session: Session, req: HttpRequest, user_id: web:
             #[template(path = "desctop/users/survey/main_list/anon_list.stpl")]
             struct Template {
                 title: String,
-                user:  User,
+                //user:  User,
                 list:  SurveyList,
             }
             let body = Template {
                 title: _user.get_full_name() + &"- список опрсоов".to_string(),
-                user:  _user,
+                //user:  _user,
                 list:  _list,
             }
             .render_once()
@@ -1060,12 +1060,12 @@ pub async fn user_surveys_page(session: Session, req: HttpRequest, user_id: web:
             #[template(path = "mobile/users/survey/main_list/anon_list.stpl")]
             struct Template {
                 title: String,
-                user:  User,
+                //user:  User,
                 list:  SurveyList,
             }
             let body = Template {
                 title: _user.get_full_name() + &"- список опрсоов".to_string(),
-                user:  _user,
+                //user:  _user,
                 list:  _list,
             }
             .render_once()
@@ -1146,12 +1146,12 @@ pub async fn user_music_page(session: Session, req: HttpRequest, user_id: web::P
             #[template(path = "desctop/users/music/main_list/anon_list.stpl")]
             struct Template {
                 title: String,
-                user:  User,
+                //user:  User,
                 list:  MusicList,
             }
             let body = Template {
                 title: _user.get_full_name() + &"- плейлисты".to_string(),
-                user:  _user,
+                //user:  _user,
                 list:  _list,
             }
             .render_once()
@@ -1163,12 +1163,12 @@ pub async fn user_music_page(session: Session, req: HttpRequest, user_id: web::P
             #[template(path = "mobile/users/music/main_list/anon_list.stpl")]
             struct Template {
                 title: String,
-                user:  User,
+                //user:  User,
                 list:  MusicList,
             }
             let body = Template {
                 title: _user.get_full_name() + &"- плейлисты".to_string(),
-                user:  _user,
+                //user:  _user,
                 list:  _list,
             }
             .render_once()
@@ -1249,12 +1249,12 @@ pub async fn user_goods_page(session: Session, req: HttpRequest, user_id: web::P
             #[template(path = "desctop/users/goods/main_list/anon_list.stpl")]
             struct Template {
                 title: String,
-                user:  User,
+                //user:  User,
                 list:  GoodList,
             }
             let body = Template {
                 title: _user.get_full_name() + &"- подборки товаров".to_string(),
-                user:  _user,
+                //user:  _user,
                 list:  _list,
             }
             .render_once()
@@ -1266,12 +1266,12 @@ pub async fn user_goods_page(session: Session, req: HttpRequest, user_id: web::P
             #[template(path = "mobile/users/goods/main_list/anon_list.stpl")]
             struct Template {
                 title: String,
-                user:  User,
+                //user:  User,
                 list:  GoodList,
             }
             let body = Template {
                 title: _user.get_full_name() + &"- подборки товаров".to_string(),
-                user:  _user,
+                //user:  _user,
                 list:  _list,
             }
             .render_once()
@@ -1352,12 +1352,12 @@ pub async fn user_photos_page(session: Session, req: HttpRequest, user_id: web::
             #[template(path = "desctop/users/photos/main_list/anon_list.stpl")]
             struct Template {
                 title: String,
-                user:  User,
+                //user:  User,
                 list:  PhotoList,
             }
             let body = Template {
                 title: _user.get_full_name() + &"- фотоальбомы".to_string(),
-                user:  _user,
+                //user:  _user,
                 list:  _list,
             }
             .render_once()
@@ -1369,12 +1369,12 @@ pub async fn user_photos_page(session: Session, req: HttpRequest, user_id: web::
             #[template(path = "mobile/users/photos/main_list/anon_list.stpl")]
             struct Template {
                 title: String,
-                user:  User,
+                //user:  User,
                 list:  PhotoList,
             }
             let body = Template {
                 title: _user.get_full_name() + &"- фотоальбомы".to_string(),
-                user:  _user,
+                //user:  _user,
                 list:  _list,
             }
             .render_once()
@@ -1410,14 +1410,14 @@ pub async fn user_docs_list_page(session: Session, req: HttpRequest, param: web:
             struct Template {
                 title:        String,
                 request_user: User,
-                //user:         User,
+                user:         User,
                 list:         DocList,
             }
 
             let body = Template {
                 title:        _user.get_full_name() + &"- список документов".to_string(),
                 request_user: _request_user,
-                //user:         _user,
+                user:         _user,
                 list:         _list,
             }
             .render_once()
@@ -1430,14 +1430,14 @@ pub async fn user_docs_list_page(session: Session, req: HttpRequest, param: web:
             struct Template {
                 title:        String,
                 request_user: User,
-                //user:         User,
+                user:         User,
                 list:         DocList,
             }
 
             let body = Template {
                 title:        _user.get_full_name() + &"- список документов".to_string(),
                 request_user: _request_user,
-                //user:         _user,
+                user:         _user,
                 list:         _list,
             }
             .render_once()
@@ -1456,12 +1456,12 @@ pub async fn user_docs_list_page(session: Session, req: HttpRequest, param: web:
             #[template(path = "desctop/users/docs/list/anon_list.stpl")]
             struct Template {
                 title: String,
-                user:  User,
+                //user:  User,
                 list:  DocList,
             }
             let body = Template {
                 title: _user.get_full_name() + &"- список документов".to_string(),
-                user:  _user,
+                //user:  _user,
                 list:  _list,
             }
             .render_once()
@@ -1826,14 +1826,14 @@ pub async fn user_goods_list_page(session: Session, req: HttpRequest, param: web
             struct Template {
                 title:        String,
                 request_user: User,
-                //user:         User,
+                user:         User,
                 list:         GoodList,
             }
 
             let body = Template {
                 title:        _user.get_full_name() + &"- подборки товаров".to_string(),
                 request_user: _request_user,
-                //user:         _user,
+                user:         _user,
                 list:         _list,
             }
             .render_once()
@@ -1846,14 +1846,14 @@ pub async fn user_goods_list_page(session: Session, req: HttpRequest, param: web
             struct Template {
                 title:        String,
                 request_user: User,
-                //user:         User,
+                user:         User,
                 list:         GoodList,
             }
 
             let body = Template {
                 title:        _user.get_full_name() + &"- подборки товаров".to_string(),
                 request_user: _request_user,
-                //user:         _user,
+                user:         _user,
                 list:         _list,
             }
             .render_once()

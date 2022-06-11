@@ -4,7 +4,7 @@
   <a href="/friends/<%= user.id %>/" class="ajax">
     <div class="card-body py-2">
         <div class="media">
-            <div class="media-body">
+            <div class="media-body"> 
               <h6 class="my-0 text-truncated"><%= user.count_friends_ru() %></h6>
               <p class="small"><%= user.get_online_friends_count() %> в сети</p>
             </div>

@@ -1,6 +1,6 @@
 <% include!("../../../../base_block/anon_base_mobile_header.stpl"); %>
 
-<div class="main-container mt-3 pk_saver" data-pk="<%= community.id %>" data-type="community_survey">
+<div class="main-container mt-3 pk_saver" data-type="community_survey">
     <div class="input-group mb-3">
         <input type="text" class="form-control form-control-sm" placeholder="Поиск опросов">
         <div class="input-group-append">
