@@ -1,14 +1,6 @@
 <% include!("../../../base_block/anon_base_header.stpl"); %>
 
-<% if community.cover.is_some() { %>
-<div class="container-fluid">
-    <div class="row align-items-center has-background-img" style="min-height: 150px">
-        <figure class="background-img">
-            <img src="<%= community.cover.as_deref().unwrap() %>" alt="img" class="" style="min-height:inherit;opacity: 1">
-        </figure>
-    </div>
-</div>
-<% } %>
+<% include!("cover.stpl"); %>
 
 <div class="container-fluid mt-3 main-container pk_saver" data-type="community_main" data-pk="<%= community.id %>">
     <div class="row">
@@ -24,27 +16,7 @@
                 <%= community.status.as_deref().unwrap() %>
               <% } %>
             </span>
-          <ul class="list-group list-group-flush w-100">
-              <li class="list-group-item px-0">
-                  <div class="media experience">
-                      <div class="icon-circle icon-40 bg-light-secondary mr-3">
-                          <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z" />
-                              <path d="M0 0h24v24H0z" fill="none" /></svg>
-                      </div>
-                      <div class="media-body">
-                          <h6 class="my-0 content-color-primary">Описание</h6>
-                          <p>
-                            <% if community.description.is_some() { %>
-                              <%= community.description.as_deref().unwrap() %>
-                            <% } else { %>
-                              Нет описания сообщества
-                            <% } %>
-                          </p>
-                      </div>
-                  </div>
-              </li>
-            </ul>
+          <% include!("../detail_sections/description.stpl"); %>
           </div>
 
           <% include!("../detail_sections/stat.stpl"); %>

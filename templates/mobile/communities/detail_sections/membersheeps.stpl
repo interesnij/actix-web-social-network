@@ -1,0 +1,25 @@
+<% if community.count_members() > 0 { %>
+
+<div class="card mb-3">
+  <a href="/community/<%=community.id %>/members/" class="ajax">
+    <div class="card-body py-2">
+        <div class="media">
+          <div class="media-body">
+              <h6 class="content-color-primary mb-0">Подписчики (<%= community.count_members() %>)</h6>
+          </div>
+
+            <% for object in community.get_6_members().iter() { %>
+              <figure style="width:50px;border-radius:50px;" class="avatar-50 staked">
+                <% if user.s_avatar.is_some() { %>
+                  <img src="<%= user.s_avatar.as_deref().unwrap() %>" style="border-radius:50px;" alt="image">
+                <% } else { %>
+                  <img src="/static/images/no_img/user.jpg" style="border-radius:50px;" alt="image">
+                <% } %>
+              </figure>
+            <% } %>
+        </div>
+    </div>
+  </a>
+  </div>
+
+<% } %>

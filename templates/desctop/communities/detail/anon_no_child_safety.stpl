@@ -1,15 +1,5 @@
 <% include!("../../../base_block/anon_base_header.stpl"); %>
 
-<% if community.cover.is_some() { %>
-<div class="container-fluid">
-    <div class="row align-items-center has-background-img" style="min-height: 150px">
-        <figure class="background-img">
-            <img src="<%= community.cover.as_deref().unwrap() %>" alt="img" class="" style="min-height:inherit;opacity: 1">
-        </figure>
-    </div>
-</div>
-<% } %>
-
 <div class="mt-3 pk_saver main-container" data-type="community_main" data-pk="<%= community.pk %>">
     <div class="row">
       <div class="col-12 col-md-12 col-lg-8">
@@ -19,27 +9,7 @@
               <svg class="svg_info svg_default" fill="currentColor" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><g><rect fill="none" /></g><g><path d="M23,12l-2.44-2.79l0.34-3.69l-3.61-0.82L15.4,1.5L12,2.96L8.6,1.5L6.71,4.69L3.1,5.5L3.44,9.2L1,12l2.44,2.79l-0.34,3.7 l3.61,0.82L8.6,22.5l3.4-1.47l3.4,1.46l1.89-3.19l3.61-0.82l-0.34-3.69L23,12z M10.09,16.72l-3.8-3.81l1.48-1.48l2.32,2.33 l5.85-5.87l1.48,1.48L10.09,16.72z"/></g></svg>
             <% } %>
           </h1>
-          <ul class="list-group list-group-flush w-100">
-              <li class="list-group-item px-0">
-                  <div class="media experience">
-                      <div class="icon-circle icon-40 bg-light-secondary mr-3">
-                          <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z" />
-                              <path d="M0 0h24v24H0z" fill="none" /></svg>
-                      </div>
-                      <div class="media-body">
-                          <h6 class="my-0 content-color-primary">Описание</h6>
-                          <p>
-                            <% if community.description.is_some() { %>
-                              <%= community.description.as_deref().unwrap() %>
-                            <% } else { %>
-                              Нет описания сообщества
-                            <% } %>
-                          </p>
-                      </div>
-                  </div>
-              </li>
-            </ul>
+          <% include!("../detail_sections/description.stpl"); %>
       </div>
       <div class="card mb-3 centered">
             <div class="card-body">

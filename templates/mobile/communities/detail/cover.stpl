@@ -1,0 +1,9 @@
+<% if community.cover.is_some() { %>
+<div class="container-fluid">
+    <div class="row align-items-center has-background-img" style="min-height: 150px">
+        <figure class="background-img">
+            <img src="<%= community.cover.as_deref().unwrap() %>" alt="img" class="" style="min-height:inherit;opacity: 1">
+        </figure>
+    </div>
+</div>
+<% } %>

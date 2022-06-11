@@ -54,10 +54,12 @@ pub fn progs_urls(config: &mut web::ServiceConfig) {
     //config.route("/chats/refresh_support_chat/{id}/", web::get().to(refresh_support_chat));
 
     //config.route("/chats/invite_members/{id}/", web::post().to(invite_members));
-    //config.route("/chats/private/{id}/", web::post().to(private));
     //config.route("/chats/clean_messages/{id}/", web::get().to(clean_messages));
+
+    //config.route("/chats/private/{id}/", web::post().to(private));
     //config.route("/chats/exclude_users/{id}/", web::post().to(chat_exclude_users));
     //config.route("/chats/include_users/{id}/", web::post().to(chat_include_users));
+
     //config.route("/chats/like_manager/{id}/", web::get().to(like_manager));
     //config.route("/chats/dislike_manager/{id}/", web::get().to(dislike_manager));
 }
