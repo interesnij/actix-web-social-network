@@ -1,0 +1,22 @@
+<% if user.is_have_photo() { %>
+<div class="card mb-3">
+    <div class="p-1">
+      <a href="/id<%= user.id %>/photos/" class="ajax">
+        <div class="media">
+            <div class="media-body">
+                <h6 class="content-color-primary mb-0">Фото </h6>
+            </div>
+          <%= user.count_photos() %>
+        </div>
+      </a>
+    </div>
+    <div class="row no-gutters">
+    <% for object in user.get_6_photos().iter() { %>
+      <div style="flex: 0 0 33.33333%;max-width:33.33333%;padding:3px;" class="detail_photo pointer" photo-pk="<%= object.id %>">
+        <img class="image_fit_70" src="<%= object.file %>" alt="">
+      </div>
+    <% } %>
+    </div>
+</div>
+
+<% } %>

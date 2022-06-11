@@ -214,14 +214,14 @@ pub fn my_user_account(is_desctop: bool, user: User, request_user: User) -> acti
         #[template(path = "desctop/users/account/my_user.stpl")]
         struct UserPage {
             title:        String,
-            private_bools: Vec<bool>,
+            //private_bools: Vec<bool>,
             request_user: User,
             user:         User,
             //is_my_user:   bool
         }
         let body = UserPage {
             title:        user.get_full_name().clone(),
-            private_bools: user.get_profile_all_can_see(request_user.id),
+            //private_bools: user.get_profile_all_can_see(request_user.id),
             request_user: request_user,
             user:         user,
             //is_my_user:   true,
@@ -234,14 +234,14 @@ pub fn my_user_account(is_desctop: bool, user: User, request_user: User) -> acti
         #[template(path = "mobile/users/account/my_user.stpl")]
         struct UserPage {
             title:        String,
-            private_bools: Vec<bool>,
+            //private_bools: Vec<bool>,
             request_user: User,
             user:         User,
             //is_my_user:   bool
         }
         let body = UserPage {
             title:        user.get_full_name().clone(),
-            private_bools: user.get_profile_all_can_see(request_user.id),
+            //private_bools: user.get_profile_all_can_see(request_user.id),
             request_user: request_user,
             user:         user,
             //is_my_user:   true,

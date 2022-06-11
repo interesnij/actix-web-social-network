@@ -68,7 +68,7 @@
     <div class="card mb-3">
         <div class="card-header">
             <div class="media centered">
-                <a href="/users/<%= user.id %>/music/" class="ajax">
+                <a href="/users/id<%= user.id %>/music/" class="ajax">
                     <div class="media-body">
                         <h6 class="content-color-primary mb-0">Добавьте музыку</h6>
                     </div>
@@ -83,7 +83,7 @@
     <div class="card mb-3">
         <div class="card-header">
             <div class="media centered">
-                <a href="/users/<%= user.id %>/photos/" class="ajax">
+                <a href="/users/id<%= user.id %>/photos/" class="ajax">
                     <div class="media-body">
                         <h6 class="content-color-primary mb-0">Добавьте фото</h6>
                     </div>
@@ -98,7 +98,7 @@
     <div class="card mb-3">
         <div class="card-header">
             <div class="media centered">
-                <a href="/users/<%= user.id %>/video/" class="ajax">
+                <a href="/users/id<%= user.id %>/video/" class="ajax">
                     <div class="media-body">
                         <h6 class="content-color-primary mb-0">Добавьте видео</h6>
                     </div>
@@ -113,7 +113,7 @@
     <div class="card mb-3">
         <div class="card-header">
             <div class="media centered">
-                <a href="/users/<%= user.id %>/docs/" class="ajax">
+                <a href="/users/id<%= user.id %>/docs/" class="ajax">
                     <div class="media-body">
                         <h6 class="content-color-primary mb-0">Добавьте документы</h6>
                     </div>
@@ -145,7 +145,7 @@
             </div>
             <div class="col-md-6">
             <span><%= user.birthday.to_string() %></span><br>
-            <span><%= user.get_gender() %></span><br> 
+            <span><%= user.get_gender() %></span><br>
             </div>
           </div>
       </div>
