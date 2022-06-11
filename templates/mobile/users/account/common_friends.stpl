@@ -1,0 +1,35 @@
+<% if user.is_have_common_friends_of_user(&request_user) { %>
+  <div class="card mb-3">
+      <div class="p-1">
+        <a href="/id<%= user.id %>/friends-common/" class="ajax">
+          <div class="media">
+              <div class="media-body">
+                  <h6 class="content-color-primary mb-0">Общие друзья </h6>
+              </div>
+          </div>
+        </a>
+      </div>
+  </div>
+<% for user in user.get_6_common_friends_of_user(&request_user).iter() { %>
+
+<% } %>
+<div class="card mb-3">
+  <a href="/id<%= user.id %>/friends-common/" class="ajax">
+    <div class="card-body py-2">
+        <div class="media">
+            <div class="media-body">
+              <h6 class="my-0 text-truncated">Общие друзья</h6>
+            </div>
+            <% for user in user.get_6_common_friends_of_user(&request_user).iter() { %>
+              <figure style="width:50px;border-radius:50px;" class="avatar-50 staked">
+                <% if user.s_avatar.is_some() { %>
+                  <img src="<%= user.s_avatar.as_deref().unwrap() %>" style="border-radius:50px;" alt="image">
+                <% } else { %>
+                  <img src="/static/images/no_img/user.jpg" style="border-radius:50px;" alt="image">
+                <% } %>
+              </figure>
+            <% } %>
+        </div>
+    </div>
+  </a>
+</div>

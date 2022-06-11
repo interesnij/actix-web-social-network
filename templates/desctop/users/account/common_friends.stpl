@@ -1,16 +1,16 @@
-<% for (i, user) in user.get_6_common_friends_of_user(&request_user).iter().enumerate() { %>
-<% if i == 0 { %>
-<div class="card mb-3">
-    <div class="p-1">
-      <a href="/friends/<%= user.id %>/#tabhome323" class="ajax">
-        <div class="media">
-            <div class="media-body">
-                <h6 class="content-color-primary mb-0">Общие друзья </h6>
-            </div>
-        </div>
-      </a>
-    </div>
-<% } %>
+<% if user.is_have_common_friends_of_user(&request_user) { %>
+  <div class="card mb-3">
+      <div class="p-1">
+        <a href="/id<%= user.id %>/friends-common/" class="ajax">
+          <div class="media">
+              <div class="media-body">
+                  <h6 class="content-color-primary mb-0">Общие друзья </h6>
+              </div>
+          </div>
+        </a>
+      </div>
+  </div>
+<% for user in user.get_6_common_friends_of_user(&request_user).iter() { %>
     <div class="card border-top">
         <div class="p-1">
             <div class="media">
@@ -32,5 +32,4 @@
             </div>
         </div>
     </div>
-</div>
 <% } %>

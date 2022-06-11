@@ -1,0 +1,156 @@
+<div class="row align-items-center no-gutters">
+<%
+  let staff = request_user.is_manager();
+  let request_user_id = request_user.id;
+%>
+  <% if user.is_user_in_block(request_user_id) { %>
+    <div class="row align-items-center no-gutters">
+      <a class="col">
+        <figure class="mx-auto mb-3 avatar_figure">
+          <%- user.get_b_avatar() %>
+        </figure>
+      </a>
+    </div>
+  <span style="margin-bottom: 10px;position:relative" class="centered dropdown">
+    <button type="button" class="btn btn-sm border" style="width: -webkit-fill-available">
+      Заблокирован
+    </button>
+    <div class="dropdown-menu" data-type="use<%= request_user_id %>" style="margin-top:5px;width:100%">
+      <a class="dropdown-item user_unblock pointer">Разблокировать</a>
+      <span class="dropdown-item create_repost">Поделиться</span>
+      <% if staff { %>
+        <span class="dropdown-item create_close" style="font-weight: bold;">Закрыть</span>
+      <% } else { %>
+        <a class="dropdown-item create_claim pointer">Пожаловаться</a>
+      <% } %>
+    </div>
+  </span>
+  <% } else if user.is_connected_with_user_with_id(request_user_id) { %>
+    <div class="row align-items-center no-gutters">
+      <a class="col">
+        <figure class="mx-auto mb-3">
+          <%- user.get_b_avatar() %>
+        </figure>
+      </a>
+    </div>
+  <span style="margin-bottom: 10px;position:relative" class="centered dropdown">
+  <button type="button" class="btn btn-sm border" style="width: -webkit-fill-available">
+      У Вас в друзьях
+  </button>
+  <div class="dropdown-menu" data-type="use<%= request_user_id %>" style="margin-top:5px;width:100%">
+      <span class="dropdown-item connect_delete">Убрать из друзей</span>
+      <span class="dropdown-item user_block">Заблокировать</span>
+      <span class="dropdown-item create_repost">Поделиться</span>
+      <% if staff { %>
+        <span class="dropdown-item create_close" style="font-weight: bold;">Закрыть</span>
+      <% } else { %>
+        <a class="dropdown-item create_claim pointer">Пожаловаться</a>
+      <% } %>
+    </div>
+  </span>
+  <% } else if user.is_followers_user_view(request_user_id) { %>
+    <div class="row align-items-center no-gutters">
+      <a class="col">
+        <figure class="mx-auto mb-3">
+          <%- user.get_b_avatar() %>
+        </figure>
+      </a>
+    </div>
+  <span style="margin-bottom: 10px;position:relative" class="centered dropdown">
+  <button type="button" class="btn btn-sm border" style="width: -webkit-fill-available">
+      Ваш подписчик
+  </button>
+  <div class="dropdown-menu" data-type="use<%= request_user_id %>" style="margin-top:5px;width:100%">
+      <span class="dropdown-item connect_create">Добавить в друзья</span>
+      <span class="dropdown-item user_block">Заблокировать</span>
+      <span class="dropdown-item create_repost">Поделиться</span>
+      <% if staff { %>
+        <span class="dropdown-item create_close" style="font-weight: bold;">Закрыть</span>
+      <% } else { %>
+        <a class="dropdown-item create_claim pointer">Пожаловаться</a>
+      <% } %>
+    </div>
+  </span>
+  <% } else if user.is_following_user_with_id(request_user_id) { %>
+    <div class="row align-items-center no-gutters">
+      <a class="col">
+        <figure class="mx-auto mb-3">
+          <%- user.get_b_avatar() %>
+        </figure>
+      </a>
+    </div>
+  <span style="margin-bottom: 10px;position:relative" class="centered dropdown">
+  <button type="button" class="btn btn-sm border" style="width: -webkit-fill-available">
+      Вы подписаны
+  </button>
+  <div class="dropdown-menu" data-type="use<%= request_user_id %>" style="margin-top:5px;width:100%">
+      <span class="dropdown-item follow_delete">Отменить подписку</span>
+      <span class="dropdown-item user_block">Заблокировать</span>
+      <span class="dropdown-item create_repost">Поделиться</span>
+      <% if staff { %>
+        <span class="dropdown-item create_close" style="font-weight: bold;">Закрыть</span>
+      <% } else { %>
+        <a class="dropdown-item create_claim pointer">Пожаловаться</a>
+      <% } %>
+    </div>
+  </span>
+  <% } else if user.is_followers_user_with_id(request_user_id) { %>
+    <div class="row align-items-center no-gutters">
+      <a class="col">
+        <figure class="mx-auto mb-3">
+          <%- user.get_b_avatar() %>
+        </figure>
+      </a>
+    </div>
+  <span style="margin-bottom: 10px;position:relative" class="centered dropdown">
+  <button type="button" class="btn btn-sm border" style="width: -webkit-fill-available">
+      Ваш подписчик
+  </button>
+  <div class="dropdown-menu" data-type="use<%= request_user_id %>" style="margin-top:5px;width:100%">
+      <span class="dropdown-item follow_view">Скрыть</span>
+      <span class="dropdown-item connect_create">Добавить в друзья</span>
+      <span class="dropdown-item user_block">Заблокировать</span>
+      <span class="dropdown-item create_repost">Поделиться</span>
+      <% if staff { %>
+        <span class="dropdown-item create_close" style="font-weight: bold;">Закрыть</span>
+      <% } else { %>
+        <a class="dropdown-item create_claim pointer">Пожаловаться</a>
+      <% } %>
+    </div>
+  </span>
+
+  <% } else { %>
+    <div class="row align-items-center no-gutters">
+      <a class="col">
+        <figure class="mx-auto mb-3">
+          <%- user.get_b_avatar() %>
+        </figure>
+      </a>
+    </div>
+  <span style="margin-bottom: 10px;position:relative" class="centered">
+    <button class="btn btn-sm border follow_create" style="width: -webkit-fill-available">Добавить в друзья</button>
+    <span class="dropdown" style="position:unset">
+    <button style="margin-left:5px;" type="button" class="btn btn-sm border dropdown">
+      <svg style="width: 17px;height: 17px; "fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+    </button>
+  <div class="dropdown-menu" data-type="use<%= request_user_id %>" style="width:100%">
+      <span class="dropdown-item connect_create">Добавить в друзья</span>
+      <span class="dropdown-item user_block">Заблокировать</span>
+      <span class="dropdown-item create_repost">Поделиться</span>
+      <% if staff { %>
+        <span class="dropdown-item create_close" style="font-weight: bold;">Закрыть</span>
+      <% } else { %>
+        <a class="dropdown-item create_claim pointer">Пожаловаться</a>
+      <% } %>
+  </div>
+  </span>
+  </span>
+  <% } %>
+
+<% if private_bools[4] == true { %>
+  <span class="centered">
+    <span class="btn btn-sm border user_send_page_message" style="width: -webkit-fill-available" data-pk="<%= user.id %>">Написать сообщение</span>
+  </span>
+<% } %>
+
+</div>
