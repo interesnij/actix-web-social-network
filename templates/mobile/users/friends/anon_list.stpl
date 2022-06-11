@@ -27,6 +27,7 @@
                 </div>
             </div>
             <ul class="list-group is_paginate">
+              <% if is_user_can_see_friends { %>
                 <% if count > 0 { %>
                 <% for object in object_list.iter() { %>
                   <li class="list-group-item border-top pag">
@@ -42,6 +43,11 @@
                 <% } else { %>
                   <% include!("no_items.stpl"); %>
                 <% } %>
+
+                <% } else { %>
+                  <% include!("../../generic/centered/private_friends.stpl"); %>
+                <% } %>
+
             </ul>
         </div>
     </div>

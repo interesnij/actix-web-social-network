@@ -671,7 +671,7 @@ pub async fn user_follows_page(session: Session, req: HttpRequest, user_id: web:
             struct Template {
                 title:            String,
                 request_user:     User,
-                user:             User,
+                //user:             User,
                 object_list:      Vec<User>,
                 next_page_number: i32,
                 count:            i32,
@@ -680,7 +680,7 @@ pub async fn user_follows_page(session: Session, req: HttpRequest, user_id: web:
             let body = Template {
                 title:            _user.get_full_name() + &" - подписчики".to_string(),
                 request_user:     _request_user,
-                user:             _user,
+                //user:             _user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 count:            count,
@@ -1410,14 +1410,14 @@ pub async fn user_docs_list_page(session: Session, req: HttpRequest, param: web:
             struct Template {
                 title:        String,
                 request_user: User,
-                user:         User,
+                //user:         User,
                 list:         DocList,
             }
 
             let body = Template {
                 title:        _user.get_full_name() + &"- список документов".to_string(),
                 request_user: _request_user,
-                user:         _user,
+                //user:         _user,
                 list:         _list,
             }
             .render_once()
@@ -1430,14 +1430,14 @@ pub async fn user_docs_list_page(session: Session, req: HttpRequest, param: web:
             struct Template {
                 title:        String,
                 request_user: User,
-                user:         User,
+                //user:         User,
                 list:         DocList,
             }
 
             let body = Template {
                 title:        _user.get_full_name() + &"- список документов".to_string(),
                 request_user: _request_user,
-                user:         _user,
+                //user:         _user,
                 list:         _list,
             }
             .render_once()
@@ -1534,14 +1534,14 @@ pub async fn user_video_list_page(session: Session, req: HttpRequest, param: web
             struct Template {
                 title:        String,
                 request_user: User,
-                user:         User,
+                //user:         User,
                 list:         VideoList,
             }
 
             let body = Template {
                 title:        _user.get_full_name() + &"- видеоальбомы".to_string(),
                 request_user: _request_user,
-                user:         _user,
+                //user:         _user,
                 list:         _list,
             }
             .render_once()
@@ -1618,14 +1618,14 @@ pub async fn user_surveys_list_page(session: Session, req: HttpRequest, param: w
             struct Template {
                 title:        String,
                 request_user: User,
-                user:         User,
+                //user:         User,
                 list:         SurveyList,
             }
 
             let body = Template {
                 title:        _user.get_full_name() + &"- список опрсоов".to_string(),
                 request_user: _request_user,
-                user:         _user,
+                //user:         _user,
                 list:         _list,
             }
             .render_once()
@@ -1638,14 +1638,14 @@ pub async fn user_surveys_list_page(session: Session, req: HttpRequest, param: w
             struct Template {
                 title:        String,
                 request_user: User,
-                user:         User,
+                //user:         User,
                 list:         SurveyList,
             }
 
             let body = Template {
                 title:        _user.get_full_name() + &"- список опрсоов".to_string(),
                 request_user: _request_user,
-                user:         _user,
+                //user:         _user,
                 list:         _list,
             }
             .render_once()
@@ -1722,14 +1722,14 @@ pub async fn user_music_list_page(session: Session, req: HttpRequest, param: web
             struct Template {
                 title:        String,
                 request_user: User,
-                user:         User,
+                //user:         User,
                 list:         MusicList,
             }
 
             let body = Template {
                 title:        _user.get_full_name() + &"- плейлисты".to_string(),
                 request_user: _request_user,
-                user:         _user,
+                //user:         _user,
                 list:         _list,
             }
             .render_once()
@@ -1742,14 +1742,14 @@ pub async fn user_music_list_page(session: Session, req: HttpRequest, param: web
             struct Template {
                 title:        String,
                 request_user: User,
-                user:         User,
+                //user:         User,
                 list:         MusicList,
             }
 
             let body = Template {
                 title:        _user.get_full_name() + &"- плейлисты".to_string(),
                 request_user: _request_user,
-                user:         _user,
+                //user:         _user,
                 list:         _list,
             }
             .render_once()
@@ -1826,14 +1826,14 @@ pub async fn user_goods_list_page(session: Session, req: HttpRequest, param: web
             struct Template {
                 title:        String,
                 request_user: User,
-                user:         User,
+                //user:         User,
                 list:         GoodList,
             }
 
             let body = Template {
                 title:        _user.get_full_name() + &"- подборки товаров".to_string(),
                 request_user: _request_user,
-                user:         _user,
+                //user:         _user,
                 list:         _list,
             }
             .render_once()
@@ -1846,14 +1846,14 @@ pub async fn user_goods_list_page(session: Session, req: HttpRequest, param: web
             struct Template {
                 title:        String,
                 request_user: User,
-                user:         User,
+                //user:         User,
                 list:         GoodList,
             }
 
             let body = Template {
                 title:        _user.get_full_name() + &"- подборки товаров".to_string(),
                 request_user: _request_user,
-                user:         _user,
+                //user:         _user,
                 list:         _list,
             }
             .render_once()
@@ -1930,14 +1930,14 @@ pub async fn user_photos_list_page(session: Session, req: HttpRequest, param: we
             struct Template {
                 title:        String,
                 request_user: User,
-                user:         User,
+                //user:         User,
                 list:         PhotoList,
             }
 
             let body = Template {
                 title:        _user.get_full_name() + &"- фотоальбомы".to_string(),
                 request_user: _request_user,
-                user:         _user,
+                //user:         _user,
                 list:         _list,
             }
             .render_once()
@@ -1950,7 +1950,7 @@ pub async fn user_photos_list_page(session: Session, req: HttpRequest, param: we
             struct Template {
                 title:        String,
                 request_user: User,
-                user:         User,
+                //user:         User,
                 list:         PhotoList,
             }
 

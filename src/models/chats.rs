@@ -1133,7 +1133,7 @@ impl Chat {
 
     pub fn get_preview_message(&self, user_id: i32 ) -> String {
         let first_message = self.get_first_message(user_id);
-        let mut preview_text: String;
+        let preview_text: String;
         let mut is_read = "".to_string();
         //let mut creator_figure: String;
         let mut created = "".to_string();
