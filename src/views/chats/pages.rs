@@ -727,22 +727,22 @@ pub async fn chat_include_users_load(session: Session, req: HttpRequest, _id: we
 
         let _request_user = get_request_user_data(&session);
         let mut users_list: Vec<User> = Vec::new();
-        let mut object_list: Vec<User> = Vec::new();
+        let step: i32;
 
         let count = _chat.members;
         if page > 1 {
-            let step = (page - 1) * 20;
-            object_list = _chat.get_members(20, step.into());
+            step = (page - 1) * 20;
             if count > (page * 20).try_into().unwrap() {
                 next_page_number = page + 1;
             }
         }
         else {
-            object_list = _chat.get_members(20, 0);
+            step = 0;
             if count > 20.try_into().unwrap() {
                 next_page_number = 2;
             }
         }
+        let object_list = _chat.get_members(20, step.into());
 
         if types == "can_add_members".to_string() {
             text = "добавлять участников".to_string();
@@ -842,22 +842,22 @@ pub async fn chat_info_page(session: Session, req: HttpRequest, _id: web::Path<i
         let _chat = get_chat(*_id);
 
         let _request_user = get_request_user_data(&session);
-        let mut object_list: Vec<User> = Vec::new();
+        let step: i32;
 
         let count = _chat.members;
-            if page > 1 {
-                let step = (page - 1) * 20;
-                object_list = _chat.get_members(20, step.into());
-                if count > (page * 20).try_into().unwrap() {
-                    next_page_number = page + 1;
-                }
+        if page > 1 {
+            step = (page - 1) * 20;
+            if count > (page * 20).try_into().unwrap() {
+                next_page_number = page + 1;
             }
-            else {
-                object_list = _chat.get_members(20, 0);
-                if count > 20.try_into().unwrap() {
-                    next_page_number = 2;
-                }
         }
+        else {
+            step = 0;
+            if count > 20.try_into().unwrap() {
+                next_page_number = 2;
+            }
+        }
+        let object_list = _chat.get_members(20, step.into());
 
         if is_desctop {
             #[derive(TemplateOnce)]
