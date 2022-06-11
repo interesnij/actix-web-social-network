@@ -1957,7 +1957,7 @@ pub async fn user_photos_list_page(session: Session, req: HttpRequest, param: we
             let body = Template {
                 title:        _user.get_full_name() + &"- фотоальбомы".to_string(),
                 request_user: _request_user,
-                user:         _user,
+                //user:         _user,
                 list:         _list,
             }
             .render_once()
