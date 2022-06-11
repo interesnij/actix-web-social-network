@@ -24,10 +24,10 @@ pub fn close_list() -> actix_web::Result<HttpResponse> {
     #[derive(TemplateOnce)]
     #[template(path = "base_block/close/close_list.stpl")]
     struct Template {
-        test: String,
+        //test: String,
     }
     let body = Template {
-        test:  "".to_string(),
+        //test:  "".to_string(),
     }
     .render_once()
     .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

@@ -716,8 +716,7 @@ pub async fn user_follows_page(session: Session, req: HttpRequest, user_id: web:
         }
     } else {
         let (is_open, text) = get_anon_user_permission(&_user);
-        let is_user_can_see_friends = _user.is_anon_user_can_see_friend();
-        if is_open == false {
+        if is_open == false { 
             use crate::views::close_item;
             return close_item(text)
         }
@@ -1514,14 +1513,14 @@ pub async fn user_video_list_page(session: Session, req: HttpRequest, param: web
             struct Template {
                 title:        String,
                 request_user: User,
-                user:         User,
+                //user:         User,
                 list:         VideoList,
             }
 
             let body = Template {
                 title:        _user.get_full_name() + &"- видеоальбомы".to_string(),
                 request_user: _request_user,
-                user:         _user,
+                //user:         _user,
                 list:         _list,
             }
             .render_once()

@@ -357,11 +357,11 @@ pub async fn edit_link_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/settings/edit_link.stpl")]
             struct Template {
-                title:        String,
+                //title:        String,
                 request_user: User,
             }
             let body = Template {
-                title:        "Изменение ссылки профиля".to_string(),
+                //title:        "Изменение ссылки профиля".to_string(),
                 request_user: _request_user,
             }
             .render_once()
@@ -371,12 +371,12 @@ pub async fn edit_link_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/settings/edit_link.stpl")]
             struct Template {
-                title:        String,
-                request_user: User,
+                //title:        String,
+                //request_user: User,
             }
             let body = Template {
-                title:        "Изменение ссылки профиля".to_string(),
-                request_user: _request_user,
+                //title:        "Изменение ссылки профиля".to_string(),
+                //request_user: _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -396,11 +396,11 @@ pub async fn edit_name_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/settings/edit_name.stpl")]
             struct Template {
-                title:        String,
+                //title:        String,
                 request_user: User,
             }
             let body = Template {
-                title:        "Изменение имени / фамилии".to_string(),
+                //title:        "Изменение имени / фамилии".to_string(),
                 request_user: _request_user,
             }
             .render_once()
@@ -410,12 +410,12 @@ pub async fn edit_name_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/settings/edit_name.stpl")]
             struct Template {
-                title:        String,
-                request_user: User,
+                //title:        String,
+                //request_user: User,
             }
             let body = Template {
-                title:        "Изменение имени / фамилии".to_string(),
-                request_user: _request_user,
+                //title:        "Изменение имени / фамилии".to_string(),
+                //request_user: _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -435,12 +435,12 @@ pub async fn edit_password_page(session: Session, req: HttpRequest) -> actix_web
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/settings/edit_password.stpl")]
             struct Template {
-                title:        String,
-                request_user: User,
+                //title:        String,
+                //request_user: User,
             }
             let body = Template {
-                title:        "Изменение пароля".to_string(),
-                request_user: _request_user,
+                //title:        "Изменение пароля".to_string(),
+                //request_user: _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -449,12 +449,12 @@ pub async fn edit_password_page(session: Session, req: HttpRequest) -> actix_web
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/settings/edit_password.stpl")]
             struct Template {
-                title:        String,
-                request_user: User,
+                //title:        String,
+                //request_user: User,
             }
             let body = Template {
-                title:        "Изменение пароля".to_string(),
-                request_user: _request_user,
+                //title:        "Изменение пароля".to_string(),
+                //request_user: _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -474,11 +474,11 @@ pub async fn edit_phone_page(session: Session, req: HttpRequest) -> actix_web::R
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/settings/edit_phone.stpl")]
             struct Template {
-                title:        String,
+                //title:        String,
                 request_user: User,
             }
             let body = Template {
-                title:        "Изменение телефона".to_string(),
+                //title:        "Изменение телефона".to_string(),
                 request_user: _request_user,
             }
             .render_once()
@@ -488,12 +488,12 @@ pub async fn edit_phone_page(session: Session, req: HttpRequest) -> actix_web::R
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/settings/edit_phone.stpl")]
             struct Template {
-                title:        String,
-                request_user: User,
+                //title:        String,
+                //request_user: User,
             }
             let body = Template {
-                title:        "Изменение телефона".to_string(),
-                request_user: _request_user,
+                //title:        "Изменение телефона".to_string(),
+                //request_user: _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -513,12 +513,12 @@ pub async fn remove_profile_page(session: Session, req: HttpRequest) -> actix_we
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/settings/remove_profile.stpl")]
             struct Template {
-                title:        String,
-                request_user: User,
+                //title:        String,
+                //request_user: User,
             }
             let body = Template {
-                title:        "Удаление аккаунта".to_string(),
-                request_user: _request_user,
+                //title:        "Удаление аккаунта".to_string(),
+                //request_user: _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -528,11 +528,11 @@ pub async fn remove_profile_page(session: Session, req: HttpRequest) -> actix_we
             #[template(path = "mobile/users/settings/remove_profile.stpl")]
             struct Template {
                 title:        String,
-                request_user: User,
+                //request_user: User,
             }
             let body = Template {
                 title:        "Удаление аккаунта".to_string(),
-                request_user: _request_user,
+                //request_user: _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
