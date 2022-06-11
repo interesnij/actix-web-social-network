@@ -452,7 +452,7 @@ pub async fn load_exclude_users_page(session: Session, req: HttpRequest) -> acti
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/settings/perm/exclude_users.stpl")]
             struct Template {
-                //request_user:     User,
+                request_user:     User,
                 object_list:      Vec<User>,
                 users:            Vec<User>,
                 next_page_number: i32,
@@ -462,7 +462,7 @@ pub async fn load_exclude_users_page(session: Session, req: HttpRequest) -> acti
             }
 
             let body = Template {
-                //request_user:     _request_user,
+                request_user:     _request_user,
                 object_list:      object_list,
                 users:            users_list,
                 next_page_number: next_page_number,
@@ -479,7 +479,7 @@ pub async fn load_exclude_users_page(session: Session, req: HttpRequest) -> acti
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/settings/perm/exclude_users.stpl")]
             struct Template {
-                //request_user:        User,
+                request_user:        User,
                 object_list:         Vec<User>,
                 users:               Vec<User>,
                 next_page_number:    i32,
@@ -489,7 +489,7 @@ pub async fn load_exclude_users_page(session: Session, req: HttpRequest) -> acti
             }
 
             let body = Template {
-                //request_user:        _request_user,
+                request_user:        _request_user,
                 object_list:         object_list,
                 users:               users_list,
                 next_page_number:    next_page_number,
@@ -602,7 +602,7 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/settings/perm/include_users.stpl")]
             struct Template {
-                //request_user:     User,
+                request_user:     User,
                 object_list:      Vec<User>,
                 users:            Vec<User>,
                 next_page_number: i32,
@@ -612,7 +612,7 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
             }
 
             let body = Template {
-                //request_user:     _request_user,
+                request_user:     _request_user,
                 object_list:      object_list,
                 users:            users_list,
                 next_page_number: next_page_number,
@@ -629,7 +629,7 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/settings/perm/include_users.stpl")]
             struct Template {
-                //request_user:        User,
+                request_user:        User,
                 object_list:         Vec<User>,
                 users:               Vec<User>,
                 next_page_number:    i32,
@@ -639,7 +639,7 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
             }
 
             let body = Template {
-                //request_user:        _request_user,
+                request_user:        _request_user,
                 object_list:         object_list,
                 users:               users_list,
                 next_page_number:    next_page_number,
