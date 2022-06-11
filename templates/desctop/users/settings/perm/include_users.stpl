@@ -34,7 +34,7 @@
               </h6>
             </div>
             <span class="custom_color border item_attach_circle friends_chat_load_several
-              <% if users.iter().any(|&i| &i==object) { %>
+              <% if users.iter().any(|i| i==object) { %>
                 active_svg
               <% } %>"
               tooltip="Выбрать друга" flow="up">
