@@ -1115,7 +1115,7 @@ pub async fn invite_members_page(session: Session, req: HttpRequest, _id: web::P
                 next_page_number = 2;
             }
         }
-        let object_list = _request_user.get_friends(20, step);
+        let object_list = _request_user.get_friends(20, step.into());
 
         if is_desctop {
 
