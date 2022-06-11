@@ -25,11 +25,15 @@ use futures::StreamExt;
 
 
 pub fn settings_urls(config: &mut web::ServiceConfig) {
+    /////// pages
     config.route("/users/followings/", web::get().to(followings_page));
     config.route("/users/blacklist/", web::get().to(blacklist_page));
     config.route("/users/settings/", web::get().to(settings_page));
     config.route("/users/settings/design/", web::get().to(design_settings_page));
+
     config.route("/users/settings/private/", web::get().to(private_settings_page));
+    config.route("/users/settings/load_include_users/", web::get().to(load_include_users_page));
+    config.route("/users/settings/load_exclude_users/", web::get().to(load_exclude_users_page));
 
     config.route("/users/settings/edit_link/", web::get().to(edit_link_page));
     config.route("/users/settings/edit_name/", web::get().to(edit_name_page));
@@ -37,6 +41,7 @@ pub fn settings_urls(config: &mut web::ServiceConfig) {
     config.route("/users/settings/edit_phone/", web::get().to(edit_phone_page));
     config.route("/users/settings/remove_profile/", web::get().to(remove_profile_page));
 
+    /////// progs
     config.route("/users/settings/change_phone_send/{phone}/", web::get().to(change_phone_send));
     config.route("/users/settings/change_phone_verify/{phone}/{code}/", web::get().to(change_phone_verify));
     config.route("/users/settings/get_background/{color}/", web::get().to(get_background));
@@ -47,7 +52,10 @@ pub fn settings_urls(config: &mut web::ServiceConfig) {
     config.route("/users/settings/edit_phone/", web::post().to(edit_phone));
 
     config.route("/users/settings/remove_profile/", web::post().to(remove_profile));
+
     config.route("/users/settings/private/", web::post().to(private_settings));
+    config.route("/users/settings/load_include_users/", web::post().to(post_include_users));
+    config.route("/users/settings/load_exclude_users/", web::post().to(post_exclude_users));
 }
 
 pub async fn followings_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
@@ -337,6 +345,307 @@ pub async fn private_settings_page(session: Session, req: HttpRequest) -> actix_
                 title:        "Настройки приватности".to_string(),
                 request_user: _request_user,
                 private:      _private,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+
+pub async fn load_exclude_users_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    #[derive(Debug, Deserialize)]
+    pub struct ZParams {
+        pub action:       Option<String>,
+    }
+
+    let params_some = web::Query::<ZParams>::from_query(&req.query_string());
+    let (is_desctop, page) = get_list_variables(req);
+
+    if is_signed_in(&session) {
+        let mut next_page_number: i32 = 0;
+        let mut count: i32 = 0;
+        let mut types = "".to_string();
+        let mut text =  "".to_string();
+        if params_some.is_ok() {
+            let params = params_some.unwrap();
+            if params.action.is_some() {
+                types = params.action.as_ref().unwrap().to_string();
+            }
+        }
+
+        let _request_user = get_request_user_data(&session);
+        let mut users_list: Vec<User> = Vec::new();
+        let step: i32;
+
+        count = _request_user.count_friends();
+        if page > 1 {
+            step = (page - 1) * 20;
+            if count > (page * 20) {
+                next_page_number = page + 1;
+            }
+        }
+        else {
+            step = 0;
+            if count > 20 {
+                next_page_number = 2;
+            }
+        }
+        let object_list = _request_user.get_friends(20, step.into());
+
+        if types == "can_see_all".to_string() {
+            text = "видеть страницы".to_string();
+            users_list = _request_user.get_can_see_all_exclude_users();
+        }
+        else if types == "can_see_community".to_string() {
+            text = "видеть сообщества".to_string();
+            users_list = _request_user.get_can_see_community_exclude_users();
+        }
+        else if types == "can_see_info".to_string() {
+            text = "видеть информацию профиля".to_string();
+            users_list = _request_user.get_can_see_info_exclude_users();
+        }
+        else if types == "can_see_friend".to_string() {
+            text = "видеть друзей".to_string();
+            users_list = _request_user.get_can_see_friend_exclude_users();
+        }
+        else if types == "can_send_message".to_string() {
+            text = "писать сообщения".to_string();
+            users_list = _request_user.get_can_send_message_exclude_users();
+        }
+        else if types == "can_add_in_chat".to_string() {
+            text = "добавлять в беседы".to_string();
+            users_list = _request_user.get_can_add_in_chat_exclude_users();
+        }
+        else if types == "can_see_post".to_string() {
+            text = "видеть записи".to_string();
+            users_list = _request_user.get_can_see_post_exclude_users();
+        }
+        else if types == "can_see_photo".to_string() {
+            text = "видеть фотографии".to_string();
+            users_list = _request_user.get_can_see_photo_exclude_users();
+        }
+        else if types == "can_see_good".to_string() {
+            text = "видеть товары".to_string();
+            users_list = _request_user.get_can_see_good_exclude_users();
+        }
+        else if types == "can_see_video".to_string() {
+            text = "видеть видеозаписи".to_string();
+            users_list = _request_user.get_can_see_video_exclude_users();
+        }
+        else if types == "can_see_music".to_string() {
+            text = "видеть аудиозаписи".to_string();
+            users_list = _request_user.get_can_see_music_exclude_users();
+        }
+        else if types == "can_see_planner".to_string() {
+            text = "видеть раздел планирования".to_string();
+            users_list = _request_user.get_can_see_planner_exclude_users();
+        }
+        else if types == "can_see_doc".to_string() {
+            text = "видеть документы".to_string();
+            users_list = _request_user.get_can_see_doc_exclude_users();
+        }
+
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/users/settings/list_exclude_users.stpl")]
+            struct Template {
+                //request_user:     User,
+                object_list:      Vec<User>,
+                users:            Vec<User>,
+                next_page_number: i32,
+                types:            String,
+                count:            i32,
+                text:             String,
+            }
+
+            let body = Template {
+                //request_user:     _request_user,
+                object_list:      object_list,
+                users:            users_list,
+                next_page_number: next_page_number,
+                types:            types,
+                count:            count,
+                text:             text,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/users/settings/list_exclude_users.stpl")]
+            struct Template {
+                //request_user:        User,
+                object_list:         Vec<User>,
+                users:               Vec<User>,
+                next_page_number:    i32,
+                types:               String,
+                count:               i32,
+                text:                String,
+            }
+
+            let body = Template {
+                //request_user:        _request_user,
+                object_list:         object_list,
+                users:               users_list,
+                next_page_number:    next_page_number,
+                types:               types,
+                count:               count,
+                text:                text,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+pub async fn list_include_users_load(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    #[derive(Debug, Deserialize)]
+    pub struct ZParams {
+        pub action:       Option<String>,
+    }
+
+    let params_some = web::Query::<ZParams>::from_query(&req.query_string());
+    let (is_desctop, page) = get_list_variables(req);
+
+    if is_signed_in(&session) {
+        let mut next_page_number: i32 = 0;
+        let mut count: i32 = 0;
+        let mut types = "".to_string();
+        let mut text =  "".to_string();
+        if params_some.is_ok() {
+            let params = params_some.unwrap();
+            if params.action.is_some() {
+                types = params.action.as_ref().unwrap().to_string();
+            }
+        }
+
+        let _request_user = get_request_user_data(&session);
+        let mut users_list: Vec<User> = Vec::new();
+        let step: i32;
+
+        count = _request_user.count_friends();
+        if page > 1 {
+            step = (page - 1) * 20;
+            if count > (page * 20) {
+                next_page_number = page + 1;
+            }
+        }
+        else {
+            step = 0;
+            if count > 20 {
+                next_page_number = 2;
+            }
+        }
+        let object_list = _request_user.get_friends(20, step.into());
+
+        if types == "can_see_all".to_string() {
+            text = "видеть страницы".to_string();
+            users_list = _request_user.get_can_see_all_include_users();
+        }
+        else if types == "can_see_community".to_string() {
+            text = "видеть сообщества".to_string();
+            users_list = _request_user.get_can_see_community_include_users();
+        }
+        else if types == "can_see_info".to_string() {
+            text = "видеть информацию профиля".to_string();
+            users_list = _request_user.get_can_see_info_include_users();
+        }
+        else if types == "can_see_friend".to_string() {
+            text = "видеть друзей".to_string();
+            users_list = _request_user.get_can_see_friend_include_users();
+        }
+        else if types == "can_send_message".to_string() {
+            text = "писать сообщения".to_string();
+            users_list = _request_user.get_can_send_message_include_users();
+        }
+        else if types == "can_add_in_chat".to_string() {
+            text = "добавлять в беседы".to_string();
+            users_list = _request_user.get_can_add_in_chat_include_users();
+        }
+        else if types == "can_see_post".to_string() {
+            text = "видеть записи".to_string();
+            users_list = _request_user.get_can_see_post_include_users();
+        }
+        else if types == "can_see_photo".to_string() {
+            text = "видеть фотографии".to_string();
+            users_list = _request_user.get_can_see_photo_include_users();
+        }
+        else if types == "can_see_good".to_string() {
+            text = "видеть товары".to_string();
+            users_list = _request_user.get_can_see_good_include_users();
+        }
+        else if types == "can_see_video".to_string() {
+            text = "видеть видеозаписи".to_string();
+            users_list = _request_user.get_can_see_video_include_users();
+        }
+        else if types == "can_see_music".to_string() {
+            text = "видеть аудиозаписи".to_string();
+            users_list = _request_user.get_can_see_music_include_users();
+        }
+        else if types == "can_see_planner".to_string() {
+            text = "видеть раздел планирования".to_string();
+            users_list = _request_user.get_can_see_planner_include_users();
+        }
+        else if types == "can_see_doc".to_string() {
+            text = "видеть документы".to_string();
+            users_list = _request_user.get_can_see_doc_include_users();
+        }
+
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/users/settings/list_include_users.stpl")]
+            struct Template {
+                //request_user:     User,
+                object_list:      Vec<User>,
+                users:            Vec<User>,
+                next_page_number: i32,
+                types:            String,
+                count:            i32,
+                text:             String,
+            }
+
+            let body = Template {
+                //request_user:     _request_user,
+                object_list:      object_list,
+                users:            users_list,
+                next_page_number: next_page_number,
+                types:            types,
+                count:            count,
+                text:             text,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/users/settings/list_include_users.stpl")]
+            struct Template {
+                //request_user:        User,
+                object_list:         Vec<User>,
+                users:               Vec<User>,
+                next_page_number:    i32,
+                types:               String,
+                count:               i32,
+                text:                String,
+            }
+
+            let body = Template {
+                //request_user:        _request_user,
+                object_list:         object_list,
+                users:               users_list,
+                next_page_number:    next_page_number,
+                types:               types,
+                count:               count,
+                text:                text,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -883,6 +1192,8 @@ pub async fn change_phone_verify(session: Session, param: web::Path<(String,i32)
 }
 
 pub async fn private_settings(session: Session, mut payload: Multipart) -> impl Responder {
+    // программа изменяет значение полей приватности пользователя
+    // кроме "друзья кроме" и "некоторые друзья" (это написано ниже)
     if is_signed_in(&session) {
         use crate::models::UserPrivate;
 
@@ -997,4 +1308,60 @@ pub async fn private_settings(session: Session, mut payload: Multipart) -> impl 
         }
     }
     HttpResponse::Ok().body("")
+}
+
+#[derive(Deserialize, Serialize, Debug)]
+pub struct UserPrivateIEForm {
+    pub users:  Option<String>,
+    pub action: Option<String>,
+}
+pub async fn user_private_ie_form(payload: &mut Multipart) -> UserPrivateIEForm {
+    let mut form: UserPrivateIEForm = UserPrivateIEForm {
+        users:  None,
+        action: None,
+    };
+
+    while let Some(item) = payload.next().await {
+        let mut field: Field = item.expect("split_payload err");
+        while let Some(chunk) = field.next().await {
+            let data = chunk.expect("split_payload err chunk");
+            if let Ok(s) = str::from_utf8(&data) {
+                let data_string = s.to_string();
+                if field.name() == "users" {
+                    form.users = Some(data_string);
+                }
+                else if field.name() == "action" {
+                    form.action = Some(data_string);
+                }
+            }
+        }
+    }
+    form
+}
+
+pub async fn post_exclude_users(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+
+        let _request_user = get_request_user_data(&session);
+        let _connection = establish_connection();
+        let form = user_private_ie_form(payload.borrow_mut()).await;
+        _request_user.set_friends_visible_perms(form.action, form.users, "b".to_string())
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+    }
+    else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+}
+pub async fn post_include_users(session: Session, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+
+        let _request_user = get_request_user_data(&session);
+        let _connection = establish_connection();
+        let form = user_private_ie_form(payload.borrow_mut()).await;
+        _request_user.set_friends_visible_perms(form.action, form.users, "a".to_string())
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+    }
+    else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
 }

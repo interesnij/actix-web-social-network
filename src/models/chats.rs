@@ -1858,11 +1858,19 @@ impl Chat {
             _ => false,
         };
     }
-    pub fn set_friends_visible_perms(&self, action: String, users_ids: Vec<i32>, types: String) -> bool {
+    pub fn set_friends_visible_perms(&self, action: String, users: String, types: String) -> bool {
         use crate::schema::chat_ie_settings::dsl::chat_ie_settings;
         use crate::schema::chat_users::dsl::chat_users;
 
         let _connection = establish_connection();
+        let mut users_ids = Vec::new();
+        let v: Vec<&str> = users.split(", ").collect();
+        for item in v.iter() {
+            if !item.is_empty() {
+                let pk: i32 = item.parse().unwrap();
+                users_ids.push(pk);
+            }
+        }
 
         let _members = chat_users
             .filter(schema::chat_users::user_id.eq_any(&users_ids))

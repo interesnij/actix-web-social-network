@@ -4543,13 +4543,20 @@ impl User {
         bool_stack.push(bool_can_see_survey);
         return bool_stack;
     }
-    pub fn set_friends_visible_perms(&self, action: String, users_ids: Vec<i32>, types: String) -> bool {
+    pub fn set_friends_visible_perms(&self, action: String, users: String, types: String) -> bool {
         use crate::models::{FriendsVisiblePerm, NewFriendsVisiblePerm};
         use crate::schema::friends_visible_perms::dsl::friends_visible_perms;
         use crate::schema::friends::dsl::friends;
 
         let _connection = establish_connection();
-
+        let mut users_ids = Vec::new();
+        let v: Vec<&str> = users.split(", ").collect();
+        for item in v.iter() {
+            if !item.is_empty() {
+                let pk: i32 = item.parse().unwrap();
+                users_ids.push(pk);
+            }
+        }
         let _friends = friends
             .filter(schema::friends::target_user_id.eq_any(&users_ids))
             .load::<Friend>(&_connection)

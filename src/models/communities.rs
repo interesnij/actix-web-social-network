@@ -3647,11 +3647,19 @@ impl Community {
             .expect("E").len();
     }
 
-    pub fn set_friends_visible_perms(&self, action: String, users_ids: Vec<i32>, types: String) -> bool {
+    pub fn set_friends_visible_perms(&self, action: String, users: String, types: String) -> bool {
         use crate::schema::community_visible_perms::dsl::community_visible_perms;
         use crate::schema::communities_memberships::dsl::communities_memberships;
 
         let _connection = establish_connection();
+        let mut users_ids = Vec::new();
+        let v: Vec<&str> = users.split(", ").collect();
+        for item in v.iter() {
+            if !item.is_empty() {
+                let pk: i32 = item.parse().unwrap();
+                users_ids.push(pk);
+            }
+        }
 
         let _members = communities_memberships
             .filter(schema::communities_memberships::user_id.eq_any(&users_ids))
