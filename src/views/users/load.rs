@@ -1987,6 +1987,7 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
                 }
             }
         }
+        if list != "null".to_string() {
         let pk: i32 = list[3..].parse().unwrap();
         let code = &list[..3].to_string();
 
@@ -2133,6 +2134,24 @@ pub async fn list_include_users_load(session: Session, req: HttpRequest) -> acti
                 use crate::utils::get_music_list;
                 let current_list = get_music_list(pk);
                 users_list = current_list.get_copy_el_include_users()
+            }
+        }
+        }
+        else {
+            if types == "can_see_el".to_string() {
+                text = "видеть записи".to_string();
+            }
+            else if types == "can_see_comment".to_string() {
+                text = "видеть комментарии".to_string();
+            }
+            else if types == "create_el".to_string() {
+                text = "создавать элементы".to_string();
+            }
+            else if types == "create_comment".to_string() {
+                text = "писать комментарии".to_string();
+            }
+            else if types == "copy_el".to_string() {
+                text = "копировать список / элементы".to_string();
             }
         }
 

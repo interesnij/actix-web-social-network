@@ -14,7 +14,7 @@
             </span>
           <% } %>
       <% } else { %>
-          <span class="header_title">Выберите тех, кто может <%= text %></span>
+          <span class="header_title">Выберите тех, кому нельзя <%= text %></span>
       <% } %>
       </div>
       <%= count %>
