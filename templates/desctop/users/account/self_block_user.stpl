@@ -6,7 +6,20 @@
   <div class="col-lg-4 col-md-5 order-1">
     <div class="card mb-3">
         <div class="card-body">
-          <% include!("buttons.stpl"); %>
+        <span style="margin-bottom: 10px;position:relative" class="centered dropdown">
+        <button type="button" class="btn btn-sm border" style="width: -webkit-fill-available">
+            Вы заблокированы
+        </button>
+        <div class="dropdown-menu" data-type="use<%= user.id %>" style="margin-top:5px;width:100%">
+            <span class="dropdown-item user_block">Заблокировать</span>
+            <span class="dropdown-item create_repost">Поделиться</span>
+            <% if request_user.is_manager() { %>
+              <span class="dropdown-item create_close" style="font-weight: bold;">Закрыть</span>
+            <% } else { %>
+              <a class="dropdown-item create_claim pointer">Пожаловаться</a>
+            <% } %>
+          </div>
+        </span>
         </div>
     </div>
 
