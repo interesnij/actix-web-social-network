@@ -1100,7 +1100,7 @@ pub async fn invite_members_page(session: Session, req: HttpRequest, _id: web::P
         let _chat = get_chat(*_id);
 
         let _request_user = get_request_user_data(&session);
-        let step: i64;
+        let step: i32;
 
         let count = _request_user.count_friends();
         if page > 1 {
