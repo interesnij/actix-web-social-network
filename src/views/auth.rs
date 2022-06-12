@@ -449,6 +449,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             .expect("Error saving design_settings.");
 
         set_current_user(&session, &_session_user);
+        HttpResponse::Ok().body(format!("ok"))
     }
     HttpResponse::Ok().body(format!("ok"))
     }
