@@ -13,7 +13,6 @@ use crate::utils::{
     establish_connection,
     is_desctop,
     get_request_user_data,
-    to_home,
     get_list_variables,
     get_type,
 };
@@ -208,7 +207,7 @@ pub async fn featured_list_page(session: Session, req: HttpRequest) -> actix_web
                 .body(body))
         }
     } else {
-        Ok(to_home())
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
 }
 
@@ -972,7 +971,7 @@ pub async fn create_claim_page(session: Session, req: HttpRequest) -> actix_web:
             #[template(path = "desctop/generic/user/report.stpl")]
             struct Template {
                 //request_user:  User,
-                text:          String, 
+                text:          String,
                 types:         String,
             }
             let body = Template {

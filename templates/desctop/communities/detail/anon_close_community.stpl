@@ -39,7 +39,7 @@
           </div>
           <% if private_bools[1] == true { %>
             <% include!("../detail_sections/membersheeps.stpl"); %>
-          <% } %>
+          <% } %> 
 
         </div>
     </div>

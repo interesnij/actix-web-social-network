@@ -732,12 +732,12 @@ pub async fn community_docs_list_page(session: Session, req: HttpRequest, param:
             #[template(path = "desctop/communities/docs/list/anon_list.stpl")]
             struct Template {
                 title:     String,
-                community: Community,
+                //community: Community,
                 list:      DocList,
             }
             let body = Template {
                 title:     _community.name.clone() + &"- список документов".to_string(),
-                community: _community,
+                //community: _community,
                 list:      _list,
             }
             .render_once()
@@ -1102,14 +1102,14 @@ pub async fn community_goods_list_page(session: Session, req: HttpRequest, param
             struct Template {
                 title:        String,
                 request_user: User,
-                community:    Community,
+                //community:    Community,
                 list:         GoodList,
             }
 
             let body = Template {
                 title:        _community.name.clone() + &"- подборки товаров".to_string(),
                 request_user: _request_user,
-                community:    _community,
+                //community:    _community,
                 list:         _list,
             }
             .render_once()

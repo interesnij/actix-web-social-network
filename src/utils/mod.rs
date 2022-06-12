@@ -73,11 +73,6 @@ pub fn hash_password(password: &str) -> String {
       //.map_err(|_| AuthError::AuthenticationError(String::from("Не удалось хэшировать пароль")))
 }
 
-#[warn(deprecated)]
-pub fn to_home() -> HttpResponse {
-  HttpResponse::Found().header(LOCATION, "/").finish()
-}
-
 pub fn verify(hash: &str, password: &str) -> Result<bool, AuthError> {
   Verifier::default()
       .with_hash(hash)
