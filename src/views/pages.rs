@@ -1387,6 +1387,6 @@ pub async fn mobile_menu_page(session: Session) -> actix_web::Result<HttpRespons
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     } else {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("not permission"))
     }
 }
