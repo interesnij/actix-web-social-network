@@ -201,10 +201,10 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
     let params = web::Query::<NewUserForm>::from_query(&req.query_string());
      // Если пользователь не аноним, то отправляем его на страницу новостей
     if is_signed_in(&session) {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        HttpResponse::Ok().content_type("text/html; charset=utf-8").body("")
     }
     else if params.is_err() {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        HttpResponse::Ok().content_type("text/html; charset=utf-8").body("")
     }
     else {
 
@@ -450,7 +450,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             .expect("Error saving design_settings.");
 
         set_current_user(&session, &_session_user);
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok"))
+        HttpResponse::Ok().content_type("text/html; charset=utf-8").body("ok")
     }
 }
 
