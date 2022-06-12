@@ -1,4 +1,4 @@
-<% include!("../../../base_block/base_mobile_header.stpl"); %>
+<% include!("../../base_block/base_mobile_header.stpl"); %>
 
 <div class="main-container container mt-3" data-type="page_menu">
 <div class="card-header p-0">
@@ -88,4 +88,4 @@
 </div>
 </div>
 
-<% include!("../../../base_block/base_mobile_footer.stpl"); %>
+<% include!("../../base_block/base_mobile_footer.stpl"); %>
