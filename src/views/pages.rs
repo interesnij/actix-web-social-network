@@ -32,7 +32,7 @@ pub fn pages_routes(config: &mut web::ServiceConfig) {
     config.route("/progs/create_repost/", web::get().to(create_repost_page));
     config.route("/progs/create_claim/", web::get().to(create_claim_page));
     config.route("/load/reactions/", web::get().to(all_reactions_page));
-    config.route("/mobile_menu/", web::get().to(mobile_menu_page));
+    config.route("/mobile-menu/", web::get().to(mobile_menu_page));
 }
 
 pub async fn link_page(session: Session, req: HttpRequest, slug: web::Path<String>) -> actix_web::Result<HttpResponse> {

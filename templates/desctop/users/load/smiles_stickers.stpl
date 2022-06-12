@@ -1,0 +1,41 @@
+<div class="_card" style="padding: 0 5px;">
+  <div class="">
+        <div class="tab-content">
+          <div class="tab-pane fade active show smiles_panel" style="height: 250px;width: 250px;overflow: auto;">
+            <div class="mb-0 f-sm">
+              {% if is_have_populate_smiles %}
+                <h6>Часто используемые</h6>
+                <div style="display: flex;flex-wrap: wrap;">
+                  {% for smile in request.user.get_populate_smiles %}
+                  <div class="progressive replace" data-href="{{ smile.image.url }}">
+                    <img class="preview pointer classic_smile_item" data-pk="/static/images/1px.png" style="width: auto;" src="{{ smile.image.url }}" alt="smile">
+                  </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+
+              {% for item in categories %}
+                <h6>{{ item.name }}</h6>
+                <div style="display: flex;flex-wrap: wrap;">
+                  {% for object in item.get_items %}
+                  <div data-pk="{{ object.pk }}" class="progressive replace pointer classic_{% if is_smile %}smile{% else %}sticker{% endif %}_item" data-href="{{ object.image.url }}">
+                    <img class="preview" data-pk="/static/images/1px.png" style="width: auto;" src="{{ object.image.url }}" alt="smile">
+                  </div>
+                  {% endfor %}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+    </div>
+    <div class="tabs-footer" style="border-top: 1px solid #B9B9C3;">
+        <ul class="nav icon_bottom_bar">
+            <li class="nav-item active" style="margin-right:5px" data-type="standart_smile">
+                <img src="/static/images/smile.png" alt="smile" style="height: 25px;margin-top: 5px;padding-top: 1px;">
+            </li>
+            <li class="nav-item select_bottom_bar_icons pointer" style="margin-right:5px" data-type="gif_smile">
+                <img src="/static/images/smile.gif" alt="smile" style="height: 30px;">
+            </li>
+        </ul>
+    </div>
+  </div>
+</div>
