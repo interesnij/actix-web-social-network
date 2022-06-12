@@ -1361,14 +1361,14 @@ pub async fn smiles_stickers_load(session: Session, req: HttpRequest) -> actix_w
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/load/smiles_stickers.stpl")]
             struct Template {
-                //request_user:     User,
+                request_user:     User,
                 s_categories:     Vec<SmileCategorie>,
                 current_category: usize,
                 categories:       Vec<StickerCategorie>,
             }
 
             let body = Template {
-                //request_user:     _request_user,
+                request_user:     _request_user,
                 s_categories:     s_categories,
                 current_category: current_category,
                 categories:       categories,
@@ -1381,14 +1381,14 @@ pub async fn smiles_stickers_load(session: Session, req: HttpRequest) -> actix_w
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/load/smiles_stickers.stpl")]
             struct Template {
-                //request_user:     User,
+                request_user:     User,
                 s_categories:     Vec<SmileCategorie>,
                 current_category: usize,
                 categories:       Vec<StickerCategorie>,
             }
 
             let body = Template {
-                //request_user:     _request_user,
+                request_user:     _request_user,
                 s_categories:     s_categories,
                 current_category: current_category,
                 categories:       categories,
