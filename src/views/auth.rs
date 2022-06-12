@@ -201,6 +201,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
     if is_signed_in(&session) {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""));
     }
+    else {
 
     let _connection = establish_connection();
     let params = web::Query::<NewUserForm>::from_query(&req.query_string());
@@ -450,6 +451,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
         set_current_user(&session, &_session_user);
     }
     HttpResponse::Ok().body(format!("ok"))
+    }
 }
 
 pub async fn phone_send(_phone: web::Path<String>) -> impl Responder {
