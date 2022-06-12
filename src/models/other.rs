@@ -92,7 +92,7 @@ impl StickerCategorie {
             return self.avatar.as_deref().unwrap();
         }
         else {
-            return "/static/images/no_img/smile.gif".as_str();
+            return "/static/images/no_img/smile.gif";
         }
     }
 }
