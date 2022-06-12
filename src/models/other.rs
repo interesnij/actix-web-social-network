@@ -87,6 +87,14 @@ impl StickerCategorie {
             .expect("Error.");
         return self;
     }
+    pub fn get_image(&self) -> &str {
+        if self.avatar.is_some() {
+            return self.avatar.as_deref().unwrap();
+        }
+        else {
+            return "/static/images/no_img/smile.gif".as_str();
+        }
+    }
 }
 
 #[derive(Deserialize, Insertable, AsChangeset)]
