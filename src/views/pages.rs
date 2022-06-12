@@ -32,6 +32,7 @@ pub fn pages_routes(config: &mut web::ServiceConfig) {
     config.route("/progs/create_repost/", web::get().to(create_repost_page));
     config.route("/progs/create_claim/", web::get().to(create_claim_page));
     config.route("/load/reactions/", web::get().to(all_reactions_page));
+    config.route("/mobile_menu/", web::get().to(mobile_menu_page));
 }
 
 pub async fn link_page(session: Session, req: HttpRequest, slug: web::Path<String>) -> actix_web::Result<HttpResponse> {
@@ -1365,5 +1366,27 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+
+pub async fn mobile_menu_page(session: Session) -> actix_web::Result<HttpResponse> {
+    if is_signed_in(&session) {
+        #[derive(TemplateOnce)]
+        #[template(path = "mobile/main/menu.stpl")]
+        struct Template {
+            title: String,
+            request_user: User,
+        }
+
+        let _request_user = get_request_user_data(&session);
+        let body = Template {
+            title: "Меню".to_string(),
+            request_user: _request_user,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    } else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
 }
