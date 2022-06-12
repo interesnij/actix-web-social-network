@@ -1266,7 +1266,7 @@ pub async fn community_photos_list_page(session: Session, req: HttpRequest, para
 
         } else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/communities/photos/main_list/anon_list.stpl")]
+            #[template(path = "mobile/communities/photos/list/anon_list.stpl")]
             struct Template {
                 title:     String,
                 //community: Community,
