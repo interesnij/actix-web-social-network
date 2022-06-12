@@ -92,7 +92,7 @@ fn handle_sign_in(data: LoginUser2,
             if is_json {
                 Ok(HttpResponse::Ok().json(user))
             } else {
-                Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+                Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
             }
         },
         Err(err) => {
@@ -135,7 +135,7 @@ pub async fn login_form(payload: &mut Multipart) -> LoginUser2 {
 
 pub async fn login(mut payload: Multipart, session: Session, req: HttpRequest) -> impl Responder {
     if is_signed_in(&session) {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""));
     }
     let form = login_form(payload.borrow_mut()).await;
     println!("{:?}", form.phone.clone());
