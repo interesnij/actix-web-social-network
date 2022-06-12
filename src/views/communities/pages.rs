@@ -686,14 +686,14 @@ pub async fn community_docs_list_page(session: Session, req: HttpRequest, param:
             struct Template {
                 title:        String,
                 request_user: User,
-                community:    Community,
+                //community:    Community,
                 list:         DocList,
             }
 
             let body = Template {
                 title:        _community.name.clone() + &"- список документов".to_string(),
                 request_user: _request_user,
-                community:    _community,
+                //community:    _community,
                 list:         _list,
             }
             .render_once()
@@ -706,14 +706,14 @@ pub async fn community_docs_list_page(session: Session, req: HttpRequest, param:
             struct Template {
                 title:        String,
                 request_user: User,
-                community:    Community,
+                //community:    Community,
                 list:         DocList,
             }
 
             let body = Template {
                 title:        _community.name.clone() + &"- список документов".to_string(),
                 request_user: _request_user,
-                community:    _community,
+                //community:    _community,
                 list:         _list,
             }
             .render_once()
@@ -749,12 +749,12 @@ pub async fn community_docs_list_page(session: Session, req: HttpRequest, param:
             #[template(path = "mobile/communities/docs/list/anon_list.stpl")]
             struct Template {
                 title:     String,
-                community: Community,
+                //community: Community,
                 list:      DocList,
             }
             let body = Template {
                 title:     _community.name.clone() + &"- список документов".to_string(),
-                community: _community,
+                //community: _community,
                 list:      _list,
             }
             .render_once()
@@ -790,14 +790,14 @@ pub async fn community_video_list_page(session: Session, req: HttpRequest, param
             struct Template {
                 title:        String,
                 request_user: User,
-                community:    Community,
+                //community:    Community,
                 list:         VideoList,
             }
 
             let body = Template {
                 title:        _community.name.clone() + &"- видеоальбомы".to_string(),
                 request_user: _request_user,
-                community:    _community,
+                //community:    _community,
                 list:         _list,
             }
             .render_once()
@@ -810,14 +810,14 @@ pub async fn community_video_list_page(session: Session, req: HttpRequest, param
             struct Template {
                 title:        String,
                 request_user: User,
-                community:    Community,
+                //community:    Community,
                 list:         VideoList,
             }
 
             let body = Template {
                 title:        _community.name.clone() + &"- видеоальбомы".to_string(),
                 request_user: _request_user,
-                community:    _community,
+                //community:    _community,
                 list:         _list,
             }
             .render_once()
@@ -836,12 +836,12 @@ pub async fn community_video_list_page(session: Session, req: HttpRequest, param
             #[template(path = "desctop/communities/video/list/anon_list.stpl")]
             struct Template {
                 title:     String,
-                community: Community,
+                //community: Community,
                 list:      VideoList,
             }
             let body = Template {
                 title:        _community.name.clone() + &"- видеоальбомы".to_string(),
-                community: _community,
+                //community: _community,
                 list:      _list,
             }
             .render_once()
@@ -853,12 +853,12 @@ pub async fn community_video_list_page(session: Session, req: HttpRequest, param
             #[template(path = "mobile/communities/video/list/anon_list.stpl")]
             struct Template {
                 title:     String,
-                community: Community,
+                //community: Community,
                 list:      VideoList,
             }
             let body = Template {
                 title:        _community.name.clone() + &"- видеоальбомы".to_string(),
-                community: _community,
+                //community: _community,
                 list:      _list,
             }
             .render_once()
@@ -894,14 +894,14 @@ pub async fn community_surveys_list_page(session: Session, req: HttpRequest, par
             struct Template {
                 title:        String,
                 request_user: User,
-                community:    Community,
+                //community:    Community,
                 list:         SurveyList,
             }
 
             let body = Template {
                 title:        _community.name.clone() + &"- список опрсоов".to_string(),
                 request_user: _request_user,
-                community:    _community,
+                //community:    _community,
                 list:         _list,
             }
             .render_once()
@@ -914,14 +914,14 @@ pub async fn community_surveys_list_page(session: Session, req: HttpRequest, par
             struct Template {
                 title:        String,
                 request_user: User,
-                community:    Community,
+                //community:    Community,
                 list:         SurveyList,
             }
 
             let body = Template {
                 title:        _community.name.clone() + &"- список опрсоов".to_string(),
                 request_user: _request_user,
-                community:    _community,
+                //community:    _community,
                 list:         _list,
             }
             .render_once()
@@ -940,12 +940,12 @@ pub async fn community_surveys_list_page(session: Session, req: HttpRequest, par
             #[template(path = "desctop/communities/survey/list/anon_list.stpl")]
             struct Template {
                 title:     String,
-                community: Community,
+                //community: Community,
                 list:      SurveyList,
             }
             let body = Template {
                 title:        _community.name.clone() + &"- список опрсоов".to_string(),
-                community: _community,
+                //community: _community,
                 list:      _list,
             }
             .render_once()
@@ -957,12 +957,12 @@ pub async fn community_surveys_list_page(session: Session, req: HttpRequest, par
             #[template(path = "mobile/communities/survey/list/anon_list.stpl")]
             struct Template {
                 title:     String,
-                community: Community,
+                //community: Community,
                 list:      SurveyList,
             }
             let body = Template {
                 title:        _community.name.clone() + &"- список опрсоов".to_string(),
-                community: _community,
+                //community: _community,
                 list:      _list,
             }
             .render_once()
@@ -998,14 +998,14 @@ pub async fn community_music_list_page(session: Session, req: HttpRequest, param
             struct Template {
                 title:        String,
                 request_user: User,
-                community:    Community,
+                //community:    Community,
                 list:         MusicList,
             }
 
             let body = Template {
                 title:        _community.name.clone() + &"- плейлисты".to_string(),
                 request_user: _request_user,
-                community:    _community,
+                //community:    _community,
                 list:         _list,
             }
             .render_once()
@@ -1018,14 +1018,14 @@ pub async fn community_music_list_page(session: Session, req: HttpRequest, param
             struct Template {
                 title:        String,
                 request_user: User,
-                community:    Community,
+                //community:    Community,
                 list:         MusicList,
             }
 
             let body = Template {
                 title:        _community.name.clone() + &"- плейлисты".to_string(),
                 request_user: _request_user,
-                community:    _community,
+                //community:    _community,
                 list:         _list,
             }
             .render_once()
@@ -1044,12 +1044,12 @@ pub async fn community_music_list_page(session: Session, req: HttpRequest, param
             #[template(path = "desctop/communities/music/list/anon_list.stpl")]
             struct Template {
                 title:     String,
-                community: Community,
+                //community: Community,
                 list:      MusicList,
             }
             let body = Template {
                 title:        _community.name.clone() + &"- плейлисты".to_string(),
-                community: _community,
+                //community: _community,
                 list:      _list,
             }
             .render_once()
@@ -1061,12 +1061,12 @@ pub async fn community_music_list_page(session: Session, req: HttpRequest, param
             #[template(path = "mobile/communities/music/list/anon_list.stpl")]
             struct Template {
                 title:     String,
-                community: Community,
+                //community: Community,
                 list:      MusicList,
             }
             let body = Template {
                 title:        _community.name.clone() + &"- плейлисты".to_string(),
-                community: _community,
+                //community: _community,
                 list:      _list,
             }
             .render_once()
@@ -1122,14 +1122,14 @@ pub async fn community_goods_list_page(session: Session, req: HttpRequest, param
             struct Template {
                 title:        String,
                 request_user: User,
-                community:    Community,
+                //community:    Community,
                 list:         GoodList,
             }
 
             let body = Template {
                 title:        _community.name.clone() + &"- подборки товаров".to_string(),
                 request_user: _request_user,
-                community:    _community,
+                //community:    _community,
                 list:         _list,
             }
             .render_once()
@@ -1148,12 +1148,12 @@ pub async fn community_goods_list_page(session: Session, req: HttpRequest, param
             #[template(path = "desctop/communities/goods/list/anon_list.stpl")]
             struct Template {
                 title:     String,
-                community: Community,
+                //community: Community,
                 list:      GoodList,
             }
             let body = Template {
                 title:        _community.name.clone() + &"- подборки товаров".to_string(),
-                community: _community,
+                //community: _community,
                 list:      _list,
             }
             .render_once()
@@ -1165,12 +1165,12 @@ pub async fn community_goods_list_page(session: Session, req: HttpRequest, param
             #[template(path = "mobile/communities/goods/list/anon_list.stpl")]
             struct Template {
                 title:     String,
-                community: Community,
+                //community: Community,
                 list:      GoodList,
             }
             let body = Template {
                 title:        _community.name.clone() + &"- подборки товаров".to_string(),
-                community: _community,
+                //community: _community,
                 list:      _list,
             }
             .render_once()
@@ -1206,14 +1206,14 @@ pub async fn community_photos_list_page(session: Session, req: HttpRequest, para
             struct Template {
                 title:        String,
                 request_user: User,
-                community:    Community,
+                //community:    Community,
                 list:         PhotoList,
             }
 
             let body = Template {
                 title:        _community.name.clone() + &"- фотоальбомы".to_string(),
                 request_user: _request_user,
-                community:    _community,
+                //community:    _community,
                 list:         _list,
             }
             .render_once()
@@ -1226,14 +1226,14 @@ pub async fn community_photos_list_page(session: Session, req: HttpRequest, para
             struct Template {
                 title:        String,
                 request_user: User,
-                community:    Community,
+                //community:    Community,
                 list:         PhotoList,
             }
 
             let body = Template {
                 title:        _community.name.clone() + &"- фотоальбомы".to_string(),
                 request_user: _request_user,
-                community:    _community,
+                //community:    _community,
                 list:         _list,
             }
             .render_once()
@@ -1252,12 +1252,12 @@ pub async fn community_photos_list_page(session: Session, req: HttpRequest, para
             #[template(path = "desctop/communities/photos/list/anon_list.stpl")]
             struct Template {
                 title:     String,
-                community: Community,
+                //community: Community,
                 list:      PhotoList,
             }
             let body = Template {
                 title:        _community.name.clone() + &"- фотоальбомы".to_string(),
-                community: _community,
+                //community: _community,
                 list:      _list,
             }
             .render_once()
@@ -1269,12 +1269,12 @@ pub async fn community_photos_list_page(session: Session, req: HttpRequest, para
             #[template(path = "mobile/communities/photos/main_list/anon_list.stpl")]
             struct Template {
                 title:     String,
-                community: Community,
+                //community: Community,
                 list:      PhotoList,
             }
             let body = Template {
                 title:        _community.name.clone() + &"- фотоальбомы".to_string(),
-                community: _community,
+                //community: _community,
                 list:      _list,
             }
             .render_once()
@@ -1494,13 +1494,13 @@ pub fn admin_community(is_desctop: bool, community: Community, request_user: Use
         #[template(path = "desctop/communities/detail/admin_community.stpl")]
         struct Template {
             title:         String,
-            private_bools: Vec<bool>,
+            //private_bools: Vec<bool>,
             request_user:  User,
             community:     Community,
         }
         let body = Template {
             title:         community.name.clone(),
-            private_bools: community.get_community_all_can_see(request_user.id),
+            //private_bools: community.get_community_all_can_see(request_user.id),
             request_user:  request_user,
             community:     community,
         }
@@ -1512,13 +1512,13 @@ pub fn admin_community(is_desctop: bool, community: Community, request_user: Use
         #[template(path = "mobile/communities/detail/admin_community.stpl")]
         struct Template {
             title:         String,
-            private_bools: Vec<bool>,
+            //private_bools: Vec<bool>,
             request_user:  User,
             community:     Community,
         }
         let body = Template {
             title:         community.name.clone(),
-            private_bools: community.get_community_all_can_see(request_user.id),
+            //private_bools: community.get_community_all_can_see(request_user.id),
             request_user:  request_user,
             community:     community,
         }
@@ -1570,13 +1570,13 @@ pub fn close_community(is_desctop: bool, community: Community, request_user: Use
         #[template(path = "desctop/communities/detail/close_community.stpl")]
         struct Template {
             title:        String,
-            private_bools: Vec<bool>,
+            //private_bools: Vec<bool>,
             community:    Community,
             request_user: User,
         }
         let body = Template {
             title:        community.name.clone(),
-            private_bools: community.get_community_all_can_see(request_user.id),
+            //private_bools: community.get_community_all_can_see(request_user.id),
             community:    community,
             request_user: request_user,
         }
@@ -1589,13 +1589,13 @@ pub fn close_community(is_desctop: bool, community: Community, request_user: Use
         #[template(path = "mobile/communities/detail/close_community.stpl")]
         struct Template {
             title:        String,
-            private_bools: Vec<bool>,
+            //private_bools: Vec<bool>,
             community:    Community,
             request_user: User,
         }
         let body = Template {
             title:        community.name.clone(),
-            private_bools: community.get_community_all_can_see(request_user.id),
+            //private_bools: community.get_community_all_can_see(request_user.id),
             community:    community,
             request_user: request_user,
         }
@@ -1646,12 +1646,12 @@ pub fn no_child_safety_community(is_desctop: bool, community: Community, request
         #[template(path = "desctop/communities/detail/no_child_safety.stpl")]
         struct Template {
             title:        String,
-            community:    Community,
+            //community:    Community,
             request_user: User,
         }
         let body = Template {
             title:        community.name.clone(),
-            community:    community,
+            //community:    community,
             request_user: request_user,
         }
         .render_once()
@@ -1663,12 +1663,12 @@ pub fn no_child_safety_community(is_desctop: bool, community: Community, request
         #[template(path = "mobile/communities/detail/no_child_safety.stpl")]
         struct Template {
             title:        String,
-            community:    Community,
+            //community:    Community,
             request_user: User,
         }
         let body = Template {
             title:        community.name.clone(),
-            community:    community,
+            //community:    community,
             request_user: request_user,
         }
         .render_once()
@@ -1868,12 +1868,12 @@ pub fn anon_close_community(is_desctop: bool, community: Community) -> actix_web
         #[template(path = "desctop/communities/detail/anon_close_community.stpl")]
         struct Template {
             title:         String,
-            private_bools: Vec<bool>,
+            //private_bools: Vec<bool>,
             community:     Community,
         }
         let body = Template {
             title: community.name.clone(),
-            private_bools: community.get_anon_community_all_can_see(),
+            //private_bools: community.get_anon_community_all_can_see(),
             community:  community,
         }
         .render_once()
@@ -1885,12 +1885,12 @@ pub fn anon_close_community(is_desctop: bool, community: Community) -> actix_web
         #[template(path = "mobile/communities/detail/anon_close_community.stpl")]
         struct Template {
             title:         String,
-            private_bools: Vec<bool>,
+            //private_bools: Vec<bool>,
             community:     Community,
         }
         let body = Template {
             title: community.name.clone(),
-            private_bools: community.get_anon_community_all_can_see(),
+            //private_bools: community.get_anon_community_all_can_see(),
             community:  community,
         }
         .render_once()
