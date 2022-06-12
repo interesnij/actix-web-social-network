@@ -196,7 +196,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
     };
      // Если пользователь не аноним, то отправляем его на страницу новостей
     if is_signed_in(&session) {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""));
     }
 
     let _connection = establish_connection();
