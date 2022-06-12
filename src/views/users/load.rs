@@ -1353,7 +1353,7 @@ pub async fn smiles_stickers_load(session: Session, req: HttpRequest) -> actix_w
         let mut current_category = 1;
         let s_categories = User::get_smilies_categories();
         if page > 1 {
-            let count_usize: usize = page as usize;
+            let count_usize: usize = (page - 1) as usize;
             current_category = count_usize;
         }
 
