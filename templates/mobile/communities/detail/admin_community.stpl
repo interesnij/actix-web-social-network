@@ -2,7 +2,7 @@
 
 <% include!("cover.stpl"); %>
 
-<div class="container main-container mt-3 pk_saver" data-type="community_main" data-pk="{{ community.pk }}">
+<div class="container main-container mt-3 pk_saver" data-type="community_main" data-pk="<%= community.id %>">
   <div class="card mb-3" style="padding:10px">
     <div style="padding-top: 10px; margin-bottom: 10px; display: flex;">
       <figure>
@@ -38,7 +38,7 @@
         <a class="btn btn-sm border community_send_page_message" data-pk="<%= community.id %>" style="width: -webkit-fill-available;">Сообщение</a>
       </span>
       <span style="flex: 0 0 40%;max-width:40%;padding:5px;" class="btn_default">
-        <a class="btn btn-sm member_create pointer border" style="width: -webkit-fill-available;">Подписаться</a>
+        <a class="btn btn-sm member_delete pointer border" style="width: -webkit-fill-available;">Отписаться</a>
       </span>
       <span style="flex: 0 0 20%;max-width:20%;padding:5px;" class="btn_default menu_drop">
         <a class="btn btn-sm pointer border" style="width: -webkit-fill-available;">
@@ -54,7 +54,6 @@
     <% include!("../detail_sections/description.stpl"); %>
   </div>
 
-  <% include!("../detail_sections/frends_member.stpl"); %>
   <% include!("../detail_sections/membersheeps.stpl"); %>
   <% include!("../detail_sections/stat.stpl"); %>
 

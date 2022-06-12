@@ -24,7 +24,7 @@
                 <ul class="list-group" id="community_friends_container">
                     <% for object in object_list.iter() { %>
                     <li class="list-group-item">
-                        <% include!("../../generic/user/card_send_message.stpl"); %>
+                        <% include!("../../generic/user/card_go_profile.stpl"); %>
                     </li>
                     <% } %>
                 </ul>
