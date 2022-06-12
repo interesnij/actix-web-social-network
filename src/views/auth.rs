@@ -40,13 +40,14 @@ struct NobileSignupTemplate {
 
 pub async fn mobile_signup(session: Session) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""));
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
-
-    let body = NobileSignupTemplate { title: "Регистрация!".to_string() }
-    .render_once()
-    .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    else {
+        let body = NobileSignupTemplate { title: "Регистрация!".to_string() }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
 }
 
 pub async fn logout(session: Session) -> HttpResponse {
@@ -135,12 +136,14 @@ pub async fn login_form(payload: &mut Multipart) -> LoginUser2 {
 
 pub async fn login(mut payload: Multipart, session: Session, req: HttpRequest) -> impl Responder {
     if is_signed_in(&session) {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""));
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
-    let form = login_form(payload.borrow_mut()).await;
-    println!("{:?}", form.phone.clone());
-    println!("{:?}", form.password.clone());
-    handle_sign_in(form, &session, &req)
+    else {
+        let form = login_form(payload.borrow_mut()).await;
+        println!("{:?}", form.phone.clone());
+        println!("{:?}", form.password.clone());
+        handle_sign_in(form, &session, &req)
+    }
 }
 
 #[derive(Debug, Deserialize)]
