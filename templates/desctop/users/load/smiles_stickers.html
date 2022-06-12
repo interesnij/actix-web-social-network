@@ -1,0 +1,32 @@
+<div class="_card" style="padding: 0 5px;">
+  <div class="">
+        <div class="tab-content">
+          <div class="tab-pane fade active show smiles_panel" style="height: 250px;width: 250px;overflow: auto;">
+            <% let populate_smiles = request_user.get_populate_smiles(); %>
+                <% if populate_smiles.len() > 0 { %>
+                  <h6>Часто используемые</h6>
+                  <% for smile in populate_smiles.iter() { %>
+                    <img class="pointer classic_smile_item" data-pk="<%= smile.id %>" style="width: auto;" src="<%= smile.image %>" alt="smile">
+                  <% } %>
+                <% } %>
+
+                <% let cat = &s_categories[current_category]; %>
+                <h6><%= cat.name %></h6>
+                <% for smile in cat.get_smiles().iter() { %>
+                  <img class="pointer classic_smile_item" data-pk="<%= smile.id %>" style="width: auto;" src="<%= smile.image %>" alt="smile">
+                <% } %>
+                <p>
+          </div>
+    </div>
+    <div class="tabs-footer" style="border-top: 1px solid #B9B9C3;">
+        <ul class="nav icon_bottom_bar">
+            <li class="nav-item active" style="margin-right:5px" data-type="standart_smile">
+                <img src="/static/images/smile.png" alt="smile" style="height: 25px;margin-top: 5px;padding-top: 1px;">
+            </li>
+            <li class="nav-item select_bottom_bar_icons pointer" style="margin-right:5px" data-type="gif_smile">
+                <img src="/static/images/smile.gif" alt="smile" style="height: 30px;">
+            </li>
+        </ul>
+    </div>
+  </div>
+</div>
