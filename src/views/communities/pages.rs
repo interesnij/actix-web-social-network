@@ -1589,13 +1589,13 @@ pub fn close_community(is_desctop: bool, community: Community, request_user: Use
         #[template(path = "mobile/communities/detail/close_community.stpl")]
         struct Template {
             title:        String,
-            //private_bools: Vec<bool>,
+            private_bools: Vec<bool>,
             community:    Community,
             request_user: User,
         }
         let body = Template {
             title:        community.name.clone(),
-            //private_bools: community.get_community_all_can_see(request_user.id),
+            private_bools: community.get_community_all_can_see(request_user.id),
             community:    community,
             request_user: request_user,
         }
@@ -1868,12 +1868,12 @@ pub fn anon_close_community(is_desctop: bool, community: Community) -> actix_web
         #[template(path = "desctop/communities/detail/anon_close_community.stpl")]
         struct Template {
             title:         String,
-            //private_bools: Vec<bool>,
+            private_bools: Vec<bool>,
             community:     Community,
         }
         let body = Template {
             title: community.name.clone(),
-            //private_bools: community.get_anon_community_all_can_see(),
+            private_bools: community.get_anon_community_all_can_see(),
             community:  community,
         }
         .render_once()
@@ -1885,12 +1885,12 @@ pub fn anon_close_community(is_desctop: bool, community: Community) -> actix_web
         #[template(path = "mobile/communities/detail/anon_close_community.stpl")]
         struct Template {
             title:         String,
-            //private_bools: Vec<bool>,
+            private_bools: Vec<bool>,
             community:     Community,
         }
         let body = Template {
             title: community.name.clone(),
-            //private_bools: community.get_anon_community_all_can_see(),
+            private_bools: community.get_anon_community_all_can_see(),
             community:  community,
         }
         .render_once()
