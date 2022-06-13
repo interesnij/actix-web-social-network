@@ -780,7 +780,7 @@ function ajax_get_reload(url) {
 
             prev = rtr.querySelector(".main-container");
             init_stat_lists(ajax.querySelector(".main-container"), prev.getAttribute("data-type"), prev.getAttribute("data-pk"));
-            console.log($page_stat);
+            console.log("статистика страницы",  $page_stat);
 
             rtr.innerHTML = ajax.innerHTML;
             window.scrollTo(0, 0);
@@ -792,7 +792,7 @@ function ajax_get_reload(url) {
             get_dragula(".drag_container");
             get_dragula(".drag_list");
             get_document_opacity_1();
-            console.log($all_stat);
+            console.log("статистика",  $all_stat);
         }
     }
     ajax_link.send()
