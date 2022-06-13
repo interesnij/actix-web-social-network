@@ -657,10 +657,10 @@ pub async fn edit_link_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/settings/edit_link.stpl")]
             struct Template {
-                //request_user: User,
+                request_user: User,
             }
             let body = Template {
-                //request_user: _request_user,
+                request_user: _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -692,10 +692,10 @@ pub async fn edit_name_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/settings/edit_name.stpl")]
             struct Template {
-                //request_user: User,
+                request_user: User,
             }
             let body = Template {
-                //request_user: _request_user,
+                request_user: _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -762,10 +762,10 @@ pub async fn edit_phone_page(session: Session, req: HttpRequest) -> actix_web::R
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/settings/edit_phone.stpl")]
             struct Template {
-                //request_user: User,
+                request_user: User,
             }
             let body = Template {
-                //request_user: _request_user,
+                request_user: _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
