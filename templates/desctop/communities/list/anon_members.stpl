@@ -1,6 +1,6 @@
 <% include!("../../../base_block/anon_base_header.stpl"); %>
 
-<div class="row main-container" data-type="community_members" data-title="">
+<div class="row main-container" data-title="<%= community.name %> - подписчики сообщества">
     <div class="col-md-8 mt-3">
         <div class="input-group mb-3">
             <input type="text" class="form-control form-control-sm" placeholder="Поиск подписчиков" aria-label="Recipient's username">

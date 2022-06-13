@@ -1,4 +1,4 @@
-<div data-title="" class="row main-container" data-type="community_members">
+<div data-title="<%= community.name %> - подписчики сообщества" class="row main-container" data-type="community_members">
     <div class="col-md-8 mt-3">
         <div class="input-group mb-3">
             <input type="text" class="form-control form-control-sm" placeholder="Поиск подписчиков" aria-label="Recipient's username">

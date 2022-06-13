@@ -1,5 +1,5 @@
 <span class="load_block">
-<span data-title="">
+<span data-title="<%= community.name %> - записи">
   <% let is_staff = list.is_user_can_create_el(request_user.id); %>
   <% let reactions_list = list.get_reactions_list(); %>
   <% let is_manager = request_user.is_moderator(); %>

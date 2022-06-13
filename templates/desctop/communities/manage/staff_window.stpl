@@ -1,5 +1,5 @@
 
-<div class="row justify-content-center" data-title="">
+<div class="row justify-content-center" data-title="<%= community.name %> - изменение статуса подписчика: <%= object.get_full_name() %>">
   <div class="card">
     <div class="card-header border-bottom">
         <h5 class="content-color-primary mb-0">Назначение руководителя</h5>
@@ -19,7 +19,7 @@
         </a>
         <div class="media-body">
           <a href="<%= object.link %>" class="ajax">
-              <h6 class="my-0 mt-1"><%= user.get_full_name() %></h6>
+              <h6 class="my-0 mt-1"><%= object.get_full_name() %></h6>
           </a>
           <span class="small">
             Назначение прав в сообществе

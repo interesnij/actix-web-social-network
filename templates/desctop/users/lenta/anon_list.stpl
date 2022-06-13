@@ -1,5 +1,5 @@
 <span class="load_block">
-<span data-title="">
+<span data-title="<%= user.get_full_name() %> - записи">
   <% let reactions_list = list.get_reactions_list(); %>
   <% let fixed_posts = user.get_fixed_posts(); %>
   <% let fixed_posts_count = fixed_posts.len(); %>

@@ -1,4 +1,4 @@
-<span data-title="">
+<span data-title="<%= object.title %> - товар">
 <% if is_user_can_see_good_list { %>
 
 <% let is_staff = list.is_user_can_create_el(request_user.id); %>

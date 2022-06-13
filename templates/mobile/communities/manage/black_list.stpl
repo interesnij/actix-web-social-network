@@ -1,5 +1,5 @@
 
-<div data-title="" class="mt-4 main-container pk_saver" data-pk="<%= community.id %>" data-type="community_manage_blacklist">
+<div data-title="<%= community.name %> - черный список" class="mt-4 main-container pk_saver" data-pk="<%= community.id %>" data-type="community_manage_blacklist">
 <div class="row">
     <div class="col-md-8 order-1">
         <div class="input-group mb-3">

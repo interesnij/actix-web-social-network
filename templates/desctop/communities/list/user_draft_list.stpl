@@ -1,6 +1,6 @@
 <% include!("../../../base_block/base_header.stpl"); %>
 
-<div class="main-container row pk_saver" data-pk="<%= community.id %>" data-type="community_user_draft_list" data-title="">
+<div class="main-container row pk_saver" data-pk="<%= community.id %>" data-title="<%= community.name %> - мои предложенные записи">
     <div class="col-md-8 mt-3">
         <div class="input-group mb-3">
             <input type="text" class="form-control form-control-sm" placeholder="Поиск записей">

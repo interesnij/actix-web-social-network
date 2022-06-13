@@ -1,5 +1,5 @@
 
-<form data-title="" id="u_remove_user_form">
+<form data-title="Удаление профиля" id="u_remove_user_form">
         <div class="card mb-3">
             <div class="card-header border-bottom">
                 <h5 class="content-color-primary mb-0">Удаление профиля</h5>

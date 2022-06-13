@@ -1,4 +1,4 @@
-<form data-title="" id="u_edit_link_form" class="contact-form">
+<form data-title="Изменение ссылки профиля" id="u_edit_link_form" class="contact-form">
     <div class="card mb-3">
         <div class="card-header border-bottom">
             <h5 class="content-color-primary mb-0">Изменение ссылки профиля</h5>

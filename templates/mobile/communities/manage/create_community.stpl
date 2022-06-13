@@ -1,4 +1,4 @@
-<form data-title="" id="add_community_form" class="is_stat_list" data-pk="<%= request_user.id %>" data-type="create_user_community">
+<form data-title="Создание сообщества" id="add_community_form" class="is_stat_list" data-pk="<%= request_user.id %>" data-type="create_user_community">
 
   <div class="card mb-3">
     <div class="card-header border-bottom">

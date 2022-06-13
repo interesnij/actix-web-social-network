@@ -1,4 +1,4 @@
-<div data-title="" class="mt-4 main-container">
+<div data-title="<%= community.name %> - настройки приватности" class="mt-4 main-container">
   <div class="row">
     <div class="col-md-9 order-1">
       <form class="case_edit type_community" data-pk="<%= community.id %>">
