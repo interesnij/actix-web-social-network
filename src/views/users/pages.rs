@@ -638,7 +638,7 @@ pub async fn user_follows_page(session: Session, req: HttpRequest, user_id: web:
             #[template(path = "desctop/users/follows/list.stpl")]
             struct Template {
                 request_user:     User,
-                //user:             User,
+                user:             User,
                 object_list:      Vec<User>,
                 next_page_number: i32,
                 count:            i32,
@@ -646,7 +646,7 @@ pub async fn user_follows_page(session: Session, req: HttpRequest, user_id: web:
 
             let body = Template {
                 request_user:     _request_user,
-                //user:             _user,
+                user:             _user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 count:            count,
