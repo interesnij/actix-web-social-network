@@ -75,7 +75,7 @@ pub async fn create_communities_category_page(session: Session) -> actix_web::Re
             #[template(path = "desctop/admin/created/create_communities_category.stpl")]
             struct Template {
                 all_categories: Vec<CommunityCategory>,
-                title:          str,
+                title:          String,
             }
             let body = Template {
                 all_categories: all_categories,
