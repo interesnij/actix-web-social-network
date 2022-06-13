@@ -27,7 +27,7 @@ function create_window_stat_list(block) {
   if (block.querySelector(".is_stat_list")) {
     item = block.querySelector(".is_stat_list");
     main_container = document.body.querySelector(".main-container");
-    $new_window_list = [item.getAttribute("data-title"),item.getAttribute("data-pk"),0,0, main_container.getAttribute("data-pk"),main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")]
+    $new_window_list = [item.getAttribute("data-title"),"url",0,0, main_container.getAttribute("data-title"),"url",$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")]
   }
 };
 
@@ -367,8 +367,8 @@ function append_items_in_stat_list(block, list) {
                 type,
                 pk,
                 0,
-                main_container.getAttribute("data-pk"),
-                main_container.getAttribute("data-type"),
+                main_container.getAttribute("data-title"),
+                "url",
                 $request_user_id,
                 $user_device,
                 new Date().toLocaleString().replace(",", "")
@@ -474,7 +474,7 @@ var scrollStopper = delayedExec(3000, function() {
       main_container = document.body.querySelector(".main-container");
       if (main_container.querySelector(".is_stat_list") && !$list_stat.length) {
         pag_list = main_container.querySelector(".is_stat_list");
-        $list_stat = [pag_list.getAttribute("data-type"), pag_list.getAttribute("data-pk"), 0, 0, main_container.getAttribute("data-pk"), main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")];
+        $list_stat = [pag_list.getAttribute("data-title"), "url", 0, 0, main_container.getAttribute("data-title"), "url", $request_user_id, $user_device, new Date().toLocaleString().replace(",", "")];
       };
 
           list = main_container.querySelectorAll('.pag');
@@ -490,7 +490,7 @@ var scrollStopper = delayedExec(3000, function() {
                     type = list[i].getAttribute('data-type');
                     if ($all_stat.indexOf(type + " " + pk) == -1 && $new_elements.indexOf(pk + " " + type) == -1 && type != null) {
                       // "user_post", object.pk, height, time, owner_pk, owner_type, request.user.pk, mobile/desctop, datetime
-                      $new_elements.push([type,pk,0,0,main_container.getAttribute("data-pk"),main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")]);
+                      $new_elements.push([type,pk,0,0,main_container.getAttribute("data-title"), "url", $request_user_id, $user_device, new Date().toLocaleString().replace(",", "")]);
                       console.log($new_elements);
                     };
                     list[i].classList.add("showed");
