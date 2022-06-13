@@ -637,13 +637,13 @@ pub async fn community_docs_list_page(session: Session, req: HttpRequest, param:
             #[template(path = "desctop/communities/docs/list/list.stpl")]
             struct Template {
                 request_user: User,
-                //community:    Community,
+                community:    Community,
                 list:         DocList,
             }
 
             let body = Template {
                 request_user: _request_user,
-                //community:    _community,
+                community:    _community,
                 list:         _list,
             }
             .render_once()
@@ -655,13 +655,13 @@ pub async fn community_docs_list_page(session: Session, req: HttpRequest, param:
             #[template(path = "mobile/communities/docs/list/list.stpl")]
             struct Template {
                 request_user: User,
-                //community:    Community,
+                community:    Community,
                 list:         DocList,
             }
 
             let body = Template {
                 request_user: _request_user,
-                //community:    _community,
+                community:    _community,
                 list:         _list,
             }
             .render_once()
@@ -679,11 +679,11 @@ pub async fn community_docs_list_page(session: Session, req: HttpRequest, param:
             #[derive(TemplateOnce)]
             #[template(path = "desctop/communities/docs/list/anon_list.stpl")]
             struct Template {
-                //community: Community,
+                community: Community,
                 list:      DocList,
             }
             let body = Template {
-                //community: _community,
+                community: _community,
                 list:      _list,
             }
             .render_once()
@@ -694,11 +694,11 @@ pub async fn community_docs_list_page(session: Session, req: HttpRequest, param:
             #[derive(TemplateOnce)]
             #[template(path = "mobile/communities/docs/list/anon_list.stpl")]
             struct Template {
-                //community: Community,
+                community: Community,
                 list:      DocList,
             }
             let body = Template {
-                //community: _community,
+                community: _community,
                 list:      _list,
             }
             .render_once()
@@ -733,13 +733,13 @@ pub async fn community_video_list_page(session: Session, req: HttpRequest, param
             #[template(path = "desctop/communities/video/list/list.stpl")]
             struct Template {
                 request_user: User,
-                //community:    Community,
+                community:    Community,
                 list:         VideoList,
             }
 
             let body = Template {
                 request_user: _request_user,
-                //community:    _community,
+                community:    _community,
                 list:         _list,
             }
             .render_once()
@@ -751,13 +751,13 @@ pub async fn community_video_list_page(session: Session, req: HttpRequest, param
             #[template(path = "mobile/communities/video/list/list.stpl")]
             struct Template {
                 request_user: User,
-                //community:    Community,
+                community:    Community,
                 list:         VideoList,
             }
 
             let body = Template {
                 request_user: _request_user,
-                //community:    _community,
+                community:    _community,
                 list:         _list,
             }
             .render_once()
@@ -775,11 +775,11 @@ pub async fn community_video_list_page(session: Session, req: HttpRequest, param
             #[derive(TemplateOnce)]
             #[template(path = "desctop/communities/video/list/anon_list.stpl")]
             struct Template {
-                //community: Community,
+                community: Community,
                 list:      VideoList,
             }
             let body = Template {
-                //community: _community,
+                community: _community,
                 list:      _list,
             }
             .render_once()
@@ -790,11 +790,11 @@ pub async fn community_video_list_page(session: Session, req: HttpRequest, param
             #[derive(TemplateOnce)]
             #[template(path = "mobile/communities/video/list/anon_list.stpl")]
             struct Template {
-                //community: Community,
+                community: Community,
                 list:      VideoList,
             }
             let body = Template {
-                //community: _community,
+                community: _community,
                 list:      _list,
             }
             .render_once()
@@ -829,13 +829,13 @@ pub async fn community_surveys_list_page(session: Session, req: HttpRequest, par
             #[template(path = "desctop/communities/survey/list/list.stpl")]
             struct Template {
                 request_user: User,
-                //community:    Community,
+                community:    Community,
                 list:         SurveyList,
             }
 
             let body = Template {
                 request_user: _request_user,
-                //community:    _community,
+                community:    _community,
                 list:         _list,
             }
             .render_once()
@@ -847,13 +847,13 @@ pub async fn community_surveys_list_page(session: Session, req: HttpRequest, par
             #[template(path = "mobile/communities/survey/list/list.stpl")]
             struct Template {
                 request_user: User,
-                //community:    Community,
+                community:    Community,
                 list:         SurveyList,
             }
 
             let body = Template {
                 request_user: _request_user,
-                //community:    _community,
+                community:    _community,
                 list:         _list,
             }
             .render_once()
@@ -871,11 +871,11 @@ pub async fn community_surveys_list_page(session: Session, req: HttpRequest, par
             #[derive(TemplateOnce)]
             #[template(path = "desctop/communities/survey/list/anon_list.stpl")]
             struct Template {
-                //community: Community,
+                community: Community,
                 list:      SurveyList,
             }
             let body = Template {
-                //community: _community,
+                community: _community,
                 list:      _list,
             }
             .render_once()
@@ -886,11 +886,11 @@ pub async fn community_surveys_list_page(session: Session, req: HttpRequest, par
             #[derive(TemplateOnce)]
             #[template(path = "mobile/communities/survey/list/anon_list.stpl")]
             struct Template {
-                //community: Community,
+                community: Community,
                 list:      SurveyList,
             }
             let body = Template {
-                //community: _community,
+                community: _community,
                 list:      _list,
             }
             .render_once()
@@ -925,13 +925,13 @@ pub async fn community_music_list_page(session: Session, req: HttpRequest, param
             #[template(path = "desctop/communities/music/list/list.stpl")]
             struct Template {
                 request_user: User,
-                //community:    Community,
+                community:    Community,
                 list:         MusicList,
             }
 
             let body = Template {
                 request_user: _request_user,
-                //community:    _community,
+                community:    _community,
                 list:         _list,
             }
             .render_once()
@@ -943,13 +943,13 @@ pub async fn community_music_list_page(session: Session, req: HttpRequest, param
             #[template(path = "mobile/communities/music/list/list.stpl")]
             struct Template {
                 request_user: User,
-                //community:    Community,
+                community:    Community,
                 list:         MusicList,
             }
 
             let body = Template {
                 request_user: _request_user,
-                //community:    _community,
+                community:    _community,
                 list:         _list,
             }
             .render_once()
@@ -967,11 +967,11 @@ pub async fn community_music_list_page(session: Session, req: HttpRequest, param
             #[derive(TemplateOnce)]
             #[template(path = "desctop/communities/music/list/anon_list.stpl")]
             struct Template {
-                //community: Community,
+                community: Community,
                 list:      MusicList,
             }
             let body = Template {
-                //community: _community,
+                community: _community,
                 list:      _list,
             }
             .render_once()
@@ -982,11 +982,11 @@ pub async fn community_music_list_page(session: Session, req: HttpRequest, param
             #[derive(TemplateOnce)]
             #[template(path = "mobile/communities/music/list/anon_list.stpl")]
             struct Template {
-                //community: Community,
+                community: Community,
                 list:      MusicList,
             }
             let body = Template {
-                //community: _community,
+                community: _community,
                 list:      _list,
             }
             .render_once()
@@ -1021,13 +1021,13 @@ pub async fn community_goods_list_page(session: Session, req: HttpRequest, param
             #[template(path = "desctop/communities/goods/list/list.stpl")]
             struct Template {
                 request_user: User,
-                //community:    Community,
+                community:    Community,
                 list:         GoodList,
             }
 
             let body = Template {
                 request_user: _request_user,
-                //community:    _community,
+                community:    _community,
                 list:         _list,
             }
             .render_once()
@@ -1039,13 +1039,13 @@ pub async fn community_goods_list_page(session: Session, req: HttpRequest, param
             #[template(path = "mobile/communities/goods/list/list.stpl")]
             struct Template {
                 request_user: User,
-                //community:    Community,
+                community:    Community,
                 list:         GoodList,
             }
 
             let body = Template {
                 request_user: _request_user,
-                //community:    _community,
+                community:    _community,
                 list:         _list,
             }
             .render_once()
@@ -1063,11 +1063,11 @@ pub async fn community_goods_list_page(session: Session, req: HttpRequest, param
             #[derive(TemplateOnce)]
             #[template(path = "desctop/communities/goods/list/anon_list.stpl")]
             struct Template {
-                //community: Community,
+                community: Community,
                 list:      GoodList,
             }
             let body = Template {
-                //community: _community,
+                community: _community,
                 list:      _list,
             }
             .render_once()
@@ -1078,11 +1078,11 @@ pub async fn community_goods_list_page(session: Session, req: HttpRequest, param
             #[derive(TemplateOnce)]
             #[template(path = "mobile/communities/goods/list/anon_list.stpl")]
             struct Template {
-                //community: Community,
+                community: Community,
                 list:      GoodList,
             }
             let body = Template {
-                //community: _community,
+                community: _community,
                 list:      _list,
             }
             .render_once()
@@ -1117,13 +1117,13 @@ pub async fn community_photos_list_page(session: Session, req: HttpRequest, para
             #[template(path = "desctop/communities/photos/list/list.stpl")]
             struct Template {
                 request_user: User,
-                //community:    Community,
+                community:    Community,
                 list:         PhotoList,
             }
 
             let body = Template {
                 request_user: _request_user,
-                //community:    _community,
+                community:    _community,
                 list:         _list,
             }
             .render_once()
@@ -1135,13 +1135,13 @@ pub async fn community_photos_list_page(session: Session, req: HttpRequest, para
             #[template(path = "mobile/communities/photos/list/list.stpl")]
             struct Template {
                 request_user: User,
-                //community:    Community,
+                community:    Community,
                 list:         PhotoList,
             }
 
             let body = Template {
                 request_user: _request_user,
-                //community:    _community,
+                community:    _community,
                 list:         _list,
             }
             .render_once()
@@ -1159,11 +1159,11 @@ pub async fn community_photos_list_page(session: Session, req: HttpRequest, para
             #[derive(TemplateOnce)]
             #[template(path = "desctop/communities/photos/list/anon_list.stpl")]
             struct Template {
-                //community: Community,
+                community: Community,
                 list:      PhotoList,
             }
             let body = Template {
-                //community: _community,
+                community: _community,
                 list:      _list,
             }
             .render_once()
@@ -1174,11 +1174,11 @@ pub async fn community_photos_list_page(session: Session, req: HttpRequest, para
             #[derive(TemplateOnce)]
             #[template(path = "mobile/communities/photos/list/anon_list.stpl")]
             struct Template {
-                //community: Community,
+                community: Community,
                 list:      PhotoList,
             }
             let body = Template {
-                //community: _community,
+                community: _community,
                 list:      _list,
             }
             .render_once()
