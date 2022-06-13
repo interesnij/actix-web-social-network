@@ -1,5 +1,5 @@
 
-<div class="px-0 card" data-title="" data-pk="none" data-type="none" style="min-height: 600px;">
+<div class="px-0 card" data-title="Сообщества для копирования списка" data-pk="none" data-type="none" style="min-height: 600px;">
     <form class="cool_private_form">
       <div class="card-header" style="min-height: 100px;">
         <span class="header_title">Выберите сообщества</span>

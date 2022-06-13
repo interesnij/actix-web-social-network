@@ -1,6 +1,6 @@
 <% include!("../../../base_block/anon_base_header.stpl"); %>
 
-<div class="row main-container" data-title="" data-type="user_main">
+<div class="row main-container" data-title="Сообщества соцсети" data-type="user_main">
 
 <div class="col-md-8 mt-3">
     <div class="input-group mb-3">

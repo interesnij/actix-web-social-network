@@ -1,4 +1,4 @@
-<span data-title="" class="friends_items_load_container is_block_paginate">
+<span data-title="Мои друзья" class="friends_items_load_container is_block_paginate">
 <% for object in object_list.iter() { %>
 
 <div class="list-group-item pointer chat_friends_load_one" data-pk="<%= object.id %>" style="padding-top: 5px;padding-bottom: 5px">

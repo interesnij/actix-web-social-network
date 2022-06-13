@@ -1,6 +1,6 @@
 <% include!("../../base_block/base_mobile_header.stpl"); %>
 
-<div data-title="" class="main-container container mt-3" data-type="page_menu">
+<div data-title="Разделы соцсети" class="main-container container mt-3" data-type="page_menu">
 <div class="card-header p-0">
   <div class="row no-gutters">
     <div style="flex: 0 0 100%;max-width:100%;padding:5px;">

@@ -1,4 +1,4 @@
-<span data-title="">
+<span data-title="Чаты / пользователи">
 <ul class="is_block_paginate">
 <% for object in object_list.iter() { %>
   <li class="list-group-item pointer go_transfer_messages" data-pk="<%= object.id %>">

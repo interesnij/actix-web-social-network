@@ -1,6 +1,6 @@
 <% include!("../../../base_block/base_header.stpl"); %>
 
-<div class="main-container" data-title="" data-type="user_main">
+<div class="main-container" data-title="Пользователи соцсети" data-type="user_main">
 <div class="row">
     <div class="col-md-8 mt-3">
         <div class="input-group mb-3">

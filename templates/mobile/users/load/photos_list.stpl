@@ -1,5 +1,5 @@
 <span class="load_block">
-<span data-title="">
+<span data-title="Мои фотографии - <%= list.name %>">
 <% if object_list.len() > 0 { %>
 
 <div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_block_paginate">

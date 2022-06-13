@@ -1,4 +1,4 @@
-<div class="card p-1" data-title="">
+<div class="card p-1" data-title="Смайлы">
     <div class="card-body">
     <% let populate_smiles = request_user.get_populate_smiles(); %>
         <% if populate_smiles.len() > 0 { %>

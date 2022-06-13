@@ -18,7 +18,7 @@
   <% } %>
 </span>
 
-<div class="card good_card mb-3" data-title="">
+<div class="card good_card mb-3">
     <div class="card-body py-0">
       <% include!("gallery.stpl"); %>
 

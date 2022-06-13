@@ -43,7 +43,7 @@
   <% include!("lists.stpl"); %>
 
     <span class="span_list_pk" list-pk="<%= list.id %>">
-      <span class="list_pk" data-uuid="<%= list.id %>" data-title="">
+      <span class="list_pk" data-uuid="<%= list.id %>">
 
         <% if is_user_can_see_post_list { %>
         <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %>: </span>
