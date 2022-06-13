@@ -19,6 +19,7 @@ page_time = false, $new_time = 0;
 
 get_dragula(".drag_container");
 get_dragula(".drag_list");
+document.querySelector("title").innerHTML = document.querySelector(".main_container").getAttribute("data-title");
 
 function create_window_stat_list(block) {
   if ($new_window_list.length) {
@@ -779,14 +780,12 @@ function ajax_get_reload(url) {
             rtr = document.getElementById('ajax');
 
             prev = rtr.querySelector(".main-container");
-            init_stat_lists(ajax.querySelector(".main-container"), prev.getAttribute("data-type"), prev.getAttribute("data-pk"));
-            console.log("статистика страницы",  $page_stat);
+            init_stat_lists(ajax.querySelector(".main-container"), prev.getAttribute("data-title"), document.location.href);
 
             rtr.innerHTML = ajax.innerHTML;
             window.scrollTo(0, 0);
-            title = elem_.querySelector('title').innerHTML;
             window.history.pushState(null, "vfgffgfgf", url);
-            document.title = title;
+            document.title = elem_.querySelector('main-container').getAttribute("data-title");
             if_list(rtr);
             create_pagination(rtr);
             get_dragula(".drag_container");
@@ -812,13 +811,12 @@ function search_ajax_get_reload(url) {
 
             prev = rtr.querySelector(".main-container");
             next = ajax.querySelector(".main-container");
-            init_stat_lists(next.getAttribute("data-type"), next.getAttribute("data-pk"), prev.getAttribute("data-type"), prev.getAttribute("data-pk"));
+            init_stat_lists(ajax.querySelector(".main-container"), prev.getAttribute("data-title"), document.location.href);
 
             rtr.innerHTML = ajax.innerHTML;
             window.scrollTo(0, 0);
-            title = elem_.querySelector('title').innerHTML;
             window.history.pushState(null, "vfgffgfgf", url);
-            document.title = title;
+            document.title = elem_.querySelector('main-container').getAttribute("data-title");
             if_list(rtr);
             create_pagination(rtr);
             get_document_opacity_1();
