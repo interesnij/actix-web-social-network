@@ -1,5 +1,5 @@
 
-  <form community-pk="" class="is_stat_list case_create" data-pk="" data-type="" data-title="">
+  <form community-pk="" class="is_stat_list case_create" data-pk="" data-type="" data-title="Создание списка">
     <input type="hidden" name="type" value="<%= types %>" class="type">
     <input type="hidden" name="community_id" value="
         <% if community_id.is_some() { %>

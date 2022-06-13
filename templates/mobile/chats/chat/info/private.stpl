@@ -1,4 +1,4 @@
-<form data-title="" class="is_stat_list case_edit chat_edit" data-pk="<%= chat.id %>" data-type="change_user_chat_private">
+<form data-title="Приватность - <%= chat.get_name(request_user.pk) %>" class="is_stat_list case_edit chat_edit" data-pk="<%= chat.id %>">
    <div class="card">
      <div class="card-header border-bottom">
        <h5 class="content-color-primary mb-0">Настройка приватности чата</h5>

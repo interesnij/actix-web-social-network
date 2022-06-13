@@ -1,5 +1,5 @@
 
-<div data-title="" class="container mt-3 main-container" data-pk="<%= chat.id %>" data-type="user_chat_fixed_messages">
+<div data-title="data-title="Закрепленные сообщения <%= chat.get_name(request_user.pk) %>" class="container mt-3 main-container" data-pk="<%= chat.id %>">
   <span class="load_block">
     <div class="media mt-3" class="pk_saver" data-pk="<%= chat.id %>" style="padding-left: 7px;">
       <h5 class="mt-1">
