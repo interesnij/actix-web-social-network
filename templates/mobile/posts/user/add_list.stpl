@@ -1,4 +1,4 @@
-<form data-title="" id="post_list_form" data-folder="/posts" class="case_create" data-type="none">
+<form data-title="Создание списка записей" id="post_list_form" data-folder="/posts" class="case_create" data-type="none">
         <div class="card mb-3">
             <div class="card-header border-bottom">
                 <h5 class="content-color-primary mb-0">Создание списка записей</h5>

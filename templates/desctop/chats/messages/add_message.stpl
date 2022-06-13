@@ -1,4 +1,4 @@
-<div class="col-md-10 col-lg-10 col-xl-8 mx-auto" data-title="">
+<div class="col-md-10 col-lg-10 col-xl-8 mx-auto" data-title="Создание сообщения">
     <form class="page_message_form" style="position:relative">
         <div class="card mb-3">
             <div class="card-header border-bottom">

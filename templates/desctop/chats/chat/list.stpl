@@ -1,6 +1,6 @@
 <% include!("../../../base_block/base_header.stpl"); %>
 
-<div class="container main-container mt-3" data-pk="<%= request_user.id %>" data-type="user_chat_list" data-title="">
+<div class="container main-container mt-3" data-title="Список чатов">
 <div class="row">
     <div class="col-md-8 chat_list_container" data-pk="<%= request_user.id %>" style="min-height: 800px;">
         <div class="input-group mb-3">

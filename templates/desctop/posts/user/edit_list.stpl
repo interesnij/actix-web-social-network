@@ -1,5 +1,5 @@
 
-    <form id="post_list_form" data-list="<%= list.get_code() %>" data-folder="/posts" data-pk="<%= list.id %>" class="case_create" data-type="none">
+    <form id="post_list_form" data-title="Изменение списка записей" data-list="<%= list.get_code() %>" data-folder="/posts" data-pk="<%= list.id %>" class="case_create" data-type="none">
     <div class="card mb-3">
         <div class="card-header border-bottom">
             <h5 class="content-color-primary mb-0">Изменение списка записей</h5>

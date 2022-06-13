@@ -1,5 +1,5 @@
 
-    <form id="post_list_form" data-title="" data-folder="/goods" class="case_create" data-type="none">
+    <form id="post_list_form" data-title="Создание списка товаров" data-folder="/goods" class="case_create" data-type="none">
         <div class="card mb-3">
             <div class="card-header border-bottom">
                 <h5 class="content-color-primary mb-0">Создание подборки товаров</h5>

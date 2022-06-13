@@ -1,5 +1,5 @@
 
-    <form id="post_list_form" data-title="" data-list="<%= list.get_code() %>" data-folder="/music" class="case_create" community-pk="<%= community.id %>" data-pk="<%= community.id %>" data-type="none">
+    <form id="post_list_form" data-title="Изменение плейлиста" data-list="<%= list.get_code() %>" data-folder="/music" class="case_create" community-pk="<%= community.id %>" data-pk="<%= community.id %>" data-type="none">
         <div class="card mb-3">
             <div class="card-header border-bottom">
                 <h5 class="content-color-primary mb-0">Изменение плейлиста</h5>

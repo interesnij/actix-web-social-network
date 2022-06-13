@@ -1397,12 +1397,10 @@ pub fn admin_community(is_desctop: bool, community: Community, request_user: Use
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/admin_community.stpl")]
         struct Template {
-            //private_bools: Vec<bool>,
             request_user:  User,
             community:     Community,
         }
         let body = Template {
-            //private_bools: community.get_community_all_can_see(request_user.id),
             request_user:  request_user,
             community:     community,
         }
@@ -1413,12 +1411,10 @@ pub fn admin_community(is_desctop: bool, community: Community, request_user: Use
         #[derive(TemplateOnce)]
         #[template(path = "mobile/communities/detail/admin_community.stpl")]
         struct Template {
-            //private_bools: Vec<bool>,
             request_user:  User,
             community:     Community,
         }
         let body = Template {
-            //private_bools: community.get_community_all_can_see(request_user.id),
             request_user:  request_user,
             community:     community,
         }
@@ -1466,13 +1462,13 @@ pub fn close_community(is_desctop: bool, community: Community, request_user: Use
         #[template(path = "desctop/communities/detail/close_community.stpl")]
         struct Template {
             private_bools: Vec<bool>,
-            community:    Community,
-            request_user: User,
+            community:     Community,
+            request_user:  User,
         }
         let body = Template {
             private_bools: community.get_community_all_can_see(request_user.id),
-            community:    community,
-            request_user: request_user,
+            community:     community,
+            request_user:  request_user,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1483,13 +1479,13 @@ pub fn close_community(is_desctop: bool, community: Community, request_user: Use
         #[template(path = "mobile/communities/detail/close_community.stpl")]
         struct Template {
             private_bools: Vec<bool>,
-            community:    Community,
-            request_user: User,
+            community:     Community,
+            request_user:  User,
         }
         let body = Template {
             private_bools: community.get_community_all_can_see(request_user.id),
-            community:    community,
-            request_user: request_user,
+            community:     community,
+            request_user:  request_user,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1533,11 +1529,11 @@ pub fn no_child_safety_community(is_desctop: bool, community: Community, request
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/no_child_safety.stpl")]
         struct Template {
-            //community:    Community,
+            community:    Community,
             request_user: User,
         }
         let body = Template {
-            //community:    community,
+            community:    community,
             request_user: request_user,
         }
         .render_once()
@@ -1548,11 +1544,11 @@ pub fn no_child_safety_community(is_desctop: bool, community: Community, request
         #[derive(TemplateOnce)]
         #[template(path = "mobile/communities/detail/no_child_safety.stpl")]
         struct Template {
-            //community:    Community,
+            community:    Community,
             request_user: User,
         }
         let body = Template {
-            //community:    community,
+            community:    community,
             request_user: request_user,
         }
         .render_once()
