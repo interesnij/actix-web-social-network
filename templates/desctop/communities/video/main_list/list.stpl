@@ -1,6 +1,6 @@
 <% include!("../../../../base_block/base_header.stpl"); %>
 
-<div class="main-container pk_saver mt-3" data-title="" data-pk="<%= community.id %>" data-type="community_video">
+<div class="main-container pk_saver mt-3" data-title="Видеозаписи - <%= community.name %>" data-pk="<%= community.id %>">
           <div class="input-group mb-3">
             <input type="text" class="form-control form-control-sm" placeholder="Поиск видео">
             <div class="input-group-append">
