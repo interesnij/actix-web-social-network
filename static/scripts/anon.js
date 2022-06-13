@@ -855,7 +855,7 @@ function list_block_load(target_block, response_block, link) {
 
 function ajax_get_reload(url) {
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'GET', url, true );
+    ajax_link.open( 'GET', url + "?ajax=1", true );
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
@@ -878,7 +878,7 @@ function search_ajax_get_reload(url) {
   $serf_history.push(document.location.href);
 
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    ajax_link.open('GET', url, true);
+    ajax_link.open('GET', url + "?ajax=1", true);
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {

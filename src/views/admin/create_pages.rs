@@ -75,9 +75,11 @@ pub async fn create_communities_category_page(session: Session) -> actix_web::Re
             #[template(path = "desctop/admin/created/create_communities_category.stpl")]
             struct Template {
                 all_categories: Vec<CommunityCategory>,
+                title:          &str,
             }
             let body = Template {
                 all_categories: all_categories,
+                title:          "Создание категории сообществ",
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
