@@ -1,5 +1,5 @@
 
-<form class="post_edit_form">
+<form data-title="Изменение записи" class="post_edit_form">
   <% if object.content.is_some() { %>
     <div contenteditable="true" class="form-control new_element_text smile_supported text_support"><%- object.content.as_deref().unwrap() %></div>
   <% } else { %>

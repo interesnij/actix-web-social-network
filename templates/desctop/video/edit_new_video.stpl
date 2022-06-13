@@ -1,4 +1,4 @@
-<form data-title="" id="upload_video_form">
+<form data-title="Редактирование новой видеозаписи" id="upload_video_form">
   <input type="hidden" class="new" id="upload_video_pk" name="pk">
       <div class="card">
           <div class="card-header border-bottom">
