@@ -202,7 +202,6 @@ pub async fn create_chat(session: Session, mut payload: Multipart) -> actix_web:
         #[derive(TemplateOnce)]
         #[template(path = "desctop/chats/chat/detail/chat.stpl")]
         struct Template {
-            title:            String,
             chat:             Chat,
             request_user:     User,
             object_list:      Vec<Message>,
@@ -210,7 +209,6 @@ pub async fn create_chat(session: Session, mut payload: Multipart) -> actix_web:
             count:            i32,
         }
         let body = Template {
-            title:            new_chat.get_name(_request_user.id),
             chat:             new_chat,
             request_user:     _request_user,
             object_list:      object_list,

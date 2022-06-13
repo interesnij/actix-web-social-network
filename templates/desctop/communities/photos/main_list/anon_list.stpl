@@ -1,6 +1,6 @@
 <% include!("../../../../base_block/anon_base_header.stpl"); %>
 
-<div class="main-container mt-3 pk_saver" data-type="community_photo">
+<div class="main-container mt-3 pk_saver" data-title="" data-type="community_photo">
 <div class="container">
   <% include!("anon_lists.stpl"); %>
 </div>

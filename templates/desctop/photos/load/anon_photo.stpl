@@ -1,5 +1,6 @@
+<span data-title="">
 <% if is_user_can_see_photo_list { %>
- 
+
 <% let reactions_list = list.get_reactions_list(); %>
 
 <span class="text-hide-xs">
@@ -50,3 +51,4 @@
   </div>
 </div>
 <% } %>
+</span>

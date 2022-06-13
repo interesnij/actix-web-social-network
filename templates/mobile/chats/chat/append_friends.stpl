@@ -1,4 +1,4 @@
-<div class="px-0 card no-shadow main-container" chat-pk="<%= chat.id %>" data-pk="none" data-type="none" style="min-height: 600px;">
+<div data-title="" class="px-0 card no-shadow main-container" chat-pk="<%= chat.id %>" data-pk="none" data-type="none" style="min-height: 600px;">
     <form>
       <div class="card-header" style="min-height: 100px;">
         <span class="header_title">Выбор собеседников<span>

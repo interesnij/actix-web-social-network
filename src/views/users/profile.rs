@@ -213,14 +213,12 @@ pub fn my_user_account(is_desctop: bool, user: User, request_user: User) -> acti
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/my_user.stpl")]
         struct UserPage {
-            title:        String,
             //private_bools: Vec<bool>,
             request_user: User,
             user:         User,
             //is_my_user:   bool
         }
         let body = UserPage {
-            title:        user.get_full_name().clone(),
             //private_bools: user.get_profile_all_can_see(request_user.id),
             request_user: request_user,
             user:         user,
@@ -233,14 +231,12 @@ pub fn my_user_account(is_desctop: bool, user: User, request_user: User) -> acti
         #[derive(TemplateOnce)]
         #[template(path = "mobile/users/account/my_user.stpl")]
         struct UserPage {
-            title:        String,
             //private_bools: Vec<bool>,
             request_user: User,
             user:         User,
             //is_my_user:   bool
         }
         let body = UserPage {
-            title:        user.get_full_name().clone(),
             //private_bools: user.get_profile_all_can_see(request_user.id),
             request_user: request_user,
             user:         user,
@@ -257,12 +253,10 @@ pub fn anon_user_account(is_desctop: bool, user: User) -> actix_web::Result<Http
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/anon_user.stpl")]
         struct UserPage {
-            title: String,
             private_bools: Vec<bool>,
             user:  User,
         }
         let body = UserPage {
-            title: user.get_full_name(),
             private_bools: user.get_anon_profile_all_can_see(),
             user:  user,
         }
@@ -274,12 +268,10 @@ pub fn anon_user_account(is_desctop: bool, user: User) -> actix_web::Result<Http
         #[derive(TemplateOnce)]
         #[template(path = "mobile/users/account/anon_user.stpl")]
         struct UserPage {
-            title: String,
             private_bools: Vec<bool>,
             user:  User,
         }
         let body = UserPage {
-            title: user.get_full_name(),
             private_bools: user.get_anon_profile_all_can_see(),
             user:  user,
         }
@@ -293,12 +285,10 @@ pub fn self_block_account(is_desctop: bool, user: User, request_user: User) -> a
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/self_block_user.stpl")]
         struct UserPage {
-            title: String,
             user:  User,
             request_user: User,
         }
         let body = UserPage {
-            title: user.get_full_name(),
             user:  user,
             request_user: request_user,
         }
@@ -310,12 +300,10 @@ pub fn self_block_account(is_desctop: bool, user: User, request_user: User) -> a
         #[derive(TemplateOnce)]
         #[template(path = "mobile/users/account/self_block_user.stpl")]
         struct UserPage {
-            title: String,
             user:  User,
             request_user: User,
         }
         let body = UserPage {
-            title: user.get_full_name(),
             user:  user,
             request_user: request_user,
         }
@@ -329,11 +317,9 @@ pub fn my_bad_account(is_desctop: bool, request_user: User) -> actix_web::Result
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/my_bad_user.stpl")]
         struct UserPage {
-            title: String,
             request_user: User,
         }
         let body = UserPage {
-            title: request_user.get_full_name(),
             request_user: request_user,
         }
         .render_once()
@@ -344,11 +330,9 @@ pub fn my_bad_account(is_desctop: bool, request_user: User) -> actix_web::Result
         #[derive(TemplateOnce)]
         #[template(path = "mobile/users/account/my_bad_user.stpl")]
         struct UserPage {
-            title: String,
             request_user: User,
         }
         let body = UserPage {
-            title: request_user.get_full_name(),
             request_user: request_user,
         }
         .render_once()
@@ -361,12 +345,10 @@ pub fn bad_account(is_desctop: bool, user: User, request_user: User) -> actix_we
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/bad_user.stpl")]
         struct UserPage {
-            title: String,
             user:  User,
             request_user: User,
         }
         let body = UserPage {
-            title: user.get_full_name(),
             user:  user,
             request_user: request_user,
         }
@@ -378,12 +360,10 @@ pub fn bad_account(is_desctop: bool, user: User, request_user: User) -> actix_we
         #[derive(TemplateOnce)]
         #[template(path = "mobile/users/account/bad_user.stpl")]
         struct UserPage {
-            title: String,
             user:  User,
             request_user: User,
         }
         let body = UserPage {
-            title: user.get_full_name(),
             user:  user,
             request_user: request_user,
         }
@@ -397,13 +377,11 @@ pub fn close_account(is_desctop: bool, user: User, request_user: User) -> actix_
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/close_user.stpl")]
         struct UserPage {
-            title: String,
             private_bools: Vec<bool>,
             request_user: User,
             user:  User,
         }
         let body = UserPage {
-            title: user.get_full_name(),
             private_bools: user.get_profile_all_can_see(request_user.id),
             request_user: request_user,
             user:  user,
@@ -416,13 +394,11 @@ pub fn close_account(is_desctop: bool, user: User, request_user: User) -> actix_
         #[derive(TemplateOnce)]
         #[template(path = "mobile/users/account/close_user.stpl")]
         struct UserPage {
-            title: String,
             private_bools: Vec<bool>,
             request_user: User,
             user:  User,
         }
         let body = UserPage {
-            title: user.get_full_name(),
             private_bools: user.get_profile_all_can_see(request_user.id),
             request_user: request_user,
             user:  user,
@@ -438,11 +414,9 @@ pub fn anon_bad_account(is_desctop: bool, user: User) -> actix_web::Result<HttpR
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/anon_bad_user.stpl")]
         struct UserPage {
-            title: String,
             user:  User,
         }
         let body = UserPage {
-            title: user.get_full_name(),
             user:  user,
         }
         .render_once()
@@ -453,11 +427,9 @@ pub fn anon_bad_account(is_desctop: bool, user: User) -> actix_web::Result<HttpR
         #[derive(TemplateOnce)]
         #[template(path = "mobile/users/account/anon_bad_user.stpl")]
         struct UserPage {
-            title: String,
             user:  User,
         }
         let body = UserPage {
-            title: user.get_full_name(),
             user:  user,
         }
         .render_once()
@@ -471,11 +443,9 @@ pub fn anon_close_account(is_desctop: bool, user: User) -> actix_web::Result<Htt
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/anon_close_user.stpl")]
         struct UserPage {
-            title: String,
             user:  User,
         }
         let body = UserPage {
-            title: user.get_full_name(),
             user:  user,
         }
         .render_once()
@@ -486,11 +456,9 @@ pub fn anon_close_account(is_desctop: bool, user: User) -> actix_web::Result<Htt
         #[derive(TemplateOnce)]
         #[template(path = "mobile/users/account/anon_close_user.stpl")]
         struct UserPage {
-            title: String,
             user:  User,
         }
         let body = UserPage {
-            title: user.get_full_name(),
             user:  user,
         }
         .render_once()
@@ -505,13 +473,11 @@ pub fn account(is_desctop: bool, user: User, request_user: User) -> actix_web::R
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/user.stpl")]
         struct UserPage {
-            title: String,
             private_bools: Vec<bool>,
             request_user: User,
             user:  User,
         }
         let body = UserPage {
-            title: user.get_full_name(),
             private_bools: user.get_profile_all_can_see(request_user.id),
             request_user: request_user,
             user:  user,
@@ -524,13 +490,11 @@ pub fn account(is_desctop: bool, user: User, request_user: User) -> actix_web::R
         #[derive(TemplateOnce)]
         #[template(path = "mobile/users/account/user.stpl")]
         struct UserPage {
-            title: String,
             private_bools: Vec<bool>,
             request_user: User,
             user:  User,
         }
         let body = UserPage {
-            title: user.get_full_name(),
             private_bools: user.get_profile_all_can_see(request_user.id),
             request_user: request_user,
             user:  user,

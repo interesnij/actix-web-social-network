@@ -1,6 +1,6 @@
 <% include!("../../../base_block/base_header.stpl"); %>
 
-<div class="main-container" data-type="page_feed">
+<div class="main-container" data-title="" data-type="page_feed">
     <div class="row">
         <div class="col-md-8 mt-3">
           featured

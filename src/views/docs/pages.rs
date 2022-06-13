@@ -61,7 +61,8 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(&session);
         if _list.community_id.is_some() {
-            let _tuple = get_community_permission(&_list.get_community(), &_request_user);
+            let community = _list.get_community();
+            let _tuple = get_community_permission(&community, &_request_user);
             is_open = _tuple.0;
             text = _tuple.1;
         }
@@ -147,16 +148,17 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
             #[derive(TemplateOnce)]
             #[template(path = "desctop/docs/list/anon_list.stpl")]
             struct Template {
-                list:         DocList,
+                list:                     DocList,
                 is_user_can_see_doc_list: bool,
-                object_list: Vec<Doc>,
-                next_page_number: i32,
+                object_list:              Vec<Doc>,
+                next_page_number:         i32,
             }
             let body = Template {
-                list:                      _list,
+                list:                     _list,
                 is_user_can_see_doc_list: is_user_can_see_doc_list,
-                object_list: object_list,
-                next_page_number: next_page_number,
+                object_list:              object_list,
+                next_page_number:         next_page_number,
+
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -166,10 +168,10 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
             #[derive(TemplateOnce)]
             #[template(path = "mobile/docs/list/anon_list.stpl")]
             struct Template {
-                list:         DocList,
+                list:                     DocList,
                 is_user_can_see_doc_list: bool,
-                object_list: Vec<Doc>,
-                next_page_number: i32,
+                object_list:              Vec<Doc>,
+                next_page_number:         i32,
             }
             let body = Template {
                 list:                      _list,

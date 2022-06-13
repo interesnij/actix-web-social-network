@@ -1,5 +1,6 @@
 <% include!("../../../base_block/anon_base_mobile_header.stpl"); %>
-<div class="container main-container mt-3" data-type="none" data-pk="">
+
+<div data-title="" class="container main-container mt-3" data-type="none" data-pk="">
 <div class="card-header p-0">
   <div class="row no-gutters">
     <div style="flex: 0 0 100%;max-width:100%;padding:5px;">

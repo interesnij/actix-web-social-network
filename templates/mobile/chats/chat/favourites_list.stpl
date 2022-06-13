@@ -1,5 +1,5 @@
 
-<div class="container mt-3 main-container" data-pk="<%= request_user.id %>" data-type="user_favourite_messages">
+<div data-title="" class="container mt-3 main-container" data-pk="<%= request_user.id %>" data-type="user_favourite_messages">
   <span class="load_block">
     <div class="media mt-3" style="padding-left: 7px;">
       <h5 class="mt-1">

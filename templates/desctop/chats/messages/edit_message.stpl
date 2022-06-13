@@ -1,5 +1,5 @@
 
-<form class="edit_customize_form m-1" style="position:relative">
+<form data-title="" class="edit_customize_form m-1" style="position:relative">
     <input class="type_hidden" type="hidden" name="text" />
     <% if object.attach.is_some() { %>
       <div class="row <%= object.get_count_attach() %> special_block message_attach_block">

@@ -1,5 +1,5 @@
 
-    <form class="is_stat_list" data-pk="<%= request_user.id %>" data-type="create_user_chat">
+    <form class="is_stat_list" data-pk="<%= request_user.id %>" data-type="create_user_chat" data-title="">
         <div class="card mb-3">
             <div class="card-header">
                 <div id="chat_members"></div>

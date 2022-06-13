@@ -1,7 +1,7 @@
 <div class="_card" style="padding: 0 5px;">
   <div class="">
         <div class="tab-content">
-          <div class="tab-pane fade active show smiles_panel" style="height: 210px;width: 230px;overflow: auto;">
+          <div class="tab-pane fade active show smiles_panel" style="height: 210px;width: 230px;overflow: auto;"">
             <% let populate_smiles = request_user.get_populate_smiles(); %>
                 <% if populate_smiles.len() > 0 { %>
                   <h6>Часто используемые</h6>
@@ -20,14 +20,14 @@
     </div>
     <div class="tabs-footer" style="border-top: 1px solid #B9B9C3;">
         <ul class="nav icon_bottom_bar">
-          <li class="nav-item active" style="margin-right:5px" data-type="standart_smile">
-            <img src="/static/images/smile.png" alt="smile" style="height: 25px;margin-top: 5px;padding-top: 1px;">
-          </li>
-          <% for cat in categories.iter() { %>
-            <li class="nav-item select_bottom_bar_icons pointer" data-pk="<%= cat.id %>" style="margin-right:5px" data-type="gif_smile">
-              <img src="<%= cat.get_image() %>" alt="stickers_category" style="height: 30px;">
+            <li class="nav-item active" style="margin-right:5px" data-type="standart_smile">
+                <img src="/static/images/smile.png" alt="smile" style="height: 25px;margin-top: 5px;padding-top: 1px;">
             </li>
-          <% } %>
+            <% for cat in categories.iter() { %>
+              <li class="nav-item select_bottom_bar_icons pointer" data-pk="<%= cat.id %>" style="margin-right:5px" data-type="gif_smile">
+                <img src="<%= cat.get_image() %>" alt="stickers_category" style="height: 30px;">
+              </li>
+            <% } %>
         </ul>
     </div>
   </div>

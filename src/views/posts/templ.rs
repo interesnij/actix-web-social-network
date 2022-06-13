@@ -27,11 +27,9 @@ pub fn close_post_list (
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/anon_close_user.stpl")]
         struct Template {
-            title: String,
             user:  User,
         }
         let body = Template {
-            title: user.get_full_name(),
             user:  user,
         }
         .render_once()
@@ -42,11 +40,9 @@ pub fn close_post_list (
         #[derive(TemplateOnce)]
         #[template(path = "mobile/users/account/anon_close_user.stpl")]
         struct Template {
-            title: String,
             user:  User,
         }
         let body = Template {
-            title: user.get_full_name(),
             user:  user,
         }
         .render_once()

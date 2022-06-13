@@ -1,5 +1,5 @@
 
-<div class="mt-4 main-container pk_saver" data-pk="<%= community.id %>" data-type="community_manage_notify_photo">
+<div data-title="" class="mt-4 main-container pk_saver" data-pk="<%= community.id %>" data-type="community_manage_notify_photo">
     <div class="row">
         <div class="col-md-8 order-1">
             <form id="community_notify_photo_form" class="contact-form">

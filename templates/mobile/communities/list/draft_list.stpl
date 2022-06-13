@@ -1,5 +1,4 @@
-
-<div class="main-container row mt-3 pk_saver" data-pk="<%= community.id %>" data-type="community_draft_list">
+<div data-title="" class="main-container row mt-3 pk_saver" data-pk="<%= community.id %>" data-type="community_draft_list">
     <div class="col-md-8 mt-3">
         <div class="input-group mb-3">
             <input type="text" class="form-control form-control-sm" placeholder="Поиск записей">

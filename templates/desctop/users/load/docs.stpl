@@ -1,5 +1,5 @@
 
-<div class="card mb-4">
+<div class="card mb-4" data-title="">
   <div class="card-body">
     <div class="media mt-3" style="padding-left: 7px;">
         <h5 class="mt-1" style="flex: 1;">Списки документов</h5>

@@ -90,26 +90,22 @@ pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result
     #[derive(TemplateOnce)]
     #[template(path = "desctop/main/auth/auth.stpl")]
     struct DesctopAuthTemplate {
-        title: String,
         users_list: Vec<User>,
         phone_codes_list: Vec<PhoneCode>,
     }
     #[derive(TemplateOnce)]
     #[template(path = "desctop/main/lists/news_list.stpl")]
     struct DesctopNewsListTemplate {
-        title:        String,
         request_user: User,
     }
 
     #[derive(TemplateOnce)]
     #[template(path = "mobile/main/auth/auth.stpl")]
     struct MobileAuthTemplate {
-        title: String,
     }
     #[derive(TemplateOnce)]
     #[template(path = "mobile/main/lists/news_list.stpl")]
     struct MobileNewsListTemplate {
-        title:        String,
         request_user: User,
     }
 
@@ -121,7 +117,6 @@ pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result
 
         if is_desctop {
             let body = DesctopNewsListTemplate {
-                title:        "Новости".to_string(),
                 request_user: _request_user,
             }
             .render_once()
@@ -132,7 +127,6 @@ pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result
         }
         else {
             let body = MobileNewsListTemplate {
-                title:        "Новости".to_string(),
                 request_user: _request_user,
             }
             .render_once()
@@ -145,7 +139,6 @@ pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result
     } else {
         if is_desctop {
             let body = DesctopAuthTemplate {
-                title: "Трезвый.рус | Вход".to_string(),
                 users_list: users_list,
                 phone_codes_list: phone_codes_list,
             }
@@ -156,7 +149,7 @@ pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result
                 .body(body))
         }
         else {
-            let body = MobileAuthTemplate { title: "Трезвый.рус | Вход".to_string() }
+            let body = MobileAuthTemplate {}
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok()
@@ -170,13 +163,11 @@ pub async fn featured_list_page(session: Session, req: HttpRequest) -> actix_web
     #[derive(TemplateOnce)]
     #[template(path = "desctop/main/lists/featured_list.stpl")]
     struct DesctopFeaturedListTemplate {
-        title:        String,
         request_user: User,
     }
     #[derive(TemplateOnce)]
     #[template(path = "mobile/main/lists/featured_list.stpl")]
     struct MobileFeaturedListTemplate {
-        title:        String,
         request_user: User,
     }
 
@@ -187,7 +178,6 @@ pub async fn featured_list_page(session: Session, req: HttpRequest) -> actix_web
 
         if is_desctop {
             let body = DesctopFeaturedListTemplate {
-                title:      "Рекомендации".to_string(),
                 request_user: _request_user,
             }
             .render_once()
@@ -198,7 +188,6 @@ pub async fn featured_list_page(session: Session, req: HttpRequest) -> actix_web
         }
         else {
             let body = MobileFeaturedListTemplate {
-                title:      "Рекомендации".to_string(),
                 request_user: _request_user,
             }
             .render_once()
@@ -240,7 +229,6 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/lists/all_users.stpl")]
             struct Template {
-                title:        String,
                 request_user: User,
                 next_page_number: i32,
                 object_list: Vec<User>,
@@ -248,7 +236,6 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
             }
 
             let body = Template {
-                title:        "Пользователи".to_string(),
                 request_user: _request_user,
                 next_page_number: next_page_number,
                 object_list: object_list,
@@ -264,7 +251,6 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/lists/all_users.stpl")]
             struct Template {
-                title:        String,
                 request_user: User,
                 next_page_number: i32,
                 object_list: Vec<User>,
@@ -272,7 +258,6 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
             }
 
             let body = Template {
-                title:        "Пользователи".to_string(),
                 request_user: _request_user,
                 next_page_number: next_page_number,
                 object_list: object_list,
@@ -305,13 +290,11 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/lists/anon_all_users.stpl")]
             struct Template {
-                title:        String,
                 next_page_number: i32,
                 object_list: Vec<User>,
                 count: usize,
             }
             let body = Template {
-                title: "Пользователи".to_string(),
                 next_page_number: next_page_number,
                 object_list: object_list,
                 count: count,
@@ -326,13 +309,11 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/lists/anon_all_users.stpl")]
             struct Template {
-                title:        String,
                 next_page_number: i32,
                 object_list: Vec<User>,
                 count: usize,
             }
             let body = Template {
-                title: "Пользователи".to_string(),
                 next_page_number: next_page_number,
                 object_list: object_list,
                 count: count,
@@ -377,7 +358,6 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/lists/all_communities.stpl")]
             struct Template {
-                title:        String,
                 request_user: User,
                 next_page_number: i32,
                 object_list: Vec<Community>,
@@ -385,7 +365,6 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
             }
 
             let body = Template {
-                title:        "Пользователи".to_string(),
                 request_user: _request_user,
                 next_page_number: next_page_number,
                 object_list: object_list,
@@ -401,7 +380,6 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/lists/all_communities.stpl")]
             struct Template {
-                title:        String,
                 request_user: User,
                 next_page_number: i32,
                 object_list: Vec<Community>,
@@ -409,7 +387,6 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
             }
 
             let body = Template {
-                title:        "Пользователи".to_string(),
                 request_user: _request_user,
                 next_page_number: next_page_number,
                 object_list: object_list,
@@ -442,13 +419,11 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/lists/anon_all_communities.stpl")]
             struct Template {
-                title:        String,
                 next_page_number: i32,
                 object_list: Vec<Community>,
                 count: usize,
             }
             let body = Template {
-                title: "Пользователи".to_string(),
                 next_page_number: next_page_number,
                 object_list: object_list,
                 count: count,
@@ -463,13 +438,11 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/lists/anon_all_communities.stpl")]
             struct Template {
-                title:        String,
                 next_page_number: i32,
                 object_list: Vec<Community>,
                 count: usize,
             }
             let body = Template {
-                title: "Пользователи".to_string(),
                 next_page_number: next_page_number,
                 object_list: object_list,
                 count: count,
@@ -1374,13 +1347,11 @@ pub async fn mobile_menu_page(session: Session) -> actix_web::Result<HttpRespons
         #[derive(TemplateOnce)]
         #[template(path = "mobile/main/menu.stpl")]
         struct Template {
-            title: String,
             request_user: User,
         }
 
         let _request_user = get_request_user_data(&session);
         let body = Template {
-            title: "Меню".to_string(),
             request_user: _request_user,
         }
         .render_once()

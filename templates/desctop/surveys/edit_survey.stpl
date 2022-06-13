@@ -1,5 +1,5 @@
 
-    <form data-pk="<%= survey.id %>">
+    <form data-pk="<%= survey.id %>" data-title="">
         <div class="card mb-3">
             <div class="card-header border-bottom">
                 <h5 class="content-color-primary mb-0">Изменение опроса</h5>

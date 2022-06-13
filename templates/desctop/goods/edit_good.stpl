@@ -7,7 +7,7 @@
 <h5 class="m-0">Добавление товара</h5>
 <br><br>
 
-<form class="is_stat_list" data-pk="<%= object.id %>" data-type="edit_good" enctype="multipart/form-data">
+<form class="is_stat_list" data-title="" data-pk="<%= object.id %>" data-type="edit_good" enctype="multipart/form-data">
     <div class="form-group row">
       <div class="col-lg-6 col-md-6">
         <label>Название (обязательно)</label>

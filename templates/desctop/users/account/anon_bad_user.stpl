@@ -1,6 +1,6 @@
 <% include!("../../../base_block/anon_base_header.stpl"); %>
 
-<div class="main-container" data-pk="<%= user.id %>" data-type="user_main">
+<div class="main-container" data-title="" data-pk="<%= user.id %>" data-type="user_main">
 
 <div class="row user_page">
   <div class="col-lg-4 col-md-5 order-1">

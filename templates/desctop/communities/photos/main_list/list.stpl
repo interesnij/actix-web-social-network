@@ -1,6 +1,6 @@
 <% include!("../../../../base_block/base_header.stpl"); %>
 
-<div class="main-container mt-3" data-pk="<%= community.id %>" data-type="community_photo">
+<div class="main-container mt-3" data-title="" data-pk="<%= community.id %>" data-type="community_photo">
 <div class="container">
   <% include!("lists.stpl"); %>
 </div>

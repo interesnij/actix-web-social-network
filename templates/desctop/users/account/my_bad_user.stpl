@@ -1,6 +1,6 @@
 <% include!("../../../base_block/base_header.stpl"); %>
 
-<div class="main-container" data-pk="<%= request_user.id %>" data-type="bad_request_user">
+<div class="main-container" data-title="" data-pk="<%= request_user.id %>" data-type="bad_request_user">
 
 <div class="row user_page">
   <div class="col-lg-4 col-md-5 order-1">

@@ -1,4 +1,4 @@
-<div class="px-0 card no-shadow main-container" data-pk="none" data-type="none" style="min-height: 600px;">
+<div class="px-0 card no-shadow main-container"data-title="" data-pk="none" data-type="none" style="min-height: 600px;">
     <form data-type="posts_list" class="cool_private_form">
       <div class="card-header" style="min-height: 100px;">
         <span class="header_title">Выберите списки</span>

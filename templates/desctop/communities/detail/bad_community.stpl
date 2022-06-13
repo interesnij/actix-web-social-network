@@ -1,6 +1,6 @@
 <% include!("../../../base_block/base_header.stpl"); %>
 
-<div class="container-fluid main-container mt-3 pk_saver" data-type="community_main" data-pk="<%= community.id %>">
+<div class="container-fluid main-container mt-3 pk_saver" data-type="community_main" data-pk="<%= community.id %>" data-title="">
     <div class="row">
       <div class="col-12 col-md-12 col-lg-8">
         <div class="container card">

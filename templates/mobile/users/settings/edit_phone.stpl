@@ -1,0 +1,23 @@
+<form data-title="" id="u_edit_phone_form" class="contact-form">
+    <div class="card mb-3">
+        <div class="card-header border-bottom">
+            <h5 class="content-color-primary mb-0">Изменение телефона</h5>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label>Телефон</label>
+                <input type="number" id="phone" onkeyup="phone_check();" placeholder="<%= request_user.phone %>" class="form-control">
+            </div>
+            <div class="form-group">
+              <button type="button" disabled="disabled" class="btn border change_phone_send btn-block">Получить код</button>
+            </div>
+
+            <div id='jsondata' style="margin-top:30px"></div>
+            <div id='jsondata2' style="margin-top:30px"></div>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-sm border this_mob_fullscreen_hide">Отмена</button>
+        </div>
+
+    </div>
+</form>

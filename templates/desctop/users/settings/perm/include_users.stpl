@@ -1,4 +1,4 @@
-<div class="px-0 card no-shadow main-container" data-pk="<%= request_user.id %>" data-pk="none" data-type="none" style="min-height: 600px;">
+<div data-title="" class="px-0 card no-shadow main-container" data-pk="<%= request_user.id %>" data-pk="none" data-type="none" style="min-height: 600px;">
     <form data-type="<%= types %>" class="" data-pk="<%= request_user.id %>">
       <input type="hidden" name="types" value="<%= types %>">
       <div class="card-header" style="min-height: 100px;">

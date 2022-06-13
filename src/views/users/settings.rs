@@ -88,7 +88,6 @@ pub async fn followings_page(session: Session, req: HttpRequest) -> actix_web::R
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/follows/following_list.stpl")]
             struct Template {
-                title:                   String,
                 request_user:            User,
                 object_list:             Vec<User>,
                 next_page_number:        i32,
@@ -96,7 +95,6 @@ pub async fn followings_page(session: Session, req: HttpRequest) -> actix_web::R
             }
 
             let body = Template {
-                title:                   _request_user.get_full_name() + &" - заявки в друзья".to_string(),
                 request_user:            _request_user,
                 object_list:             object_list,
                 next_page_number:        next_page_number,
@@ -110,7 +108,6 @@ pub async fn followings_page(session: Session, req: HttpRequest) -> actix_web::R
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/follows/following_list.stpl")]
             struct Template {
-                title:                   String,
                 request_user:            User,
                 object_list:             Vec<User>,
                 next_page_number:        i32,
@@ -118,7 +115,6 @@ pub async fn followings_page(session: Session, req: HttpRequest) -> actix_web::R
             }
 
             let body = Template {
-                title:                   _request_user.get_full_name() + &" - заявки в друзья".to_string(),
                 request_user:            _request_user,
                 object_list:             object_list,
                 next_page_number:        next_page_number,
@@ -163,7 +159,6 @@ pub async fn blacklist_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/lists/blacklist.stpl")]
             struct Template {
-                title:                   String,
                 request_user:            User,
                 object_list:             Vec<User>,
                 next_page_number:        i32,
@@ -171,7 +166,6 @@ pub async fn blacklist_page(session: Session, req: HttpRequest) -> actix_web::Re
             }
 
             let body = Template {
-                title:                   _request_user.get_full_name() + &" - черный список".to_string(),
                 request_user:            _request_user,
                 object_list:             object_list,
                 next_page_number:        next_page_number,
@@ -185,7 +179,6 @@ pub async fn blacklist_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/lists/blacklist.stpl")]
             struct Template {
-                title:                   String,
                 request_user:            User,
                 object_list:             Vec<User>,
                 next_page_number:        i32,
@@ -193,7 +186,6 @@ pub async fn blacklist_page(session: Session, req: HttpRequest) -> actix_web::Re
             }
 
             let body = Template {
-                title:                   _request_user.get_full_name() + &" - черный список".to_string(),
                 request_user:            _request_user,
                 object_list:             object_list,
                 next_page_number:        next_page_number,
@@ -218,11 +210,9 @@ pub async fn settings_page(session: Session, req: HttpRequest) -> actix_web::Res
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/settings/settings.stpl")]
             struct Template {
-                title:        String,
                 request_user: User,
             }
             let body = Template {
-                title:        "Настройки профиля".to_string(),
                 request_user: _request_user,
             }
             .render_once()
@@ -232,11 +222,9 @@ pub async fn settings_page(session: Session, req: HttpRequest) -> actix_web::Res
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/settings/settings.stpl")]
             struct Template {
-                title:        String,
                 request_user: User,
             }
             let body = Template {
-                title:        "Настройки профиля".to_string(),
                 request_user: _request_user,
             }
             .render_once()
@@ -267,12 +255,10 @@ pub async fn design_settings_page(session: Session, req: HttpRequest) -> actix_w
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/settings/design_settings.stpl")]
             struct Template {
-                title:        String,
                 request_user: User,
                 color:        String,
             }
             let body = Template {
-                title:        "Настройки профиля".to_string(),
                 request_user: _request_user,
                 color:        _designs[0].background.clone(),
             }
@@ -283,12 +269,10 @@ pub async fn design_settings_page(session: Session, req: HttpRequest) -> actix_w
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/settings/design_settings.stpl")]
             struct Template {
-                title:        String,
                 request_user: User,
                 color:        String,
             }
             let body = Template {
-                title:        "Настройки профиля".to_string(),
                 request_user: _request_user,
                 color:        _designs[0].background.clone(),
             }
@@ -322,12 +306,10 @@ pub async fn private_settings_page(session: Session, req: HttpRequest) -> actix_
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/settings/private_settings.stpl")]
             struct Template {
-                title:        String,
                 request_user: User,
                 private:      UserPrivate,
             }
             let body = Template {
-                title:        "Настройки приватности".to_string(),
                 request_user: _request_user,
                 private:      _private,
             }
@@ -338,12 +320,10 @@ pub async fn private_settings_page(session: Session, req: HttpRequest) -> actix_
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/settings/design_settings.stpl")]
             struct Template {
-                title:        String,
                 request_user: User,
                 private:      UserPrivate,
             }
             let body = Template {
-                title:        "Настройки приватности".to_string(),
                 request_user: _request_user,
                 private:      _private,
             }
@@ -665,11 +645,9 @@ pub async fn edit_link_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/settings/edit_link.stpl")]
             struct Template {
-                //title:        String,
                 request_user: User,
             }
             let body = Template {
-                //title:        "Изменение ссылки профиля".to_string(),
                 request_user: _request_user,
             }
             .render_once()
@@ -679,11 +657,9 @@ pub async fn edit_link_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/settings/edit_link.stpl")]
             struct Template {
-                //title:        String,
                 //request_user: User,
             }
             let body = Template {
-                //title:        "Изменение ссылки профиля".to_string(),
                 //request_user: _request_user,
             }
             .render_once()
@@ -704,11 +680,9 @@ pub async fn edit_name_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/settings/edit_name.stpl")]
             struct Template {
-                //title:        String,
                 request_user: User,
             }
             let body = Template {
-                //title:        "Изменение имени / фамилии".to_string(),
                 request_user: _request_user,
             }
             .render_once()
@@ -718,11 +692,9 @@ pub async fn edit_name_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/settings/edit_name.stpl")]
             struct Template {
-                //title:        String,
                 //request_user: User,
             }
             let body = Template {
-                //title:        "Изменение имени / фамилии".to_string(),
                 //request_user: _request_user,
             }
             .render_once()
@@ -743,11 +715,9 @@ pub async fn edit_password_page(session: Session, req: HttpRequest) -> actix_web
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/settings/edit_password.stpl")]
             struct Template {
-                //title:        String,
                 //request_user: User,
             }
             let body = Template {
-                //title:        "Изменение пароля".to_string(),
                 //request_user: _request_user,
             }
             .render_once()
@@ -757,11 +727,9 @@ pub async fn edit_password_page(session: Session, req: HttpRequest) -> actix_web
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/settings/edit_password.stpl")]
             struct Template {
-                //title:        String,
                 //request_user: User,
             }
             let body = Template {
-                //title:        "Изменение пароля".to_string(),
                 //request_user: _request_user,
             }
             .render_once()
@@ -782,11 +750,9 @@ pub async fn edit_phone_page(session: Session, req: HttpRequest) -> actix_web::R
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/settings/edit_phone.stpl")]
             struct Template {
-                //title:        String,
                 request_user: User,
             }
             let body = Template {
-                //title:        "Изменение телефона".to_string(),
                 request_user: _request_user,
             }
             .render_once()
@@ -796,11 +762,9 @@ pub async fn edit_phone_page(session: Session, req: HttpRequest) -> actix_web::R
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/settings/edit_phone.stpl")]
             struct Template {
-                //title:        String,
                 //request_user: User,
             }
             let body = Template {
-                //title:        "Изменение телефона".to_string(),
                 //request_user: _request_user,
             }
             .render_once()
@@ -821,11 +785,9 @@ pub async fn remove_profile_page(session: Session, req: HttpRequest) -> actix_we
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/settings/remove_profile.stpl")]
             struct Template {
-                //title:        String,
                 //request_user: User,
             }
             let body = Template {
-                //title:        "Удаление аккаунта".to_string(),
                 //request_user: _request_user,
             }
             .render_once()
@@ -835,11 +797,9 @@ pub async fn remove_profile_page(session: Session, req: HttpRequest) -> actix_we
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/settings/remove_profile.stpl")]
             struct Template {
-                title:        String,
                 //request_user: User,
             }
             let body = Template {
-                title:        "Удаление аккаунта".to_string(),
                 //request_user: _request_user,
             }
             .render_once()

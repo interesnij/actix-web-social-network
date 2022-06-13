@@ -1,1 +1,3 @@
-<%= text %>
+<div data-title="">
+  <%= text %>
+</div>

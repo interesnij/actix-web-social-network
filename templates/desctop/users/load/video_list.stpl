@@ -1,4 +1,5 @@
 <span class="load_block">
+<span data-title="">
 <% if object_list.len() > 0 { %>
 
 <div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_block_paginate">
@@ -39,4 +40,5 @@
   <h5 style="text-align: center;margin: 20px;"> Видеоальбом пустой.</h5>
 </div>
 <% } %>
+</span>
 </span>

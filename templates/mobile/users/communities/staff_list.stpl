@@ -1,6 +1,6 @@
 <% include!("../../../base_block/base_mobile_header.stpl"); %>
 
-<div class="main-container" data-pk="<%= request_user.id %>" data-type="user_staff_communities">
+<div data-title="" class="main-container" data-pk="<%= request_user.id %>" data-type="user_staff_communities">
 <div class="card-header p-0">
   <div class="row no-gutters">
     <div style="flex: 0 0 100%;max-width:100%;padding:5px;">

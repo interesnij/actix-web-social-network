@@ -1,6 +1,6 @@
 <% include!("../../../../base_block/base_header.stpl"); %>
 
-<div class="container mt-3 main-container pk_saver chat_container" data-pk="<%= chat.id %>" chat-pk="<%= chat.id %>" user-pk="<%= request_user.id %>" data-type="page_chat">
+<div class="container mt-3 main-container pk_saver chat_container" data-pk="<%= chat.id %>" chat-pk="<%= chat.id %>" user-pk="<%= request_user.id %>" data-type="page_chat" data-title="">
   <div class="row">
     <div class="col-md-8 main_chat_block">
       <div class="custom_color fixed_header_chat">

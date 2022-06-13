@@ -1,5 +1,5 @@
 
-<div class="mt-4 main-container pk_saver" data-pk="<%= community.id %>" data-type="community_manage_members">
+<div data-title="" class="mt-4 main-container pk_saver" data-pk="<%= community.id %>" data-type="community_manage_members">
 <div class="row">
     <div class="col-md-8 order-1">
         <div class="input-group mb-3">

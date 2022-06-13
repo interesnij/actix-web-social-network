@@ -1,5 +1,4 @@
-
-    <form id="post_list_form" data-folder="/surveys" class="case_create" community-pk="<%= community.id %>" data-pk="<%= community.id %>" data-type="none">
+<form data-title="" id="post_list_form" data-folder="/surveys" class="case_create" community-pk="<%= community.id %>" data-pk="<%= community.id %>" data-type="none">
         <div class="card mb-3">
             <div class="card-header border-bottom">
                 <h5 class="content-color-primary mb-0">Создание списка опросов</h5>

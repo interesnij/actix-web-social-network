@@ -1,3 +1,5 @@
+<span data-title="">
+
 <% if is_user_can_see_post_list { %>
 
 <span class="text-hide-xs">
@@ -18,3 +20,4 @@
 <% } else { %>
   <% include!("../../generic/centered/private_list.stpl"); %>
 <% } %>
+</span>

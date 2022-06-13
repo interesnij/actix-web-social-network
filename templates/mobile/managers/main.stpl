@@ -1,6 +1,6 @@
 <% include!("../../base_block/base_mobile_header.stpl"); %>
 
-<div class="container mt-4 main-container" data-type="manager_main">
+<div data-title="" class="container mt-4 main-container" data-type="manager_main">
           <div class="container mt-4 card">
             <h1 class="mb-0 text-center">Вы управленец</h1>
             <p class="mb-4 text-center">

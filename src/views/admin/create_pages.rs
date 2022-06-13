@@ -14,7 +14,6 @@ use crate::utils::{
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
-//use crate::models::User;
 use crate::diesel::{RunQueryDsl, QueryDsl, ExpressionMethods};
 
 
@@ -75,11 +74,9 @@ pub async fn create_communities_category_page(session: Session) -> actix_web::Re
             #[template(path = "desctop/admin/created/create_communities_category.stpl")]
             struct Template {
                 all_categories: Vec<CommunityCategory>,
-                title:          String,
             }
             let body = Template {
                 all_categories: all_categories,
-                title:          "Создание категории сообществ",
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -456,10 +453,10 @@ pub async fn create_artist_page(session: Session) -> actix_web::Result<HttpRespo
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_artist.stpl")]
             struct Template {
-                all_artists:  Vec<Artist>,
+                all_artists: Vec<Artist>,
             }
             let body = Template {
-                all_artists:  all_artists,
+                all_artists: all_artists,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -501,8 +498,8 @@ pub async fn edit_artist_page(session: Session, cat_id: web::Path<i32>) -> actix
                 all_artists:  Vec<Artist>,
             }
             let body = Template {
-                artist:       artist,
-                all_artists:  all_artists,
+                artist:      artist,
+                all_artists: all_artists,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -623,7 +620,7 @@ pub async fn create_stickers_category_page(session: Session) -> actix_web::Resul
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_stickers_category.stpl")]
             struct Template {
-                all_categories:  Vec<StickerCategorie>,
+                all_categories: Vec<StickerCategorie>,
             }
             let body = Template {
                 all_categories: all_categories,
@@ -752,8 +749,8 @@ pub async fn edit_sticker_page(session: Session, cat_id: web::Path<i32>) -> acti
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/edit_sticker.stpl")]
             struct Template {
-                sticker:      Sticker,
-                all_stickers: Vec<Sticker>,
+                sticker:        Sticker,
+                all_stickers:   Vec<Sticker>,
                 all_categories: Vec<StickerCategorie>,
             }
             let body = Template {
@@ -957,7 +954,7 @@ pub async fn create_post_category_page(session: Session) -> actix_web::Result<Ht
             #[derive(TemplateOnce)]
             #[template(path = "desctop/admin/created/create_post_category.stpl")]
             struct Template {
-                all_categories: Vec<PostCategorie>
+                all_categories: Vec<PostCategorie>,
             }
             let body = Template {
                 all_categories: all_categories,
@@ -999,7 +996,7 @@ pub async fn edit_post_category_page(session: Session, cat_id: web::Path<i32>) -
             #[template(path = "desctop/admin/created/edit_post_category.stpl")]
             struct Template {
                 category:       PostCategorie,
-                all_categories: Vec<PostCategorie>
+                all_categories: Vec<PostCategorie>,
             }
             let body = Template {
                 category:       category,

@@ -1,3 +1,4 @@
+<span data-title="">
 <% if is_user_can_see_photo_list { %>
 
 <% let is_staff = list.is_user_can_create_el(request_user.id); %>
@@ -57,3 +58,4 @@
   </div>
 </div>
 <% } %>
+</span>

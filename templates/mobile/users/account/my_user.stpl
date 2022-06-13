@@ -1,5 +1,6 @@
 <% include!("../../../base_block/base_mobile_header.stpl"); %>
-<div class="container main-container mt-3" data-type="user_profile" data-pk="<%= user.id %>">
+
+<div data-title="" class="container main-container mt-3" data-type="user_profile" data-pk="<%= user.id %>">
 
 <div class="card mb-3 avatar_figure" style="padding:10px">
   <div style="padding-top: 10px; margin-bottom: 10px; display: flex;">

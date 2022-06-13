@@ -1,5 +1,4 @@
-
-    <form data-pk="<%= list.id %>">
+<form data-title="" data-pk="<%= list.id %>">
         <div class="card mb-3">
             <div class="card-header border-bottom">
                 <h5 class="content-color-primary mb-0">Добавление опроса</h5>

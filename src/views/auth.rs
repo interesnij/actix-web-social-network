@@ -35,7 +35,6 @@ pub fn auth_routes(config: &mut web::ServiceConfig) {
 #[derive(TemplateOnce)]
 #[template(path = "mobile/main/auth/signup.stpl")]
 struct NobileSignupTemplate {
-    title: String,
 }
 
 pub async fn mobile_signup(session: Session) -> actix_web::Result<HttpResponse> {
@@ -43,7 +42,7 @@ pub async fn mobile_signup(session: Session) -> actix_web::Result<HttpResponse> 
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let body = NobileSignupTemplate { title: "Регистрация!".to_string() }
+        let body = NobileSignupTemplate {}
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))

@@ -1,5 +1,5 @@
 
-<div class="is_stat_list" data-pk="<%= request_user.id %>" data-type="create_video">
+<div data-title="" class="is_stat_list" data-pk="<%= request_user.id %>" data-type="create_video">
       <div class="card">
           <div class="card-header border-bottom">
               <h6 class="content-color-primary mb-0">Загрузка в мои видео</h6>
