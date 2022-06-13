@@ -541,10 +541,12 @@ pub async fn private_chat_page(session: Session, _id: web::Path<i32>) -> actix_w
             #[derive(TemplateOnce)]
             #[template(path = "desctop/chats/chat/info/private.stpl")]
             struct Template {
-                chat:  Chat,
+                chat:         Chat,
+                request_user: User,
             }
             let body = Template {
-                chat:  _chat,
+                chat:         _chat,
+                request_user: _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
