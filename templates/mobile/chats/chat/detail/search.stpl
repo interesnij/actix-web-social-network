@@ -1,4 +1,4 @@
-<div data-title="Поиск - <%= chat.get_name(request_user.pk) %>" class="container mt-3 main-container">
+<div data-title="Поиск - <%= chat.get_name(request_user.id) %>" class="container mt-3 main-container">
   <span class="load_block">
     <div class="media mt-3" style="padding-left: 7px;">
       <h5 class="mt-1">Поиск по "<span class="chat_search_value"><%= q %></span>"</h5>

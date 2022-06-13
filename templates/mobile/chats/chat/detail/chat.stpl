@@ -1,5 +1,5 @@
 <% include!("../../../../base_block/base_mobile_header.stpl"); %>
-<div data-title="Чат - <%= chat.get_name(request_user.pk) %>" class="container main-container mt-3" data-pk="<%= chat.id %>">
+<div data-title="Чат - <%= chat.get_name(request_user.id) %>" class="container main-container mt-3" data-pk="<%= chat.id %>">
 
 <span>
   <span>

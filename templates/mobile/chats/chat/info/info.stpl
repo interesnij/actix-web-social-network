@@ -1,5 +1,5 @@
 
-<div data-title="Информация - <%= chat.get_name(request_user.pk) %>">
+<div data-title="Информация - <%= chat.get_name(request_user.id) %>">
 <div class="card" chat-pk="<%= chat.id %>">
   <div class="card-header">
       <div class="media">

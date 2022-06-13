@@ -1,4 +1,4 @@
-<div class="px-0 card no-shadow main-container" chat-pk="<%= chat.id %>" style="min-height: 600px;" data-title="Исключение участников - приватность - <%= chat.get_name(request_user.pk) %>">
+<div class="px-0 card no-shadow main-container" chat-pk="<%= chat.id %>" style="min-height: 600px;" data-title="Исключение участников - приватность - <%= chat.get_name(request_user.id) %>">
     <form data-type="<%= types %>" class="cool_private_form">
       <input type="hidden" name="types" value="<%= types %>">
       <div class="card-header" style="min-height: 100px;">

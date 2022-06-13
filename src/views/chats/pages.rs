@@ -1097,6 +1097,7 @@ pub async fn invite_members_page(session: Session, req: HttpRequest, _id: web::P
                 object_list:      Vec<User>,
                 next_page_number: i32,
                 count:            i32,
+                request_user:     User,
             }
 
             let body = Template {
@@ -1104,6 +1105,7 @@ pub async fn invite_members_page(session: Session, req: HttpRequest, _id: web::P
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 count:            count,
+                request_user:     _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1118,6 +1120,7 @@ pub async fn invite_members_page(session: Session, req: HttpRequest, _id: web::P
                 object_list:      Vec<User>,
                 next_page_number: i32,
                 count:            i32,
+                request_user:     User,
             }
 
             let body = Template {
@@ -1125,6 +1128,7 @@ pub async fn invite_members_page(session: Session, req: HttpRequest, _id: web::P
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 count:            count,
+                request_user:     _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
