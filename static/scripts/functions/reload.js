@@ -27,7 +27,7 @@ function create_window_stat_list(block) {
   if (block.querySelector(".is_stat_list")) {
     item = block.querySelector(".is_stat_list");
     main_container = document.body.querySelector(".main-container");
-    $new_window_list = [item.getAttribute("data-type"),item.getAttribute("data-pk"),0,0, main_container.getAttribute("data-pk"),main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")]
+    $new_window_list = [item.getAttribute("data-title"),item.getAttribute("data-pk"),0,0, main_container.getAttribute("data-pk"),main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")]
   }
 };
 

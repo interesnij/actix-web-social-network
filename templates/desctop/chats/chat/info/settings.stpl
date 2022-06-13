@@ -1,4 +1,4 @@
-<form data-title="Настройки - <%= chat.get_name(request_user.id) %>" class="is_stat_list" data-pk="{{ chat.pk }}" data-type="change_user_chat">
+<form data-title="Настройки - <%= chat.get_name(request_user.id) %>" class="is_stat_list" data-pk="{{ chat.pk }}">
    <div class="card">
      <div class="card-header border-bottom">
        <h5 class="content-color-primary mb-0">Редактирование чата</h5>

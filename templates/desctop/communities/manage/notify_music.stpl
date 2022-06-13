@@ -1,5 +1,5 @@
 
-<div class="mt-4 main-container pk_saver" data-title="<%= community.name %> - уведомления аудиозаписей" data-pk="<%= community.id %>" data-type="community_manage_notify_music">
+<div class="mt-4 main-container pk_saver" data-title="<%= community.name %> - уведомления аудиозаписей" data-pk="<%= community.id %>">
     <div class="row">
         <div class="col-md-8 order-1">
             <form id="community_notify_music_form" class="contact-form">
