@@ -19,7 +19,7 @@ page_time = false, $new_time = 0;
 
 get_dragula(".drag_container");
 get_dragula(".drag_list");
-document.title = document.querySelector(".main_container").getAttribute("data-title");
+document.title = document.querySelector(".main-container").getAttribute("data-title");
 
 function create_window_stat_list(block) {
   if ($new_window_list.length) {
