@@ -635,6 +635,7 @@ pub async fn chat_exclude_users_load(session: Session, req: HttpRequest, _id: we
                 types:            String,
                 count:            i32,
                 text:             String,
+                request_user:     User,
             }
 
             let body = Template {
@@ -645,6 +646,7 @@ pub async fn chat_exclude_users_load(session: Session, req: HttpRequest, _id: we
                 types:            types,
                 count:            count,
                 text:             text,
+                request_user:     _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -662,6 +664,7 @@ pub async fn chat_exclude_users_load(session: Session, req: HttpRequest, _id: we
                 types:            String,
                 count:            i32,
                 text:             String,
+                request_user:     User,
             }
 
             let body = Template {
@@ -672,6 +675,7 @@ pub async fn chat_exclude_users_load(session: Session, req: HttpRequest, _id: we
                 types:            types,
                 count:            count,
                 text:             text,
+                request_user:     _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -763,6 +767,7 @@ pub async fn chat_include_users_load(session: Session, req: HttpRequest, _id: we
                 types:            String,
                 count:            i32,
                 text:             String,
+                request_user:     User,
             }
 
             let body = Template {
@@ -773,6 +778,7 @@ pub async fn chat_include_users_load(session: Session, req: HttpRequest, _id: we
                 types:            types,
                 count:            count,
                 text:             text,
+                request_user:     _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -789,6 +795,7 @@ pub async fn chat_include_users_load(session: Session, req: HttpRequest, _id: we
                 types:            String,
                 count:            i32,
                 text:             String,
+                request_user:     User,
             }
 
             let body = Template {
@@ -799,6 +806,7 @@ pub async fn chat_include_users_load(session: Session, req: HttpRequest, _id: we
                 types:            types,
                 count:            count,
                 text:             text,
+                request_user:     _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
