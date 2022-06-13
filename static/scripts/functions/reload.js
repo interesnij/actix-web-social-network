@@ -19,25 +19,6 @@ page_time = false, $new_time = 0;
 
 get_dragula(".drag_container");
 get_dragula(".drag_list");
-// type statistics item:
-// 1. "user..." - страницы пользователя
-// 2. "community..." - страницы сообщества
-// 3. "page..." - прочие страницы
-// 4. "create_user..." - начало создания объектов пользователя (открыли окно, например)
-// 5. "edit_user..." - начало изменения объектов пользователя
-// 6. "created_user..." - создание объектов пользователя (успешно создан объект)
-// 4. "edited_user..." - изменение объектов пользователя
-// 6. "delete_user..." - удаление объектов пользователя
-// 7. "create_community..." - начало создания объектов сообщества
-// 8. "edit_community..." - начало изменения объектов сообщества
-// 7. "created_community..." - создание объектов сообщества
-// 8. "edited_community..." - изменение объектов сообщества
-// 9. "delete_community..." - удаление объектов сообщества
-// 10. "manager..." - страницы менеджерские
-
-// Важно! юзер или админ может крепить только свои списки, потому по просмотру
-// его списков мы не должны писать owner-pk, ведь владелец страницы будет записан
-// и так. Это дата-пк и дата-тайп
 
 function create_window_stat_list(block) {
   if ($new_window_list.length) {
@@ -382,7 +363,16 @@ function append_items_in_stat_list(block, list) {
             pk = _list[i].getAttribute('data-pk');
             type = _list[i].getAttribute('data-type');
             if ($all_stat.indexOf(type + " " + pk) == -1 && $new_elements.indexOf(pk + " " + type) == -1) {
-              list.push([type,pk,0,main_container.getAttribute("data-pk"),main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")]);
+              list.push([
+                type,
+                pk,
+                0,
+                main_container.getAttribute("data-pk"),
+                main_container.getAttribute("data-type"),
+                $request_user_id,
+                $user_device,
+                new Date().toLocaleString().replace(",", "")
+              ]);
               console.log(list);
             };
             _list[i].classList.add("showed");
@@ -415,7 +405,7 @@ init_stat_lists(document.body.querySelector(".main-container"), '', '');
 
 function init_stat_lists(next_block, prev_type, prev_pk) {
   if ($page_stat.length) {
-  el_page_stat = $page_stat[0] + ";" + $page_stat[1] + ";" + $page_stat[2] + ";" + $page_stat[3] + ";" + $page_stat[4] + ";" + $page_stat[5] + ";" + $page_stat[6] + ";" + $page_stat[7] + ";" + $page_stat[8]
+  el_page_stat = $page_stat[0] + ";" + $page_stat[1] + ";" + $page_stat[2] + ";" + $page_stat[3] + ";" + $page_stat[4] + ";" + $page_stat[5] + ";" + $page_stat[6] + ";" + $page_stat[7] + ";" + $page_stat[8];
   $all_stat.push(el_page_stat);
   };
   if ($list_stat.length) {
