@@ -36,6 +36,57 @@ pub fn get_type(req: &HttpRequest) -> (bool, i32, String) {
         return (false, 0, "".to_string());
     }
 }
+pub fn get_page_and_ajax(req: &HttpRequest) -> (i32, bool) {
+    #[derive(Debug, Deserialize)]
+    struct Params {
+        pub page:    Option<i32>,
+        pub is_ajax: Option<bool>,
+    }
+    let params_some = web::Query::<Params>::from_query(&req.query_string());
+    let page: i32;
+    let is_ajax: bool;
+    if params_some.is_ok() {
+        let params = params_some.unwrap();
+        if params.page.is_some() {
+            page = params.page.unwrap();
+        }
+        else {
+            page = 1;
+        }
+        if params.is_ajax.is_some() {
+            is_ajax = true;
+        }
+        else {
+            is_ajax = false;
+        }
+    }
+    else {
+        page = 1;
+        is_ajax = false;
+    }
+    (page, is_ajax)
+}
+pub fn get_ajax(req: &HttpRequest) -> bool {
+    #[derive(Debug, Deserialize)]
+    struct Params {
+        pub is_ajax: Option<bool>,
+    }
+    let params_some = web::Query::<Params>::from_query(&req.query_string());
+    let is_ajax: bool;
+    if params_some.is_ok() {
+        let params = params_some.unwrap();
+        if params.is_ajax.is_some() {
+            is_ajax = true;
+        }
+        else {
+            is_ajax = false;
+        }
+    }
+    else {
+        is_ajax = false;
+    }
+    is_ajax
+}
 
 pub fn get_user(id: i32) -> User {
     use crate::schema::users::dsl::users;

@@ -12,6 +12,8 @@ use crate::utils::{
     get_chat,
     get_message,
     get_list_variables,
+    get_device_and_page_and_ajax,
+    get_device_and_ajax,
 };
 use serde::Deserialize;
 use actix_session::Session;
@@ -41,23 +43,7 @@ pub fn pages_urls(config: &mut web::ServiceConfig) {
 
 pub async fn chats_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        use crate::utils::PaginationParams;
-
-        let params_some = web::Query::<PaginationParams>::from_query(&req.query_string());
-        let is_desctop = is_desctop(req);
-        let page: i32;
-        if params_some.is_ok() {
-            let params = params_some.unwrap();
-            if params.page.is_some() {
-                page = params.page.unwrap();
-            }
-            else {
-                page = 1;
-            }
-        }
-        else {
-            page = 1;
-        }
+        let (is_desctop, page, is_ajax) = get_device_and_page_and_ajax(&req);
         let mut next_page_number = 0;
         let object_list: Vec<Chat>;
 
@@ -121,24 +107,9 @@ pub async fn chats_list_page(session: Session, req: HttpRequest) -> actix_web::R
 
 pub async fn fixed_messages_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        use crate::utils::PaginationParams;
-
         let _chat = get_chat(*_id);
-        let params_some = web::Query::<PaginationParams>::from_query(&req.query_string());
-        let is_desctop = is_desctop(req);
-        let page: i32;
-        if params_some.is_ok() {
-            let params = params_some.unwrap();
-            if params.page.is_some() {
-                page = params.page.unwrap();
-            }
-            else {
-                page = 1;
-            }
-        }
-        else {
-            page = 1;
-        }
+
+
         let mut next_page_number = 0;
         let object_list: Vec<Message>;
 
@@ -206,23 +177,9 @@ pub async fn fixed_messages_page(session: Session, req: HttpRequest, _id: web::P
 
 pub async fn closed_support_chats_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        use crate::utils::PaginationParams;
+        use crate::utils::get_page_and_ajax;
 
-        let params_some = web::Query::<PaginationParams>::from_query(&req.query_string());
-        let is_desctop = is_desctop(req);
-        let page: i32;
-        if params_some.is_ok() {
-            let params = params_some.unwrap();
-            if params.page.is_some() {
-                page = params.page.unwrap();
-            }
-            else {
-                page = 1;
-            }
-        }
-        else {
-            page = 1;
-        }
+        let (page, is_ajax) = get_page_and_ajax(&req);
         let mut next_page_number = 0;
         let object_list: Vec<Chat>;
 
@@ -286,25 +243,11 @@ pub async fn closed_support_chats_page(session: Session, req: HttpRequest) -> ac
 
 pub async fn chat_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        use crate::utils::PaginationParams;
+        use crate::utils::get_page_and_ajax;
 
         let _chat = get_chat(*_id);
 
-        let params_some = web::Query::<PaginationParams>::from_query(&req.query_string());
-        let is_desctop = is_desctop(req);
-        let page: i32;
-        if params_some.is_ok() {
-            let params = params_some.unwrap();
-            if params.page.is_some() {
-                page = params.page.unwrap();
-            }
-            else {
-                page = 1;
-            }
-        }
-        else {
-            page = 1;
-        }
+        let (page, is_ajax) = get_page_and_ajax(&req);
         let mut next_page_number = 0;
         let object_list: Vec<Message>;
 
@@ -896,23 +839,7 @@ pub async fn chat_info_page(session: Session, req: HttpRequest, _id: web::Path<i
 
 pub async fn favourites_messages_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        use crate::utils::PaginationParams;
-
-        let params_some = web::Query::<PaginationParams>::from_query(&req.query_string());
-        let is_desctop = is_desctop(req);
-        let page: i32;
-        if params_some.is_ok() {
-            let params = params_some.unwrap();
-            if params.page.is_some() {
-                page = params.page.unwrap();
-            }
-            else {
-                page = 1;
-            }
-        }
-        else {
-            page = 1;
-        }
+        let (is_desctop, page, is_ajax) = get_device_and_page_and_ajax(&req);
         let mut next_page_number = 0;
         let object_list: Vec<Message>;
 
@@ -982,7 +909,7 @@ pub async fn chat_search_page(session: Session, req: HttpRequest, _id: web::Path
     }
 
     let params_some = web::Query::<ZParams>::from_query(&req.query_string());
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     if is_signed_in(&session) {
         let mut page: i32 = 0;

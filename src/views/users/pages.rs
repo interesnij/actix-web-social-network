@@ -14,6 +14,7 @@ use crate::utils::{
     get_user_permission,
     get_anon_user_permission,
     get_list_variables,
+    get_device_and_ajax,
 };
 
 use actix_session::Session;
@@ -730,7 +731,7 @@ pub async fn user_docs_page(session: Session, req: HttpRequest, user_id: web::Pa
     use crate::utils::get_doc_list;
 
     let user_id : i32 = *user_id;
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     let _user = get_user(user_id);
     let _list = get_doc_list(_user.get_selected_doc_list_pk());
@@ -825,7 +826,7 @@ pub async fn user_video_page(session: Session, req: HttpRequest, user_id: web::P
     use crate::utils::get_video_list;
 
     let user_id : i32 = *user_id;
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     let _user = get_user(user_id);
     let _list = get_video_list(_user.get_selected_video_list_pk());
@@ -920,7 +921,7 @@ pub async fn user_surveys_page(session: Session, req: HttpRequest, user_id: web:
     use crate::utils::get_survey_list;
 
     let user_id : i32 = *user_id;
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     let _user = get_user(user_id);
     let _list = get_survey_list(_user.get_selected_survey_list_pk());
@@ -1015,7 +1016,7 @@ pub async fn user_music_page(session: Session, req: HttpRequest, user_id: web::P
     use crate::utils::get_music_list;
 
     let user_id : i32 = *user_id;
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     let _user = get_user(user_id);
     let _list = get_music_list(_user.get_selected_music_list_pk());
@@ -1110,7 +1111,7 @@ pub async fn user_goods_page(session: Session, req: HttpRequest, user_id: web::P
     use crate::utils::get_good_list;
 
     let user_id : i32 = *user_id;
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     let _user = get_user(user_id);
     let _list = get_good_list(_user.get_selected_good_list_pk());
@@ -1205,7 +1206,7 @@ pub async fn user_photos_page(session: Session, req: HttpRequest, user_id: web::
     use crate::utils::get_photo_list;
 
     let user_id : i32 = *user_id;
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     let _user = get_user(user_id);
     let _list = get_photo_list(_user.get_selected_photo_list_pk());
@@ -1301,7 +1302,7 @@ pub async fn user_docs_list_page(session: Session, req: HttpRequest, param: web:
 
     let user_id : i32 = param.0;
     let list_id : i32 = param.1;
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     let _user = get_user(user_id);
     let _list = get_doc_list(list_id);
@@ -1397,7 +1398,7 @@ pub async fn user_video_list_page(session: Session, req: HttpRequest, param: web
 
     let user_id : i32 = param.0;
     let list_id : i32 = param.1;
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     let _user = get_user(user_id);
     let _list = get_video_list(list_id);
@@ -1491,7 +1492,7 @@ pub async fn user_surveys_list_page(session: Session, req: HttpRequest, param: w
 
     let user_id : i32 = param.0;
     let list_id : i32 = param.1;
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     let _user = get_user(user_id);
     let _list = get_survey_list(list_id);
@@ -1587,7 +1588,7 @@ pub async fn user_music_list_page(session: Session, req: HttpRequest, param: web
 
     let user_id : i32 = param.0;
     let list_id : i32 = param.1;
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     let _user = get_user(user_id);
     let _list = get_music_list(list_id);
@@ -1683,7 +1684,7 @@ pub async fn user_goods_list_page(session: Session, req: HttpRequest, param: web
 
     let user_id : i32 = param.0;
     let list_id : i32 = param.1;
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     let _user = get_user(user_id);
     let _list = get_good_list(list_id);
@@ -1779,7 +1780,7 @@ pub async fn user_photos_list_page(session: Session, req: HttpRequest, param: we
 
     let user_id : i32 = param.0;
     let list_id : i32 = param.1;
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     let _user = get_user(user_id);
     let _list = get_photo_list(list_id);

@@ -11,7 +11,7 @@ use crate::utils::{
     is_signed_in,
     get_request_user_data,
     //establish_connection,
-    is_desctop,
+    get_device_and_ajax,
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
@@ -30,7 +30,7 @@ pub async fn managers_page(session: Session, req: HttpRequest) -> actix_web::Res
     else {
         let _request_user = get_request_user_data(&session);
         if _request_user.is_moderator() {
-            let is_desctop = is_desctop(req);
+            let {is_desctop, is_ajax} = get_device_and_ajax(req);
             if is_desctop {
                 #[derive(TemplateOnce)]
                 #[template(path = "desctop/managers/main.stpl")]

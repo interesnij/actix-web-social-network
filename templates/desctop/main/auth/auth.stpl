@@ -5,15 +5,6 @@
 <div class="main-container h-100 h-sm-auto" data-title="Трезвый.рус - вход">
             <div class="row h-100 h-sm-auto">
     <div class="col-md-8 order-md-1 mt-3">
-      Пользователи:
-      <% for object in users_list.iter() { %>
-        <%= object.get_full_name() %> - <%= object.phone %>
-      <% } %>
-      <br>
-      Коды:
-      <% for object in phone_codes_list.iter() { %>
-        <%= object.phone %> - <%= object.code %>
-      <% } %>
       <% include!("../../main/auth/process.stpl"); %>
     </div>
 

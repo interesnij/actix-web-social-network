@@ -44,10 +44,10 @@ pub fn community_urls(config: &mut web::ServiceConfig) {
 
 pub async fn community_docs_page(session: Session, req: HttpRequest, community_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     use crate::models::DocList;
-    use crate::utils::get_doc_list;
+    use crate::utils::get_device_and_ajax;
 
     let community_id : i32 = *community_id;
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     let _community = get_community(community_id);
     let _list = get_doc_list(_community.get_selected_doc_list_pk());
@@ -139,10 +139,10 @@ pub async fn community_docs_page(session: Session, req: HttpRequest, community_i
 
 pub async fn community_video_page(session: Session, req: HttpRequest, community_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     use crate::models::VideoList;
-    use crate::utils::get_video_list;
+    use crate::utils::{get_video_list, get_device_and_ajax};
 
     let community_id : i32 = *community_id;
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     let _community = get_community(community_id);
     let _list = get_video_list(_community.get_selected_video_list_pk());
@@ -234,10 +234,10 @@ pub async fn community_video_page(session: Session, req: HttpRequest, community_
 
 pub async fn community_surveys_page(session: Session, req: HttpRequest, community_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     use crate::models::SurveyList;
-    use crate::utils::get_survey_list;
+    use crate::utils::{get_survey_list, get_device_and_ajax};
 
     let community_id : i32 = *community_id;
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     let _community = get_community(community_id);
     let _list = get_survey_list(_community.get_selected_survey_list_pk());
@@ -329,10 +329,10 @@ pub async fn community_surveys_page(session: Session, req: HttpRequest, communit
 
 pub async fn community_music_page(session: Session, req: HttpRequest, community_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     use crate::models::MusicList;
-    use crate::utils::get_music_list;
+    use crate::utils::{get_music_list, get_device_and_ajax};
 
     let community_id : i32 = *community_id;
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     let _community = get_community(community_id);
     let _list = get_music_list(_community.get_selected_music_list_pk());
@@ -424,10 +424,10 @@ pub async fn community_music_page(session: Session, req: HttpRequest, community_
 
 pub async fn community_goods_page(session: Session, req: HttpRequest, community_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     use crate::models::GoodList;
-    use crate::utils::get_good_list;
+    use crate::utils::{get_good_list, get_device_and_ajax};
 
     let community_id : i32 = *community_id;
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     let _community = get_community(community_id);
     let _list = get_good_list(_community.get_selected_good_list_pk());
@@ -519,10 +519,10 @@ pub async fn community_goods_page(session: Session, req: HttpRequest, community_
 
 pub async fn community_photos_page(session: Session, req: HttpRequest, community_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     use crate::models::PhotoList;
-    use crate::utils::get_photo_list;
+    use crate::utils::{get_photo_list, get_device_and_ajax};
 
     let community_id : i32 = *community_id;
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     let _community = get_community(community_id);
     let _list = get_photo_list(_community.get_selected_photo_list_pk());
@@ -614,11 +614,11 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
 
 pub async fn community_docs_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
     use crate::models::DocList;
-    use crate::utils::get_doc_list;
+    use crate::utils::{get_doc_list, get_device_and_ajax};
 
     let community_id : i32 = param.0;
     let list_id : i32 = param.1;
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     let _community = get_community(community_id);
     let _list = get_doc_list(list_id);
@@ -710,11 +710,11 @@ pub async fn community_docs_list_page(session: Session, req: HttpRequest, param:
 
 pub async fn community_video_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
     use crate::models::VideoList;
-    use crate::utils::get_video_list;
+    use crate::utils::{get_video_list, get_device_and_ajax};
 
     let community_id : i32 = param.0;
     let list_id : i32 = param.1;
-    let is_desctop = is_desctop(req);
+    let {is_desctop, is_ajax} = get_device_and_ajax(req);
 
     let _community = get_community(community_id);
     let _list = get_video_list(list_id);
@@ -806,11 +806,11 @@ pub async fn community_video_list_page(session: Session, req: HttpRequest, param
 
 pub async fn community_surveys_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
     use crate::models::SurveyList;
-    use crate::utils::get_survey_list;
+    use crate::utils::{get_survey_list, get_device_and_ajax};
 
     let community_id : i32 = param.0;
     let list_id : i32 = param.1;
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     let _community = get_community(community_id);
     let _list = get_survey_list(list_id);
@@ -902,11 +902,11 @@ pub async fn community_surveys_list_page(session: Session, req: HttpRequest, par
 
 pub async fn community_music_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
     use crate::models::MusicList;
-    use crate::utils::get_music_list;
+    use crate::utils::{get_music_list, get_device_and_ajax};
 
     let community_id : i32 = param.0;
     let list_id : i32 = param.1;
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     let _community = get_community(community_id);
     let _list = get_music_list(list_id);
@@ -998,11 +998,11 @@ pub async fn community_music_list_page(session: Session, req: HttpRequest, param
 
 pub async fn community_goods_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
     use crate::models::GoodList;
-    use crate::utils::get_good_list;
+    use crate::utils::{get_good_list, get_device_and_ajax};
 
     let community_id : i32 = param.0;
     let list_id : i32 = param.1;
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     let _community = get_community(community_id);
     let _list = get_good_list(list_id);
@@ -1094,11 +1094,11 @@ pub async fn community_goods_list_page(session: Session, req: HttpRequest, param
 
 pub async fn community_photos_list_page(session: Session, req: HttpRequest, param: web::Path<(i32,i32)>) -> actix_web::Result<HttpResponse> {
     use crate::models::PhotoList;
-    use crate::utils::get_photo_list;
+    use crate::utils::{get_photo_list, get_device_and_ajax};
 
     let community_id : i32 = param.0;
     let list_id : i32 = param.1;
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     let _community = get_community(community_id);
     let _list = get_photo_list(list_id);
@@ -1332,59 +1332,60 @@ pub async fn community_wall_page(session: Session, req: HttpRequest, param: web:
 }
 
 pub async fn community_page(session: Session, req: HttpRequest, link: String) -> actix_web::Result<HttpResponse> {
-    let is_desctop = is_desctop(req);
+    use crate::utils::get_device_and_ajax;
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
     let _community = get_community_with_link(link);
 
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(&session);
         if _request_user.types > 10 {
             use crate::views::my_bad_account;
-            return my_bad_account(is_desctop, _request_user)
+            return my_bad_account(is_desctop, _request_user, is_ajax)
         }
         else if _request_user.is_administrator_of_community(_community.id) {
             if _community.types > 10 {
-                return admin_bad_community(is_desctop, _community, _request_user)
+                return admin_bad_community(is_desctop, _community, _request_user, is_ajax)
             }
             else {
-                return admin_community(is_desctop, _community, _request_user)
+                return admin_community(is_desctop, _community, _request_user, is_ajax)
             }
         }
         else if _community.types > 10 {
-            return bad_community(is_desctop, _community, _request_user)
+            return bad_community(is_desctop, _community, _request_user, is_ajax)
         }
         else if _request_user.is_follow_from_community(_community.id) {
-            return follow_community(is_desctop, _community, _request_user)
+            return follow_community(is_desctop, _community, _request_user, is_ajax)
         }
         else if _request_user.is_child() && !_community.is_identified() {
-            return no_child_safety_community(is_desctop, _community, _request_user)
+            return no_child_safety_community(is_desctop, _community, _request_user, is_ajax)
         }
         else if _request_user.is_member_of_community(_community.id) {
-            return public_community(is_desctop, _community, _request_user)
+            return public_community(is_desctop, _community, _request_user, is_ajax)
         }
         else if _community.is_public() {
-            return public_community(is_desctop, _community, _request_user)
+            return public_community(is_desctop, _community, _request_user, is_ajax)
         }
         else if _community.is_close() {
-            return close_community(is_desctop, _community, _request_user)
+            return close_community(is_desctop, _community, _request_user, is_ajax)
         }
         else if _community.is_private() {
-            return private_community(is_desctop, _community, _request_user)
+            return private_community(is_desctop, _community, _request_user, is_ajax)
         }
         else {
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
         }
     } else {
         if _community.types > 10 {
-            return anon_bad_community(is_desctop, _community)
+            return anon_bad_community(is_desctop, _community, is_ajax)
         }
         else if _community.is_public() {
-            return anon_community(is_desctop, _community)
+            return anon_community(is_desctop, _community, is_ajax)
         }
         else if _community.is_close() {
-            return anon_close_community(is_desctop, _community)
+            return anon_close_community(is_desctop, _community, is_ajax)
         }
         else if _community.is_private() {
-            return anon_private_community(is_desctop, _community)
+            return anon_private_community(is_desctop, _community, is_ajax)
         }
         else {
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
@@ -1392,7 +1393,7 @@ pub async fn community_page(session: Session, req: HttpRequest, link: String) ->
     }
 }
 
-pub fn admin_community(is_desctop: bool, community: Community, request_user: User) -> actix_web::Result<HttpResponse> {
+pub fn admin_community(is_desctop: bool, community: Community, request_user: User, is_ajax: bool) -> actix_web::Result<HttpResponse> {
     if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/admin_community.stpl")]
@@ -1424,7 +1425,7 @@ pub fn admin_community(is_desctop: bool, community: Community, request_user: Use
     }
 }
 
-pub fn anon_community(is_desctop: bool, community: Community) -> actix_web::Result<HttpResponse> {
+pub fn anon_community(is_desctop: bool, community: Community, is_ajax: bool) -> actix_web::Result<HttpResponse> {
     if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/anon_community.stpl")]
@@ -1456,7 +1457,7 @@ pub fn anon_community(is_desctop: bool, community: Community) -> actix_web::Resu
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
 }
-pub fn close_community(is_desctop: bool, community: Community, request_user: User) -> actix_web::Result<HttpResponse> {
+pub fn close_community(is_desctop: bool, community: Community, request_user: User, is_ajax: bool) -> actix_web::Result<HttpResponse> {
     if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/close_community.stpl")]
@@ -1492,7 +1493,7 @@ pub fn close_community(is_desctop: bool, community: Community, request_user: Use
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
 }
-pub fn private_community(is_desctop: bool, community: Community, request_user: User) -> actix_web::Result<HttpResponse> {
+pub fn private_community(is_desctop: bool, community: Community, request_user: User, is_ajax: bool) -> actix_web::Result<HttpResponse> {
     if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/private_community.stpl")]
@@ -1524,7 +1525,7 @@ pub fn private_community(is_desctop: bool, community: Community, request_user: U
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
 }
-pub fn no_child_safety_community(is_desctop: bool, community: Community, request_user: User) -> actix_web::Result<HttpResponse> {
+pub fn no_child_safety_community(is_desctop: bool, community: Community, request_user: User, is_ajax: bool) -> actix_web::Result<HttpResponse> {
     if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/no_child_safety.stpl")]
@@ -1556,7 +1557,7 @@ pub fn no_child_safety_community(is_desctop: bool, community: Community, request
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
 }
-pub fn follow_community(is_desctop: bool, community: Community, request_user: User) -> actix_web::Result<HttpResponse> {
+pub fn follow_community(is_desctop: bool, community: Community, request_user: User, is_ajax: bool) -> actix_web::Result<HttpResponse> {
     if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/follow_community.stpl")]
@@ -1592,7 +1593,7 @@ pub fn follow_community(is_desctop: bool, community: Community, request_user: Us
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
 }
-pub fn admin_bad_community(is_desctop: bool, community: Community, request_user: User) -> actix_web::Result<HttpResponse> {
+pub fn admin_bad_community(is_desctop: bool, community: Community, request_user: User, is_ajax: bool) -> actix_web::Result<HttpResponse> {
     if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/admin_bad_community.stpl")]
@@ -1624,7 +1625,7 @@ pub fn admin_bad_community(is_desctop: bool, community: Community, request_user:
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
 }
-pub fn bad_community(is_desctop: bool, community: Community, request_user: User) -> actix_web::Result<HttpResponse> {
+pub fn bad_community(is_desctop: bool, community: Community, request_user: User, is_ajax: bool) -> actix_web::Result<HttpResponse> {
     if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/bad_community.stpl")]
@@ -1656,7 +1657,7 @@ pub fn bad_community(is_desctop: bool, community: Community, request_user: User)
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
 }
-pub fn public_community(is_desctop: bool, community: Community, request_user: User) -> actix_web::Result<HttpResponse> {
+pub fn public_community(is_desctop: bool, community: Community, request_user: User, is_ajax: bool) -> actix_web::Result<HttpResponse> {
     if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/public_community.stpl")]
@@ -1693,7 +1694,7 @@ pub fn public_community(is_desctop: bool, community: Community, request_user: Us
     }
 }
 
-pub fn anon_bad_community(is_desctop: bool, community: Community) -> actix_web::Result<HttpResponse> {
+pub fn anon_bad_community(is_desctop: bool, community: Community, is_ajax: bool) -> actix_web::Result<HttpResponse> {
     if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/anon_bad_community.stpl")]
@@ -1722,7 +1723,7 @@ pub fn anon_bad_community(is_desctop: bool, community: Community) -> actix_web::
     }
 }
 
-pub fn anon_close_community(is_desctop: bool, community: Community) -> actix_web::Result<HttpResponse> {
+pub fn anon_close_community(is_desctop: bool, community: Community, is_ajax: bool) -> actix_web::Result<HttpResponse> {
     if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/anon_close_community.stpl")]
@@ -1755,7 +1756,7 @@ pub fn anon_close_community(is_desctop: bool, community: Community) -> actix_web
     }
 }
 
-pub fn anon_private_community(is_desctop: bool, community: Community) -> actix_web::Result<HttpResponse> {
+pub fn anon_private_community(is_desctop: bool, community: Community, is_ajax: bool) -> actix_web::Result<HttpResponse> {
     if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/anon_private_community.stpl")]

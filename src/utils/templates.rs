@@ -19,6 +19,98 @@ pub fn is_desctop(req: HttpRequest) -> bool {
     };
     _type
 }
+pub fn get_device_and_ajax(req: &HttpRequest) -> (bool, bool) {
+    struct Params {
+        pub is_ajax: Option<bool>,
+    }
+    let params_some = web::Query::<Params>::from_query(&req.query_string());
+    let is_ajax: bool;
+    let _type: bool;
+
+    if params_some.is_ok() {
+        let params = params_some.unwrap();
+        if params.is_ajax.is_some() {
+            is_ajax = true;
+        }
+        else {
+            is_ajax = false;
+        }
+    }
+    else {
+        is_ajax = false;
+    }
+
+    for header in req.headers().into_iter() {
+        if header.0 == "user-agent" {
+            let _val = format!("{:?}", header.1);
+            if _val.contains("Mobile"){
+                _type = false;
+            }
+            else {
+                _type = true;
+            }
+        }
+    };
+    (_type, is_ajax)
+}
+
+pub fn get_device_and_page_and_ajax(req: &HttpRequest) -> (bool, i32, bool) {
+    #[derive(Debug, Deserialize)]
+    struct Params {
+        pub page:    Option<i32>,
+        pub is_ajax: Option<bool>,
+    }
+    let params_some = web::Query::<Params>::from_query(&req.query_string());
+    let page: i32;
+    let is_ajax: bool;
+    if params_some.is_ok() {
+        let params = params_some.unwrap();
+        if params.page.is_some() {
+            page = params.page.unwrap();
+        }
+        else {
+            page = 1;
+        }
+        if params.is_ajax.is_some() {
+            is_ajax = true;
+        }
+        else {
+            is_ajax = false;
+        }
+    }
+    else {
+        page = 1;
+        is_ajax = false;
+    }
+
+    if params_some.is_ok() {
+        let params = params_some.unwrap();
+        if params.is_ajax.is_some() {
+            is_ajax = true;
+        }
+        else {
+            is_ajax = false;
+        }
+    }
+    else {
+        is_ajax = false;
+    }
+
+    let _type: bool;
+    for header in req.headers().into_iter() {
+        if header.0 == "user-agent" {
+            let _val = format!("{:?}", header.1);
+            if _val.contains("Mobile"){
+                _type = false;
+            }
+            else {
+                _type = true;
+            }
+        }
+    };
+    (_type, page, is_ajax)
+}
+
 pub fn get_list_variables(req: HttpRequest) -> (bool, i32) {
     use crate::utils::PaginationParams;
 

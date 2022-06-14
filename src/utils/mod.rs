@@ -49,7 +49,8 @@ pub struct JsonItemReactions {
 
 #[derive(Deserialize)]
 pub struct PaginationParams {
-    pub page: Option<i32>,
+    pub page:    Option<i32>,
+    pub is_ajax: Option<bool>,
 }
 
 pub fn establish_connection() -> PgConnection {

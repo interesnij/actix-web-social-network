@@ -863,8 +863,7 @@ function ajax_get_reload(url) {
         elem_ = document.createElement('span');
         elem_.innerHTML = ajax_link.responseText;
         ajax = elem_.querySelector("#reload_block");
-        rtr = document.getElementById('ajax');
-        rtr.innerHTML = ajax.innerHTML;
+        rtr.innerHTML = elem_.innerHTML;
         window.scrollTo(0,0);
         document.title = rtr.querySelector('.main-container').getAttribute("data-title");
         window.history.pushState({route: url}, "network", url);
@@ -885,9 +884,8 @@ function search_ajax_get_reload(url) {
         if (this.readyState == 4 && this.status == 200) {
             elem_ = document.createElement('span');
             elem_.innerHTML = ajax_link.responseText;
-            ajax = elem_.body.querySelector(".load_search_container");
             rtr = document.body.querySelector(".load_search_container");
-            rtr.innerHTML = ajax.innerHTML;
+            rtr.innerHTML = elem_.innerHTML;
             window.scrollTo(0, 0);
             window.history.pushState(null, "vfgffgfgf", url);
             document.title = rtr.querySelector('.main-container').getAttribute("data-title");

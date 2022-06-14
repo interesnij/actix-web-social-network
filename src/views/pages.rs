@@ -80,18 +80,18 @@ pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result
     use crate::models::PhoneCode;
 
     let _connection = establish_connection();
-    let users_list = users
-        .load::<User>(&_connection)
-        .expect("E.");
-    let phone_codes_list = phone_codes
-        .load::<PhoneCode>(&_connection)
-        .expect("E.");
+    //let users_list = users
+    //    .load::<User>(&_connection)
+    //    .expect("E.");
+    //let phone_codes_list = phone_codes
+    //    .load::<PhoneCode>(&_connection)
+    //    .expect("E.");
 
     #[derive(TemplateOnce)]
     #[template(path = "desctop/main/auth/auth.stpl")]
     struct DesctopAuthTemplate {
-        users_list: Vec<User>,
-        phone_codes_list: Vec<PhoneCode>,
+        //users_list: Vec<User>,
+        //phone_codes_list: Vec<PhoneCode>,
     }
     #[derive(TemplateOnce)]
     #[template(path = "desctop/main/lists/news_list.stpl")]
@@ -110,7 +110,7 @@ pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result
     }
 
     let _connection = establish_connection();
-    let is_desctop = is_desctop(req);
+    let {is_desctop, is_ajax} = get_device_and_ajax(req);
     if is_signed_in(&session) {
 
         let _request_user = get_request_user_data(&session);
@@ -121,9 +121,7 @@ pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
         else {
             let body = MobileNewsListTemplate {
@@ -131,70 +129,59 @@ pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
 
     } else {
         if is_desctop {
             let body = DesctopAuthTemplate {
-                users_list: users_list,
-                phone_codes_list: phone_codes_list,
+                //users_list: users_list,
+                //phone_codes_list: phone_codes_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
         else {
             let body = MobileAuthTemplate {}
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
     }
 }
 
 pub async fn featured_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    #[derive(TemplateOnce)]
-    #[template(path = "desctop/main/lists/featured_list.stpl")]
-    struct DesctopFeaturedListTemplate {
-        request_user: User,
-    }
-    #[derive(TemplateOnce)]
-    #[template(path = "mobile/main/lists/featured_list.stpl")]
-    struct MobileFeaturedListTemplate {
-        request_user: User,
-    }
-
     let _connection = establish_connection();
-    let is_desctop = is_desctop(req);
+    let {is_desctop, is_ajax} = get_device_and_ajax(req);
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(&session);
 
         if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/main/lists/featured_list.stpl")]
+            struct DesctopFeaturedListTemplate {
+                request_user: User,
+            }
             let body = DesctopFeaturedListTemplate {
                 request_user: _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
         else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/main/lists/featured_list.stpl")]
+            struct MobileFeaturedListTemplate {
+                request_user: User,
+            }
             let body = MobileFeaturedListTemplate {
                 request_user: _request_user,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
     } else {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
@@ -203,7 +190,9 @@ pub async fn featured_list_page(session: Session, req: HttpRequest) -> actix_web
 
 
 pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    let (is_desctop, page) = get_list_variables(req);
+    use crate::utils::get_device_and_page_and_ajax;
+
+    let (is_desctop, page, is_ajax) = get_device_and_page_and_ajax(req);
     let mut next_page_number = 0;
     let object_list: Vec<User>;
 
@@ -243,9 +232,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
         else {
             #[derive(TemplateOnce)]
@@ -265,9 +252,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
 
     } else {
@@ -301,9 +286,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
         else {
             #[derive(TemplateOnce)]
@@ -320,9 +303,7 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
     }
 }
@@ -330,8 +311,9 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
 
 pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     use crate::models::Community;
+    use crate::utils::get_device_and_page_and_ajax;
 
-    let (is_desctop, page) = get_list_variables(req);
+    let (is_desctop, page, is_ajax) = get_device_and_page_and_ajax(req);
     let mut next_page_number = 0;
 
     let object_list: Vec<Community>;
@@ -372,9 +354,7 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
         else {
             #[derive(TemplateOnce)]
@@ -394,9 +374,7 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
 
     } else {
@@ -430,9 +408,7 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
         else {
             #[derive(TemplateOnce)]
@@ -449,9 +425,7 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok()
-                .content_type("text/html; charset=utf-8")
-                .body(body))
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
     }
 }
@@ -1004,7 +978,6 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
         step = (page - 1) * 20;
     }
 
-    //let pre_types = &code[..1];
     if code == "c".to_string() {
         if code == "cpo".to_string() {
             use crate::utils::get_post_comment;

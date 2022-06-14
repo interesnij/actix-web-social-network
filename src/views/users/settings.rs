@@ -14,6 +14,7 @@ use crate::utils::{
     is_desctop,
     get_request_user_data,
     get_list_variables,
+    get_device_and_ajax,
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
@@ -202,7 +203,7 @@ pub async fn blacklist_page(session: Session, req: HttpRequest) -> actix_web::Re
 }
 
 pub async fn settings_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(&session);
@@ -237,7 +238,7 @@ pub async fn settings_page(session: Session, req: HttpRequest) -> actix_web::Res
 }
 
 pub async fn design_settings_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     if is_signed_in(&session) {
         use crate::schema::design_settings::dsl::design_settings;
@@ -285,7 +286,7 @@ pub async fn design_settings_page(session: Session, req: HttpRequest) -> actix_w
     }
 }
 pub async fn private_settings_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     if is_signed_in(&session) {
         use crate::schema::user_privates::dsl::user_privates;

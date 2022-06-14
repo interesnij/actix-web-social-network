@@ -16,6 +16,7 @@ use crate::utils::{
     get_user_permission,
     get_anon_user_permission,
     get_list_variables,
+    get_device_and_ajax,
 };
 
 use actix_session::Session;
@@ -170,45 +171,45 @@ pub async fn user_wall_page(session: Session, req: HttpRequest, param: web::Path
 }
 
 pub async fn user_page(session: Session, req: HttpRequest, link: String) -> actix_web::Result<HttpResponse> {
-    let is_desctop = is_desctop(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
     let _user = get_user_with_link(link);
 
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(&session);
         if &_user.id == &_request_user.id {
             if _user.types > 10 {
-                return my_bad_account(is_desctop, _request_user)
+                return my_bad_account(is_desctop, _request_user, is_ajax)
             }
             else {
-                return my_user_account(is_desctop, _user, _request_user)
+                return my_user_account(is_desctop, _user, _request_user, is_ajax)
             }
         }
         else if _user.types > 10 {
-            return bad_account(is_desctop, _user, _request_user)
+            return bad_account(is_desctop, _user, _request_user, is_ajax)
         }
         else if _request_user.is_self_user_in_block(_user.id) {
-            return self_block_account(is_desctop, _user, _request_user)
+            return self_block_account(is_desctop, _user, _request_user, is_ajax)
         }
         else if !_user.is_user_can_see_all(_request_user.id) {
-            return close_account(is_desctop, _user, _request_user, )
+            return close_account(is_desctop, _user, _request_user, is_ajax)
         }
         else {
-            return account(is_desctop, _user, _request_user)
+            return account(is_desctop, _user, _request_user, is_ajax)
         }
     } else {
         if !_user.is_anon_user_can_see_all() {
-            return anon_close_account(is_desctop, _user)
+            return anon_close_account(is_desctop, _user, is_ajax)
         }
         else if _user.types > 10 {
-            return anon_bad_account(is_desctop, _user)
+            return anon_bad_account(is_desctop, _user, is_ajax)
         }
         else {
-            return anon_user_account(is_desctop, _user)
+            return anon_user_account(is_desctop, _user, is_ajax)
         }
     }
 }
 
-pub fn my_user_account(is_desctop: bool, user: User, request_user: User) -> actix_web::Result<HttpResponse> {
+pub fn my_user_account(is_desctop: bool, user: User, request_user: User, is_ajax: bool) -> actix_web::Result<HttpResponse> {
     if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/my_user.stpl")]
@@ -248,7 +249,7 @@ pub fn my_user_account(is_desctop: bool, user: User, request_user: User) -> acti
     }
 }
 
-pub fn anon_user_account(is_desctop: bool, user: User) -> actix_web::Result<HttpResponse> {
+pub fn anon_user_account(is_desctop: bool, user: User, is_ajax: bool) -> actix_web::Result<HttpResponse> {
     if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/anon_user.stpl")]
@@ -280,7 +281,7 @@ pub fn anon_user_account(is_desctop: bool, user: User) -> actix_web::Result<Http
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
 }
-pub fn self_block_account(is_desctop: bool, user: User, request_user: User) -> actix_web::Result<HttpResponse> {
+pub fn self_block_account(is_desctop: bool, user: User, request_user: User, is_ajax: bool) -> actix_web::Result<HttpResponse> {
     if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/self_block_user.stpl")]
@@ -312,7 +313,7 @@ pub fn self_block_account(is_desctop: bool, user: User, request_user: User) -> a
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
 }
-pub fn my_bad_account(is_desctop: bool, request_user: User) -> actix_web::Result<HttpResponse> {
+pub fn my_bad_account(is_desctop: bool, request_user: User, is_ajax: bool) -> actix_web::Result<HttpResponse> {
     if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/my_bad_user.stpl")]
@@ -340,7 +341,7 @@ pub fn my_bad_account(is_desctop: bool, request_user: User) -> actix_web::Result
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
 }
-pub fn bad_account(is_desctop: bool, user: User, request_user: User) -> actix_web::Result<HttpResponse> {
+pub fn bad_account(is_desctop: bool, user: User, request_user: User, is_ajax: bool) -> actix_web::Result<HttpResponse> {
     if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/bad_user.stpl")]
@@ -372,7 +373,7 @@ pub fn bad_account(is_desctop: bool, user: User, request_user: User) -> actix_we
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
 }
-pub fn close_account(is_desctop: bool, user: User, request_user: User) -> actix_web::Result<HttpResponse> {
+pub fn close_account(is_desctop: bool, user: User, request_user: User, is_ajax: bool) -> actix_web::Result<HttpResponse> {
     if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/close_user.stpl")]
@@ -409,7 +410,7 @@ pub fn close_account(is_desctop: bool, user: User, request_user: User) -> actix_
     }
 }
 
-pub fn anon_bad_account(is_desctop: bool, user: User) -> actix_web::Result<HttpResponse> {
+pub fn anon_bad_account(is_desctop: bool, user: User, is_ajax: bool) -> actix_web::Result<HttpResponse> {
     if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/anon_bad_user.stpl")]
@@ -438,7 +439,7 @@ pub fn anon_bad_account(is_desctop: bool, user: User) -> actix_web::Result<HttpR
     }
 }
 
-pub fn anon_close_account(is_desctop: bool, user: User) -> actix_web::Result<HttpResponse> {
+pub fn anon_close_account(is_desctop: bool, user: User, is_ajax: bool) -> actix_web::Result<HttpResponse> {
     if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/anon_close_user.stpl")]
@@ -468,7 +469,7 @@ pub fn anon_close_account(is_desctop: bool, user: User) -> actix_web::Result<Htt
 }
 
 
-pub fn account(is_desctop: bool, user: User, request_user: User) -> actix_web::Result<HttpResponse> {
+pub fn account(is_desctop: bool, user: User, request_user: User, is_ajax: bool) -> actix_web::Result<HttpResponse> {
     if is_desctop {
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/user.stpl")]
