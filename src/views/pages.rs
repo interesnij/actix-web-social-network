@@ -110,7 +110,7 @@ pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result
     }
 
     let _connection = establish_connection();
-    let {is_desctop, is_ajax} = get_device_and_ajax(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(req);
     if is_signed_in(&session) {
 
         let _request_user = get_request_user_data(&session);
@@ -153,7 +153,7 @@ pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result
 
 pub async fn featured_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let _connection = establish_connection();
-    let {is_desctop, is_ajax} = get_device_and_ajax(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(req);
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(&session);
 
@@ -192,7 +192,7 @@ pub async fn featured_list_page(session: Session, req: HttpRequest) -> actix_web
 pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     use crate::utils::get_device_and_page_and_ajax;
 
-    let (is_desctop, page, is_ajax) = get_device_and_page_and_ajax(req);
+    let (is_desctop, page, is_ajax) = get_device_and_page_and_ajax(&req);
     let mut next_page_number = 0;
     let object_list: Vec<User>;
 
@@ -313,7 +313,7 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
     use crate::models::Community;
     use crate::utils::get_device_and_page_and_ajax;
 
-    let (is_desctop, page, is_ajax) = get_device_and_page_and_ajax(req);
+    let (is_desctop, page, is_ajax) = get_device_and_page_and_ajax(&req);
     let mut next_page_number = 0;
 
     let object_list: Vec<Community>;

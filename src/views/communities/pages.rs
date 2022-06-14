@@ -44,7 +44,7 @@ pub fn community_urls(config: &mut web::ServiceConfig) {
 
 pub async fn community_docs_page(session: Session, req: HttpRequest, community_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     use crate::models::DocList;
-    use crate::utils::get_device_and_ajax;
+    use crate::utils::{get_doc_list, get_device_and_ajax};
 
     let community_id : i32 = *community_id;
     let (is_desctop, is_ajax) = get_device_and_ajax(&req);
@@ -714,7 +714,7 @@ pub async fn community_video_list_page(session: Session, req: HttpRequest, param
 
     let community_id : i32 = param.0;
     let list_id : i32 = param.1;
-    let {is_desctop, is_ajax} = get_device_and_ajax(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(req);
 
     let _community = get_community(community_id);
     let _list = get_video_list(list_id);
