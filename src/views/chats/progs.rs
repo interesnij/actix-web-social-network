@@ -207,6 +207,7 @@ pub async fn create_chat(session: Session, mut payload: Multipart) -> actix_web:
             object_list:      Vec<Message>,
             next_page_number: i32,
             count:            i32,
+            is_ajax:          bool,
         }
         let body = Template {
             chat:             new_chat,
@@ -214,6 +215,7 @@ pub async fn create_chat(session: Session, mut payload: Multipart) -> actix_web:
             object_list:      object_list,
             next_page_number: 0,
             count:            0,
+            is_ajax:          true,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
