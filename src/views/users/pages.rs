@@ -49,7 +49,7 @@ pub async fn user_communities_page(session: Session, req: HttpRequest, user_id: 
     use crate::models::Community;
 
     let user_id : i32 = *user_id;
-    let (is_desctop, page) = get_list_variables(req);
+    let (is_desctop, page, is_ajax) = get_device_and_page_and_ajax(&req);
     let mut next_page_number = 0;
 
     let _user = get_user(user_id);
@@ -90,6 +90,7 @@ pub async fn user_communities_page(session: Session, req: HttpRequest, user_id: 
                 next_page_number:            i32,
                 is_user_can_see_communities: bool,
                 count:                       i32,
+                is_ajax:                     bool,
             }
 
             let body = Template {
@@ -99,6 +100,7 @@ pub async fn user_communities_page(session: Session, req: HttpRequest, user_id: 
                 next_page_number:            next_page_number,
                 is_user_can_see_communities: is_user_can_see_communities,
                 count:                       count,
+                is_ajax:                     is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -114,6 +116,7 @@ pub async fn user_communities_page(session: Session, req: HttpRequest, user_id: 
                 next_page_number:            i32,
                 is_user_can_see_communities: bool,
                 count:                       i32,
+                is_ajax:                     bool,
             }
 
             let body = Template {
@@ -123,6 +126,7 @@ pub async fn user_communities_page(session: Session, req: HttpRequest, user_id: 
                 next_page_number:            next_page_number,
                 is_user_can_see_communities: is_user_can_see_communities,
                 count:                       count,
+                is_ajax:                     is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -145,6 +149,7 @@ pub async fn user_communities_page(session: Session, req: HttpRequest, user_id: 
                 next_page_number:            i32,
                 is_user_can_see_communities: bool,
                 count:                       i32,
+                is_ajax:                     bool,
             }
             let body = Template {
                 user:                        _user,
@@ -152,6 +157,7 @@ pub async fn user_communities_page(session: Session, req: HttpRequest, user_id: 
                 next_page_number:            next_page_number,
                 is_user_can_see_communities: is_user_can_see_communities,
                 count:                       count,
+                is_ajax:                     is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -166,6 +172,7 @@ pub async fn user_communities_page(session: Session, req: HttpRequest, user_id: 
                 next_page_number:            i32,
                 is_user_can_see_communities: bool,
                 count:                       i32,
+                is_ajax:                     bool,
             }
             let body = Template {
                 user:                        _user,
@@ -173,6 +180,7 @@ pub async fn user_communities_page(session: Session, req: HttpRequest, user_id: 
                 next_page_number:            next_page_number,
                 is_user_can_see_communities: is_user_can_see_communities,
                 count:                       count,
+                is_ajax:                     is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -183,7 +191,7 @@ pub async fn user_communities_page(session: Session, req: HttpRequest, user_id: 
 pub async fn user_staff_communities_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     use crate::models::Community;
 
-    let (is_desctop, page) = get_list_variables(req);
+    let (is_desctop, page, is_ajax) = get_device_and_page_and_ajax(&req);
     let mut next_page_number = 0;
 
     if is_signed_in(&session) {
@@ -210,17 +218,19 @@ pub async fn user_staff_communities_page(session: Session, req: HttpRequest) -> 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/communities/staff_list.stpl")]
             struct Template {
-                request_user:                User,
-                object_list:                 Vec<Community>,
-                next_page_number:            i32,
-                count:                       usize,
+                request_user:     User,
+                object_list:      Vec<Community>,
+                next_page_number: i32,
+                count:            usize,
+                is_ajax:          bool,
             }
 
             let body = Template {
-                request_user:                _request_user,
-                object_list:                 object_list,
-                next_page_number:            next_page_number,
-                count:                       count,
+                request_user:     _request_user,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                count:            count,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -230,17 +240,19 @@ pub async fn user_staff_communities_page(session: Session, req: HttpRequest) -> 
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/communities/staff_list.stpl")]
             struct Template {
-                request_user:                User,
-                object_list:                 Vec<Community>,
-                next_page_number:            i32,
-                count:                       usize,
+                request_user:     User,
+                object_list:      Vec<Community>,
+                next_page_number: i32,
+                count:            usize,
+                is_ajax:          bool,
             }
 
             let body = Template {
-                request_user:                _request_user,
-                object_list:                 object_list,
-                next_page_number:            next_page_number,
-                count:                       count,
+                request_user:     _request_user,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                count:            count,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -254,7 +266,7 @@ pub async fn user_staff_communities_page(session: Session, req: HttpRequest) -> 
 
 pub async fn user_friends_page(session: Session, req: HttpRequest, user_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let user_id : i32 = *user_id;
-    let (is_desctop, page) = get_list_variables(req);
+    let (is_desctop, page, is_ajax) = get_device_and_page_and_ajax(&req);
     let mut next_page_number = 0;
 
     let _user = get_user(user_id);
@@ -295,6 +307,7 @@ pub async fn user_friends_page(session: Session, req: HttpRequest, user_id: web:
                 next_page_number:        i32,
                 is_user_can_see_friends: bool,
                 count:                   i32,
+                is_ajax:                 bool,
             }
 
             let body = Template {
@@ -304,6 +317,7 @@ pub async fn user_friends_page(session: Session, req: HttpRequest, user_id: web:
                 next_page_number:        next_page_number,
                 is_user_can_see_friends: is_user_can_see_friends,
                 count:                   count,
+                is_ajax:                 is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -319,6 +333,7 @@ pub async fn user_friends_page(session: Session, req: HttpRequest, user_id: web:
                 next_page_number:        i32,
                 is_user_can_see_friends: bool,
                 count:                   i32,
+                is_ajax:                 bool,
             }
 
             let body = Template {
@@ -328,6 +343,7 @@ pub async fn user_friends_page(session: Session, req: HttpRequest, user_id: web:
                 next_page_number:        next_page_number,
                 is_user_can_see_friends: is_user_can_see_friends,
                 count:                   count,
+                is_ajax:                 is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -350,6 +366,7 @@ pub async fn user_friends_page(session: Session, req: HttpRequest, user_id: web:
                 next_page_number:        i32,
                 is_user_can_see_friends: bool,
                 count:                   i32,
+                is_ajax:                 bool,
             }
             let body = Template {
                 user:                    _user,
@@ -357,6 +374,7 @@ pub async fn user_friends_page(session: Session, req: HttpRequest, user_id: web:
                 next_page_number:        next_page_number,
                 is_user_can_see_friends: is_user_can_see_friends,
                 count:                   count,
+                is_ajax:                 is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -371,6 +389,7 @@ pub async fn user_friends_page(session: Session, req: HttpRequest, user_id: web:
                 next_page_number:        i32,
                 is_user_can_see_friends: bool,
                 count:                   i32,
+                is_ajax:                 bool,
             }
             let body = Template {
                 user:                    _user,
@@ -378,6 +397,7 @@ pub async fn user_friends_page(session: Session, req: HttpRequest, user_id: web:
                 next_page_number:        next_page_number,
                 is_user_can_see_friends: is_user_can_see_friends,
                 count:                   count,
+                is_ajax:                 is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -388,7 +408,7 @@ pub async fn user_friends_page(session: Session, req: HttpRequest, user_id: web:
 
 pub async fn user_friends_online_page(session: Session, req: HttpRequest, user_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let user_id : i32 = *user_id;
-    let (is_desctop, page) = get_list_variables(req);
+    let (is_desctop, page, is_ajax) = get_device_and_page_and_ajax(&req);
     let mut next_page_number = 0;
 
     let _user = get_user(user_id);
@@ -429,6 +449,7 @@ pub async fn user_friends_online_page(session: Session, req: HttpRequest, user_i
                 next_page_number:        i32,
                 is_user_can_see_friends: bool,
                 count:                   usize,
+                is_ajax:                 bool,
             }
 
             let body = Template {
@@ -438,6 +459,7 @@ pub async fn user_friends_online_page(session: Session, req: HttpRequest, user_i
                 next_page_number:        next_page_number,
                 is_user_can_see_friends: is_user_can_see_friends,
                 count:                   count,
+                is_ajax:                 is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -453,6 +475,7 @@ pub async fn user_friends_online_page(session: Session, req: HttpRequest, user_i
                 next_page_number:        i32,
                 is_user_can_see_friends: bool,
                 count:                   usize,
+                is_ajax:                 bool,
             }
 
             let body = Template {
@@ -462,6 +485,7 @@ pub async fn user_friends_online_page(session: Session, req: HttpRequest, user_i
                 next_page_number:        next_page_number,
                 is_user_can_see_friends: is_user_can_see_friends,
                 count:                   count,
+                is_ajax:                 is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -484,6 +508,7 @@ pub async fn user_friends_online_page(session: Session, req: HttpRequest, user_i
                 next_page_number:        i32,
                 is_user_can_see_friends: bool,
                 count:                   usize,
+                is_ajax:                 bool,
             }
             let body = Template {
                 user:                    _user,
@@ -491,6 +516,7 @@ pub async fn user_friends_online_page(session: Session, req: HttpRequest, user_i
                 next_page_number:        next_page_number,
                 is_user_can_see_friends: is_user_can_see_friends,
                 count:                   count,
+                is_ajax:                 is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -505,6 +531,7 @@ pub async fn user_friends_online_page(session: Session, req: HttpRequest, user_i
                 next_page_number:        i32,
                 is_user_can_see_friends: bool,
                 count:                   usize,
+                is_ajax:                 bool,
             }
             let body = Template {
                 user:                    _user,
@@ -512,6 +539,7 @@ pub async fn user_friends_online_page(session: Session, req: HttpRequest, user_i
                 next_page_number:        next_page_number,
                 is_user_can_see_friends: is_user_can_see_friends,
                 count:                   count,
+                is_ajax:                 is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -522,7 +550,7 @@ pub async fn user_friends_online_page(session: Session, req: HttpRequest, user_i
 
 pub async fn user_friends_common_page(session: Session, req: HttpRequest, user_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let user_id : i32 = *user_id;
-    let (is_desctop, page) = get_list_variables(req);
+    let (is_desctop, page, is_ajax) = get_device_and_page_and_ajax(&req);
     let mut next_page_number = 0;
 
     let _user = get_user(user_id);
@@ -562,6 +590,7 @@ pub async fn user_friends_common_page(session: Session, req: HttpRequest, user_i
                 object_list:             Vec<User>,
                 next_page_number:        i32,
                 count:                   usize,
+                is_ajax:                 bool,
             }
 
             let body = Template {
@@ -570,6 +599,7 @@ pub async fn user_friends_common_page(session: Session, req: HttpRequest, user_i
                 object_list:             object_list,
                 next_page_number:        next_page_number,
                 count:                   count,
+                is_ajax:                 is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -584,6 +614,7 @@ pub async fn user_friends_common_page(session: Session, req: HttpRequest, user_i
                 object_list:             Vec<User>,
                 next_page_number:        i32,
                 count:                   usize,
+                is_ajax:                 bool,
             }
 
             let body = Template {
@@ -592,6 +623,7 @@ pub async fn user_friends_common_page(session: Session, req: HttpRequest, user_i
                 object_list:             object_list,
                 next_page_number:        next_page_number,
                 count:                   count,
+                is_ajax:                 is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -605,7 +637,7 @@ pub async fn user_friends_common_page(session: Session, req: HttpRequest, user_i
 
 pub async fn user_follows_page(session: Session, req: HttpRequest, user_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let user_id : i32 = *user_id;
-    let (is_desctop, page) = get_list_variables(req);
+    let (is_desctop, page, is_ajax) = get_device_and_page_and_ajax(&req);
     let mut next_page_number = 0;
 
     let _user = get_user(user_id);
@@ -643,6 +675,7 @@ pub async fn user_follows_page(session: Session, req: HttpRequest, user_id: web:
                 object_list:      Vec<User>,
                 next_page_number: i32,
                 count:            i32,
+                is_ajax:          bool,
             }
 
             let body = Template {
@@ -651,6 +684,7 @@ pub async fn user_follows_page(session: Session, req: HttpRequest, user_id: web:
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 count:            count,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -665,6 +699,7 @@ pub async fn user_follows_page(session: Session, req: HttpRequest, user_id: web:
                 object_list:      Vec<User>,
                 next_page_number: i32,
                 count:            i32,
+                is_ajax:          bool,
             }
 
             let body = Template {
@@ -673,6 +708,7 @@ pub async fn user_follows_page(session: Session, req: HttpRequest, user_id: web:
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 count:            count,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -689,16 +725,18 @@ pub async fn user_follows_page(session: Session, req: HttpRequest, user_id: web:
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/follows/anon_list.stpl")]
             struct Template {
-                user:                    User,
-                object_list:             Vec<User>,
-                next_page_number:        i32,
-                count:                   i32,
+                user:             User,
+                object_list:      Vec<User>,
+                next_page_number: i32,
+                count:            i32,
+                is_ajax:          bool,
             }
             let body = Template {
                 user:                    _user,
                 object_list:             object_list,
                 next_page_number:        next_page_number,
                 count:                   count,
+                is_ajax:                 is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -708,16 +746,18 @@ pub async fn user_follows_page(session: Session, req: HttpRequest, user_id: web:
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/follows/anon_list.stpl")]
             struct Template {
-                user:                    User,
-                object_list:             Vec<User>,
-                next_page_number:        i32,
-                count:                   i32,
+                user:             User,
+                object_list:      Vec<User>,
+                next_page_number: i32,
+                count:            i32,
+                is_ajax:          bool,
             }
             let body = Template {
                 user:                    _user,
                 object_list:             object_list,
                 next_page_number:        next_page_number,
                 count:                   count,
+                is_ajax:                 is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -759,6 +799,7 @@ pub async fn user_docs_page(session: Session, req: HttpRequest, user_id: web::Pa
                 request_user: _request_user,
                 user:         _user,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -778,6 +819,7 @@ pub async fn user_docs_page(session: Session, req: HttpRequest, user_id: web::Pa
                 request_user: _request_user,
                 user:         _user,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -799,8 +841,9 @@ pub async fn user_docs_page(session: Session, req: HttpRequest, user_id: web::Pa
                 is_ajax: bool,
             }
             let body = Template {
-                user:   _user,
-                list:   _list,
+                user:    _user,
+                list:    _list,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -815,8 +858,9 @@ pub async fn user_docs_page(session: Session, req: HttpRequest, user_id: web::Pa
                 is_ajax: bool,
             }
             let body = Template {
-                user:  _user,
-                list:  _list,
+                user:    _user,
+                list:    _list,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -858,6 +902,7 @@ pub async fn user_video_page(session: Session, req: HttpRequest, user_id: web::P
                 request_user: _request_user,
                 user:         _user,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -877,6 +922,7 @@ pub async fn user_video_page(session: Session, req: HttpRequest, user_id: web::P
                 request_user: _request_user,
                 user:         _user,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -898,8 +944,9 @@ pub async fn user_video_page(session: Session, req: HttpRequest, user_id: web::P
                 is_ajax: bool,
             }
             let body = Template {
-                user:  _user,
-                list:  _list,
+                user:    _user,
+                list:    _list,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -914,8 +961,9 @@ pub async fn user_video_page(session: Session, req: HttpRequest, user_id: web::P
                 is_ajax: bool,
             }
             let body = Template {
-                user:  _user,
-                list:  _list,
+                user:    _user,
+                list:    _list,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -957,6 +1005,7 @@ pub async fn user_surveys_page(session: Session, req: HttpRequest, user_id: web:
                 request_user: _request_user,
                 user:         _user,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -976,6 +1025,7 @@ pub async fn user_surveys_page(session: Session, req: HttpRequest, user_id: web:
                 request_user: _request_user,
                 user:         _user,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -997,8 +1047,9 @@ pub async fn user_surveys_page(session: Session, req: HttpRequest, user_id: web:
                 is_ajax: bool,
             }
             let body = Template {
-                user:  _user,
-                list:  _list,
+                user:    _user,
+                list:    _list,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1013,8 +1064,9 @@ pub async fn user_surveys_page(session: Session, req: HttpRequest, user_id: web:
                 is_ajax: bool,
             }
             let body = Template {
-                user:  _user,
-                list:  _list,
+                user:    _user,
+                list:    _list,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1056,6 +1108,7 @@ pub async fn user_music_page(session: Session, req: HttpRequest, user_id: web::P
                 request_user: _request_user,
                 user:         _user,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1075,6 +1128,7 @@ pub async fn user_music_page(session: Session, req: HttpRequest, user_id: web::P
                 request_user: _request_user,
                 user:         _user,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1096,8 +1150,9 @@ pub async fn user_music_page(session: Session, req: HttpRequest, user_id: web::P
                 is_ajax: bool,
             }
             let body = Template {
-                user:  _user,
-                list:  _list,
+                user:    _user,
+                list:    _list,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1112,8 +1167,9 @@ pub async fn user_music_page(session: Session, req: HttpRequest, user_id: web::P
                 is_ajax: bool,
             }
             let body = Template {
-                user:  _user,
-                list:  _list,
+                user:    _user,
+                list:    _list,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1155,6 +1211,7 @@ pub async fn user_goods_page(session: Session, req: HttpRequest, user_id: web::P
                 request_user: _request_user,
                 user:         _user,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1174,6 +1231,7 @@ pub async fn user_goods_page(session: Session, req: HttpRequest, user_id: web::P
                 request_user: _request_user,
                 user:         _user,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1195,8 +1253,9 @@ pub async fn user_goods_page(session: Session, req: HttpRequest, user_id: web::P
                 is_ajax: bool,
             }
             let body = Template {
-                user:  _user,
-                list:  _list,
+                user:    _user,
+                list:    _list,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1211,8 +1270,9 @@ pub async fn user_goods_page(session: Session, req: HttpRequest, user_id: web::P
                 is_ajax: bool,
             }
             let body = Template {
-                user:  _user,
-                list:  _list,
+                user:    _user,
+                list:    _list,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1254,6 +1314,7 @@ pub async fn user_photos_page(session: Session, req: HttpRequest, user_id: web::
                 request_user: _request_user,
                 user:         _user,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1273,6 +1334,7 @@ pub async fn user_photos_page(session: Session, req: HttpRequest, user_id: web::
                 request_user: _request_user,
                 user:         _user,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1294,8 +1356,9 @@ pub async fn user_photos_page(session: Session, req: HttpRequest, user_id: web::
                 is_ajax: bool,
             }
             let body = Template {
-                user:  _user,
-                list:  _list,
+                user:    _user,
+                list:    _list,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1310,8 +1373,9 @@ pub async fn user_photos_page(session: Session, req: HttpRequest, user_id: web::
                 is_ajax: bool,
             }
             let body = Template {
-                user:  _user,
-                list:  _list,
+                user:    _user,
+                list:    _list,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1354,6 +1418,7 @@ pub async fn user_docs_list_page(session: Session, req: HttpRequest, param: web:
                 request_user: _request_user,
                 user:         _user,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1373,6 +1438,7 @@ pub async fn user_docs_list_page(session: Session, req: HttpRequest, param: web:
                 request_user: _request_user,
                 user:         _user,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1394,8 +1460,9 @@ pub async fn user_docs_list_page(session: Session, req: HttpRequest, param: web:
                 is_ajax: bool,
             }
             let body = Template {
-                user:  _user,
-                list:  _list,
+                user:    _user,
+                list:    _list,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1410,8 +1477,9 @@ pub async fn user_docs_list_page(session: Session, req: HttpRequest, param: web:
                 is_ajax: bool,
             }
             let body = Template {
-                user:   _user,
-                list:   _list,
+                user:    _user,
+                list:    _list,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1453,6 +1521,7 @@ pub async fn user_video_list_page(session: Session, req: HttpRequest, param: web
                 request_user: _request_user,
                 user:         _user,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1471,6 +1540,7 @@ pub async fn user_video_list_page(session: Session, req: HttpRequest, param: web
                 request_user: _request_user,
                 user:         _user,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1492,8 +1562,9 @@ pub async fn user_video_list_page(session: Session, req: HttpRequest, param: web
                 is_ajax: bool,
             }
             let body = Template {
-                user:  _user,
-                list:  _list,
+                user:    _user,
+                list:    _list,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1508,8 +1579,9 @@ pub async fn user_video_list_page(session: Session, req: HttpRequest, param: web
                 is_ajax: bool,
             }
             let body = Template {
-                user:  _user,
-                list:  _list,
+                user:    _user,
+                list:    _list,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1552,6 +1624,7 @@ pub async fn user_surveys_list_page(session: Session, req: HttpRequest, param: w
                 request_user: _request_user,
                 user:         _user,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1571,6 +1644,7 @@ pub async fn user_surveys_list_page(session: Session, req: HttpRequest, param: w
                 request_user: _request_user,
                 user:         _user,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1592,8 +1666,9 @@ pub async fn user_surveys_list_page(session: Session, req: HttpRequest, param: w
                 is_ajax: bool,
             }
             let body = Template {
-                user:  _user,
-                list:  _list,
+                user:    _user,
+                list:    _list,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1608,8 +1683,9 @@ pub async fn user_surveys_list_page(session: Session, req: HttpRequest, param: w
                 is_ajax: bool,
             }
             let body = Template {
-                user:   _user,
-                list:   _list,
+                user:    _user,
+                list:    _list,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1652,6 +1728,7 @@ pub async fn user_music_list_page(session: Session, req: HttpRequest, param: web
                 request_user: _request_user,
                 user:         _user,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1671,6 +1748,7 @@ pub async fn user_music_list_page(session: Session, req: HttpRequest, param: web
                 request_user: _request_user,
                 user:         _user,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1692,8 +1770,9 @@ pub async fn user_music_list_page(session: Session, req: HttpRequest, param: web
                 is_ajax: bool,
             }
             let body = Template {
-                user:  _user,
-                list:  _list,
+                user:    _user,
+                list:    _list,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1708,8 +1787,9 @@ pub async fn user_music_list_page(session: Session, req: HttpRequest, param: web
                 is_ajax: bool,
             }
             let body = Template {
-                user:  _user,
-                list:  _list,
+                user:    _user,
+                list:    _list,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1752,6 +1832,7 @@ pub async fn user_goods_list_page(session: Session, req: HttpRequest, param: web
                 request_user: _request_user,
                 user:         _user,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1771,6 +1852,7 @@ pub async fn user_goods_list_page(session: Session, req: HttpRequest, param: web
                 request_user: _request_user,
                 user:         _user,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1792,8 +1874,9 @@ pub async fn user_goods_list_page(session: Session, req: HttpRequest, param: web
                 is_ajax: bool,
             }
             let body = Template {
-                user:   _user,
-                list:   _list,
+                user:    _user,
+                list:    _list,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1803,13 +1886,14 @@ pub async fn user_goods_list_page(session: Session, req: HttpRequest, param: web
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/goods/list/anon_list.stpl")]
             struct Template {
-                user:   User,
-                list:   GoodList,
+                user:    User,
+                list:    GoodList,
                 is_ajax: bool,
             }
             let body = Template {
-                user:   _user,
-                list:   _list,
+                user:    _user,
+                list:    _list,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1852,6 +1936,7 @@ pub async fn user_photos_list_page(session: Session, req: HttpRequest, param: we
                 request_user: _request_user,
                 user:         _user,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1871,6 +1956,7 @@ pub async fn user_photos_list_page(session: Session, req: HttpRequest, param: we
                 request_user: _request_user,
                 user:         _user,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1892,9 +1978,9 @@ pub async fn user_photos_list_page(session: Session, req: HttpRequest, param: we
                 is_ajax: bool,
             }
             let body = Template {
-                user:   _user,
-                list:   _list,
-            }
+                user:    _user,
+                list:    _list,
+                is_ajax: is_ajax,
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
@@ -1910,6 +1996,7 @@ pub async fn user_photos_list_page(session: Session, req: HttpRequest, param: we
             let body = Template {
                 user:   _user,
                 list:   _list,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
