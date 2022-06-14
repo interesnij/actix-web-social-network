@@ -13,7 +13,7 @@
               </div>
 
               <div class="form-group">
-                <select name="sticker_categorie_id" class="form-control" id="smile_categorie_id" data-live-search="true" tabindex="-1" aria-hidden="true">
+                <select name="category_id" class="form-control" id="smile_categorie_id" data-live-search="true" tabindex="-1" aria-hidden="true">
                   <option value="">Выберите категорию</option>
                   <% for object in all_categories.iter() { %>
                     <option value="<%= object.id %>"><%= object.name %></option>
