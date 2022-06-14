@@ -15,6 +15,7 @@ use crate::utils::{
     get_anon_user_permission,
     get_list_variables,
     get_device_and_ajax,
+    get_device_and_page_and_ajax,
 };
 
 use actix_session::Session;
