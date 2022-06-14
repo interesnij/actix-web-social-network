@@ -9,7 +9,7 @@
   </div>
   <div class="card mb-2">
     <div class="card-body">
-      <ul class="row is_block_paginate is_paginate">
+      <ul class="is_block_paginate is_paginate">
 
         <% if object_list.len() > 0 { %>
         <% for object in object_list.iter() { %>
