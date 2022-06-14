@@ -108,7 +108,7 @@ pub async fn chats_list_page(session: Session, req: HttpRequest) -> actix_web::R
 pub async fn fixed_messages_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         let _chat = get_chat(*_id);
-        let is_desctop = is_desctop(req);
+        let (is_desctop, page) = get_device_and_page(&req); 
         let mut next_page_number = 0;
         let object_list: Vec<Message>;
 
@@ -242,11 +242,11 @@ pub async fn closed_support_chats_page(session: Session, req: HttpRequest) -> ac
 
 pub async fn chat_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        use crate::utils::get_page_and_ajax;
+        use crate::utils::get_device_and_page_and_ajax;
 
         let _chat = get_chat(*_id);
 
-        let (page, is_ajax) = get_page_and_ajax(&req);
+        let (is_desctop, page, is_ajax) = get_device_and_page_and_ajax(&req);
         let mut next_page_number = 0;
         let object_list: Vec<Message>;
 

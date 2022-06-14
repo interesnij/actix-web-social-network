@@ -15,6 +15,7 @@ use crate::utils::{
     get_request_user_data,
     get_list_variables,
     get_type,
+    get_device_and_ajax,
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
