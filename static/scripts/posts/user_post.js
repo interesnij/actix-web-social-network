@@ -844,7 +844,7 @@ on('#ajax', 'click', '#create_list_btn', function() {
       }
       else {
         new_block = "<ul class='drag_list' style='width:max-content;list-style: none;'>" + new_list + "</ul>";
-        document.body.querySelector(".col-12").append(new_block);
+        document.body.querySelector(".empty_list_block").append(new_block);
       }
     };
     close_work_fullscreen();
