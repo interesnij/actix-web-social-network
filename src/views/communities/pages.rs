@@ -714,7 +714,7 @@ pub async fn community_video_list_page(session: Session, req: HttpRequest, param
 
     let community_id : i32 = param.0;
     let list_id : i32 = param.1;
-    let (is_desctop, is_ajax) = get_device_and_ajax(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
 
     let _community = get_community(community_id);
     let _list = get_video_list(list_id);

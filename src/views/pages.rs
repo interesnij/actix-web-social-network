@@ -110,7 +110,7 @@ pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result
     }
 
     let _connection = establish_connection();
-    let (is_desctop, is_ajax) = get_device_and_ajax(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
     if is_signed_in(&session) {
 
         let _request_user = get_request_user_data(&session);
@@ -153,7 +153,7 @@ pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result
 
 pub async fn featured_list_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let _connection = establish_connection();
-    let (is_desctop, is_ajax) = get_device_and_ajax(req);
+    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
     if is_signed_in(&session) {
         let _request_user = get_request_user_data(&session);
 
