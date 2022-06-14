@@ -84,7 +84,7 @@ pub fn get_device_and_ajax(req: &HttpRequest) -> (bool, bool) {
     }
     let params_some = web::Query::<Params>::from_query(&req.query_string());
     let mut is_ajax = false;
-    let _type: bool;
+    let mut _type = true;
 
     if params_some.is_ok() {
         let params = params_some.unwrap();
@@ -98,9 +98,6 @@ pub fn get_device_and_ajax(req: &HttpRequest) -> (bool, bool) {
             let _val = format!("{:?}", header.1);
             if _val.contains("Mobile"){
                 _type = false;
-            }
-            else {
-                _type = true;
             }
         }
     };
