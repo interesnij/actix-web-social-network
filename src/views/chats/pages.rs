@@ -108,7 +108,7 @@ pub async fn chats_list_page(session: Session, req: HttpRequest) -> actix_web::R
 pub async fn fixed_messages_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         let _chat = get_chat(*_id);
-        let (is_desctop, page) = get_device_and_page(&req); 
+        let (is_desctop, page, _is_ajax) = get_device_and_page_and_ajax(&req);  
         let mut next_page_number = 0;
         let object_list: Vec<Message>;
 
