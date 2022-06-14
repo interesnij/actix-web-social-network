@@ -15,6 +15,7 @@ use crate::utils::{
     get_request_user_data,
     get_list_variables,
     get_device_and_ajax,
+    get_device_and_page_and_ajax,
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
@@ -61,7 +62,7 @@ pub fn settings_urls(config: &mut web::ServiceConfig) {
 }
 
 pub async fn followings_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    let (is_desctop, page) = get_list_variables(req);
+    let (is_desctop, page, is_ajax) = get_device_and_page_and_ajax(&req);
     let mut next_page_number = 0;
 
     let object_list: Vec<User>;
@@ -89,17 +90,19 @@ pub async fn followings_page(session: Session, req: HttpRequest) -> actix_web::R
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/follows/following_list.stpl")]
             struct Template {
-                request_user:            User,
-                object_list:             Vec<User>,
-                next_page_number:        i32,
-                count:                   i32,
+                request_user:     User,
+                object_list:      Vec<User>,
+                next_page_number: i32,
+                count:            i32,
+                is_ajax:          bool,
             }
 
             let body = Template {
-                request_user:            _request_user,
-                object_list:             object_list,
-                next_page_number:        next_page_number,
-                count:                   count,
+                request_user:     _request_user,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                count:            count,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -109,17 +112,19 @@ pub async fn followings_page(session: Session, req: HttpRequest) -> actix_web::R
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/follows/following_list.stpl")]
             struct Template {
-                request_user:            User,
-                object_list:             Vec<User>,
-                next_page_number:        i32,
-                count:                   i32,
+                request_user:     User,
+                object_list:      Vec<User>,
+                next_page_number: i32,
+                count:            i32,
+                is_ajax:          bool,
             }
 
             let body = Template {
-                request_user:            _request_user,
-                object_list:             object_list,
-                next_page_number:        next_page_number,
-                count:                   count,
+                request_user:     _request_user,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                count:            count,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -132,7 +137,7 @@ pub async fn followings_page(session: Session, req: HttpRequest) -> actix_web::R
 }
 
 pub async fn blacklist_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    let (is_desctop, page) = get_list_variables(req);
+    let (is_desctop, page, is_ajax) = get_device_and_page_and_ajax(&req);
     let mut next_page_number = 0;
 
     let object_list: Vec<User>;
@@ -160,17 +165,19 @@ pub async fn blacklist_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/lists/blacklist.stpl")]
             struct Template {
-                request_user:            User,
-                object_list:             Vec<User>,
-                next_page_number:        i32,
-                count:                   usize,
+                request_user:     User,
+                object_list:      Vec<User>,
+                next_page_number: i32,
+                count:            usize,
+                is_ajax:          bool,
             }
 
             let body = Template {
-                request_user:            _request_user,
-                object_list:             object_list,
-                next_page_number:        next_page_number,
-                count:                   count,
+                request_user:     _request_user,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                count:            count,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -180,17 +187,19 @@ pub async fn blacklist_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/lists/blacklist.stpl")]
             struct Template {
-                request_user:            User,
-                object_list:             Vec<User>,
-                next_page_number:        i32,
-                count:                   usize,
+                request_user:     User,
+                object_list:      Vec<User>,
+                next_page_number: i32,
+                count:            usize,
+                is_ajax:          bool,
             }
 
             let body = Template {
-                request_user:            _request_user,
-                object_list:             object_list,
-                next_page_number:        next_page_number,
-                count:                   count,
+                request_user:     _request_user,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                count:            count,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
