@@ -1,7 +1,7 @@
 <% include!("../../../base_block/base_mobile_header.stpl"); %>
-<div data-title="Настройки" class="container main-container mt-3" data-type="user_settings" data-pk="<%= request_user.id %>">
+<div data-title="Настройки" class="container main-container mt-3" data-pk="<%= request_user.id %>">
 
-  {% include 'mobile/users/settings/menu.html' %}
+  <% include!("menu.stpl"); %>
 
   <div class="card mb-3 border">
       <div class="card-body">
@@ -11,7 +11,7 @@
             </figure>
               <div class="media-body pointer edit_user_name">
                   <p class="mb-0">Имя / Фамилия</p>
-                  <h4 class="mb-0 user_full_name">{{ request.user.get_full_name }}</h4>
+                  <h4 class="mb-0 user_full_name"><%= request_user.get_full_name() %></h4>
               </div>
           </div>
       </div>
@@ -39,7 +39,7 @@
             </figure>
               <div class="media-body pointer edit_user_email">
                   <p class="mb-0">Электронная почта</p>
-                  <h4 class="mb-0">{{ user.get_email_status }}</h4>
+                  <h4 class="mb-0"><%= request_user.get_email_status() %></h4>
               </div>
           </div>
       </div>
@@ -53,7 +53,7 @@
             </figure>
               <div class="media-body pointer edit_user_phone">
                   <p class="mb-0">Номер телефона</p>
-                  <h4 class="mb-0">{{ user.phone }}</h4>
+                  <h4 class="mb-0"><%= request_user.phone %></h4>
               </div>
           </div>
       </div>
@@ -67,7 +67,7 @@
             </figure>
               <div class="media-body pointer edit_user_custom_link">
                   <p class="mb-0">Адрес страницы</p>
-                  <h4 class="mb-0">{{ user.get_slug }}</h4>
+                  <h4 class="mb-0"><%= request_user.get_slug() %></h4>
               </div>
           </div>
       </div>
@@ -79,42 +79,26 @@
             <figure style="width: 50px">
               <svg class="svg_default" fill="currentColor" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><g><rect fill="none" /></g><g><path d="M23,12l-2.44-2.79l0.34-3.69l-3.61-0.82L15.4,1.5L12,2.96L8.6,1.5L6.71,4.69L3.1,5.5L3.44,9.2L1,12l2.44,2.79l-0.34,3.7 l3.61,0.82L8.6,22.5l3.4-1.47l3.4,1.46l1.89-3.19l3.61-0.82l-0.34-3.69L23,12z M10.09,16.72l-3.8-3.81l1.48-1.48l2.32,2.33 l5.85-5.87l1.48,1.48L10.09,16.72z"/></g></svg>
             </figure>
-            {% if user.is_identified_send %}
+            <% if request_user.is_identified() { %>
+            <div class="media-body">
+                <p class="mb-0">Персонализация</p>
+                <h4 class="mb-0">Профиль подтвержден</h4>
+            </div>
+            <% } else if request_user.is_identified_send() { %>
               <div class="media-body pointer remove_user_identified_send">
                   <p class="mb-0">Персонализация</p>
                   <h4 class="mb-0">Запрос отправлен</h4>
               </div>
-            {% else %}
+            <% } else { %>
             <div class="media-body pointer user_identified_send">
                 <p class="mb-0">Персонализация</p>
                 <h4 class="mb-0">Отправить запрос</h4>
             </div>
-            {% endif %}
+            <% } %>
           </div>
       </div>
   </div>
-  {% elif not user.is_verified %}
-  <div class="card mb-3 border">
-      <div class="card-body pointer">
-          <div class="media">
-            <figure style="width: 50px">
-              <svg class="svg_default" fill="currentColor" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"></path></svg>
-            </figure>
-            {% if user.is_verified_send %}
-              <div class="media-body pointer remove_user_verified_send">
-                  <p class="mb-0">Верификация</p>
-                  <h4 class="mb-0">Запрос отправлен</h4>
-              </div>
-            {% else %}
-            <div class="media-body pointer user_verified_send">
-                <p class="mb-0">Верификация</p>
-                <h4 class="mb-0">Отправить запрос</h4>
-            </div>
-            {% endif %}
-          </div>
-      </div>
-  </div>
-  {% endif %}
+
 
   <div class="card mb-3 border">
       <div class="card-body">

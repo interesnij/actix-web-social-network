@@ -1,5 +1,589 @@
 <% include!("../../../base_block/base_mobile_header.stpl"); %>
 <div data-title="Настройки приватности" class="container main-container mt-3" data-type="user_private_settings" data-pk="<%= request_user.id %>">
 
+  <% include!("menu.stpl"); %>
+
+  <form class="type_profile case_edit">
+  <div class="card">
+    <div class="card-body hot_perm_post">
+
+      <div class="row mt-1 mb-1 form_group_flex">
+        <label class="col-md-6">Кто видит Ваши страницы</label>
+        <span class="col-md-6">
+          <a class="i_link menu_drop_2 pointer">
+            <% if private.can_see_all == "a" { %>
+            Все пользователи
+            <% } else if private.can_see_all == "b" { %>
+            Друзья
+            <% } else if private.can_see_all == "c" { %>
+            Друзья и друзья друзей
+            <% } else if private.can_see_all == "d" { %>
+            Только я
+            <% } else if private.can_see_all == "e" { %>
+            Друзья, кроме
+            <% } else if private.can_see_all == "f" { %>
+            Некоторые друзья
+            <% } %>
+          </a>
+          <span class="collector">
+            <% if private.can_see_all == "e" && request_user.get_can_see_all_exclude_users().len() > 0 { %>:
+            <% for object in request_user.get_can_see_all_exclude_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } else if private.can_see_all == "f" && request_user.get_can_see_all_include_users().len() > 0 { %>:
+            <% for object in request_user.get_can_see_all_include_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } %>
+          </span>
+          <div class="dropdown-menu border" data-action="can_see_all" style="top: 30px;">
+            <% include!("perm/user_perm_drop.html"); %>
+          </div>
+        </span>
+      </div>
+
+      <div class="row mb-1 form_group_flex">
+        <label class="col-md-6">Кто видит сообщества</label>
+        <span class="col-md-6">
+          <a class="i_link menu_drop_2 pointer">
+            <% if private.can_see_community == "a" { %>
+            Все пользователи
+            <% } else if private.can_see_community == "b" { %>
+            Друзья
+            <% } else if private.can_see_community == "c" { %>
+            Друзья и друзья друзей
+            <% } else if private.can_see_community == "d" { %>
+            Только я
+            <% } else if private.can_see_community == "e" { %>
+            Друзья, кроме
+            <% } else if private.can_see_community == "f" { %>
+            Некоторые друзья
+            <% } %>
+          </a>
+          <span class="collector">
+            <% if private.can_see_community == "e" && request_user.get_can_see_community_exclude_users().len() > 0 { %>:
+            <% for object in request_user.get_can_see_community_exclude_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } else if private.can_see_community == "f" && request_user.get_can_see_community_include_users().len() > 0 { %>:
+            <% for object in request_user.get_can_see_community_include_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } %>
+          </span>
+          <div class="dropdown-menu border" data-action="can_see_community" style="top: 30px;">
+            <% include!("perm/user_perm_drop.html"); %>
+          </div>
+        </span>
+      </div>
+
+      <div class="row mb-1 form_group_flex">
+        <label class="col-md-6">Кто видит информацию</label>
+        <span class="col-md-6">
+          <a class="i_link menu_drop_2 pointer">
+            <% if private.can_see_info == "a" { %>
+            Все пользователи
+            <% } else if private.can_see_info == "b" { %>
+            Друзья
+            <% } else if private.can_see_info == "c" { %>
+            Друзья и друзья друзей
+            <% } else if private.can_see_info == "d" { %>
+            Только я
+            <% } else if private.can_see_info == "e" { %>
+            Друзья, кроме
+            <% } else if private.can_see_info == "f" { %>
+            Некоторые друзья
+            <% } %>
+          </a>
+          <span class="collector">
+            <% if private.can_see_info == "e" && request_user.get_can_see_info_exclude_users().len() > 0 { %>:
+            <% for object in request_user.get_can_see_info_exclude_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } else if private.can_see_info == "f" && request_user.get_can_see_info_include_users().len() > 0 { %>:
+            <% for object in request_user.get_can_see_info_include_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } %>
+          </span>
+          <div class="dropdown-menu border" data-action="can_see_info" style="top: 30px;">
+            <% include!("perm/user_perm_drop.html"); %>
+          </div>
+        </span>
+      </div>
+
+      <div class="row mb-1 form_group_flex">
+        <label class="col-md-6">Кто видит друзей</label>
+        <span class="col-md-6">
+          <a class="i_link menu_drop_2 pointer">
+            <% if private.can_see_friend == "a" { %>
+            Все пользователи
+            <% } else if private.can_see_friend == "b" { %>
+            Друзья
+            <% } else if private.can_see_friend == "c" { %>
+            Друзья и друзья друзей
+            <% } else if private.can_see_friend == "d" { %>
+            Только я
+            <% } else if private.can_see_friend == "e" { %>
+            Друзья, кроме
+            <% } else if private.can_see_friend == "f" { %>
+            Некоторые друзья
+            <% } %>
+          </a>
+          <span class="collector">
+            <% if private.can_see_friend == "e" && request_user.get_can_see_friend_exclude_users().len() > 0 { %>:
+            <% for object in request_user.get_can_see_friend_exclude_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } else if private.can_see_friend == "f" && request_user.get_can_see_friend_include_users().len() > 0 { %>:
+            <% for object in request_user.get_can_see_friend_include_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } %>
+          </span>
+          <div class="dropdown-menu border" data-action="can_see_friend" style="top: 30px;">
+            <% include!("perm/user_perm_drop.html"); %>
+          </div>
+        </span>
+      </div>
+
+      <div class="row mb-1 form_group_flex">
+        <label class="col-md-6">Кто пишет сообщения</label>
+        <span class="col-md-6">
+          <a class="i_link menu_drop_2 pointer">
+            <% if private.can_send_message == "a" { %>
+            Все пользователи
+            <% } else if private.can_send_message == "b" { %>
+            Друзья
+            <% } else if private.can_send_message == "c" { %>
+            Друзья и друзья друзей
+            <% } else if private.can_send_message == "d" { %>
+            Только я
+            <% } else if private.can_send_message == "e" { %>
+            Друзья, кроме
+            <% } else if private.can_send_message == "f" { %>
+            Некоторые друзья
+            <% } %>
+          </a>
+          <span class="collector">
+            <% if private.can_send_message == "e" && request_user.get_can_send_message_exclude_users().len() > 0 { %>:
+            <% for object in request_user.get_can_send_message_exclude_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } else if private.can_send_message == "f" && request_user.get_can_send_message_include_users().len() > 0 { %>:
+            <% for object in request_user.get_can_send_message_include_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } %>
+          </span>
+          <div class="dropdown-menu border" data-action="can_send_message" style="top: 30px;">
+            <% include!("perm/user_perm_drop.html"); %>
+          </div>
+        </span>
+      </div>
+
+      <div class="row mb-1 form_group_flex">
+        <label class="col-md-6">Кто добавляет в чаты</label>
+        <span class="col-md-6">
+          <a class="i_link menu_drop_2 pointer">
+            <% if private.can_add_in_chat == "a" { %>
+            Все пользователи
+            <% } else if private.can_add_in_chat == "b" { %>
+            Друзья
+            <% } else if private.can_add_in_chat == "c" { %>
+            Друзья и друзья друзей
+            <% } else if private.can_add_in_chat == "d" { %>
+            Только я
+            <% } else if private.can_add_in_chat == "e" { %>
+            Друзья, кроме
+            <% } else if private.can_add_in_chat == "f" { %>
+            Некоторые друзья
+            <% } %>
+          </a>
+          <span class="collector">
+            <% if private.can_add_in_chat == "e" && request_user.get_can_add_in_chat_exclude_users().len() > 0 { %>:
+            <% for object in request_user.get_can_add_in_chat_exclude_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } else if private.can_add_in_chat == "f" && request_user.get_can_add_in_chat_include_users().len() > 0 { %>:
+            <% for object in request_user.get_can_add_in_chat_include_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } %>
+          </span>
+          <div class="dropdown-menu border" data-action="can_add_in_chat" style="top: 30px;">
+            <% include!("perm/user_perm_drop.html"); %>
+          </div>
+        </span>
+      </div>
+
+      <div class="row mb-1 form_group_flex">
+        <label class="col-md-6">Кто видит записи</label>
+        <span class="col-md-6">
+          <a class="i_link menu_drop_2 pointer">
+            <% if private.can_see_post == "a" { %>
+            Все пользователи
+            <% } else if private.can_see_post == "b" { %>
+            Друзья
+            <% } else if private.can_see_post == "c" { %>
+            Друзья и друзья друзей
+            <% } else if private.can_see_post == "d" { %>
+            Только я
+            <% } else if private.can_see_post == "e" { %>
+            Друзья, кроме
+            <% } else if private.can_see_post == "f" { %>
+            Некоторые друзья
+            <% } %>
+          </a>
+          <span class="collector">
+            <% if private.can_see_post == "e" && request_user.get_can_see_post_exclude_users().len() > 0 { %>:
+            <% for object in request_user.get_can_see_post_exclude_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } else if private.can_see_post == "f" && request_user.get_can_see_post_include_users().len() > 0 { %>:
+            <% for object in request_user.get_can_see_post_include_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } %>
+          </span>
+          <div class="dropdown-menu border" data-action="can_see_post" style="top: 30px;">
+            <% include!("perm/user_perm_drop.html"); %>
+          </div>
+        </span>
+      </div>
+
+      <div class="row mb-1 form_group_flex">
+        <label class="col-md-6">Кто видит фотографии</label>
+        <span class="col-md-6">
+          <a class="i_link menu_drop_2 pointer">
+            <% if private.can_see_photo == "a" { %>
+            Все пользователи
+            <% } else if private.can_see_photo == "b" { %>
+            Друзья
+            <% } else if private.can_see_photo == "c" { %>
+            Друзья и друзья друзей
+            <% } else if private.can_see_photo == "d" { %>
+            Только я
+            <% } else if private.can_see_photo == "e" { %>
+            Друзья, кроме
+            <% } else if private.can_see_photo == "f" { %>
+            Некоторые друзья
+            <% } %>
+          </a>
+          <span class="collector">
+            <% if private.can_see_photo == "e" && request_user.get_can_see_photo_exclude_users().len() > 0 { %>:
+            <% for object in request_user.get_can_see_photo_exclude_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } else if private.can_see_photo == "f" && request_user.get_can_see_photo_include_users().len() > 0 { %>:
+            <% for object in request_user.get_can_see_photo_include_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } %>
+          </span>
+          <div class="dropdown-menu border" data-action="can_see_photo" style="top: 30px;">
+            <% include!("perm/user_perm_drop.html"); %>
+          </div>
+        </span>
+      </div>
+
+      <div class="row mb-1 form_group_flex">
+        <label class="col-md-6">Кто видит товары</label>
+        <span class="col-md-6">
+          <a class="i_link menu_drop_2 pointer">
+            <% if private.can_see_good == "a" { %>
+            Все пользователи
+            <% } else if private.can_see_good == "b" { %>
+            Друзья
+            <% } else if private.can_see_good == "c" { %>
+            Друзья и друзья друзей
+            <% } else if private.can_see_good == "d" { %>
+            Только я
+            <% } else if private.can_see_good == "e" { %>
+            Друзья, кроме
+            <% } else if private.can_see_good == "f" { %>
+            Некоторые друзья
+            <% } %>
+          </a>
+          <span class="collector">
+            <% if private.can_see_good == "e" && request_user.get_can_see_good_exclude_users().len() > 0 { %>:
+            <% for object in request_user.get_can_see_good_exclude_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } else if private.can_see_good == "f" && request_user.get_can_see_good_include_users().len() > 0 { %>:
+            <% for object in request_user.get_can_see_good_include_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } %>
+          </span>
+          <div class="dropdown-menu border" data-action="can_see_good" style="top: 30px;">
+            <% include!("perm/user_perm_drop.html"); %>
+          </div>
+        </span>
+      </div>
+
+      <div class="row mb-1 form_group_flex">
+        <label class="col-md-6">Кто видит видеозаписи</label>
+        <span class="col-md-6">
+          <a class="i_link menu_drop_2 pointer">
+            <% if private.can_see_video == "a" { %>
+            Все пользователи
+            <% } else if private.can_see_video == "b" { %>
+            Друзья
+            <% } else if private.can_see_video == "c" { %>
+            Друзья и друзья друзей
+            <% } else if private.can_see_video == "d" { %>
+            Только я
+            <% } else if private.can_see_video == "e" { %>
+            Друзья, кроме
+            <% } else if private.can_see_video == "f" { %>
+            Некоторые друзья
+            <% } %>
+          </a>
+          <span class="collector">
+            <% if private.can_see_video == "e" && request_user.get_can_see_video_exclude_users().len() > 0 { %>:
+            <% for object in request_user.get_can_see_video_exclude_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } else if private.can_see_video == "f" && request_user.get_can_see_video_include_users().len() > 0 { %>:
+            <% for object in request_user.get_can_see_video_include_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } %>
+          </span>
+          <div class="dropdown-menu border" data-action="can_see_video" style="top: 30px;">
+            <% include!("perm/user_perm_drop.html"); %>
+          </div>
+        </span>
+      </div>
+
+      <div class="row mb-1 form_group_flex">
+        <label class="col-md-6">Кто видит аудиозаписи</label>
+        <span class="col-md-6">
+          <a class="i_link menu_drop_2 pointer">
+            <% if private.can_see_music == "a" { %>
+            Все пользователи
+            <% } else if private.can_see_music == "b" { %>
+            Друзья
+            <% } else if private.can_see_music == "c" { %>
+            Друзья и друзья друзей
+            <% } else if private.can_see_music == "d" { %>
+            Только я
+            <% } else if private.can_see_music == "e" { %>
+            Друзья, кроме
+            <% } else if private.can_see_music == "f" { %>
+            Некоторые друзья
+            <% } %>
+          </a>
+          <span class="collector">
+            <% if private.can_see_music == "e" && request_user.get_can_see_music_exclude_users().len() > 0 { %>:
+            <% for object in request_user.get_can_see_music_exclude_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } else if private.can_see_music == "f" && request_user.get_can_see_music_include_users().len() > 0 { %>:
+            <% for object in request_user.get_can_see_music_include_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } %>
+          </span>
+          <div class="dropdown-menu border" data-action="can_see_music" style="top: 30px;">
+            <% include!("perm/user_perm_drop.html"); %>
+          </div>
+        </span>
+      </div>
+
+      <div class="row mb-1 form_group_flex">
+        <label class="col-md-6">Кто видит планировщик</label>
+        <span class="col-md-6">
+          <a class="i_link menu_drop_2 pointer">
+            <% if private.can_see_planner == "a" { %>
+            Все пользователи
+            <% } else if private.can_see_planner == "b" { %>
+            Друзья
+            <% } else if private.can_see_planner == "c" { %>
+            Друзья и друзья друзей
+            <% } else if private.can_see_planner == "d" { %>
+            Только я
+            <% } else if private.can_see_planner == "e" { %>
+            Друзья, кроме
+            <% } else if private.can_see_planner == "f" { %>
+            Некоторые друзья
+            <% } %>
+          </a>
+          <span class="collector">
+            <% if private.can_see_planner == "e" && request_user.get_can_see_planner_exclude_users().len() > 0 { %>:
+            <% for object in request_user.get_can_see_planner_exclude_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } else if private.can_see_planner == "f" && request_user.get_can_see_planner_include_users().len() > 0 { %>:
+            <% for object in request_user.get_can_see_planner_include_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } %>
+          </span>
+          <div class="dropdown-menu border" data-action="can_see_planner" style="top: 30px;">
+            <% include!("perm/user_perm_drop.html"); %>
+          </div>
+        </span>
+      </div>
+
+      <div class="row mb-1 form_group_flex">
+        <label class="col-md-6">Кто видит документы</label>
+        <span class="col-md-6">
+          <a class="i_link menu_drop_2 pointer">
+            <% if private.can_see_doc == "a" { %>
+            Все пользователи
+            <% } else if private.can_see_doc == "b" { %>
+            Друзья
+            <% } else if private.can_see_doc == "c" { %>
+            Друзья и друзья друзей
+            <% } else if private.can_see_doc == "d" { %>
+            Только я
+            <% } else if private.can_see_doc == "e" { %>
+            Друзья, кроме
+            <% } else if private.can_see_doc == "f" { %>
+            Некоторые друзья
+            <% } %>
+          </a>
+          <span class="collector">
+            <% if private.can_see_doc == "e" && request_user.get_can_see_doc_exclude_users().len() > 0 { %>:
+            <% for object in request_user.get_can_see_doc_exclude_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } else if private.can_see_doc == "f" && request_user.get_can_see_doc_include_users().len() > 0 { %>:
+            <% for object in request_user.get_can_see_doc_include_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } %>
+          </span>
+          <div class="dropdown-menu border" data-action="can_see_doc" style="top: 30px;">
+            <% include!("perm/user_perm_drop.html"); %>
+          </div>
+        </span>
+      </div>
+
+      <div class="row mb-1 form_group_flex">
+        <label class="col-md-6">Кто видит опросы</label>
+        <span class="col-md-6">
+          <a class="i_link menu_drop_2 pointer">
+            <% if private.can_see_survey == "a" { %>
+            Все пользователи
+            <% } else if private.can_see_survey == "b" { %>
+            Друзья
+            <% } else if private.can_see_survey == "c" { %>
+            Друзья и друзья друзей
+            <% } else if private.can_see_survey == "d" { %>
+            Только я
+            <% } else if private.can_see_survey == "e" { %>
+            Друзья, кроме
+            <% } else if private.can_see_survey == "f" { %>
+            Некоторые друзья
+            <% } %>
+          </a>
+          <span class="collector">
+            <% if private.can_see_survey == "e" && request_user.get_can_see_survey_exclude_users().len() > 0 { %>:
+            <% for object in request_user.get_can_see_survey_exclude_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } else if private.can_see_survey == "f" && request_user.get_can_see_survey_include_users().len() > 0 { %>:
+            <% for object in request_user.get_can_see_survey_include_users().iter() { %>
+            <a href="<%= object.link %>" target="_blank">
+              <%= object.get_full_name() %>
+            </a>
+            &nbsp;
+            <% } %>
+            <% } %>
+          </span>
+          <div class="dropdown-menu border" data-action="can_see_survey" style="top: 30px;">
+            <% include!("perm/user_perm_drop.html"); %>
+          </div>
+        </span>
+      </div>
+
+    </div>
+  </div>
+  </form>
+
 </div>
 <% include!("../../../base_block/base_mobile_footer.stpl"); %>

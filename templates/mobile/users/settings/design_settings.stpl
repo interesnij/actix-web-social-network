@@ -1,5 +1,5 @@
 <% include!("../../../base_block/base_mobile_header.stpl"); %>
 <div data-title="Настройки дизайна" class="container main-container mt-3" data-type="user_design_settings" data-pk="<%= request_user.id %>">
-
+  <% include!("menu.stpl"); %>
 </div>
 <% include!("../../../base_block/base_mobile_footer.stpl"); %>
