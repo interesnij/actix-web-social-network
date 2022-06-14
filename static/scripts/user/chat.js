@@ -896,11 +896,11 @@ on('#ajax', 'click', '.classic_smile_item', function() {
   $img.src = this.getAttribute("src");
   input.append($img);
   if (document.body.querySelector(".chatlist")) {
-  show_message_form_send_btn()
+    show_message_form_send_btn();
+    form = input.parentElement.parentElement;
+    send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.parentElement.getAttribute("chat-pk") + "/");
   };
   setEndOfContenteditable(input);
-  form = input.parentElement.parentElement;
-  send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.parentElement.getAttribute("chat-pk") + "/");
 });
 
 function send_comment_sticker(form_post,value) {
