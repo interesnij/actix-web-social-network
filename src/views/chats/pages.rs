@@ -141,7 +141,6 @@ pub async fn fixed_messages_page(session: Session, req: HttpRequest, _id: web::P
                 next_page_number: i32,
                 object_list:      Vec<Message>,
                 chat:             Chat,
-                is_ajax:          bool,
             }
             let body = Template {
                 request_user:     _request_user,
@@ -149,7 +148,6 @@ pub async fn fixed_messages_page(session: Session, req: HttpRequest, _id: web::P
                 next_page_number: next_page_number,
                 object_list:      object_list,
                 chat:             _chat,
-                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -163,7 +161,6 @@ pub async fn fixed_messages_page(session: Session, req: HttpRequest, _id: web::P
                 next_page_number: i32,
                 object_list:      Vec<Message>,
                 chat:             Chat,
-                is_ajax:          bool,
             }
             let body = Template {
                 request_user:     _request_user,
@@ -171,7 +168,6 @@ pub async fn fixed_messages_page(session: Session, req: HttpRequest, _id: web::P
                 next_page_number: next_page_number,
                 object_list:      object_list,
                 chat:             _chat,
-                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

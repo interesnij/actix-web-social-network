@@ -11,6 +11,7 @@ use crate::utils::{
     establish_connection,
     is_signed_in,
     verify,
+    get_ajax,
 };
 use diesel::prelude::*;
 use crate::schema;
@@ -35,14 +36,18 @@ pub fn auth_routes(config: &mut web::ServiceConfig) {
 #[derive(TemplateOnce)]
 #[template(path = "mobile/main/auth/signup.stpl")]
 struct NobileSignupTemplate {
+    is_ajax: bool,
 }
 
-pub async fn mobile_signup(session: Session) -> actix_web::Result<HttpResponse> {
+pub async fn mobile_signup(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        let body = NobileSignupTemplate {}
+        let is_ajax = get_ajax(&req);
+        let body = NobileSignupTemplate {
+            is_ajax: is_ajax,
+        }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
