@@ -871,7 +871,6 @@ function ajax_get_reload(url) {
       if_list(rtr);
       create_pagination(rtr);
       get_document_opacity_1();
-      console.log("статистика",  $all_stat);
     }
   }
   ajax_link.send()

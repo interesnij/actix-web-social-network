@@ -39,8 +39,8 @@ pub fn get_type(req: &HttpRequest) -> (bool, i32, String) {
 pub fn get_page_and_ajax(req: &HttpRequest) -> (i32, bool) {
     #[derive(Debug, Deserialize)]
     struct Params {
-        pub page:    Option<i32>,
-        pub is_ajax: Option<bool>,
+        pub page: Option<i32>,
+        pub ajax: Option<i32>,
     }
     let params_some = web::Query::<Params>::from_query(&req.query_string());
     let page: i32;
@@ -53,7 +53,7 @@ pub fn get_page_and_ajax(req: &HttpRequest) -> (i32, bool) {
         else {
             page = 1;
         }
-        if params.is_ajax.is_some() {
+        if params.ajax.is_some() {
             is_ajax = true;
         }
     }
@@ -65,13 +65,13 @@ pub fn get_page_and_ajax(req: &HttpRequest) -> (i32, bool) {
 pub fn get_ajax(req: &HttpRequest) -> bool {
     #[derive(Debug, Deserialize)]
     struct Params {
-        pub is_ajax: Option<bool>,
+        pub ajax: Option<i32>,
     }
     let params_some = web::Query::<Params>::from_query(&req.query_string());
     let mut is_ajax = false;
     if params_some.is_ok() {
         let params = params_some.unwrap();
-        if params.is_ajax.is_some() {
+        if params.ajax.is_some() {
             is_ajax = true;
         }
     }
@@ -80,7 +80,7 @@ pub fn get_ajax(req: &HttpRequest) -> bool {
 pub fn get_device_and_ajax(req: &HttpRequest) -> (bool, bool) {
     #[derive(Debug, Deserialize)]
     struct Params {
-        pub is_ajax: Option<bool>,
+        pub ajax: Option<i32>,
     }
     let params_some = web::Query::<Params>::from_query(&req.query_string());
     let mut is_ajax = false;
@@ -88,7 +88,7 @@ pub fn get_device_and_ajax(req: &HttpRequest) -> (bool, bool) {
 
     if params_some.is_ok() {
         let params = params_some.unwrap();
-        if params.is_ajax.is_some() {
+        if params.ajax.is_some() {
             is_ajax = true;
         }
     }
@@ -107,8 +107,8 @@ pub fn get_device_and_ajax(req: &HttpRequest) -> (bool, bool) {
 pub fn get_device_and_page_and_ajax(req: &HttpRequest) -> (bool, i32, bool) {
     #[derive(Debug, Deserialize)]
     struct Params {
-        pub page:    Option<i32>,
-        pub is_ajax: Option<bool>,
+        pub page: Option<i32>,
+        pub ajax: Option<i32>,
     }
     let params_some = web::Query::<Params>::from_query(&req.query_string());
     let page: i32;
@@ -121,7 +121,7 @@ pub fn get_device_and_page_and_ajax(req: &HttpRequest) -> (bool, i32, bool) {
         else {
             page = 1;
         }
-        if params.is_ajax.is_some() {
+        if params.ajax.is_some() {
             is_ajax = true;
         }
     }
