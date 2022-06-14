@@ -855,27 +855,26 @@ function list_block_load(target_block, response_block, link) {
 };
 
 function ajax_get_reload(url) {
-  $serf_history.push(document.location.href);
-    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    ajax_link.open('GET', url + "?ajax=1", true);
-    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    ajax_link.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            elem_ = document.createElement('span');
-            elem_.innerHTML = ajax_link.responseText;
-            rtr = document.getElementById('ajax');
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+  ajax_link.open('GET', url + "?ajax=1", true);
+  ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  ajax_link.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      elem_ = document.createElement('span');
+      elem_.innerHTML = ajax_link.responseText;
+      rtr = document.getElementById('ajax');
 
-            rtr.innerHTML = elem_.innerHTML;
-            window.scrollTo(0, 0);
-            window.history.pushState(null, "vfgffgfgf", url);
-            document.title = rtr.querySelector('.main-container').getAttribute("data-title");
-            if_list(rtr);
-            create_pagination(rtr);
-            get_document_opacity_1();
-            console.log("статистика",  $all_stat);
-        }
+      rtr.innerHTML = elem_.innerHTML;
+      window.scrollTo(0, 0);
+      window.history.pushState(null, "vfgffgfgf", url);
+      document.title = rtr.querySelector('.main-container').getAttribute("data-title");
+      if_list(rtr);
+      create_pagination(rtr);
+      get_document_opacity_1();
+      console.log("статистика",  $all_stat);
     }
-    ajax_link.send()
+  }
+  ajax_link.send()
 };
 
 function search_ajax_get_reload(url) {
