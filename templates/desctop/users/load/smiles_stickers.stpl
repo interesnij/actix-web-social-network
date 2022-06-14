@@ -1,7 +1,7 @@
 <div data-title="Смайлы / наклейки" class="_card" style="padding: 0 5px;">
   <div class="">
         <div class="tab-content">
-          <div class="tab-pane fade active show smiles_panel" style="height: 210px;width: 230px;overflow: auto;"">
+          <div class="tab-pane fade active show smiles_panel">
             <% let populate_smiles = request_user.get_populate_smiles(); %>
                 <% if populate_smiles.len() > 0 { %>
                   <h6>Часто используемые</h6>
