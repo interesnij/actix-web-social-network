@@ -1,3 +1,5 @@
+<% if !is_ajax { %>
+
 <div id="fullscreens_container"></div>
 </span>
 </div>
@@ -122,3 +124,4 @@
 <script defer src="/static/scripts/anon.js?ver6" type="text/javascript"></script>
 </body>
 </html>
+<% } %>

@@ -68,12 +68,14 @@ pub async fn community_docs_page(session: Session, req: HttpRequest, community_i
                 request_user: User,
                 community:    Community,
                 list:         DocList,
+                is_ajax:      bool,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -86,12 +88,14 @@ pub async fn community_docs_page(session: Session, req: HttpRequest, community_i
                 request_user: User,
                 community:    Community,
                 list:         DocList,
+                is_ajax:      bool,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -110,10 +114,12 @@ pub async fn community_docs_page(session: Session, req: HttpRequest, community_i
             struct Template {
                 community: Community,
                 list:      DocList,
+                is_ajax:   bool,
             }
             let body = Template {
                 community: _community,
                 list:      _list,
+                is_ajax:   is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -125,10 +131,12 @@ pub async fn community_docs_page(session: Session, req: HttpRequest, community_i
             struct Template {
                 community: Community,
                 list:      DocList,
+                is_ajax:   bool,
             }
             let body = Template {
                 community: _community,
                 list:      _list,
+                is_ajax:   is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -163,12 +171,14 @@ pub async fn community_video_page(session: Session, req: HttpRequest, community_
                 request_user: User,
                 community:    Community,
                 list:         VideoList,
+                is_ajax:      bool,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -181,12 +191,14 @@ pub async fn community_video_page(session: Session, req: HttpRequest, community_
                 request_user: User,
                 community:    Community,
                 list:         VideoList,
+                is_ajax:      bool,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -205,10 +217,12 @@ pub async fn community_video_page(session: Session, req: HttpRequest, community_
             struct Template {
                 community: Community,
                 list:      VideoList,
+                is_ajax:   bool,
             }
             let body = Template {
                 community: _community,
                 list:      _list,
+                is_ajax:   is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -220,10 +234,12 @@ pub async fn community_video_page(session: Session, req: HttpRequest, community_
             struct Template {
                 community: Community,
                 list:      VideoList,
+                is_ajax:   bool,
             }
             let body = Template {
                 community: _community,
                 list:      _list,
+                is_ajax:   is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -258,12 +274,14 @@ pub async fn community_surveys_page(session: Session, req: HttpRequest, communit
                 request_user: User,
                 community:    Community,
                 list:         SurveyList,
+                is_ajax:      bool,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -276,12 +294,14 @@ pub async fn community_surveys_page(session: Session, req: HttpRequest, communit
                 request_user: User,
                 community:    Community,
                 list:         SurveyList,
+                is_ajax:      bool,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -300,10 +320,12 @@ pub async fn community_surveys_page(session: Session, req: HttpRequest, communit
             struct Template {
                 community: Community,
                 list:      SurveyList,
+                is_ajax:   bool,
             }
             let body = Template {
                 community: _community,
                 list:      _list,
+                is_ajax:   is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -315,10 +337,12 @@ pub async fn community_surveys_page(session: Session, req: HttpRequest, communit
             struct Template {
                 community: Community,
                 list:      SurveyList,
+                is_ajax:   bool,
             }
             let body = Template {
                 community: _community,
                 list:      _list,
+                is_ajax:   is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -353,12 +377,14 @@ pub async fn community_music_page(session: Session, req: HttpRequest, community_
                 request_user: User,
                 community:    Community,
                 list:         MusicList,
+                is_ajax:      bool,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -371,12 +397,14 @@ pub async fn community_music_page(session: Session, req: HttpRequest, community_
                 request_user: User,
                 community:    Community,
                 list:         MusicList,
+                is_ajax:      bool,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -395,10 +423,12 @@ pub async fn community_music_page(session: Session, req: HttpRequest, community_
             struct Template {
                 community: Community,
                 list:      MusicList,
+                is_ajax:   bool,
             }
             let body = Template {
                 community: _community,
                 list:      _list,
+                is_ajax:   is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -410,10 +440,12 @@ pub async fn community_music_page(session: Session, req: HttpRequest, community_
             struct Template {
                 community: Community,
                 list:      MusicList,
+                is_ajax:   bool,
             }
             let body = Template {
                 community: _community,
                 list:      _list,
+                is_ajax:   is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -448,12 +480,14 @@ pub async fn community_goods_page(session: Session, req: HttpRequest, community_
                 request_user: User,
                 community:    Community,
                 list:         GoodList,
+                is_ajax:      bool,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -466,12 +500,14 @@ pub async fn community_goods_page(session: Session, req: HttpRequest, community_
                 request_user: User,
                 community:    Community,
                 list:         GoodList,
+                is_ajax:      bool,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -490,10 +526,12 @@ pub async fn community_goods_page(session: Session, req: HttpRequest, community_
             struct Template {
                 community: Community,
                 list:      GoodList,
+                is_ajax:   bool,
             }
             let body = Template {
                 community: _community,
                 list:      _list,
+                is_ajax:   is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -505,10 +543,12 @@ pub async fn community_goods_page(session: Session, req: HttpRequest, community_
             struct Template {
                 community: Community,
                 list:      GoodList,
+                is_ajax:   bool,
             }
             let body = Template {
                 community: _community,
                 list:      _list,
+                is_ajax:   is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -543,12 +583,14 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
                 request_user: User,
                 community:    Community,
                 list:         PhotoList,
+                is_ajax:      bool,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -561,12 +603,14 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
                 request_user: User,
                 community:    Community,
                 list:         PhotoList,
+                is_ajax:      bool,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -585,10 +629,12 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
             struct Template {
                 community: Community,
                 list:      PhotoList,
+                is_ajax:   bool,
             }
             let body = Template {
                 community: _community,
                 list:      _list,
+                is_ajax:   is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -600,10 +646,12 @@ pub async fn community_photos_page(session: Session, req: HttpRequest, community
             struct Template {
                 community: Community,
                 list:      PhotoList,
+                is_ajax:   bool,
             }
             let body = Template {
                 community: _community,
                 list:      _list,
+                is_ajax:   is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -639,12 +687,14 @@ pub async fn community_docs_list_page(session: Session, req: HttpRequest, param:
                 request_user: User,
                 community:    Community,
                 list:         DocList,
+                is_ajax:      bool,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -657,12 +707,14 @@ pub async fn community_docs_list_page(session: Session, req: HttpRequest, param:
                 request_user: User,
                 community:    Community,
                 list:         DocList,
+                is_ajax:      bool,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -681,10 +733,12 @@ pub async fn community_docs_list_page(session: Session, req: HttpRequest, param:
             struct Template {
                 community: Community,
                 list:      DocList,
+                is_ajax:   bool,
             }
             let body = Template {
                 community: _community,
                 list:      _list,
+                is_ajax:   is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -696,10 +750,12 @@ pub async fn community_docs_list_page(session: Session, req: HttpRequest, param:
             struct Template {
                 community: Community,
                 list:      DocList,
+                is_ajax:   bool,
             }
             let body = Template {
                 community: _community,
                 list:      _list,
+                is_ajax:   is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -735,12 +791,14 @@ pub async fn community_video_list_page(session: Session, req: HttpRequest, param
                 request_user: User,
                 community:    Community,
                 list:         VideoList,
+                is_ajax:      bool,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -753,12 +811,14 @@ pub async fn community_video_list_page(session: Session, req: HttpRequest, param
                 request_user: User,
                 community:    Community,
                 list:         VideoList,
+                is_ajax:      bool,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -777,10 +837,12 @@ pub async fn community_video_list_page(session: Session, req: HttpRequest, param
             struct Template {
                 community: Community,
                 list:      VideoList,
+                is_ajax:   bool,
             }
             let body = Template {
                 community: _community,
                 list:      _list,
+                is_ajax:   is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -792,10 +854,12 @@ pub async fn community_video_list_page(session: Session, req: HttpRequest, param
             struct Template {
                 community: Community,
                 list:      VideoList,
+                is_ajax:   bool,
             }
             let body = Template {
                 community: _community,
                 list:      _list,
+                is_ajax:   is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -831,12 +895,14 @@ pub async fn community_surveys_list_page(session: Session, req: HttpRequest, par
                 request_user: User,
                 community:    Community,
                 list:         SurveyList,
+                is_ajax:      bool,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -849,12 +915,14 @@ pub async fn community_surveys_list_page(session: Session, req: HttpRequest, par
                 request_user: User,
                 community:    Community,
                 list:         SurveyList,
+                is_ajax:      bool,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -873,10 +941,12 @@ pub async fn community_surveys_list_page(session: Session, req: HttpRequest, par
             struct Template {
                 community: Community,
                 list:      SurveyList,
+                is_ajax:   bool,
             }
             let body = Template {
                 community: _community,
                 list:      _list,
+                is_ajax:   is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -888,10 +958,12 @@ pub async fn community_surveys_list_page(session: Session, req: HttpRequest, par
             struct Template {
                 community: Community,
                 list:      SurveyList,
+                is_ajax:   bool,
             }
             let body = Template {
                 community: _community,
                 list:      _list,
+                is_ajax:   is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -927,12 +999,14 @@ pub async fn community_music_list_page(session: Session, req: HttpRequest, param
                 request_user: User,
                 community:    Community,
                 list:         MusicList,
+                is_ajax:      bool,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -945,12 +1019,14 @@ pub async fn community_music_list_page(session: Session, req: HttpRequest, param
                 request_user: User,
                 community:    Community,
                 list:         MusicList,
+                is_ajax:      bool,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -969,10 +1045,12 @@ pub async fn community_music_list_page(session: Session, req: HttpRequest, param
             struct Template {
                 community: Community,
                 list:      MusicList,
+                is_ajax:   bool,
             }
             let body = Template {
                 community: _community,
                 list:      _list,
+                is_ajax:   is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -984,10 +1062,12 @@ pub async fn community_music_list_page(session: Session, req: HttpRequest, param
             struct Template {
                 community: Community,
                 list:      MusicList,
+                is_ajax:   bool,
             }
             let body = Template {
                 community: _community,
                 list:      _list,
+                is_ajax:   is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1023,12 +1103,14 @@ pub async fn community_goods_list_page(session: Session, req: HttpRequest, param
                 request_user: User,
                 community:    Community,
                 list:         GoodList,
+                is_ajax:      bool,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1041,12 +1123,14 @@ pub async fn community_goods_list_page(session: Session, req: HttpRequest, param
                 request_user: User,
                 community:    Community,
                 list:         GoodList,
+                is_ajax:      bool,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1065,10 +1149,12 @@ pub async fn community_goods_list_page(session: Session, req: HttpRequest, param
             struct Template {
                 community: Community,
                 list:      GoodList,
+                is_ajax:   bool,
             }
             let body = Template {
                 community: _community,
                 list:      _list,
+                is_ajax:   is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1080,10 +1166,12 @@ pub async fn community_goods_list_page(session: Session, req: HttpRequest, param
             struct Template {
                 community: Community,
                 list:      GoodList,
+                is_ajax:   bool,
             }
             let body = Template {
                 community: _community,
                 list:      _list,
+                is_ajax:   is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1119,12 +1207,14 @@ pub async fn community_photos_list_page(session: Session, req: HttpRequest, para
                 request_user: User,
                 community:    Community,
                 list:         PhotoList,
+                is_ajax:      bool,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1137,12 +1227,14 @@ pub async fn community_photos_list_page(session: Session, req: HttpRequest, para
                 request_user: User,
                 community:    Community,
                 list:         PhotoList,
+                is_ajax:      bool,
             }
 
             let body = Template {
                 request_user: _request_user,
                 community:    _community,
                 list:         _list,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1161,10 +1253,12 @@ pub async fn community_photos_list_page(session: Session, req: HttpRequest, para
             struct Template {
                 community: Community,
                 list:      PhotoList,
+                is_ajax:   bool,
             }
             let body = Template {
                 community: _community,
                 list:      _list,
+                is_ajax:   is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1176,10 +1270,12 @@ pub async fn community_photos_list_page(session: Session, req: HttpRequest, para
             struct Template {
                 community: Community,
                 list:      PhotoList,
+                is_ajax:   bool,
             }
             let body = Template {
                 community: _community,
                 list:      _list,
+                is_ajax:   is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1398,12 +1494,14 @@ pub fn admin_community(is_desctop: bool, community: Community, request_user: Use
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/admin_community.stpl")]
         struct Template {
-            request_user:  User,
-            community:     Community,
+            request_user: User,
+            community:    Community,
+            is_ajax:      bool,
         }
         let body = Template {
-            request_user:  request_user,
-            community:     community,
+            request_user: request_user,
+            community:    community,
+            is_ajax:      is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1412,12 +1510,14 @@ pub fn admin_community(is_desctop: bool, community: Community, request_user: Use
         #[derive(TemplateOnce)]
         #[template(path = "mobile/communities/detail/admin_community.stpl")]
         struct Template {
-            request_user:  User,
-            community:     Community,
+            request_user: User,
+            community:    Community,
+            is_ajax:      bool,
         }
         let body = Template {
-            request_user:  request_user,
-            community:     community,
+            request_user: request_user,
+            community:    community,
+            is_ajax:      is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1432,10 +1532,12 @@ pub fn anon_community(is_desctop: bool, community: Community, is_ajax: bool) -> 
         struct Template {
             private_bools: Vec<bool>,
             community:     Community,
+            is_ajax:       bool,
         }
         let body = Template {
             private_bools: community.get_anon_community_all_can_see(),
-            community:  community,
+            community:     community,
+            is_ajax:       is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1447,10 +1549,12 @@ pub fn anon_community(is_desctop: bool, community: Community, is_ajax: bool) -> 
         struct Template {
             private_bools: Vec<bool>,
             community:     Community,
+            is_ajax:       bool,
         }
         let body = Template {
             private_bools: community.get_anon_community_all_can_see(),
-            community:  community,
+            community:     community,
+            is_ajax:       is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1465,11 +1569,13 @@ pub fn close_community(is_desctop: bool, community: Community, request_user: Use
             private_bools: Vec<bool>,
             community:     Community,
             request_user:  User,
+            is_ajax:       bool,
         }
         let body = Template {
             private_bools: community.get_community_all_can_see(request_user.id),
             community:     community,
             request_user:  request_user,
+            is_ajax:       is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1482,11 +1588,13 @@ pub fn close_community(is_desctop: bool, community: Community, request_user: Use
             private_bools: Vec<bool>,
             community:     Community,
             request_user:  User,
+            is_ajax:       bool,
         }
         let body = Template {
             private_bools: community.get_community_all_can_see(request_user.id),
             community:     community,
             request_user:  request_user,
+            is_ajax:       is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1500,10 +1608,12 @@ pub fn private_community(is_desctop: bool, community: Community, request_user: U
         struct Template {
             community:    Community,
             request_user: User,
+            is_ajax:      bool,
         }
         let body = Template {
             community:    community,
             request_user: request_user,
+            is_ajax:      is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1515,10 +1625,12 @@ pub fn private_community(is_desctop: bool, community: Community, request_user: U
         struct Template {
             community:    Community,
             request_user: User,
+            is_ajax:      bool,
         }
         let body = Template {
             community:    community,
             request_user: request_user,
+            is_ajax:      is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1532,10 +1644,12 @@ pub fn no_child_safety_community(is_desctop: bool, community: Community, request
         struct Template {
             community:    Community,
             request_user: User,
+            is_ajax:      bool,
         }
         let body = Template {
             community:    community,
             request_user: request_user,
+            is_ajax:      is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1547,10 +1661,12 @@ pub fn no_child_safety_community(is_desctop: bool, community: Community, request
         struct Template {
             community:    Community,
             request_user: User,
+            is_ajax:      bool,
         }
         let body = Template {
             community:    community,
             request_user: request_user,
+            is_ajax:      is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1565,11 +1681,13 @@ pub fn follow_community(is_desctop: bool, community: Community, request_user: Us
             private_bools: Vec<bool>,
             community:    Community,
             request_user: User,
+            is_ajax:      bool,
         }
         let body = Template {
             private_bools: community.get_community_all_can_see(request_user.id),
-            community:    community,
-            request_user: request_user,
+            community:     community,
+            request_user:  request_user,
+            is_ajax:       is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1580,13 +1698,15 @@ pub fn follow_community(is_desctop: bool, community: Community, request_user: Us
         #[template(path = "mobile/communities/detail/follow_community.stpl")]
         struct Template {
             private_bools: Vec<bool>,
-            community:    Community,
-            request_user: User,
+            community:     Community,
+            request_user:  User,
+            is_ajax:       bool,
         }
         let body = Template {
             private_bools: community.get_community_all_can_see(request_user.id),
-            community:    community,
-            request_user: request_user,
+            community:     community,
+            request_user:  request_user,
+            is_ajax:       is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1600,10 +1720,12 @@ pub fn admin_bad_community(is_desctop: bool, community: Community, request_user:
         struct Template {
             community:    Community,
             request_user: User,
+            is_ajax:      bool,
         }
         let body = Template {
             community:    community,
             request_user: request_user,
+            is_ajax:      is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1615,10 +1737,12 @@ pub fn admin_bad_community(is_desctop: bool, community: Community, request_user:
         struct Template {
             community:    Community,
             request_user: User,
+            is_ajax:      bool,
         }
         let body = Template {
             community:    community,
             request_user: request_user,
+            is_ajax:      is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1632,10 +1756,12 @@ pub fn bad_community(is_desctop: bool, community: Community, request_user: User,
         struct Template {
             community:    Community,
             request_user: User,
+            is_ajax:      bool,
         }
         let body = Template {
             community:    community,
             request_user: request_user,
+            is_ajax:      is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1647,10 +1773,12 @@ pub fn bad_community(is_desctop: bool, community: Community, request_user: User,
         struct Template {
             community:    Community,
             request_user: User,
+            is_ajax:      bool,
         }
         let body = Template {
             community:    community,
             request_user: request_user,
+            is_ajax:      is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1663,13 +1791,15 @@ pub fn public_community(is_desctop: bool, community: Community, request_user: Us
         #[template(path = "desctop/communities/detail/public_community.stpl")]
         struct Template {
             private_bools: Vec<bool>,
-            community:    Community,
-            request_user: User,
+            community:     Community,
+            request_user:  User,
+            is_ajax:       bool,
         }
         let body = Template {
             private_bools: community.get_community_all_can_see(request_user.id),
-            community:    community,
-            request_user: request_user,
+            community:     community,
+            request_user:  request_user,
+            is_ajax:       is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1680,13 +1810,15 @@ pub fn public_community(is_desctop: bool, community: Community, request_user: Us
         #[template(path = "mobile/communities/detail/public_community.stpl")]
         struct Template {
             private_bools: Vec<bool>,
-            community:    Community,
-            request_user: User,
+            community:     Community,
+            request_user:  User,
+            is_ajax:       bool,
         }
         let body = Template {
             private_bools: community.get_community_all_can_see(request_user.id),
-            community:    community,
-            request_user: request_user,
+            community:     community,
+            request_user:  request_user,
+            is_ajax:       is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1699,10 +1831,12 @@ pub fn anon_bad_community(is_desctop: bool, community: Community, is_ajax: bool)
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/anon_bad_community.stpl")]
         struct Template {
-            community:    Community,
+            community: Community,
+            is_ajax:   bool,
         }
         let body = Template {
-            community:    community,
+            community: community,
+            is_ajax:   is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1712,10 +1846,12 @@ pub fn anon_bad_community(is_desctop: bool, community: Community, is_ajax: bool)
         #[derive(TemplateOnce)]
         #[template(path = "mobile/communities/detail/anon_bad_community.stpl")]
         struct Template {
-            community:    Community,
+            community: Community,
+            is_ajax:   bool,
         }
         let body = Template {
-            community:    community,
+            community: community,
+            is_ajax:   is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1730,10 +1866,12 @@ pub fn anon_close_community(is_desctop: bool, community: Community, is_ajax: boo
         struct Template {
             private_bools: Vec<bool>,
             community:     Community,
+            is_ajax:       bool,
         }
         let body = Template {
             private_bools: community.get_anon_community_all_can_see(),
-            community:  community,
+            community:     community,
+            is_ajax:       is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1745,10 +1883,12 @@ pub fn anon_close_community(is_desctop: bool, community: Community, is_ajax: boo
         struct Template {
             private_bools: Vec<bool>,
             community:     Community,
+            is_ajax:       bool,
         }
         let body = Template {
             private_bools: community.get_anon_community_all_can_see(),
-            community:  community,
+            community:     community,
+            is_ajax:       is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1761,10 +1901,12 @@ pub fn anon_private_community(is_desctop: bool, community: Community, is_ajax: b
         #[derive(TemplateOnce)]
         #[template(path = "desctop/communities/detail/anon_private_community.stpl")]
         struct Template {
-            community:    Community,
+            community: Community,
+            is_ajax:   bool,
         }
         let body = Template {
-            community:    community,
+            community: community,
+            is_ajax:   is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -1774,10 +1916,12 @@ pub fn anon_private_community(is_desctop: bool, community: Community, is_ajax: b
         #[derive(TemplateOnce)]
         #[template(path = "mobile/communities/detail/anon_private_community.stpl")]
         struct Template {
-            community:    Community,
+            community: Community,
+            is_ajax:   bool,
         }
         let body = Template {
-            community:    community,
+            community: community,
+            is_ajax:   is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

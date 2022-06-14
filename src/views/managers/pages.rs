@@ -36,9 +36,11 @@ pub async fn managers_page(session: Session, req: HttpRequest) -> actix_web::Res
                 #[template(path = "desctop/managers/main.stpl")]
                 struct Template {
                     request_user: User,
+                    is_ajax:      bool,
                 }
                 let body = Template {
                     request_user: _request_user,
+                    is_ajax:      is_ajax,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -49,9 +51,11 @@ pub async fn managers_page(session: Session, req: HttpRequest) -> actix_web::Res
                 #[template(path = "mobile/managers/main.stpl")]
                 struct Template {
                     request_user: User,
+                    is_ajax:      bool,
                 }
                 let body = Template {
                     request_user: _request_user,
+                    is_ajax:      is_ajax,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

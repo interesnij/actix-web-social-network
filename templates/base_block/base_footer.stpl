@@ -1,3 +1,5 @@
+<% if !is_ajax { %>
+
 <div id="fullscreens_container"></div>
 </span>
 </div>
@@ -49,3 +51,4 @@
 <% } %>
 </body>
 </html>
+<% } %>

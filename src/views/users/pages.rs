@@ -752,6 +752,7 @@ pub async fn user_docs_page(session: Session, req: HttpRequest, user_id: web::Pa
                 request_user: User,
                 user:         User,
                 list:         DocList,
+                is_ajax:      bool,
             }
 
             let body = Template {
@@ -770,6 +771,7 @@ pub async fn user_docs_page(session: Session, req: HttpRequest, user_id: web::Pa
                 request_user: User,
                 user:         User,
                 list:         DocList,
+                is_ajax:      bool,
             }
 
             let body = Template {
@@ -792,8 +794,9 @@ pub async fn user_docs_page(session: Session, req: HttpRequest, user_id: web::Pa
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/docs/main_list/anon_list.stpl")]
             struct Template {
-                user:  User,
-                list:  DocList,
+                user:    User,
+                list:    DocList,
+                is_ajax: bool,
             }
             let body = Template {
                 user:   _user,
@@ -807,8 +810,9 @@ pub async fn user_docs_page(session: Session, req: HttpRequest, user_id: web::Pa
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/docs/main_list/anon_list.stpl")]
             struct Template {
-                user:  User,
-                list:  DocList,
+                user:    User,
+                list:    DocList,
+                is_ajax: bool,
             }
             let body = Template {
                 user:  _user,
@@ -847,6 +851,7 @@ pub async fn user_video_page(session: Session, req: HttpRequest, user_id: web::P
                 request_user: User,
                 user:         User,
                 list:         VideoList,
+                is_ajax:      bool,
             }
 
             let body = Template {
@@ -865,6 +870,7 @@ pub async fn user_video_page(session: Session, req: HttpRequest, user_id: web::P
                 request_user: User,
                 user:         User,
                 list:         VideoList,
+                is_ajax:      bool,
             }
 
             let body = Template {
@@ -887,8 +893,9 @@ pub async fn user_video_page(session: Session, req: HttpRequest, user_id: web::P
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/video/main_list/anon_list.stpl")]
             struct Template {
-                user:  User,
-                list:  VideoList,
+                user:    User,
+                list:    VideoList,
+                is_ajax: bool,
             }
             let body = Template {
                 user:  _user,
@@ -902,8 +909,9 @@ pub async fn user_video_page(session: Session, req: HttpRequest, user_id: web::P
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/video/main_list/anon_list.stpl")]
             struct Template {
-                user:  User,
-                list:  VideoList,
+                user:    User,
+                list:    VideoList,
+                is_ajax: bool,
             }
             let body = Template {
                 user:  _user,
@@ -942,6 +950,7 @@ pub async fn user_surveys_page(session: Session, req: HttpRequest, user_id: web:
                 request_user: User,
                 user:         User,
                 list:         SurveyList,
+                is_ajax:      bool,
             }
 
             let body = Template {
@@ -960,6 +969,7 @@ pub async fn user_surveys_page(session: Session, req: HttpRequest, user_id: web:
                 request_user: User,
                 user:         User,
                 list:         SurveyList,
+                is_ajax:      bool,
             }
 
             let body = Template {
@@ -982,8 +992,9 @@ pub async fn user_surveys_page(session: Session, req: HttpRequest, user_id: web:
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/survey/main_list/anon_list.stpl")]
             struct Template {
-                user:  User,
-                list:  SurveyList,
+                user:    User,
+                list:    SurveyList,
+                is_ajax: bool,
             }
             let body = Template {
                 user:  _user,
@@ -997,8 +1008,9 @@ pub async fn user_surveys_page(session: Session, req: HttpRequest, user_id: web:
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/survey/main_list/anon_list.stpl")]
             struct Template {
-                user:  User,
-                list:  SurveyList,
+                user:    User,
+                list:    SurveyList,
+                is_ajax: bool,
             }
             let body = Template {
                 user:  _user,
@@ -1037,6 +1049,7 @@ pub async fn user_music_page(session: Session, req: HttpRequest, user_id: web::P
                 request_user: User,
                 user:         User,
                 list:         MusicList,
+                is_ajax:      bool,
             }
 
             let body = Template {
@@ -1055,6 +1068,7 @@ pub async fn user_music_page(session: Session, req: HttpRequest, user_id: web::P
                 request_user: User,
                 user:         User,
                 list:         MusicList,
+                is_ajax:      bool,
             }
 
             let body = Template {
@@ -1077,8 +1091,9 @@ pub async fn user_music_page(session: Session, req: HttpRequest, user_id: web::P
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/music/main_list/anon_list.stpl")]
             struct Template {
-                user:  User,
-                list:  MusicList,
+                user:    User,
+                list:    MusicList,
+                is_ajax: bool,
             }
             let body = Template {
                 user:  _user,
@@ -1092,8 +1107,9 @@ pub async fn user_music_page(session: Session, req: HttpRequest, user_id: web::P
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/music/main_list/anon_list.stpl")]
             struct Template {
-                user:  User,
-                list:  MusicList,
+                user:    User,
+                list:    MusicList,
+                is_ajax: bool,
             }
             let body = Template {
                 user:  _user,
@@ -1132,6 +1148,7 @@ pub async fn user_goods_page(session: Session, req: HttpRequest, user_id: web::P
                 request_user: User,
                 user:         User,
                 list:         GoodList,
+                is_ajax:      bool,
             }
 
             let body = Template {
@@ -1150,6 +1167,7 @@ pub async fn user_goods_page(session: Session, req: HttpRequest, user_id: web::P
                 request_user: User,
                 user:         User,
                 list:         GoodList,
+                is_ajax:      bool,
             }
 
             let body = Template {
@@ -1172,8 +1190,9 @@ pub async fn user_goods_page(session: Session, req: HttpRequest, user_id: web::P
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/goods/main_list/anon_list.stpl")]
             struct Template {
-                user:  User,
-                list:  GoodList,
+                user:    User,
+                list:    GoodList,
+                is_ajax: bool,
             }
             let body = Template {
                 user:  _user,
@@ -1187,8 +1206,9 @@ pub async fn user_goods_page(session: Session, req: HttpRequest, user_id: web::P
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/goods/main_list/anon_list.stpl")]
             struct Template {
-                user:  User,
-                list:  GoodList,
+                user:    User,
+                list:    GoodList,
+                is_ajax: bool,
             }
             let body = Template {
                 user:  _user,
@@ -1227,6 +1247,7 @@ pub async fn user_photos_page(session: Session, req: HttpRequest, user_id: web::
                 request_user: User,
                 user:         User,
                 list:         PhotoList,
+                is_ajax:      bool,
             }
 
             let body = Template {
@@ -1245,6 +1266,7 @@ pub async fn user_photos_page(session: Session, req: HttpRequest, user_id: web::
                 request_user: User,
                 user:         User,
                 list:         PhotoList,
+                is_ajax:      bool,
             }
 
             let body = Template {
@@ -1267,8 +1289,9 @@ pub async fn user_photos_page(session: Session, req: HttpRequest, user_id: web::
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/photos/main_list/anon_list.stpl")]
             struct Template {
-                user:  User,
-                list:  PhotoList,
+                user:    User,
+                list:    PhotoList,
+                is_ajax: bool,
             }
             let body = Template {
                 user:  _user,
@@ -1282,8 +1305,9 @@ pub async fn user_photos_page(session: Session, req: HttpRequest, user_id: web::
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/photos/main_list/anon_list.stpl")]
             struct Template {
-                user:  User,
-                list:  PhotoList,
+                user:    User,
+                list:    PhotoList,
+                is_ajax: bool,
             }
             let body = Template {
                 user:  _user,
@@ -1323,6 +1347,7 @@ pub async fn user_docs_list_page(session: Session, req: HttpRequest, param: web:
                 request_user: User,
                 user:         User,
                 list:         DocList,
+                is_ajax:      bool,
             }
 
             let body = Template {
@@ -1341,6 +1366,7 @@ pub async fn user_docs_list_page(session: Session, req: HttpRequest, param: web:
                 request_user: User,
                 user:         User,
                 list:         DocList,
+                is_ajax:      bool,
             }
 
             let body = Template {
@@ -1363,8 +1389,9 @@ pub async fn user_docs_list_page(session: Session, req: HttpRequest, param: web:
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/docs/list/anon_list.stpl")]
             struct Template {
-                user:  User,
-                list:  DocList,
+                user:    User,
+                list:    DocList,
+                is_ajax: bool,
             }
             let body = Template {
                 user:  _user,
@@ -1378,8 +1405,9 @@ pub async fn user_docs_list_page(session: Session, req: HttpRequest, param: web:
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/docs/list/anon_list.stpl")]
             struct Template {
-                user:  User,
-                list:  DocList,
+                user:    User,
+                list:    DocList,
+                is_ajax: bool,
             }
             let body = Template {
                 user:   _user,
@@ -1419,6 +1447,7 @@ pub async fn user_video_list_page(session: Session, req: HttpRequest, param: web
                 request_user: User,
                 user:         User,
                 list:         VideoList,
+                is_ajax:      bool,
             }
             let body = Template {
                 request_user: _request_user,
@@ -1436,6 +1465,7 @@ pub async fn user_video_list_page(session: Session, req: HttpRequest, param: web
                 request_user: User,
                 user:         User,
                 list:         VideoList,
+                is_ajax:      bool,
             }
             let body = Template {
                 request_user: _request_user,
@@ -1457,8 +1487,9 @@ pub async fn user_video_list_page(session: Session, req: HttpRequest, param: web
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/video/list/anon_list.stpl")]
             struct Template {
-                user:  User,
-                list:  VideoList,
+                user:    User,
+                list:    VideoList,
+                is_ajax: bool,
             }
             let body = Template {
                 user:  _user,
@@ -1472,8 +1503,9 @@ pub async fn user_video_list_page(session: Session, req: HttpRequest, param: web
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/video/list/anon_list.stpl")]
             struct Template {
-                user:  User,
-                list:  VideoList,
+                user:    User,
+                list:    VideoList,
+                is_ajax: bool,
             }
             let body = Template {
                 user:  _user,
@@ -1513,6 +1545,7 @@ pub async fn user_surveys_list_page(session: Session, req: HttpRequest, param: w
                 request_user: User,
                 user:         User,
                 list:         SurveyList,
+                is_ajax:      bool,
             }
 
             let body = Template {
@@ -1531,6 +1564,7 @@ pub async fn user_surveys_list_page(session: Session, req: HttpRequest, param: w
                 request_user: User,
                 user:         User,
                 list:         SurveyList,
+                is_ajax:      bool,
             }
 
             let body = Template {
@@ -1553,8 +1587,9 @@ pub async fn user_surveys_list_page(session: Session, req: HttpRequest, param: w
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/survey/list/anon_list.stpl")]
             struct Template {
-                user:  User,
-                list:  SurveyList,
+                user:    User,
+                list:    SurveyList,
+                is_ajax: bool,
             }
             let body = Template {
                 user:  _user,
@@ -1568,8 +1603,9 @@ pub async fn user_surveys_list_page(session: Session, req: HttpRequest, param: w
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/survey/list/anon_list.stpl")]
             struct Template {
-                user:  User,
-                list:  SurveyList,
+                user:    User,
+                list:    SurveyList,
+                is_ajax: bool,
             }
             let body = Template {
                 user:   _user,
@@ -1609,6 +1645,7 @@ pub async fn user_music_list_page(session: Session, req: HttpRequest, param: web
                 request_user: User,
                 user:         User,
                 list:         MusicList,
+                is_ajax:      bool,
             }
 
             let body = Template {
@@ -1627,6 +1664,7 @@ pub async fn user_music_list_page(session: Session, req: HttpRequest, param: web
                 request_user: User,
                 user:         User,
                 list:         MusicList,
+                is_ajax:      bool,
             }
 
             let body = Template {
@@ -1649,8 +1687,9 @@ pub async fn user_music_list_page(session: Session, req: HttpRequest, param: web
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/music/list/anon_list.stpl")]
             struct Template {
-                user:   User,
-                list:   MusicList,
+                user:    User,
+                list:    MusicList,
+                is_ajax: bool,
             }
             let body = Template {
                 user:  _user,
@@ -1664,8 +1703,9 @@ pub async fn user_music_list_page(session: Session, req: HttpRequest, param: web
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/music/list/anon_list.stpl")]
             struct Template {
-                user:   User,
-                list:   MusicList,
+                user:    User,
+                list:    MusicList,
+                is_ajax: bool,
             }
             let body = Template {
                 user:  _user,
@@ -1705,6 +1745,7 @@ pub async fn user_goods_list_page(session: Session, req: HttpRequest, param: web
                 request_user: User,
                 user:         User,
                 list:         GoodList,
+                is_ajax:      bool,
             }
 
             let body = Template {
@@ -1723,6 +1764,7 @@ pub async fn user_goods_list_page(session: Session, req: HttpRequest, param: web
                 request_user: User,
                 user:         User,
                 list:         GoodList,
+                is_ajax:      bool,
             }
 
             let body = Template {
@@ -1745,8 +1787,9 @@ pub async fn user_goods_list_page(session: Session, req: HttpRequest, param: web
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/goods/list/anon_list.stpl")]
             struct Template {
-                user:   User,
-                list:   GoodList,
+                user:    User,
+                list:    GoodList,
+                is_ajax: bool,
             }
             let body = Template {
                 user:   _user,
@@ -1760,8 +1803,9 @@ pub async fn user_goods_list_page(session: Session, req: HttpRequest, param: web
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/goods/list/anon_list.stpl")]
             struct Template {
-                user:  User,
-                list:  GoodList,
+                user:   User,
+                list:   GoodList,
+                is_ajax: bool,
             }
             let body = Template {
                 user:   _user,
@@ -1801,6 +1845,7 @@ pub async fn user_photos_list_page(session: Session, req: HttpRequest, param: we
                 request_user: User,
                 user:         User,
                 list:         PhotoList,
+                is_ajax:      bool,
             }
 
             let body = Template {
@@ -1819,6 +1864,7 @@ pub async fn user_photos_list_page(session: Session, req: HttpRequest, param: we
                 request_user: User,
                 user:         User,
                 list:         PhotoList,
+                is_ajax:      bool,
             }
 
             let body = Template {
@@ -1841,8 +1887,9 @@ pub async fn user_photos_list_page(session: Session, req: HttpRequest, param: we
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/photos/list/anon_list.stpl")]
             struct Template {
-                user:   User,
-                list:   PhotoList,
+                user:    User,
+                list:    PhotoList,
+                is_ajax: bool,
             }
             let body = Template {
                 user:   _user,
@@ -1856,8 +1903,9 @@ pub async fn user_photos_list_page(session: Session, req: HttpRequest, param: we
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/photos/main_list/anon_list.stpl")]
             struct Template {
-                user:  User,
-                list:  PhotoList,
+                user:    User,
+                list:    PhotoList,
+                is_ajax: bool,
             }
             let body = Template {
                 user:   _user,

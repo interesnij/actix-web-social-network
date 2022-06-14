@@ -212,9 +212,11 @@ pub async fn settings_page(session: Session, req: HttpRequest) -> actix_web::Res
             #[template(path = "desctop/users/settings/settings.stpl")]
             struct Template {
                 request_user: User,
+                is_ajax:      bool,
             }
             let body = Template {
                 request_user: _request_user,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -224,9 +226,11 @@ pub async fn settings_page(session: Session, req: HttpRequest) -> actix_web::Res
             #[template(path = "mobile/users/settings/settings.stpl")]
             struct Template {
                 request_user: User,
+                is_ajax:      bool,
             }
             let body = Template {
                 request_user: _request_user,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -258,10 +262,12 @@ pub async fn design_settings_page(session: Session, req: HttpRequest) -> actix_w
             struct Template {
                 request_user: User,
                 color:        String,
+                is_ajax:      bool,
             }
             let body = Template {
                 request_user: _request_user,
                 color:        _designs[0].background.clone(),
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -272,10 +278,12 @@ pub async fn design_settings_page(session: Session, req: HttpRequest) -> actix_w
             struct Template {
                 request_user: User,
                 color:        String,
+                is_ajax:      bool,
             }
             let body = Template {
                 request_user: _request_user,
                 color:        _designs[0].background.clone(),
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -309,10 +317,12 @@ pub async fn private_settings_page(session: Session, req: HttpRequest) -> actix_
             struct Template {
                 request_user: User,
                 private:      UserPrivate,
+                is_ajax:      bool,
             }
             let body = Template {
                 request_user: _request_user,
                 private:      _private,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -323,10 +333,12 @@ pub async fn private_settings_page(session: Session, req: HttpRequest) -> actix_
             struct Template {
                 request_user: User,
                 private:      UserPrivate,
+                is_ajax:      bool,
             }
             let body = Template {
                 request_user: _request_user,
                 private:      _private,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

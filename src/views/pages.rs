@@ -91,23 +91,25 @@ pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result
     #[derive(TemplateOnce)]
     #[template(path = "desctop/main/auth/auth.stpl")]
     struct DesctopAuthTemplate {
-        //users_list: Vec<User>,
-        //phone_codes_list: Vec<PhoneCode>,
+        is_ajax: bool,
     }
     #[derive(TemplateOnce)]
     #[template(path = "desctop/main/lists/news_list.stpl")]
     struct DesctopNewsListTemplate {
         request_user: User,
+        is_ajax:      bool,
     }
 
     #[derive(TemplateOnce)]
     #[template(path = "mobile/main/auth/auth.stpl")]
     struct MobileAuthTemplate {
+        is_ajax: bool,
     }
     #[derive(TemplateOnce)]
     #[template(path = "mobile/main/lists/news_list.stpl")]
     struct MobileNewsListTemplate {
         request_user: User,
+        is_ajax:      bool,
     }
 
     let _connection = establish_connection();
@@ -119,6 +121,7 @@ pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result
         if is_desctop {
             let body = DesctopNewsListTemplate {
                 request_user: _request_user,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -127,6 +130,7 @@ pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result
         else {
             let body = MobileNewsListTemplate {
                 request_user: _request_user,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -136,15 +140,14 @@ pub async fn index_page(session: Session, req: HttpRequest) -> actix_web::Result
     } else {
         if is_desctop {
             let body = DesctopAuthTemplate {
-                //users_list: users_list,
-                //phone_codes_list: phone_codes_list,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
         else {
-            let body = MobileAuthTemplate {}
+            let body = MobileAuthTemplate {is_ajax: is_ajax,}
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
@@ -163,9 +166,11 @@ pub async fn featured_list_page(session: Session, req: HttpRequest) -> actix_web
             #[template(path = "desctop/main/lists/featured_list.stpl")]
             struct DesctopFeaturedListTemplate {
                 request_user: User,
+                is_ajax:      bool,
             }
             let body = DesctopFeaturedListTemplate {
                 request_user: _request_user,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -176,9 +181,11 @@ pub async fn featured_list_page(session: Session, req: HttpRequest) -> actix_web
             #[template(path = "mobile/main/lists/featured_list.stpl")]
             struct MobileFeaturedListTemplate {
                 request_user: User,
+                is_ajax:      bool,
             }
             let body = MobileFeaturedListTemplate {
                 request_user: _request_user,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -219,17 +226,19 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/lists/all_users.stpl")]
             struct Template {
-                request_user: User,
+                request_user:     User,
                 next_page_number: i32,
-                object_list: Vec<User>,
-                count: usize,
+                object_list:      Vec<User>,
+                count:            usize,
+                is_ajax:          bool,
             }
 
             let body = Template {
-                request_user: _request_user,
+                request_user:     _request_user,
                 next_page_number: next_page_number,
-                object_list: object_list,
-                count: count,
+                object_list:      object_list,
+                count:            count,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -239,17 +248,19 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/lists/all_users.stpl")]
             struct Template {
-                request_user: User,
+                request_user:     User,
                 next_page_number: i32,
-                object_list: Vec<User>,
-                count: usize,
+                object_list:      Vec<User>,
+                count:            usize,
+                is_ajax:          bool,
             }
 
             let body = Template {
-                request_user: _request_user,
+                request_user:     _request_user,
                 next_page_number: next_page_number,
-                object_list: object_list,
-                count: count,
+                object_list:      object_list,
+                count:            count,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -277,13 +288,15 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[template(path = "desctop/users/lists/anon_all_users.stpl")]
             struct Template {
                 next_page_number: i32,
-                object_list: Vec<User>,
-                count: usize,
+                object_list:      Vec<User>,
+                count:            usize,
+                is_ajax:          bool,
             }
             let body = Template {
                 next_page_number: next_page_number,
-                object_list: object_list,
-                count: count,
+                object_list:      object_list,
+                count:            count,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -294,13 +307,15 @@ pub async fn all_users_page(session: Session, req: HttpRequest) -> actix_web::Re
             #[template(path = "mobile/users/lists/anon_all_users.stpl")]
             struct Template {
                 next_page_number: i32,
-                object_list: Vec<User>,
-                count: usize,
+                object_list:      Vec<User>,
+                count:            usize,
+                is_ajax:          bool,
             }
             let body = Template {
                 next_page_number: next_page_number,
-                object_list: object_list,
-                count: count,
+                object_list:      object_list,
+                count:            count,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -341,17 +356,19 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
             #[derive(TemplateOnce)]
             #[template(path = "desctop/users/lists/all_communities.stpl")]
             struct Template {
-                request_user: User,
+                request_user:     User,
                 next_page_number: i32,
-                object_list: Vec<Community>,
-                count: usize,
+                object_list:      Vec<Community>,
+                count:            usize,
+                is_ajax:          bool,
             }
 
             let body = Template {
-                request_user: _request_user,
+                request_user:     _request_user,
                 next_page_number: next_page_number,
-                object_list: object_list,
-                count: count,
+                object_list:      object_list,
+                count:            count,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -361,17 +378,19 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
             #[derive(TemplateOnce)]
             #[template(path = "mobile/users/lists/all_communities.stpl")]
             struct Template {
-                request_user: User,
+                request_user:     User,
                 next_page_number: i32,
-                object_list: Vec<Community>,
-                count: usize,
+                object_list:      Vec<Community>,
+                count:            usize,
+                is_ajax:          bool,
             }
 
             let body = Template {
-                request_user: _request_user,
+                request_user:     _request_user,
                 next_page_number: next_page_number,
-                object_list: object_list,
-                count: count,
+                object_list:      object_list,
+                count:            count,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -399,13 +418,15 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
             #[template(path = "desctop/users/lists/anon_all_communities.stpl")]
             struct Template {
                 next_page_number: i32,
-                object_list: Vec<Community>,
-                count: usize,
+                object_list:      Vec<Community>,
+                count:            usize,
+                is_ajax:          bool,
             }
             let body = Template {
                 next_page_number: next_page_number,
-                object_list: object_list,
-                count: count,
+                object_list:      object_list,
+                count:            count,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -416,13 +437,15 @@ pub async fn all_communities_page(session: Session, req: HttpRequest) -> actix_w
             #[template(path = "mobile/users/lists/anon_all_communities.stpl")]
             struct Template {
                 next_page_number: i32,
-                object_list: Vec<Community>,
-                count: usize,
+                object_list:      Vec<Community>,
+                count:            usize,
+                is_ajax:          bool,
             }
             let body = Template {
                 next_page_number: next_page_number,
-                object_list: object_list,
-                count: count,
+                object_list:      object_list,
+                count:            count,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

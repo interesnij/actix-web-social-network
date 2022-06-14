@@ -214,16 +214,14 @@ pub fn my_user_account(is_desctop: bool, user: User, request_user: User, is_ajax
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/my_user.stpl")]
         struct UserPage {
-            //private_bools: Vec<bool>,
             request_user: User,
             user:         User,
-            //is_my_user:   bool
+            is_ajax:      bool,
         }
         let body = UserPage {
-            //private_bools: user.get_profile_all_can_see(request_user.id),
             request_user: request_user,
             user:         user,
-            //is_my_user:   true,
+            is_ajax:      is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -232,16 +230,14 @@ pub fn my_user_account(is_desctop: bool, user: User, request_user: User, is_ajax
         #[derive(TemplateOnce)]
         #[template(path = "mobile/users/account/my_user.stpl")]
         struct UserPage {
-            //private_bools: Vec<bool>,
             request_user: User,
             user:         User,
-            //is_my_user:   bool
+            is_ajax:      bool,
         }
         let body = UserPage {
-            //private_bools: user.get_profile_all_can_see(request_user.id),
             request_user: request_user,
             user:         user,
-            //is_my_user:   true,
+            is_ajax:      is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -255,11 +251,13 @@ pub fn anon_user_account(is_desctop: bool, user: User, is_ajax: bool) -> actix_w
         #[template(path = "desctop/users/account/anon_user.stpl")]
         struct UserPage {
             private_bools: Vec<bool>,
-            user:  User,
+            user:          User,
+            is_ajax:       bool,
         }
         let body = UserPage {
             private_bools: user.get_anon_profile_all_can_see(),
-            user:  user,
+            user:          user,
+            is_ajax:       is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -270,11 +268,13 @@ pub fn anon_user_account(is_desctop: bool, user: User, is_ajax: bool) -> actix_w
         #[template(path = "mobile/users/account/anon_user.stpl")]
         struct UserPage {
             private_bools: Vec<bool>,
-            user:  User,
+            user:          User,
+            is_ajax:       bool,
         }
         let body = UserPage {
             private_bools: user.get_anon_profile_all_can_see(),
-            user:  user,
+            user:          user,
+            is_ajax:       is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -286,12 +286,14 @@ pub fn self_block_account(is_desctop: bool, user: User, request_user: User, is_a
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/self_block_user.stpl")]
         struct UserPage {
-            user:  User,
+            user:         User,
             request_user: User,
+            is_ajax:      bool,
         }
         let body = UserPage {
-            user:  user,
+            user:         user,
             request_user: request_user,
+            is_ajax:      is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -301,12 +303,14 @@ pub fn self_block_account(is_desctop: bool, user: User, request_user: User, is_a
         #[derive(TemplateOnce)]
         #[template(path = "mobile/users/account/self_block_user.stpl")]
         struct UserPage {
-            user:  User,
+            user:         User,
             request_user: User,
+            is_ajax:      bool,
         }
         let body = UserPage {
-            user:  user,
+            user:         user,
             request_user: request_user,
+            is_ajax:      is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -319,9 +323,11 @@ pub fn my_bad_account(is_desctop: bool, request_user: User, is_ajax: bool) -> ac
         #[template(path = "desctop/users/account/my_bad_user.stpl")]
         struct UserPage {
             request_user: User,
+            is_ajax:      bool,
         }
         let body = UserPage {
             request_user: request_user,
+            is_ajax:      is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -332,9 +338,11 @@ pub fn my_bad_account(is_desctop: bool, request_user: User, is_ajax: bool) -> ac
         #[template(path = "mobile/users/account/my_bad_user.stpl")]
         struct UserPage {
             request_user: User,
+            is_ajax:      bool,
         }
         let body = UserPage {
             request_user: request_user,
+            is_ajax:      is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -346,12 +354,14 @@ pub fn bad_account(is_desctop: bool, user: User, request_user: User, is_ajax: bo
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/bad_user.stpl")]
         struct UserPage {
-            user:  User,
+            user:         User,
             request_user: User,
+            is_ajax:      bool,
         }
         let body = UserPage {
-            user:  user,
+            user:         user,
             request_user: request_user,
+            is_ajax:      is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -361,12 +371,14 @@ pub fn bad_account(is_desctop: bool, user: User, request_user: User, is_ajax: bo
         #[derive(TemplateOnce)]
         #[template(path = "mobile/users/account/bad_user.stpl")]
         struct UserPage {
-            user:  User,
+            user:         User,
             request_user: User,
+            is_ajax:      bool,
         }
         let body = UserPage {
-            user:  user,
+            user:         user,
             request_user: request_user,
+            is_ajax:      is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -379,13 +391,15 @@ pub fn close_account(is_desctop: bool, user: User, request_user: User, is_ajax: 
         #[template(path = "desctop/users/account/close_user.stpl")]
         struct UserPage {
             private_bools: Vec<bool>,
-            request_user: User,
-            user:  User,
+            request_user:  User,
+            user:          User,
+            is_ajax:       bool,
         }
         let body = UserPage {
             private_bools: user.get_profile_all_can_see(request_user.id),
-            request_user: request_user,
-            user:  user,
+            request_user:  request_user,
+            user:          user,
+            is_ajax:       is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -396,13 +410,15 @@ pub fn close_account(is_desctop: bool, user: User, request_user: User, is_ajax: 
         #[template(path = "mobile/users/account/close_user.stpl")]
         struct UserPage {
             private_bools: Vec<bool>,
-            request_user: User,
-            user:  User,
+            request_user:  User,
+            user:          User,
+            is_ajax:       bool,
         }
         let body = UserPage {
             private_bools: user.get_profile_all_can_see(request_user.id),
-            request_user: request_user,
-            user:  user,
+            request_user:  request_user,
+            user:          user,
+            is_ajax:       is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -415,10 +431,12 @@ pub fn anon_bad_account(is_desctop: bool, user: User, is_ajax: bool) -> actix_we
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/anon_bad_user.stpl")]
         struct UserPage {
-            user:  User,
+            user:    User,
+            is_ajax: bool,
         }
         let body = UserPage {
-            user:  user,
+            user:    user,
+            is_ajax: is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -428,10 +446,12 @@ pub fn anon_bad_account(is_desctop: bool, user: User, is_ajax: bool) -> actix_we
         #[derive(TemplateOnce)]
         #[template(path = "mobile/users/account/anon_bad_user.stpl")]
         struct UserPage {
-            user:  User,
+            user:    User,
+            is_ajax: bool,
         }
         let body = UserPage {
-            user:  user,
+            user:    user,
+            is_ajax: is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -444,10 +464,12 @@ pub fn anon_close_account(is_desctop: bool, user: User, is_ajax: bool) -> actix_
         #[derive(TemplateOnce)]
         #[template(path = "desctop/users/account/anon_close_user.stpl")]
         struct UserPage {
-            user:  User,
+            user:    User,
+            is_ajax: bool,
         }
         let body = UserPage {
-            user:  user,
+            user:    user,
+            is_ajax: is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -457,10 +479,12 @@ pub fn anon_close_account(is_desctop: bool, user: User, is_ajax: bool) -> actix_
         #[derive(TemplateOnce)]
         #[template(path = "mobile/users/account/anon_close_user.stpl")]
         struct UserPage {
-            user:  User,
+            user:    User,
+            is_ajax: bool,
         }
         let body = UserPage {
-            user:  user,
+            user:    user,
+            is_ajax: is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -475,13 +499,15 @@ pub fn account(is_desctop: bool, user: User, request_user: User, is_ajax: bool) 
         #[template(path = "desctop/users/account/user.stpl")]
         struct UserPage {
             private_bools: Vec<bool>,
-            request_user: User,
-            user:  User,
+            request_user:  User,
+            user:          User,
+            is_ajax:       bool,
         }
         let body = UserPage {
             private_bools: user.get_profile_all_can_see(request_user.id),
-            request_user: request_user,
-            user:  user,
+            request_user:  request_user,
+            user:          user,
+            is_ajax:       is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -492,13 +518,15 @@ pub fn account(is_desctop: bool, user: User, request_user: User, is_ajax: bool) 
         #[template(path = "mobile/users/account/user.stpl")]
         struct UserPage {
             private_bools: Vec<bool>,
-            request_user: User,
-            user:  User,
+            request_user:  User,
+            user:          User,
+            is_ajax:       bool,
         }
         let body = UserPage {
             private_bools: user.get_profile_all_can_see(request_user.id),
-            request_user: request_user,
-            user:  user,
+            request_user:  request_user,
+            user:          user,
+            is_ajax:       is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

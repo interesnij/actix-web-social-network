@@ -1,3 +1,5 @@
+<% if !is_ajax { %>
+
 <!doctype html>
 <html>
 <head>
@@ -25,3 +27,5 @@
   <body class="fixed-header" data-video="first_player" data-csrf="csrf_token">
         <div id="ajax" class="userpic" data-id="<%= request_user.id %>" data-pk="<%= request_user.link %>" data-device="mobile" data-name="<%= request_user.get_full_name() %>" style="padding-right:0px; padding-left:0px;">
           <span id="reload_block">
+
+<% } %>

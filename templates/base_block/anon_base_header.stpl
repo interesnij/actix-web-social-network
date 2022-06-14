@@ -1,4 +1,4 @@
-
+<% if !is_ajax { %>
 <!doctype html>
 <html>
 <head>
@@ -39,3 +39,4 @@
             </div>
             <div class="col-md-8 col-lg-8 col-xl-6 desctop_version" id="ajax">
               <span id="reload_block">
+<% } %>

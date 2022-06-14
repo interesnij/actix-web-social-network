@@ -67,16 +67,18 @@ pub async fn chats_list_page(session: Session, req: HttpRequest) -> actix_web::R
             #[derive(TemplateOnce)]
             #[template(path = "desctop/chats/chat/list.stpl")]
             struct Template {
-                request_user: User,
-                count: usize,
+                request_user:     User,
+                count:            usize,
                 next_page_number: i32,
-                object_list: Vec<Chat>,
+                object_list:      Vec<Chat>,
+                is_ajax:          bool,
             }
             let body = Template {
-                request_user: _request_user,
-                count: count,
+                request_user:     _request_user,
+                count:            count,
                 next_page_number: next_page_number,
-                object_list: object_list,
+                object_list:      object_list,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -85,16 +87,18 @@ pub async fn chats_list_page(session: Session, req: HttpRequest) -> actix_web::R
             #[derive(TemplateOnce)]
             #[template(path = "mobile/chats/chat/list.stpl")]
             struct Template {
-                request_user: User,
-                count: usize,
+                request_user:     User,
+                count:            usize,
                 next_page_number: i32,
-                object_list: Vec<Chat>,
+                object_list:      Vec<Chat>,
+                is_ajax:          bool,
             }
             let body = Template {
-                request_user: _request_user,
-                count: count,
+                request_user:     _request_user,
+                count:            count,
                 next_page_number: next_page_number,
-                object_list: object_list,
+                object_list:      object_list,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -108,7 +112,7 @@ pub async fn chats_list_page(session: Session, req: HttpRequest) -> actix_web::R
 pub async fn fixed_messages_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
         let _chat = get_chat(*_id);
-        let (is_desctop, page, _is_ajax) = get_device_and_page_and_ajax(&req);  
+        let (is_desctop, page, _is_ajax) = get_device_and_page_and_ajax(&req);
         let mut next_page_number = 0;
         let object_list: Vec<Message>;
 
@@ -132,18 +136,20 @@ pub async fn fixed_messages_page(session: Session, req: HttpRequest, _id: web::P
             #[derive(TemplateOnce)]
             #[template(path = "desctop/chats/chat/fixed_list.stpl")]
             struct Template {
-                request_user: User,
-                count:        usize,
+                request_user:     User,
+                count:            usize,
                 next_page_number: i32,
-                object_list: Vec<Message>,
-                chat: Chat,
+                object_list:      Vec<Message>,
+                chat:             Chat,
+                is_ajax:          bool,
             }
             let body = Template {
-                request_user: _request_user,
-                count: count,
+                request_user:     _request_user,
+                count:            count,
                 next_page_number: next_page_number,
-                object_list: object_list,
-                chat: _chat,
+                object_list:      object_list,
+                chat:             _chat,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -152,18 +158,20 @@ pub async fn fixed_messages_page(session: Session, req: HttpRequest, _id: web::P
             #[derive(TemplateOnce)]
             #[template(path = "mobile/chats/chat/fixed_list.stpl")]
             struct Template {
-                request_user: User,
-                count: usize,
+                request_user:     User,
+                count:            usize,
                 next_page_number: i32,
-                object_list: Vec<Message>,
-                chat: Chat,
+                object_list:      Vec<Message>,
+                chat:             Chat,
+                is_ajax:          bool,
             }
             let body = Template {
-                request_user: _request_user,
-                count: count,
+                request_user:     _request_user,
+                count:            count,
                 next_page_number: next_page_number,
-                object_list: object_list,
-                chat: _chat,
+                object_list:      object_list,
+                chat:             _chat,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -206,12 +214,14 @@ pub async fn closed_support_chats_page(session: Session, req: HttpRequest) -> ac
                 count:            usize,
                 next_page_number: i32,
                 object_list:      Vec<Chat>,
+                is_ajax:          bool,
             }
             let body = Template {
                 request_user:     _request_user,
                 count:            count,
                 next_page_number: next_page_number,
                 object_list:      object_list,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -224,12 +234,14 @@ pub async fn closed_support_chats_page(session: Session, req: HttpRequest) -> ac
                 count:            usize,
                 next_page_number: i32,
                 object_list:      Vec<Chat>,
+                is_ajax:          bool,
             }
             let body = Template {
                 request_user:     _request_user,
                 count:            count,
                 next_page_number: next_page_number,
                 object_list:      object_list,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -275,6 +287,7 @@ pub async fn chat_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
                 next_page_number: i32,
                 object_list:      Vec<Message>,
                 chat:             Chat,
+                is_ajax:          bool,
             }
             let body = Template {
                 request_user:     _request_user,
@@ -282,6 +295,7 @@ pub async fn chat_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
                 next_page_number: next_page_number,
                 object_list:      object_list,
                 chat:             _chat,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -295,6 +309,7 @@ pub async fn chat_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
                 next_page_number: i32,
                 object_list:      Vec<Message>,
                 chat:             Chat,
+                is_ajax:          bool,
             }
             let body = Template {
                 request_user:     _request_user,
@@ -302,6 +317,7 @@ pub async fn chat_page(session: Session, req: HttpRequest, _id: web::Path<i32>) 
                 next_page_number: next_page_number,
                 object_list:      object_list,
                 chat:             _chat,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -862,16 +878,18 @@ pub async fn favourites_messages_page(session: Session, req: HttpRequest) -> act
             #[derive(TemplateOnce)]
             #[template(path = "desctop/chats/chat/favourites_list.stpl")]
             struct Template {
-                request_user: User,
-                count:        usize,
+                request_user:     User,
+                count:            usize,
                 next_page_number: i32,
-                object_list: Vec<Message>,
+                object_list:      Vec<Message>,
+                is_ajax:          bool,
             }
             let body = Template {
-                request_user: _request_user,
-                count: count,
+                request_user:     _request_user,
+                count:            count,
                 next_page_number: next_page_number,
-                object_list: object_list,
+                object_list:      object_list,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -880,16 +898,18 @@ pub async fn favourites_messages_page(session: Session, req: HttpRequest) -> act
             #[derive(TemplateOnce)]
             #[template(path = "mobile/chats/chat/favourites_list.stpl")]
             struct Template {
-                request_user: User,
-                count: usize,
+                request_user:     User,
+                count:            usize,
                 next_page_number: i32,
-                object_list: Vec<Message>,
+                object_list:      Vec<Message>,
+                is_ajax:          bool,
             }
             let body = Template {
-                request_user: _request_user,
-                count: count,
+                request_user:     _request_user,
+                count:            count,
                 next_page_number: next_page_number,
-                object_list: object_list,
+                object_list:      object_list,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -908,7 +928,7 @@ pub async fn chat_search_page(session: Session, req: HttpRequest, _id: web::Path
     }
 
     let params_some = web::Query::<ZParams>::from_query(&req.query_string());
-    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
+    let is_desctop = is_desctop(req);
 
     if is_signed_in(&session) {
         let mut page: i32 = 0;
