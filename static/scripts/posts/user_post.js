@@ -749,9 +749,11 @@ on('#ajax', 'click', '#create_list_btn', function() {
     return
   } else { this.disabled = true };
   community_id = form_post.getAttribute("community-pk");
+  is_community = false;
   folder = form_post.getAttribute("data-folder");
   if (form_post.getAttribute("community-pk") && form_post.getAttribute("community-pk") !== "") {
     url = folder + "/add_community_list/" + community_id + "/";
+    is_community = true;
   } else {
     url = folder + "/add_user_list/";
   }
@@ -774,21 +776,20 @@ on('#ajax', 'click', '#create_list_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( link_.readyState == 4 && link_.status == 200 ) {
-    elem = link_.responseText;
-    new_post = document.createElement("span");
-    new_post.innerHTML = elem;
+    jsonResponse = JSON.parse(link_.responseText);
+    new_pk = jsonResponse.pk;
+    new_name = jsonResponse.name;
+    new_image = jsonResponse.image;
+    userpic = document.body.querySelector(".userpic");
 
     if (folder == "/posts") {
       post_stream = document.body.querySelector(".span_list_pk");
       post_stream.innerHTML = '';
       post_stream.innerHTML = '<div class="card mb-3 items_empty centered"><div class="card-body"><svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M22 13h-8v-2h8v2zm0-6h-8v2h8V7zm-8 10h8v-2h-8v2zm-2-8v6c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2zm-1.5 6l-2.25-3-1.75 2.26-1.25-1.51L3.5 15h7z"/></svg></div><h6 style="margin: 20px;">Пока записей нет...</h6></div>';
 
-      userpic = document.body.querySelector(".userpic");
-
-      name = form_post.querySelector("#id_name").value;
+      name = new_name;
       li = document.createElement("li");
       li.classList.add("date", "list", "active");
-      new_pk = new_post.querySelector(".span_list_pk").getAttribute("list-pk");
       li.setAttribute("list-pk", new_pk);
 
       media = document.createElement("div");
@@ -826,12 +827,25 @@ on('#ajax', 'click', '#create_list_btn', function() {
       document.body.querySelector(".date-list").prepend(li);
     }
     else {
-      ajax = new_post.querySelector("#reload_block");
-      rtr = document.getElementById('ajax');
-      rtr.innerHTML = ajax.innerHTML;
-      window.scrollTo(0,0);
-      document.title = new_post.querySelector('title').innerHTML;
-      window.history.pushState({route: new_post.location.href}, "network", new_post.location.href);
+      if (is_community) {
+        creator_name = form_post.getAttribute("community-name");
+        creator_id = form_post.getAttribute("community-pk");
+        community_class = " community";
+      }
+      else {
+        creator_name = userpic.getAttribute("data-name");
+        creator_id = userpic.getAttribute("data-pk");
+        community_class = "";
+      }
+
+      new_list = "<li class='list_item drag_item' data-pk='" + new_pk + "'><div class='card file-manager-item folder border" + community_class + "' data-pk='" + creator_id + "' data-uuid='" + new_pk + "'><div class='card-img-top file-logo-wrapper'><div class='d-flex align-items-center justify-content-center w-100'><svg class='active svg_default list_toggle list_svg' width='50' height='50' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'><path d='M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z'></path></svg></div></div><div class='card-body pt-0'><div class='content-wrapper'><p class='card-text file-name mb-0 list_name active' style='text-align: left;' data-name='" + new_name + "'>" + new_name + "</p><p class='handle card-text file-size mb-0'>0</p></div><small class='file-accessed'><a class='ajax underline' href='" + creator_id + "'>" + creator_name + "</a></small></div></div></li>"
+      if (document.body.querySelector(".drag_list")) {
+        document.body.querySelector(".drag_list").append(new_list);
+      }
+      else {
+        new_block = "<ul class='drag_list' style='width:max-content;list-style: none;'>" + new_list + "</ul>";
+        document.body.querySelector(".col-12").append(new_block);
+      }
     };
     close_work_fullscreen();
   }};
