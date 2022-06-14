@@ -13,7 +13,6 @@ use crate::utils::{
     get_message,
     get_list_variables,
     get_device_and_page_and_ajax,
-    get_device_and_ajax,
 };
 use serde::Deserialize;
 use actix_session::Session;
@@ -180,8 +179,6 @@ pub async fn fixed_messages_page(session: Session, req: HttpRequest, _id: web::P
 
 pub async fn closed_support_chats_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        use crate::utils::get_device_and_page_and_ajax;
-
         let (is_desctop, page, is_ajax) = get_device_and_page_and_ajax(&req);
         let mut next_page_number = 0;
         let object_list: Vec<Chat>;
@@ -250,8 +247,6 @@ pub async fn closed_support_chats_page(session: Session, req: HttpRequest) -> ac
 
 pub async fn chat_page(session: Session, req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        use crate::utils::get_device_and_page_and_ajax;
-
         let _chat = get_chat(*_id);
 
         let (is_desctop, page, is_ajax) = get_device_and_page_and_ajax(&req);
@@ -850,7 +845,7 @@ pub async fn chat_info_page(session: Session, req: HttpRequest, _id: web::Path<i
 
 pub async fn favourites_messages_page(session: Session, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
-        let (is_desctop, page, is_ajax) = get_device_and_page_and_ajax(&req);
+        let (is_desctop, page, _is_ajax) = get_device_and_page_and_ajax(&req);
         let mut next_page_number = 0;
         let object_list: Vec<Message>;
 
@@ -878,14 +873,12 @@ pub async fn favourites_messages_page(session: Session, req: HttpRequest) -> act
                 count:            usize,
                 next_page_number: i32,
                 object_list:      Vec<Message>,
-                is_ajax:          bool,
             }
             let body = Template {
                 request_user:     _request_user,
                 count:            count,
                 next_page_number: next_page_number,
                 object_list:      object_list,
-                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -898,14 +891,12 @@ pub async fn favourites_messages_page(session: Session, req: HttpRequest) -> act
                 count:            usize,
                 next_page_number: i32,
                 object_list:      Vec<Message>,
-                is_ajax:          bool,
             }
             let body = Template {
                 request_user:     _request_user,
                 count:            count,
                 next_page_number: next_page_number,
                 object_list:      object_list,
-                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

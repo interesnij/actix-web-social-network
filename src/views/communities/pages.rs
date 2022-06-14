@@ -8,7 +8,6 @@ use actix_web::{
 
 use crate::utils::{
     is_signed_in,
-    is_desctop,
     get_request_user_data,
     get_community,
     get_community_with_link,

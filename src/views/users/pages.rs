@@ -8,12 +8,10 @@ use actix_web::{
 
 use crate::utils::{
     is_signed_in,
-    is_desctop,
     get_request_user_data,
     get_user,
     get_user_permission,
     get_anon_user_permission,
-    get_list_variables,
     get_device_and_ajax,
     get_device_and_page_and_ajax,
 };
