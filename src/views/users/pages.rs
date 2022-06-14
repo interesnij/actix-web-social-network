@@ -1981,6 +1981,7 @@ pub async fn user_photos_list_page(session: Session, req: HttpRequest, param: we
                 user:    _user,
                 list:    _list,
                 is_ajax: is_ajax,
+            }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
