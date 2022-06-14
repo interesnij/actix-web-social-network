@@ -44,7 +44,7 @@ pub fn get_page_and_ajax(req: &HttpRequest) -> (i32, bool) {
     }
     let params_some = web::Query::<Params>::from_query(&req.query_string());
     let page: i32;
-    let is_ajax: bool;
+    let mut is_ajax = false;
     if params_some.is_ok() {
         let params = params_some.unwrap();
         if params.page.is_some() {
@@ -56,13 +56,9 @@ pub fn get_page_and_ajax(req: &HttpRequest) -> (i32, bool) {
         if params.is_ajax.is_some() {
             is_ajax = true;
         }
-        else {
-            is_ajax = false;
-        }
     }
     else {
         page = 1;
-        is_ajax = false;
     }
     (page, is_ajax)
 }
@@ -72,18 +68,12 @@ pub fn get_ajax(req: &HttpRequest) -> bool {
         pub is_ajax: Option<bool>,
     }
     let params_some = web::Query::<Params>::from_query(&req.query_string());
-    let is_ajax: bool;
+    let mut is_ajax = false;
     if params_some.is_ok() {
         let params = params_some.unwrap();
         if params.is_ajax.is_some() {
             is_ajax = true;
         }
-        else {
-            is_ajax = false;
-        }
-    }
-    else {
-        is_ajax = false;
     }
     is_ajax
 }
@@ -93,7 +83,7 @@ pub fn get_device_and_ajax(req: &HttpRequest) -> (bool, bool) {
         pub is_ajax: Option<bool>,
     }
     let params_some = web::Query::<Params>::from_query(&req.query_string());
-    let is_ajax: bool;
+    let mut is_ajax = false;
     let _type: bool;
 
     if params_some.is_ok() {
@@ -101,12 +91,6 @@ pub fn get_device_and_ajax(req: &HttpRequest) -> (bool, bool) {
         if params.is_ajax.is_some() {
             is_ajax = true;
         }
-        else {
-            is_ajax = false;
-        }
-    }
-    else {
-        is_ajax = false;
     }
 
     for header in req.headers().into_iter() {
@@ -131,7 +115,7 @@ pub fn get_device_and_page_and_ajax(req: &HttpRequest) -> (bool, i32, bool) {
     }
     let params_some = web::Query::<Params>::from_query(&req.query_string());
     let page: i32;
-    let is_ajax: bool;
+    let mut is_ajax = false;
     if params_some.is_ok() {
         let params = params_some.unwrap();
         if params.page.is_some() {
@@ -143,37 +127,17 @@ pub fn get_device_and_page_and_ajax(req: &HttpRequest) -> (bool, i32, bool) {
         if params.is_ajax.is_some() {
             is_ajax = true;
         }
-        else {
-            is_ajax = false;
-        }
     }
     else {
         page = 1;
-        is_ajax = false;
     }
 
-    if params_some.is_ok() {
-        let params = params_some.unwrap();
-        if params.is_ajax.is_some() {
-            is_ajax = true;
-        }
-        else {
-            is_ajax = false;
-        }
-    }
-    else {
-        is_ajax = false;
-    }
-
-    let _type: bool;
+    let mut _type = true;
     for header in req.headers().into_iter() {
         if header.0 == "user-agent" {
             let _val = format!("{:?}", header.1);
             if _val.contains("Mobile"){
                 _type = false;
-            }
-            else {
-                _type = true;
             }
         }
     };
