@@ -1,6 +1,7 @@
+<div id="fullscreens_container"></div>
+
 <% if is_ajax == false { %>
 
-<div id="fullscreens_container"></div>
 </span>
 </div>
 <div class="col-md-0 col-lg-0 col-xl-2 clean_panel"></div>
