@@ -1341,15 +1341,20 @@ pub async fn all_reactions_page(session: Session, req: HttpRequest) -> actix_web
 
 pub async fn mobile_menu_page(session: Session) -> actix_web::Result<HttpResponse> {
     if is_signed_in(&session) {
+        use crate::utils::get_ajax;
+        
+        let is_ajax = get_ajax(&req);
         #[derive(TemplateOnce)]
         #[template(path = "mobile/main/menu.stpl")]
         struct Template {
             request_user: User,
+            is_ajax:      bool,
         }
 
         let _request_user = get_request_user_data(&session);
         let body = Template {
             request_user: _request_user,
+            is_ajax:      is_ajax,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
