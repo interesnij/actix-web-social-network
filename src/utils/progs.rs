@@ -1017,7 +1017,7 @@ pub fn get_formatted_text(text: &str) -> String {
                         }
                     }
                 }
-                if exists && !_exlude.iter().any(|i| i==&word) {
+                if exists && !_exlude.iter().any(|&i| &i==word) {
                     println!("упоминание есть!!");
                     _loop.push("".to_string());
                     next += 1;
