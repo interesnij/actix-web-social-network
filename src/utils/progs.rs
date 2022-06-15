@@ -1035,7 +1035,12 @@ pub fn get_formatted_text(text: &str) -> String {
                     _loop.push("".to_string());
                     p_2 = word.replace("трезвый.рус", "/").replace("http://", "").replace("https://", "");
                     next += 1;
-                    _loop[next] = _loop[this].replace(&(indent.to_owned() + &word), &(indent.to_owned() + &"<a class='ajax action'href='" + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"</a>".to_string()));
+                    if word.len() > 30 {
+                        _loop[next] = _loop[this].replace(&(indent.to_owned() + &word), &(indent.to_owned() + &"<a class='ajax action'href='" + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"</a>".to_string()));
+                    }
+                    else {
+                        _loop[next] = _loop[this].replace(&(indent.to_owned() + &word), &(indent.to_owned() + &"<a class='ajax action'href='" + &p_2 + &"'>".to_string() + &word.to_string() + &"</a>".to_string()));
+                    }
                     this += 1;
                 }
                 else {
