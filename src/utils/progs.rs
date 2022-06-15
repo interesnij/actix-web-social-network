@@ -974,12 +974,13 @@ pub fn get_formatted_text(text: &str) -> String {
                     }
                 }
                 else if custom_links
-                    .filter(schema::custom_links::link.eq(&word[..1]))
+                    .filter(schema::custom_links::link.eq(&word[1..]))
                     .load::<CustomLink>(&_connection)
                     .expect("E.")
                     .len() > 0 {
+                    println!("custom_links {:?}", &word[1..]);
                     let link_l = custom_links
-                        .filter(schema::custom_links::link.eq(&word[..1]))
+                        .filter(schema::custom_links::link.eq(&word[1..]))
                         .load::<CustomLink>(&_connection)
                         .expect("E.")
                         .into_iter()
