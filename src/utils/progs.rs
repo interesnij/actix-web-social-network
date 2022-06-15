@@ -944,7 +944,7 @@ pub fn get_formatted_text(text: &str) -> String {
                 let mut link = "".to_string();
                 if word[..3] == "@id" {
                     let users_list = users
-                        .filter(schema::users::link.eq("/" + word[..1] + "/"))
+                        .filter(schema::users::link.eq("/" + &word[..1] + "/"))
                         .load::<User>(&_connection)
                         .expect("E.");
                     if users_list.len() > 0 {
@@ -956,7 +956,7 @@ pub fn get_formatted_text(text: &str) -> String {
                 }
                 else if word[..7] == "@public" {
                     let communitys_list = communitys
-                        .filter(schema::communitys::link.eq("/" + word[..1] + "/"))
+                        .filter(schema::communitys::link.eq("/" + &word[..1] + "/"))
                         .load::<Community>(&_connection)
                         .expect("E.");
                     if communitys_list.len() > 0 {
@@ -967,12 +967,12 @@ pub fn get_formatted_text(text: &str) -> String {
                     }
                 }
                 else if custom_links
-                    .filter(schema::custom_links::link.eq(word[..1]))
+                    .filter(schema::custom_links::link.eq(&word[..1]))
                     .load::<CustomLink>(&_connection)
                     .expect("E.")
                     .len() > 0 {
                     let link_l = custom_links
-                        .filter(schema::custom_links::link.eq(word[..1]))
+                        .filter(schema::custom_links::link.eq(&word[..1]))
                         .load::<CustomLink>(&_connection)
                         .expect("E.")
                         .into_iter()
@@ -997,7 +997,7 @@ pub fn get_formatted_text(text: &str) -> String {
                         .expect("E.")
                         .len() > 0 {
                             let communitys_list = communitys
-                                .filter(schema::communitys::link.eq("/" + word[..1] + "/"))
+                                .filter(schema::communitys::link.eq("/" + link_l + "/"))
                                 .load::<Community>(&_connection)
                                 .expect("E.");
                             if communitys_list.len() > 0 {
