@@ -894,7 +894,7 @@ pub fn get_formatted_text(text: &str) -> String {
             ".vegas", ".ventures", ".vet", ".viajes", ".video", ".villas", ".vin", ".vip", ".vision", ".vodka", ".vote", ".voting",
             ".voto", ".voyage", ".watch", ".webcam", ".website", ".wedding", ".wien", ".wiki", ".win", ".wine", ".work", ".works",
             ".world", ".wtf", ".xyz", ".yoga", ".zone", ".дети", ".москва", ".онлайн", ".орг", ".рус", ".сайт"
-        ]
+        ];
     let _words = text
         .replace("<img src"," |<imgsrc")
         .replace(".png\">",".png'>| ")
@@ -910,15 +910,15 @@ pub fn get_formatted_text(text: &str) -> String {
 
         _loop.push(text);
         for word in words.iter().enumerate() {
+            if word == "".to_string() {
+                continue;
+            }
             let indent: &str;
             if count == 0 && count == words_count {
                 indent = "";
             }
             else {
                 indent = " ";
-            }
-            if word == "".to_string():
-                continue;
             }
 
             if word.contains("#") {
@@ -1048,7 +1048,8 @@ pub fn get_formatted_text(text: &str) -> String {
             let result = _loop[next].replace(" |<imgsrc","<img src").replace(".png\">| ",".png\">").replace(" <br> ","<br>");
             return result;
         }
-        else {
-            return text;
-        }
+    }
+    else {
+        return text;
+    }
 }
