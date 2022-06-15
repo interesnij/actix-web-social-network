@@ -930,7 +930,7 @@ pub fn get_formatted_text(text: &str) -> String {
                 //}
                 this += 1;
             }
-            else if word.as_bytes()[0] == "@" {
+            else if word[..1] == "@" {
                 use crate::models::{CustomLink, User, Community};
                 use crate::schema::{
                     custom_links::dsl::custom_links,
@@ -1018,7 +1018,7 @@ pub fn get_formatted_text(text: &str) -> String {
 
             else if word.contains(".") && !word.contains(".png") {
                 let mut p_2: &str;
-                if word[0] == "h" {
+                if word[..1] == "h" {
                     p_2 = word;
                 }
                 else {
