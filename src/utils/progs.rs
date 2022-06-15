@@ -927,7 +927,7 @@ pub fn get_formatted_text(text: &str) -> String {
                 next += 1;
 
                 //if word[0] == "#".to_string() {
-                _loop[next] = _loop[this].replace(indent + word, indent + "<a class='ajax action'href='/search/?q=%23'" + word + "'>" + word + "</a>", 1).replace("#<", "<");
+                _loop[next] = _loop[this].replace(indent.to_owned() + &word, indent.to_owned() + "<a class='ajax action'href='/search/?q=%23'" + word + "'>" + word + "</a>", 1).replace("#<", "<");
                 //}
             }
             else if word[0] == "@" {
@@ -1012,7 +1012,7 @@ pub fn get_formatted_text(text: &str) -> String {
                     _loop.append("".to_string());
                     this += 1;
                     next += 1;
-                    _loop[next] = _loop[this].replace(indent + word, indent + &"<a class='action ajax show_mention_info pointer'href='/'".to_string() + &word[..0].to_string() + &"/'>".to_string() + &name + &"</a>".to_string(), 1);
+                    _loop[next] = _loop[this].replace(indent.to_owned() + &word, indent.to_owned() + &"<a class='action ajax show_mention_info pointer'href='/'".to_string() + &word[..0].to_string() + &"/'>".to_string() + &name + &"</a>".to_string(), 1);
                 }
             }
 
@@ -1029,7 +1029,7 @@ pub fn get_formatted_text(text: &str) -> String {
                     p_2 = word.replace("трезвый.рус", "/").replace("http://", "").replace("https://", "");
                     this += 1;
                     next += 1;
-                    _loop[next] = _loop[this].replace(indent + &word, indent + &"<a class='ajax action'href='" + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"</a>".to_string(), 1);
+                    _loop[next] = _loop[this].replace(indent.to_owned() + &word, indent.to_owned() + &"<a class='ajax action'href='" + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"</a>".to_string(), 1);
                 }
                 else {
                     for zone in zons {
