@@ -905,8 +905,8 @@ pub fn get_formatted_text(text: &str) -> String {
     if words_count > 0 {
         let mut _loop: Vec<&str> = Vec::new();
         let mut _exlude: Vec<&str> = Vec::new();
-        let mut this: i8 = -1;
-        let mut next: i8 = 0;
+        let mut this: usize = -1;
+        let mut next: usize = 0;
 
         _loop.push(text);
         for (count, word) in words.iter().enumerate() {
