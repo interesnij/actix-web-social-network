@@ -1017,19 +1017,16 @@ pub fn get_formatted_text(text: &str) -> String {
                         }
                     }
                 }
-                if exists && !_exlude.iter().any(|i| &i==word) {
-                    println!("_exlude {:?}", _exlude);
-                    println!("word {:?}", word);
+                if exists {
                     println!("упоминание есть!!");
                     _loop.push("".to_string());
                     next += 1;
                     _loop[next] = _loop[this].replace(&(indent.to_owned() + &word), &(indent.to_owned() + &"<a class='action ajax show_mention_info pointer'href='/".to_string() + &word[1..].to_string() + &"/'>".to_string() + &name + &"</a>".to_string()));
                     this += 1;
-                    _exlude.push(word.to_string());
                 }
             }
 
-            else if word.contains(".") && !word.contains(".png") {
+            else if word.contains(".") && !word.contains(".png") &&  && !_exlude.iter().any(|i| &i==word) {
                 let mut p_2 = "".to_string();
                 if &word.chars().nth(0).unwrap() == &'h' {
                     p_2 = word.to_string();
@@ -1048,6 +1045,7 @@ pub fn get_formatted_text(text: &str) -> String {
                         _loop[next] = _loop[this].replace(&(indent.to_owned() + &word), &(indent.to_owned() + &"<a class='ajax action'href='" + &p_2 + &"'>".to_string() + &word.to_string() + &"</a>".to_string()));
                     }
                     this += 1;
+                    _exlude.push(word.to_string());
                 }
                 else {
                     for zone in zons {
@@ -1063,6 +1061,7 @@ pub fn get_formatted_text(text: &str) -> String {
                                     _loop[next] = _loop[this].replace(word, &("<a class='action'rel='nofollow'target='_blank'href='".to_string() + &p_2 + &"'>".to_string() + &word + &"</a>".to_string()));
                                 }
                                 this += 1;
+                                _exlude.push(word.to_string());
                             }
                         }
                     }
