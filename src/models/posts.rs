@@ -1787,7 +1787,7 @@ impl PostList {
         }
 
         if content.is_some() {
-            _content = Some(get_formatted_text(content.unwrap()));
+            _content = Some(get_formatted_text(&content.unwrap()));
         }
         let new_post_form = NewPost {
           content: _content,
