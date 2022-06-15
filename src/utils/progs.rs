@@ -916,14 +916,13 @@ pub fn get_formatted_text(text: &str) -> String {
                 continue;
             }
             let indent: &str;
-            if count == 0 && count == words_count {
+            let curr_count = count + 1;
+            if curr_count == 1 && curr_count == words_count {
                 indent = "";
             }
             else {
                 indent = " ";
             }
-            println!("enumerate {:?}", count);
-            println!("words_count {:?}", words_count);
 
             if word.contains("#") {
                 println!("word.contains('#')");
