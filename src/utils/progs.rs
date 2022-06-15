@@ -1044,7 +1044,8 @@ pub fn get_formatted_text(text: &str) -> String {
 
                             let count = zone.len();
                             println!("words_count {:?}", count);
-                            println!("&word[count..] {:?}", &word[..count]);
+                            println!("&word[count..] {:?}", &word[count..]);
+                            println!("zone {:?}", zone);
                             if &word[count..] == zone {
                                 _loop.push("".to_string());
                                 next += 1;
