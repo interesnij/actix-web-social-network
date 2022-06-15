@@ -926,7 +926,7 @@ pub fn get_formatted_text(text: &str) -> String {
                 next += 1;
 
                 //if word[0] == "#".to_string() {
-                _loop[next] = _loop[(this-1)..this].replace(indent.to_owned() + &word, &(indent.to_owned() + "<a class='ajax action'href='/search/?q=%23'" + word + "'>" + word + "</a>")).replace("#<", "<");
+                _loop[next] = _loop[this].replace(indent.to_owned() + &word, indent.to_owned() + "<a class='ajax action'href='/search/?q=%23'" + word + "'>" + word + "</a>").replace("#<", "<");
                 //}
                 this += 1;
             }
@@ -1029,7 +1029,7 @@ pub fn get_formatted_text(text: &str) -> String {
                     _loop.push("".to_string());
                     p_2 = &word.replace("трезвый.рус", "/").replace("http://", "").replace("https://", "");
                     next += 1;
-                    _loop[next] = _loop[this].unwrap().replace(indent.to_owned() + &word, &(indent.to_owned() + &"<a class='ajax action'href='" + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"</a>".to_string()));
+                    _loop[next] = _loop[this].replace(indent.to_owned() + &word, &(indent.to_owned() + &"<a class='ajax action'href='" + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"</a>".to_string()));
                     this += 1;
                 }
                 else {
