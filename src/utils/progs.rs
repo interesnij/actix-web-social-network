@@ -893,7 +893,7 @@ pub fn get_formatted_text(text: &str) -> String {
             ".top", ".tours", ".town", ".toys", ".trade", ".trading", ".training", ".tube", ".tv", ".university", ".uno", ".vacations",
             ".vegas", ".ventures", ".vet", ".viajes", ".video", ".villas", ".vin", ".vip", ".vision", ".vodka", ".vote", ".voting",
             ".voto", ".voyage", ".watch", ".webcam", ".website", ".wedding", ".wien", ".wiki", ".win", ".wine", ".work", ".works",
-            ".world", ".wtf", ".xyz", ".yoga", ".zone", ".дети", ".москва", ".онлайн", ".орг", ".рус", ".сайт"
+            ".world", ".wtf", ".html", ".xyz", ".yoga", ".zone", ".дети", ".москва", ".онлайн", ".орг", ".рус", ".сайт"
         ];
     let _words = text
         .replace("<img src"," |<imgsrc")
@@ -958,7 +958,7 @@ pub fn get_formatted_text(text: &str) -> String {
                         link = user.link;
                     }
                 }
-                else if &word[..7] == "@public" {
+                else if word.len() > 6 && &word[..7] == "@public" {
                     let communitys_list = communitys
                         .filter(schema::communitys::link.eq("/".to_owned() + &word[..1] + &"/".to_string()))
                         .load::<Community>(&_connection)
@@ -1036,7 +1036,7 @@ pub fn get_formatted_text(text: &str) -> String {
                     p_2 = word.replace("трезвый.рус", "/").replace("http://", "").replace("https://", "");
                     next += 1;
                     if word.len() > 30 {
-                        _loop[next] = _loop[this].replace(&(indent.to_owned() + &word), &(indent.to_owned() + &"<a class='ajax action'href='" + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"</a>".to_string()));
+                        _loop[next] = _loop[this].replace(&(indent.to_owned() + &word), &(indent.to_owned() + &"<a class='ajax action'href='" + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"...</a>".to_string()));
                     }
                     else {
                         _loop[next] = _loop[this].replace(&(indent.to_owned() + &word), &(indent.to_owned() + &"<a class='ajax action'href='" + &p_2 + &"'>".to_string() + &word.to_string() + &"</a>".to_string()));
@@ -1052,7 +1052,7 @@ pub fn get_formatted_text(text: &str) -> String {
                                 _loop.push("".to_string());
                                 next += 1;
                                 if word.len() > 30 {
-                                    _loop[next] = _loop[this].replace(word, &("<a class='action'rel='nofollow'target='_blank'href='".to_string() + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"</a>".to_string()));
+                                    _loop[next] = _loop[this].replace(word, &("<a class='action'rel='nofollow'target='_blank'href='".to_string() + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"...</a>".to_string()));
                                 }
                                 else {
                                     _loop[next] = _loop[this].replace(word, &("<a class='action'rel='nofollow'target='_blank'href='".to_string() + &p_2 + &"'>".to_string() + &word + &"</a>".to_string()));
