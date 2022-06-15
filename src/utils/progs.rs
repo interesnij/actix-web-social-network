@@ -947,6 +947,7 @@ pub fn get_formatted_text(text: &str) -> String {
                 let mut name = "".to_string();
                 let mut link = "".to_string();
                 if &word[..3] == "@id" {
+                    println!("word[..3] {:?}", &word[..3]);
                     let users_list = users
                         .filter(schema::users::link.eq("/".to_owned() + &word[..1] + &"/".to_string()))
                         .load::<User>(&_connection)
@@ -959,6 +960,7 @@ pub fn get_formatted_text(text: &str) -> String {
                     }
                 }
                 else if word.len() > 6 && &word[..7] == "@public" {
+                    println!("word[..7] {:?}", &word[..7]);
                     let communitys_list = communitys
                         .filter(schema::communitys::link.eq("/".to_owned() + &word[..1] + &"/".to_string()))
                         .load::<Community>(&_connection)
@@ -1021,17 +1023,14 @@ pub fn get_formatted_text(text: &str) -> String {
             }
 
             else if word.contains(".") && !word.contains(".png") {
-                println!("word.contains('.')");
                 let mut p_2 = "".to_string();
                 if &word.chars().nth(0).unwrap() == &'h' {
-                    println!("word.contains('h')");
                     p_2 = word.to_string();
                 }
                 else {
                     p_2 = "//".to_owned() + &word;
                 }
                 if word.contains("трезвый.рус") {
-                    println!("word.contains('трезвый.рус')");
                     _loop.push("".to_string());
                     p_2 = word.replace("трезвый.рус", "/").replace("http://", "").replace("https://", "");
                     next += 1;
@@ -1047,7 +1046,6 @@ pub fn get_formatted_text(text: &str) -> String {
                     for zone in zons {
                         if word.contains(zone) {
                             let _word_count = word.len() - zone.len();
-                            println!("words_count {:?}", _word_count);
                             if &word[_word_count..] == zone {
                                 _loop.push("".to_string());
                                 next += 1;
