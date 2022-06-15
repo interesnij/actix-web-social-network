@@ -971,7 +971,7 @@ pub fn get_formatted_text(text: &str) -> String {
                     .load::<CustomLink>(&_connection)
                     .expect("E.")
                     .len() > 0 {
-                    let link = custom_links
+                    let link_l = custom_links
                         .filter(schema::custom_links::link.eq(word[..1]))
                         .load::<CustomLink>(&_connection)
                         .expect("E.")
@@ -979,9 +979,9 @@ pub fn get_formatted_text(text: &str) -> String {
                         .nth(0)
                         .unwrap();
 
-                    if link.owner == 1 {
+                    if link_l.owner == 1 {
                         let users_list = users
-                            .filter(schema::users::link.eq(word[..1]))
+                            .filter(schema::users::link.eq("/" + link_l + "/"))
                             .load::<User>(&_connection)
                             .expect("E.");
                         if users_list.len() > 0 {
@@ -992,7 +992,7 @@ pub fn get_formatted_text(text: &str) -> String {
                         }
                     }
                     else if communitys
-                        .filter(schema::communitys::link.eq(word[..1]))
+                        .filter(schema::communitys::link.eq("/" + link_l + "/"))
                         .load::<Community>(&_connection)
                         .expect("E.")
                         .len() > 0 {
