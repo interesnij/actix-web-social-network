@@ -903,8 +903,8 @@ pub fn get_formatted_text(text: &str) -> String {
     let words: Vec<&str> = _words.split(" ").collect();
     let words_count = words.len();
     if words_count > 0 {
-        let mut _loop: Vec<&str> = Vec::new();
-        let mut _exlude: Vec<&str> = Vec::new();
+        let mut _loop: Vec<String> = Vec::new();
+        let mut _exlude: Vec<String> = Vec::new();
         let mut this: usize = 0;
         let mut next: usize = 0;
 
@@ -1036,7 +1036,7 @@ pub fn get_formatted_text(text: &str) -> String {
                         if word.contains(zone) {
                             let count = zone.len();
                             if &word[..count] == zone {
-                                _loop.push("");
+                                _loop.push("".to_string());
                                 next += 1;
                                 _loop[next] = &_loop[this].replace(word, &("<a class='action'rel='nofollow'target='_blank'href='".to_string() + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"</a>".to_string()));
                                 this += 1;
