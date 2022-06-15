@@ -844,7 +844,7 @@ pub fn custom_link_check(value: &str) -> (i8, String) {
 }
 
 pub fn get_formatted_text(text: &str) -> String {
-    let zons: Vec<&str> = [
+    let zons = [
             ".рф",".ru",".su",".net",".aero",".asia",".biz",".com",".info",".mobi",".name",".net",".org",".pro",".tel",
             ".travel",".xxx",".ad", ".ae", ".af", ".ai",
             ".al", ".am", ".aq", ".as", ".at", ".aw", ".ax", ".az", ".ba", ".be", ".bg", ".bh", ".bi", ".bj", ".bm",
@@ -909,7 +909,7 @@ pub fn get_formatted_text(text: &str) -> String {
         let mut next: i8 = 0;
 
         _loop.push(text);
-        for word in words.iter().enumerate() {
+        for (count, word) in words.iter().enumerate() {
             if word == "".to_string() {
                 continue;
             }
