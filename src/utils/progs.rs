@@ -930,7 +930,7 @@ pub fn get_formatted_text(text: &str) -> String {
                 //}
                 this += 1;
             }
-            else if &word.chars().nth(0).unwrap() == "@" {
+            else if &word.chars().nth(0).unwrap() == '@' {
                 use crate::models::{CustomLink, User, Community};
                 use crate::schema::{
                     custom_links::dsl::custom_links,
