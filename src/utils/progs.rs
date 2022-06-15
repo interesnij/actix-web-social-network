@@ -1044,8 +1044,8 @@ pub fn get_formatted_text(text: &str) -> String {
 
                             let count = zone.len();
                             println!("words_count {:?}", count);
-                            println!("&word[..count] {:?}", &word[..count]);
-                            if &word[..count] == zone {
+                            println!("&word[count..] {:?}", &word[..count]);
+                            if &word[count..] == zone {
                                 _loop.push("".to_string());
                                 next += 1;
                                 _loop[next] = _loop[this].replace(word, &("<a class='action'rel='nofollow'target='_blank'href='".to_string() + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"</a>".to_string()));
