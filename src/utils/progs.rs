@@ -1018,7 +1018,7 @@ pub fn get_formatted_text(text: &str) -> String {
 
             else if word.contains(".") && !word.contains(".png") {
                 let mut p_2 = "".to_string();
-                if &word[..1] == "h" {
+                if &word.chars().nth(0).unwrap() == &'h' { 
                     p_2 = word.to_string();
                 }
                 else {
