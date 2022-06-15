@@ -922,6 +922,8 @@ pub fn get_formatted_text(text: &str) -> String {
             else {
                 indent = " ";
             }
+            println!("enumerate {:?}", count);
+            println!("words_count {:?}", words_count);
 
             if word.contains("#") {
                 println!("word.contains('#')");
