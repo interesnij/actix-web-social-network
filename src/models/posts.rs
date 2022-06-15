@@ -1768,6 +1768,8 @@ impl PostList {
         comment_enabled: bool, is_signature: bool,
         types: Option<String>) -> Post {
 
+        use crate::utils::get_formatted_text;
+
         let _connection = establish_connection();
         diesel::update(self)
           .set(schema::post_lists::count.eq(self.count + 1))
@@ -1775,6 +1777,7 @@ impl PostList {
           .expect("Error.");
 
         let mut _types = "".to_string();
+        let mut _content: Option<String> = None;
 
         if types.is_some() {
             _types = types.unwrap();
@@ -1782,8 +1785,12 @@ impl PostList {
         else {
             _types = "a".to_string();
         }
+
+        if content.is_some() {
+            _content = Some(get_formatted_text(content.unwrap()));
+        }
         let new_post_form = NewPost {
-          content: content,
+          content: _content,
           community_id: self.community_id,
           post_categorie_id: category_id,
           user_id: user_id,
