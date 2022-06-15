@@ -947,7 +947,7 @@ pub fn get_formatted_text(text: &str) -> String {
                 let mut name = "".to_string();
                 let mut link = "".to_string();
                 if &word[..3] == "@id" {
-                    let _link = "/".to_owned() + &word[..1] + &"/".to_string();
+                    let _link = "/".to_owned() + &word[1..] + &"/".to_string();
                     let users_list = users
                         .filter(schema::users::link.eq(_link))
                         .load::<User>(&_connection)
@@ -962,7 +962,7 @@ pub fn get_formatted_text(text: &str) -> String {
                 else if word.len() > 6 && &word[..7] == "@public" {
                     println!("word[..7] {:?}", &word[..7]);
                     let communitys_list = communitys
-                        .filter(schema::communitys::link.eq("/".to_owned() + &word[..1] + &"/".to_string()))
+                        .filter(schema::communitys::link.eq("/".to_owned() + &word[1..] + &"/".to_string()))
                         .load::<Community>(&_connection)
                         .expect("E.");
                     if communitys_list.len() > 0 {
