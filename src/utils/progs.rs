@@ -949,7 +949,7 @@ pub fn get_formatted_text(text: &str) -> String {
                         .expect("E.");
                     if users_list.len() > 0 {
                         exists = true;
-                        let user = users_list[0];
+                        let user = users_list.into_iter().nth(0).unwrap();
                         name = user.get_full_name();
                         link = user.link;
                     }
@@ -961,7 +961,7 @@ pub fn get_formatted_text(text: &str) -> String {
                         .expect("E.");
                     if communitys_list.len() > 0 {
                         exists = true;
-                        let community = communitys_list[0];
+                        let community = communitys_list.into_iter().nth(0).unwrap();
                         name = community.name;
                         link = community.link;
                     }
@@ -986,7 +986,7 @@ pub fn get_formatted_text(text: &str) -> String {
                             .expect("E.");
                         if users_list.len() > 0 {
                             exists = true;
-                            let user = users_list[0];
+                            let user = users_list.into_iter().nth(0).unwrap();
                             name = user.get_full_name();
                             link = user.link;
                         }
@@ -1002,7 +1002,7 @@ pub fn get_formatted_text(text: &str) -> String {
                                 .expect("E.");
                             if communitys_list.len() > 0 {
                                 exists = true;
-                                let community = communitys_list[0];
+                                let community = communitys_list.into_iter().nth(0).unwrap();
                                 name = community.name;
                                 link = community.link;
                         }
@@ -1025,7 +1025,7 @@ pub fn get_formatted_text(text: &str) -> String {
                     p_2 = &("//".to_owned() + &word);
                 }
                 if word.contains("трезвый.рус") {
-                    _loop.push("");
+                    _loop.push("".to_string());
                     p_2 = &word.replace("трезвый.рус", "/").replace("http://", "").replace("https://", "");
                     next += 1;
                     _loop[next] = _loop[this].replace(indent.to_owned() + &word, &(indent.to_owned() + &"<a class='ajax action'href='" + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"</a>".to_string()));
