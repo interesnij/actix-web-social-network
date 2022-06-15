@@ -1045,9 +1045,9 @@ pub fn get_formatted_text(text: &str) -> String {
                     }
                 }
             }
-            let result = _loop[next].replace(" |<imgsrc","<img src").replace(".png\">| ",".png\">").replace(" <br> ","<br>");
-            return result;
         }
+        let result = _loop[next].replace(" |<imgsrc","<img src").replace(".png\">| ",".png\">").replace(" <br> ","<br>");
+        return result;
     }
     else {
         return text.to_string();
