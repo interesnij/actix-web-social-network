@@ -908,9 +908,9 @@ pub fn get_formatted_text(text: &str) -> String {
         let mut this: usize = 0;
         let mut next: usize = 0;
 
-        _loop.push(text);
+        _loop.push(text.to_string());
         for (count, word) in words.iter().enumerate() {
-            if word == "".to_string() {
+            if word.to_string() == "".to_string() {
                 continue;
             }
             let indent: &str;
