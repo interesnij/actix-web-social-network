@@ -981,7 +981,7 @@ pub fn get_formatted_text(text: &str) -> String {
 
                     if link_l.owner == 1 {
                         let users_list = users
-                            .filter(schema::users::link.eq("/" + link_l + "/"))
+                            .filter(schema::users::link.eq("/" + &link_l + "/"))
                             .load::<User>(&_connection)
                             .expect("E.");
                         if users_list.len() > 0 {
@@ -992,12 +992,12 @@ pub fn get_formatted_text(text: &str) -> String {
                         }
                     }
                     else if communitys
-                        .filter(schema::communitys::link.eq("/" + link_l + "/"))
+                        .filter(schema::communitys::link.eq("/" + &link_l + "/"))
                         .load::<Community>(&_connection)
                         .expect("E.")
                         .len() > 0 {
                             let communitys_list = communitys
-                                .filter(schema::communitys::link.eq("/" + link_l + "/"))
+                                .filter(schema::communitys::link.eq("/" + &link_l + "/"))
                                 .load::<Community>(&_connection)
                                 .expect("E.");
                             if communitys_list.len() > 0 {
