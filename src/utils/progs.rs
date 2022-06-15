@@ -1019,14 +1019,14 @@ pub fn get_formatted_text(text: &str) -> String {
             else if word.contains(".") && !word.contains(".png") {
                 let mut p_2 = "".to_string();
                 if &word[..1] == "h" {
-                    p_2 = word;
+                    p_2 = word.to_string();
                 }
                 else {
                     p_2 = "//".to_owned() + &word;
                 }
                 if word.contains("трезвый.рус") {
                     _loop.push("".to_string());
-                    p_2 = &word.replace("трезвый.рус", "/").replace("http://", "").replace("https://", "");
+                    p_2 = word.replace("трезвый.рус", "/").replace("http://", "").replace("https://", "");
                     next += 1;
                     _loop[next] = _loop[this].replace(&(indent.to_owned() + &word), &(indent.to_owned() + &"<a class='ajax action'href='" + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"</a>".to_string()));
                     this += 1;
