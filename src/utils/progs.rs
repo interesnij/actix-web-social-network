@@ -1046,7 +1046,12 @@ pub fn get_formatted_text(text: &str) -> String {
                             if &word[_word_count..] == zone {
                                 _loop.push("".to_string());
                                 next += 1;
-                                _loop[next] = _loop[this].replace(word, &("<a class='action'rel='nofollow'target='_blank'href='".to_string() + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"</a>".to_string()));
+                                if word.len() > 30 {
+                                    _loop[next] = _loop[this].replace(word, &("<a class='action'rel='nofollow'target='_blank'href='".to_string() + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"</a>".to_string()));
+                                }
+                                else {
+                                    _loop[next] = _loop[this].replace(word, &("<a class='action'rel='nofollow'target='_blank'href='".to_string() + &p_2 + &"'>".to_string() + &word + &"</a>".to_string()));
+                                }
                                 this += 1;
                             }
                         }
