@@ -1017,12 +1017,12 @@ pub fn get_formatted_text(text: &str) -> String {
             }
 
             else if word.contains(".") && !word.contains(".png") {
-                let mut p_2: &str;
+                let mut p_2 = "".to_string();
                 if &word[..1] == "h" {
                     p_2 = word;
                 }
                 else {
-                    p_2 = &("//".to_owned() + &word);
+                    p_2 = "//".to_owned() + &word;
                 }
                 if word.contains("трезвый.рус") {
                     _loop.push("".to_string());
