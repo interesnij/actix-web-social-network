@@ -948,6 +948,7 @@ pub fn get_formatted_text(text: &str) -> String {
                 let mut link = "".to_string();
                 if &word[..3] == "@id" {
                     let _link = "/".to_owned() + &word[1..] + &"/".to_string();
+                    println!("_link {:?}", _link);
                     let users_list = users
                         .filter(schema::users::link.eq(_link))
                         .load::<User>(&_connection)
