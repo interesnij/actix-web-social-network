@@ -947,9 +947,9 @@ pub fn get_formatted_text(text: &str) -> String {
                 let mut name = "".to_string();
                 let mut link = "".to_string();
                 if &word[..3] == "@id" {
-                    println!("word[..3] {:?}", &word[..3]);
+                    let _link = "/".to_owned() + &word[..1] + &"/".to_string();
                     let users_list = users
-                        .filter(schema::users::link.eq("/".to_owned() + &word[..1] + &"/".to_string()))
+                        .filter(schema::users::link.eq(_link))
                         .load::<User>(&_connection)
                         .expect("E.");
                     if users_list.len() > 0 {
@@ -1015,6 +1015,7 @@ pub fn get_formatted_text(text: &str) -> String {
                     }
                 }
                 if exists {
+                    println!("упоминание есть!!");
                     _loop.push("".to_string());
                     next += 1;
                     _loop[next] = _loop[this].replace(&(indent.to_owned() + &word), &(indent.to_owned() + &"<a class='action ajax show_mention_info pointer'href='/'".to_string() + &word[..0].to_string() + &"/'>".to_string() + &name + &"</a>".to_string()));
