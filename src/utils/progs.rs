@@ -905,7 +905,7 @@ pub fn get_formatted_text(text: &str) -> String {
     if words_count > 0 {
         let mut _loop: Vec<&str> = Vec::new();
         let mut _exlude: Vec<&str> = Vec::new();
-        let mut this: usize = -1;
+        let mut this: usize = 0;
         let mut next: usize = 0;
 
         _loop.push(text);
@@ -923,12 +923,12 @@ pub fn get_formatted_text(text: &str) -> String {
 
             if word.contains("#") {
                 _loop.push("".to_string());
-                this += 1;
                 next += 1;
 
                 //if word[0] == "#".to_string() {
-                _loop[next] = &_loop[this].replace(indent.to_owned() + &word, indent.to_owned() + "<a class='ajax action'href='/search/?q=%23'" + word + "'>" + word + "</a>").replace("#<", "<");
+                _loop[next] = &_loop[this].replace(indent.to_owned() + &word, &(indent.to_owned() + "<a class='ajax action'href='/search/?q=%23'" + word + "'>" + word + "</a>")).replace("#<", "<");
                 //}
+                this += 1;
             }
             else if word[0] == "@" {
                 use crate::models::{CustomLink, User, Community};
@@ -1010,9 +1010,9 @@ pub fn get_formatted_text(text: &str) -> String {
                 }
                 if exists {
                     _loop.append("".to_string());
-                    this += 1;
                     next += 1;
-                    _loop[next] = &_loop[this].replace(indent.to_owned() + &word, indent.to_owned() + &"<a class='action ajax show_mention_info pointer'href='/'".to_string() + &word[..0].to_string() + &"/'>".to_string() + &name + &"</a>".to_string());
+                    _loop[next] = &_loop[this].replace(indent.to_owned() + &word, &(indent.to_owned() + &"<a class='action ajax show_mention_info pointer'href='/'".to_string() + &word[..0].to_string() + &"/'>".to_string() + &name + &"</a>".to_string()));
+                    this += 1;
                 }
             }
 
@@ -1027,9 +1027,9 @@ pub fn get_formatted_text(text: &str) -> String {
                 if word.contains("трезвый.рус") {
                     _loop.push("");
                     p_2 = &word.replace("трезвый.рус", "/").replace("http://", "").replace("https://", "");
-                    this += 1;
                     next += 1;
-                    _loop[next] = &_loop[this].replace(indent.to_owned() + &word, indent.to_owned() + &"<a class='ajax action'href='" + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"</a>".to_string());
+                    _loop[next] = &_loop[this].replace(indent.to_owned() + &word, &(indent.to_owned() + &"<a class='ajax action'href='" + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"</a>".to_string()));
+                    this += 1;
                 }
                 else {
                     for zone in zons {
@@ -1037,9 +1037,9 @@ pub fn get_formatted_text(text: &str) -> String {
                             let count = zone.len();
                             if &word[..count] == zone {
                                 _loop.push("");
-                                this += 1;
                                 next += 1;
-                                _loop[next] = &_loop[this].replace(word, "<a class='action'rel='nofollow'target='_blank'href='".to_string() + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"</a>".to_string());
+                                _loop[next] = &_loop[this].replace(word, &("<a class='action'rel='nofollow'target='_blank'href='".to_string() + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"</a>".to_string()));
+                                this += 1;
                             }
                         }
                     }
