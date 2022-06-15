@@ -1041,12 +1041,9 @@ pub fn get_formatted_text(text: &str) -> String {
                 else {
                     for zone in zons {
                         if word.contains(zone) {
-
-                            let count = zone.len();
-                            println!("words_count {:?}", count);
-                            println!("&word[count..] {:?}", &word[count..]);
-                            println!("zone {:?}", zone);
-                            if &word[count..] == zone {
+                            let _word_count = word.len() - zone.len();
+                            println!("words_count {:?}", _word_count);
+                            if &word[_word_count..] == zone {
                                 _loop.push("".to_string());
                                 next += 1;
                                 _loop[next] = _loop[this].replace(word, &("<a class='action'rel='nofollow'target='_blank'href='".to_string() + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"</a>".to_string()));
