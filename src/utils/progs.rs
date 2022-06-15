@@ -926,7 +926,7 @@ pub fn get_formatted_text(text: &str) -> String {
                 next += 1;
 
                 //if word[0] == "#".to_string() {
-                _loop[next] = &_loop[this].replace(indent.to_owned() + &word, &(indent.to_owned() + "<a class='ajax action'href='/search/?q=%23'" + word + "'>" + word + "</a>")).replace("#<", "<");
+                _loop[next] = _loop[this].replace(indent.to_owned() + &word, &(indent.to_owned() + "<a class='ajax action'href='/search/?q=%23'" + word + "'>" + word + "</a>")).replace("#<", "<");
                 //}
                 this += 1;
             }
@@ -1011,7 +1011,7 @@ pub fn get_formatted_text(text: &str) -> String {
                 if exists {
                     _loop.append("".to_string());
                     next += 1;
-                    _loop[next] = &_loop[this].replace(indent.to_owned() + &word, &(indent.to_owned() + &"<a class='action ajax show_mention_info pointer'href='/'".to_string() + &word[..0].to_string() + &"/'>".to_string() + &name + &"</a>".to_string()));
+                    _loop[next] = _loop[this].replace(indent.to_owned() + &word, &(indent.to_owned() + &"<a class='action ajax show_mention_info pointer'href='/'".to_string() + &word[..0].to_string() + &"/'>".to_string() + &name + &"</a>".to_string()));
                     this += 1;
                 }
             }
@@ -1028,7 +1028,7 @@ pub fn get_formatted_text(text: &str) -> String {
                     _loop.push("");
                     p_2 = &word.replace("трезвый.рус", "/").replace("http://", "").replace("https://", "");
                     next += 1;
-                    _loop[next] = &_loop[this].replace(indent.to_owned() + &word, &(indent.to_owned() + &"<a class='ajax action'href='" + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"</a>".to_string()));
+                    _loop[next] = _loop[this].replace(indent.to_owned() + &word, &(indent.to_owned() + &"<a class='ajax action'href='" + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"</a>".to_string()));
                     this += 1;
                 }
                 else {
@@ -1038,7 +1038,7 @@ pub fn get_formatted_text(text: &str) -> String {
                             if &word[..count] == zone {
                                 _loop.push("".to_string());
                                 next += 1;
-                                _loop[next] = &_loop[this].replace(word, &("<a class='action'rel='nofollow'target='_blank'href='".to_string() + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"</a>".to_string()));
+                                _loop[next] = _loop[this].replace(word, &("<a class='action'rel='nofollow'target='_blank'href='".to_string() + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"</a>".to_string()));
                                 this += 1;
                             }
                         }
