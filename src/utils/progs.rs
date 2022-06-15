@@ -902,6 +902,8 @@ pub fn get_formatted_text(text: &str) -> String {
         .replace("  "," ");
     let words: Vec<&str> = _words.split(" ").collect();
     let words_count = words.len();
+    println!("words_count {:?}", words_count);
+
     if words_count > 0 {
         let mut _loop: Vec<String> = Vec::new();
         let mut _exlude: Vec<String> = Vec::new();
@@ -922,6 +924,7 @@ pub fn get_formatted_text(text: &str) -> String {
             }
 
             if word.contains("#") {
+                println!("word.contains('#')");
                 _loop.push("".to_string());
                 next += 1;
 
@@ -931,6 +934,7 @@ pub fn get_formatted_text(text: &str) -> String {
                 this += 1;
             }
             else if &word.chars().nth(0).unwrap() == &'@' {
+                println!("word.contains('@')");
                 use crate::models::{CustomLink, User, Community};
                 use crate::schema::{
                     custom_links::dsl::custom_links,
@@ -1017,8 +1021,9 @@ pub fn get_formatted_text(text: &str) -> String {
             }
 
             else if word.contains(".") && !word.contains(".png") {
+                println!("word.contains('.')");
                 let mut p_2 = "".to_string();
-                if &word.chars().nth(0).unwrap() == &'h' { 
+                if &word.chars().nth(0).unwrap() == &'h' {
                     p_2 = word.to_string();
                 }
                 else {
@@ -1047,9 +1052,11 @@ pub fn get_formatted_text(text: &str) -> String {
             }
         }
         let result = &_loop[next].replace(" |<imgsrc","<img src").replace(".png\">| ",".png\">").replace(" <br> ","<br>");
+        println!("return result!!!");
         return result.to_string();
     }
     else {
+        println!("return text((((");
         return text.to_string();
     }
 }
