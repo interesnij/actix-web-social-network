@@ -930,7 +930,7 @@ pub fn get_formatted_text(text: &str) -> String {
                 //}
                 this += 1;
             }
-            else if word[0] == "@" {
+            else if word.as_bytes()[0] == "@" {
                 use crate::models::{CustomLink, User, Community};
                 use crate::schema::{
                     custom_links::dsl::custom_links,
@@ -942,7 +942,7 @@ pub fn get_formatted_text(text: &str) -> String {
                 let mut exists = false;
                 let mut name = "".to_string();
                 let mut link = "".to_string();
-                if word[..3] == "@id" {
+                if &word[..3] == "@id" {
                     let users_list = users
                         .filter(schema::users::link.eq("/".to_owned() + &word[..1] + &"/".to_string()))
                         .load::<User>(&_connection)
@@ -954,7 +954,7 @@ pub fn get_formatted_text(text: &str) -> String {
                         link = user.link;
                     }
                 }
-                else if word[..7] == "@public" {
+                else if &word[..7] == "@public" {
                     let communitys_list = communitys
                         .filter(schema::communitys::link.eq("/".to_owned() + &word[..1] + &"/".to_string()))
                         .load::<Community>(&_connection)
