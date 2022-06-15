@@ -1024,12 +1024,14 @@ pub fn get_formatted_text(text: &str) -> String {
                 println!("word.contains('.')");
                 let mut p_2 = "".to_string();
                 if &word.chars().nth(0).unwrap() == &'h' {
+                    println!("word.contains('h')");
                     p_2 = word.to_string();
                 }
                 else {
                     p_2 = "//".to_owned() + &word;
                 }
                 if word.contains("трезвый.рус") {
+                    println!("word.contains('трезвый.рус')");
                     _loop.push("".to_string());
                     p_2 = word.replace("трезвый.рус", "/").replace("http://", "").replace("https://", "");
                     next += 1;
@@ -1039,7 +1041,10 @@ pub fn get_formatted_text(text: &str) -> String {
                 else {
                     for zone in zons {
                         if word.contains(zone) {
+
                             let count = zone.len();
+                            println!("words_count {:?}", count);
+                            println!("&word[..count] {:?}", &word[..count]);
                             if &word[..count] == zone {
                                 _loop.push("".to_string());
                                 next += 1;
