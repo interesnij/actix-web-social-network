@@ -935,7 +935,7 @@ pub fn get_formatted_text(text: &str) -> String {
             }
             else if &word.chars().nth(0).unwrap() == &'@' {
                 println!("word.contains('@')");
-                use crate::models::{CustomLink, User, Community};
+                use crate::models::CustomLink;
                 use crate::schema::{
                     custom_links::dsl::custom_links,
                     users::dsl::users,
