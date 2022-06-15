@@ -992,12 +992,12 @@ pub fn get_formatted_text(text: &str) -> String {
                         }
                     }
                     else if communitys
-                        .filter(schema::communitys::link.eq("/" + &link_l.link + "/"))
+                        .filter(schema::communitys::link.eq("/".to_owned() + &link_l.link + &"/".to_string()))
                         .load::<Community>(&_connection)
                         .expect("E.")
                         .len() > 0 {
                             let communitys_list = communitys
-                                .filter(schema::communitys::link.eq("/" + link_l + "/"))
+                                .filter(schema::communitys::link.eq("/".to_owned() + &link_l.link + &"/".to_string()))
                                 .load::<Community>(&_connection)
                                 .expect("E.");
                             if communitys_list.len() > 0 {
