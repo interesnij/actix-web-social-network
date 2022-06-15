@@ -1009,9 +1009,9 @@ pub fn get_formatted_text(text: &str) -> String {
                     }
                 }
                 if exists {
-                    _loop.append("".to_string());
+                    _loop.push("".to_string());
                     next += 1;
-                    _loop[next] = _loop[this].replace(indent.to_owned() + &word, &(indent.to_owned() + &"<a class='action ajax show_mention_info pointer'href='/'".to_string() + &word[..0].to_string() + &"/'>".to_string() + &name + &"</a>".to_string()));
+                    _loop[next] = _loop[this].to_string().replace(indent.to_owned() + &word, &(indent.to_owned() + &"<a class='action ajax show_mention_info pointer'href='/'".to_string() + &word[..0].to_string() + &"/'>".to_string() + &name + &"</a>".to_string()));
                     this += 1;
                 }
             }
