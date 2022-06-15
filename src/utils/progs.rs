@@ -1051,5 +1051,4 @@ pub fn get_formatted_text(text: &str) -> String {
         else {
             return text;
         }
-    }
 }
