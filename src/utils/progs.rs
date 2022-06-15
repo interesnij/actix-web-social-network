@@ -1039,7 +1039,7 @@ pub fn get_formatted_text(text: &str) -> String {
                                 _loop.push("");
                                 this += 1;
                                 next += 1;
-                                _loop[next] = _loop[this].replace(word, "<a class='action'rel='nofollow'target='_blank'href='".to_string() + &p_2 + &"'>".to_string() + &word[:30].to_string() + &"</a>".to_string(), 1);
+                                _loop[next] = _loop[this].replace(word, "<a class='action'rel='nofollow'target='_blank'href='".to_string() + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"</a>".to_string(), 1);
                             }
                         }
                     }
@@ -1050,6 +1050,6 @@ pub fn get_formatted_text(text: &str) -> String {
         }
     }
     else {
-        return text;
+        return text.to_string();
     }
 }
