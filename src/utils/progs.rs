@@ -944,7 +944,7 @@ pub fn get_formatted_text(text: &str) -> String {
                 let mut link = "".to_string();
                 if word[..3] == "@id" {
                     let users_list = users
-                        .filter(schema::users::link.eq("/" + &word[..1] + "/"))
+                        .filter(schema::users::link.eq("/".to_owned() + &word[..1] + &"/".to_string()))
                         .load::<User>(&_connection)
                         .expect("E.");
                     if users_list.len() > 0 {
@@ -956,7 +956,7 @@ pub fn get_formatted_text(text: &str) -> String {
                 }
                 else if word[..7] == "@public" {
                     let communitys_list = communitys
-                        .filter(schema::communitys::link.eq("/" + &word[..1] + "/"))
+                        .filter(schema::communitys::link.eq("/".to_owned() + &word[..1] + &"/".to_string()))
                         .load::<Community>(&_connection)
                         .expect("E.");
                     if communitys_list.len() > 0 {
@@ -981,7 +981,7 @@ pub fn get_formatted_text(text: &str) -> String {
 
                     if link_l.owner == 1 {
                         let users_list = users
-                            .filter(schema::users::link.eq("/" + &link_l.link + "/"))
+                            .filter(schema::users::link.eq("/".to_owned() + &link_l.link + &"/".to_string()))
                             .load::<User>(&_connection)
                             .expect("E.");
                         if users_list.len() > 0 {
