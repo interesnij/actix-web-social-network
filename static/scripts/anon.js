@@ -510,7 +510,7 @@ function send_user_form (url) {
   request_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
   request_2.open( 'GET', url, true );
   request_2.onreadystatechange = function() {
-      if (request_2.readyState == 4 && request.status == 200) {
+      if (request_2.readyState == 4 && request_2.status == 200) {
         window.location.href = "/"
       }
   }
