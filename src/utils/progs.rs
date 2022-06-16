@@ -925,13 +925,13 @@ pub fn get_formatted_text(text: &str) -> String {
             }
             let first_char = &word.chars().nth(0).unwrap();
 
-            if first_char == &'#' && !_exlude.iter().any(|i| &i==word) {
+            if first_char == &'#' {
                 println!("first_char == #");
                 _loop.push("".to_string());
                 next += 1;
-                _loop[next] = _loop[this].replace(&(indent.to_owned() + &word), &(indent.to_owned() + "<a class='ajax action'href='/search/?q=%23" + word + "'>" + word + "</a>")).replace("#<", "<");
+                _loop[next] = _loop[this].replace(&(" ".to_owned() + &word), &(indent.to_owned() + "<a class='ajax action'href='/search/?q=%23" + word + "'>" + word + "</a>")).replace("#<", "<");
                 this += 1;
-                _exlude.push(word.to_string());
+                //_exlude.push(word.to_string());
             }
             else if first_char == &'@' {
                 println!("first_char == @");
@@ -1066,7 +1066,7 @@ pub fn get_formatted_text(text: &str) -> String {
                     }
                 }
             }
-            println!("word {:?}", &word);
+            println!("word {:?}", word);
         }
         let result = &_loop[next].replace(" |<imgsrc","<img src").replace(".png\">| ",".png\">").replace(" <br> ","<br>");
         println!("return result!!!");
