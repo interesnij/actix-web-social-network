@@ -1054,7 +1054,7 @@ pub fn get_formatted_text(text: &str) -> String {
                                 _loop.push("".to_string());
                                 next += 1;
                                 if word.len() > 30 {
-                                    _loop[next] = _loop[this].replace(word, &("<a class='action'rel='nofollow'target='_blank'href='".to_string() + &p_2 + &"'>".to_string() + &word[..30].to_string() + &"...</a>".to_string()));
+                                    _loop[next] = _loop[this].replace(word, &("<a class='action'rel='nofollow'target='_blank'href='".to_string() + &p_2 + &"'>".to_string() + &word.to_string() + &"...</a>".to_string()));
                                 }
                                 else {
                                     _loop[next] = _loop[this].replace(word, &("<a class='action'rel='nofollow'target='_blank'href='".to_string() + &p_2 + &"'>".to_string() + &word + &"</a>".to_string()));
