@@ -1048,17 +1048,16 @@ pub fn get_formatted_text(text: &str) -> String {
                 }
                 else {
                     for zone in zons {
-                        if word.contains(zone) {
+                        if word.contains(zone) && !_exlude.iter().any(|i| &i==word) {
                             let _word_count = word.len() - zone.len();
                             if &word[_word_count..] == zone || word.contains("/") {
                                 _loop.push("".to_string());
-                                let name = &word;
                                 next += 1;
                                 if word.len() > 30 {
-                                    _loop[next] = _loop[this].replace(&(indent.to_owned() + &word), &("<a class='action'rel='nofollow'target='_blank'href='".to_string() + &p_2 + &"'>".to_string() + &name + &"...</a>".to_string()));
+                                    _loop[next] = _loop[this].replace(&(indent.to_owned() + &word), &("<a class='action'rel='nofollow'target='_blank'href='".to_string() + &p_2 + &"'>".to_string() + &word + &"...</a>".to_string()));
                                 }
                                 else {
-                                    _loop[next] = _loop[this].replace(&(indent.to_owned() + &word), &("<a class='action'rel='nofollow'target='_blank'href='".to_string() + &p_2 + &"'>".to_string() + &name + &"</a>".to_string()));
+                                    _loop[next] = _loop[this].replace(&(indent.to_owned() + &word), &("<a class='action'rel='nofollow'target='_blank'href='".to_string() + &p_2 + &"'>".to_string() + &word + &"</a>".to_string()));
                                 }
                                 this += 1;
                                 _exlude.push(word.to_string());
