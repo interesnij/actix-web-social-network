@@ -826,7 +826,7 @@ on('#ajax', 'input', '.smile_supported', function() {
   if (_this.innerHTML = "<br>") {
     _this.innerHTML = "";
   }
-  else if (_this.classList.contains("chat_message_text")){
+  if (_this.classList.contains("chat_message_text")){
     if (document.body.querySelector(".chatlist")) {
       check_message_form_btn()
     };
