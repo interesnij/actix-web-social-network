@@ -338,7 +338,7 @@ pub async fn private_settings_page(session: Session, req: HttpRequest) -> actix_
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         } else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/users/settings/design_settings.stpl")]
+            #[template(path = "mobile/users/settings/private_settings.stpl")]
             struct Template {
                 request_user: User,
                 private:      UserPrivate,

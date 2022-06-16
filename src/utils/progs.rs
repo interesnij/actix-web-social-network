@@ -1029,7 +1029,7 @@ pub fn get_formatted_text(text: &str) -> String {
                 let mut p_2: String;
                 if &word.chars().nth(0).unwrap() == &'h' {
                     p_2 = word.to_string();
-                }
+                } 
                 else {
                     p_2 = "//".to_owned() + &word;
                 }
