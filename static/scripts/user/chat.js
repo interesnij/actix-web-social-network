@@ -822,9 +822,9 @@ on('#ajax', 'click', '.chat_items_toggle', function() {
 
 on('#ajax', 'input', '.smile_supported', function() {
   _this = this;
-  console.log(_this.value);
-  if (_this.value = "<br>") {
-    _this.value = "";
+  console.log(_this.innerHTML);
+  if (_this.innerHTML = "<br>") {
+    _this.innerHTML = "";
   }
   else if (_this.classList.contains("chat_message_text")){
     if (document.body.querySelector(".chatlist")) {
