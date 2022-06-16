@@ -945,7 +945,7 @@ pub fn get_formatted_text(text: &str) -> String {
                 let _connection = establish_connection();
                 let mut exists = false;
                 let mut name = "".to_string();
-                let mut link = "".to_string();
+                //let mut link = "".to_string();
                 if &word[..3] == "@id" {
                     let _link = "/".to_owned() + &word[1..] + &"/".to_string();
                     println!("_link {:?}", _link);
@@ -957,7 +957,7 @@ pub fn get_formatted_text(text: &str) -> String {
                         exists = true;
                         let user = users_list.into_iter().nth(0).unwrap();
                         name = user.get_full_name();
-                        link = user.link;
+                        //link = user.link;
                     }
                 }
                 else if word.len() > 6 && &word[..7] == "@public" {
@@ -970,7 +970,7 @@ pub fn get_formatted_text(text: &str) -> String {
                         exists = true;
                         let community = communitys_list.into_iter().nth(0).unwrap();
                         name = community.name;
-                        link = community.link;
+                        //link = community.link;
                     }
                 }
                 else if custom_links
@@ -996,7 +996,7 @@ pub fn get_formatted_text(text: &str) -> String {
                             exists = true;
                             let user = users_list.into_iter().nth(0).unwrap();
                             name = user.get_full_name();
-                            link = user.link;
+                            //link = user.link;
                         }
                     }
                     else if communitys
@@ -1012,7 +1012,7 @@ pub fn get_formatted_text(text: &str) -> String {
                                 exists = true;
                                 let community = communitys_list.into_iter().nth(0).unwrap();
                                 name = community.name;
-                                link = community.link;
+                                //link = community.link;
                         }
                     }
                 }
@@ -1026,7 +1026,7 @@ pub fn get_formatted_text(text: &str) -> String {
             }
 
             else if word.contains(".") && !word.contains(".png") && !_exlude.iter().any(|i| &i==word) {
-                let mut p_2 = "".to_string();
+                //let mut p_2 = "".to_string();
                 if &word.chars().nth(0).unwrap() == &'h' {
                     p_2 = word.to_string();
                 }
