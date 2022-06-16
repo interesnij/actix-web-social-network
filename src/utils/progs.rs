@@ -929,7 +929,7 @@ pub fn get_formatted_text(text: &str) -> String {
                 println!("first_char == #");
                 _loop.push("".to_string());
                 next += 1;
-                _loop[next] = _loop[this].replace(&word, &(" ".to_owned() + "<a class='ajax action'href='/search/?q=%23" + word + "'>" + word + "</a>")).replace("#<", "<");
+                _loop[next] = _loop[this].replace(word, &(" ".to_owned() + "<a class='ajax action'href='/search/?q=%23" + word + "'>" + word + "</a>")).replace("#<", "<");
                 this += 1;
                 //_exlude.push(word.to_string());
             }
