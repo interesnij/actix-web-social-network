@@ -823,7 +823,7 @@ on('#ajax', 'click', '.chat_items_toggle', function() {
 on('#ajax', 'input', '.smile_supported', function() {
   _this = this;
   console.log(_this.innerHTML);
-  if (_this.innerHTML = "<br>") {
+  if (_this.innerHTML == "<br>") {
     _this.innerHTML = "";
   }
   if (_this.classList.contains("chat_message_text")){
