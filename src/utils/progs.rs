@@ -1050,7 +1050,7 @@ pub fn get_formatted_text(text: &str) -> String {
                     for zone in zons {
                         if word.contains(zone) {
                             let _word_count = word.len() - zone.len();
-                            if &word[_word_count..] == zone && word.contains("/") {
+                            if &word[_word_count..] == zone || word.contains("/") {
                                 _loop.push("".to_string());
                                 next += 1;
                                 if word.len() > 30 {
