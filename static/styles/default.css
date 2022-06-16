@@ -280,7 +280,9 @@ button {
 .smile_supported {
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 200px
+  max-height: 200px;
+  display: inline-block !important;
+  height: auto !important;
 }
 .border_red {
   border: 1px #FF0000 solid !important
