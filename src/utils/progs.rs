@@ -1066,6 +1066,7 @@ pub fn get_formatted_text(text: &str) -> String {
                     }
                 }
             }
+            println!("word {:?}", &word);
         }
         let result = &_loop[next].replace(" |<imgsrc","<img src").replace(".png\">| ",".png\">").replace(" <br> ","<br>");
         println!("return result!!!");
