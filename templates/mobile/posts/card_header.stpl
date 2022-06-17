@@ -62,7 +62,7 @@
                 </span>
                 <span class="dropdown-item item_stat_f">Статистика записи</span>
 
-              <% } else if is_moderator { %>
+              <% } else if is_staff { %> 
                 <span class="dropdown-item post_close">Закрыть</span>
               <% } else { %>
                 <span class="dropdown-item post_claim">Пожаловаться</span>
