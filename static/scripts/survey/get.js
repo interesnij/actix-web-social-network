@@ -7,6 +7,23 @@ on('#ajax', 'click', '.load_attach_survey_list', function() {
   profile_list_block_attach(this, ".load_block", "/u_survey_list_load/", "load_attach_survey_list");
 });
 
+on('#ajax', 'click', '.load_survey_list', function() {
+  parent = this.parentElement.parentElement.parentElement;
+  if (parent.getAttribute("owner-pk")) {
+    surveylist_pk = parent.getAttribute("surveylist-pk");
+    owner_pk = parent.getAttribute("owner-pk");
+  }
+  else {
+    surveylist_pk = parent.getAttribute("surveylist-pk");
+    owner_pk = null;
+  };
+
+  create_fullscreen("/surveys/load_list/" + surveylist_pk + "/", "item_fullscreen");
+  if (owner_pk) {
+    window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&surveylist=" + surveylist_pk);
+  }
+});
+
 on('#ajax', 'click', '.add_survey', function() {
   create_fullscreen('/survey/add_survey_in_list/' + this.parentElement.getAttribute("data-pk") + "/", "worker_fullscreen", true);
 });
