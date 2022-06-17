@@ -11,59 +11,59 @@
 </div>
 <div class="row no-gutters" style="overflow-x: auto;">
    <div class="col-12">
-       <ul class="drag_list" data-type="ldo" style="width:max-content;list-style: none;">
-           <% for (index, object) in lists.iter().enumerate() { %>
-           <% if object.community_id.is_some() { %>
-             <% let list_community = object.get_community(); %>
-           <li class="list_item drag_item" data-pk="<%= object.id %>">
-               <div class="card file-manager-item folder border community" data-pk="<%= object.community_id.unwrap() %>" data-uuid="<%= object.id %>">
-                   <div class="card-img-top file-logo-wrapper">
-                     <div class="d-flex align-items-center justify-content-center w-100">
-                       <svg class="<% if index == 0 { %>active<% } else { %>pointer load_profile_doc_list<% } %> svg_default list_toggle list_svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                         <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-                       </svg>
-                     </div>
-                   </div>
-                   <div class="card-body pt-0">
-                       <div class="content-wrapper">
-                           <p class="card-text file-name mb-0 list_name <% if index == 0 { %>active<% } else { %>pointer load_profile_doc_list<% } %> list_toggle" style="text-align: left;" data-name="<%= object.name %>"><%= object.name %></p>
-                           <p class="card-text file-size mb-0">{{ object.count_items }}</p>
-                       </div>
-                       <small class="file-accessed">
-                         <a class="ajax underline" href="<%= list_community.link %>">
-                           <%= list_community.name %>
-                         </a>
-                       </small>
-                   </div>
+   <ul class="drag_list" data-type="ldo" style="width:max-content;list-style: none;">
+       <% for object in lists.iter() { %>
+       <% if object.community_id.is_some() { %>
+         <% let community = object.get_community(); %>
+       <li class="list_item drag_item" data-pk="<%= object.id %>">
+           <div class="card file-manager-item folder border community" data-pk="<%= object.community_id.unwrap() %>" doclist-pk="<%= object.id %>">
+               <div class="card-img-top file-logo-wrapper">
+                 <div class="d-flex align-items-center justify-content-center w-100">
+                   <svg class="pointer load_doc_list svg_default" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                     <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                   </svg>
+                 </div>
                </div>
-           </li>
-           <% } else { %>
-             <% let creator = object.get_creator(); %>
-           <li class="list_item drag_item" data-pk="<%= object.id %>">
-               <div class="card file-manager-item folder border" data-pk="<%= object.user_id %>" data-uuid="<%= object.id %>">
-                   <div class="card-img-top file-logo-wrapper">
-                     <div class="d-flex align-items-center justify-content-center w-100">
-                       <svg class="<% if index == 0 { %>active<% } else { %>pointer load_profile_doc_list<% } %> list_toggle list_svg svg_default" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                         <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-                       </svg>
-                     </div>
+               <div class="card-body pt-0">
+                   <div class="content-wrapper">
+                       <p class="card-text file-name mb-0 list_name load_doc_list" style="text-align: left;" data-name="<%= object.name %>"><%= object.name %></p>
+                       <p class="card-text file-size mb-0"><%= object.count_items() %></p>
                    </div>
-                   <div class="card-body pt-0">
-                       <div class="content-wrapper">
-                           <p class="card-text file-name mb-0 list_name <% if index == 0 { %>active<% } else { %>pointer load_profile_doc_list<% } %> list_toggle" style="text-align: left;" data-name="<%= object.name %>"><%= object.name %></p>
-                           <p class="card-text file-size mb-0"><%= object.count_items() %></p>
-                       </div>
-                       <small class="file-accessed">
-                         <a class="ajax underline" href="<%= creator.link %>">
-                           <%= creator.get_full_name() %>
-                         </a>
-                       </small>
-                   </div>
+                   <small class="file-accessed">
+                     <a class="ajax underline" href="<%= community.link %>">
+                       <%= community.name %>
+                     </a>
+                   </small>
                </div>
-           </li>
-           <% } %>
-           <% } %>
-       </ul>
+           </div>
+       </li>
+       <% } else { %>
+         <% let creator = object.get_creator(); %>
+       <li class="list_item drag_item" data-pk="<%= object.id %>">
+           <div class="card file-manager-item folder border" data-pk="<%= object.user_id %>" doclist-pk="<%= object.id %>">
+               <div class="card-img-top file-logo-wrapper">
+                 <div class="d-flex align-items-center justify-content-center w-100">
+                   <svg class="pointer load_doc_list svg_default" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                     <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                   </svg>
+                 </div>
+               </div>
+               <div class="card-body pt-0">
+                   <div class="content-wrapper">
+                       <p class="card-text file-name mb-0 list_name load_doc_list" style="text-align: left;" data-name="<%= object.name %>"><%= object.name %></p>
+                       <p class="card-text file-size mb-0"><%= object.count_items() %></p>
+                   </div>
+                   <small class="file-accessed">
+                     <a class="ajax underline" href="<%= creator.link %>">
+                       <%= creator.get_full_name() %>
+                     </a>
+                   </small>
+               </div>
+           </div>
+       </li>
+       <% } %>
+       <% } %>
+   </ul>
    </div>
 </div>
 <% } else { %>

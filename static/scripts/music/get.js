@@ -16,13 +16,14 @@ on('#ajax', 'click', '.load_attach_playlist', function() {
 });
 
 on('#ajax', 'click', '.load_music_list', function() {
-  if (this.getAttribute("playlist-pk")) {
-    playlist_pk = this.getAttribute("playlist-pk");
-    owner_pk = null
-  } else {
-    card = this.parentElement.parentElement.parentElement;
-    playlist_pk = card.getAttribute("playlist-pk");
-    owner_pk = card.getAttribute("owner-pk");
+  parent = this.parentElement.parentElement.parentElement;
+  if (parent.getAttribute("owner-pk")) {
+    doclist_pk = parent.getAttribute("playlist-pk");
+    owner_pk = parent.getAttribute("owner-pk");
+  }
+  else {
+    doclist_pk = parent.getAttribute("playlist-pk");
+    owner_pk = null;
   };
 
   create_fullscreen("/music/load_list/" + playlist_pk + "/", "item_fullscreen");

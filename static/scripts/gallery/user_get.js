@@ -40,13 +40,14 @@ on('body', 'click', '.chat_photo', function() {
 });
 
 on('#ajax', 'click', '.load_photo_list', function() {
-  if (this.getAttribute("photolist-pk")) {
-    photolist_pk = this.getAttribute("photolist-pk");
-    owner_pk = null
-  } else {
-    card = this.parentElement.parentElement;
-    photolist_pk = card.getAttribute("photolist-pk");
-    owner_pk = card.getAttribute("owner-pk");
+  parent = this.parentElement.parentElement.parentElement;
+  if (parent.getAttribute("owner-pk")) {
+    photolist_pk = parent.getAttribute("photolist-pk");
+    owner_pk = parent.getAttribute("owner-pk");
+  }
+  else {
+    photolist_pk = parent.getAttribute("photolist-pk");
+    owner_pk = null;
   };
   create_fullscreen("/photos/load_list/" + photolist_pk + "/", "item_fullscreen");
   if (owner_pk) {

@@ -11,61 +11,61 @@
 </div>
 <div class="row no-gutters" style="overflow-x: auto;">
    <div class="col-12">
-       <ul class="drag_list" data-type="ldo" style="width:max-content;list-style: none;">
-           <% for (index, object) in lists.iter().enumerate() { %>
-           <% if object.community_id.is_some() { %>
-             <% let community = object.get_community(); %>
-           <li class="list_item drag_item" data-pk="<%= object.id %>">
-               <div class="card file-manager-item folder border community" data-pk="<%= object.community_id.unwrap() %>" data-uuid="<%= object.id %>">
-                   <div class="card-img-top file-logo-wrapper">
-                     <div class="d-flex align-items-center justify-content-center w-100">
-                       <svg class="<% if index == 0 { %>active<% } else { %>pointer load_profile_video_list<% } %> svg_default list_toggle list_svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                         <path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"/>
-                         <path d="M0 0h24v24H0z" fill="none"/>
-                       </svg>
-                     </div>
-                   </div>
-                   <div class="card-body pt-0">
-                       <div class="content-wrapper">
-                           <p class="card-text file-name mb-0 list_name <% if index == 0 { %>active<% } else { %>pointer load_profile_video_list<% } %> list_toggle" style="text-align: left;" data-name="<%= object.name %>"><%= object.name %></p>
-                           <p class="handle card-text file-size mb-0">{{ object.count_items }}</p>
-                       </div>
-                       <small class="file-accessed">
-                         <a class="ajax underline" href="<%= community.link %>">
-                           <%= community.name %>
-                         </a>
-                       </small>
-                   </div>
+   <ul class="drag_list" data-type="ldo" style="width:max-content;list-style: none;">
+       <% for object in lists.iter() { %>
+       <% if object.community_id.is_some() { %>
+         <% let community = object.get_community(); %>
+       <li class="list_item drag_item" data-pk="<%= object.id %>">
+           <div class="card file-manager-item folder border community" data-pk="<%= object.community_id.unwrap() %>" videolist-pk="<%= object.id %>">
+               <div class="card-img-top file-logo-wrapper">
+                 <div class="d-flex align-items-center justify-content-center w-100">
+                   <svg class="pointer load_video_list svg_default" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"/>
+                      <path d="M0 0h24v24H0z" fill="none"/>
+                   </svg>
+                 </div>
                </div>
-           </li>
-           <% } else { %>
-             <% let creator = object.get_creator(); %>
-           <li class="list_item drag_item" data-pk="<%= object.id %>">
-               <div class="card file-manager-item folder border" data-pk="<%= object.user_id %>" data-uuid="<%= object.id %>">
-                   <div class="card-img-top file-logo-wrapper">
-                     <div class="d-flex align-items-center justify-content-center w-100">
-                       <svg class="<% if index == 0 { %>active<% } else { %>pointer load_profile_video_list<% } %> list_toggle list_svg svg_default" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                         <path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"/>
-                         <path d="M0 0h24v24H0z" fill="none"/>
-                       </svg>
-                     </div>
+               <div class="card-body pt-0">
+                   <div class="content-wrapper">
+                       <p class="card-text file-name mb-0 list_name load_video_list" style="text-align: left;" data-name="<%= object.name %>"><%= object.name %></p>
+                       <p class="handle card-text file-size mb-0"><%= object.count_items() %></p>
                    </div>
-                   <div class="card-body pt-0">
-                       <div class="content-wrapper">
-                           <p class="card-text file-name mb-0 list_name <% if index == 0 { %>active<% } else { %>pointer load_profile_video_list<% } %> list_toggle" style="text-align: left;" data-name="<%= object.name %>"><%= object.name %></p>
-                           <p class="handle card-text file-size mb-0"><%= object.count_items() %></p>
-                       </div>
-                       <small class="file-accessed">
-                         <a class="ajax underline" href="<%= creator.link %>">
-                           <%= creator.get_full_name() %>
-                         </a>
-                       </small>
-                   </div>
+                   <small class="file-accessed">
+                     <a class="ajax underline" href="<%= community.link %>">
+                       <%= community.name %>
+                     </a>
+                   </small>
                </div>
-           </li>
-           <% } %>
-           <% } %>
-       </ul>
+           </div>
+       </li>
+       <% } else { %>
+         <% let creator = object.get_creator(); %>
+       <li class="list_item drag_item" data-pk="<%= object.id %>">
+           <div class="card file-manager-item folder border" data-pk="<%= object.user_id %>" videolist-pk="<%= object.id %>">
+               <div class="card-img-top file-logo-wrapper">
+                 <div class="d-flex align-items-center justify-content-center w-100">
+                   <svg class="pointer load_video_list svg_default" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"/>
+                      <path d="M0 0h24v24H0z" fill="none"/>
+                   </svg>
+                 </div>
+               </div>
+               <div class="card-body pt-0">
+                   <div class="content-wrapper">
+                       <p class="card-text file-name mb-0 list_name load_video_list" style="text-align: left;" data-name="<%= object.name %>"><%= object.name %></p>
+                       <p class="handle card-text file-size mb-0"><%= object.count_items() %></p>
+                   </div>
+                   <small class="file-accessed">
+                     <a class="ajax underline" href="<%= creator.link %>">
+                       <%= creator.get_full_name() %>
+                     </a>
+                   </small>
+               </div>
+           </div>
+       </li>
+       <% } %>
+       <% } %>
+   </ul>
    </div>
 </div>
 

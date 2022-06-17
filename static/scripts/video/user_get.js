@@ -14,13 +14,14 @@ on('#ajax', 'click', '.load_attach_video_list', function() {
 });
 
 on('#ajax', 'click', '.load_video_list', function() {
-  if (this.getAttribute("videolist-pk")) {
-    videolist_pk = this.getAttribute("videolist-pk");
-    owner_pk = null
-  } else {
-    card = this.parentElement.parentElement.parentElement;
-    videolist_pk = card.getAttribute("videolist-pk");
-    owner_pk = card.getAttribute("owner-pk");
+  parent = this.parentElement.parentElement.parentElement;
+  if (parent.getAttribute("owner-pk")) {
+    videolist_pk = parent.getAttribute("videolist-pk");
+    owner_pk = parent.getAttribute("owner-pk");
+  }
+  else {
+    videolist_pk = parent.getAttribute("videolist-pk");
+    owner_pk = null;
   };
 
   create_fullscreen("/video/load_list/" + videolist_pk + "/", "item_fullscreen");

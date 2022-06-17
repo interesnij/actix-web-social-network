@@ -14,13 +14,14 @@ on('#ajax', 'click', '.good_detail', function() {
 });
 
 on('#ajax', 'click', '.load_good_list', function() {
-  if (this.getAttribute("goodlist-pk")) {
-    goodlist_pk = this.getAttribute("goodlist-pk");
-    owner_pk = null
-  } else {
-    card = this.parentElement.parentElement.parentElement;
-    goodlist_pk = card.getAttribute("goodlist-pk");
-    owner_pk = card.getAttribute("owner-pk");
+  parent = this.parentElement.parentElement.parentElement;
+  if (parent.getAttribute("owner-pk")) {
+    goodlist_pk = parent.getAttribute("goodlist-pk");
+    owner_pk = parent.getAttribute("owner-pk");
+  }
+  else {
+    goodlist_pk = parent.getAttribute("goodlist-pk");
+    owner_pk = null;
   };
   create_fullscreen("/goods/load_list/" + goodlist_pk + "/", "item_fullscreen");
   if (owner_pk) {
