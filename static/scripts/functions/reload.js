@@ -84,6 +84,9 @@ function close_fullscreen() {
       all_windows[i].remove();
     }
   }
+  if (!container.firstChild) {
+    get_document_opacity_1();
+  }
 };
 function close_work_fullscreen() {
   toggle_active_select = false;
