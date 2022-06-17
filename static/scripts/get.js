@@ -51,6 +51,9 @@ on('#ajax', 'click', '.load_next_list_comments', function() {
     }
     ajax_link.send()
 });
+on('#ajax', 'click', '.toggle_visible_next_block', function() {
+  this.nextElementSibling.classList.toggle("hide");
+})
 
 on('#ajax', 'click', '.show_post_text', function() {
   shower = this.parentElement.querySelector(".show_post_text");
