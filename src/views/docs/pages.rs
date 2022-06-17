@@ -46,7 +46,7 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
     let _list = get_doc_list(*list_id);
 
     let object_list: Vec<Doc>;
-    let lists: Vec<Doclist>; // покажем и другие списки владельца.
+    let lists: Vec<DocList>; // покажем и другие списки владельца.
 
     if page > 1 {
         let step = (page - 1) * 20;
