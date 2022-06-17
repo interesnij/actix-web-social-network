@@ -71,7 +71,7 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
             text = _tuple.1;
             owner_name = community.name;
             owner_link = community.link;
-            lists = community.get_docs_list();
+            lists = community.get_doc_lists();
         }
         else {
             let creator = _list.get_creator();
@@ -80,7 +80,7 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
             text = _tuple.1;
             owner_name = creator.get_full_name();
             owner_link = creator.link;
-            lists = creator.get_docs_list();
+            lists = creator.get_doc_lists();
         }
 
         let _request_user_id = &_request_user.id;
