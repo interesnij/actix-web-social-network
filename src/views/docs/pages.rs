@@ -38,12 +38,16 @@ pub fn pages_urls(config: &mut web::ServiceConfig) {
 pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, page) = get_list_variables(req);
     let mut next_page_number = 0;
+    let mut owner_name = "".to_string();
+    let mut owner_link = "".to_string();
     let is_open : bool;
     let text : String;
 
     let _list = get_doc_list(*list_id);
 
     let object_list: Vec<Doc>;
+    let lists: Vec<Doclist>; // покажем и другие списки владельца.
+
     if page > 1 {
         let step = (page - 1) * 20;
         object_list = _list.get_paginate_items(20, step.into());
@@ -65,11 +69,18 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
             let _tuple = get_community_permission(&community, &_request_user);
             is_open = _tuple.0;
             text = _tuple.1;
+            owner_name = community.name;
+            owner_link = community.link;
+            lists = community.get_docs_list();
         }
         else {
+            let creator = _list.get_creator();
             let _tuple = get_user_permission(&_list.get_creator(), &_request_user);
             is_open = _tuple.0;
             text = _tuple.1;
+            owner_name = creator.get_full_name();
+            owner_link = creator.link;
+            lists = creator.get_docs_list();
         }
 
         let _request_user_id = &_request_user.id;
@@ -85,20 +96,26 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
             #[derive(TemplateOnce)]
             #[template(path = "desctop/docs/list/list.stpl")]
             struct Template {
-                list:         DocList,
-                request_user: User,
+                list:                     DocList,
+                request_user:             User,
                 is_user_can_see_doc_list: bool,
-                is_user_can_create_docs: bool,
-                object_list: Vec<Doc>,
-                next_page_number: i32,
+                is_user_can_create_docs:  bool,
+                object_list:              Vec<Doc>,
+                next_page_number:         i32,
+                owner_name:               String,
+                owner_link:               String,
+                lists:                    Vec<DocList>,
             }
             let body = Template {
-                list:                      _list,
-                request_user:              _request_user,
+                list:                     _list,
+                request_user:             _request_user,
                 is_user_can_see_doc_list: is_user_can_see_doc_list,
                 is_user_can_create_docs:  is_user_can_create_docs,
-                object_list: object_list,
-                next_page_number: next_page_number,
+                object_list:              object_list,
+                next_page_number:         next_page_number,
+                owner_name:               owner_name,
+                owner_link:               owner_link,
+                lists:                    lists,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -108,20 +125,26 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
             #[derive(TemplateOnce)]
             #[template(path = "mobile/docs/list/list.stpl")]
             struct Template {
-                list:         DocList,
-                request_user: User,
+                list:                     DocList,
+                request_user:             User,
                 is_user_can_see_doc_list: bool,
-                is_user_can_create_docs: bool,
-                object_list: Vec<Doc>,
-                next_page_number: i32,
+                is_user_can_create_docs:  bool,
+                object_list:              Vec<Doc>,
+                next_page_number:         i32,
+                owner_name:               String,
+                owner_link:               String,
+                lists:                    Vec<DocList>,
             }
             let body = Template {
-                list:                      _list,
-                request_user:              _request_user,
+                list:                     _list,
+                request_user:             _request_user,
                 is_user_can_see_doc_list: is_user_can_see_doc_list,
                 is_user_can_create_docs:  is_user_can_create_docs,
-                object_list: object_list,
-                next_page_number: next_page_number,
+                object_list:              object_list,
+                next_page_number:         next_page_number,
+                owner_name:               owner_name,
+                owner_link:               owner_link,
+                lists:                    lists,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
