@@ -791,6 +791,12 @@ on('#ajax', 'click', '#create_list_btn', function() {
       li = document.createElement("li");
       li.classList.add("date", "list", "pointer", "post_list_change");
       li.setAttribute("list-pk", new_pk);
+      if (is_community) {
+        li.setAttribute("data-pk", community_pk);
+      }
+      else {
+        li.setAttribute("data-pk", userpic.getAttribute("data-id"));
+      }
 
       media = document.createElement("div");
       media.classList.add("media");
@@ -827,6 +833,24 @@ on('#ajax', 'click', '#create_list_btn', function() {
       document.body.querySelector(".date-list").prepend(li);
     }
     else {
+      if (folder == "/docs") {
+        svg = "<svg class='pointer load_profile_doc_list svg_default list_toggle list_svg' width='50' height='50' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'><path d='M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z'></path></svg>"
+      }
+      else if (folder == "/goods") {
+        svg = "<svg class='pointer load_profile_good_list svg_default list_toggle list_svg' width='50' height='50' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'><g><rect fill='none' height='24' width='24' /><path d='M18,6h-2c0-2.21-1.79-4-4-4S8,3.79,8,6H6C4.9,6,4,6.9,4,8v12c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V8C20,6.9,19.1,6,18,6z M12,4c1.1,0,2,0.9,2,2h-4C10,4.9,10.9,4,12,4z M18,20H6V8h2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V8h4v2c0,0.55,0.45,1,1,1s1-0.45,1-1V8 h2V20z' /></g></svg>";
+      }
+      else if (folder == "/music") {
+        svg = "<svg class='pointer load_profile_music_list svg_default list_toggle list_svg' width='50' height='50' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'><g><rect fill='none' height='24' width='24'/><path d='M18,6h-2c0-2.21-1.79-4-4-4S8,3.79,8,6H6C4.9,6,4,6.9,4,8v12c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V8C20,6.9,19.1,6,18,6z M12,4c1.1,0,2,0.9,2,2h-4C10,4.9,10.9,4,12,4z M18,20H6V8h2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V8h4v2c0,0.55,0.45,1,1,1s1-0.45,1-1V8 h2V20z' /></g></svg>";
+      }
+      else if (folder == "/photos") {
+        svg = "<rect x='3' y='3' width='18' height='18' rx='2' ry='2'></rect><circle cx='8.5' cy='8.5' r='1.5'></circle><polyline points='21 15 16 10 5 21'></polyline>";
+      }
+      else if (folder == "/survey") {
+        svg = "<svg class='pointer load_profile_survey_list svg_default list_toggle list_svg' width='50' height='50' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'><path d='M0 0h24v24H0V0z' fill='none'></path><path d='M18 9l-1.41-1.42L10 14.17l-2.59-2.58L6 13l4 4zm1-6h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-.14 0-.27.01-.4.04-.39.08-.74.28-1.01.55-.18.18-.33.4-.43.64-.1.23-.16.49-.16.77v14c0 .27.06.54.16.78s.25.45.43.64c.27.27.62.47 1.01.55.13.02.26.03.4.03h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7-.25c.41 0 .75.34.75.75s-.34.75-.75.75-.75-.34-.75-.75.34-.75.75-.75zM19 19H5V5h14v14z'></path></svg>";
+      }
+      else if (folder == "/video") {
+        svg = "<svg class='pointer load_profile_video_list svg_default list_toggle list_svg' width='50' height='50' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'><path d='M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z' /><path d='M0 0h24v24H0z' fill='none' /></svg>";
+      }
       if (is_community) {
         creator_name = form_post.getAttribute("community-name");
         creator_id = form_post.getAttribute("community-pk");
@@ -838,7 +862,7 @@ on('#ajax', 'click', '#create_list_btn', function() {
         community_class = "";
       }
 
-      new_list = "<li class='list_item drag_item' data-pk='" + new_pk + "'><div class='card file-manager-item folder border" + community_class + "' data-pk='" + creator_id + "' data-uuid='" + new_pk + "'><div class='card-img-top file-logo-wrapper'><div class='d-flex align-items-center justify-content-center w-100'><svg class='active svg_default list_toggle list_svg' width='50' height='50' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'><path d='M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z'></path></svg></div></div><div class='card-body pt-0'><div class='content-wrapper'><p class='card-text file-name mb-0 list_name active' style='text-align: left;' data-name='" + new_name + "'>" + new_name + "</p><p class='handle card-text file-size mb-0'>0</p></div><small class='file-accessed'><a class='ajax underline' href='" + creator_id + "'>" + creator_name + "</a></small></div></div></li>"
+      new_list = "<li class='list_item drag_item' data-pk='" + new_pk + "'><div class='card file-manager-item folder border" + community_class + "' data-pk='" + creator_id + "' data-uuid='" + new_pk + "'><div class='card-img-top file-logo-wrapper'><div class='d-flex align-items-center justify-content-center w-100'>" + svg + "</div></div><div class='card-body pt-0'><div class='content-wrapper'><p class='card-text file-name mb-0 list_name active' style='text-align: left;' data-name='" + new_name + "'>" + new_name + "</p><p class='handle card-text file-size mb-0'>0</p></div><small class='file-accessed'><a class='ajax underline' href='" + creator_id + "'>" + creator_name + "</a></small></div></div></li>"
       if (document.body.querySelector(".drag_list")) {
         document.body.querySelector(".drag_list").append(new_list);
       }
