@@ -35,6 +35,200 @@ pub fn pages_urls(config: &mut web::ServiceConfig) {
     config.route("/posts/load_comments/{id}/", web::get().to(load_comments_page));
 }
 
+pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let (is_desctop, page) = get_list_variables(req);
+    let mut next_page_number = 0;
+    let owner_name : String;
+    let owner_link : String;
+    let is_open : bool;
+    let text : String;
+
+    let _list = get_post_list(*list_id);
+
+    let object_list: Vec<Post>;
+    let lists: Vec<PostList>; // покажем и другие списки владельца.
+
+    if page > 1 {
+        let step = (page - 1) * 20;
+        object_list = _list.get_paginate_items(20, step.into());
+        if _list.count > (page * 20).try_into().unwrap() {
+            next_page_number = page + 1;
+        }
+    }
+    else {
+        object_list = _list.get_paginate_items(20, 0);
+        if _list.count > 20.try_into().unwrap() {
+            next_page_number = 2;
+        }
+    }
+
+    if is_signed_in(&session) {
+        let _request_user = get_request_user_data(&session);
+        if _list.community_id.is_some() {
+            let community = _list.get_community();
+            let _tuple = get_community_permission(&community, &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
+            lists = community.get_post_lists();
+            owner_name = community.name;
+            owner_link = community.link;
+        }
+        else {
+            let creator = _list.get_creator();
+            let _tuple = get_user_permission(&_list.get_creator(), &_request_user);
+            is_open = _tuple.0;
+            text = _tuple.1;
+            lists = creator.get_post_lists();
+            owner_name = creator.get_full_name();
+            owner_link = creator.link;
+        }
+
+        let _request_user_id = &_request_user.id;
+        let is_user_can_see_post_list = _list.is_user_can_see_el(*_request_user_id);
+        let is_user_can_create_posts = _list.is_user_can_create_el(*_request_user_id);
+
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/posts/list/list.stpl")]
+            struct Template {
+                list:                      PostList,
+                request_user:              User,
+                is_user_can_see_post_list: bool,
+                is_user_can_create_posts:  bool,
+                object_list:               Vec<Post>,
+                next_page_number:          i32,
+                owner_name:                String,
+                owner_link:                String,
+                lists:                     Vec<PostList>,
+            }
+            let body = Template {
+                list:                     _list,
+                request_user:             _request_user,
+                is_user_can_see_post_list: is_user_can_see_post_list,
+                is_user_can_create_posts:  is_user_can_create_posts,
+                object_list:              object_list,
+                next_page_number:         next_page_number,
+                owner_name:               owner_name,
+                owner_link:               owner_link,
+                lists:                    lists,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/posts/list/list.stpl")]
+            struct Template {
+                list:                     PostList,
+                request_user:             User,
+                is_user_can_see_post_list: bool,
+                is_user_can_create_posts:  bool,
+                object_list:              Vec<Post>,
+                next_page_number:         i32,
+                owner_name:               String,
+                owner_link:               String,
+                lists:                    Vec<PostList>,
+            }
+            let body = Template {
+                list:                     _list,
+                request_user:             _request_user,
+                is_user_can_see_post_list: is_user_can_see_post_list,
+                is_user_can_create_posts:  is_user_can_create_posts,
+                object_list:              object_list,
+                next_page_number:         next_page_number,
+                owner_name:               owner_name,
+                owner_link:               owner_link,
+                lists:                    lists,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        }
+    } else {
+        if _list.community_id.is_some() {
+            let community = _list.get_community();
+            let _tuple = get_anon_community_permission(&community);
+            is_open = _tuple.0;
+            text = _tuple.1;
+            lists = community.get_post_lists();
+            owner_name = community.name;
+            owner_link = community.link;
+        }
+        else {
+            let creator = _list.get_creator();
+            let _tuple = get_anon_user_permission(&creator);
+            is_open = _tuple.0;
+            text = _tuple.1;
+            lists = creator.get_post_lists();
+            owner_name = creator.get_full_name();
+            owner_link = creator.link;
+        }
+        let is_user_can_see_post_list = _list.is_anon_user_can_see_el();
+        if is_open == false {
+            use crate::views::close_item;
+            return close_item(text)
+        }
+        else if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/posts/list/anon_list.stpl")]
+            struct Template {
+                list:                     PostList,
+                is_user_can_see_post_list: bool,
+                object_list:              Vec<Post>,
+                next_page_number:         i32,
+                owner_name:               String,
+                owner_link:               String,
+                lists:                    Vec<PostList>,
+            }
+            let body = Template {
+                list:                     _list,
+                is_user_can_see_post_list: is_user_can_see_post_list,
+                object_list:              object_list,
+                next_page_number:         next_page_number,
+                owner_name:               owner_name,
+                owner_link:               owner_link,
+                lists:                    lists,
+
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+
+        } else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/posts/list/anon_list.stpl")]
+            struct Template {
+                list:                     PostList,
+                is_user_can_see_post_list: bool,
+                object_list:              Vec<Post>,
+                next_page_number:         i32,
+                owner_name:               String,
+                owner_link:               String,
+                lists:                    Vec<PostList>,
+            }
+            let body = Template {
+                list:                     _list,
+                is_user_can_see_post_list: is_user_can_see_post_list,
+                object_list:              object_list,
+                next_page_number:         next_page_number,
+                owner_name:               owner_name,
+                owner_link:               owner_link,
+                lists:                    lists,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+}
+
 pub async fn add_user_list_page(session: Session) -> actix_web::Result<HttpResponse> {
     if !is_signed_in(&session) {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
