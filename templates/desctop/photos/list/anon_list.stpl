@@ -1,3 +1,28 @@
+<span class="text_support">
+<a href="<%= owner_link %>" class="ajax i_link font-weight">
+  <%= owner_name %>
+</a> - фотоальбом
+<% if lists.len() > 1 { %>
+  <a class="pointer i_link toggle_visible_owner_lists">(другие списки)</a>
+<% } %>
+</span>
+
+<div class="mt-2 mb-2 border-bottom">
+  <div class="owner_lists hide">
+    <% for object in lists.iter() { %>
+      <% if list.id != object.id { %>
+        <p photolist-pk="<%= object.id %>" class="text_support">
+          <span><span>
+            <span class="pointer load_photo_list">
+              <%= object.name %> (<%= object.count %>)
+            </span>
+          </span></span>
+        </p>
+      <% } %>
+    <% } %>
+  </div>
+</div>
+
 <span class="load_block">
 <span data-title="<%= list.name %> - фотоальбом">
 <% if is_user_can_see_photo_list { %>
