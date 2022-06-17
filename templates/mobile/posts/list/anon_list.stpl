@@ -1,3 +1,5 @@
+<% let reactions_list = list.get_reactions_list(); %>
+
 <span class="text_support">
 <a href="<%= owner_link %>" class="ajax i_link font-weight">
   <%= owner_name %>
