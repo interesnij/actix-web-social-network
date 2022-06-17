@@ -156,11 +156,17 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
             let _tuple = get_anon_community_permission(&_list.get_community());
             is_open = _tuple.0;
             text = _tuple.1;
+            lists = community.get_doc_lists();
+            owner_name = community.name;
+            owner_link = community.link;
         }
         else {
             let _tuple = get_anon_user_permission(&_list.get_creator());
             is_open = _tuple.0;
             text = _tuple.1;
+            lists = creator.get_doc_lists();
+            owner_name = creator.get_full_name();
+            owner_link = creator.link;
         }
         let is_user_can_see_doc_list = _list.is_anon_user_can_see_el();
         if is_open == false {
@@ -175,12 +181,18 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
                 is_user_can_see_doc_list: bool,
                 object_list:              Vec<Doc>,
                 next_page_number:         i32,
+                owner_name:               String,
+                owner_link:               String,
+                lists:                    Vec<DocList>,
             }
             let body = Template {
                 list:                     _list,
                 is_user_can_see_doc_list: is_user_can_see_doc_list,
                 object_list:              object_list,
                 next_page_number:         next_page_number,
+                owner_name:               owner_name,
+                owner_link:               owner_link,
+                lists:                    lists,
 
             }
             .render_once()
@@ -195,12 +207,18 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
                 is_user_can_see_doc_list: bool,
                 object_list:              Vec<Doc>,
                 next_page_number:         i32,
+                owner_name:               String,
+                owner_link:               String,
+                lists:                    Vec<DocList>,
             }
             let body = Template {
-                list:                      _list,
+                list:                     _list,
                 is_user_can_see_doc_list: is_user_can_see_doc_list,
-                object_list: object_list,
-                next_page_number: next_page_number,
+                object_list:              object_list,
+                next_page_number:         next_page_number,
+                owner_name:               owner_name,
+                owner_link:               owner_link,
+                lists:                    lists,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
