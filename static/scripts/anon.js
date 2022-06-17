@@ -1057,3 +1057,7 @@ on('#ajax', 'click', '.select_tab_content_universal', function() {
   }
   ajax_link.send();
 });
+
+on('#ajax', 'click', '.toggle_visible_owner_lists', function() {
+  this.parentElement.nextElementSibling.querySelector(".owner_lists").classList.toggle("hide");
+})
