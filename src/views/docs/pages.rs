@@ -69,18 +69,18 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
             let _tuple = get_community_permission(&community, &_request_user);
             is_open = _tuple.0;
             text = _tuple.1;
+            lists = community.get_doc_lists();
             owner_name = community.name;
             owner_link = community.link;
-            lists = community.get_doc_lists();
         }
         else {
             let creator = _list.get_creator();
             let _tuple = get_user_permission(&_list.get_creator(), &_request_user);
             is_open = _tuple.0;
             text = _tuple.1;
+            lists = creator.get_doc_lists();
             owner_name = creator.get_full_name();
             owner_link = creator.link;
-            lists = creator.get_doc_lists();
         }
 
         let _request_user_id = &_request_user.id;
