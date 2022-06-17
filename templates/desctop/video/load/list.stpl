@@ -10,8 +10,8 @@
 <ul id="my_playlist" style="display:none;" class="">
 <% for object in videos.iter() { %>
  <li data-thumb-source="<%= object.get_image() %>"
-     data-video-source="http://134.0.112.253:9000<%= object.file %>"
-     data-poster-source="<%= object.get_image() %>" 
+     data-video-source="http://194.58.119.147:9000<%= object.file %>"
+     data-poster-source="<%= object.get_image() %>"
      data-video-uuid="<%= object.id %>" class="video_playlist_li">
  <div data-video-short-description="">
      <div style="width:100%">
