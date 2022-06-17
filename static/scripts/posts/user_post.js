@@ -849,7 +849,7 @@ on('#ajax', 'click', '#create_list_btn', function() {
         _svg = "<svg class='pointer load_profile_photo_list svg_default list_toggle list_svg' width='50' height='50' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='18' height='18' rx='2' ry='2'></rect><circle cx='8.5' cy='8.5' r='1.5'></circle><polyline points='21 15 16 10 5 21'></polyline></svg>";
         _class = "load_profile_photo_list";
       }
-      else if (folder == "/survey") {
+      else if (folder == "/surveys") {
         _svg = "<svg class='pointer load_profile_survey_list svg_default list_toggle list_svg' width='50' height='50' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'><path d='M0 0h24v24H0V0z' fill='none'></path><path d='M18 9l-1.41-1.42L10 14.17l-2.59-2.58L6 13l4 4zm1-6h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-.14 0-.27.01-.4.04-.39.08-.74.28-1.01.55-.18.18-.33.4-.43.64-.1.23-.16.49-.16.77v14c0 .27.06.54.16.78s.25.45.43.64c.27.27.62.47 1.01.55.13.02.26.03.4.03h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7-.25c.41 0 .75.34.75.75s-.34.75-.75.75-.75-.34-.75-.75.34-.75.75-.75zM19 19H5V5h14v14z'></path></svg>";
         _class = "load_profile_survey_list";
       }
@@ -870,14 +870,12 @@ on('#ajax', 'click', '#create_list_btn', function() {
 
       new_list = "<li class='list_item drag_item' data-pk='" + new_pk + "'><div class='card file-manager-item folder border" + community_class + "' data-pk='" + creator_id + "' data-uuid='" + new_pk + "'><div class='card-img-top file-logo-wrapper'><div class='d-flex align-items-center justify-content-center w-100'>" + _svg + "</div></div><div class='card-body pt-0'><div class='content-wrapper'><p class='card-text file-name mb-0 list_name list_toggle pointer " + _class + "' style='text-align: left;' data-name='" + new_name + "'>" + new_name + "</p><p class='handle card-text file-size mb-0'>0</p></div><small class='file-accessed'><a class='ajax underline' href='" + creator_id + "'>" + creator_name + "</a></small></div></div></li>"
       if (document.body.querySelector(".drag_list")) {
-        document.body.querySelector(".drag_list").append(new_list);
+        drag_list = document.body.querySelector(".drag_list");
+        drag_list.innerHTML = new_list + drag_list.innerHTML + new_list;
       }
       else {
-        new_div = document.createElement("div");
-        new_div.classList.add("new_ul_container");
-        document.body.querySelector(".empty_list_block").parentElement.append(new_div);
-        new_block = "<ul class='drag_list' style='width:max-content;list-style: none;'>" + new_list + "</ul>";
-        document.body.querySelector(".new_ul_container").innerHTML = "new_block";
+        new_block = "<div class='row no-gutters' style='overflow-x: auto;'><div class='col-12'><ul class='drag_list' style='width:max-content;list-style: none;'>" + new_list + "</ul></div></div>";
+        document.body.querySelector(".new_ul_container").innerHTML = new_block;
       }
     };
     close_work_fullscreen();
