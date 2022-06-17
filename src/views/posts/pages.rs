@@ -31,6 +31,7 @@ pub fn pages_urls(config: &mut web::ServiceConfig) {
     config.route("/posts/edit_community_list/{id}/", web::get().to(edit_community_list_page));
     config.route("/posts/edit_post/{id}/", web::get().to(edit_post_page));
 
+    config.route("/posts/load_list/{list_id}/", web::get().to(load_list_page));
     config.route("/posts/load_post/{id}/", web::get().to(load_post_page));
     config.route("/posts/load_comments/{id}/", web::get().to(load_comments_page));
 }

@@ -3,7 +3,7 @@
   <%= owner_name %>
 </a> - список документов
 <% if lists.len() > 1 { %>
-  <span class="pointer toggle_visible_owner_lists">(показать ещё)</span>
+  <a class="pointer i_link toggle_visible_owner_lists">(другие списки)</a>
 <% } %>
 </span>
 
