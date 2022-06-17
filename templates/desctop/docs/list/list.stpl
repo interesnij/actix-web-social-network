@@ -4,14 +4,14 @@
 </a> - список документов
 </span>
 <% if lists.len() > 1 { %>
-<div class="mt-2 mb-2">
-  <p class="toggle_visible_next_block">
+<div class="mt-2 mb-2 border-bottom">
+  <p class="pointer toggle_visible_next_block">
     Показать еще списки источника
   </p>
   <div class="hide">
     <% for object in lists.iter() { %>
-      <p class="text_support">
-        <span doclist-pk="<%= object.id %>"><span>
+      <p doclist-pk="<%= object.id %>" class="text_support">
+        <span><span>
           <span class="pointer load_doc_list">
             <%= object.name %> (<%= object.count %>)
           </span>
