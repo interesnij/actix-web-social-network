@@ -153,7 +153,8 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
         }
     } else {
         if _list.community_id.is_some() {
-            let _tuple = get_anon_community_permission(&_list.get_community());
+            let community = _list.get_community();
+            let _tuple = get_anon_community_permission(&community);
             is_open = _tuple.0;
             text = _tuple.1;
             lists = community.get_doc_lists();
@@ -161,7 +162,8 @@ pub async fn load_list_page(session: Session, req: HttpRequest, list_id: web::Pa
             owner_link = community.link;
         }
         else {
-            let _tuple = get_anon_user_permission(&_list.get_creator());
+            let creator = _list.get_creator();
+            let _tuple = get_anon_user_permission(&creator);
             is_open = _tuple.0;
             text = _tuple.1;
             lists = creator.get_doc_lists();
