@@ -2,7 +2,7 @@
 <span data-title="<%= community.name %> - записи">
   <% let is_staff = list.is_user_can_create_el(request_user.id); %>
   <% let reactions_list = list.get_reactions_list(); %>
-  <% let is_moderator = request_user.is_moderator(); %>
+  <% let is_manager = request_user.is_moderator(); %>
   <% let fixed_posts = community.get_fixed_posts(); %>
   <% let fixed_posts_count = fixed_posts.len(); %>
 

@@ -1,6 +1,6 @@
 <% let is_staff = list.is_user_can_create_el(request_user.id); %>
 <% let reactions_list = list.get_reactions_list(); %>
-<% let is_moderator = request_user.is_moderator(); %>
+<% let is_manager = request_user.is_moderator(); %>
 
 <span class="text_support">
 <a href="<%= owner_link %>" class="ajax i_link font-weight">
