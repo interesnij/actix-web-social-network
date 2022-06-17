@@ -3,10 +3,10 @@
   <%= owner_name %>
 </a> - список документов
 </span>
-<% if lists.len() > 2 { %>
+<% if lists.len() > 1 { %>
 <div class="mt-2 mb-2 border-bottom">
   <p class="pointer toggle_visible_next_block">
-    Показать еще списки источника
+    Другие списки источника
   </p>
   <div class="hide">
     <% for object in lists.iter() { %>
