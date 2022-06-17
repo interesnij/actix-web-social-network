@@ -39,7 +39,7 @@
 <% } %>
 <% if object_list.len() > 0 { %>
   <% for object in object_list.iter() { %>
-    <% include!("../../posts/load/post.stpl"); %>
+    <% include!("../../posts/post.stpl"); %>
   <% } %>
   <% if next_page_number > 0 { %>
   <div class="load centered m-1 next_page_list" data-link="/posts/load_list/<%= list.id %>/?page=<%= next_page_number %>">
