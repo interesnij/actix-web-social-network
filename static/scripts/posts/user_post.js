@@ -781,6 +781,7 @@ on('#ajax', 'click', '#create_list_btn', function() {
     new_name = jsonResponse.name;
     new_image = jsonResponse.image;
     userpic = document.body.querySelector(".userpic");
+    user_id = userpic.getAttribute("data-id");
 
     if (folder == "/posts") {
       //post_stream = document.body.querySelector(".span_list_pk");
@@ -795,7 +796,7 @@ on('#ajax', 'click', '#create_list_btn', function() {
         li.setAttribute("data-pk", community_pk);
       }
       else {
-        li.setAttribute("data-pk", userpic.getAttribute("data-id"));
+        li.setAttribute("data-pk", user_id);
       }
 
       media = document.createElement("div");
@@ -868,10 +869,10 @@ on('#ajax', 'click', '#create_list_btn', function() {
         community_class = "";
       }
 
-      new_list = "<li class='list_item drag_item' data-pk='" + new_pk + "'><div class='card file-manager-item folder border" + community_class + "' data-pk='" + creator_id + "' data-uuid='" + new_pk + "'><div class='card-img-top file-logo-wrapper'><div class='d-flex align-items-center justify-content-center w-100'>" + _svg + "</div></div><div class='card-body pt-0'><div class='content-wrapper'><p class='card-text file-name mb-0 list_name list_toggle pointer " + _class + "' style='text-align: left;' data-name='" + new_name + "'>" + new_name + "</p><p class='handle card-text file-size mb-0'>0</p></div><small class='file-accessed'><a class='ajax underline' href='" + creator_id + "'>" + creator_name + "</a></small></div></div></li>"
+      new_list = "<li class='list_item drag_item' data-pk='" + new_pk + "'><div class='card file-manager-item folder border" + community_class + "' data-pk='" + user_id + "' data-uuid='" + new_pk + "'><div class='card-img-top file-logo-wrapper'><div class='d-flex align-items-center justify-content-center w-100'>" + _svg + "</div></div><div class='card-body pt-0'><div class='content-wrapper'><p class='card-text file-name mb-0 list_name list_toggle pointer " + _class + "' style='text-align: left;' data-name='" + new_name + "'>" + new_name + "</p><p class='handle card-text file-size mb-0'>0</p></div><small class='file-accessed'><a class='ajax underline' href='" + creator_id + "'>" + creator_name + "</a></small></div></div></li>"
       if (document.body.querySelector(".drag_list")) {
         drag_list = document.body.querySelector(".drag_list");
-        drag_list.innerHTML = new_list + drag_list.innerHTML + new_list;
+        drag_list.innerHTML = new_list + drag_list.innerHTML;
       }
       else {
         new_block = "<div class='row no-gutters' style='overflow-x: auto;'><div class='col-12'><ul class='drag_list' style='width:max-content;list-style: none;'>" + new_list + "</ul></div></div>";
