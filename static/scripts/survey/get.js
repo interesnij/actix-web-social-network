@@ -1,8 +1,4 @@
 
-on('#ajax', 'click', '.load_profile_survey_list', function() {
-  profile_list_block_load(this, ".load_block", "/survey_list/", "load_profile_survey_list");
-});
-
 on('#ajax', 'click', '.load_attach_survey_list', function() {
   profile_list_block_attach(this, ".load_block", "/u_survey_list_load/", "load_attach_survey_list");
 });

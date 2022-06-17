@@ -1,6 +1,4 @@
-on('#ajax', 'click', '.load_profile_doc_list', function() {
-  profile_list_block_load(this, ".load_block", "/doc_list/", "load_profile_doc_list");
-});
+
 on('#ajax', 'click', '.load_attach_doc_list', function() {
   profile_list_block_attach(this, ".load_block", "/u_doc_list_load/", "load_attach_doc_list");
 });

@@ -6,9 +6,7 @@ on('#ajax', 'click', '.uri_click', function() {
   this.parentElement.nextElementSibling.querySelector("#add_video_btn").style.display = "block";
   fullscreen_resize()
 });
-on('#ajax', 'click', '.load_profile_video_list', function() {
-  profile_list_block_load(this, ".load_block", "/video_list/", "load_profile_video_list");
-});
+
 on('#ajax', 'click', '.load_attach_video_list', function() {
   profile_list_block_attach(this, ".load_block", "/u_video_list_load/", "load_attach_video_list");
 });

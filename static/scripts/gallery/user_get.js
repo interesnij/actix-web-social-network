@@ -1,6 +1,4 @@
-on('#ajax', 'click', '.load_profile_photo_list', function() {
-  profile_list_block_load(this, ".load_block", "/photo_list/", "load_profile_photo_list");
-});
+
 on('#ajax', 'click', '.load_attach_photo_list', function() {
   profile_list_block_attach(this, ".load_block", "/u_photo_list_load/", "load_attach_photo_list");
 });

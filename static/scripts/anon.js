@@ -195,39 +195,6 @@ function get_document_opacity_1() {
   overlay.style.opacity = "0";
 };
 
-function profile_list_block_load(_this, block, url, actions_class) {
-  // подгрузка списков в профиле пользователя
-  var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  saver = _this.parentElement.parentElement.parentElement;
-  saver.classList.contains("community") ?
-  link = "/communities/" + saver.getAttribute("data-pk") + url + saver.getAttribute("data-uuid") + "/" :
-  link = "/users/" + saver.getAttribute("data-pk") + url + saver.getAttribute("data-uuid") + "/";
-  request.open( 'GET', link, true );
-  request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  request.onreadystatechange = function () {
-    if ( request.readyState == 4 && request.status == 200 ){
-        elem_ = document.createElement('span');
-        elem_.innerHTML = request.responseText;
-       document.body.querySelector(block).innerHTML = elem_.querySelector(block).innerHTML;
-       if (elem_.querySelector(".is_block_paginate")) {
-         lenta = elem_.querySelector('.is_block_paginate');
-         link = lenta.getAttribute("data-link");
-         list_load(document.body.querySelector(".is_block_paginate"), link);
-       };
-
-       class_to_add = _this.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".list_toggle")
-       for (var i = 0; i < class_to_add.length; i++) {
-         class_to_add[i].classList.add(actions_class, "pointer");
-         class_to_add[i].parentElement.parentElement.parentElement.classList.replace("active_border", "border");
-       };
-       parent = _this.parentElement.parentElement.parentElement;
-       parent.querySelector(".list_svg")? parent.querySelector(".list_svg").classList.remove(actions_class, "pointer") : null;
-       parent.querySelector(".list_name").classList.remove(actions_class, "pointer");
-       parent.classList.replace("border", "active_border");
-    }};
-    request.send( null );
-};
-
 function addStyleSheets (href) {
   $head = document.head,
   $link = document.createElement('link');
