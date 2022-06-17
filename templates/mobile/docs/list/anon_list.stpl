@@ -28,13 +28,10 @@
 <span data-title="<%= list.name %> - список документов">
   <% if is_user_can_see_doc_list { %>
   <div class="media mt-3" style="padding-left: 7px;">
-    <form class="uuid_saver" data-uuid="<%= list.id %>" data-pk="<%= list.id %>">
       <h5 class="mt-1">
         <span class="second_list_name" data-name="<%= list.name %>"><%= list.name %></span> (<%= list.count %>)
-        <% include!("../../generic/items/anon_list_meta.stpl"); %>
       </h5>
       <span id="onload_info"></span>
-    </form>
   </div>
   <div class="card mb-2">
     <div class="card-body">
