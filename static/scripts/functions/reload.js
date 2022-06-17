@@ -112,6 +112,15 @@ function close_work_fullscreen() {
     get_document_opacity_1();
   };
   window.history.replaceState(null, null, window.location.pathname);
+  all_windows = container.querySelectorAll(".card_fullscreen");
+  for (var i = 0; i < all_windows.length; i++) {
+    if (!all_windows[i].querySelector("#fullscreen_loader").firstChild) {
+      all_windows[i].remove();
+    }
+  }
+  if (!container.firstChild) {
+    get_document_opacity_1();
+  }
 };
 
 function view_timer(count, list) {

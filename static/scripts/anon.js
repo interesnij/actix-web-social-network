@@ -21,7 +21,15 @@ function close_fullscreen() {
     try {prev_window.querySelector(".next_item").style.display = "unset"} catch {null}
   };
   window.history.replaceState(null, null, window.location.pathname);
-  console.log("okkkkk")
+  all_windows = container.querySelectorAll(".card_fullscreen");
+  for (var i = 0; i < all_windows.length; i++) {
+    if (!all_windows[i].querySelector("#fullscreen_loader").firstChild) {
+      all_windows[i].remove();
+    }
+  }
+  if (!container.firstChild) {
+    get_document_opacity_1();
+  }
 };
 
 function create_fullscreen(url, type_class) {
