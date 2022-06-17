@@ -74,4 +74,5 @@
     </a> - документы
   </h5>
 </div>
+<div class="empty_list_block"></div>
 <% } %>

@@ -873,8 +873,11 @@ on('#ajax', 'click', '#create_list_btn', function() {
         document.body.querySelector(".drag_list").append(new_list);
       }
       else {
+        new_div = document.createElement("div");
+        new_div.classList.add("new_ul_container");
+        document.body.querySelector(".empty_list_block").parentElement.append(new_div);
         new_block = "<ul class='drag_list' style='width:max-content;list-style: none;'>" + new_list + "</ul>";
-        document.body.querySelector(".empty_list_block").append(new_block);
+        document.body.querySelector(".new_ul_container").innerHTML = "new_block";
       }
     };
     close_work_fullscreen();
