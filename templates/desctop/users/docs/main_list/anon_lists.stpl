@@ -19,14 +19,14 @@
                <div class="card file-manager-item folder border community" data-pk="<%= object.community_id.unwrap() %>" data-uuid="<%= object.id %>">
                    <div class="card-img-top file-logo-wrapper">
                      <div class="d-flex align-items-center justify-content-center w-100">
-                       <svg class="<% if index == 1 { %>active<% } else { %>pointer load_profile_doc_list<% } %> svg_default list_toggle list_svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                       <svg class="<% if index == 0 { %>active<% } else { %>pointer load_profile_doc_list<% } %> svg_default list_toggle list_svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
                          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
                        </svg>
                      </div>
                    </div>
                    <div class="card-body pt-0">
                        <div class="content-wrapper">
-                           <p class="card-text file-name mb-0 list_name <% if index == 1 { %>active<% } else { %>pointer load_profile_doc_list<% } %> list_toggle" style="text-align: left;" data-name="<%= object.name %>"><%= object.name %></p>
+                           <p class="card-text file-name mb-0 list_name <% if index == 0 { %>active<% } else { %>pointer load_profile_doc_list<% } %> list_toggle" style="text-align: left;" data-name="<%= object.name %>"><%= object.name %></p>
                            <p class="card-text file-size mb-0">{{ object.count_items }}</p>
                        </div>
                        <small class="file-accessed">
@@ -43,14 +43,14 @@
                <div class="card file-manager-item folder border" data-pk="<%= object.user_id %>" data-uuid="<%= object.id %>">
                    <div class="card-img-top file-logo-wrapper">
                      <div class="d-flex align-items-center justify-content-center w-100">
-                       <svg class="<% if index == 1 { %>active<% } else { %>pointer load_profile_doc_list<% } %> list_toggle list_svg svg_default" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                       <svg class="<% if index == 0 { %>active<% } else { %>pointer load_profile_doc_list<% } %> list_toggle list_svg svg_default" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
                          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
                        </svg>
                      </div>
                    </div>
                    <div class="card-body pt-0">
                        <div class="content-wrapper">
-                           <p class="card-text file-name mb-0 list_name <% if index == 1 { %>active<% } else { %>pointer load_profile_doc_list<% } %> list_toggle" style="text-align: left;" data-name="<%= object.name %>"><%= object.name %></p>
+                           <p class="card-text file-name mb-0 list_name <% if index == 0 { %>active<% } else { %>pointer load_profile_doc_list<% } %> list_toggle" style="text-align: left;" data-name="<%= object.name %>"><%= object.name %></p>
                            <p class="card-text file-size mb-0"><%= object.count_items() %></p>
                        </div>
                        <small class="file-accessed">
