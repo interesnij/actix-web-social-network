@@ -1338,6 +1338,7 @@ impl User {
                 favorite_game: None,
                 about: None,
                 survey: 0,
+                playlist: 0,
             };
             let profile = diesel::insert_into(schema::user_profiles::table)
                 .values(&_new_profile)
@@ -2178,6 +2179,16 @@ impl User {
                 .get_result::<UserMusicListPosition>(&_connection)
                 .expect("Error saving music_list_position.");
             return _musics_list;
+        }
+    }
+    pub fn get_saved_playlist(&self) -> MusicList {
+        private = self.get_profile();
+        if private.playlist == 0 {
+            return self.get_music_list();
+        }
+        else {
+            use crate::utils::get_music_list;
+            return get_music_list(private.playlist);
         }
     }
     pub fn get_video_list(&self) -> VideoList {

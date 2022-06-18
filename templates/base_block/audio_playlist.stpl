@@ -9,7 +9,7 @@
 
 
 <ul id="playlist_" style="display:none;">
-  <% if request_user.my_playlist().len() > 0 { %>
+  <% if request_user.get_saved_playlist().len() > 0 { %>
     <% for track in request_user.my_playlist().iter() { %>
       <li data-path="/media/<%= track.file %>"
         <% if track.image.is_some() { %>

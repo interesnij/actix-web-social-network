@@ -321,6 +321,7 @@ pub async fn process_signup(session: Session, req: HttpRequest) -> impl Responde
             favorite_game: None,
             about: None,
             survey: 0,
+            playlist: 0,
         };
         diesel::insert_into(schema::user_profiles::table)
             .values(&_user_profile)

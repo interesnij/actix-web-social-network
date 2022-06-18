@@ -79,6 +79,7 @@ pub struct UserProfile {
     pub favorite_game:  Option<String>,
     pub about:          Option<String>,
     pub survey:         i32,
+    pub playlist:       i32,
 }
 
 #[derive(Deserialize, Insertable)]
@@ -107,6 +108,7 @@ pub struct NewUserProfile {
     pub favorite_game:  Option<String>,
     pub about:          Option<String>,
     pub survey:         i32,
+    pub playlist:       i32,
 }
 
 /////// UserLocation //////
@@ -565,7 +567,7 @@ pub struct NewUserDocListPosition {
     // 'b' Друзья
     // 'c' Друзья и друзья друзей
     // 'd' Только я
-    // 'e' Друзья, кроме 
+    // 'e' Друзья, кроме
     // 'f' Некоторые друзья
 
 #[derive(Queryable, Serialize, Identifiable, Associations)]

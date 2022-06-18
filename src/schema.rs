@@ -1955,6 +1955,7 @@ table! {
         favorite_game -> Nullable<Varchar>,
         about -> Nullable<Varchar>,
         survey -> Int4,
+        playlist -> Int4,
     }
 }
 
