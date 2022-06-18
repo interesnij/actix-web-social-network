@@ -1,3 +1,4 @@
+use crate::schema;
 use actix_web::{
     HttpResponse,
     web,
@@ -14,6 +15,7 @@ use crate::utils::{
     get_community_permission,
     get_user_permission,
     NewListValues,
+    establish_connection,
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
