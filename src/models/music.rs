@@ -1555,10 +1555,6 @@ impl MusicList {
         file: String, image: Option<String>) -> Music {
 
         let _connection = establish_connection();
-        diesel::update(self)
-          .set(schema::music_lists::count.eq(self.count + 1))
-          .get_result::<MusicList>(&_connection)
-          .expect("Error.");
 
         let new_music_form = NewMusic {
             title: title,

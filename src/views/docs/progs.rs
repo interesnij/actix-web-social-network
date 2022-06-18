@@ -394,6 +394,8 @@ pub async fn add_doc_in_list(session: Session, mut payload: Multipart, _id: web:
             ).await;
 
             let mut files_list = Vec::new();
+            let _connection = establish_connection();
+            let mut count = 0;
             for file in form.files.iter() {
                 let v: Vec<&str> = file.split('/').collect();
                 let filename = v.last().unwrap().to_string();
@@ -405,7 +407,13 @@ pub async fn add_doc_in_list(session: Session, mut payload: Multipart, _id: web:
                     file.to_string(),
                 );
                 files_list.push(new_doc);
+                count += 1;
             }
+
+            diesel::update(&_list)
+              .set(schema::doc_lists::count.eq(self.count + count))
+              .get_result::<DocList>(&_connection)
+              .expect("Error.");
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/docs/new_docs.stpl")]

@@ -14,6 +14,7 @@ use crate::utils::{
     get_community_permission,
     get_user_permission,
     NewListValues,
+    establish_connection,
 };
 use actix_session::Session;
 use sailfish::TemplateOnce;
@@ -357,6 +358,8 @@ pub async fn add_tracks_in_list(session: Session, mut payload: Multipart, _id: w
             }
 
             let mut files_list = Vec::new();
+            let mut count = 0;
+            let _connection = establish_connection();
             for file in form.files.iter() {
                 let v: Vec<&str> = file.split('/').collect();
                 let filename = v.last().unwrap().to_string();
@@ -370,7 +373,13 @@ pub async fn add_tracks_in_list(session: Session, mut payload: Multipart, _id: w
                     None,
                 );
                 files_list.push(new_track);
+                count += 1;
             }
+
+            diesel::update(&_list)
+              .set(schema::music_lists::count.eq(self.count + count))
+              .get_result::<MusicList>(&_connection)
+              .expect("Error.");
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/music/tracks_list.stpl")]
