@@ -33,6 +33,7 @@
     </button>
   </nav>
 
+<% include!("audio_playlist.stpl"); %>
 <div class='card video_fullscreen' style='display:none;'>
 <span class="video_btn_big" style="top: 30px; position: absolute;right: 12%;">
 <span class="video_fullscreen_resize" title="Свернуть">

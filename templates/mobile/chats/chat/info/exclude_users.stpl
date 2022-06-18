@@ -1,4 +1,4 @@
-<div data-title="Исключение участников - приватность - <%= chat.get_name(request_user.id) %>" class="px-0 card no-shadow main-container" chat-pk="<%= chat.id %>"data-type="none" style="min-height: 600px;">
+<div class="px-0 card no-shadow main-container" chat-pk="<%= chat.id %>" style="min-height: 600px;" data-title="Исключение участников - приватность - <%= chat.get_name(request_user.id) %>">
     <form data-type="<%= types %>" class="cool_private_form">
       <input type="hidden" name="types" value="<%= types %>">
       <div class="card-header" style="min-height: 100px;">
@@ -17,8 +17,9 @@
           <span class="header_title">Выберите тех, кому нельзя <%= text %></span>
       <% } %>
       </div>
-      <%= count %>
+
       <div class="card-body">
+      <% if count > 0 { %>
         <div class="is_block_paginate">
           <% for object in object_list.iter() { %>
           <div class="media pointer add_member_chat_toggle border-bottom" data-link="<%= object.link %>" data-pk="<%= object.id %>" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
@@ -50,6 +51,9 @@
           <% } %>
 
         </div>
+        <% } else { %>
+          <p>В чате пока никого нет.</p>
+        <% } %>
       </div>
       <div class="card-footer border-top">
         <button type="button" class="btn btn-sm border form_btn" <% if users.len() == 0 { %>disabled<% } %> id="add_chat_exclude_users_btn" style="float: right;">

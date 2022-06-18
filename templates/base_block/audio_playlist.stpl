@@ -1,0 +1,33 @@
+
+<ul id="audio_playlists" style="display:none;">
+		<li data-source="playlist_" data-playlist-name="My first playlist" data-thumbnail-path="/static/images/news_small1.jpg">
+			<p class="minimalWhiteCategoriesTitle"><span class="boldWhite">Название: </span>Мой плейлист</p>
+			<p class="minimalWhiteCategoriesType"><span class="boldWhite">Здесь тип плейлиста</span></p>
+			<p class="minimalWhiteCategoriesDescription">Здесь описание плейлиста</p>
+		</li>
+</ul>
+
+
+<ul id="playlist_" style="display:none;">
+  <% if request_user.my_playlist().len() > 0 { %>
+    <% for track in request_user.my_playlist().iter() { %>
+      <li data-path="/media/<%= track.file %>"
+        <% if track.image.is_some() { %>
+          data-thumbpath="<%= track.image.as_deref().unwrap() %>"
+        <% } else { %>
+          data-thumbpath="/static/images/logo.jpg"
+        <% } %>
+			   data-add="track_copy"
+			   data-track-id="<%= track.id %>">
+        <p><span class="custom_color" style="font-weight:bold"><%= track.title %></span></p>
+      </li>
+    <% } %>
+	<% } else { %>
+    <li data-path="http://mp3.trb-stream.net/;.mp3"
+      data-thumbpath="/static/images/news_small1.jpg"
+      data-add="track_copy"
+      data-track-id="0">
+     <p><span style="font-weight:bold; color:#FF0000;">Радио по умолчанию</span></p>
+    </li>
+  <% } %>
+</ul>

@@ -44,7 +44,7 @@ on('#ajax', 'click', '.community_member_delete', function() {
         li.remove()
       }};
   link.send( null );
-});
+}); 
 
 on('#ajax', 'click', '#community_private_post_btn', function() {
   send_form_and_toast('/communities/manage/private_post/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", document.body.querySelector("#community_private_post_form"), "Изменения приняты!")

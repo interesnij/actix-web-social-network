@@ -49,7 +49,6 @@
               <img src="/static/images/preloader.gif">
           </div>
           <% } %>
-
         </div>
         <% } else { %>
           <p>У Вас пока нет друзей.</p>

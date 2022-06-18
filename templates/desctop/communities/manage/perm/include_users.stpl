@@ -18,6 +18,7 @@
         <% } %>
       </div>
       <div class="card-body">
+      <% if object_list.len() > 0 { %>
         <div class="is_block_paginate">
           <% for object in object_list.iter() { %>
           <div class="media pointer add_member_chat_toggle border-bottom" data-link="<%= object.link %>" data-pk="<%= object.id %>" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
@@ -45,6 +46,9 @@
           </div>
           <% } %>
         </div>
+        <% } else { %>
+          <p>Сообщество пока не имеет подписчиков.</p>
+        <% } %>
       </div>
       <div class="card-footer border-top">
         <button type="button" class="btn btn-sm border form_btn" <% if users.len() == 0 { %>disabled<% } %> id="add_community_include_users_btn" style="float: right;">
