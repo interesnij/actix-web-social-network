@@ -411,7 +411,7 @@ pub async fn add_doc_in_list(session: Session, mut payload: Multipart, _id: web:
             }
 
             diesel::update(&_list)
-              .set(schema::doc_lists::count.eq(self.count + count))
+              .set(schema::doc_lists::count.eq(_list.count + count))
               .get_result::<DocList>(&_connection)
               .expect("Error.");
 

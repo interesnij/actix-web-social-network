@@ -377,7 +377,7 @@ pub async fn add_tracks_in_list(session: Session, mut payload: Multipart, _id: w
             }
 
             diesel::update(&_list)
-              .set(schema::music_lists::count.eq(self.count + count))
+              .set(schema::music_lists::count.eq(_list.count + count))
               .get_result::<MusicList>(&_connection)
               .expect("Error.");
 
