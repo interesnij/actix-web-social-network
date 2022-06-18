@@ -133,6 +133,8 @@ pub async fn add_photos_in_list(session: Session, mut payload: Multipart, _id: w
             ).await;
 
             let mut image_list = Vec::new();
+            let _connection = establish_connection();
+            let mut count = 0;
             for image in form.images.iter() {
                 let new_photo = _list.create_photo (
                     community_id,
@@ -141,9 +143,10 @@ pub async fn add_photos_in_list(session: Session, mut payload: Multipart, _id: w
                     image.to_string()
                 );
                 image_list.push(new_photo);
+                count += 1;
             };
             diesel::update(&_list)
-              .set(schema::photo_lists::count.eq(_list.count + image_list.len()))
+              .set(schema::photo_lists::count.eq(_list.count + count))
               .get_result::<PhotoList>(&_connection)
               .expect("Error.");
 
