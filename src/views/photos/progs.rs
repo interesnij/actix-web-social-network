@@ -142,6 +142,10 @@ pub async fn add_photos_in_list(session: Session, mut payload: Multipart, _id: w
                 );
                 image_list.push(new_photo);
             };
+            diesel::update(&_list)
+              .set(schema::photo_lists::count.eq(_list.count + image_list.len()))
+              .get_result::<PhotoList>(&_connection)
+              .expect("Error.");
 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/photos/new_photos.stpl")]

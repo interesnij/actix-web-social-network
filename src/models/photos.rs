@@ -309,12 +309,7 @@ impl PhotoList {
     pub fn create_photo(&self, community_id: Option<i32>, user_id: i32,
         preview: String, file: String) -> Photo {
 
-        let _connection = establish_connection();
-
-        diesel::update(&*self)
-          .set(schema::photo_lists::count.eq(self.count + 1))
-          .get_result::<PhotoList>(&_connection)
-          .expect("Error.");
+        let _connection = establish_connection();  
 
         let new_photo_form = NewPhoto {
           community_id: community_id,
