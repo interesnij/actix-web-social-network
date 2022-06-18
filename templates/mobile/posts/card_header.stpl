@@ -22,7 +22,6 @@
 <% } else { %>
 
 <% let post_creator = object.get_creator(); %>
-    <div class="media">
     <a href="<%= post_creator.link %>" class="ajax">
       <figure>
         <%- post_creator.get_50_avatar() %>
@@ -62,7 +61,7 @@
                 </span>
                 <span class="dropdown-item item_stat_f">Статистика записи</span>
 
-              <% } else if is_staff { %> 
+              <% } else if is_manager { %>
                 <span class="dropdown-item post_close">Закрыть</span>
               <% } else { %>
                 <span class="dropdown-item post_claim">Пожаловаться</span>
